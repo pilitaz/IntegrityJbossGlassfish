@@ -1,0 +1,213 @@
+/* ESTOS SON LOS BOTONES DE PORTAFOLIOS:
+
+.po_bullet1
+.po_bullet2
+.po_editon
+.po_editoff
+.po_detalle
+.po_saveon
+.po_saveoff
+.po.playon
+.po_playoff
+
+
+
+  */
+
+.po_bullet1{
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -8px;
+	cursor:pointer
+}
+.po_bullet1:hover {
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -58px -8px;
+	cursor:pointer
+}
+.po_bullet1:active {
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -8px;
+}
+
+/* ——  */
+
+.po_bullet2{
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -58px;
+	cursor:pointer
+}
+.po_bullet2:hover {
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -58px -58px;
+	cursor:pointer
+}
+.po_bullet2:active {
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -58px;
+}
+
+/* ——  */
+
+.po_editon{
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -108px;
+	cursor:pointer
+}
+.po_editon:hover {
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -58px -108px;
+	cursor:pointer
+}
+.po_editon:active {
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -108px;
+}
+
+/* ——  */
+
+.po_editoff{
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -158px;
+	cursor:pointer
+}
+.po_editoff:hover {
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -58px -158px;
+	cursor:pointer
+}
+.po_editoff:active {
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -158px;
+}
+
+/* ——  */
+
+.po_mas{
+    width: 34px;
+    height: 34px;
+    background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -258px;
+    cursor:pointer
+}
+.po_mas:hover {
+    width: 34px;
+    height: 34px;
+    background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -58px -258px;
+    cursor:pointer
+}
+.po_mas:active {
+    width: 34px;
+    height: 34px;
+    background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -258px;
+}
+
+/* ——  */
+
+.po_detalle{
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -208px;
+	cursor:pointer
+}
+.po_detalle:hover {
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -58px -208px;
+	cursor:pointer
+}
+.po_detalle:active {
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -208px;
+}
+
+/* ——  */
+
+.po_saveon{
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -258px;
+	cursor:pointer
+}
+.po_saveon:hover {
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -58px -258px;
+	cursor:pointer
+}
+.po_saveon:active {
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -258px;
+}
+
+/* ——  */
+
+.po_saveoff{
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -358px;
+	cursor:pointer
+}
+.po_saveoff:hover {
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -58px -358px;
+	cursor:pointer
+}
+.po_saveoff:active {
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -358px;
+}
+
+/* ——  */
+
+.po_playon{
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -408px;
+	cursor:pointer
+}
+.po_playon:hover {
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -58px -408px;
+	cursor:pointer
+}
+.po_playon:active {
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -408px;
+}
+
+/* ——  */
+
+.po_playoff{
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -458px;
+	cursor:pointer
+}
+.po_playoff:hover {
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -58px -458px;
+	cursor:pointer
+}
+.po_playoff:active {
+	width: 34px;
+	height: 34px;
+	background: url(/sbm/BizSolo/Base_Integrity/images/SpriteIntegrity.png) -8px -458px;
+}
