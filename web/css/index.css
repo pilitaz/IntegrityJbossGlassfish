@@ -71,3 +71,12 @@ img{
     border: 0;
 }
 
+divConsole{
+    height:100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width:300px;
+    z-index: 10;
+}
+

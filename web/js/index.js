@@ -386,15 +386,12 @@ function correLinuxBack() {//corre las funciones del shell in a box
         alert(e.message + " corre");
     }
 }
-function corre(){//esta funcion se ejecuta por que la app IntegrityViejo la llama y su funcion es determinar si le muestra al usuario la plataforma linux Envevida o una cosola de wind
-    alert("corre");	
+function corre(){//esta funcion se ejecuta por que la app IntegrityViejo la llama y su funcion es determinar si le muestra al usuario la plataforma linux Envevida o una cosola de wind   
     var hibrido = sessionStorage.getItem("hibrido");
     
-    if (hibrido == "LinuxWeb") {  
-        debugger
-        document.getElementById("idFrame").style.display ="";        
-        crearFont (sessionStorage.getItem("ncf"),"include1",4,"#ffffff");
-        setTimeout("document.getElementById(\"div17\").style.display =\"none\"\;",100);
+    if (hibrido == "LinuxWeb") {
+        document.getElementById("IframeInc").style = "position: absolute; left: 0; top: 0;";  
+        crearFont (sessionStorage.getItem("ncf"),"IframeInc",4,"#ffffff");       
     }else{
         document.location.href = "localexplorer:W:/SrcDesarrollo/Programas/Shell/integrity3.bat";
     }
@@ -402,8 +399,7 @@ function corre(){//esta funcion se ejecuta por que la app IntegrityViejo la llam
 function  crearFont (titulo,div,tam,color){
     var font = document.createElement('font');
     font.setAttribute('color', color);
-    font.setAttribute('size', tam);
-    limpiar(div);
+    font.setAttribute('size', tam);    
     font.innerHTML = titulo;
     document.getElementById(div).appendChild(font);
 }
