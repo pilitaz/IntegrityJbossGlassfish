@@ -390,11 +390,11 @@ function corre(){//esta funcion se ejecuta por que la app IntegrityViejo la llam
     var hibrido = sessionStorage.getItem("hibrido");
     
     if (hibrido == "LinuxWeb") {
-        document.getElementById("IframeInc").style = "position: absolute; left: 0; top: 0;";  
-        crearFont (sessionStorage.getItem("ncf"),"IframeInc",4,"#ffffff");       
+        document.getElementById("IframeInc").style = "position: absolute; left: 0; top: 0;";
+        document.getElementById("labelConsole").innerHTML=sessionStorage.getItem("ncf");
     }else{
         document.location.href = "localexplorer:W:/SrcDesarrollo/Programas/Shell/integrity3.bat";
-    }
+    }S
 }
 function  crearFont (titulo,div,tam,color){
     var font = document.createElement('font');
