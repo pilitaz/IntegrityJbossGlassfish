@@ -33,7 +33,7 @@ function login() {
         jSonData.dslogin.ttdatauser[0] = new Object();
         jSonData.dslogin.ttdatauser[0].picusrcod = usuario;
         jSonData.dslogin.ttdatauser[0].picusrpass = password;
-        
+        var jsonResp = "";
         $.ajax({
             type: "POST",
             data: JSON.stringify(jSonData),
@@ -43,29 +43,29 @@ function login() {
             success: function (resp) {
                 
                 permitirIngreso = JSON.stringify(resp.dslogin.ttestado[0].pocestado);
-                imgEmp = JSON.stringify();
-                
-                if(permitirIngreso=='"OK"'){                
-                    console.log("Usuario con permiso de ingresar \n" + permitirIngreso);                    
-                    sessionStorage.setItem("usrnom",resp.dslogin.eesicusuarios[0].usrnom);
-                    sessionStorage.setItem("usuario",usuario);
-                    sessionStorage.setItem("usrmail",resp.dslogin.eesicusuarios[0].usrmail);
-                    sessionStorage.setItem("picfiid",resp.dslogin.ttdatauser[0].picfiid);                    
-                    sessionStorage.setItem("poccargo",resp.dslogin.ttdatauser[0].poccargo);
-                    sessionStorage.setItem("img",resp.dslogin.eesiccia[0].cialog);
-                    sessionStorage.setItem("companyNIT",resp.dslogin.eesiccia[0].cianit);
-                    sessionStorage.setItem("contra",resp.dslogin.eesicusuarios[0].clavprov);                    
-                    sessionStorage.setItem('sesion', sessionStorage.getItem("picfiid"));
-                    sessionStorage.setItem("loginintegrity","valido");
-                    sessionStorage.setItem("hibrido",resp.dslogin.eesiccia[0].ciaserv);
-                    sessionStorage.setItem("portLinux",resp.dslogin.eesiccia[0].ciapuerto);
-                    window.location.assign("html/index.html");
-                }else{                    
-                    console.log("Usuario no puede ingresar \n" + permitirIngreso);                
-                }
+                jsonResp = resp; 
             },
                     error: function (e) {
                         alert("Error" + JSON.stringify(e));
+            }
+        }).done(function(){
+            if(permitirIngreso=='"OK"'){                
+                console.log("Usuario con permiso de ingresar \n" + permitirIngreso);                    
+                sessionStorage.setItem("usrnom",jsonResp.dslogin.eesicusuarios[0].usrnom);
+                sessionStorage.setItem("usuario",usuario);
+                sessionStorage.setItem("usrmail",jsonResp.dslogin.eesicusuarios[0].usrmail);
+                sessionStorage.setItem("picfiid",jsonResp.dslogin.ttdatauser[0].picfiid);                    
+                sessionStorage.setItem("poccargo",jsonResp.dslogin.ttdatauser[0].poccargo);
+                sessionStorage.setItem("img",jsonResp.dslogin.eesiccia[0].cialog);
+                sessionStorage.setItem("companyNIT",jsonResp.dslogin.eesiccia[0].cianit);
+                sessionStorage.setItem("contra",jsonResp.dslogin.eesicusuarios[0].clavprov);                    
+                sessionStorage.setItem('sesion', sessionStorage.getItem("picfiid"));
+                sessionStorage.setItem("loginintegrity","valido");
+                sessionStorage.setItem("hibrido",jsonResp.dslogin.eesiccia[0].ciaserv);
+                sessionStorage.setItem("portLinux",jsonResp.dslogin.eesiccia[0].ciapuerto);
+                window.location.assign("html/index.html");
+            }else{                    
+                console.log("Usuario no puede ingresar \n" + permitirIngreso);                
             }
         });
         

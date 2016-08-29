@@ -315,8 +315,7 @@ function documentos(){
 }
 
 function abreFuncion(servicio){
-    $("#tdPerfil").fadeOut("slow");
-    alert(servicio);
+    $("#tdPerfil").fadeOut("slow");    
     apagarBotones();
     cambiarFondoTD("tdVerde")
     if(servicio.slice(0,8)=="caracter"){        
