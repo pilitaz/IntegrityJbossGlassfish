@@ -17,10 +17,6 @@ var arreglo_funRepor = new Array();
 $(document).ready(function() {
     sessionStorage.setItem("VideoAyuda","http://comunicacion349.wix.com/integrity#!reportes-tutoriales/w865s");//cambiar urlVideo con url link apenas este listo el video de ayuda   
     
-    //sessionStorage.setItem("cifrapass","");
-    
-    
-    
     if(sessionStorage.getItem("loginintegrity")==="valido"){
         $(window).trigger("resize");
         
@@ -31,6 +27,7 @@ $(document).ready(function() {
             
         });
         menufunciones();
+        tamanoShell();
         correLinuxBack();
         document.getElementById("lbNombre").innerHTML = sessionStorage.getItem("usrnom");
         document.getElementById("lbEMail").innerHTML = sessionStorage.getItem("usrmail");    
@@ -66,8 +63,9 @@ function cambiarImagen(imgId, estiloTd){
         document.getElementById(imgId).setAttribute("estado", "on");
         document.getElementById(imgId).setAttribute("onmouseover", "");
         document.getElementById(imgId).setAttribute("onmouseout", "");
-        document.getElementById(imgId).getAttribute("servicio");
+        //document.getElementById(imgId).getAttribute("servicio");
         if(servicio!=""){
+            document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
             document.getElementById("idFrame").src = urlIFrame+servicio+"/Start.jsp";
             document.getElementById("tdPerfil").style="display:none"
         }        
@@ -294,7 +292,7 @@ function menufunciones() {
                 dataarbol = dataarbol.replace(/CON IMAGEN/g, "../css/images/leaf.gif");
                 dataarbol = dataarbol.replace(/SIN IMAGEN/g, "");
                 dataarbol = dataarbol.replace(/Servicio/g, "columna5");
-                txtJson = "{ \"plugins\" : [],\"core\" : { \"data\" : " + dataarbol + "}}";
+                txtJson = "{ \"plugins\" : [],\"core\" : { \"data\" : " + dataarbol + "}}";                
                 sessionStorage.setItem("txtJson2", txtJson);
                 $("#divArbol").load("tree2.html"); 
             }    
@@ -315,9 +313,10 @@ function documentos(){
 }
 
 function abreFuncion(servicio){
+    document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
     $("#tdPerfil").fadeOut("slow");    
     apagarBotones();
-    cambiarFondoTD("tdVerde")
+    cambiarFondoTD("tdVerde");
     if(servicio.slice(0,8)=="caracter"){        
         var contra = sessionStorage.getItem("contra");//sbm.util.getValue("textField1");
         var servicio = servicio.replace(/caracter/g,"");
@@ -389,21 +388,16 @@ function corre(){//esta funcion se ejecuta por que la app IntegrityViejo la llam
     var hibrido = sessionStorage.getItem("hibrido");
     
     if (hibrido == "LinuxWeb") {
-        document.getElementById("IframeInc").style = "position: absolute; left: 0; top: 0;";
+        document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0;";
         document.getElementById("labelConsole").innerHTML=sessionStorage.getItem("ncf");
     }else{
         document.location.href = "localexplorer:W:/SrcDesarrollo/Programas/Shell/integrity3.bat";
-    }S
+    }
 }
-function  crearFont (titulo,div,tam,color){
-    var font = document.createElement('font');
-    font.setAttribute('color', color);
-    font.setAttribute('size', tam);    
-    font.innerHTML = titulo;
-    document.getElementById(div).appendChild(font);
-}
-function limpiar(div) {
-    var d = document.getElementById(div);
-    while (d.hasChildNodes())
-        d.removeChild(d.firstChild);
+
+function tamanoShell(){
+    var div_ancho = $("#divDerecho").width();
+    var div_alto = $("#divDerecho").height();   
+    $( "#includeTerm" ).height( div_alto - 44);
+    $( "#includeTerm" ).width( div_ancho - 35);
 }

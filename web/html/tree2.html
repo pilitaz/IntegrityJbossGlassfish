@@ -17,7 +17,7 @@
         <script>
             try{
                 $(function() {
-                    try{
+                    try{                        
                         $('#jstree2').jstree(JSON.parse(sessionStorage.getItem("txtJson2")));
                         if(sessionStorage.getItem("pcf")){
                             $('#jstree2').jstree(true).select_node(sessionStorage.getItem("pcf"));
@@ -39,8 +39,7 @@
                             else{
                                 $('#jstree2').jstree(true).open_node(id[i]);
                             }
-                            if(!$('#jstree2').jstree(true).is_parent(id[i])){
-                                debugger
+                            if(!$('#jstree2').jstree(true).is_parent(id[i])){                                
                                 var texto = id[i];
                                 parent.fijarPcf(sessionStorage.setItem("pcf", texto));
                             }
