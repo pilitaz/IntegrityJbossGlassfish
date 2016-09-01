@@ -66,6 +66,7 @@ td{
     width:300px;
     z-index: 10;
     background-image: url("../images/fondo-arbol.png");
+    overflow: auto;
 }
 #divIFrame{
     position: absolute;

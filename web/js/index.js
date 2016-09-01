@@ -2,9 +2,6 @@
 var puerto = sessionStorage.getItem("puerto");
 var ip = sessionStorage.getItem("ip");
 
-puerto = "18800" ;
-ip = "172.21.24.146";
-
 var urlIFrame = "http://"+ip+":"+puerto+"/sbm/BizSolo/"; 
 var arreglo_funCod = new Array();
 var arreglo_funDes = new Array();
@@ -26,15 +23,14 @@ $(document).ready(function() {
         $("#btnGuardarClave").kendoButton({
             
         });
-        menufunciones();
-        tamanoShell();
+        menufunciones();        
         correLinuxBack();
         document.getElementById("lbNombre").innerHTML = sessionStorage.getItem("usrnom");
         document.getElementById("lbEMail").innerHTML = sessionStorage.getItem("usrmail");    
         document.getElementById("imgUsuario").src = "../images/equipo/"+sessionStorage.getItem("usuario")+".png";
         document.getElementById("logoEmpresa").src = "data:image/png;base64," + sessionStorage.getItem("img");
         document.getElementById("idFrame").src = urlIFrame+"actatareas/Start.jsp";
-        
+//        document.getElementById("idFrame").src = "http://190.144.16.114:18800/PruebaHRD";
     }else{
         window.location.assign(sessionStorage.getItem(url));
     }
@@ -43,7 +39,9 @@ $(document).ready(function() {
 
 $(window).resize(function() {
     var viewportHeight = $(window).height();
-    $('#outerWrapper').height(viewportHeight-55);
+    $('#outerWrapper').height(viewportHeight-44);
+    tamanoShell();
+    $('#divDerecho').width($(window).width()-239); 
 });
 /**
  * Cambia la imagen del menu izquierdo, cuyo id=imgId, por una imagen que muestre un estado activo(On) y cambia la URL del iframe. 
@@ -65,6 +63,7 @@ function cambiarImagen(imgId, estiloTd){
         document.getElementById(imgId).setAttribute("onmouseout", "");
         //document.getElementById(imgId).getAttribute("servicio");
         if(servicio!=""){
+            $('#divDerecho').width($(window).width());
             document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
             document.getElementById("idFrame").src = urlIFrame+servicio+"/Start.jsp";
             document.getElementById("tdPerfil").style="display:none"
@@ -315,6 +314,7 @@ function documentos(){
 function abreFuncion(servicio){
     document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
     $("#tdPerfil").fadeOut("slow");    
+    $('#divDerecho').width($(window).width());
     apagarBotones();
     cambiarFondoTD("tdVerde");
     if(servicio.slice(0,8)=="caracter"){        
@@ -389,7 +389,7 @@ function corre(){//esta funcion se ejecuta por que la app IntegrityViejo la llam
     
     if (hibrido == "LinuxWeb") {
         document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0;";
-        document.getElementById("labelConsole").innerHTML=sessionStorage.getItem("ncf");
+        document.getElementById("labelConsole").innerHTML=sessionStorage.getItem("ncf");        
     }else{
         document.location.href = "localexplorer:W:/SrcDesarrollo/Programas/Shell/integrity3.bat";
     }
@@ -398,6 +398,6 @@ function corre(){//esta funcion se ejecuta por que la app IntegrityViejo la llam
 function tamanoShell(){
     var div_ancho = $("#divDerecho").width();
     var div_alto = $("#divDerecho").height();   
-    $( "#includeTerm" ).height( div_alto - 44);
-    $( "#includeTerm" ).width( div_ancho - 35);
+    $( "#includeTerm" ).height( div_alto - 50);
+    $( "#includeTerm" ).width( div_ancho - 36);
 }

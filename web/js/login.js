@@ -3,15 +3,15 @@ var usuario;
 var password;
 var permitirIngreso;
 
-function onLoad() {
+function onLoad() {    
     sessionStorage.clear();
     var url =   document.URL;
     sessionStorage.setItem("url", url);
     var y =   document.URL.split("/");
-    var ipPuerto=document.URL.split("/")[2];
-    var puerto =   y[2].split("/");
-    sessionStorage.setItem("puerto", puerto[0]);
-
+    var ipPuerto = document.URL.split("/")[2];
+    var puerto =   y[2].split(":");
+    sessionStorage.setItem("ip", puerto[0]);
+    sessionStorage.setItem("puerto", puerto[1]);
     $("#btnLogin").kendoButton({
     });
 
@@ -45,8 +45,9 @@ function login() {
                 permitirIngreso = JSON.stringify(resp.dslogin.ttestado[0].pocestado);
                 jsonResp = resp; 
             },
-                    error: function (e) {
-                        alert("Error" + JSON.stringify(e));
+            error: function (e) {
+                alert("Error" + JSON.stringify(e));
+                window.location.assign("html/login.html");
             }
         }).done(function(){
             if(permitirIngreso=='"OK"'){                
@@ -71,8 +72,7 @@ function login() {
         
     } catch (e) {
         alert("Function: consumeServAjaxSIR Error: " + e.message);
-    }
-    
+    }    
 }
 
 /*
