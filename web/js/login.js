@@ -25,7 +25,9 @@ function onLoad() {
 function login() {
     usuario = $("#usuario").val();
     password = $("#password").val();
-    
+    $("#btnLogin").kendoButton({
+        enable: false
+    });
     try {        
         var jSonData = new Object();
         jSonData.dslogin = new Object();
@@ -47,7 +49,9 @@ function login() {
             },
             error: function (e) {
                 alert("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);
-                window.location.assign("html/login.html");
+                $("#btnLogin").kendoButton({
+                    enable: false
+                });
             }
         }).done(function(){
             if(permitirIngreso=='"OK"'){                
@@ -68,7 +72,10 @@ function login() {
             }else{
                 alert("Problemas con el inicio sesión .\n" + permitirIngreso);
                 console.log("Usuario no puede ingresar \n" + permitirIngreso);
-                window.location.assign(sessionStorage.getItem("url"));
+                $("#btnLogin").kendoButton({
+                    enable: false
+                });
+             //   window.location.assign(sessionStorage.getItem("url"));
             }
         });
         
