@@ -13,7 +13,7 @@ var arreglo_funUrl = new Array();
 var arreglo_funProg = new Array();
 var arreglo_funVideo = new Array();
 var arreglo_funRepor = new Array();
-
+estadoIfra = "PagInicio";
 $(document).ready(function() {
     sessionStorage.setItem("VideoAyuda","http://comunicacion349.wix.com/integrity#!reportes-tutoriales/w865s");//cambiar urlVideo con url link apenas este listo el video de ayuda   
     
@@ -27,7 +27,8 @@ $(document).ready(function() {
             
         });
         menufunciones();
-        tamanoShell();
+        //tamanoShell();
+        tamanoPagIni();
         correLinuxBack();
         document.getElementById("lbNombre").innerHTML = sessionStorage.getItem("usrnom");
         document.getElementById("lbEMail").innerHTML = sessionStorage.getItem("usrmail");    
@@ -44,6 +45,13 @@ $(document).ready(function() {
 $(window).resize(function() {
     var viewportHeight = $(window).height();
     $('#outerWrapper').height(viewportHeight-55);
+    if(estadoIfra === "PagShell"){
+        tamanoShell();
+    }else if(estadoIfra === "PagFunciones"){
+        tamanoPagIni();
+    }else{
+        tamanoFunciones();
+    }
 });
 /**
  * Cambia la imagen del menu izquierdo, cuyo id=imgId, por una imagen que muestre un estado activo(On) y cambia la URL del iframe. 
@@ -313,6 +321,7 @@ function documentos(){
 }
 
 function abreFuncion(servicio){
+    tamanoFunciones();
     document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
     $("#tdPerfil").fadeOut("slow");    
     apagarBotones();
@@ -386,7 +395,7 @@ function correLinuxBack() {//corre las funciones del shell in a box
 }
 function corre(){//esta funcion se ejecuta por que la app IntegrityViejo la llama y su funcion es determinar si le muestra al usuario la plataforma linux Envevida o una cosola de wind   
     var hibrido = sessionStorage.getItem("hibrido");
-    
+    tamanoShell();
     if (hibrido == "LinuxWeb") {
         document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0;";
         document.getElementById("labelConsole").innerHTML=sessionStorage.getItem("ncf");
@@ -396,8 +405,34 @@ function corre(){//esta funcion se ejecuta por que la app IntegrityViejo la llam
 }
 
 function tamanoShell(){
+    estadoIfra = "PagShell";
     var div_ancho = $("#divDerecho").width();
     var div_alto = $("#divDerecho").height();   
     $( "#includeTerm" ).height( div_alto - 44);
     $( "#includeTerm" ).width( div_ancho - 35);
+    $( "#includeArbol" ).height( div_alto -10);
+}
+
+function tamanoPagIni(){
+    estadoIfra = "PagInicio";
+    var div_ancho = $("#divDerecho").width();
+    var div_alto = $("#divDerecho").height();
+    
+    $( "#includeTerm" ).height( div_alto - 51);
+    $( "#includeTerm" ).width( div_ancho - 51);
+    $( "#divIFrame" ).width( div_ancho -500);
+    $( "#divFrameInc" ).height( div_alto - 51);
+    $( "#divIFrame" ).height( div_alto );
+    $( "#idFrame" ).width( div_ancho - 35-253-20);
+    $( "#includeArbol" ).height( div_alto -10);
+}
+
+function tamanoFunciones(){
+    estadoIfra = "PagFunciones";
+    var div_ancho = $("#divDerecho").width();
+    var div_alto = $("#divDerecho").height();
+    
+    $( "#idFrame" ).height( div_alto );
+    $( "#idFrame" ).width( div_ancho - 35-20);
+    $( "#includeArbol" ).height( div_alto -10);
 }

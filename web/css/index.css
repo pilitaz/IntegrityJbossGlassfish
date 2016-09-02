@@ -7,6 +7,7 @@ body {
     padding: 0 ;
     font-family: Arial;
     color: #48494B;
+    overflow-y:hidden;
 }
 table{
     border-spacing: 0;
@@ -49,7 +50,7 @@ td{
 }
 .tdIFrame{
     text-align: center;    
-    background-color: white;           
+    background-color: #fff;           
 }
 #outerWrapper{  
     position:relative;
@@ -65,13 +66,15 @@ td{
     top: 0;
     width:300px;
     z-index: 10;
+    overflow: auto;
     background-image: url("../images/fondo-arbol.png");
 }
 #divIFrame{
     position: absolute;
     height:100%;
     width: 100%;
-    border: 0;    
+    border: 0;
+    
 }
 img{    
     border: 0;
@@ -81,6 +84,6 @@ img{
     position: absolute;
     left: 0;
     top: 0;
-    background: white;
+    background-color: #fff;
 }
 
