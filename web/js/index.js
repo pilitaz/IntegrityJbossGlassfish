@@ -203,7 +203,9 @@ function guardarClave(){
             jSonData.dslogin = new Object();
             jSonData.dslogin.ttdatauser = new Array();
             jSonData.dslogin.ttdatauser[0] = new Object();
-            jSonData.dslogin.ttdatauser[0].picusrcod = sessionStorage.getItem("usuario");        
+            jSonData.dslogin.ttdatauser[0].picusrcod = sessionStorage.getItem("usuario");
+            jSonData.dslogin.ttdatauser[0].picusrpass = "";
+            jSonData.dslogin.ttdatauser[0].picfiid = sessionStorage.getItem("picfiid");
             jSonData.dslogin.ee_userPAS = new Array();
             jSonData.dslogin.ee_userPAS[0] = new Object();
             jSonData.dslogin.ee_userPAS[0].euserid = sessionStorage.getItem("usuario");
@@ -222,7 +224,7 @@ function guardarClave(){
                     cambioExitoso = JSON.stringify(resp.dslogin.ttestado[0].pocestado);                
                 },
                 error: function (e) {
-                    alert("Error \n" + JSON.stringify(e));
+                    alert("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);
                 }
             }).done(function(){
                 if (cambioExitoso=='"OK"') {
@@ -232,8 +234,7 @@ function guardarClave(){
                     alert(cambioExitoso);
                 }
                 
-            });
-            
+            });            
             reemplazarDiv("cambiarClave","divBtCambiarClave");
         }else{
             status.text("Datos incompletos");            
