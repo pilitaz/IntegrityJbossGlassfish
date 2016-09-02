@@ -1,17 +1,17 @@
 
 var usuario;
 var password;
-var permitirIngreso;
 
 function onLoad() {
-    sessionStorage.clear();
+    sessionStorage.clear();    
     var url =   document.URL;
     sessionStorage.setItem("url", url);
     var y =   document.URL.split("/");
-    var ipPuerto=document.URL.split("/")[2];
-    var puerto =   y[2].split("/");
-    sessionStorage.setItem("puerto", puerto[0]);
-
+    var ipPuerto = document.URL.split("/")[2];
+    var puerto =   y[2].split(":");
+    sessionStorage.setItem("ip", puerto[0]);
+    sessionStorage.setItem("puerto", puerto[1]);
+    
     $("#btnLogin").kendoButton({
     });
 
@@ -34,19 +34,20 @@ function login() {
         jSonData.dslogin.ttdatauser[0].picusrcod = usuario;
         jSonData.dslogin.ttdatauser[0].picusrpass = password;
         var jsonResp = "";
+        var permitirIngreso;
         $.ajax({
             type: "POST",
             data: JSON.stringify(jSonData),
             url: ipServicios + baseServicio +"Login",
             dataType : "json",
             contentType: "application/json;",
-            success: function (resp) {
-                
+            success: function (resp) {                
                 permitirIngreso = JSON.stringify(resp.dslogin.ttestado[0].pocestado);
                 jsonResp = resp; 
             },
-                    error: function (e) {
-                        alert("Error" + JSON.stringify(e));
+            error: function (e) {
+                alert("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);
+                window.location.assign("html/login.html");
             }
         }).done(function(){
             if(permitirIngreso=='"OK"'){                
@@ -64,15 +65,17 @@ function login() {
                 sessionStorage.setItem("hibrido",jsonResp.dslogin.eesiccia[0].ciaserv);
                 sessionStorage.setItem("portLinux",jsonResp.dslogin.eesiccia[0].ciapuerto);
                 window.location.assign("html/index.html");
-            }else{                    
-                console.log("Usuario no puede ingresar \n" + permitirIngreso);                
+            }else{
+                alert("Problemas con el inicio sesión .\n" + permitirIngreso);
+                console.log("Usuario no puede ingresar \n" + permitirIngreso);
+                window.location.assign(sessionStorage.getItem("url"));
             }
         });
         
     } catch (e) {
         alert("Function: consumeServAjaxSIR Error: " + e.message);
-    }
-    
+        window.location.assign(sessionStorage.getItem("url"));
+    }    
 }
 
 /*

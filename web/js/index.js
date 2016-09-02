@@ -2,9 +2,6 @@
 var puerto = sessionStorage.getItem("puerto");
 var ip = sessionStorage.getItem("ip");
 
-puerto = "18800" ;
-ip = "172.21.24.146";
-
 var urlIFrame = "http://"+ip+":"+puerto+"/sbm/BizSolo/"; 
 var arreglo_funCod = new Array();
 var arreglo_funDes = new Array();
@@ -35,7 +32,7 @@ $(document).ready(function() {
         document.getElementById("imgUsuario").src = "../images/equipo/"+sessionStorage.getItem("usuario")+".png";
         document.getElementById("logoEmpresa").src = "data:image/png;base64," + sessionStorage.getItem("img");
         document.getElementById("idFrame").src = urlIFrame+"actatareas/Start.jsp";
-        
+//        document.getElementById("idFrame").src = "http://190.144.16.114:18800/PruebaHRD";
     }else{
         window.location.assign(sessionStorage.getItem(url));
     }
@@ -73,6 +70,7 @@ function cambiarImagen(imgId, estiloTd){
         document.getElementById(imgId).setAttribute("onmouseout", "");
         //document.getElementById(imgId).getAttribute("servicio");
         if(servicio!=""){
+            $('#divDerecho').width($(window).width());
             document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
             document.getElementById("idFrame").src = urlIFrame+servicio+"/Start.jsp";
             document.getElementById("tdPerfil").style="display:none"
@@ -324,6 +322,7 @@ function abreFuncion(servicio){
     tamanoFunciones();
     document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
     $("#tdPerfil").fadeOut("slow");    
+    $('#divDerecho').width($(window).width());
     apagarBotones();
     cambiarFondoTD("tdVerde");
     if(servicio.slice(0,8)=="caracter"){        
@@ -398,7 +397,7 @@ function corre(){//esta funcion se ejecuta por que la app IntegrityViejo la llam
     tamanoShell();
     if (hibrido == "LinuxWeb") {
         document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0;";
-        document.getElementById("labelConsole").innerHTML=sessionStorage.getItem("ncf");
+        document.getElementById("labelConsole").innerHTML=sessionStorage.getItem("ncf");        
     }else{
         document.location.href = "localexplorer:W:/SrcDesarrollo/Programas/Shell/integrity3.bat";
     }
