@@ -41,11 +41,13 @@ $(document).ready(function() {
 
 $(window).resize(function() {
     var viewportHeight = $(window).height();
+    var viewportWidth=$( window ).width();
     $('#outerWrapper').height(viewportHeight-55);
+    
     if(estadoIfra === "PagShell"){
-        tamanoShell();
+        tamanoShell(viewportWidth);
     }else if(estadoIfra === "PagFunciones"){
-        tamanoFunciones();
+        tamanoFunciones(viewportWidth);
     }else{
         tamanoPagIni();
     }
@@ -404,16 +406,27 @@ function corre(){//esta funcion se ejecuta por que la app IntegrityViejo la llam
     }
 }
 
-function tamanoShell(){
+function tamanoShell(e){
     estadoIfra = "PagShell";
+    if(e){
+        div_ancho=e;
+        $( "#divDerecho" ).width( div_ancho);
+    }
     var div_ancho = $("#divDerecho").width();
-    var div_alto = $("#divDerecho").height();   
-    $( "#includeTerm" ).height( div_alto - 44);
-    $( "#includeTerm" ).width( div_ancho - 35);
+    var div_alto = $("#divDerecho").height();
+    
+    $( "#divIFrame" ).width( div_ancho -500);
+    $( "#divIFrame" ).height( div_alto );
+    $( "#divFrameInc" ).height( div_alto - 51);
+    $( "#idFrame" ).height( div_alto );
+    $( "#idFrame" ).width( div_ancho - 35-20);
+    
+    $( "#includeTerm" ).height( div_alto - 51);
+    $( "#includeTerm" ).width( div_ancho - 51);
     $( "#includeArbol" ).height( div_alto -10);
 }
 
-function tamanoPagIni(){
+function tamanoPagIni(width){
     estadoIfra = "PagInicio";
     var div_ancho = $("#divDerecho").width();
     var div_alto = $("#divDerecho").height();
@@ -427,13 +440,22 @@ function tamanoPagIni(){
     $( "#includeArbol" ).height( div_alto -10);
 }
 
-function tamanoFunciones(){
+function tamanoFunciones(e){
     estadoIfra = "PagFunciones";
+    if(e){
+        div_ancho=e;
+        $( "#divDerecho" ).width( div_ancho);
+    }
     var div_ancho = $("#divDerecho").width();
     var div_alto = $("#divDerecho").height();
     
 //    $( "#includeTerm" ).height( div_alto - 44);
 //    $( "#includeTerm" ).width( div_ancho - 35-20);
+//    
+    $( "#includeTerm" ).width( div_ancho - 51);
+    $( "#divIFrame" ).width( div_ancho -500);
+    $( "#divIFrame" ).height( div_alto );
+    $( "#divFrameInc" ).height( div_alto - 51); 
     
     $( "#idFrame" ).height( div_alto );
     $( "#idFrame" ).width( div_ancho - 35-20);
