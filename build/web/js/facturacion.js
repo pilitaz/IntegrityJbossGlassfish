@@ -39,8 +39,6 @@ $(document).ready(function() {
             });
         }
     });
-   
-
     
     $("#ipFecha").kendoDatePicker({
         format: "yyyy/MM/dd",
@@ -51,9 +49,30 @@ $(document).ready(function() {
         format: "yyyy/MM/dd",        
         value: new Date(hoy),
         disableDates: ["sa", "su"]
-    });   
+    });
     
-    cargarParametros();
+    var clientes= [
+//        {"id": "1", "nit": "000458324", "cliente" : "ABC Ltda"},
+//        {"id": "2", "nit": "000458325", "cliente" : "Pelaez Hermanos S.A."},
+//        {"id": "3", "nit": "000458326", "cliente" : "Comercial papelera S.A"}
+    ];
+    
+   // cargarParametros();
+    
+    $("#ipCliente").kendoAutoComplete({
+        dataSource: clientes,
+        filter: "contains",
+        minLength: 3,
+        placeholder: "Selecione un cliente...",
+        dataBound: listaClientes
+//        dataSource: {
+//            type: "odata",
+//            serverFiltering: true,
+//            transport: {
+//                read: "//demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
+//            }
+//        }
+    });
     
     $("#validacion").kendoButton({
     });    
@@ -127,6 +146,7 @@ function validaDocumento(){
     var fletes = $("#ipFletes").val();
     var observaciones = $("#txtAObservaciones").val();
     var cabeceraValida = "";
+    var codVendedor = $("#ipVendedor").val();
     
     var jSonData = new Object();
     jSonData.dsFactura = new Object();
@@ -151,6 +171,7 @@ function validaDocumento(){
     jSonData.dsFactura.eegfc_fac[0].pago__cod = condiPagos;
     jSonData.dsFactura.eegfc_fac[0].suc__cod = sucursal;
     jSonData.dsFactura.eegfc_fac[0].ter__nit = nitCliente;
+    jSonData.dsFactura.eegfc_fac[0].ven__cod = codVendedor;
     console.log(JSON.stringify(jSonData));
     $.ajax({
         type: "POST",
@@ -160,8 +181,7 @@ function validaDocumento(){
         contentType: "application/json;",
         success: function (resp) {
             console.log(JSON.stringify(resp));                
-            cabeceraValida = JSON.stringify(resp.dsFactura.eeEstados[0].Estado);
-            
+            cabeceraValida = JSON.stringify(resp.dsFactura.eeEstados[0].Estado);            
         },
         error: function (e) {
             console.log(JSON.stringify(e));
@@ -170,8 +190,7 @@ function validaDocumento(){
     }).done(function(){
         if(cabeceraValida=='"OK"'){
             alert("Cabecera valida");
-            console.log("Cabecera valida \n" + cabeceraValida);                    
-            
+            console.log("Cabecera valida \n" + cabeceraValida);                     
         }else{                    
             alert("Cabecera invalida"+cabeceraValida);
             console.log("Datos  \n" + cabeceraValida);                
@@ -294,5 +313,24 @@ function cargarParametros(){
             }
         });      
         
+    }catch(e){alert(e.message);}
+}
+
+function listaClientes(e){
+    try{
+        $.ajax({            
+            type: "POST",
+            url: "http://172.21.24.146:8810/rest/Facturacion/QueryParam",
+            dataType : "json",
+            contentType: "application/json;",
+            success: function (resp) {
+                
+                
+            },
+            error: function (e) {
+                console.log(JSON.stringify(e));
+                alert("Error consumiendo el servicio\n"+ e.status +" - "+ e.statusText);
+            }
+        }).done(function(){});
     }catch(e){alert(e.message);}
 }

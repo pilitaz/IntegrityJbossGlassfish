@@ -50,7 +50,7 @@ function login() {
             error: function (e) {
                 alert("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);
                 $("#btnLogin").kendoButton({
-                    enable: false
+                    enable: true
                 });
             }
         }).done(function(){
@@ -73,7 +73,7 @@ function login() {
                 alert("Problemas con el inicio sesión .\n" + permitirIngreso);
                 console.log("Usuario no puede ingresar \n" + permitirIngreso);
                 $("#btnLogin").kendoButton({
-                    enable: false
+                    enable: true
                 });
              //   window.location.assign(sessionStorage.getItem("url"));
             }
