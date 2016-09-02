@@ -45,9 +45,9 @@ $(window).resize(function() {
     if(estadoIfra === "PagShell"){
         tamanoShell();
     }else if(estadoIfra === "PagFunciones"){
-        tamanoPagIni();
-    }else{
         tamanoFunciones();
+    }else{
+        tamanoPagIni();
     }
 });
 /**
@@ -58,6 +58,7 @@ $(window).resize(function() {
  */  
 function cambiarImagen(imgId, estiloTd){
     ocultarArbol();
+    tamanoFunciones();
     var imgName=imgId.replace("img", "").toLowerCase();    
     var estado = document.getElementById(imgId).getAttribute("estado");
     apagarBotones(imgId);
@@ -430,6 +431,9 @@ function tamanoFunciones(){
     estadoIfra = "PagFunciones";
     var div_ancho = $("#divDerecho").width();
     var div_alto = $("#divDerecho").height();
+    
+//    $( "#includeTerm" ).height( div_alto - 44);
+//    $( "#includeTerm" ).width( div_ancho - 35-20);
     
     $( "#idFrame" ).height( div_alto );
     $( "#idFrame" ).width( div_ancho - 35-20);
