@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Facturación Boostrasp</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="../scripts/jquery-1.10.2.js" type="text/javascript"></script>
+        <script src="../scripts/jquery-ui.js" type="text/javascript"></script>
+        <script src="../scripts/jquery.min.js" type="text/javascript"></script>
+        <script src="../scripts/kendo.all.min.js" type="text/javascript"></script>
+        <script src="../js/kendo.messages.es-ES.min.js" type="text/javascript"></script>
+        <script src="../scripts/LibreriaIntegrity.js" type="text/javascript"></script>
+        <script src="../js/servicios.js" type="text/javascript"></script>
+        <script src="../js/variablesFacturacion.js" type="text/javascript"></script>
+        <script src="../js/facturacion.js" type="text/javascript"></script>
+        
+        <link href="../css/kendo.common.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/kendo.default.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/kendo.dataviz.metro.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/kendo.default.mobile.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/estilos.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/kendo.metro.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/facturacion.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row content">
+                <div>
+                    <h4 id = "subtitulo" class="subTitulo">Facturación</h4>
+                    <div class="sidenavSup"></div>                    
+                </div>
+                <div class="row">
+                    <div class="col-md-4">                        
+                        <table style="width: 100%">
+                            <tr>
+                                <td>
+                                    <label class="letraParrafo">Sucursal/Agencia:</label>
+                                </td>
+                                <td>
+                                    <input id="ipSucursal" style="width: 100%" required/>                        
+                                </td>
+                            </tr>
+                        </table>                        
+                    </div>
+                    <div class="col-md-4">                        
+                        <table style="width: 100%">
+                            <tr>
+                                <td>
+                                    <label class="letraParrafo">Clase documento:</label>
+                                </td>
+                                <td>
+                                    <input id="ipCDocumento" style="width: 100%" required/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-4">                        
+                        <table style="width: 100%">
+                            <tr>
+                                <td>
+                                    <label class="letraParrafo">Nº Factura:</label>
+                                </td>
+                                <td>
+                                    <input id="nFactura" class="k-textbox" style="width: 100%" disabled="disabled"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">                        
+                        <table style="width: 100%">
+                            <tr>
+                                <td>
+                                    <label class="letraParrafo">Cliente:</label>
+                                </td>
+                                <td>
+                                    <input id="ipCliente" class="k-textbox" style="width: 100%" required/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-4">                        
+                        <table style="width: 100%">
+                            <tr>
+                                <td>
+                                    <label class="letraParrafo">Condiciones de pago:</label>
+                                </td>
+                                <td>
+                                    <input id="ipCdePago" style="width: 100%"/>                        
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-4">                        
+                        <table style="width: 100%">
+                            <tr>
+                                <td>
+                                    <label class="letraParrafo">Fecha:</label>
+                                </td>
+                                <td>
+                                    <input id="ipFecha" value="" style="width: 100%" onChange="calcularFechaVencimiento()"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">                        
+                        <table style="width: 100%">
+                            <tr>
+                                <td>
+                                    <label class="letraParrafo">Fecha de vencimiento:</label>
+                                </td>
+                                <td>
+                                    <input id="ipFechaVencimiento" value=""  style="width: 100%" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-4">                        
+                        <table style="width: 100%">
+                            <tr>
+                                <td>
+                                    <label class="letraParrafo">Descuento(%):</label>
+                                </td>
+                                <td>
+                                    <input id="ipDescuento" style="width: 100%"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-4">                        
+                        <table style="width: 100%">
+                            <tr>
+                                <td>
+                                    <label class="letraParrafo">Divisa</label>
+                                </td>
+                                <td>
+                                    <input id="ipDivisa" style="width: 100%"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">                        
+                        <table style="width: 100%">
+                            <tr>
+                                <td>
+                                    <label class="letraParrafo">Tasa:</label>
+                                </td>
+                                <td>
+                                    <input id="ipTasa" type="number" style="width: 100%" onblur="onBlurTasaDeCambio()" title="Sí ingresa el dato manualmente quedará con la fecha de hoy"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-4">                        
+                        <table style="width: 100%">
+                            <tr>
+                                <td>
+                                    <label class="letraParrafo">Fecha tasa de cambio:</label>
+                                </td>
+                                <td>
+                                    <input id="ipFechaTasa" value="" style="width: 100%"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-4">                        
+                        <table style="width: 100%">
+                            <tr>
+                                <td>
+                                    <label class="letraParrafo">Vendedor:</label>
+                                </td>
+                                <td>
+                                    <input id="ipVendedor" class="k-textbox" style="width: 100%"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">                        
+                        <table style="width: 100%">
+                            <tr>
+                                <td>
+                                    <label class="letraParrafo">Fletes</label>
+                                </td>
+                                <td>
+                                    <input id="ipFletes" type="number" style="width: 100%"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>            
+        </div>
+        <div id="grid"></div>
+    </body>
+</html>

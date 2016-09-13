@@ -32,8 +32,8 @@ function  msnError(mensaje) { //pasar a carpeta scrips
     midiv.setAttribute("style", "vertical-align: middle; border-top: 1px solid #E0E0E0;position: static;right: 30px;overflow: hidden;");
     document.getElementById("divPopUp").appendChild(midiv);
 
-    crearButton("ButtonCancel", "Aceptar", "botones", "k-primary");
-    $("#ButtonCancel").kendoButton();
+    crearButton("ButtonCancel", "Aceptar", "botones", "k-button");
+    //$("#ButtonCancel").kendoButton();
     document.getElementById("ButtonCancel").addEventListener("click", cerrarWindow);
 
     crearEspacio_salto("jumpLine", 1, "labelMensaje");

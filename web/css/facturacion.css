@@ -9,9 +9,19 @@ and open the template in the editor.
 */
 body{
     font-size: 14px; 
-    font-family: "Helvetica, sans-serif"; 
+    font-family: "Verdana"; 
     color:"#E6E6FA";
+    padding-left: 10px;
 }
+
+div{
+    padding: 2px;
+}
+
+table{
+    padding: 0px;
+}
+
 .sidenavSup {
     border-style: solid;
     border-color: #80BD28 #fff  #fff  #fff;
@@ -24,7 +34,7 @@ body{
     font-stretch: normal;
     font-size: 14px;
     line-height: normal;
-    font-family: Helvetica;
+    font-family: Verdana;
 }
 .subTitulo{
     font-style: normal; 
@@ -33,7 +43,7 @@ body{
     font-stretch: normal;
     font-size: 17px;
     line-height: normal;
-    font-family: Helvetica;
+    font-family: Verdana;
     font-weight: bold;
 }
 textarea {

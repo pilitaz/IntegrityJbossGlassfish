@@ -48,7 +48,7 @@ function login() {
                 jsonResp = resp; 
             },
             error: function (e) {
-                alert("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);
+                msnError("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);
                 $("#btnLogin").kendoButton({
                     enable: true
                 });
@@ -70,7 +70,7 @@ function login() {
                 sessionStorage.setItem("portLinux",jsonResp.dslogin.eesiccia[0].ciapuerto);
                 window.location.assign("html/index.html");
             }else{
-                alert("Problemas con el inicio sesión .\n" + permitirIngreso);
+                msnError("Problemas con el inicio sesión .\n" + permitirIngreso);
                 console.log("Usuario no puede ingresar \n" + permitirIngreso);
                 $("#btnLogin").kendoButton({
                     enable: true
@@ -80,7 +80,7 @@ function login() {
         });
         
     } catch (e) {
-        alert("Function: consumeServAjaxSIR Error: " + e.message);
+        msnError("Function: consumeServAjaxSIR Error: " + e.message);
         window.location.assign(sessionStorage.getItem("url"));
     }    
 }
