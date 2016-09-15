@@ -71,3 +71,13 @@ authdsinv_art.dsinv_art.eeDatos[0].fiid = sessionStorage.getItem("fiid");
 authdsinv_art.dsinv_art.eetemp = new Array();
 authdsinv_art.dsinv_art.eetemp[0] = new Object();
 //console.log(JSON.stringify(authdsinv_art));
+
+var authdsgpr_lis = new Object();
+authdsgpr_lis.dsgpr_lpd = new Object();
+authdsgpr_lis.dsgpr_lpd.eeDatos = new Array();
+authdsgpr_lis.dsgpr_lpd.eeDatos[0] = new Object();
+authdsgpr_lis.dsgpr_lpd.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
+authdsgpr_lis.dsgpr_lpd.eeDatos[0].fiid = sessionStorage.getItem("fiid");
+authdsgpr_lis.dsgpr_lpd.eetemp = new Array();
+authdsgpr_lis.dsgpr_lpd.eetemp[0] = new Object();
+//console.log(JSON.stringify(authdsinv_art));
