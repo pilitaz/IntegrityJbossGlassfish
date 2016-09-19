@@ -81,3 +81,10 @@ authdsgpr_lis.dsgpr_lpd.eeDatos[0].fiid = sessionStorage.getItem("fiid");
 authdsgpr_lis.dsgpr_lpd.eetemp = new Array();
 authdsgpr_lis.dsgpr_lpd.eetemp[0] = new Object();
 //console.log(JSON.stringify(authdsinv_art));
+
+var authdssic_pdif = new Object();
+authdssic_pdif.dssic_pdif = new Object();
+authdssic_pdif.dssic_pdif.eeDatos = new Array();
+authdssic_pdif.dssic_pdif.eeDatos[0] = new Object();
+authdssic_pdif.dssic_pdif.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
+authdssic_pdif.dssic_pdif.eeDatos[0].fiid = sessionStorage.getItem("fiid");

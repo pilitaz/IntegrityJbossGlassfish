@@ -337,7 +337,12 @@ function abreFuncion(servicio){
     $('#divDerecho').width($(window).width());
     apagarBotones();
     cambiarFondoTD("tdVerde");
-    if(servicio.slice(0,8)=="caracter"){        
+    if(servicio.slice(0,5)==="html&"){
+        var servicio = servicio.replace(/html&/g,"");
+        sessionStorage.setItem("servicio",servicio);        
+        document.getElementById("idFrame").src = sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html"; 
+    }
+    else if(servicio.slice(0,8)=="caracter"){        
         var contra = sessionStorage.getItem("contra");//sbm.util.getValue("textField1");
         var servicio = servicio.replace(/caracter/g,"");
         sessionStorage.setItem("servicio",servicio);
