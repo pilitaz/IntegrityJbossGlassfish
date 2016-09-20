@@ -150,7 +150,7 @@ function iniAutocompletar(e){
             serverFiltering: true,
             transport: {
                 read:{
-                    url: "http://"+ip+":"+puerto+"/rest/Parameters/Sirsic_ven",
+                    url: "http://"+ip+":"+puerto+"/rest/Parameters/SIRnom_emp",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST",

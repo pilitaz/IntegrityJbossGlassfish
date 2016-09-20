@@ -72,10 +72,10 @@ function cambiarImagen(imgId, estiloTd){
         document.getElementById(imgId).setAttribute("onmouseover", "");
         document.getElementById(imgId).setAttribute("onmouseout", "");
         //document.getElementById(imgId).getAttribute("servicio");
-        if(servicio==="Reports"){
+        if(servicio==="Reporteador"){
             $('#divDerecho').width($(window).width());
             document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
-            var urlFrameNew = "http://"+ip+":"+puerto+"/Reporteador"; 
+            var urlFrameNew = "http://"+ip+":"+puerto+"/"+servicio; 
             document.getElementById("idFrame").src = urlFrameNew;
             document.getElementById("tdPerfil").style="display:none"
         }
