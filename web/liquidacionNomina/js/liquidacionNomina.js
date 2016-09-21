@@ -5,14 +5,17 @@
  */
 
 var hoy = new Date();
+var codigoEmpleado = 0;
 
 sessionStorage.setItem("ip", "190.144.16.114");
 sessionStorage.setItem("puerto", "8810");
 
 ip=sessionStorage.getItem("ip");
-puerto=sessionStorage.getItem("puerto");;
+puerto=sessionStorage.getItem("puerto");
+
 
 $(document).ready(function() {
+    codigoEmpleado = 0;
     
     iniDropdownList();
     
@@ -37,6 +40,52 @@ $(document).ready(function() {
 });
 
 function iniDropdownList(){
+    
+    $("#ipSucursal").kendoDropDownList({
+        optionLabel: "Seleccionar sucursal",
+        dataTextField: "suc__nom",
+        dataValueField: "suc__cod",        
+        dataSource: {
+            transport: {
+                read: {
+                    url: "http://"+ip+":"+puerto+"/rest/Parameters/SIRSucursalagencia",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) {
+                    try {
+                        auth.dssic_suc.eetemp[0].piccia_nit = sessionStorage.getItem("companyNIT");
+                        if (operation === 'read') {//                         
+                            return JSON.stringify(auth);
+                        }	
+                    } catch (e) {
+                        alert(e.message)
+                    }
+                },
+            },
+            schema: {
+                type: "json",
+                data:function (e){                    
+                    if(e.dssic_suc.eeEstados[0].Estado==="OK"){
+                        return e.dssic_suc.eesic_suc;
+                    }else{
+                        alert(e.dssic_suc.eeEstados[0].Estado);
+                    }
+                },
+                model: {
+                    id: "suc__cod",
+                    fields: {
+                        suc__cod: {validation: {required: true}, type: 'string'},
+                        suc__nom: {validation: {required: true}, type: 'string'}
+                    }
+                }
+            },
+            error: function (xhr, error) {
+                alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+            }
+        }
+    });
     
     $("#ipJornada").kendoDropDownList({
         optionLabel: "Seleccionar jornada",
@@ -90,61 +139,16 @@ function iniDropdownList(){
         dataTextField: "cal__des",
         dataValueField: "cal__nro"        
     });
-    
-    $("#ipSucursal").kendoDropDownList({
-        optionLabel: "Seleccionar sucursal",
-        dataTextField: "suc__nom",
-        dataValueField: "suc__cod",        
-        dataSource: {
-            transport: {
-                read: {
-                    url: "http://"+ip+":"+puerto+"/rest/Parameters/SIRSucursalagencia",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    type: "POST"
-                },
-                parameterMap: function (options, operation) {
-                    try {
-                        if (operation === 'read') {//                         
-                            return JSON.stringify(auth);
-                        }	
-                    } catch (e) {
-                        alert(e.message)
-                    }
-                },
-            },
-            schema: {
-                type: "json",
-                data:function (e){
-                    if(e.dssic_suc.eeEstados[0].Estado==="OK"){
-                        return e.dssic_suc.eesic_suc;
-                    }else{
-                        alert(e.dssic_suc.eeEstados[0].Estado);
-                    }
-                },
-                model: {
-                    id: "suc__cod",
-                    fields: {
-                        suc__cod: {validation: {required: true}, type: 'string'},
-                        suc__nom: {validation: {required: true}, type: 'string'}
-                    }
-                }
-            },
-            error: function (xhr, error) {
-                alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
-            }
-        }
-    });
 }
 
-function iniAutocompletar(e){
-    
+function iniAutocompletar(e){    
     $("#ipEmpleado").kendoAutoComplete({
-        dataTextField: "ter__raz",
+        dataTextField: "emp__apenom",
+        dataValueField: "emp__cod", 
         placeholder: "Selecione un empleado...",
         filter: "contains",
         minLength: 3,
-        select: codigoVendedor,
+        select: OnSelectEmpleado,
         dataSource: {
             type: "json",
             serverFiltering: true,
@@ -157,14 +161,15 @@ function iniAutocompletar(e){
                 },
                 parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
                     try{
-                        if($("#ipSucursal").val()==""){
-                            alert("Debe seleccionar primero la sucursal");                       
-                        }else{
-                            debugger
-                            authdssic_ven.dssic_ven.eetemp[0].picsuc_cod = $("#ipSucursal").val();                           
+                        if($("#ipSucursal").val()=="" || $("#ipJornada").val()==""){
+                            alert("Debe seleccionar primero la sucursal y la jornada");                       
+                        }else{                            
+                            authdsnom_emp.dsnom_emp.eetemp[0].piijor_nro = $("#ipJornada").val();
+                            authdsnom_emp.dsnom_emp.eetemp[0].picsuc_cod = $("#ipSucursal").val();
+                            authdsnom_emp.dsnom_emp.eetemp[0].picemp_nom = $("#ipEmpleado").val();
                             if (operation === 'read') {
-                                authdssic_ven["eesic_ven1"] = [options];
-                                return JSON.stringify(authdssic_ven);
+                                authdsnom_emp["eenom_emp"] = [options];
+                                return JSON.stringify(authdsnom_emp);
                             } 
                         }                        
                     } catch (e) {
@@ -175,10 +180,10 @@ function iniAutocompletar(e){
             },
             schema: {
                 data: function (e){                    
-                    if(e.dssic_ven.eeEstados[0].Estado==="OK"){
-                        return e.dssic_ven.eesic_ven1;
+                    if(e.dsnom_emp.eeEstados[0].Estado==="OK"){
+                        return e.dsnom_emp.eenom_emp;
                     }else{
-                        alert(e.dssic_ven.eeEstados[0].Estado);
+                        alert(e.dsnom_emp.eeEstados[0].Estado);
                     }
                 },
                 model:{}
@@ -208,7 +213,6 @@ function onChangeCalendario(e){
 }
 
 function  onChangeJornada(e){
-
     $("#ipCalendario").kendoDropDownList({
         optionLabel: "Seleccionar calendario",
         dataTextField: "cal__des",
@@ -258,8 +262,71 @@ function  onChangeJornada(e){
     });
 }
 
-function codigoVendedor(e){
-    alert("aqui se debe desactivar los radio de definitivo");
+function OnSelectEmpleado(e){
+//    document.getElementById("rbDefinitivoSi").disabled = true;
+//    document.getElementById("rbDefinitivoNo").disabled = true;
+//    document.getElementById("rbDefinitivoSi").checked = "";
+//    document.getElementById("rbDefinitivoNo").checked = "";
+    
     var dataItem = this.dataItem(e.item.index()); 
-    codVendedor = dataItem.ven__cod;    
+    codigoEmpleado = dataItem.emp__cod;    
+}
+
+function liquidarNomina(){
+    
+    debugger 
+    var usuario = sessionStorage.getItem("usuario");
+    var fiid = sessionStorage.getItem("picfiid");
+    var sucursal = $("#ipSucursal").val();    
+    var fecha = $("#ipFecha").val();
+    var jornada = $("#ipJornada").val();
+    fecha = new Date(fecha);
+    var anno = fecha.getFullYear();
+    var calendario = $("#ipCalendario").val();
+    var definitivo = $('input:radio[name=rbDefinitivo]:checked').val();
+    
+    var liquidacionHecha = "";
+    
+    var jSonData = new Object();
+    jSonData.dsnom_his = new Object();
+    jSonData.dsnom_his.eeDatos = new Array();
+    jSonData.dsnom_his.eeDatos[0] = new Object();
+    jSonData.dsnom_his.eeDatos[0].picusrcod = usuario;
+    jSonData.dsnom_his.eeDatos[0].fiid = fiid;
+    jSonData.dsnom_his.eetemp = new Array();
+    jSonData.dsnom_his.eetemp[0] = new Object();
+    jSonData.dsnom_his.eetemp[0].piianno = anno;
+    jSonData.dsnom_his.eetemp[0].piijor_nro = jornada;
+    jSonData.dsnom_his.eetemp[0].picsuc_cod = sucursal;
+    if($("#ipEmpleado").val()===""){
+        jSonData.dsnom_his.eetemp[0].picemp_cod = "";
+    }else{
+        jSonData.dsnom_his.eetemp[0].picemp_cod = codigoEmpleado;    
+    }    
+    jSonData.dsnom_his.eetemp[0].piical_nro = calendario;
+    jSonData.dsnom_his.eetemp[0].pilhis_def = definitivo;
+    
+    console.log("jSonData "+JSON.stringify(jSonData));
+    
+    $.ajax({
+        type: "POST",
+        data: JSON.stringify(jSonData),
+        url: "http://"+ip+":"+puerto+"/rest/Nomina/SICUDliquidanomina",
+        dataType : "json",
+        contentType: "application/json;",
+        success: function (resp) {
+            console.log(JSON.stringify(resp));                
+            liquidacionHecha = JSON.stringify(resp.dsnom_his.eeEstados[0].Estado);            
+        },
+        error: function (e) {
+            console.log(JSON.stringify(e));
+            alert("Error consumiendo el servicio de liquidar\n"+ e.status +" - "+ e.statusText);
+        }
+    }).done(function(){
+        if(liquidacionHecha=='"OK"'){            
+            console.log("Liquidación hecha \n" + liquidacionHecha);                     
+        }else{                                
+            console.log("Error  \n" + liquidacionHecha);                
+        }
+    });
 }

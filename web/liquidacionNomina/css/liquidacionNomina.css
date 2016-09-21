@@ -28,6 +28,12 @@ table{
     height: 100%;
 }
 
+.sidenavIzq {
+    border-style: solid;
+    border-color: #fff #fff #fff #E0E0E0;
+    height: 100%;
+}
+
 .letraParrafo{
     font-style: normal; 
     font-variant: normal;

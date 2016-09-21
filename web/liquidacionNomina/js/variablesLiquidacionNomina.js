@@ -10,14 +10,14 @@ authdsnom_jor.dsnom_jor = new Object();
 authdsnom_jor.dsnom_jor.eeDatos = new Array();
 authdsnom_jor.dsnom_jor.eeDatos[0] = new Object();
 authdsnom_jor.dsnom_jor.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
-authdsnom_jor.dsnom_jor.eeDatos[0].picfiid = sessionStorage.getItem("fiid");
+authdsnom_jor.dsnom_jor.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
 
 var authdsnom_cal = new Object();
 authdsnom_cal.dsnom_cal = new Object();
 authdsnom_cal.dsnom_cal.eeDatos = new Array();
 authdsnom_cal.dsnom_cal.eeDatos[0] = new Object();
 authdsnom_cal.dsnom_cal.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
-authdsnom_cal.dsnom_cal.eeDatos[0].picfiid = sessionStorage.getItem("fiid");
+authdsnom_cal.dsnom_cal.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
 authdsnom_cal.dsnom_cal.eetemp = new Array();
 authdsnom_cal.dsnom_cal.eetemp[0] = new Object();
 
@@ -26,14 +26,16 @@ auth.dssic_suc = new Object();
 auth.dssic_suc.eeDatos = new Array();
 auth.dssic_suc.eeDatos[0] = new Object();
 auth.dssic_suc.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
-auth.dssic_suc.eeDatos[0].picfiid = sessionStorage.getItem("fiid");
+auth.dssic_suc.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
+auth.dssic_suc.eetemp = new Array();
+auth.dssic_suc.eetemp[0] = new Object();
 
-var authdssic_ven = new Object();
-authdssic_ven.dssic_ven = new Object();
-authdssic_ven.dssic_ven.eeDatos = new Array();
-authdssic_ven.dssic_ven.eeDatos[0] = new Object();
-authdssic_ven.dssic_ven.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
-authdssic_ven.dssic_ven.eeDatos[0].fiid = sessionStorage.getItem("fiid");
-authdssic_ven.dssic_ven.eetemp = new Array();
-authdssic_ven.dssic_ven.eetemp[0] = new Object();
+var authdsnom_emp = new Object();
+authdsnom_emp.dsnom_emp = new Object();
+authdsnom_emp.dsnom_emp.eeDatos = new Array();
+authdsnom_emp.dsnom_emp.eeDatos[0] = new Object();
+authdsnom_emp.dsnom_emp.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
+authdsnom_emp.dsnom_emp.eeDatos[0].fiid = sessionStorage.getItem("picfiid");
+authdsnom_emp.dsnom_emp.eetemp = new Array();
+authdsnom_emp.dsnom_emp.eetemp[0] = new Object();
 

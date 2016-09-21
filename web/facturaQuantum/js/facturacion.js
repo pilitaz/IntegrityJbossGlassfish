@@ -104,6 +104,7 @@ function iniComboboxCabecera(){
                 parameterMap: function (options, operation) {
                     try {
                         if (operation === 'read') {
+                            auth.dssic_suc.eetemp[0].piccia_nit = sessionStorage.getItem("companyNIT");
                             auth["eesic_suc"] = [options];
                             return JSON.stringify(auth);
                         }	

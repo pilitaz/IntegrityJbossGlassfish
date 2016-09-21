@@ -3,6 +3,7 @@ var puerto = sessionStorage.getItem("puerto");
 var ip = sessionStorage.getItem("ip");
 
 var urlIFrame = "http://"+ip+":"+puerto+"/sbm/BizSolo/"; 
+
 var arreglo_funCod = new Array();
 var arreglo_funDes = new Array();
 var arreglo_funIco = new Array();
@@ -34,7 +35,7 @@ $(document).ready(function() {
         document.getElementById("idFrame").src = urlIFrame+"actatareas/Start.jsp";
 //        document.getElementById("idFrame").src = "http://190.144.16.114:18800/PruebaHRD";
     }else{
-        window.location.assign(sessionStorage.getItem(url));
+        window.location.assign(sessionStorage.getItem("url"));
     }
 });
 
@@ -325,9 +326,11 @@ function inicio(){
 }
 
 function documentos(){
+    debugger
     servicio="Documentos";
+    tamanoFunciones();
     $("#tdPerfil").fadeOut("slow");
-    document.getElementById("idFrame").src = urlIFrame+servicio+"/Start.jsp";      
+    document.getElementById("idFrame").src = urlIFrame+servicio+"/Start.jsp";   
 }
 
 function abreFuncion(servicio){
