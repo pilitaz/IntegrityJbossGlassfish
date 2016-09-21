@@ -3,7 +3,7 @@ var usuario;
 var password;
 
 function onLoad() {
-    sessionStorage.clear();    
+    //sessionStorage.clear();    
     var url =   document.URL;
     sessionStorage.setItem("url", url);
     var y =   document.URL.split("/");
@@ -36,6 +36,8 @@ function login() {
         jSonData.dslogin.ttdatauser[0] = new Object();
         jSonData.dslogin.ttdatauser[0].picusrcod = usuario;
         jSonData.dslogin.ttdatauser[0].picusrpass = password;
+        jSonData.dslogin.ttdatauser[0].local_ip = sessionStorage.getItem("ipPrivada");
+        jSonData.dslogin.ttdatauser[0].remote_ip = sessionStorage.getItem("ipPublica");
         var jsonResp = "";
         var permitirIngreso;
         $.ajax({
@@ -45,7 +47,7 @@ function login() {
             dataType : "json",
             contentType: "application/json;",
             success: function (resp) {                
-                permitirIngreso = JSON.stringify(resp.dslogin.ttestado[0].pocestado);
+                permitirIngreso = JSON.stringify(resp.dslogin.eeEstados[0].Estado);
                 jsonResp = resp; 
             },
             error: function (e) {
