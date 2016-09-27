@@ -5,7 +5,7 @@
  */
 $(window).resize(function () {
     var viewportHeight = $(window).height();
-    $('#outerWrapper').height(viewportHeight - 65);
+    $('#outerWrapper').height(viewportHeight - 100);
 });
 
 
@@ -211,11 +211,10 @@ function creatv(){
 
                             }
                         });
-
+                                $(window).trigger("resize");
           					var grid1 = $("#grid").kendoGrid({
                             dataSource: dataSource,
                             pageable: true,
-                            height: 500,
                             scrollable: true,
                             //sortable: true,
                             resizable: true,
@@ -223,26 +222,26 @@ function creatv(){
                             navigatable: true,
                             columns: [
 
-                                {field: "euser__Name", title: "NOMBRE COMPLETO", width: "50px" ,hidden:true},  
-                                {field: "euserid", title: "USUARIO", width: "250px",hidden:false },                                                             
-                                {field: "usr__mail"  , title:  "CORREO", width: "50px" ,hidden:true},
-                                {field: "usr__carp"   , title: "CEDULA", width: "50px" ,hidden:true},
-                                {field: "car__nom"    , title: "ELIJA UN ROL", width: "50px" , hidden:true , editor: categoryDropDownEditor,
+                                {field: "euser__Name", title: "NOMBRE COMPLETO",hidden:true},  
+                                {field: "euserid", title: "USUARIO", hidden:false },                                                             
+                                {field: "usr__mail"  , title:  "CORREO" ,hidden:true},
+                                {field: "usr__carp"   , title: "CEDULA" ,hidden:true},
+                                {field: "car__nom"    , title: "ELIJA UN ROL",  hidden:true , editor: categoryDropDownEditor,
                                     template: function (e) {
                                         return e.car__nom;
                                     } },//
 
 
-                                {field: "usr__codjef" , title: "ELIJA EL JEFE", width: "50px" ,hidden:true , editor: categoryDropDownEditor1,
+                                {field: "usr__codjef" , title: "ELIJA EL JEFE",hidden:true , editor: categoryDropDownEditor1,
                                     template: function (e) {
                                         return e.usr__codjef;
                                     } },// },//
 
 
-                                {field: "usr__jef"  , title:   "JEFE DE AREA ", width: "50px" ,hidden:true},//
+                                {field: "usr__jef"  , title:   "JEFE DE AREA ",hidden:true},//
 
 
-                                {field: "usr__est"   , title:  "ESTADO", width: "50px" ,hidden:true , editor: categoryDropDownEditor2,
+                                {field: "usr__est"   , title:  "ESTADO" ,hidden:true , editor: categoryDropDownEditor2,
                                     template: function (e) {
                                         return e.usr__est;
                                     }},                                
@@ -251,7 +250,7 @@ function creatv(){
 								
 								
                                 
-                                {command: ["edit"],  width: "80px", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"}],
+                                {command: [{name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"}],  width: "60px"} ],
                                  editable: "popup"
 
                         });
