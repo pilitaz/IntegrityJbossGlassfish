@@ -39,10 +39,9 @@ $(document).ready(function() {
 
 });
 
-function iniDropdownList(){
-    
+function iniDropdownList(){    
     $("#ipSucursal").kendoDropDownList({
-        optionLabel: "Seleccionar sucursal",
+        optionLabel: "Seleccionar sucursal...",
         dataTextField: "suc__nom",
         dataValueField: "suc__cod",        
         dataSource: {
@@ -263,18 +262,17 @@ function  onChangeJornada(e){
 }
 
 function OnSelectEmpleado(e){
-//    document.getElementById("rbDefinitivoSi").disabled = true;
-//    document.getElementById("rbDefinitivoNo").disabled = true;
-//    document.getElementById("rbDefinitivoSi").checked = "";
-//    document.getElementById("rbDefinitivoNo").checked = "";
+    document.getElementById("rbDefinitivoSi").disabled = true;
+    document.getElementById("rbDefinitivoNo").disabled = true;
+    document.getElementById("rbDefinitivoSi").checked = "";
+    document.getElementById("rbDefinitivoNo").checked = "checked";
     
     var dataItem = this.dataItem(e.item.index()); 
     codigoEmpleado = dataItem.emp__cod;    
 }
 
-function liquidarNomina(){
-    
-    debugger 
+function liquidarNomina(){   
+     
     var usuario = sessionStorage.getItem("usuario");
     var fiid = sessionStorage.getItem("picfiid");
     var sucursal = $("#ipSucursal").val();    
@@ -323,9 +321,11 @@ function liquidarNomina(){
             alert("Error consumiendo el servicio de liquidar\n"+ e.status +" - "+ e.statusText);
         }
     }).done(function(){
-        if(liquidacionHecha=='"OK"'){            
+        if(liquidacionHecha=='"OK"'){
+            msnError("Liquidación realizada con exito");
             console.log("Liquidación hecha \n" + liquidacionHecha);                     
-        }else{                                
+        }else{
+            msnError("No se pudo realizar la liquidación .\n" + liquidacionHecha);
             console.log("Error  \n" + liquidacionHecha);                
         }
     });

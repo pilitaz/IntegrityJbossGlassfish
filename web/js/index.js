@@ -331,7 +331,7 @@ function documentos(){
     document.getElementById("idFrame").src = urlIFrame+servicio+"/Start.jsp";   
 }
 
-function abreFuncion(servicio){
+function abreFuncion(servicio){    
     tamanoFunciones();
     document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
     $("#tdPerfil").fadeOut("slow");    

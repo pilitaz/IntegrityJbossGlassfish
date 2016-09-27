@@ -19,7 +19,7 @@ div{
 }
 
 table{
-    padding: 0px;
+    padding: 2px;
 }
 
 .sidenavSup {
@@ -52,4 +52,20 @@ resize: vertical;
 
 .tdBotton{
     text-align: center;    
+}
+
+#divFactura{    
+    background-color: #F5F5F5;
+}
+
+td{
+    padding: 5px
+}
+
+#grid .k-grid-toolbar
+{
+    padding: .6em 1.3em;
+}
+.toolbar {
+    float: right;
 }
