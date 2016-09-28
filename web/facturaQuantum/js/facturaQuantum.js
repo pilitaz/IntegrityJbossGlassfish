@@ -428,13 +428,11 @@ function iniGridDetalle(){
         });
     }
     
-    function fechaAmortizacion(container, options) {
-        $('<input data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field + '" data-format="' + options.format + '"/>')
-                .appendTo(container)
-                .kendoDatePicker({
-                    format: "yyyy/MM/dd",        
-                    value: new Date(hoy),
-                });
+    function fechaAmortizacion(container, options) {        
+        $('<input data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoDatePicker({
+            format: "{0:dd/MM/yyyy}",
+            value: new Date(hoy)
+        });
     }
     
     function onChangeClase(e){        
@@ -513,7 +511,7 @@ function iniGridDetalle(){
                     ValorTotal: { type: "number" },
                     CodAmortizacion: { type: "string" },
                     DiasAmortizacion: { type: "number", validation: { min:1} },
-                    FechaAmortizacion: { type: "datetime", format: "yyyy/MM/dd"}
+                    FechaAmortizacion: { type: "date", format: "{0:dd/MM/yyyy}"}
                 }}
         },
         pageSize: 20
@@ -580,11 +578,12 @@ function iniGridDetalle(){
                 title: "Valor total",
                 editor: valorTotal,
                 template: function (e){
+                    debugger
                     if(e.codAmortizacion){return e.codAmortizacion.pdif__des;}
                 }
             },
             {
-                field: "codAmortizacion",
+                field: "CodAmortizacion",
                 title: "Código de amortizacion",
                 editor: codigoAmortizacion,
                 template: function (e){                    
@@ -598,7 +597,8 @@ function iniGridDetalle(){
             {
                 field: "FechaAmortizacion",
                 title: "Fecha de amortización",                
-                editor: fechaAmortizacion
+                editor: fechaAmortizacion,
+                template: '#= kendo.toString(FechaAmortizacion, "MM/dd/yyyy" ) #'
             },
             { command: [
                     {name: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
