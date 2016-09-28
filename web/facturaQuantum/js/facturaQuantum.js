@@ -10,7 +10,7 @@ var mm = hoy.getMonth()+1; //hoy es 0!
 var yyyy = hoy.getFullYear();
 hoy = yyyy+'-'+ mm+'-'+dd;
 var tasaDeCambio = "";
-var dataSource = "";
+var data="";
 
 sessionStorage.setItem("ip", "190.144.16.114");
 sessionStorage.setItem("puerto", "8810");
@@ -496,7 +496,8 @@ function iniGridDetalle(){
     } 
     
     
-    var dataSource = new kendo.data.DataSource({        
+    var dataSource = new kendo.data.DataSource({
+        data: data,
         schema: {            
             model: {
                 fields: {
@@ -523,6 +524,8 @@ function iniGridDetalle(){
         batch: false,
         pageable: true,
         height: 500,
+        dataBinding : onDataBoundGrid,
+//        dataBinding : onDataBinding,
         toolbar: kendo.template($("#template").html()),
         columns: [            
             {
@@ -561,29 +564,23 @@ function iniGridDetalle(){
             {
                 field: "IVA",
                 title: "IVA",
-                editor: iva,
-//                template: function (e){
-//                   debugger
-//                }
+                editor: iva
             },
             {
                 field: "ValorUnitario",
                 title: "Valor unitario",
-                editor: valorUnitario,
-                 
-                
+                editor: valorUnitario
             },
             {
                 field: "ValorTotal",
                 title: "Valor total",
                 editor: valorTotal,
-                template: function (e){
-                    debugger
-                    if(e.codAmortizacion){return e.codAmortizacion.pdif__des;}
+                template: function (e){                    
+                    if(e.ValorTotal){return e.ValorTotal;}
                 }
             },
             {
-                field: "CodAmortizacion",
+                field: "codAmortizacion",
                 title: "Código de amortizacion",
                 editor: codigoAmortizacion,
                 template: function (e){                    
@@ -604,30 +601,47 @@ function iniGridDetalle(){
                     {name: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
                     {name: "delete", template: "<a class='k-grid-delete'><span class='k-sprite po_cerrar'></span></a>"}
                 ], title: "&nbsp;", width: 300 }],
-        editable: "popup"
+        editable: "popup",
+        cancel: function(e) {debugger
+            e.preventDefault();
+            $('#grid').data('kendoGrid').refresh();
+        },
+        saveChanges:function(e) {debugger
+            e.preventDefault();
+            $('#grid').data('kendoGrid').refresh();
+        },
+        update: function (e) { debugger
+            console.log('edit completed');
+            console.log(e);
+        },
+        change: function (e) { debugger
+            console.log('a change happened not datasource one');
+            console.log(e);
+        },
     }).data("kendoGrid");
 }
 
-function valorUnitario(container, options){
-    $('<input id="idValorUnitario"/>').appendTo(container).kendoNumericTextBox({
+function valorUnitario(container, options){    
+    $('<input id="idValorUnitario" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({        
+        
     });    
 }
 
 function iva(container, options){
-    $('<input id="idIVA"/>').appendTo(container).kendoNumericTextBox({
+    $('<input id="idIVA" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({
         format: "p0",
         step: 0.01
     });    
 }
 
 function valorTotal(container, options){
-    $('<input id="idValorTotal"/>').appendTo(container).kendoNumericTextBox({
+    $('<input id="idValorTotal" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({
         format: "c2"                
     });    
 }
 
 function cantidad(container, options){
-    $('<input id="ipCantidad"/>').appendTo(container).kendoNumericTextBox({        
+    $('<input id="ipCantidad" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({        
         format: "n0",
         value: 1,        
         change: setValorTotal,        
@@ -641,6 +655,7 @@ function setIVA(e){
     var numerictextbox = $("#idIVA").data("kendoNumericTextBox");    
     numerictextbox.value(iva/100);    
     numerictextbox.readonly();
+    
 }
 
 function validaCabecera(){
@@ -877,7 +892,7 @@ function codigoVendedor(e){
 
 
 
-function setValorArticulo(e){    
+function setValorArticulo(e){
     var cantidad = $("#ipCantidad").val();
     var valor = 0;
     
@@ -894,8 +909,7 @@ function setValorArticulo(e){
     
     numerictextbox = $("#idValorTotal").data("kendoNumericTextBox");
     numerictextbox.value(total);
-    
-   // updateDataSourceGrid(e);
+
     
 }
 
@@ -908,8 +922,6 @@ function setValorTotal(){
     
     var numerictextbox = $("#idValorTotal").data("kendoNumericTextBox");
     numerictextbox.value(total);
-    
-    //updateDataSourceGrid(e);
 }
 
 function guardarFactura(){    
@@ -1001,60 +1013,6 @@ function guardarFactura(){
     });
 }
 
-function updateDataSourceGrid(e) {
-    //Get the datasource here
-    var cantidad = $("#ipCantidad").val();
-    var valor = $("#idValorUnitario").val();
-    var iva = $("#idIVA").val();
-    var valorTotal = $("#idValorTotal").val();
-    
-    debugger
-//    ID: { type: "number", editable: false },
-//                    Clase: { type: "string", validation: { required: true} },
-//                    Articulo: { type: "string", validation: { required: true} },
-//                    ListaPrecio: {type: "string", validation: { required: true}},
-//                    Descripcion: { type: "string" },
-//                    Cantidad: { type: "number", validation: { required: true, min:1} },                    
-//                    Descuento: { type: "number", validation: { min: 0, max: 0.1, step: 0.01}},
-//                    IVA: { type: "number", validation: { required: true, min: 0, max: 0.1, step: 0.01} },
-//                    ValorUnitario: { type: "number" },
-//                    ValorTotal: { type: "number" },
-//                    CodAmortizacion: { type: "string" },
-//                    DiasAmortizacion: { type: "number", validation: { min:1} }
-    var data = $("#grid").data("kendoGrid").dataSource.data();
-    data[0].Cantidad =cantidad;
-    
-    //var model = $("#grid").data("kendoGrid").dataItem(grid.select());
-    //Loop through each item
-    for (var x = 0; x < data.length; x++) {
-        //Get the currently active item
-        var dataItem = data[x];
-        dataItem.IVA = iva;
-        dataItem.Cantidad = cantidad;
-        dataItem.ValorUnitario = valor;
-        dataItem.ValorTotal = valorTotal;
-        $("#grid").data("kendoGrid").dataSource.data[x]=dataItem;
-        
-        $('#grid').data('kendoGrid').refresh();
-        //Access table row basedon uid
-//        var tr = $("#grid").find("[data-uid='" + dataItem.uid + "']");
-//        //Access cell object
-//        var cell = $("td:nth-child(1)", tr);
-//        //Get the cell content here
-//        //Check if the column values are 
-//        if (cell[0].textContent == "Nige") {
-//            //Assign the css style to cell
-//            //You can hide the cell content using css here
-//            cell.addClass("color");
-//        }
-    }
-}
-
-function onDataBinding(e) {
-    kendo.alert("Grid data binding");
-    var grid = $("#grid").data("kendoGrid");    
-}
-
 function agregarItemDetalle(e){    
     if(sessionStorage.getItem("cabeceraValida")==null || sessionStorage.getItem("cabeceraValida")=="false"){
         validaCabecera();    
@@ -1078,3 +1036,17 @@ function onChangetfacpag(e){
     var diasCredito = dataItemfacpag.fac__num;
     calcularFechaVencimiento (diasCredito);    
 };
+
+function onDataBoundGrid(e){    
+    debugger
+    var valor = $("#idValorUnitario").val();
+    var iva = $("#idIVA").val();
+    var valorTotal = $("#idValorTotal").val();
+    
+    e.sender.dataSource._data[0].IVA = iva;
+    e.sender.dataSource._data[0].ValorTotal = valorTotal;
+    e.sender.dataSource._data[0].ValorUnitario= valor;    
+    
+    var grid = $("#grid").data("kendoGrid");  
+    
+}
