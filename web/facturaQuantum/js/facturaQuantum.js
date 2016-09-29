@@ -12,9 +12,6 @@ hoy = yyyy+'-'+ mm+'-'+dd;
 var tasaDeCambio = "";
 var data="";
 
-sessionStorage.setItem("ip", "190.144.16.114");
-sessionStorage.setItem("puerto", "8810");
-
 ip=sessionStorage.getItem("ip");
 puerto=sessionStorage.getItem("puerto");
 
@@ -89,7 +86,7 @@ function iniDropDownList(){
         dataSource: {
             transport: {
                 read: {
-                    url: "http://"+ip+":"+puerto+"/rest/Parameters/SIRSucursalagencia",
+                    url: ipServicios+"rest/Parameters/SIRSucursalagencia",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST"
@@ -147,7 +144,7 @@ function iniDropDownList(){
         dataSource: {
             transport: {
                 read: {
-                    url: "http://"+ip+":"+puerto+"/rest/Parameters/SIRgfc_cpto", //http://190.144.16.114:8810/rest/Parameters/SIRgfc_cpto
+                    url: ipServicios+"rest/Parameters/SIRgfc_cpto", //http://190.144.16.114:8810/rest/Parameters/SIRgfc_cpto
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST"
@@ -210,7 +207,7 @@ function iniDropDownList(){
         dataSource: {
             transport: {
                 read: {
-                    url: "http://"+ip+":"+puerto+"/rest/Parameters/SIRsic_mnd",
+                    url: ipServicios+"rest/Parameters/SIRsic_mnd",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST"
@@ -271,7 +268,7 @@ function iniAutocomplete(){
             serverFiltering: true,
             transport: {
                 read:{
-                    url: "http://"+ip+":"+puerto+"/rest/Parameters/SIRgfc_cli",
+                    url: ipServicios+"rest/Parameters/SIRgfc_cli",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST",
@@ -321,7 +318,7 @@ function iniGridDetalle(){
             dataSource: {
                 transport: {
                     read: {
-                        url: "http://"+ip+":"+puerto+"/rest/Parameters/SIRgfc_cpto", //http://190.144.16.114:8810/rest/Parameters/SIRgfc_cpto
+                        url: ipServicios+"rest/Parameters/SIRgfc_cpto", //http://190.144.16.114:8810/rest/Parameters/SIRgfc_cpto
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         type: "POST"
@@ -371,7 +368,7 @@ function iniGridDetalle(){
                 type: "json",
                 transport: {
                     read: {
-                        url: "http://"+ip+":"+puerto+"/rest/Parameters/SIRinv_cla",
+                        url: ipServicios+"rest/Parameters/SIRinv_cla",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         type: "POST"
@@ -434,7 +431,7 @@ function iniGridDetalle(){
                 type: "json",
                 transport: {
                     read: {
-                        url: "http://"+ip+":"+puerto+"/rest/Parameters/SIRsic_pdif",
+                        url: ipServicios+"rest/Parameters/SIRsic_pdif",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         type: "POST"
@@ -491,7 +488,7 @@ function iniGridDetalle(){
                 type: "json",
                 transport: {
                     read: {
-                        url: "http://"+ip+":"+puerto+"/rest/Parameters/SIRinv_art",
+                        url: ipServicios+"rest/Parameters/SIRinv_art",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         type: "POST"
@@ -554,7 +551,7 @@ function iniGridDetalle(){
                     Descuento: { type: "number", format: "p0", validation: { min: 0, max: 0.1, step: 0.01}},
                     IVA: { type: "number", format: "p0", validation: { required: true, min: 0, max: 0.1, step: 0.01} },
                     ValorUnitario: { type: "number", format: "c2" },
-                    ValorTotal: { type: "number", format: "{c2}" },
+                    ValorTotal: { type: "number", format: "{0:c}" },
                     CodAmortizacion: { type: "string" },
                     DiasAmortizacion: { type: "number", format: "n0", validation: { min:1} },
                     FechaAmortizacion: { type: "date", format: "{0:dd/MM/yyyy}"}
@@ -610,7 +607,8 @@ function iniGridDetalle(){
             },
             {
                 field: "Descuento",
-                title: "Descuento"
+                title: "Descuento",
+                editor: descuento
             },
             {
                 field: "IVA",
@@ -657,9 +655,12 @@ function iniGridDetalle(){
     }).data("kendoGrid");
 }
 
-function valorUnitario(container, options){    
-    $('<input id="idValorUnitario" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({        
-        
+function descuento(container, options){
+    $('<input id="idDescuento" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({
+        format: "p0",
+        step: 0.01,
+        change: setValorTotal,        
+        spin: setValorTotal
     });    
 }
 
@@ -667,6 +668,13 @@ function iva(container, options){
     $('<input id="idIVA" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({
         format: "p0",
         step: 0.01
+    });    
+}
+
+function valorUnitario(container, options){    
+    $('<input id="idValorUnitario" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({        
+        format: "c2",
+        change: setValorTotal        
     });    
 }
 
@@ -678,10 +686,11 @@ function valorTotal(container, options){
 
 function cantidad(container, options){
     $('<input id="ipCantidad" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({        
-        format: "n0",        
+        format: "n0",
+        value: 1,
         min: 1,
         change: setValorTotal,        
-        spin: setValorTotal,        
+        spin: setValorTotal
     });    
 }
 
@@ -737,7 +746,7 @@ function validaCabecera(){
     $.ajax({
         type: "POST",
         data: JSON.stringify(jSonData),
-        url: "http://"+ip+":"+puerto+"/rest/Comercial/Valida_gfc_fac", //ipServicios + baseFactura +"ValidaCabecera",
+        url: ipServicios+"rest/Comercial/Valida_gfc_fac", //ipServicios + baseFactura +"ValidaCabecera",
         dataType : "json",
         contentType: "application/json;",
         success: function (resp) {
@@ -811,7 +820,7 @@ function setInfoCliente(e){
         dataSource: {
             transport: {
                 read: {
-                    url: "http://"+ip+":"+puerto+"/rest/Parameters/SIRfac_pag",
+                    url: ipServicios+"rest/Parameters/SIRfac_pag",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST"
@@ -863,7 +872,7 @@ function setInfoCliente(e){
             serverFiltering: true,
             transport: {
                 read:{
-                    url: "http://"+ip+":"+puerto+"/rest/Parameters/SIRsic_ven", //SIRsic_ven
+                    url: ipServicios+"rest/Parameters/SIRsic_ven", //SIRsic_ven
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST",
@@ -927,31 +936,20 @@ function codigoVendedor(e){
 
 
 function setValorArticulo(e){
-    var cantidad = $("#ipCantidad").val();
-    var valor = 0;
-    
-    if(cantidad===""){
-        cantidad=0;
-    }
+    var valor = 0;    
     valor = e.sender.dataSource._data[e.sender.selectedIndex-1].art__val;
     
     var numerictextbox = $("#idValorUnitario").data("kendoNumericTextBox");
-    numerictextbox.value(valor);
-    
-    var iva = $("#idIVA").val();
-    var total = parseFloat(cantidad) * (parseFloat(valor) * (parseFloat(1)+parseFloat(iva))); //idValorTotal
-    
-    numerictextbox = $("#idValorTotal").data("kendoNumericTextBox");
-    numerictextbox.value(total);
-
-    
+    numerictextbox.value(valor);    
 }
 
 function setValorTotal(){
-    
+    debugger
     var cantidad = $("#ipCantidad").val();
     var valor = $("#idValorUnitario").val();
     var iva = $("#idIVA").val();
+    var descuento = $("#idDescuento").val();
+    valor = (parseFloat(valor) * (parseFloat(1)-parseFloat(descuento)));
     var total = parseFloat(cantidad) * (parseFloat(valor) * (parseFloat(1)+parseFloat(iva))); //idValorTotal
     
     var numerictextbox = $("#idValorTotal").data("kendoNumericTextBox");
@@ -1028,7 +1026,7 @@ function guardarFactura(){
     $.ajax({
         type: "POST",
         data: JSON.stringify(jSonData),
-        url: "http://"+ip+":"+puerto+"/rest/Comercial/SICUDgfc_fac",
+        url: ipServicios+"rest/Comercial/SICUDgfc_fac",
         dataType : "json",
         contentType: "application/json;",
         success: function (resp) {            
