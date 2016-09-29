@@ -7,17 +7,20 @@
  *  var url = sir.getUrlSir();
  *  var input = sir.getdataInputSir();
  */
-function sirEjemplo () {
-    var urlSir = ipServicios + baseServicio +"/SIRsic_por";
-    var dataInputSir = {
-        "dssic_por": {
-            "SIRsic_por": [
-                {
-                    "piipor_cod": numero
-                }
-            ]
-        }
-    };
+ function sirconsulta() {
+    var urlSir = "http://190.144.16.114:8810"+ "/rest/Base/BaseIntegrity/" +"SirUsuarios";
+    var json = {  
+     "dsee_user2":{  
+      "eeDatos":[  
+      {  
+        "picusrcod":"jorgereita1",
+        "picfiid":"80019884934504174879",
+        "local_ip":"172.21.24.105",
+        "remote_ip":"190.144.16.114"
+    }
+    ]
+}
+};
     
     this.setUrlSir = function (newname) {
         if (newname) {
@@ -28,32 +31,46 @@ function sirEjemplo () {
         return urlSir;
     };
     
-    this.setdataInputSir = function (newname) {
+    this.setjson = function (newname) {
         if (newname) {
-            dataInputSir = newname;
+            json = newname;
         }
     };
-    this.getdataInputSir = function () {
-        return dataInputSir;
+    this.getjson = function () {
+        return json;
     };
     
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////
-function cudEjemplo () {
-//  var urlCud = "http://190.144.16.114:8810/rest/Base/BaseIntegrity/SICUDsic_por";
-    var urlCud = ipServicios + baseServicio +"/SICUDsic_por";
-    var dataInputCud = {
-        "dssic_por": {
-            "eesic_por": [
-                {
-                    "por__bas": "",
-                    "por__cod": "",
-                    "por__des": "",
-                    "por__est": 0
-                }
-            ]
-        }
+function cudcreate () {
+
+    var urlCud = "http://190.144.16.114:8810/"+ "rest/Base/BaseIntegrity/" +"SicudUsuarios";
+    var json = {  
+       "dsee_user2":{  
+          "eeDatos":[  
+             {  
+                "picusrcod":"jorgereita1",
+                "picfiid":"80019884934504174879",
+                "local_ip":"172.21.24.105",
+                "remote_ip":"190.144.16.114"
+             }
+          ],
+          "ee_user2":[  
+             {  
+                "euserid":"apastori",
+                "euser__Name":"Ansaldo PastoriS",
+                "epassword":"**********",
+                "usr__mail":"apastori@quantumltda.com",
+                "usr__carp":"560187",
+                "usr__est":1,
+                "car__cod":9999,
+                "car__nom":"PORTALNOMINA",
+                "usr__jef":false,
+                "usr__codjef":"aduarte"
+             }
+          ]
+       }
     };
     this.setUrlCud = function (newname) {
         if (newname) {
@@ -64,12 +81,12 @@ function cudEjemplo () {
         return urlCud;
     };
     
-    this.setdataInputCud = function (newname) {
+    this.setjson = function (newname) {
         if (newname) {
-            dataInputCud = newname;
+            json = newname;
         }
     };
-    this.getdataInputCud = function () {
-        return dataInputCud;
+    this.getjson= function () {
+        return json;
     };
 };
