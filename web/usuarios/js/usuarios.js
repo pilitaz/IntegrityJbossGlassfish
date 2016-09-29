@@ -195,14 +195,13 @@
 */     
              					var grid1 = $("#grid").kendoGrid({
                                 dataSource: dataSource,
-                                                height: 600,
-                //groupable: true,
-                sortable: true,
-                pageable: {
-                    refresh: true,
-                    pageSizes: true,
-                    buttonCount: 5
-                },
+                                     height: 600,
+                                    sortable: true,
+                                    pageable: {
+                                    refresh: true,
+                                    pageSizes: true,
+                                    buttonCount: 5
+                                },
                                 //navigatable: true,
                                 columns: [
                                     {field: "euser__Name", title: "NOMBRE COMPLETO",hidden:true},  
@@ -261,6 +260,7 @@
                             filter: "contains",                           
      						dataTextField: "car__nom",
                             dataValueField: "car__nom",
+                            placeholder: "Rol...",  
                             autoBind: false,
                             dataSource: dataSource ,   
                              change: function() {
@@ -286,6 +286,7 @@
      						dataTextField: "usr__est",
                             dataValueField: "usr__est",
                             autoBind: false,
+                            placeholder: "Estado..",  
                             dataSource: dataSource,   
                              change: function() {
                                 var value = this.value();
