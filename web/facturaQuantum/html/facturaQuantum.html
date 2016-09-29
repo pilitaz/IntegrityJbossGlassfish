@@ -25,7 +25,7 @@ and open the template in the editor.
         <script src="../js/facturaQuantum.js" type="text/javascript"></script> 
         <link href="../../css/kendo.common.min.css" rel="stylesheet" type="text/css"/>        
               
-        <link href="../../css/estilos.css" rel="stylesheet" type="text/css"/>
+        <!--<link href="../../css/estilos.css" rel="stylesheet" type="text/css"/>-->
         <link href="../../css/kendo.metro.min.css" rel="stylesheet" type="text/css"/>
         <link href="../../css/kendo.metro.mobile.min.css" rel="stylesheet" type="text/css"/>
         <link href="../css/facturaQuantum.css" rel="stylesheet" type="text/css"/>
@@ -63,7 +63,7 @@ and open the template in the editor.
                             </tr>
                             <tr>
                                 <td>
-                                    <label class="letraParrafo">Clase documento:</label>
+                                    <label class="letraParrafo">Concepto factura:</label>
                                 </td>
                                 <td>
                                     <input id="ipCDocumento" style="width: 100%" required/>
@@ -74,7 +74,7 @@ and open the template in the editor.
                                     <label class="letraParrafo">Cliente:</label>
                                 </td>
                                 <td>
-                                    <input id="ipCliente" class="k-textbox" style="width: 100%" required/>
+                                    <input id="ipCliente" style="width: 100%" required/>
                                 </td>
                             </tr>
                             <tr>
@@ -115,10 +115,10 @@ and open the template in the editor.
                             </tr>
                             <tr>
                                 <td>
-                                    <label class="letraParrafo">Descuento(%):</label>
+                                    <label class="letraParrafo">Fletes</label>
                                 </td>
                                 <td>
-                                    <input id="ipDescuento" style="width: 100%"/>
+                                    <input id="ipFletes" type="number" style="width: 100%"/>
                                 </td>
                             </tr>
                         </table>
@@ -148,15 +148,7 @@ and open the template in the editor.
                                 <td>
                                     <input id="ipFechaTasa" value="" style="width: 100%"/>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label class="letraParrafo">Fletes</label>
-                                </td>
-                                <td>
-                                    <input id="ipFletes" type="number" style="width: 100%"/>
-                                </td>
-                            </tr>
+                            </tr>                            
                         </table>
                     </div>
                 </div>
@@ -182,23 +174,7 @@ and open the template in the editor.
                     <a id ="btnCrear" class="k-grid" onclick ="agregarItemDetalle()" aling="center"><span class="k-icon po_mas"></span></a>                        
             </div>
         </script>
-        <div>
-<!--            <div class="row">
-                <div class="col-md-12">                        
-                        <table style="width: 100%">
-                            <tr>
-                                <td style="text-align: right">
-                                    <button id="btGuardarFact" class="k-primary" onclick="guardarFactura()" >Guardar</button>
-                                </td>
-                                <td style="width: 50px">
-                                    
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-            </div> -->
-        </div>
-        <div id="appendto" class="demo-section k-content"></div>
-        <span id="staticNotification"></span>
+        <div id="dialog">
+        </div>        
     </body>
 </html>
