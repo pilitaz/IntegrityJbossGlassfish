@@ -918,13 +918,13 @@ function setInfoCliente(e){
         }
     });
    
-    var comboboxDivisa= $("#ipDivisa").data("kendoDropDownList")
+    var comboboxDivisa= $("#ipDivisa").data("kendoDropDownList");
     comboboxDivisa.enable(!clienteNacional);
     
-    var numericTextBoxTasa= $("#ipTasa").data("kendoNumericTextBox")
+    var numericTextBoxTasa= $("#ipTasa").data("kendoNumericTextBox");
     numericTextBoxTasa.enable(!clienteNacional);
     
-    var datepickerFechaTasa= $("#ipFechaTasa").data("kendoDatePicker")
+    var datepickerFechaTasa= $("#ipFechaTasa").data("kendoDatePicker");
     datepickerFechaTasa.enable(!clienteNacional);     
 }
 
@@ -932,8 +932,6 @@ function codigoVendedor(e){
     var dataItem = this.dataItem(e.item.index()); 
     sessionStorage.setItem("codVendedor", dataItem.ven__cod);    
 }
-
-
 
 function setValorArticulo(e){
     var valor = 0;    
@@ -944,7 +942,6 @@ function setValorArticulo(e){
 }
 
 function setValorTotal(){
-    debugger
     var cantidad = $("#ipCantidad").val();
     var valor = $("#idValorUnitario").val();
     var iva = $("#idIVA").val();
