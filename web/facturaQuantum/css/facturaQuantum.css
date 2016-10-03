@@ -69,3 +69,7 @@ td{
 .toolbar {
     float: right;
 }
+
+.k-edit-form-container{
+    width: 99%;
+}

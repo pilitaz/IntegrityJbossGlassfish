@@ -16,7 +16,7 @@ ip=sessionStorage.getItem("ip");
 puerto=sessionStorage.getItem("puerto");
 
 $(document).ready(function() {
-
+    
     iniDropDownList();
     
     iniAutocomplete();
@@ -38,8 +38,8 @@ $(document).ready(function() {
         disableDates: ["sa", "su"]
     });    
     
-//    $("#btGuardarFact").kendoButton({
-//    });
+    //    $("#btGuardarFact").kendoButton({
+    //    });
     
     $("#ipTasa").kendoNumericTextBox({
         format: "c",
@@ -73,8 +73,8 @@ $(document).ready(function() {
  */
 function iniDropDownList(){    
     function onChangetSucursal(e){        
-//        var autocompleteVendedor = $("#ipVendedor").data("kendoAutoComplete");
-//        autocompleteVendedor.enable(true); 
+        //        var autocompleteVendedor = $("#ipVendedor").data("kendoAutoComplete");
+        //        autocompleteVendedor.enable(true); 
     };
     
     //carga el combo de sucursales
@@ -99,7 +99,7 @@ function iniDropDownList(){
                             return JSON.stringify(auth);
                         }	
                     } catch (e) {
-                        kendo.alert(e.message)
+                        kendo.alert(e.message);
                     }
                 },
             },
@@ -126,12 +126,12 @@ function iniDropDownList(){
         }
         
     });
-       
+    
     
     $("#ipCdePago").kendoDropDownList({
         optionLabel: "Seleccione la forma de pago",
         dataTextField: "pag__des",
-        dataValueField: "fac__pag", 
+        dataValueField: "fac__pag"
     });   
     
     
@@ -191,7 +191,7 @@ function iniDropDownList(){
         var tasaNumeric = $("#ipTasa").data("kendoNumericTextBox");
         tasaNumeric.value(tasaDeCambio);        
         var fechaTasa = dataItemDivisa.mnd__fec__vig;
-        fechaTasa = fechaTasa.replace(/__/g, "-");        
+        fechaTasa = fechaTasa.replace(/__/g, "/");        
         $("#ipFechaTasa").kendoDatePicker({        
             format: "yyyy/MM/dd",
             disableDates: ["sa", "su"],
@@ -219,7 +219,7 @@ function iniDropDownList(){
                             return JSON.stringify(authdssic_mnd);
                         }	
                     } catch (e) {
-                        kendo.alert(e.message)
+                        kendo.alert(e.message);
                     }
                 },
             },
@@ -251,7 +251,7 @@ function iniDropDownList(){
         dataTextField: "ter__raz",        
         dataValueField: "ven__cod", 
         optionLabel: "Selecione un vendedor...",                
-  
+        
     });
 }
 
@@ -271,7 +271,7 @@ function iniAutocomplete(){
                     url: ipServicios+"rest/Parameters/SIRgfc_cli",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    type: "POST",
+                    type: "POST"
                 },
                 parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
                     try {
@@ -310,15 +310,17 @@ function iniAutocomplete(){
 }
 
 function iniGridDetalle(){
+    
     function conceptoDet(container, options) {        
-        $('<input id="ipConceptoDet" data-bind="value: ' + options.field + '" />').appendTo(container).kendoDropDownList({
+        $('<input id="ipConceptoDet" style="width: 100%;" data-bind="value: ' + options.field + '" />').appendTo(container).kendoDropDownList({
             optionLabel: "Seleccione el tipo de documento",
             dataTextField: "cpto__des",
-            dataValueField: "cpto__cod",        
+            dataValueField: "cpto__cod",
+            change: onChangeConceptoDet,
             dataSource: {
                 transport: {
                     read: {
-                        url: ipServicios+"rest/Parameters/SIRgfc_cpto", //http://190.144.16.114:8810/rest/Parameters/SIRgfc_cpto
+                        url: ipServicios+"rest/Parameters/SIRgfc_cpto", 
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         type: "POST"
@@ -332,7 +334,7 @@ function iniGridDetalle(){
                         } catch (e) {
                             kendo.alert(e.message)
                         }
-                    },
+                    }
                 },
                 schema: {
                     type: "json",
@@ -346,20 +348,21 @@ function iniGridDetalle(){
                     model: {
                         id: "cpto__cod",
                         fields: {
-                            cpto__cod: {validation: {required: true}, type: 'number'},
-                            cpto__des: {validation: {required: true}, type: 'string'}
+                            cpto__cod: {validation: {required: true}, type: 'pdif__cla'},
+                            cpto__des: {validation: {required: true}, type: 'string'},
+                            pdif__cla: {validation: {required: true}, type: 'pdif__cla'}
                         }
                     }
                 },
                 error: function (xhr, error) {
                     kendo.alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
-                },
+                }
             }
         });
     }
     
     function claseArticulo(container, options) {        
-        $('<input id="idClaseArticulo" data-bind="value: ' + options.field + '" />').appendTo(container).kendoDropDownList({
+        $('<input id="idClaseArticulo" style="width: 100%;" data-bind="value: ' + options.field + '" />').appendTo(container).kendoDropDownList({
             dataTextField: 'cla__des',
             dataValueField: 'cla__cod',
             optionLabel: "Seleccionar clase de articulo...",
@@ -383,7 +386,7 @@ function iniGridDetalle(){
                         } catch (e) {
                             kendo.alert(e.message);
                         }
-                    },
+                    }
                 },
                 schema: {
                     type: "json",
@@ -410,20 +413,58 @@ function iniGridDetalle(){
     }
     
     function articulo(container, options) {
-        $('<input id="idArticulo" data-bind="value: ' + options.field + '" />').appendTo(container).kendoDropDownList({
+        $('<input id="idArticulo" style="width: 100%;" data-bind="value: ' + options.field + '" />').appendTo(container).kendoDropDownList({
             dataTextField: 'art__des',
             dataValueField: 'art__cod',
             optionLabel: "Seleccionar articulo..."           
-            			
+            
         });        
     }
     
     function descripcion(container, options) {
-        $('<textarea id="idDescripcion" style="width: 173px; height: 150px; resize:none;" class="k-textbox"s data-bind="value: ' + options.field + '" />').appendTo(container)
-    }    
+        $('<textarea id="idDescripcion" style="width: 100%; height: 150px; resize:none;" class="k-textbox"s data-bind="value: ' + options.field + '" />').appendTo(container)
+    }
+    
+    function cantidad(container, options){
+        $('<input id="ipCantidad" style="width: 100%;" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({        
+            format: "n0",            
+            min: 1,
+            change: setValorTotal,        
+            spin: setValorTotal
+        });    
+    }
+    
+    function descuento(container, options){
+        $('<input id="idDescuento" style="width: 100%;" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({
+            format: "p0",
+            step: 0.01,
+            change: setValorTotal,        
+            spin: setValorTotal
+        });    
+    }
+    
+    function iva(container, options){
+        $('<input id="idIVA" style="width: 100%;" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({
+            format: "p0",
+            step: 0.01
+        });    
+    }
+    
+    function valorUnitario(container, options){    
+        $('<input id="idValorUnitario" style="width: 100%;" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({        
+            format: "c2",
+            change: setValorTotal        
+        });    
+    }
+    
+    function valorTotal(container, options){
+        $('<input id="idValorTotal" style="width: 100%;" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({
+            format: "c2"                
+        });    
+    }
     
     function codigoAmortizacion(container, options) {        
-        $('<input id="idCodigoAmortizacion" data-bind="value: ' + options.field + '" />').appendTo(container) .kendoDropDownList({
+        $('<input id="idCodigoAmortizacion" style="width: 100%;" data-bind="value: ' + options.field + '" />').appendTo(container) .kendoDropDownList({
             dataTextField: 'pdif__des',
             dataValueField: 'pdif__cla',
             optionLabel: "Seleccionar codigo de amortización...",            
@@ -471,8 +512,15 @@ function iniGridDetalle(){
         });
     }
     
+    function diasAmortizacion(container, options){
+        $('<input id="ipDiasAmortizacion" style="width: 100%;" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({        
+            format: "n0",            
+            min: 0
+        });    
+    }
+    
     function fechaAmortizacion(container, options) {        
-        $('<input data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoDatePicker({
+        $('<input id="ipFechaAmortizacion" style="width: 100%;" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoDatePicker({
             format: "{0:dd/MM/yyyy}",
             value: new Date(hoy)
         });
@@ -533,10 +581,61 @@ function iniGridDetalle(){
         });
     }
     
+    function onChangeConceptoDet(e){
+        debugger
+        var codAmortizacion= e.sender.dataSource._data[e.sender.selectedIndex-1].pdif__cla;
+        var dropdownlist = $("#idCodigoAmortizacion").data("kendoDropDownList");
+        var numericTextBoxTasa= $("#ipDiasAmortizacion").data("kendoNumericTextBox");
+        var datepickerFechaTasa= $("#ipFechaAmortizacion").data("kendoDatePicker");
+        
+        if(codAmortizacion===0){
+            dropdownlist.enable(false);
+            numericTextBoxTasa.enable(false);            
+            datepickerFechaTasa.enable(false);
+        }else{
+            dropdownlist.enable(true);
+            numericTextBoxTasa.enable(true);            
+            datepickerFechaTasa.enable(true);
+            dropdownlist.value(codAmortizacion);
+            dropdownlist.readonly();   
+        }        
+    }
+    
     function onChangeArticulo(e){        
         setIVA(e);
         setValorArticulo(e);       
-    } 
+    }
+    
+    
+    function setIVA(e){
+        var selected= e.sender.selectedIndex;
+        var iva= e.sender.dataSource._data[(selected-1)].art__iva;
+        var numerictextbox = $("#idIVA").data("kendoNumericTextBox");    
+        numerictextbox.value(iva/100);    
+        numerictextbox.readonly();
+        
+    }
+    
+    function setValorArticulo(e){
+        var valor = 0;    
+        valor = e.sender.dataSource._data[e.sender.selectedIndex-1].art__val;
+        
+        var numerictextbox = $("#idValorUnitario").data("kendoNumericTextBox");
+        numerictextbox.value(valor);    
+    }
+    
+    function setValorTotal(){
+        var cantidad = $("#ipCantidad").val();
+        var valor = $("#idValorUnitario").val();
+        var iva = $("#idIVA").val();
+        var descuento = $("#idDescuento").val();
+        valor = (parseFloat(valor) * (parseFloat(1)-parseFloat(descuento)));
+        var total = parseFloat(cantidad) * (parseFloat(valor) * (parseFloat(1)+parseFloat(iva))); //idValorTotal
+        
+        var numerictextbox = $("#idValorTotal").data("kendoNumericTextBox");
+        numerictextbox.value(total);
+    }
+    
     
     
     var dataSource = new kendo.data.DataSource({        
@@ -544,6 +643,7 @@ function iniGridDetalle(){
             model: {
                 fields: {
                     ID: { type: "number", editable: false },
+                    ConceptoDet: { type: "string", editable: false },
                     Clase: { type: "string", validation: { required: true} },
                     Articulo: { type: "string", validation: { required: true} },                    
                     Descripcion: { type: "string" },
@@ -553,7 +653,7 @@ function iniGridDetalle(){
                     ValorUnitario: { type: "number", format: "c2" },
                     ValorTotal: { type: "number", format: "{0:c}" },
                     CodAmortizacion: { type: "string" },
-                    DiasAmortizacion: { type: "number", format: "n0", validation: { min:1} },
+                    DiasAmortizacion: { type: "number", format: "n0", validation: { min:0} },
                     FechaAmortizacion: { type: "date", format: "{0:dd/MM/yyyy}"}
                 }}
         },
@@ -566,8 +666,7 @@ function iniGridDetalle(){
         batch: false,
         pageable: true,
         height: 500,
-        dataBinding : onDataBoundGrid,
-        toolbar: kendo.template($("#template").html()),
+        dataBinding : onDataBoundGrid,        
         columns: [
             {
                 field: "conceptoDet",
@@ -637,6 +736,7 @@ function iniGridDetalle(){
             {
                 field: "DiasAmortizacion",
                 title: "Días de amortización",
+                editor: diasAmortizacion,
                 hidden:true
                 
             },
@@ -650,57 +750,16 @@ function iniGridDetalle(){
             { command: [
                     {name: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
                     {name: "delete", template: "<a class='k-grid-delete'><span class='k-sprite po_cerrar'></span></a>"}
-                ], title: "&nbsp;", width: 300 }],
-        editable: "popup"
+                ], title: "detalle", width: 300 }],
+        editable: {
+            mode: "popup",
+            window: {
+                title: "Editar",
+                animation: false,
+                width: "700px"
+            }
+        }
     }).data("kendoGrid");
-}
-
-function descuento(container, options){
-    $('<input id="idDescuento" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({
-        format: "p0",
-        step: 0.01,
-        change: setValorTotal,        
-        spin: setValorTotal
-    });    
-}
-
-function iva(container, options){
-    $('<input id="idIVA" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({
-        format: "p0",
-        step: 0.01
-    });    
-}
-
-function valorUnitario(container, options){    
-    $('<input id="idValorUnitario" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({        
-        format: "c2",
-        change: setValorTotal        
-    });    
-}
-
-function valorTotal(container, options){
-    $('<input id="idValorTotal" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({
-        format: "c2"                
-    });    
-}
-
-function cantidad(container, options){
-    $('<input id="ipCantidad" data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field+ '"/>').appendTo(container).kendoNumericTextBox({        
-        format: "n0",
-        value: 1,
-        min: 1,
-        change: setValorTotal,        
-        spin: setValorTotal
-    });    
-}
-
-function setIVA(e){
-    var selected= e.sender.selectedIndex;
-    var iva= e.sender.dataSource._data[(selected-1)].art__iva;
-    var numerictextbox = $("#idIVA").data("kendoNumericTextBox");    
-    numerictextbox.value(iva/100);    
-    numerictextbox.readonly();
-    
 }
 
 function validaCabecera(){
@@ -771,7 +830,7 @@ function validaCabecera(){
 }
 
 function calcularFechaVencimiento(diasCredito){    
-  
+    
     var fechaTex = $("#ipFecha").val();
     var fechaIni = new Date(fechaTex); //fecha = new Date().toString('yyyy/M/d');
     var yyyy = fechaIni.getDate();
@@ -828,7 +887,7 @@ function setInfoCliente(e){
                 parameterMap: function (options, operation) {
                     try {                        
                         authfacpag.dsfac_pag.eetemp[0].piifac_pag = sessionStorage.getItem("opciondepago");
-//                        console.log("authfacpag \n"+JSON.stringify(authfacpag));
+                        //                        console.log("authfacpag \n"+JSON.stringify(authfacpag));
                         if (operation === 'read') {                            
                             authfacpag["eefac_pag"] = [options];
                             return JSON.stringify(authfacpag);
@@ -884,7 +943,7 @@ function setInfoCliente(e){
                         }else{
                             authdssic_ven.dssic_ven.eetemp[0].picsuc_cod = $("#ipSucursal").val();
                             authdssic_ven.dssic_ven.eetemp[0].piiven_cod = sessionStorage.getItem("codVendedor");
-//                            console.log("authdssic_ven 877 \n"+JSON.stringify(authdssic_ven));
+                            //                            console.log("authdssic_ven 877 \n"+JSON.stringify(authdssic_ven));
                             if (operation === 'read') {
                                 authdssic_ven["eesic_ven1"] = [options];
                                 return JSON.stringify(authdssic_ven);
@@ -917,7 +976,7 @@ function setInfoCliente(e){
             }            
         }
     });
-   
+    
     var comboboxDivisa= $("#ipDivisa").data("kendoDropDownList");
     comboboxDivisa.enable(!clienteNacional);
     
@@ -931,26 +990,6 @@ function setInfoCliente(e){
 function codigoVendedor(e){
     var dataItem = this.dataItem(e.item.index()); 
     sessionStorage.setItem("codVendedor", dataItem.ven__cod);    
-}
-
-function setValorArticulo(e){
-    var valor = 0;    
-    valor = e.sender.dataSource._data[e.sender.selectedIndex-1].art__val;
-    
-    var numerictextbox = $("#idValorUnitario").data("kendoNumericTextBox");
-    numerictextbox.value(valor);    
-}
-
-function setValorTotal(){
-    var cantidad = $("#ipCantidad").val();
-    var valor = $("#idValorUnitario").val();
-    var iva = $("#idIVA").val();
-    var descuento = $("#idDescuento").val();
-    valor = (parseFloat(valor) * (parseFloat(1)-parseFloat(descuento)));
-    var total = parseFloat(cantidad) * (parseFloat(valor) * (parseFloat(1)+parseFloat(iva))); //idValorTotal
-    
-    var numerictextbox = $("#idValorTotal").data("kendoNumericTextBox");
-    numerictextbox.value(total);
 }
 
 function guardarFactura(){    
@@ -997,7 +1036,7 @@ function guardarFactura(){
     
     var jSonDataGrid = new Object();
     jSonDataGrid = $("#grid").data("kendoGrid").dataSource.data();
-        
+    
     $.each(jSonDataGrid, function(i,item){ 
         
         var jSonDetalle = new Object();
@@ -1094,11 +1133,12 @@ function onDataBoundGrid(e){
     var valorTotal = $("#idValorTotal").val();
     var cantidad = $("#ipCantidad").val();
     
-    e.sender.dataSource._data[0].Cantidad = cantidad;
-    e.sender.dataSource._data[0].IVA = iva;    
-    e.sender.dataSource._data[0].ValorTotal = valorTotal;
-    e.sender.dataSource._data[0].ValorUnitario= valor;    
-    
+    if(e.sender.dataSource._data.length!==0){
+        e.sender.dataSource._data[0].Cantidad = cantidad;
+        e.sender.dataSource._data[0].IVA = iva;    
+        e.sender.dataSource._data[0].ValorTotal = valorTotal;
+        e.sender.dataSource._data[0].ValorUnitario= valor;    
+    }
     var grid = $("#grid").data("kendoGrid");  
     
 }
