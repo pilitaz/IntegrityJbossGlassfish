@@ -51,13 +51,16 @@ function login() {
                 jsonResp = resp; 
             },
             error: function (e) {
-                msnError("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);
-                var buttonObject = $("#btnLogin").kendoButton().data("kendoButton")
+                kendo.alert("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);
+                var buttonObject = $("#btnLogin").kendoButton().data("kendoButton");
                 buttonObject.enable(true);
             }
         }).done(function(){
-            if(permitirIngreso=='"OK"'){                
+            if(permitirIngreso=='"OK"'){  
+                var fechaSistema=jsonResp.dslogin.eesiccia[0].fecsis;
+                fechaSistema = fechaSistema.replace(/-/g, "/"); 
                 console.log("Usuario con permiso de ingresar \n" + permitirIngreso);                    
+                console.log("jsonResp\n" + JSON.stringify(jsonResp));   
                 sessionStorage.setItem("usrnom",jsonResp.dslogin.eesicusuarios[0].usrnom);
                 sessionStorage.setItem("usuario",usuario);
                 sessionStorage.setItem("usrmail",jsonResp.dslogin.eesicusuarios[0].usrmail);
@@ -65,6 +68,8 @@ function login() {
                 sessionStorage.setItem("poccargo",jsonResp.dslogin.ttdatauser[0].poccargo);
                 sessionStorage.setItem("img",jsonResp.dslogin.eesiccia[0].cialog);
                 sessionStorage.setItem("companyNIT",jsonResp.dslogin.eesiccia[0].cianit);
+                sessionStorage.setItem("razonSocial",jsonResp.dslogin.eesiccia[0].ciaraz);
+                sessionStorage.setItem("fechaSistema",fechaSistema);
                 sessionStorage.setItem("contra",jsonResp.dslogin.eesicusuarios[0].clavprov);                    
                 sessionStorage.setItem('sesion', sessionStorage.getItem("picfiid"));
                 sessionStorage.setItem("loginintegrity","valido");
@@ -72,17 +77,36 @@ function login() {
                 sessionStorage.setItem("portLinux",jsonResp.dslogin.eesiccia[0].ciapuerto);
                 window.location.assign("html/index.html");
             }else{
-                msnError("Problemas con el inicio sesión .\n" + permitirIngreso);
+                var dialog = $('#dialog');
+                dialog.kendoDialog({
+                    width: "400px",
+                    title: "Problemas con el inicio sesión",
+                    closable: false,
+                    modal: true,
+                    content: "<p>"+permitirIngreso+"</p><br>",
+                    actions: [
+                        { text: 'Intentar de nuevo', primary: true, action: IntentarNuevamente }                    
+                    ]                
+                });
                 console.log("Usuario no puede ingresar \n" + permitirIngreso);
-                var buttonObject = $("#btnLogin").kendoButton().data("kendoButton")
+                var buttonObject = $("#btnLogin").kendoButton().data("kendoButton");
                 buttonObject.enable(true);             
             }
         });
         
     } catch (e) {
-        msnError("Function: consumeServAjaxSIR Error: " + e.message);
+        kendo.alert("Function: consumeServAjaxSIR Error: " + e.message);
         window.location.assign(sessionStorage.getItem("url"));
     }    
+}
+
+/**
+ * función que se encarga de cerrar el dialog
+ * @returns {undefined}
+ */
+function IntentarNuevamente(){    
+    var dialog = $('#dialog');
+    dialog.fadeIn();    
 }
 
 /*

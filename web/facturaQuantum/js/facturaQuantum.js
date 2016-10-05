@@ -4,11 +4,7 @@
  * and open the template in the editor.
  */
 
-var hoy = new Date();
-var dd = hoy.getDate();
-var mm = hoy.getMonth()+1; //hoy es 0!
-var yyyy = hoy.getFullYear();
-hoy = yyyy+'-'+ mm+'-'+dd;
+var hoy = new Date(sessionStorage.getItem("fechaSistema"));
 var tasaDeCambio = "";
 var data="";
 
@@ -22,11 +18,13 @@ $(document).ready(function() {
     iniAutocomplete();
     
     $("#ipFecha").kendoDatePicker({
+        culture: "es-CO",
         format: "yyyy/MM/dd",
         value: new Date(hoy),
         disableDates: ["sa", "su"]
     });    
     $("#ipFechaVencimiento").kendoDatePicker({
+        culture: "es-CO",
         format: "yyyy/MM/dd",        
         value: new Date(hoy),
         disableDates: ["sa", "su"]
@@ -37,9 +35,6 @@ $(document).ready(function() {
         //value: new Date(hoy),
         disableDates: ["sa", "su"]
     });    
-    
-    //    $("#btGuardarFact").kendoButton({
-    //    });
     
     $("#ipTasa").kendoNumericTextBox({
         format: "c",
@@ -57,6 +52,9 @@ $(document).ready(function() {
         max: 0.1,
         step: 0.01
     });
+    
+    var datepickerFechaTasa= $("#ipFechaTasa").data("kendoDatePicker");
+    datepickerFechaTasa.readonly();
     
     iniGridDetalle();
     
@@ -95,6 +93,7 @@ function iniDropDownList(){
                     try {
                         if (operation === 'read') {
                             auth.dssic_suc.eetemp[0].piccia_nit = sessionStorage.getItem("companyNIT");
+                            //console.log(JSON.stringify(auth));
                             auth["eesic_suc"] = [options];
                             return JSON.stringify(auth);
                         }	
@@ -179,24 +178,31 @@ function iniDropDownList(){
             },
             error: function (xhr, error) {
                 kendo.alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
-            },
+            }
         }        
     });
     
     // divisa
     
     function onSelectDivisa(e){
-        var dataItemDivisa = this.dataItem(e.item.index());
-        tasaDeCambio = dataItemDivisa.mnd__tas__act;
+        var dataItemDivisa = e.sender.dataSource._data[e.sender.selectedIndex-1];
+        tasaDeCambio = dataItemDivisa.mnd__tas__act;        
         var tasaNumeric = $("#ipTasa").data("kendoNumericTextBox");
         tasaNumeric.value(tasaDeCambio);        
-        var fechaTasa = dataItemDivisa.mnd__fec__vig;
-        fechaTasa = fechaTasa.replace(/__/g, "/");        
+        
+        var fechaTasaTex = dataItemDivisa.mnd__fec__vig;
+        fechaTasaTex = fechaTasaTex.replace(/-/g, "/");  
+        var fechaTasa = new Date(fechaTasaTex);        
+        
         $("#ipFechaTasa").kendoDatePicker({        
             format: "yyyy/MM/dd",
             disableDates: ["sa", "su"],
-            value: fechaTasa        
+            value: new Date(fechaTasa)
         });
+        
+        if(fechaTasa===hoy){
+             $("#ipActualizarTasa")[0].disabled=true;
+        }
     };
     
     $("#ipDivisa").kendoDropDownList({
@@ -531,6 +537,7 @@ function iniGridDetalle(){
             dataTextField: 'art__des',
             dataValueField: 'art__cod',
             optionLabel: "Seleccionar articulo...",
+            template:'<div class="divElementDropDownList">#: data.art__des #</div',
             change: onChangeArticulo,
             dataSource: {
                 type: "json",
@@ -764,7 +771,7 @@ function iniGridDetalle(){
 
 function validaCabecera(){
     var usuario = sessionStorage.getItem("usuario");
-    var fiid = sessionStorage.getItem("fiid");
+    var fiid = sessionStorage.getItem("picfiid");
     var sucursal = $("#ipSucursal").val();
     var claDocumento = $("#ipCDocumento").val();    
     var condiPagos = $("#ipCdePago").val();
@@ -777,7 +784,8 @@ function validaCabecera(){
     var cabeceraValida = "";    
     var fechaTasa = $("#ipFechaTasa").val();
     var listaPrecios = $("#ipListaPrecios").val();
-    
+    var actualizarTasa = $("#ipActualizarTasa")["0"].checked;
+        
     var jSonData = new Object();
     jSonData.dsSIRgfc_fac = new Object();
     jSonData.dsSIRgfc_fac.eeDatos = new Array();
@@ -796,6 +804,7 @@ function validaCabecera(){
     jSonData.dsSIRgfc_fac.eegfc_fac[0].mnd__cla = divisa;
     jSonData.dsSIRgfc_fac.eegfc_fac[0].mnd__fec = fechaTasa;
     jSonData.dsSIRgfc_fac.eegfc_fac[0].mnd__val = tasa;
+    jSonData.dsSIRgfc_fac.eegfc_fac[0].mnd__act = actualizarTasa;
     jSonData.dsSIRgfc_fac.eegfc_fac[0].pago__cod = condiPagos;
     jSonData.dsSIRgfc_fac.eegfc_fac[0].suc__cod = sucursal;
     jSonData.dsSIRgfc_fac.eegfc_fac[0].ter__nit = sessionStorage.getItem("nitCliente");
@@ -850,11 +859,13 @@ function sumarDias(fechax, dias){
 }
 function onBlurTasaDeCambio(){
     if(tasaDeCambio != $("#ipTasa").val()){
+        debugger
         $("#ipFechaTasa").kendoDatePicker({        
             format: "yyyy/MM/dd",
             disableDates: ["sa", "su"],
             value: hoy        
         });  
+        $("#ipActualizarTasa")[0].disabled=true;
     }
 }
 
@@ -1007,6 +1018,7 @@ function guardarFactura(){
     var facturaGuardada = "";    
     var fechaTasa = $("#ipFechaTasa").val();
     var listaPrecios = $("#ipListaPrecios").val();
+    var actualizarTasa = $("#ipActualizarTasa")["0"].checked;
     var numFactura = "";
     var msn = "";
     
@@ -1028,6 +1040,7 @@ function guardarFactura(){
     jSonData.dsSIRgfc_fac.eegfc_fac[0].mnd__cla = divisa;
     jSonData.dsSIRgfc_fac.eegfc_fac[0].mnd__fec = fechaTasa;
     jSonData.dsSIRgfc_fac.eegfc_fac[0].mnd__val = tasa;
+    jSonData.dsSIRgfc_fac.eegfc_fac[0].mnd__act = actualizarTasa;
     jSonData.dsSIRgfc_fac.eegfc_fac[0].pago__cod = condiPagos;
     jSonData.dsSIRgfc_fac.eegfc_fac[0].suc__cod = sucursal;
     jSonData.dsSIRgfc_fac.eegfc_fac[0].ter__nit = sessionStorage.getItem("nitCliente");

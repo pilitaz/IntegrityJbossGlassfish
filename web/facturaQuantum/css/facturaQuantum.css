@@ -73,3 +73,8 @@ td{
 .k-edit-form-container{
     width: 99%;
 }
+
+.divElementDropDownList{
+    border-bottom: 1px solid;
+    border-bottom-color: #DFDFDF;
+}
