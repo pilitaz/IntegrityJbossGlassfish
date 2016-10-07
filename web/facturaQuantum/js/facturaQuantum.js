@@ -14,6 +14,7 @@ puerto=sessionStorage.getItem("puerto");
 
 $(document).ready(function() {
     
+    sessionStorage.setItem("cabeceraValida","false");    
     iniDropDownList();
     
     iniAutocomplete();
@@ -188,7 +189,7 @@ function iniDropDownList(){
     // divisa
     
     function onSelectDivisa(e){
-        
+       
         var dataItemDivisa = e.sender.dataSource._data[e.sender.selectedIndex-1];
         tasaDeCambio = dataItemDivisa.mnd__tas__act;        
         var tasaNumeric = $("#ipTasa").data("kendoNumericTextBox");
@@ -199,17 +200,19 @@ function iniDropDownList(){
         var fechaTasa = new Date(fechaTasaTex);
         fechaTasa.setHours(0,0,0,0);
         
+        if(fechaTasa.getTime()===hoy.getTime()){
+             $("#ipActualizarTasa")[0].disabled=true;
+        }else{
+             $("#ipActualizarTasa")[0].disabled=false;
+        }
+        
         $("#ipFechaTasa").kendoDatePicker({        
             format: "yyyy/MM/dd",
             disableDates: ["sa", "su"],
             value: new Date(fechaTasa)
         });
         
-        if(fechaTasa.getTime()===hoy.getTime()){
-             $("#ipActualizarTasa")[0].disabled=true;
-        }else{
-             $("#ipActualizarTasa")[0].disabled=false;
-        }
+        
     };
     
     $("#ipDivisa").kendoDropDownList({
@@ -797,7 +800,7 @@ function validaCabecera(){
     var observaciones = $("#txtAObservaciones").val();
     var cabeceraValida = "";    
     var fechaTasa = $("#ipFechaTasa").val();
-    var listaPrecios = $("#ipListaPrecios").val();
+    var listaPrecios = sessionStorage.getItem("listaPrecioCliente");
     var actualizarTasa = $("#ipActualizarTasa")["0"].checked;
         
     var jSonData = new Object();
@@ -872,6 +875,7 @@ function sumarDias(fechax, dias){
     return fechax;
 }
 function onBlurTasaDeCambio(){
+    debugger
     if(tasaDeCambio != $("#ipTasa").val()){
         
         $("#ipFechaTasa").kendoDatePicker({        
@@ -879,7 +883,7 @@ function onBlurTasaDeCambio(){
             disableDates: ["sa", "su"],
             value: hoy        
         });  
-        $("#ipActualizarTasa")[0].disabled=true;
+        $("#ipActualizarTasa")[0].disabled=false;
     }
 }
 
@@ -1009,7 +1013,9 @@ function setInfoCliente(e){
     numericTextBoxTasa.enable(!clienteNacional);
     
     var datepickerFechaTasa= $("#ipFechaTasa").data("kendoDatePicker");
-    datepickerFechaTasa.enable(!clienteNacional);     
+    datepickerFechaTasa.enable(!clienteNacional);
+    
+    $("#ipActualizarTasa")[0].disabled = clienteNacional;
 }
 
 function codigoVendedor(e){
@@ -1031,7 +1037,7 @@ function guardarFactura(){
     var observaciones = $("#txtAObservaciones").val();
     var facturaGuardada = "";    
     var fechaTasa = $("#ipFechaTasa").val();
-    var listaPrecios = $("#ipListaPrecios").val();
+    var listaPrecios = sessionStorage.getItem("listaPrecioCliente");
     var actualizarTasa = $("#ipActualizarTasa")["0"].checked;
     var numFactura = "";
     var msn = "";
@@ -1095,21 +1101,18 @@ function guardarFactura(){
         success: function (resp) {            
             console.log(JSON.stringify(resp));                
             facturaGuardada = JSON.stringify(resp.dsSIRgfc_fac.eeEstados[0].Estado); 
-            msn = resp.dsSIRgfc_fac.eeSgfc_fac["0"].desmsg;
-            numFactura = resp.dsSIRgfc_fac.eeSgfc_fac["0"].facnro
+            if(facturaGuardada=='"OK"'){
+                msn = resp.dsSIRgfc_fac.eeSgfc_fac["0"].desmsg;
+                numFactura = resp.dsSIRgfc_fac.eeSgfc_fac["0"].facnro
+            }
         },
         error: function (e) {
             console.log(JSON.stringify(e));
             kendo.alert("Error consumiendo el servicio de guardar\n"+ e.status +" - "+ e.statusText);
         }
     }).done(function(){
-        if(facturaGuardada=='"OK"'){
-            
-            var dialog = $('#dialog');
-            
-            function onClose() {
-                undo.fadeIn();
-            }
+        if(facturaGuardada=='"OK"'){            
+            var dialog = $('#dialog');  
             
             dialog.kendoDialog({
                 width: "400px",
