@@ -5,6 +5,7 @@
  */
 
 var hoy = new Date(sessionStorage.getItem("fechaSistema"));
+hoy.setHours(0,0,0,0);
 var tasaDeCambio = "";
 var data="";
 
@@ -80,6 +81,7 @@ function iniDropDownList(){
         optionLabel: "Seleccione la sucursal",
         dataTextField: "suc__nom",
         dataValueField: "suc__cod",
+        template:'<div class="divElementDropDownList">#: data.suc__nom #</div>',
         change: onChangetSucursal,
         dataSource: {
             transport: {
@@ -139,11 +141,12 @@ function iniDropDownList(){
     $("#ipCDocumento").kendoDropDownList({
         optionLabel: "Seleccione el tipo de documento",
         dataTextField: "cpto__des",
-        dataValueField: "cpto__cod",        
+        dataValueField: "cpto__cod",      
+        template:'<div class="divElementDropDownList">#: data.cpto__des #</div>',
         dataSource: {
             transport: {
                 read: {
-                    url: ipServicios+"rest/Parameters/SIRgfc_cpto", //http://190.144.16.114:8810/rest/Parameters/SIRgfc_cpto
+                    url: ipServicios+"rest/Parameters/SIRgfc_cpto",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST"
@@ -155,7 +158,7 @@ function iniDropDownList(){
                             return JSON.stringify(authdsgfc_cpto);
                         }	
                     } catch (e) {
-                        kendo.alert(e.message)
+                        kendo.alert(e.message);
                     }
                 },
             },
@@ -185,6 +188,7 @@ function iniDropDownList(){
     // divisa
     
     function onSelectDivisa(e){
+        
         var dataItemDivisa = e.sender.dataSource._data[e.sender.selectedIndex-1];
         tasaDeCambio = dataItemDivisa.mnd__tas__act;        
         var tasaNumeric = $("#ipTasa").data("kendoNumericTextBox");
@@ -192,7 +196,8 @@ function iniDropDownList(){
         
         var fechaTasaTex = dataItemDivisa.mnd__fec__vig;
         fechaTasaTex = fechaTasaTex.replace(/-/g, "/");  
-        var fechaTasa = new Date(fechaTasaTex);        
+        var fechaTasa = new Date(fechaTasaTex);
+        fechaTasa.setHours(0,0,0,0);
         
         $("#ipFechaTasa").kendoDatePicker({        
             format: "yyyy/MM/dd",
@@ -200,15 +205,18 @@ function iniDropDownList(){
             value: new Date(fechaTasa)
         });
         
-        if(fechaTasa===hoy){
+        if(fechaTasa.getTime()===hoy.getTime()){
              $("#ipActualizarTasa")[0].disabled=true;
+        }else{
+             $("#ipActualizarTasa")[0].disabled=false;
         }
     };
     
     $("#ipDivisa").kendoDropDownList({
         optionLabel: "Seleccione la moneda",
         dataTextField: "mnd__des ",
-        dataValueField: "mnd__cla",        
+        dataValueField: "mnd__cla",
+        template:'<div class="divElementDropDownList">#: data.mnd__des #</div>',
         change: onSelectDivisa,       
         dataSource: {
             transport: {
@@ -224,10 +232,10 @@ function iniDropDownList(){
                             authdssic_mnd["eesic_mnd"] = [options];                            
                             return JSON.stringify(authdssic_mnd);
                         }	
-                    } catch (e) {
+                    } catch (e) {                        
                         kendo.alert(e.message);
                     }
-                },
+                }
             },
             schema: {
                 type: "json",
@@ -235,7 +243,7 @@ function iniDropDownList(){
                     if(e.dssic_mnd.eeEstados[0].Estado==="OK"){
                         return e.dssic_mnd.eesic_mnd;
                     }else{
-                        kendo.alert(e.dssic_mnd.eeEstados[0].Estado);
+                        kendo.alert("Problemas con el servicio: "+e.dssic_mnd.eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -248,7 +256,7 @@ function iniDropDownList(){
             },
             error: function (xhr, error) {
                 kendo.alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
-            },
+            }
         }
         
     });
@@ -266,8 +274,9 @@ function iniAutocomplete(){
         dataTextField: "ter__raz",
         dataValueField: "ter__nit",        
         placeholder: "Selecione un cliente...",
-        filter: "contains",
         minLength: 3,
+        filter: "contains",
+        template:'<div class="divElementDropDownList">#: data.ter__raz #</div>',
         select: setInfoCliente,
         dataSource: {
             type: "json",
@@ -287,7 +296,7 @@ function iniAutocomplete(){
                             return JSON.stringify(authdsgfc_cli);
                         } 
                     } catch (e) {
-                        kendo.alert(e.message)
+                        kendo.alert(e.message);
                     }                
                     
                 }
@@ -296,6 +305,8 @@ function iniAutocomplete(){
                 data: function (e){                    
                     if(e.dsgfc_cli.eeEstados[0].Estado==="OK"){
                         return e.dsgfc_cli.eegfc_cli;
+                    }else if(e.dsgfc_cli.eeEstados[0].Estado==="ERROR: Patrón de Búsqueda Insuficiente !!!"){
+                        
                     }else{
                         kendo.alert(e.dsgfc_cli.eeEstados[0].Estado);
                     }
@@ -322,6 +333,7 @@ function iniGridDetalle(){
             optionLabel: "Seleccione el tipo de documento",
             dataTextField: "cpto__des",
             dataValueField: "cpto__cod",
+            template:'<div class="divElementDropDownList">#: data.cpto__des #</div>',
             change: onChangeConceptoDet,
             dataSource: {
                 transport: {
@@ -372,6 +384,7 @@ function iniGridDetalle(){
             dataTextField: 'cla__des',
             dataValueField: 'cla__cod',
             optionLabel: "Seleccionar clase de articulo...",
+            template:'<div class="divElementDropDownList">#: data.cla__des #</div>',
             change: onChangeClase,            
             dataSource: {
                 type: "json",
@@ -473,7 +486,8 @@ function iniGridDetalle(){
         $('<input id="idCodigoAmortizacion" style="width: 100%;" data-bind="value: ' + options.field + '" />').appendTo(container) .kendoDropDownList({
             dataTextField: 'pdif__des',
             dataValueField: 'pdif__cla',
-            optionLabel: "Seleccionar codigo de amortización...",            
+            optionLabel: "Seleccionar codigo de amortización...",  
+            template:'<div class="divElementDropDownList">#: data.pdif__des #</div>',
             dataSource: {
                 type: "json",
                 transport: {
@@ -492,7 +506,7 @@ function iniGridDetalle(){
                         } catch (e) {
                             kendo.alert(e.message);
                         }
-                    },
+                    }
                 },
                 schema: {
                     type: "json",
@@ -537,7 +551,7 @@ function iniGridDetalle(){
             dataTextField: 'art__des',
             dataValueField: 'art__cod',
             optionLabel: "Seleccionar articulo...",
-            template:'<div class="divElementDropDownList">#: data.art__des #</div',
+            template:'<div class="divElementDropDownList">#: data.art__des #</div>',
             change: onChangeArticulo,
             dataSource: {
                 type: "json",
@@ -558,7 +572,7 @@ function iniGridDetalle(){
                                 return JSON.stringify(authdsinv_art);
                             }	
                         } catch (e) {
-                            kendo.kendo.alert("Error" +e.message);
+                            kendo.alert("Error" +e.message);
                         }
                     },
                 },
@@ -589,7 +603,7 @@ function iniGridDetalle(){
     }
     
     function onChangeConceptoDet(e){
-        debugger
+        
         var codAmortizacion= e.sender.dataSource._data[e.sender.selectedIndex-1].pdif__cla;
         var dropdownlist = $("#idCodigoAmortizacion").data("kendoDropDownList");
         var numericTextBoxTasa= $("#ipDiasAmortizacion").data("kendoNumericTextBox");
@@ -859,7 +873,7 @@ function sumarDias(fechax, dias){
 }
 function onBlurTasaDeCambio(){
     if(tasaDeCambio != $("#ipTasa").val()){
-        debugger
+        
         $("#ipFechaTasa").kendoDatePicker({        
             format: "yyyy/MM/dd",
             disableDates: ["sa", "su"],

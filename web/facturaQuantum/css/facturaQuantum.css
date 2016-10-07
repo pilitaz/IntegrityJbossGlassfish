@@ -62,14 +62,6 @@ td{
     padding: 5px
 }
 
-#grid .k-grid-toolbar
-{
-    padding: .6em 1.3em;
-}
-.toolbar {
-    float: right;
-}
-
 .k-edit-form-container{
     width: 99%;
 }
