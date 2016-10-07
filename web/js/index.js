@@ -347,8 +347,9 @@ function abreFuncion(servicio){
         var contra = sessionStorage.getItem("contra");//sbm.util.getValue("textField1");
         var servicio = servicio.replace(/caracter/g,"");
         sessionStorage.setItem("servicio",servicio);
-        sessionStorage.setItem("sesion",sessionStorage.getItem("picfiid"));        
-        document.getElementById("idFrame").src = urlIFrame + "IntegrityViejo/Start.jsp";        
+        sessionStorage.setItem("sesion",sessionStorage.getItem("picfiid"));
+        servLinuxSOption(servicio);
+        //document.getElementById("idFrame").src = urlIFrame + "IntegrityViejo/Start.jsp";        
     }else{
         document.getElementById("idFrame").src = urlIFrame+servicio+"/Start.jsp";
     }
@@ -420,7 +421,72 @@ function corre(){//esta funcion se ejecuta por que la app IntegrityViejo la llam
         document.location.href = "localexplorer:W:/SrcDesarrollo/Programas/Shell/integrity3.bat";
     }
 }
-
+function servLinuxSOption(programa) {
+    var jSonData = {
+        "dsOpcion": {
+            "eeDatos": [
+                {
+                    "picusrcod":sessionStorage.getItem("usuario"),
+                    "picfiid":sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "eeParametros": [
+                {
+                    "picprograma": programa
+                }
+            ]
+        }
+    };
+    var jsonResp = "";
+    var permitirIngreso;
+    $.ajax({
+        "async": false,
+        type: "POST",
+        data: JSON.stringify(jSonData),
+        url: ipServicios + baseServicio + "SOpcion",
+        dataType: "json",
+        contentType: "application/json;",
+        success: function (resp) {
+            var key1 = Object.keys(resp)[0];
+            permitirIngreso = JSON.stringify(resp[key1].eeEstados[0].Estado);
+            jsonResp = resp;
+        },
+        error: function (e) {
+            msnError("Error al consumir el servicio de login.\n" + e.status + " - " + e.statusText);
+            var buttonObject = $("#btnLogin").kendoButton().data("kendoButton")
+            buttonObject.enable(true);
+        }
+    }).done(function () {
+        if (permitirIngreso == '"OK"') {
+alert("hola");
+corre();
+        } else {
+            $("body").append("<div id='dialog'></div>");
+             var dialog = $('#dialog');
+                dialog.kendoDialog({
+                    width: "400px",
+                    title: "Problemas con el inicio sesión en plataforma Caracter",
+                    closable: false,
+                    modal: true,
+                    content: "<p>"+permitirIngreso+"</p><br>",
+                    actions: [
+                        { text: 'Intentar de nuevo', primary: true, action: IntentarNuevamente }                    
+                    ]                
+                });
+            console.log("Usuario no puede ingresar \n" + permitirIngreso);
+            var buttonObject = $("#btnLogin").kendoButton().data("kendoButton")
+            buttonObject.enable(true);
+        }
+    });
+}
+function IntentarNuevamente(){    
+    var dialog = $('#dialog');
+    dialog.fadeIn('slow', function(){
+        $( ".dialog" ).remove();
+    });    
+}
 function tamanoShell(e){
     estadoIfra = "PagShell";
     if(e){
