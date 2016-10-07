@@ -77,6 +77,7 @@ function login() {
                 sessionStorage.setItem("portLinux",jsonResp.dslogin.eesiccia[0].ciapuerto);
                 window.location.assign("html/index.html");
             }else{
+                $("body").append("<div id='dialog'></div>");
                 var dialog = $('#dialog');
                 dialog.kendoDialog({
                     width: "400px",
@@ -106,7 +107,11 @@ function login() {
  */
 function IntentarNuevamente(){    
     var dialog = $('#dialog');
-    dialog.fadeIn();    
+    dialog.fadeOut();
+    $( "#book" ).fadeIn( "slow", function() {
+    // Animation complete
+  });
+    $( ".dialog" ).remove();
 }
 
 /*
