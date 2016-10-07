@@ -3,7 +3,7 @@ var usuario;
 var password;
 
 function onLoad() {
-    sessionStorage.clear();    
+    //sessionStorage.clear();    
     var url =   document.URL;
     sessionStorage.setItem("url", url);
     var y =   document.URL.split("/");
@@ -25,9 +25,10 @@ function onLoad() {
 function login() {
     usuario = $("#usuario").val();
     password = $("#password").val();
-    $("#btnLogin").kendoButton({
-        enable: false
-    });
+    
+    var buttonObject = $("#btnLogin").kendoButton().data("kendoButton")
+    buttonObject.enable(false);
+    
     try {        
         var jSonData = new Object();
         jSonData.dslogin = new Object();
@@ -35,6 +36,8 @@ function login() {
         jSonData.dslogin.ttdatauser[0] = new Object();
         jSonData.dslogin.ttdatauser[0].picusrcod = usuario;
         jSonData.dslogin.ttdatauser[0].picusrpass = password;
+        jSonData.dslogin.ttdatauser[0].local_ip = sessionStorage.getItem("ipPrivada");
+        jSonData.dslogin.ttdatauser[0].remote_ip = sessionStorage.getItem("ipPublica");
         var jsonResp = "";
         var permitirIngreso;
         $.ajax({
@@ -44,18 +47,20 @@ function login() {
             dataType : "json",
             contentType: "application/json;",
             success: function (resp) {                
-                permitirIngreso = JSON.stringify(resp.dslogin.ttestado[0].pocestado);
+                permitirIngreso = JSON.stringify(resp.dslogin.eeEstados[0].Estado);
                 jsonResp = resp; 
             },
             error: function (e) {
-                alert("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);
-                $("#btnLogin").kendoButton({
-                    enable: true
-                });
+                kendo.alert("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);
+                var buttonObject = $("#btnLogin").kendoButton().data("kendoButton");
+                buttonObject.enable(true);
             }
         }).done(function(){
-            if(permitirIngreso=='"OK"'){                
+            if(permitirIngreso=='"OK"'){  
+                var fechaSistema=jsonResp.dslogin.eesiccia[0].fecsis;
+                fechaSistema = fechaSistema.replace(/-/g, "/"); 
                 console.log("Usuario con permiso de ingresar \n" + permitirIngreso);                    
+                console.log("jsonResp\n" + JSON.stringify(jsonResp));   
                 sessionStorage.setItem("usrnom",jsonResp.dslogin.eesicusuarios[0].usrnom);
                 sessionStorage.setItem("usuario",usuario);
                 sessionStorage.setItem("usrmail",jsonResp.dslogin.eesicusuarios[0].usrmail);
@@ -63,6 +68,8 @@ function login() {
                 sessionStorage.setItem("poccargo",jsonResp.dslogin.ttdatauser[0].poccargo);
                 sessionStorage.setItem("img",jsonResp.dslogin.eesiccia[0].cialog);
                 sessionStorage.setItem("companyNIT",jsonResp.dslogin.eesiccia[0].cianit);
+                sessionStorage.setItem("razonSocial",jsonResp.dslogin.eesiccia[0].ciaraz);
+                sessionStorage.setItem("fechaSistema",fechaSistema);
                 sessionStorage.setItem("contra",jsonResp.dslogin.eesicusuarios[0].clavprov);                    
                 sessionStorage.setItem('sesion', sessionStorage.getItem("picfiid"));
                 sessionStorage.setItem("loginintegrity","valido");
@@ -70,19 +77,41 @@ function login() {
                 sessionStorage.setItem("portLinux",jsonResp.dslogin.eesiccia[0].ciapuerto);
                 window.location.assign("html/index.html");
             }else{
-                alert("Problemas con el inicio sesión .\n" + permitirIngreso);
-                console.log("Usuario no puede ingresar \n" + permitirIngreso);
-                $("#btnLogin").kendoButton({
-                    enable: true
+                $("body").append("<div id='dialog'></div>");
+                var dialog = $('#dialog');
+                dialog.kendoDialog({
+                    width: "400px",
+                    title: "Problemas con el inicio sesión",
+                    closable: false,
+                    modal: true,
+                    content: "<p>"+permitirIngreso+"</p><br>",
+                    actions: [
+                        { text: 'Intentar de nuevo', primary: true, action: IntentarNuevamente }                    
+                    ]                
                 });
-             //   window.location.assign(sessionStorage.getItem("url"));
+                console.log("Usuario no puede ingresar \n" + permitirIngreso);
+                var buttonObject = $("#btnLogin").kendoButton().data("kendoButton");
+                buttonObject.enable(true);             
             }
         });
         
     } catch (e) {
-        alert("Function: consumeServAjaxSIR Error: " + e.message);
+        kendo.alert("Function: consumeServAjaxSIR Error: " + e.message);
         window.location.assign(sessionStorage.getItem("url"));
     }    
+}
+
+/**
+ * función que se encarga de cerrar el dialog
+ * @returns {undefined}
+ */
+function IntentarNuevamente(){    
+    var dialog = $('#dialog');
+    dialog.fadeOut();
+    $( "#book" ).fadeIn( "slow", function() {
+    // Animation complete
+  });
+    $( ".dialog" ).remove();
 }
 
 /*

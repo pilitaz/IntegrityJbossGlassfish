@@ -3,6 +3,7 @@ var puerto = sessionStorage.getItem("puerto");
 var ip = sessionStorage.getItem("ip");
 
 var urlIFrame = "http://"+ip+":"+puerto+"/sbm/BizSolo/"; 
+
 var arreglo_funCod = new Array();
 var arreglo_funDes = new Array();
 var arreglo_funIco = new Array();
@@ -34,7 +35,7 @@ $(document).ready(function() {
         document.getElementById("idFrame").src = urlIFrame+"actatareas/Start.jsp";
 //        document.getElementById("idFrame").src = "http://190.144.16.114:18800/PruebaHRD";
     }else{
-        window.location.assign(sessionStorage.getItem(url));
+        window.location.assign(sessionStorage.getItem("url"));
     }
 });
 
@@ -72,10 +73,10 @@ function cambiarImagen(imgId, estiloTd){
         document.getElementById(imgId).setAttribute("onmouseover", "");
         document.getElementById(imgId).setAttribute("onmouseout", "");
         //document.getElementById(imgId).getAttribute("servicio");
-        if(servicio==="Reports"){
+        if(servicio==="Reporteador"){
             $('#divDerecho').width($(window).width());
             document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
-            var urlFrameNew = "http://"+ip+":"+puerto+"/Reporteador"; 
+            var urlFrameNew = "http://"+ip+":"+puerto+"/"+servicio; 
             document.getElementById("idFrame").src = urlFrameNew;
             document.getElementById("tdPerfil").style="display:none"
         }
@@ -229,7 +230,7 @@ function guardarClave(){
                 dataType : "json",
                 contentType: "application/json;",
                 success: function (resp) {                    
-                    cambioExitoso = JSON.stringify(resp.dslogin.ttestado[0].pocestado);                
+                    cambioExitoso = JSON.stringify(resp.dslogin.eeEstados[0].Estado);                
                 },
                 error: function (e) {
                     alert("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);
@@ -290,11 +291,9 @@ function menufunciones() {
             url: ipServicios + baseServicio +"arbol",
             dataType : "json",
             contentType: "application/json;",
-            success: function (resp) {
-                
+            success: function (resp) {                
                 menuUsuario = JSON.stringify(resp.dslogin.ttmenuxusuario);
-                sessionStorage.setItem("menuJsonIni",menuUsuario);
-                
+                sessionStorage.setItem("menuJsonIni",menuUsuario);                
             },
             error: function (e) {
                 alert("Error" + JSON.stringify(e));
@@ -325,24 +324,32 @@ function inicio(){
 }
 
 function documentos(){
+    debugger
     servicio="Documentos";
+    tamanoFunciones();
     $("#tdPerfil").fadeOut("slow");
-    document.getElementById("idFrame").src = urlIFrame+servicio+"/Start.jsp";      
+    document.getElementById("idFrame").src = urlIFrame+servicio+"/Start.jsp";   
 }
 
-function abreFuncion(servicio){
+function abreFuncion(servicio){    
     tamanoFunciones();
     document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
     $("#tdPerfil").fadeOut("slow");    
     $('#divDerecho').width($(window).width());
     apagarBotones();
     cambiarFondoTD("tdVerde");
-    if(servicio.slice(0,8)=="caracter"){        
+    if(servicio.slice(0,5)==="html&"){
+        var servicio = servicio.replace(/html&/g,"");
+        sessionStorage.setItem("servicio",servicio);        
+        document.getElementById("idFrame").src = sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html"; 
+    }
+    else if(servicio.slice(0,8)=="caracter"){        
         var contra = sessionStorage.getItem("contra");//sbm.util.getValue("textField1");
         var servicio = servicio.replace(/caracter/g,"");
         sessionStorage.setItem("servicio",servicio);
-        sessionStorage.setItem("sesion",sessionStorage.getItem("picfiid"));        
-        document.getElementById("idFrame").src = urlIFrame + "IntegrityViejo/Start.jsp";        
+        sessionStorage.setItem("sesion",sessionStorage.getItem("picfiid"));
+        servLinuxSOption(servicio);
+        //document.getElementById("idFrame").src = urlIFrame + "IntegrityViejo/Start.jsp";        
     }else{
         document.getElementById("idFrame").src = urlIFrame+servicio+"/Start.jsp";
     }
@@ -414,7 +421,72 @@ function corre(){//esta funcion se ejecuta por que la app IntegrityViejo la llam
         document.location.href = "localexplorer:W:/SrcDesarrollo/Programas/Shell/integrity3.bat";
     }
 }
-
+function servLinuxSOption(programa) {
+    var jSonData = {
+        "dsOpcion": {
+            "eeDatos": [
+                {
+                    "picusrcod":sessionStorage.getItem("usuario"),
+                    "picfiid":sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "eeParametros": [
+                {
+                    "picprograma": programa
+                }
+            ]
+        }
+    };
+    var jsonResp = "";
+    var permitirIngreso;
+    $.ajax({
+        "async": false,
+        type: "POST",
+        data: JSON.stringify(jSonData),
+        url: ipServicios + baseServicio + "SOpcion",
+        dataType: "json",
+        contentType: "application/json;",
+        success: function (resp) {
+            var key1 = Object.keys(resp)[0];
+            permitirIngreso = JSON.stringify(resp[key1].eeEstados[0].Estado);
+            jsonResp = resp;
+        },
+        error: function (e) {
+            msnError("Error al consumir el servicio de login.\n" + e.status + " - " + e.statusText);
+            var buttonObject = $("#btnLogin").kendoButton().data("kendoButton")
+            buttonObject.enable(true);
+        }
+    }).done(function () {
+        if (permitirIngreso == '"OK"') {
+alert("hola");
+corre();
+        } else {
+            $("body").append("<div id='dialog'></div>");
+             var dialog = $('#dialog');
+                dialog.kendoDialog({
+                    width: "400px",
+                    title: "Problemas con el inicio sesión en plataforma Caracter",
+                    closable: false,
+                    modal: true,
+                    content: "<p>"+permitirIngreso+"</p><br>",
+                    actions: [
+                        { text: 'Intentar de nuevo', primary: true, action: IntentarNuevamente }                    
+                    ]                
+                });
+            console.log("Usuario no puede ingresar \n" + permitirIngreso);
+            var buttonObject = $("#btnLogin").kendoButton().data("kendoButton")
+            buttonObject.enable(true);
+        }
+    });
+}
+function IntentarNuevamente(){    
+    var dialog = $('#dialog');
+    dialog.fadeIn('slow', function(){
+        $( ".dialog" ).remove();
+    });    
+}
 function tamanoShell(e){
     estadoIfra = "PagShell";
     if(e){
