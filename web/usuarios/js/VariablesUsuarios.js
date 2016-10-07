@@ -8,15 +8,15 @@
  *  var input = sir.getdataInputSir();
  */
  function sirconsulta() {
-    var urlSir = "http://190.144.16.114:8810"+ "/rest/Base/BaseIntegrity/" +"SirUsuarios";
+    var urlSir = ipServicios + baseServicio +"SirUsuarios";
     var json = {  
      "dsee_user2":{  
       "eeDatos":[  
       {  
-        "picusrcod":"jorgereita1",
-        "picfiid":"80019884934504174879",
-        "local_ip":"172.21.24.105",
-        "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
     }
     ]
 }
@@ -45,15 +45,15 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 function cudcreate () {
 
-    var urlCud = "http://190.144.16.114:8810/"+ "rest/Base/BaseIntegrity/" +"SicudUsuarios";
+    var urlCud = ipServicios + baseServicio  +"SicudUsuarios";
     var json = {  
        "dsee_user2":{  
           "eeDatos":[  
              {  
-                "picusrcod":"jorgereita1",
-                "picfiid":"80019884934504174879",
-                "local_ip":"172.21.24.105",
-                "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
              }
           ],
           "ee_user2":[  
@@ -89,4 +89,39 @@ function cudcreate () {
     this.getjson= function () {
         return json;
     };
+};
+
+ function serviRoles() {
+    var urlSir = ipServicios + baseServicio +"SirCargos2";
+    var json = {  
+   "SIResic_car":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
 };

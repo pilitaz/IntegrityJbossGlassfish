@@ -167,7 +167,7 @@
 */     
              					var grid1 = $("#grid").kendoGrid({
                                 dataSource: dataSource,
-                                     height: 600,
+                                     height: 520,
                                     sortable: true,
                                     pageable: {
                                     refresh: true,
