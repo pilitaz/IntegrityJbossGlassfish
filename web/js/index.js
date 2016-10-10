@@ -32,7 +32,7 @@ $(document).ready(function() {
         document.getElementById("lbEMail").innerHTML = sessionStorage.getItem("usrmail");    
         document.getElementById("imgUsuario").src = "../images/equipo/"+sessionStorage.getItem("usuario")+".png";
         document.getElementById("logoEmpresa").src = "data:image/png;base64," + sessionStorage.getItem("img");
-        document.getElementById("idFrame").src = urlIFrame+"actatareas/Start.jsp";
+        document.getElementById("idFrame").src = "fondo.html";
 //        document.getElementById("idFrame").src = "http://190.144.16.114:18800/PruebaHRD";
     }else{
         window.location.assign(sessionStorage.getItem("url"));

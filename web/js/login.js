@@ -81,12 +81,7 @@ function login() {
                 actions[0] = new Object();
                 actions[0].text = "Intentar de nuevo";
                 actions[0].primary = "true";
-                actions[0].action = "IntentarNuevamente";
-                
-                actions[1] = new Object();    
-                actions[1].text = "Salir";                
-                actions[1].action = "salir";
-                console.log(JSON.stringify(actions));
+                actions[0].action = "IntentarNuevamente";                
                 
                 createDialog("Problemas con el inicio sesión", permitirIngreso, "400px", "auto", true, false, actions);
                 

@@ -435,16 +435,10 @@ function iniGridDetalle(){
     }
     
     function articulo(container, options) {
-        $('<input id="idArticulo" style="width: 100%;" data-bind="value: ' + options.field + '" />').appendTo(container).kendoDropDownList({
-            dataTextField: 'art__des',
-            dataValueField: 'art__cod',
-            optionLabel: "Seleccionar articulo..."           
-            
-        });        
+        $('<input id="idArticulo" class="k-textbox" style="width: 100%;" data-bind="value: ' + options.field + '" />').appendTo(container);
     }
-    
     function descripcion(container, options) {
-        $('<textarea id="idDescripcion" style="width: 100%; height: 150px; resize:none;" class="k-textbox"s data-bind="value: ' + options.field + '" />').appendTo(container)
+        $('<textarea id="idDescripcion" style="width: 100%; height: 150px; resize:none;" class="k-textbox"s data-bind="value: ' + options.field + '" />').appendTo(container);
     }
     
     function cantidad(container, options){
@@ -549,13 +543,15 @@ function iniGridDetalle(){
         });
     }
     
-    function onChangeClase(e){        
-        $("#idArticulo").kendoDropDownList({
+    function onChangeClase(e){
+        $("#idArticulo").removeClass("k-textbox");
+        $("#idArticulo").kendoAutoComplete({
             dataTextField: 'art__des',
-            dataValueField: 'art__cod',
             optionLabel: "Seleccionar articulo...",
+            minLength: 3,
+            filter: "contains",
             template:'<div class="divElementDropDownList">#: data.art__des #</div>',
-            change: onChangeArticulo,
+            select: onChangeArticulo,
             dataSource: {
                 type: "json",
                 transport: {
@@ -568,6 +564,7 @@ function iniGridDetalle(){
                     parameterMap: function (options, operation) {
                         authdsinv_art.dsinv_art.eetemp[0].piicla_cod = $("#idClaseArticulo").val();
                         authdsinv_art.dsinv_art.eetemp[0].piilis_num = sessionStorage.getItem("listaPrecioCliente");//lista del cliente        
+                        authdsinv_art.dsinv_art.eetemp[0].picart_des = $("#idArticulo").val();
                         console.log("authdsinv_art"+JSON.stringify(authdsinv_art));
                         try {
                             if (operation === 'read') {
@@ -577,12 +574,11 @@ function iniGridDetalle(){
                         } catch (e) {
                             kendo.alert("Error" +e.message);
                         }
-                    },
+                    }
                 },
                 schema: {
                     type: "json",
-                    data:function (e){ 
-                        
+                    data:function (e){                         
                         if(e.dsinv_art.eeEstados[0].Estado==="OK"){
                             return e.dsinv_art.eeinv_art;
                         }else{
@@ -600,7 +596,7 @@ function iniGridDetalle(){
                 },
                 error: function (xhr, error) {
                     kendo.alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
-                }
+                }   
             }
         });
     }
@@ -625,15 +621,16 @@ function iniGridDetalle(){
         }        
     }
     
-    function onChangeArticulo(e){        
+    function onChangeArticulo(e){   
         setIVA(e);
         setValorArticulo(e);       
     }
     
     
     function setIVA(e){
-        var selected= e.sender.selectedIndex;
-        var iva= e.sender.dataSource._data[(selected-1)].art__iva;
+        debugger        
+        var item= e.dataItem;
+        var iva= item.art__iva;
         var numerictextbox = $("#idIVA").data("kendoNumericTextBox");    
         numerictextbox.value(iva/100);    
         numerictextbox.readonly();
@@ -641,8 +638,9 @@ function iniGridDetalle(){
     }
     
     function setValorArticulo(e){
+        var item= e.dataItem;
         var valor = 0;    
-        valor = e.sender.dataSource._data[e.sender.selectedIndex-1].art__val;
+        valor = item.art__val;
         
         var numerictextbox = $("#idValorUnitario").data("kendoNumericTextBox");
         numerictextbox.value(valor);    
@@ -711,12 +709,14 @@ function iniGridDetalle(){
                 }
             },
             {
-                field: "articulo",
+                field: "Articulo",
                 title: "Articulo",
-                editor: articulo,
-                template: function (e){
-                    if(e.articulo){return e.articulo.art__des;}
-                }
+                editor: articulo
+//                template: function (e){    
+//                    debugger
+//                    if(e.articulo){return e.articulo;}                    
+//                }
+                
             },           
             {
                 field: "Descripcion",
@@ -945,7 +945,7 @@ function setInfoCliente(e){
             },
             error: function (xhr, error) {
                 kendo.alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
-            },
+            }
         }
         
     });
@@ -1111,20 +1111,17 @@ function guardarFactura(){
             kendo.alert("Error consumiendo el servicio de guardar\n"+ e.status +" - "+ e.statusText);
         }
     }).done(function(){
-        if(facturaGuardada=='"OK"'){            
-            var dialog = $('#dialog');  
+        if(facturaGuardada=='"OK"'){
+            var actions = new Array();
+            actions[0] = new Object();
+            actions[0].text = "Crear nueva factura";
+            actions[0].primary = "true";
+            actions[0].action = "nuevaFactura";
+            actions[1] = new Object();
+            actions[1].text = "Imprimir factura";            
+            actions[0].action = "imprimirFac";     
             
-            dialog.kendoDialog({
-                width: "400px",
-                title: "Que desea hacer?",
-                closable: false,
-                modal: true,
-                content: "<p>"+msn+" El número de la factura es: "+numFactura+"</p>"+"<br><p></p>",
-                actions: [
-                    { text: 'Crear nueva factura', primary: true, action: nuevaFactura },
-                    { text: 'Imprimir factura', action: imprimirFac }
-                ]                
-            });
+            createDialog("Que desea hacer?", msn+" El número de la factura es: "+numFactura, "400px", "auto", true, false, actions);
             console.log("Factura guardada \n" + facturaGuardada);                     
         }else{                    
             kendo.alert("factura con errores  \n"+facturaGuardada);
