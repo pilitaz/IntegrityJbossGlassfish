@@ -77,18 +77,19 @@ function login() {
                 sessionStorage.setItem("portLinux",jsonResp.dslogin.eesiccia[0].ciapuerto);
                 window.location.assign("html/index.html");
             }else{
-                $("body").append("<div id='dialog'></div>");
-                var dialog = $('#dialog');
-                dialog.kendoDialog({
-                    width: "400px",
-                    title: "Problemas con el inicio sesión",
-                    closable: false,
-                    modal: true,
-                    content: "<p>"+permitirIngreso+"</p><br>",
-                    actions: [
-                        { text: 'Intentar de nuevo', primary: true, action: IntentarNuevamente }                    
-                    ]                
-                });
+                var actions = new Array();
+                actions[0] = new Object();
+                actions[0].text = "Intentar de nuevo";
+                actions[0].primary = "true";
+                actions[0].action = "IntentarNuevamente";
+                
+                actions[1] = new Object();    
+                actions[1].text = "Salir";                
+                actions[1].action = "salir";
+                console.log(JSON.stringify(actions));
+                
+                createDialog("Problemas con el inicio sesión", permitirIngreso, "400px", "auto", true, false, actions);
+                
                 console.log("Usuario no puede ingresar \n" + permitirIngreso);
                 var buttonObject = $("#btnLogin").kendoButton().data("kendoButton");
                 buttonObject.enable(true);             

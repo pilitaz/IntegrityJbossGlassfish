@@ -259,3 +259,39 @@ function identBrowser() {
     return  browser;
 }
 
+/**
+ * Crea un ventana tipo "dialog" de kendo para mostrar mensajes de al usuario
+ * 
+ * @param {string} titulo  texto que aparece en la parte superior de la ventana
+ * @param {string} contenido texto que aparece en el centro de la ventana 
+ * @param {string} ancho indica el ancho de la ventana, puede ser "auto" o un numero en pixeles "300px"
+ * @param {string} alto indica el ato de la ventana, puede ser "auto" o un numero en pixeles "300px"
+ * @param {boolean} modal indica el tipo de foco que tiene la ventana respecto a la aplicaciòn
+ * @param {boolean} cerrar indica si la ventana se puede cerrar sin llamar a una de las acciones
+ * @param {array} actions objeto tipo arreglo el cual contiene las diferentes opciones que el usuario puede elegir, solo puede haber un boton principal ejem:
+ *                        var actions = new Array();
+ *                        actions[0] = new Object();
+ *                        actions[0].text = "Intentar de nuevo";
+ *                        actions[0].primary = "true";
+ *                        actions[0].action = "IntentarNuevamente"; (función que se invoca)
+ *                        actions[1] = new Object();    
+ *                        actions[1].text = "Salir";                
+ *                        actions[1].action = "salir"; función que se invoca)
+ * @returns {undefined}
+ */
+function createDialog(titulo, contenido, ancho, alto, modal, cerrar, actions){
+    
+    $("body").append("<div id='dialog'></div>");
+    var dialog = $('#dialog');
+    dialog.kendoDialog({
+        width: ancho,
+        heigh: alto,
+        title: titulo,
+        closable: cerrar,
+        modal: modal,
+        content: "<p>"+contenido+"</p><br>",
+        actions: actions        
+    });
+    
+}
+
