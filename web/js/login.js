@@ -38,6 +38,7 @@ function login() {
         jSonData.dslogin.ttdatauser[0].picusrpass = password;
         jSonData.dslogin.ttdatauser[0].local_ip = sessionStorage.getItem("ipPrivada");
         jSonData.dslogin.ttdatauser[0].remote_ip = sessionStorage.getItem("ipPublica");
+        console.log(JSON.stringify(jSonData));
         var jsonResp = "";
         var permitirIngreso;
         $.ajax({

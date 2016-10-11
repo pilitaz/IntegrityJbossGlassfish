@@ -1,3 +1,24 @@
+body{
+    font-size: 14px; 
+    font-family: "Verdana"; 
+    color:"#E6E6FA";
+    padding-left: 10px;
+}
+
+div{
+    padding: 2px;
+}
+
+table{
+    padding: 2px;
+}
+
+.sidenavSup {
+    border-style: solid;
+    border-color: #80BD28 #fff  #fff  #fff;
+    height: 100%;
+}
+
 .botonDescargar {
     display: block;
     margin: 0 auto;

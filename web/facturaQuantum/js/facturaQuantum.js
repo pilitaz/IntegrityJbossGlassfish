@@ -8,6 +8,7 @@ var hoy = new Date(sessionStorage.getItem("fechaSistema"));
 hoy.setHours(0,0,0,0);
 var tasaDeCambio = "";
 var data="";
+var objArticulo="";
 
 ip=sessionStorage.getItem("ip");
 puerto=sessionStorage.getItem("puerto");
@@ -330,6 +331,7 @@ function iniAutocomplete(){
 }
 
 function iniGridDetalle(){
+       
     
     function conceptoDet(container, options) {        
         $('<input id="ipConceptoDet" style="width: 100%;" data-bind="value: ' + options.field + '" />').appendTo(container).kendoDropDownList({
@@ -619,17 +621,17 @@ function iniGridDetalle(){
             dropdownlist.value(codAmortizacion);
             dropdownlist.readonly();   
         }        
-    }
+    }    
     
-    function onChangeArticulo(e){   
-        setIVA(e);
-        setValorArticulo(e);       
-    }
-    
-    
-    function setIVA(e){
-        debugger        
+    function onChangeArticulo(e){
         var item= e.dataItem;
+        objArticulo = item;
+        setIVA(item);
+        setValorArticulo(item);       
+    }    
+    
+    function setIVA(item){
+        
         var iva= item.art__iva;
         var numerictextbox = $("#idIVA").data("kendoNumericTextBox");    
         numerictextbox.value(iva/100);    
@@ -637,8 +639,8 @@ function iniGridDetalle(){
         
     }
     
-    function setValorArticulo(e){
-        var item= e.dataItem;
+    function setValorArticulo(item){
+        
         var valor = 0;    
         valor = item.art__val;
         
@@ -668,7 +670,8 @@ function iniGridDetalle(){
                     ConceptoDet: { type: "string", editable: false },
                     Clase: { type: "string", validation: { required: true} },
                     Articulo: { type: "string", validation: { required: true} },                    
-                    Descripcion: { type: "string" },
+                    ArticuloId: {type: "number", editable: false },
+                    Descripcion: { type: "string" },                    
                     Cantidad: { type: "number", format: "n0", validation: { required: true, min:1} },                    
                     Descuento: { type: "number", format: "p0", validation: { min: 0, max: 0.1, step: 0.01}},
                     IVA: { type: "number", format: "p0", validation: { required: true, min: 0, max: 0.1, step: 0.01} },
@@ -711,11 +714,11 @@ function iniGridDetalle(){
             {
                 field: "Articulo",
                 title: "Articulo",
-                editor: articulo
-//                template: function (e){    
-//                    debugger
-//                    if(e.articulo){return e.articulo;}                    
-//                }
+                editor: articulo,
+                template: function (e){
+                    e.ArticuloId = objArticulo.art__cod;                     
+                    if(e.Articulo){return e.Articulo;}                    
+                }
                 
             },           
             {
@@ -875,7 +878,7 @@ function sumarDias(fechax, dias){
     return fechax;
 }
 function onBlurTasaDeCambio(){
-    debugger
+    
     if(tasaDeCambio != $("#ipTasa").val()){
         
         $("#ipFechaTasa").kendoDatePicker({        
@@ -1074,7 +1077,7 @@ function guardarFactura(){
         
         var jSonDetalle = new Object();
         jSonDetalle.cpto__cod = jSonDataGrid[i].conceptoDet.cpto__cod;
-        jSonDetalle.art__cod = jSonDataGrid[i].articulo.art__cod;
+        jSonDetalle.art__cod = jSonDataGrid[i].ArticuloId;
         jSonDetalle.cla__cod = jSonDataGrid[i].clase.cla__cod;
         jSonDetalle.itms__can = jSonDataGrid[i].Cantidad;        
         jSonDetalle.des__itms = jSonDataGrid[i].Descripcion;
@@ -1116,16 +1119,16 @@ function guardarFactura(){
             actions[0] = new Object();
             actions[0].text = "Crear nueva factura";
             actions[0].primary = "true";
-            actions[0].action = "nuevaFactura";
-            actions[1] = new Object();
-            actions[1].text = "Imprimir factura";            
-            actions[0].action = "imprimirFac";     
+            actions[0].action = nuevaFactura;
+//            actions[1] = new Object();
+//            actions[1].text = "Imprimir factura";            
+//            actions[1].action = "imprimirFac";     
             
             createDialog("Que desea hacer?", msn+" El número de la factura es: "+numFactura, "400px", "auto", true, false, actions);
             console.log("Factura guardada \n" + facturaGuardada);                     
         }else{                    
             kendo.alert("factura con errores  \n"+facturaGuardada);
-            console.log("Datos  \n" + cabeceraValida);                
+            console.log("Datos  \n" + facturaGuardada);                
         }
     });
 }
@@ -1170,10 +1173,9 @@ function onDataBoundGrid(e){
     
 }
 
-function nuevaFactura(e){
-    
+function nuevaFactura(e){ 
     var dialog = $('#dialog');
-    dialog.fadeIn();
+    dialog.fadeIn();    
     location.reload();
 }
 
