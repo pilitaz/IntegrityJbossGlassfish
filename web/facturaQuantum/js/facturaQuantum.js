@@ -966,7 +966,7 @@ function setInfoCliente(e){
                     url: ipServicios+"rest/Parameters/SIRsic_ven", //SIRsic_ven
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    type: "POST",
+                    type: "POST"
                 },
                 parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
                     try{

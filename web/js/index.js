@@ -323,12 +323,12 @@ function inicio(){
     window.location.assign("index.html");
 }
 
-function documentos(){
-    debugger
-    servicio="Documentos";
+function documentos(){    
+    servicio="documentos";    
+    sessionStorage.setItem("servicio",servicio);        
+    document.getElementById("idFrame").src = sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html";
     tamanoFunciones();
-    $("#tdPerfil").fadeOut("slow");
-    document.getElementById("idFrame").src = urlIFrame+servicio+"/Start.jsp";   
+    $("#tdPerfil").fadeOut("slow");    
 }
 
 function abreFuncion(servicio){    
@@ -522,6 +522,7 @@ function tamanoPagIni(width){
 }
 
 function tamanoFunciones(e){
+    
     estadoIfra = "PagFunciones";
     if(e){
         div_ancho=e;
