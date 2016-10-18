@@ -9,7 +9,6 @@ dsfiles.dsfiles.eeDatos[0].remote_ip = sessionStorage.getItem("ipPublica");
 console.log(JSON.stringify(dsfiles));
 
 $(document).ready(function () {
-    
     dataSource = new kendo.data.DataSource({
         transport: {
             read:  {
@@ -45,7 +44,7 @@ $(document).ready(function () {
     $("#grid").kendoGrid({
         dataSource: dataSource,
         change: onChange,
-        selectable: true,
+        selectable: "row",
         filterable: true,
         //height: 100%,        
         columns: [
@@ -59,7 +58,7 @@ function onChange(arg) {
         return $(item).text();
     });
     sessionStorage.setItem("documento", selected);
-    var tipoArchivo = sessionStorage.getItem("documento").split(".")[1];
+    var tipoArchivo = sessionStorage.getItem("documento").split(".")[sessionStorage.getItem("documento").split(".").length-1];
     
     var actions = new Array();
     actions[0] = new Object();
@@ -151,16 +150,16 @@ function getFileAsPDF(e){
 }
 
 function showFile(e){
-    try{
+    try{        
         var archivo = sessionStorage.getItem("documento");
         dsfiles.dsfiles.SIRfile = new Array();
         dsfiles.dsfiles.SIRfile[0] = new Object();
         dsfiles.dsfiles.SIRfile[0].pilfilename = archivo;
-        
+       //console.log("dsfiles\n"+JSON.stringify(dsfiles));
         $.ajax({
             type: "POST",
             data: JSON.stringify(dsfiles),
-            url: ipServicios+ipServicios+"DocumentAsPdf",
+            url: ipServicios+baseServicio+"GetDocument",
             dataType : "json",
             contentType: "application/json;",
             success: function (resp) {                
@@ -169,13 +168,17 @@ function showFile(e){
                 sessionStorage.setItem("documentobase64",documentobase64);                
             },
             error: function (e) {
-                alert("Error" + JSON.stringify(e));
+                kendo.alert("Error" + JSON.stringify(e));
             }
         }).done(function(){
-            var tipoArchivo = sessionStorage.getItem("documento").split(".")[1];
+            var tipoArchivo = sessionStorage.getItem("documento").split(".")[sessionStorage.getItem("documento").split(".").length-1];
+            debugger
             if (tipoArchivo==="pdf"){
                 var dataURI = "data:application/pdf;base64,"+ sessionStorage.getItem("documentobase64");                
-            }else {
+            }else if(tipoArchivo==="gif"||tipoArchivo==="jpeg"||tipoArchivo==="png"||tipoArchivo==="pjpeg"||tipoArchivo==="tiff"){
+                var dataURI = "data:image/"+tipoArchivo+";base64,"+ sessionStorage.getItem("documentobase64");
+            }
+            else {
                 var dataURI = "data:text/plain;base64,"+ sessionStorage.getItem("documentobase64");
             }            
             var a = document.createElement("a");

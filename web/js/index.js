@@ -323,13 +323,11 @@ function inicio(){
     window.location.assign("index.html");
 }
 
-function documentos(){    
-    servicio="documentos";    
-    sessionStorage.setItem("servicio",servicio);        
-    document.getElementById("idFrame").src = sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html";
-    tamanoFunciones();
-    $("#tdPerfil").fadeOut("slow");    
-}
+//function documentos(){
+//    mostrarDocumentos();    
+//    
+//    
+//}
 
 function abreFuncion(servicio){    
     tamanoFunciones();
@@ -542,4 +540,14 @@ function tamanoFunciones(e){
     $( "#idFrame" ).height( div_alto );
     $( "#idFrame" ).width( div_ancho - 35-20);
     $( "#includeArbol" ).height( div_alto -10);
+}
+
+function mostrarDocumentos(){    
+    servicio="documentos";
+    $("#divDocumentos").load("../documentos/html/documentos.html"); 
+    $("#divDocumentos").fadeIn("slow");
+    tamanoFunciones();
+}
+function ocultarDocumentos(){
+    $("#divDocumentos").fadeOut("slow");
 }

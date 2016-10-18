@@ -67,8 +67,7 @@ td{
     width:300px;
     z-index: 10;
     overflow: auto;
-    background-image: url("../images/fondo-arbol.png");
-    overflow: auto;
+    background-image: url("../images/fondo-arbol.png");    
 }
 #divIFrame{
     position: absolute;
@@ -94,8 +93,7 @@ img{
     left: 300px;
     top: 0;
     width:300px;
-    z-index: 10;
-    overflow: auto;
+    z-index: 10;    
     background-image: url("../images/fondo-arbol.png");
     overflow: auto;
 }
