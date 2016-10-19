@@ -45,10 +45,22 @@ $(document).ready(function () {
         dataSource: dataSource,
         change: onChange,
         selectable: "row",
-        filterable: true,
+        filterable: {
+            mode: "row"            
+        },        
         //height: 100%,        
         columns: [
-            { field: "nomfile", title: "Documento", width: "auto" }
+            { 
+                field: "nomfile", 
+                title: "Documentos", 
+                width: "auto", 
+                filterable: {
+                    cell: {
+                        showOperators: false,
+                        operator: "contains"
+                    }
+                } 
+            }
         ]
     });
 });
@@ -171,8 +183,7 @@ function showFile(e){
                 kendo.alert("Error" + JSON.stringify(e));
             }
         }).done(function(){
-            var tipoArchivo = sessionStorage.getItem("documento").split(".")[sessionStorage.getItem("documento").split(".").length-1];
-            debugger
+            var tipoArchivo = sessionStorage.getItem("documento").split(".")[sessionStorage.getItem("documento").split(".").length-1];            
             if (tipoArchivo==="pdf"){
                 var dataURI = "data:application/pdf;base64,"+ sessionStorage.getItem("documentobase64");                
             }else if(tipoArchivo==="gif"||tipoArchivo==="jpeg"||tipoArchivo==="png"||tipoArchivo==="pjpeg"||tipoArchivo==="tiff"){

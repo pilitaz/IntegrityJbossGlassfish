@@ -24,8 +24,7 @@ $(document).ready(function() {
         $("#btnGuardarClave").kendoButton({
             
         });
-        menufunciones();
-        //tamanoShell();
+        menufunciones();        
         tamanoPagIni();
         correLinuxBack();
         document.getElementById("lbNombre").innerHTML = sessionStorage.getItem("usrnom");
@@ -458,8 +457,7 @@ function servLinuxSOption(programa) {
         }
     }).done(function () {
         if (permitirIngreso == '"OK"') {
-alert("hola");
-corre();
+            corre();
         } else {
             $("body").append("<div id='dialog'></div>");
              var dialog = $('#dialog');
@@ -542,12 +540,14 @@ function tamanoFunciones(e){
     $( "#includeArbol" ).height( div_alto -10);
 }
 
-function mostrarDocumentos(){    
-    servicio="documentos";
+function mostrarDocumentos(){                                  
+    var tamañoContenedor = $("#outerWrapper").width();    
+    var d = document.getElementById('divDocumentos');    
+    d.style.left = (tamañoContenedor-300)+'px';    
     $("#divDocumentos").load("../documentos/html/documentos.html"); 
-    $("#divDocumentos").fadeIn("slow");
-    tamanoFunciones();
+    $("#divDocumentos").fadeIn("slow");    
 }
 function ocultarDocumentos(){
+    $("#divArbol").load("tree2.html");     
     $("#divDocumentos").fadeOut("slow");
 }
