@@ -45,6 +45,7 @@ $(document).ready(function () {
         dataSource: dataSource,
         change: onChange,
         selectable: "row",
+        scrollable: false,
         filterable: {
             mode: "row"            
         },        
@@ -52,7 +53,7 @@ $(document).ready(function () {
         columns: [
             { 
                 field: "nomfile", 
-                title: "Documentos", 
+                title: "&nbsp;", 
                 width: "auto", 
                 filterable: {
                     cell: {
@@ -85,7 +86,7 @@ function onChange(arg) {
         actions[2].text = "Como pdf";            
         actions[2].action = getFileAsPDF;
     }
-    createDialog("Que desea hacer?", "El archivo seleccinado es "+selected+" que desea hacer ", "400px", "auto", true, true, actions);   
+    createDialog("", "El archivo seleccinado es "+selected+" que desea hacer ", "400px", "auto", true, true, actions);   
     
 }
 /**

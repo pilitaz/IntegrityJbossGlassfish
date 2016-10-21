@@ -1,34 +1,47 @@
 .k-alt{
-    background-color: #1d1d1d;
+    background-color: #656565;
 }
 
 .k-grid.k-widget{
-    background-color: #0e0e0e;
+    background-color: #505050;
     border-color: #323232;
     color: #cecece;
 }
 
-.k-header{
-    background-color: #0e0e0e;
+.k-header{    
+    display: none;
+    background-color: gold;
     border-color: #323232;
     color: #cecece;
 }
+
 .k-grid-header{    
-    background-color: #0e0e0e;
+    background-color: #505050;
     border-color: #323232;
 }
 
 .k-grid-header-wrap{
-    background-color: #0e0e0e;
+    display: none;
+    background-color: #505050;
     border-color: #323232;
 }
 
 .k-filter-row th:hover{    
-    background-color: #0e0e0e;
+    background-color: #505050;
+    border-color: #323232;
 }
 
-.k-window-titlebar{
+.k-filter-row th{    
+    background-color: #505050;
+    border-color: #323232;
+}
+
+.k-window-titlebar{    
     background-color: #ffffff;
+}
+
+.k-grid td {
+    padding-left: 20px;
 }
 
 

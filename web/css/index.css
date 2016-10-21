@@ -78,6 +78,17 @@ td{
 }
 img{    
     border: 0;
+    cursor: pointer;
+}
+
+#logoEmpresa{
+    border: 0;
+    cursor: auto;
+}
+
+#imgUsuario{
+    border: 0;
+    cursor: auto;
 }
 
 #divFrameInc{

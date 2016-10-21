@@ -16,6 +16,7 @@ $(document).ready(function() {
     sessionStorage.setItem("VideoAyuda","http://comunicacion349.wix.com/integrity#!reportes-tutoriales/w865s");//cambiar urlVideo con url link apenas este listo el video de ayuda   
     
     if(sessionStorage.getItem("loginintegrity")==="valido"){
+        
         $(window).trigger("resize");
         
         $("#btnCambiarClave").kendoButton({
