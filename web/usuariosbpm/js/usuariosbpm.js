@@ -28,15 +28,16 @@ function creausuario() {
  *  var urlactualizar: url de servicio para actualizar / crear 
  *  var mapCud1: direccion de json para el esquema
  */
-                  function editar_usr(){debugger
+                  function editar_usr(e){debugger
                 	
-                       
-                       var grid1 = $("#grid").data("kendoGrid");
+                       e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
+                        var id = this.dataItem($(e.currentTarget).closest("tr")).euserid;
+//                       var grid1 = $("#grid").data("kendoGrid");
                        
                         
-                         var row = grid1.dataItem(grid1.select());
-                        var s=0;
-                        sessionStorage.setItem("Userid_bpm",row.euserid);
+//                         var row = grid1.dataItem(grid1.select());
+//                        var s=0;
+                        sessionStorage.setItem("Userid_bpm",id);
                         window.location = ("procesos&grupos.html");
                         //sessionStorage.setItem("Rolname",row.car__nom);
                     }
@@ -177,7 +178,7 @@ $(document).ready(function () {
                 }},
             {field: "epassword", title: "CLAVE", width: "50px", hidden: true, editor: passEditorPopup},
             {field: "epassword1", title: "REPITA CLAVE", width: "50px", hidden: true, editor: onkeypass},
-            {command: [{  template: "<a class='k-grid-destroy' onclick ='editar_usr()'><span  class='k-sprite re_detalle'></span></a>"  }, 
+            {command: [{name: "detalle", text: " ", click: editar_usr, template: "<a class='k-grid-detalle'><span class='k-sprite po_detalle'></span></a>"},
                        { name: "edit", text: "edit",  template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"}
                     
                        ], width: "100px"}

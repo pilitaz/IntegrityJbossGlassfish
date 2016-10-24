@@ -158,13 +158,13 @@
                             $('#grid').data('kendoGrid').refresh();                                             
                             $('#grid').data('kendoGrid').dataSource.read();
                             $('#grid').data('kendoGrid').refresh(); `}                                                                                       
-                        
+                       
                          *  
                          *  
                          */     
                         var grid1 = $("#grid").kendoGrid({
                             dataSource: dataSource,
-                            height: 600,
+                            
                             sortable: true,
                             selectable: true,
                             pageable: {

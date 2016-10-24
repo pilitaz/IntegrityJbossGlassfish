@@ -22,7 +22,9 @@ table{
     padding: 0px;
     border-spacing: 0;
 }
-
+.k-primary {
+    min-width: 150px;
+}
 
 .sidenavSup {
     border-style: solid;
@@ -34,7 +36,11 @@ table{
     border-color: #fff #fff #fff #E0E0E0;
     height: 100%;
 }
-
+.sidenavDer {
+    border-style: solid;
+    border-color: #fff #E0E0E0 #fff  #fff ;
+    height: 100%;
+}
 .letraParrafo{
     font-style: normal; 
     font-variant: normal;
@@ -57,19 +63,55 @@ table{
     vertical-align: center;
 }
 .mensaje{
-    font-style: normal; 
-    font-variant: normal;
-    font-weight: normal;
-    font-stretch: normal;
+    
     font-size: 14px;
-    line-height: normal;
+
     font-family: Verdana;
     font-weight: bold;
     vertical-align: center;
-    border-right-style: outset;
+   
+}
+ @media screen and (max-width: 1023px) {
+                    div.k-window {
+                        display: none !important;
+                    }
+                }
+
+                   .k-grid tr:hover {
+  background: transparent;
+}
+.k-grid tr:not(.k-state-selected):hover {
+      background: none;
+      color: inherit;
+  }
+
+  .k-grid tr.k-alt:not(.k-state-selected):hover {
+      background: #f1f1f1;
+  }
+  .k-detail-row{
+       padding: 0;
+  }
+  k-detail-cell{
+      padding: 0;
+  }
+#gridproceso {
+    height:250px;
+
+    width:550px;
+   
+    overflow: auto;
 }
 
-
+.sidenavIzq {
+    border-style: solid;
+    border-color: #fff #fff #fff #E0E0E0;
+    height: 100%;
+}
+.sidenavSub {
+    border-style: solid;
+    border-color: #EF9F27 #fff  #fff  #fff;
+    height: 100%;
+}
 
 
 

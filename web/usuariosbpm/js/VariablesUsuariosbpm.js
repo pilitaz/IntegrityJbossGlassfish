@@ -7,6 +7,45 @@
  *  var url = sir.getUrlSir();
  *  var input = sir.getdataInputSir();
  */
+function sirproceso() {
+   var urlSir = "http://172.21.24.146:8810/rest/Procesos/SIRbpm_proc";
+    var json = {  
+   "dsSIRbpm_proc":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid")
+         }
+      ],    
+        "SIRbpm_proc": [
+          {
+        "piccia__nit": sessionStorage.getItem("companyNIT"),
+        "picproc__name": "*"
+       }
+     ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+//----------------------------------------------------------
  function sirconsulta() {
     var urlSir = ipServicios + baseServicio +"SirUsuarios";
     var json = {  
@@ -43,6 +82,86 @@
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////
+function sirRoles() {
+    var urlSir = "http://172.21.24.146:8810/rest/Procesos/SIRbpm_rol";
+    var json = {  
+   "dsSIRbpm_rol":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid")
+         }
+      ],    
+        "SIRbpm_rol": [
+          {
+        "piireg": 0,
+        "picproc__name": " ",
+        "piireggrp": 0,
+        "picgrp__name": " "
+       }
+     ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+//-----------------------------------------------------------------------------
+ function sirgrupos() {
+    var urlSir = "http://172.21.24.146:8810/rest/Procesos/SIRbpm_grp";
+    var json = {  
+   "dsSIRbpm_grp":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid")
+         }
+      ],    
+        "SIRbpm_grp": [
+          {
+        "piireg": 0,
+        "picproc__name": " "
+       }
+     ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///-----------------------------------------------------------------------------
 function cudcreate () {
 
     var urlCud = ipServicios + baseServicio  +"SicudUsuarios";
@@ -90,6 +209,7 @@ function cudcreate () {
         return json;
     };
 };
+//------------------------------------------------------------------------------
 
  function serviRoles() {
     var urlSir = ipServicios + baseServicio +"SirCargos2";
@@ -103,6 +223,45 @@ function cudcreate () {
             "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+//-------------------------------------------------------------------------
+function sirusuariobpm() {
+    var urlSir = "http://172.21.24.146:8810/rest/Procesos/SIRbpm_user";
+    var json = {  
+   "dsSIRbpm_user":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid")
+         }
+      ],    
+        "SIRbpm_user": [
+          {
+        "piccia__nit": "",
+        "picusr__bmp" : ""
+       }
+     ]
    }
 };
     
