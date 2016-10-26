@@ -301,3 +301,24 @@ function onClose(e) {
         document.getElementById("dialog").remove();
     });    
 }
+/**
+ * ]Funcion que elimina la ventana emergente de una alerta
+ * @returns {undefined}
+ */
+function closeWin() {
+    $("#dialog").data("kendoDialog").close();
+    document.getElementById("#dialog").remove();
+}
+/**
+ * Funcion que envia los parametros por defoult en caso de que sea una alerta simple
+ * @param {type} header
+ * @param {type} message
+ * @returns {undefined}
+ */
+function alertDialogs (mensaje) {
+    var actions = new Array();
+    actions[0] = new Object();
+    actions[0].text = "Salir";
+    actions[0].action = onClose;
+    createDialog("Atención", mensaje, "400px", "200px", true, true, actions);
+}
