@@ -7,6 +7,63 @@
 
 $(document).ready(function() {
     
+    var dsSIRbpm_mpr = new Object();
+    dsSIRbpm_mpr.dsSIRbpm_mpr = new Object();
+    dsSIRbpm_mpr.dsSIRbpm_mpr.eeDatos = new Array();
+    dsSIRbpm_mpr.dsSIRbpm_mpr.eeDatos[0] = new Object();
+    dsSIRbpm_mpr.dsSIRbpm_mpr.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
+    dsSIRbpm_mpr.dsSIRbpm_mpr.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");        
+    dsSIRbpm_mpr.dsSIRbpm_mpr.SIRbpm_mpr = new Array();
+    dsSIRbpm_mpr.dsSIRbpm_mpr.SIRbpm_mpr[0] = new Object();
+    dsSIRbpm_mpr.dsSIRbpm_mpr.SIRbpm_mpr[0].picproc__nam = "*";
+    
+    
+    $("#ipProcesos").kendoDropDownList({
+        optionLabel: "Seleccione el proceso",
+        dataTextField: "mpr__nam",
+        dataValueField: "mpr__nam",
+        template:'<div class="divElementDropDownList">#: data.mpr__nam #</div>',            
+        dataSource: {
+            transport: {
+                read: {
+                    url: "http://172.21.24.146:8810/rest/Procesos/SIRbpm_mpr", 
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) {                    
+                    try {                         
+                        if (operation === 'read') {                                
+                            return JSON.stringify(dsSIRbpm_mpr);
+                        }	
+                    } catch (e) {
+                        kendo.alert(e.message)
+                    }
+                }
+            },
+            schema: {
+                type: "json",
+                data:function (e){
+                    if(e.dsSIRbpm_mpr.eeEstados[0].Estado==="OK"){
+                        return e.dsSIRbpm_mpr.eebpm_mpr;
+                    }else{
+                        kendo.alert(e.dsSIRbpm_mpr.eeEstados[0].Estado);
+                    }
+                },
+                model: {                       
+                    fields: {                            
+                        mpr__nam: {validation: {required: true}, type: 'string'}                            
+                    }
+                }
+            },
+            error: function (xhr, error) {
+                kendo.alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+            }
+        }
+    });
+    
+    
+    
     var dsSIRbpm_proc = new Object();
     dsSIRbpm_proc.dsSIRbpm_proc = new Object();
     dsSIRbpm_proc.dsSIRbpm_proc.eeDatos = new Array();
@@ -17,8 +74,6 @@ $(document).ready(function() {
     dsSIRbpm_proc.dsSIRbpm_proc.SIRbpm_proc[0] = new Object();
     dsSIRbpm_proc.dsSIRbpm_proc.SIRbpm_proc[0].piccia__nit = "800001541";
     dsSIRbpm_proc.dsSIRbpm_proc.SIRbpm_proc[0].picproc__name = "*";
-    console.log(JSON.stringify(dsSIRbpm_proc));
-     
     
     var dataSourceProcesos = new kendo.data.DataSource({
         transport: {
@@ -27,22 +82,17 @@ $(document).ready(function() {
                 url: "http://172.21.24.146:8810/rest/Procesos/SIRbpm_proc",
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json'             
-            },            
-            destroy: {
-                url: "http://172.21.24.146:8810/rest/Procesos/SICUDbpm_proc",
-                dataType: "jsonp"
             },
-            parameterMap: function (options, operation) {
-                try{                    
+            parameterMap: function (options, operation) {                
+                try{
                     if (operation === 'read') {                                
                         return JSON.stringify(dsSIRbpm_proc);
-                    }                     
+                    }                  
                 } catch (e) {
                     kendo.alert(e.message);
                 }
             }
-        },
-        batch: true,
+        },         
         pageSize: 20,
         schema: {
             data:"dsSIRbpm_proc.eebpm_proc",
@@ -54,13 +104,14 @@ $(document).ready(function() {
         }
     });
     
-    var gridheigth = $("#windowProcess").height()-$("#divSubtituloProcesos").height()-15;
+    var gridheigth = $("#windowProcess").height()-$("#divSubtituloProcesos").height()-25;
     
     $("#gridProcesos").kendoGrid({
         dataSource: dataSourceProcesos,
         height: gridheigth,
         sortable: true,
         pageable: true,
+        batch: false,
         filterable: {
             mode: "row"            
         },
@@ -73,81 +124,102 @@ $(document).ready(function() {
                         showOperators: false,
                         operator: "contains"
                     }
-                },
-                editor: proceso,
-                template: function (e){  
-                    if(e.proc__name){return e.proc__name;}
-                    
                 }
-            },
-            {
-                command: [
-                    {name: "eliminar", text: " ", template: "<a class='k-grid-detalle'><span class='k-sprite po_cerrar'></span></a>"}
-                ], 
-                width: "100px"
+            },            
+            {command: [
+                    {name: "eliminar", click: eliminarProceso, template: "<a class='k-grid-eliminar' href='' style='min-width:16px;'><span class='k-sprite po_cerrar'></span></a>"}
+                ],
+                width: "50px"
             }
+            
         ],
         editable: "inline"
     });
     
-    var dsSIRbpm_mpr = new Object();
-    dsSIRbpm_mpr.dsSIRbpm_mpr = new Object();
-    dsSIRbpm_mpr.dsSIRbpm_mpr.eeDatos = new Array();
-    dsSIRbpm_mpr.dsSIRbpm_mpr.eeDatos[0] = new Object();
-    dsSIRbpm_mpr.dsSIRbpm_mpr.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
-    dsSIRbpm_mpr.dsSIRbpm_mpr.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");        
-    dsSIRbpm_mpr.dsSIRbpm_mpr.SIRbpm_mpr = new Array();
-    dsSIRbpm_mpr.dsSIRbpm_mpr.SIRbpm_mpr[0] = new Object();
-    dsSIRbpm_mpr.dsSIRbpm_mpr.SIRbpm_mpr[0].picproc__nam = "*";
-    
-    function proceso(container, options) {        
-        $('<input id="ipProceso" style="width: 100%;" data-bind="value: ' + options.field + '" />').appendTo(container).kendoDropDownList({
-            optionLabel: "Seleccione el proceso",
-            dataTextField: "mpr__nam",
-            dataValueField: "mpr__nam",
-            template:'<div class="divElementDropDownList">#: data.mpr__nam #</div>',            
-            dataSource: {
-                transport: {
-                    read: {
-                        url: "http://172.21.24.146:8810/rest/Procesos/SIRbpm_mpr", 
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        type: "POST"
-                    },
-                    parameterMap: function (options, operation) {                    
-                        try {                         
-                            if (operation === 'read') {                                
-                                return JSON.stringify(dsSIRbpm_mpr);
-                            }	
-                        } catch (e) {
-                            kendo.alert(e.message)
-                        }
-                    }
+    function eliminarProceso(e){
+        
+        e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
+        var proceso = this.dataItem($(e.currentTarget).closest("tr")).proc__name;
+        
+        debugger
+        try{
+            $("#gridProcesos")
+            var dsSICUDbpm_proc = new Object();
+            dsSICUDbpm_proc.dsSICUDbpm_proc = new Object();
+            dsSICUDbpm_proc.dsSICUDbpm_proc.eeDatos = new Array();
+            dsSICUDbpm_proc.dsSICUDbpm_proc.eeDatos[0] = new Object();
+            dsSICUDbpm_proc.dsSICUDbpm_proc.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
+            dsSICUDbpm_proc.dsSICUDbpm_proc.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");        
+            dsSICUDbpm_proc.dsSICUDbpm_proc.eebpm_proc = new Array();
+            dsSICUDbpm_proc.dsSICUDbpm_proc.eebpm_proc[0] = new Object();
+            dsSICUDbpm_proc.dsSICUDbpm_proc.eebpm_proc[0].cia__nit = "800001541";
+            dsSICUDbpm_proc.dsSICUDbpm_proc.eebpm_proc[0].proc__name = proceso;
+            console.log(JSON.stringify(dsSICUDbpm_proc))
+           
+            
+            $.ajax({
+                type: "DELETE",
+                data: JSON.stringify(dsSICUDbpm_proc),
+                url: "http://172.21.24.146:8810/rest/Procesos/SICUDbpm_proc",
+                dataType : "json",
+                contentType: "application/json;",
+                success: function (resp) {                     
+                    permitirIngreso = JSON.stringify(resp.dsSICUDbpm_proc.eeEstados[0].Estado);                    
+                    jsonResp = resp; 
                 },
-                schema: {
-                    type: "json",
-                    data:function (e){
-                        if(e.dsSIRbpm_mpr.eeEstados[0].Estado==="OK"){
-                            return e.dsSIRbpm_mpr.eebpm_mpr;
-                        }else{
-                            kendo.alert(e.dsSIRbpm_mpr.eeEstados[0].Estado);
-                        }
-                    },
-                    model: {                       
-                        fields: {                            
-                            mpr__nam: {validation: {required: true}, type: 'string'}                            
-                        }
-                    }
-                },
-                error: function (xhr, error) {
-                    kendo.alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+                error: function (e) {
+                    kendo.alert("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);                
                 }
-            }
-        });
+            }).done(function(){
+                if(permitirIngreso=='"OK"'){  
+                    $('#gridProcesos').data('kendoGrid').dataSource.read();
+                    $('#gridProcesos').data('kendoGrid').refresh();
+                }else{
+                    kendo.alert(permitirIngreso);
+                }
+            });
+        }catch (e) {
+            kendo.alert("Function: consumeServAjaxSIR Error: " + e.message);        
+        }
     }
+    
 });
 
-function agregarProceso(e){    
-    var grid = $("#gridProcesos").data("kendoGrid");
-    grid.addRow();    
+function agregarProceso(e){
+    try{
+        var dsSICUDbpm_proc = new Object();
+        dsSICUDbpm_proc.dsSICUDbpm_proc = new Object();
+        dsSICUDbpm_proc.dsSICUDbpm_proc.eeDatos = new Array();
+        dsSICUDbpm_proc.dsSICUDbpm_proc.eeDatos[0] = new Object();
+        dsSICUDbpm_proc.dsSICUDbpm_proc.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
+        dsSICUDbpm_proc.dsSICUDbpm_proc.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");        
+        dsSICUDbpm_proc.dsSICUDbpm_proc.eebpm_proc = new Array();
+        dsSICUDbpm_proc.dsSICUDbpm_proc.eebpm_proc[0] = new Object();
+        dsSICUDbpm_proc.dsSICUDbpm_proc.eebpm_proc[0].cia__nit = "800001541";
+        dsSICUDbpm_proc.dsSICUDbpm_proc.eebpm_proc[0].proc__name = $("#ipProcesos").val();        
+        
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(dsSICUDbpm_proc),
+            url: "http://172.21.24.146:8810/rest/Procesos/SICUDbpm_proc",
+            dataType : "json",
+            contentType: "application/json;",
+            success: function (resp) {                 
+                permitirIngreso = JSON.stringify(resp.dsSICUDbpm_proc.eeEstados[0].Estado);                
+                jsonResp = resp; 
+            },
+            error: function (e) {
+                kendo.alert("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);                
+            }
+        }).done(function(){
+            if(permitirIngreso==='"OK"'){  
+                $('#gridProcesos').data('kendoGrid').dataSource.read();
+                $('#gridProcesos').data('kendoGrid').refresh();
+            }else{
+                kendo.alert(permitirIngreso);
+            }
+        });
+    }catch (e) {
+        kendo.alert("Function: consumeServAjaxSIR Error: " + e.message);        
+    }
 }

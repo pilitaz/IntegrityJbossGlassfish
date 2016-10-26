@@ -8,6 +8,10 @@ and open the template in the editor.
     Author     : jenny
 */
 
+body{
+    padding-bottom: 10px
+}
+
 .k-pager-info{
     display: none;
 }
