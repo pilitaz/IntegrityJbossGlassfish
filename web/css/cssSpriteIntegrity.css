@@ -915,3 +915,21 @@
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -608px -508px;
 }
+
+.admin_proff{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -608px -108px;
+	cursor:pointer
+}
+.admin_proff:hover {
+	width: 34px;
+	height: 34px;	
+        background: url(../images/SpriteIntegrity.png) -658px -108px;
+	cursor:pointer
+}
+.admin_proff:active {
+	width: 34px;
+	height: 34px;	
+        background: url(../images/SpriteIntegrity.png) -608px -108px;
+}

@@ -10,9 +10,11 @@ and open the template in the editor.
 
 html { 
     padding: 0;
+    height: 100%;
 }
 
 body{
+    height: 100%;
     font-size: 14px; 
     font-family: Verdana, Helvetica, sans-serif; 
     color: #48494B;
@@ -31,6 +33,18 @@ h4{
     border-color: #80BD28 #fff  #fff  #fff;
     height: 100%;
 }
+
+.sidenavIzq {
+    border-style: solid;
+    border-color: #fff #fff #fff #E0E0E0;
+    height: 100%;
+}
+.sidenavDer {
+    border-style: solid;
+    border-color: #fff #E0E0E0 #fff  #fff ;
+    height: 100%;
+}
+
 .letraParrafo{
     font-style: normal; 
     font-variant: normal;
@@ -51,3 +65,7 @@ h4{
     font-weight: bold;
 }
 
+.divElementDropDownList{
+    border-bottom: 1px solid;
+    border-bottom-color: #DFDFDF;
+}
