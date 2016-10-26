@@ -30,19 +30,19 @@ $(document).ready(function() {
         height: gridheigth,
         sortable: true,
         pageable: true,
-        filterable: {
-            mode: "row"            
-        },
+//        filterable: {
+//            mode: "row"            
+//        },
         columns: [
             {
                 field: "ciaraz",
                 title: "Compañia",
-                filterable: {
-                    cell: {
-                        showOperators: false,
-                        operator: "contains"
-                    }
-                }                 
+//                filterable: {
+//                    cell: {
+//                        showOperators: false,
+//                        operator: "contains"
+//                    }
+//                }                 
             },
             {
                 command: [
@@ -74,7 +74,7 @@ function agregarProcesos(e){
         width: widthPopUp,
         height: heightPopUp,
         title: nombreEmpresa,
-        content: "procesos.html",
+        content: "popupAsignarProcesos.html",
         visible: false,
         modal: true,
         actions: [            

@@ -37,7 +37,7 @@ $(document).ready(function() {
                             return JSON.stringify(dsSIRbpm_mpr);
                         }	
                     } catch (e) {
-                        kendo.alert(e.message)
+                        alertDialogs (e.message)
                     }
                 }
             },
@@ -47,7 +47,7 @@ $(document).ready(function() {
                     if(e.dsSIRbpm_mpr.eeEstados[0].Estado==="OK"){
                         return e.dsSIRbpm_mpr.eebpm_mpr;
                     }else{
-                        kendo.alert(e.dsSIRbpm_mpr.eeEstados[0].Estado);
+                        alertDialogs (e.dsSIRbpm_mpr.eeEstados[0].Estado);
                     }
                 },
                 model: {                       
@@ -57,7 +57,7 @@ $(document).ready(function() {
                 }
             },
             error: function (xhr, error) {
-                kendo.alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+                alertDialogs ("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
             }
         }
     });
@@ -89,7 +89,7 @@ $(document).ready(function() {
                         return JSON.stringify(dsSIRbpm_proc);
                     }                  
                 } catch (e) {
-                    kendo.alert(e.message);
+                    alertDialogs (e.message);
                 }
             }
         },         
@@ -112,19 +112,19 @@ $(document).ready(function() {
         sortable: true,
         pageable: true,
         batch: false,
-        filterable: {
-            mode: "row"            
-        },
+//        filterable: {
+//            mode: "row"            
+//        },
         columns: [
             {
                 field: "proc__name",
                 title: "Proceso",
-                filterable: {
-                    cell: {
-                        showOperators: false,
-                        operator: "contains"
-                    }
-                }
+//                filterable: {
+//                    cell: {
+//                        showOperators: false,
+//                        operator: "contains"
+//                    }
+//                }
             },            
             {command: [
                     {name: "eliminar", click: eliminarProceso, template: "<a class='k-grid-eliminar' href='' style='min-width:16px;'><span class='k-sprite po_cerrar'></span></a>"}
@@ -141,7 +141,7 @@ $(document).ready(function() {
         e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
         var proceso = this.dataItem($(e.currentTarget).closest("tr")).proc__name;
         
-        debugger
+         
         try{
             $("#gridProcesos")
             var dsSICUDbpm_proc = new Object();
@@ -168,18 +168,18 @@ $(document).ready(function() {
                     jsonResp = resp; 
                 },
                 error: function (e) {
-                    kendo.alert("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);                
+                    alertDialogs ("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);                
                 }
             }).done(function(){
                 if(permitirIngreso=='"OK"'){  
                     $('#gridProcesos').data('kendoGrid').dataSource.read();
                     $('#gridProcesos').data('kendoGrid').refresh();
                 }else{
-                    kendo.alert(permitirIngreso);
+                    alertDialogs (permitirIngreso);
                 }
             });
         }catch (e) {
-            kendo.alert("Function: consumeServAjaxSIR Error: " + e.message);        
+            alertDialogs ("Function: consumeServAjaxSIR Error: " + e.message);        
         }
     }
     
@@ -209,17 +209,17 @@ function agregarProceso(e){
                 jsonResp = resp; 
             },
             error: function (e) {
-                kendo.alert("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);                
+                alertDialogs ("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);                
             }
         }).done(function(){
             if(permitirIngreso==='"OK"'){  
                 $('#gridProcesos').data('kendoGrid').dataSource.read();
                 $('#gridProcesos').data('kendoGrid').refresh();
             }else{
-                kendo.alert(permitirIngreso);
+                alertDialogs (permitirIngreso);
             }
         });
     }catch (e) {
-        kendo.alert("Function: consumeServAjaxSIR Error: " + e.message);        
+        alertDialogs ("Function: consumeServAjaxSIR Error: " + e.message);        
     }
 }
