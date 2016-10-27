@@ -8,7 +8,7 @@ var hoy = new Date(sessionStorage.getItem("fechaSistema"));
 hoy.setHours(0,0,0,0);
 var tasaDeCambio = "";
 var data="";
-var objArticulo="";
+var objArticulo= null;
 
 ip=sessionStorage.getItem("ip");
 puerto=sessionStorage.getItem("puerto");
@@ -102,7 +102,7 @@ function iniDropDownList(){
                             return JSON.stringify(auth);
                         }	
                     } catch (e) {
-                        kendo.alert(e.message);
+                        alertDialogs(e.message);
                     }
                 },
             },
@@ -112,7 +112,7 @@ function iniDropDownList(){
                     if(e.dssic_suc.eeEstados[0].Estado==="OK"){
                         return e.dssic_suc.eesic_suc;
                     }else{
-                        kendo.alert(e.dssic_suc.eeEstados[0].Estado);
+                        alertDialogs(e.dssic_suc.eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -124,7 +124,7 @@ function iniDropDownList(){
                 }
             },
             error: function (xhr, error) {
-                kendo.alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+                alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
             }
         }
         
@@ -160,7 +160,7 @@ function iniDropDownList(){
                             return JSON.stringify(authdsgfc_cpto);
                         }	
                     } catch (e) {
-                        kendo.alert(e.message);
+                        alertDialogs(e.message);
                     }
                 },
             },
@@ -170,7 +170,7 @@ function iniDropDownList(){
                     if(e.dsgfc_cpto.eeEstados[0].Estado==="OK"){
                         return e.dsgfc_cpto.eegfc_cpto;
                     }else{
-                        kendo.alert(e.dsgfc_cpto.eeEstados[0].Estado);
+                        alertDialogs(e.dsgfc_cpto.eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -182,7 +182,7 @@ function iniDropDownList(){
                 }
             },
             error: function (xhr, error) {
-                kendo.alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+                alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
             }
         }        
     });
@@ -237,7 +237,7 @@ function iniDropDownList(){
                             return JSON.stringify(authdssic_mnd);
                         }	
                     } catch (e) {                        
-                        kendo.alert(e.message);
+                        alertDialogs(e.message);
                     }
                 }
             },
@@ -247,7 +247,7 @@ function iniDropDownList(){
                     if(e.dssic_mnd.eeEstados[0].Estado==="OK"){
                         return e.dssic_mnd.eesic_mnd;
                     }else{
-                        kendo.alert("Problemas con el servicio: "+e.dssic_mnd.eeEstados[0].Estado);
+                        alertDialogs("Problemas con el servicio: "+e.dssic_mnd.eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -259,7 +259,7 @@ function iniDropDownList(){
                 }
             },
             error: function (xhr, error) {
-                kendo.alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+                alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
             }
         }
         
@@ -300,7 +300,7 @@ function iniAutocomplete(){
                             return JSON.stringify(authdsgfc_cli);
                         } 
                     } catch (e) {
-                        kendo.alert(e.message);
+                        alertDialogs(e.message);
                     }                
                     
                 }
@@ -312,13 +312,13 @@ function iniAutocomplete(){
                     }else if(e.dsgfc_cli.eeEstados[0].Estado==="ERROR: Patrón de Búsqueda Insuficiente !!!"){
                         
                     }else{
-                        kendo.alert(e.dsgfc_cli.eeEstados[0].Estado);
+                        alertDialogs(e.dsgfc_cli.eeEstados[0].Estado);
                     }
                 },
                 model:{}
             },
             error: function (xhr, error) {
-                kendo.alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+                alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
             },
             change: function (e) {
                 //console.log("Change client");
@@ -355,7 +355,7 @@ function iniGridDetalle(){
                                 return JSON.stringify(authdsgfc_cpto);
                             }	
                         } catch (e) {
-                            kendo.alert(e.message)
+                            alertDialogs(e.message)
                         }
                     }
                 },
@@ -365,7 +365,7 @@ function iniGridDetalle(){
                         if(e.dsgfc_cpto.eeEstados[0].Estado==="OK"){
                             return e.dsgfc_cpto.eegfc_cpto;
                         }else{
-                            kendo.alert(e.dsgfc_cpto.eeEstados[0].Estado);
+                            alertDialogs(e.dsgfc_cpto.eeEstados[0].Estado);
                         }
                     },
                     model: {
@@ -378,7 +378,7 @@ function iniGridDetalle(){
                     }
                 },
                 error: function (xhr, error) {
-                    kendo.alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+                    alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
                 }
             }
         });
@@ -408,7 +408,7 @@ function iniGridDetalle(){
                                 return JSON.stringify(authdsinv_cla);
                             }	
                         } catch (e) {
-                            kendo.alert(e.message);
+                            alertDialogs(e.message);
                         }
                     }
                 },
@@ -418,7 +418,7 @@ function iniGridDetalle(){
                         if(e.dsinv_cla.eeEstados[0].Estado==="OK"){                            
                             return e.dsinv_cla.eeinv_cla;
                         }else{
-                            kendo.alert(e.dsinv_cla.eeEstados[0].Estado);
+                            alertDialogs(e.dsinv_cla.eeEstados[0].Estado);
                         }
                     },
                     model: {
@@ -430,14 +430,14 @@ function iniGridDetalle(){
                     }
                 },
                 error: function (xhr, error) {
-                    kendo.alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+                    alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
                 }
             }			
         });
     }
     
     function articulo(container, options) {
-        $('<input id="idArticulo" class="k-textbox" style="width: 100%;" data-bind="value: ' + options.field + '" />').appendTo(container);
+        $('<input id="idArticulo" class="k-textbox" style="width: 100%;"/>').appendTo(container);
     }
     function descripcion(container, options) {
         $('<textarea id="idDescripcion" style="width: 100%; height: 150px; resize:none;" class="k-textbox"s data-bind="value: ' + options.field + '" />').appendTo(container);
@@ -503,7 +503,7 @@ function iniGridDetalle(){
                                 return JSON.stringify(authdssic_pdif);
                             }	
                         } catch (e) {
-                            kendo.alert(e.message);
+                            alertDialogs(e.message);
                         }
                     }
                 },
@@ -513,7 +513,7 @@ function iniGridDetalle(){
                         if(e.dssic_pdif.eeEstados[0].Estado==="OK"){                            
                             return e.dssic_pdif.eesic_pdif;
                         }else{
-                            kendo.alert(e.dssic_pdif.eeEstados[0].Estado);
+                            alertDialogs(e.dssic_pdif.eeEstados[0].Estado);
                         }
                     },
                     model: {
@@ -525,7 +525,7 @@ function iniGridDetalle(){
                     }
                 },
                 error: function (xhr, error) {
-                    kendo.alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+                    alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
                 }
             }			
         });
@@ -570,11 +570,11 @@ function iniGridDetalle(){
                         console.log("authdsinv_art"+JSON.stringify(authdsinv_art));
                         try {
                             if (operation === 'read') {
-                                authdsinv_art["eeinv_art"] = [options];                                
-                                return JSON.stringify(authdsinv_art);
+                                authdsinv_art["eeinv_art"] = [options];                                  
+                                return JSON.stringify(authdsinv_art);                                
                             }	
                         } catch (e) {
-                            kendo.alert("Error" +e.message);
+                            alertDialogs("Error" +e.message);
                         }
                     }
                 },
@@ -582,22 +582,23 @@ function iniGridDetalle(){
                     type: "json",
                     data:function (e){                         
                         if(e.dsinv_art.eeEstados[0].Estado==="OK"){
+//                            console.log("authdsinv_art "+JSON.stringify(authdsinv_art));
                             return e.dsinv_art.eeinv_art;
                         }else{
-                            kendo.alert("Error: " +e.dsinv_art.eeEstados[0].Estado);
+                            alertDialogs("Error: " +e.dsinv_art.eeEstados[0].Estado);
                         }
                     },
                     model: {
                         id: "art__cod",
                         fields: {
-                            art__cod: {validation: {required: true}, type: 'number'},
+                            art__cod: {validation: {required: true}, type: 'string'},
                             art__des: {validation: {required: true}, type: 'string'},
                             art__iva: {type: 'number'}
                         }
                     }
                 },
                 error: function (xhr, error) {
-                    kendo.alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+                    alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
                 }   
             }
         });
@@ -670,7 +671,7 @@ function iniGridDetalle(){
                     ConceptoDet: { type: "string", editable: false },
                     Clase: { type: "string", validation: { required: true} },
                     Articulo: { type: "string", validation: { required: true} },                    
-                    ArticuloId: {type: "number", editable: false },
+                    ArticuloId: {type: "string", editable: false },
                     Descripcion: { type: "string" },                    
                     Cantidad: { type: "number", format: "n0", validation: { required: true, min:1} },                    
                     Descuento: { type: "number", format: "p0", validation: { min: 0, max: 0.1, step: 0.01}},
@@ -715,8 +716,12 @@ function iniGridDetalle(){
                 field: "Articulo",
                 title: "Articulo",
                 editor: articulo,
-                template: function (e){
-                    e.ArticuloId = objArticulo.art__cod;                     
+                template: function (e){                    
+                    if(objArticulo!=null){
+                        e.Articulo = objArticulo.art__des
+                        e.ArticuloId = objArticulo.art__cod; 
+                        objArticulo = null;
+                    }                    
                     if(e.Articulo){return e.Articulo;}                    
                 }
                 
@@ -784,12 +789,19 @@ function iniGridDetalle(){
                 title: "Editar",
                 animation: false,
                 width: "700px"
-            }
+            }            
+        },
+        cancel: function (e) {            
+            e._defaultPrevented = true;
+            $('#grid').data('kendoGrid').refresh();
+//            $('#grid').data('kendoGrid').dataSource.read();
+//            $('#grid').data('kendoGrid').refresh();
         }
     }).data("kendoGrid");
 }
 
 function validaCabecera(){
+   
     var usuario = sessionStorage.getItem("usuario");
     var fiid = sessionStorage.getItem("picfiid");
     var sucursal = $("#ipSucursal").val();
@@ -843,7 +855,7 @@ function validaCabecera(){
         },
         error: function (e) {
             console.log(JSON.stringify(e));
-            kendo.alert("Error consumiendo el servicio de validar cabecera\n"+ e.status +" - "+ e.statusText);
+            alertDialogs("Error consumiendo el servicio de validar cabecera\n"+ e.status +" - "+ e.statusText);
         }
     }).done(function(){
         if(cabeceraValida=='"OK"'){
@@ -852,7 +864,7 @@ function validaCabecera(){
             console.log("Cabecera valida \n" + cabeceraValida);                     
         }else{
             sessionStorage.setItem("cabeceraValida","false");
-            kendo.alert("Cabecera invalida"+cabeceraValida);
+            alertDialogs("Cabecera invalida"+cabeceraValida);
             console.log("Datos  \n" + cabeceraValida);                
         }
     });
@@ -925,7 +937,7 @@ function setInfoCliente(e){
                             return JSON.stringify(authfacpag);
                         }	
                     } catch (e) {
-                        kendo.alert("Error 825"+e.message)
+                        alertDialogs("Error 825"+e.message)
                     }
                 },
             },
@@ -935,7 +947,7 @@ function setInfoCliente(e){
                     if(e.dsfac_pag.eeEstados[0].Estado==="OK"){
                         return e.dsfac_pag.eefac_pag;
                     }else{
-                        kendo.alert(e.dsfac_pag.eeEstados[0].Estado);
+                        alertDialogs(e.dsfac_pag.eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -947,7 +959,7 @@ function setInfoCliente(e){
                 }
             },
             error: function (xhr, error) {
-                kendo.alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+                alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
             }
         }
         
@@ -971,7 +983,7 @@ function setInfoCliente(e){
                 parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
                     try{
                         if($("#ipSucursal").val()==""){
-                            kendo.alert("Debe seleccionar primero la sucursal");                       
+                            alertDialogs("Debe seleccionar primero la sucursal");                       
                         }else{
                             authdssic_ven.dssic_ven.eetemp[0].picsuc_cod = $("#ipSucursal").val();
                             authdssic_ven.dssic_ven.eetemp[0].piiven_cod = sessionStorage.getItem("codVendedor");
@@ -982,7 +994,7 @@ function setInfoCliente(e){
                             } 
                         }                        
                     } catch (e) {
-                        kendo.alert(e.message)
+                        alertDialogs(e.message)
                     }                
                     
                 }
@@ -992,13 +1004,13 @@ function setInfoCliente(e){
                     if(e.dssic_ven.eeEstados[0].Estado==="OK"){
                         return e.dssic_ven.eesic_ven1;
                     }else{
-                        kendo.alert(e.dssic_ven.eeEstados[0].Estado);
+                        alertDialogs(e.dssic_ven.eeEstados[0].Estado);
                     }
                 },
                 model:{}
             },
             error: function (xhr, error) {
-                kendo.alert("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+                alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
             },
             change: function (e) {
                 //console.log("Change vandedor");
@@ -1086,6 +1098,7 @@ function guardarFactura(){
         jSonDetalle.itms__val__u = jSonDataGrid[i].ValorUnitario;        
         jSonDetalle.lis__num = jSonDataGrid[i].listaPrecios;        
         jSonDetalle.itms__piv = (jSonDataGrid[i].IVA)*100;
+        jSonDetalle.lis__num = listaPrecios;
         if(jSonDataGrid[i].CodAmortizacion!==""){
             jSonDetalle.pdif__cla = jSonDataGrid[i].CodAmortizacion;
             jSonDetalle.ddif__dias = jSonDataGrid[i].DiasAmortizacion;
@@ -1111,7 +1124,7 @@ function guardarFactura(){
         },
         error: function (e) {
             console.log(JSON.stringify(e));
-            kendo.alert("Error consumiendo el servicio de guardar\n"+ e.status +" - "+ e.statusText);
+            alertDialogs("Error consumiendo el servicio de guardar\n"+ e.status +" - "+ e.statusText);
         }
     }).done(function(){
         if(facturaGuardada=='"OK"'){
@@ -1127,7 +1140,7 @@ function guardarFactura(){
             createDialog("Que desea hacer?", msn+" El número de la factura es: "+numFactura, "400px", "auto", true, false, actions);
             console.log("Factura guardada \n" + facturaGuardada);                     
         }else{                    
-            kendo.alert("factura con errores  \n"+facturaGuardada);
+            alertDialogs("factura con errores  \n"+facturaGuardada);
             console.log("Datos  \n" + facturaGuardada);                
         }
     });
@@ -1182,6 +1195,6 @@ function nuevaFactura(e){
 function imprimirFac(){
     var dialog = $('#dialog');
     dialog.fadeIn();
-    kendo.alert("Próximamente");
+    alertDialogs("Próximamente");
     nuevaFactura();
 }
