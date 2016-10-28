@@ -547,7 +547,9 @@ function iniGridDetalle(){
     
     function onChangeClase(e){
         $("#idArticulo").removeClass("k-textbox");
-        $("#idArticulo").kendoAutoComplete({
+        $("#idArticulo").removeClass("k-state-default");
+              
+        var autoComplete = $("#idArticulo").kendoAutoComplete({
             dataTextField: 'art__des',
             optionLabel: "Seleccionar articulo...",
             minLength: 3,
@@ -601,7 +603,7 @@ function iniGridDetalle(){
                     alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
                 }   
             }
-        });
+        }).data("kendoAutoComplete");
     }
     
     function onChangeConceptoDet(e){
@@ -794,8 +796,6 @@ function iniGridDetalle(){
         cancel: function (e) {            
             e._defaultPrevented = true;
             $('#grid').data('kendoGrid').refresh();
-//            $('#grid').data('kendoGrid').dataSource.read();
-//            $('#grid').data('kendoGrid').refresh();
         }
     }).data("kendoGrid");
 }
