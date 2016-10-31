@@ -106,7 +106,7 @@ $(document).ready(function() {
                 var key1 = Object.keys(e)[0];
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     var Json_usr = JSON.stringify(e[key1]); 
-                    sessionStorage.setItem("Json_Usrbpm",Json_usr);                                       
+                                                       
                     return e[key1][mapCud];
                 } else {
                     alertDialogs(e[key1].eeEstados[0].Estado);
@@ -156,6 +156,7 @@ $(document).ready(function() {
                 data: function (e) {
                     var key1 = Object.keys(e)[0];
                     if (e[key1].eeEstados[0].Estado === "OK") {
+  
                         return e[key1][mapCud];
                     } else {
                         //createDialog("Que desea hacer"+e[key1].eeEstados[0].Estado);
@@ -177,7 +178,83 @@ $(document).ready(function() {
             dataValueField: "piireggrp",
             placeholder: "Grupos...",
             dataSource: datasource1,
+            change: roles
         });
+        
+       function roles()
+       {debugger
+           
+        var dropdownlist = $("#procesos").data("kendoComboBox");
+        var dropdownlist1 = $("#grupos").data("kendoComboBox");
+        
+        var x = dropdownlist.value();
+        var y = dropdownlist.text();
+        var x1 = dropdownlist1.value();
+        var y1 = dropdownlist1.text();
+        
+        var consultar = new sirRoles();
+        var datajson = consultar.getjson();
+        var urlService = consultar.getUrlSir();
+        datajson.dsSIRbpm_rol.SIRbpm_rol[0].piireg = x;
+        datajson.dsSIRbpm_rol.SIRbpm_rol[0].picproc__name = y;
+         datajson.dsSIRbpm_rol.SIRbpm_rol[0].piireggrp = x1;
+          datajson.dsSIRbpm_rol.SIRbpm_rol[0].picgrp__name = y1;
+        
+        var mapCud = "eebpm_rol";
+        var datasourcerol = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: urlService,
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8"
+                },
+                               
+                parameterMap: function (options, operation) {
+                    if (operation === "read") {
+                        return JSON.stringify(datajson);
+                    }
+                }      
+            },
+            batch: false,
+            severFiltering: true,                            
+            schema: {
+                data: function (e) {
+                    var key1 = Object.keys(e)[0];
+                    if (e[key1].eeEstados[0].Estado === "OK") {debugger
+                        var Json_usr = JSON.stringify(e[key1]); 
+                        sessionStorage.setItem("Json_Usrbpm",Json_usr); 
+                        return e[key1][mapCud];
+                    } else {
+                        //createDialog("Que desea hacer"+e[key1].eeEstados[0].Estado);
+                        alertDialogs(e[key1].eeEstados[0].Estado);
+                    }
+                },
+                model: {
+                    id: "proc__name",
+                    fields: {
+                        proc__name:    {editable: false, nullable: false},
+                        grp__name:     {editable: false, nullable: false},
+                        
+                        piiregrol:     {editable: false, nullable: false}
+                    }
+                }
+            }
+        });
+                 
+        
+        $("#roles1").kendoComboBox({
+        dataTextField: "rol__name",
+        dataValueField: "piiregrol",
+        visible: false,
+        dataSource: datasourcerol
+      
+    }); 
+           
+    
+           
+           
+       }
     }
     var grid1 = $("#gridproceso").kendoGrid({
         dataSource: datasourcex,

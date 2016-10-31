@@ -17,7 +17,7 @@ $(document).ready(function () {
         var j=1;
         for (i  in Roles ){
             crearDiv("divFiltr" + i, "K"+j+"-Container");
-            crearImg("divFiltr" + i,Roles[i].rol__name+Roles[i].piiregrol );
+            crearImg("divFiltr" + i,Roles[i].rol__name);
             crearSpan("divFiltr" + i, Roles[i].rol__name);
             if (j == 3) {
                 j = 1;
@@ -79,7 +79,7 @@ function Click(e){debugger
         var consultarUsr = new cudUsrBpm();
         var datajsonusr = consultarUsr.getjson();
         var urlServiceusr = consultarUsr.getUrlSir();
-        var rol_name = e.replace(/[0-9]/g ,"");
+        var rol_name = e;
         datajsonusr.dsSICUDbpm_user.eebpm_user[0].usr__cod = usr_name + "_" + NIT;
         datajsonusr.dsSICUDbpm_user.eebpm_user[0].grp__name = Bpm_grp;  
         datajsonusr.dsSICUDbpm_user.eebpm_user[0].proc__name = Bpm_id ; 
