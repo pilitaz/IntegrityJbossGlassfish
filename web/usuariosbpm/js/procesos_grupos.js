@@ -274,6 +274,7 @@ $(document).ready(function() {
             $('#gridproceso').data('kendoGrid').dataSource.read();
             $('#gridproceso').data('kendoGrid').refresh();
         }
+        var UrL= sessionStorage.getItem("url");  
         myWindow.kendoWindow({
             draggable: true,
             height: "70%",
@@ -281,7 +282,7 @@ $(document).ready(function() {
             resizable: false,
             title: "Roles",
             width: "60%",
-            content: "http://localhost:8080/Integrity1/usuariosbpm/html/popUpEditar.html",
+            content: UrL+"usuariosbpm/html/popUpEditar.html",
             actions: [
                 "Close"
             ],                                
@@ -388,6 +389,7 @@ function CrearCampo(){debugger
             $('#gridproceso').data('kendoGrid').dataSource.read();
             $('#gridproceso').data('kendoGrid').refresh();
         }
+        var UrL= sessionStorage.getItem("url");  
         myWindow1.kendoWindow({
             draggable: true,
             height: "70%",
@@ -395,7 +397,7 @@ function CrearCampo(){debugger
             resizable: false,
             title: "Roles",
             width: "60%",
-            content: "http://localhost:8080/Integrity1/usuariosbpm/html/popUpAgregar.html",
+            content: UrL+"usuariosbpm/html/popUpAgregar.html",
             actions: [
                 "Close"
             ],                               
