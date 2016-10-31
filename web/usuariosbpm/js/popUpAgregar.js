@@ -38,7 +38,15 @@ $(document).ready(function () {
         document.getElementById(div).appendChild(newlabel);
     }
 
-    $("#btnSave").kendoButton();
+    $("#btnSave").kendoButton({
+        click: borrar,
+        
+    });
+    
+    function borrar(){debugger
+        parent.errorPopUp();
+        
+    }
 });
 
 

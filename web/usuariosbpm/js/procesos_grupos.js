@@ -10,6 +10,10 @@ $(document).ready(function() {
         $('body').fadeOut(1000, newpage);
     });
     $("#grupos").kendoComboBox();
+    
+    
+
+    
     $("#btnAddCmp").kendoButton({
         click: CrearCampo
     });
@@ -57,7 +61,7 @@ $(document).ready(function() {
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     return e[key1][mapCud];
                 } else {
-                    alertDialogs(e[key1].eeEstados[0].Estado);
+                   // alertDialogs(e[key1].eeEstados[0].Estado);
                 }
             },
             model: {
@@ -109,7 +113,7 @@ $(document).ready(function() {
                                                        
                     return e[key1][mapCud];
                 } else {
-                    alertDialogs(e[key1].eeEstados[0].Estado);
+                    //alertDialogs(e[key1].eeEstados[0].Estado);
                 }
             },
             model: {
@@ -160,7 +164,7 @@ $(document).ready(function() {
                         return e[key1][mapCud];
                     } else {
                         //createDialog("Que desea hacer"+e[key1].eeEstados[0].Estado);
-                        alertDialogs(e[key1].eeEstados[0].Estado);
+                        //alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -227,7 +231,7 @@ $(document).ready(function() {
                         return e[key1][mapCud];
                     } else {
                         //createDialog("Que desea hacer"+e[key1].eeEstados[0].Estado);
-                        alertDialogs(e[key1].eeEstados[0].Estado);
+                        //alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -241,17 +245,17 @@ $(document).ready(function() {
                 }
             }
         });
-                 
-        
+           
         $("#roles1").kendoComboBox({
         dataTextField: "rol__name",
         dataValueField: "piiregrol",
-        visible: false,
+        Isvisible: false,
         dataSource: datasourcerol
       
     }); 
            
-    
+      var combox = $("#roles1").data("kendoComboBox");
+    combox.wrapper.hide();     
            
            
        }
@@ -307,7 +311,7 @@ $(document).ready(function() {
                                         
                         return e[key1][mapCud];
                     } else {
-                        alertDialogs(e[key1].eeEstados[0].Estado);
+                        //alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -482,6 +486,14 @@ function CrearCampo(){debugger
         }).data("kendoWindow").center().open();                 
     }
 }      
+            function reloadGrid() {
+                
+    $("#textarea").data("kendoWindow").close();
+    
+    }
             
-            
-       
+         function errorPopUp(){
+    alertDialogs("Su solicitud sera procesada");
+    reloadGrid();
+    
+    }
