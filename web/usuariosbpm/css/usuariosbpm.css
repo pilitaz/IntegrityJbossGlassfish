@@ -87,21 +87,41 @@ table{
 
   .k-grid tr.k-alt:not(.k-state-selected):hover {
       background: #f1f1f1;
+      border:0;
   }
   .k-detail-row{
        padding: 0;
+       border:0;
   }
-  k-detail-cell{
+  .k-detail-cell{
       padding: 0;
+      border:0;
+  }
+  .orders.k-grid.k-widget{
+            border:0;
+      
+      
   }
 #gridproceso {
     height:250px;
 
-    width:550px;
+    /*width:550px;*/
    
     overflow: auto;
 }
-
+.po_bulleto1{
+	width: 34px;
+	height: 34px;
+	background: url(../../../images/SpriteIntegrity.png) -8px -8px;
+	cursor:pointer;
+        border: 0px;
+             
+}
+.po_bulleto1:active {
+	width: 34px;
+	height: 34px;
+	background:url(../../../images/SpriteIntegrity.png) -8px -8px;
+}
 .sidenavIzq {
     border-style: solid;
     border-color: #fff #fff #fff #E0E0E0;
@@ -109,7 +129,7 @@ table{
 }
 .sidenavSub {
     border-style: solid;
-    border-color: #EF9F27 #fff  #fff  #fff;
+    border-color: #80BD28 #fff  #fff  #fff;
     height: 100%;
 }
 
@@ -125,32 +145,14 @@ table{
 }
 
 
-.re_bulleto1off{
-    width: 34px;
-    height: 34px;
-    background: url(../../css/images/SpriteIntegrity.png) -258px -8px;
-    cursor:pointer
-}
-.re_bulleto1off:active {
-    width: 34px;
-    height: 34px;
-    background: url(../../css/images/SpriteIntegrity.png) -208px -8px;
+.k-grid-header
+{
+    height: 0;
+    border-bottom-width: 0;
+    display: none;
+    overflow: hidden;
 }
 
-
-.po_bulleto1{
-	width: 34px;
-	height: 34px;
-	background: url(../../css/images/SpriteIntegrity.png) -8px -8px;
-	cursor:pointer;
-        border: 0px;
-            
-}
-.po_bulleto1:active {
-	width: 34px;
-	height: 34px;
-	background:url(../../css/images/SpriteIntegrity.png) -8px -8px;
-}
 
 
 

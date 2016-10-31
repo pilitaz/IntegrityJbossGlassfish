@@ -8,7 +8,7 @@
  *  var input = sir.getdataInputSir();
  */
 function sirproceso() {
-   var urlSir = "http://172.21.24.146:8810/rest/Procesos/SIRbpm_proc";
+   var urlSir = ipBpm + baseUsrBpm +"SIRbpm_proc";
     var json = {  
    "dsSIRbpm_proc":{  
       "eeDatos":[  
@@ -83,7 +83,7 @@ function sirproceso() {
 
 ///////////////////////////////////////////////////////////////////////////////////////
 function sirRoles() {
-    var urlSir = "http://172.21.24.146:8810/rest/Procesos/SIRbpm_rol";
+    var urlSir =  ipBpm + baseUsrBpm + "SIRbpm_rol";
     var json = {  
    "dsSIRbpm_rol":{  
       "eeDatos":[  
@@ -124,7 +124,7 @@ function sirRoles() {
 };
 //-----------------------------------------------------------------------------
  function sirgrupos() {
-    var urlSir = "http://172.21.24.146:8810/rest/Procesos/SIRbpm_grp";
+    var urlSir =  ipBpm + baseUsrBpm + "SIRbpm_grp";
     var json = {  
    "dsSIRbpm_grp":{  
       "eeDatos":[  
@@ -247,7 +247,7 @@ function cudcreate () {
 };
 //-------------------------------------------------------------------------
 function sirusuariobpm() {
-    var urlSir = "http://172.21.24.146:8810/rest/Procesos/SIRbpm_user";
+    var urlSir =  ipBpm + baseUsrBpm + "SIRbpm_user";
     var json = {  
    "dsSIRbpm_user":{  
       "eeDatos":[  
@@ -260,6 +260,48 @@ function sirusuariobpm() {
           {
         "piccia__nit": "",
         "picusr__bmp" : ""
+       }
+     ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+//-------------------------------
+function cudUsrBpm() {
+    var urlSir =  ipBpm + baseUsrBpm + "SICUDbpm_user";
+    var json = 
+{  
+   "dsSICUDbpm_user":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid")
+         }
+      ],    
+        "eebpm_user": [
+          {
+        "usr__cod": "aduarte_800001541",
+        "grp__name": "Grupo5",
+        "proc__name": "Vehicleorder",
+        "rol__name": "RolQuantum"
        }
      ]
    }

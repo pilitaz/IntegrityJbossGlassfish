@@ -38,7 +38,7 @@ function creausuario() {
 //                         var row = grid1.dataItem(grid1.select());
 //                        var s=0;
                         sessionStorage.setItem("Userid_bpm",id);
-                        window.location = ("procesos&grupos.html");
+                        window.location = ("procesos_grupos.html");
                         //sessionStorage.setItem("Rolname",row.car__nom);
                     }
      
@@ -101,7 +101,7 @@ $(document).ready(function () {
                             return JSON.stringify(actjson);
                         } else
                         {
-                            window.alert('Las contraseñas no coinciden');
+                            window.alertDialogs('Las contraseñas no coinciden');
 
                         }
                     }
@@ -116,7 +116,7 @@ $(document).ready(function () {
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     return e[key1][mapCud];
                 } else {
-                    alert(e[key1].eeEstados[0].Estado);
+                    alertDialogs(e[key1].eeEstados[0].Estado);
                 }
             },
             model: {
@@ -178,7 +178,7 @@ $(document).ready(function () {
                 }},
             {field: "epassword", title: "CLAVE", width: "50px", hidden: true, editor: passEditorPopup},
             {field: "epassword1", title: "REPITA CLAVE", width: "50px", hidden: true, editor: onkeypass},
-            {command: [{name: "detalle", text: " ", click: editar_usr, template: "<a class='k-grid-detalle'><span class='k-sprite po_detalle'></span></a>"},
+            {command: [{name: "detalle", text: " ", click: editar_usr, template: "<a class='k-grid-detalle'><span class='k-sprite admin_proff'></span></a>"},
                        { name: "edit", text: "edit",  template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"}
                     
                        ], width: "100px"}

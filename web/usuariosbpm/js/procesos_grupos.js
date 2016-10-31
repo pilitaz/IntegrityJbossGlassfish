@@ -1,46 +1,39 @@
-
 function ir_usuarios(){
-    
     window.location = ("usuariosbpm.html");    
 }
-
-
-
 $(document).ready(function() {
-
-
     $('body').css('display', 'none');
-
     $('body').fadeIn(1000);
-
-
- 
-      
     $('.link').click(function() {
-
         event.preventDefault();
-
         newLocation = this.href;
-
         $('body').fadeOut(1000, newpage);
-
+    });
+    $("#grupos").kendoComboBox();
+    $("#btnAddCmp").kendoButton({
+        click: CrearCampo
+    });
+        $("#btnSave").kendoButton({
+        click: onClose
     });
 
+  var myWindow = $("#window"),
+        undo = $("#undo");
+        function onClose() {debugger
+            undo.fadeIn();
+            $('#gridproceso').data('kendoGrid').refresh();
+            $('#gridproceso').data('kendoGrid').dataSource.read();
+            $('#gridproceso').data('kendoGrid').refresh();
+        }
+    
     function newpage() {
-
         window.location = newLocation;
-
     }
-
     var usr_name = sessionStorage.getItem("Userid_bpm");  
     document.getElementById("demo").innerHTML = usr_name;
- 
     var consultar = new sirproceso();
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();
-                        
-
-
     var mapCud = "eebpm_proc";
     var datasource = new kendo.data.DataSource({
         transport: {
@@ -49,15 +42,12 @@ $(document).ready(function() {
                 dataType: "json",
                 type: "POST",
                 contentType: "application/json; charset=utf-8"
-            },
-                                
+            },         
             parameterMap: function (options, operation) {
                 if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
-                                   
             }
-                                
         },
         batch: false,
         severFiltering: true,                            
@@ -67,7 +57,7 @@ $(document).ready(function() {
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     return e[key1][mapCud];
                 } else {
-                    alert(e[key1].eeEstados[0].Estado);
+                    alertDialogs(e[key1].eeEstados[0].Estado);
                 }
             },
             model: {
@@ -88,17 +78,12 @@ $(document).ready(function() {
         dataSource: datasource,
         change: grupos
     });
-    //-----------------------------------------------
-                        
     var consultarusr = new sirusuariobpm();
     var datajsonusr = consultarusr.getjson();
     var urlServiceusr = consultarusr.getUrlSir();
-                        
-                         
     var NIT = sessionStorage.getItem("companyNIT");
     datajsonusr.dsSIRbpm_user.SIRbpm_user[0].piccia__nit = NIT;
     datajsonusr.dsSIRbpm_user.SIRbpm_user[0].picusr__bmp = usr_name;
-                           
     var mapCud = "eebpm_proc";
     var datasourcex = new kendo.data.DataSource({
         transport: {
@@ -108,14 +93,11 @@ $(document).ready(function() {
                 type: "POST",
                 contentType: "application/json; charset=utf-8"
             },
-                                
             parameterMap: function (options, operation) {
                 if (operation === "read") {
                     return JSON.stringify(datajsonusr);
                 }
-                                   
             }
-                                
         },
         batch: false,
         severFiltering: true,                            
@@ -127,7 +109,7 @@ $(document).ready(function() {
                     sessionStorage.setItem("Json_Usrbpm",Json_usr);                                       
                     return e[key1][mapCud];
                 } else {
-                    alert(e[key1].eeEstados[0].Estado);
+                    alertDialogs(e[key1].eeEstados[0].Estado);
                 }
             },
             model: {
@@ -139,28 +121,19 @@ $(document).ready(function() {
                 }
             }
         }
-    });
-    //--------------------------------------------------------------------------------
-   
-                        
-    //---------------------------------------------------------
-
-    
+    });   
+    /**
+     * Funcion llamada para crear en el dropdown de procesos.
+     */   
     function grupos(){
- 
         var dropdownlist = $("#procesos").data("kendoComboBox");
         var x = dropdownlist.value();
         var y = dropdownlist.text();
-                            
-
         var consultar = new sirgrupos();
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();
-                        
         datajson.dsSIRbpm_grp.SIRbpm_grp[0].piidreg = x;
         datajson.dsSIRbpm_grp.SIRbpm_grp[0].picproc__name = y;
-                        
-
         var mapCud = "eebpm_grp";
         var datasource1 = new kendo.data.DataSource({
             transport: {
@@ -175,8 +148,7 @@ $(document).ready(function() {
                     if (operation === "read") {
                         return JSON.stringify(datajson);
                     }
-                }
-                                
+                }      
             },
             batch: false,
             severFiltering: true,                            
@@ -187,7 +159,7 @@ $(document).ready(function() {
                         return e[key1][mapCud];
                     } else {
                         //createDialog("Que desea hacer"+e[key1].eeEstados[0].Estado);
-                        alert(e[key1].eeEstados[0].Estado);
+                        alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -200,60 +172,39 @@ $(document).ready(function() {
                 }
             }
         });
-                        
-        
-        
         $("#grupos").kendoComboBox({
             dataTextField: "grp__name",
             dataValueField: "piireggrp",
-            placeholder: "Proceso...",
+            placeholder: "Grupos...",
             dataSource: datasource1,
-            change: roles
-        
         });
     }
-    //--------------------------------------------------------------------------
-    
-    function roles(){
-        
-    }
-            
-    //---------------------------------------------------------------------------------
-        
     var grid1 = $("#gridproceso").kendoGrid({
         dataSource: datasourcex,
         selectable: true,
         pageSize: 10,
         scrollable: true,
         sortable: true,
-                            
         detailInit: detailInit,
         detailTemplate: kendo.template($("#template").html()),
-                            
-        //navigatable: true,
         columns: [
             { field: "proc__name", title:"ID" }
         ]
     });
- 
+    /**
+     * Crea el primer detalle de la grilla.
+     * @param {type} NIT : Dato enviado para consumir el servicio
+     * @param {type} usr_name: Dato enviado para consumir el servicio
+     */
     function detailInit(e) {
-                     
-                     
-                     
-                     
-                     
-        var detailRow = e.detailRow;
-                    
+        var detailRow = e.detailRow;                    
         var consultarusr = new sirusuariobpm();
         var datajsonusr = consultarusr.getjson();
         var urlServiceusr = consultarusr.getUrlSir();
         var mapCud = "eebpm_grp";
-                           
-                             
         var NIT = sessionStorage.getItem("companyNIT");
         datajsonusr.dsSIRbpm_user.SIRbpm_user[0].piccia__nit = NIT;
-        datajsonusr.dsSIRbpm_user.SIRbpm_user[0].picusr__bmp = usr_name;
-                           
+        datajsonusr.dsSIRbpm_user.SIRbpm_user[0].picusr__bmp = usr_name;                           
         var datasourcey = new kendo.data.DataSource({
             transport: {
                 read: {
@@ -261,15 +212,12 @@ $(document).ready(function() {
                     dataType: "json",
                     type: "POST",
                     contentType: "application/json; charset=utf-8"
-                },
-                                
+                },             
                 parameterMap: function (options, operation) {
                     if (operation === "read") {
                         return JSON.stringify(datajsonusr);
-                    }
-                                   
-                }
-                                
+                    }                  
+                }                               
             },
             severFiltering: true,
             serverPaging: true,
@@ -282,7 +230,7 @@ $(document).ready(function() {
                                         
                         return e[key1][mapCud];
                     } else {
-                        alert(e[key1].eeEstados[0].Estado);
+                        alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -294,117 +242,113 @@ $(document).ready(function() {
                     }
                 }
             }
-        });                                  
-
-                             
+        });                                                             
         var grillad = detailRow.find(".orders").kendoGrid({
-            dataSource:  datasourcey,                
-                            
+            dataSource:  datasourcey,                                            
             detailInit: detailInit1,
             detailTemplate: kendo.template($("#template1").html()),
             columns: [
-                {field: "grp__name",title:"Grupos"},
+                {field: "grp__name"},
                             
                 {command: [{name: "detalle", text: " ", click: editar_usr, template: "<a class='k-grid-detalle'><span class='k-sprite po_detalle'></span></a>"},
                     ],width: "60px"}
             ]
-        });
-                    
-                
-                    
-    }//fin funcion detalle1
-                
+        });       
+    }  
+    /**
+     * Crea el POP Up Para editar usuario desde la grilla
+     * @param {type} e para buscar row selecionado
+     */
     function editar_usr(e){debugger
-         e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
+        e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
         var id = this.dataItem($(e.currentTarget).closest("tr"));
         var grp=id.grp__name;
         var id=id.id;
-         sessionStorage.setItem("Bpm_grp",grp);  
-         sessionStorage.setItem("Bpm_id",id);  
-         
-        //sessionStorage.getItem("Json_Usrbpm");
+        sessionStorage.setItem("Bpm_grp",grp);  
+        sessionStorage.setItem("Bpm_id",id);  
         var myWindow = $("#window"),
         undo = $("#undo");
-
-        function onClose() {
+        function onClose() {debugger
             undo.fadeIn();
+            $('#gridproceso').data('kendoGrid').refresh();
+            $('#gridproceso').data('kendoGrid').dataSource.read();
+            $('#gridproceso').data('kendoGrid').refresh();
         }
-
         myWindow.kendoWindow({
             draggable: true,
             height: "70%",
             modal: true,
             resizable: false,
-            title: "Filtros",
+            title: "Roles",
             width: "60%",
-            content: "http://localhost:8080/Integrity1/usuariosbpm/html/popUp.html",
+            content: "http://localhost:8080/Integrity1/usuariosbpm/html/popUpEditar.html",
             actions: [
-                                    
-                                    "Close"
-                                ],
-                                
+                "Close"
+            ],                                
             close: onClose
-            }).data("kendoWindow").center().open();            
-                
-                }
-                
+        }).data("kendoWindow").center().open();            
+    }               
+    /**
+     * Crear segundo detalle para visualizar roles
+     * @param {type} e captura datos del row desplegado
+     */
     function detailInit1(e) {debugger
-                    
-                   
-      var Jsonbpm=[];
+        e.preventDefault();
+        var id = e.data;
+        var grp=id.grp__name;
+        var id=id.id;       
+        var Jsonbpm=[];
         Jsonbpm = sessionStorage.getItem("Json_Usrbpm");                                           
         var Jsonbpm1  = JSON.parse(Jsonbpm);
         var Roles = Jsonbpm1.eebpm_rol;
-
-        var cbh = document.getElementById('roles'); 
         var i = 0;
         var j=1;
-        for (i  in Roles ){debugger
-       
-            crearLabel("label"+Roles[i].piiregrol, Roles[i].rol__name, "K"+j+"-Container");
-            if (j == 3) {
-                j = 1;
-            } else {
-                j++;
-            }
-        }  
-    
-    
-function  crearLabel(id, titulo, div, fuente, color, tipo) {
-    var newlabel = document.createElement("Label");
-    newlabel.id = id;
-    newlabel.setAttribute("for", "text" + id);
-    if (tipo == 'editor') {//en caso de que sea un label para editor le coloca este estilo para mostrarlo en la parte superior
-        newlabel.style.verticalAlign = '220%';
+        for (i  in Roles){debugger
+            if(Roles[i].grp__name === grp){
+                if(Roles[i].proc__name === id){
+                    crearDiv("divFiltr"+Roles[i].piireg + "&" + Roles[i].piireggrp + "&" + i,Roles[i].piireg + "&" + Roles[i].piireggrp + "-" + "K"+j+"-Container");
+                    crearImg("divFiltr"+Roles[i].piireg + "&" + Roles[i].piireggrp + "&" + i ,Roles[i].rol__name+Roles[i].piiregrol );
+                    crearSpan("divFiltr"+Roles[i].piireg + "&" + Roles[i].piireggrp + "&" + i, Roles[i].rol__name);
+                    if (j === 3) {
+                        j = 1;
+                    } else {
+                        j++;
+                    } 
+                }
+            }           
+        }
+        function  crearLabel(id, titulo, div, fuente, color, tipo) {
+            var newlabel = document.createElement("Label");
+            newlabel.id = id;
+            newlabel.setAttribute("for", "text" + id);
+            newlabel.style.textAlign = "bottom";    
+            newlabel.style.font = fuente;
+            newlabel.innerHTML = titulo;
+            document.getElementById(div).appendChild(newlabel);
+        }
+        function crearImg(div, id) {    
+            var x = document.createElement("SPAN");
+            x.setAttribute("class", "k-sprite po_bulleto1");
+            x.setAttribute("id", id);
+            x.setAttribute("estado", "off");    
+            document.getElementById(div).appendChild(x);
+        }
+        function crearSpan(div, titulo) {
+            var x = document.createElement("SPAN");
+            var t = document.createTextNode(titulo);
+            x.appendChild(t);
+            document.getElementById(div).appendChild(x);
+        }
+        function crearDiv(id, div, clase, align, style) {
+            var newDiv = document.createElement("DIV");
+            newDiv.setAttribute("align", align);
+            newDiv.setAttribute("class", clase);
+            newDiv.setAttribute("style", style);
+            newDiv.id = id;
+            document.getElementById(div).appendChild(newDiv);
+        }
     }
-    newlabel.style.font = fuente;
-    newlabel.innerHTML = titulo;
-    document.getElementById(div).appendChild(newlabel);
-}
-        
-    }
-                
-                
-               
- 
-             
- 
-   
-    
-    
 });// Fin document ready
-
-function CrearCampo(){
-
-    var dropdownlist = $("#procesos").data("kendoComboBox");
-    var x = dropdownlist.value();
-    var y =0;
-
-                        
-    //grid1.addRow();
-            
-}
-        
 /**
  * Crear un elemento label dentro de un div
  * @param {type} id id del nuevo label
@@ -426,8 +370,39 @@ function  crearLabel(id, titulo, div, fuente, color, tipo) {
     newlabel.innerHTML = titulo;
     document.getElementById(div).appendChild(newlabel);
 }
-        
-        
+function CrearCampo(){debugger
+    var dropdownlist = $("#procesos").data("kendoComboBox");     
+    var proceso = dropdownlist._prev;
+    var dropdownlist1 = $("#grupos").data("kendoComboBox"); 
+    if(proceso=="" || dropdownlist1== undefined || dropdownlist1._prev== undefined || dropdownlist1._prev== "" ){            
+        alertDialogs("Debe Ingresar almenos Un proceso y un grupo para poder agregar") ;   
+    }else{
+        var grupo = dropdownlist1._prev;    
+        sessionStorage.setItem("Grupo",grupo);  
+        sessionStorage.setItem("Proceso",proceso);  
+        var myWindow1 = $("#textarea"),
+                undo = $("#undo");
+        function onClose() {
+            undo.fadeIn();
+            $('#gridproceso').data('kendoGrid').refresh();
+            $('#gridproceso').data('kendoGrid').dataSource.read();
+            $('#gridproceso').data('kendoGrid').refresh();
+        }
+        myWindow1.kendoWindow({
+            draggable: true,
+            height: "70%",
+            modal: true,
+            resizable: false,
+            title: "Roles",
+            width: "60%",
+            content: "http://localhost:8080/Integrity1/usuariosbpm/html/popUpAgregar.html",
+            actions: [
+                "Close"
+            ],                               
+            close: onClose
+        }).data("kendoWindow").center().open();                 
+    }
+}      
             
             
        
