@@ -284,7 +284,7 @@ function sirusuariobpm() {
     };
     
 };
-//-------------------------------
+//-----------------------------------------
 function cudUsrBpm() {
     var urlSir =  ipBpm + baseUsrBpm + "SICUDbpm_user";
     var json = 
