@@ -80,6 +80,12 @@ function cambiarImagen(imgId, estiloTd){
             document.getElementById("idFrame").src = urlFrameNew;
             document.getElementById("tdPerfil").style="display:none"
         }
+        else if(servicio === "procesos"){
+            $('#divDerecho').width($(window).width());
+            document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
+            document.getElementById("idFrame").src = sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html";
+            document.getElementById("tdPerfil").style="display:none"
+        }
         else if(servicio!=""){
             $('#divDerecho').width($(window).width());
             document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
