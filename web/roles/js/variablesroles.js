@@ -92,9 +92,9 @@ function cudcreate () {
 };
 ////////////////////////////////////////////////////////////////////////////////
 function crearol() {
-   var urlSir = ipServicios + baseServicio +"SirCargos2";
+   var urlSir = ipServicios + baseServicio +"SICUDsic_car";
     var json = {  
-   "SIResic_car":{  
+   "dssic_car":{  
       "eeDatos":[  
          {  
             "picusrcod":sessionStorage.getItem("usuario"),
@@ -102,7 +102,13 @@ function crearol() {
             "local_ip":sessionStorage.getItem("ipPrivada"),
             "remote_ip":sessionStorage.getItem("ipPublica")
          }
-      ]
+      ],
+      "eesic_car":[
+      	{
+      	"car__nom": "",
+      	"car__est":1
+      	}
+      	]
    }
 };
     

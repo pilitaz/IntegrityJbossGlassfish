@@ -23,7 +23,7 @@ $(document).ready(function() {
 
   var myWindow = $("#window"),
         undo = $("#undo");
-        function onClose() {debugger
+        function onClose() {
             undo.fadeIn();
             $('#gridproceso').data('kendoGrid').refresh();
             $('#gridproceso').data('kendoGrid').dataSource.read();
@@ -106,7 +106,7 @@ $(document).ready(function() {
         batch: false,
         severFiltering: true,                            
         schema: {
-            data: function (e) {debugger
+            data: function (e) {
                 var key1 = Object.keys(e)[0];
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     var Json_usr = JSON.stringify(e[key1]); 
@@ -225,7 +225,7 @@ $(document).ready(function() {
             schema: {
                 data: function (e) {
                     var key1 = Object.keys(e)[0];
-                    if (e[key1].eeEstados[0].Estado === "OK") {debugger
+                    if (e[key1].eeEstados[0].Estado === "OK") {
                         var Json_usr = JSON.stringify(e[key1]); 
                         sessionStorage.setItem("Json_Usrbpm",Json_usr); 
                         return e[key1][mapCud];
@@ -388,7 +388,7 @@ $(document).ready(function() {
         for (i  in Roles){debugger
             if(Roles[i].grp__name === grp){
                 if(Roles[i].proc__name === id){
-                    crearDiv("divFiltr"+Roles[i].piireg + "&" + Roles[i].piireggrp + "&" + i,Roles[i].piireg + "&" + Roles[i].piireggrp + "-" + "K"+j+"-Container");
+                    crearDiv("divFiltr"+Roles[i].piireg + "&" + Roles[i].piireggrp + "&" + i, Roles[i].piireg + "&" + Roles[i].piireggrp + "-" + "K"+j+"-Container");
                     crearImg("divFiltr"+Roles[i].piireg + "&" + Roles[i].piireggrp + "&" + i ,Roles[i].rol__name+Roles[i].piiregrol );
                     crearSpan("divFiltr"+Roles[i].piireg + "&" + Roles[i].piireggrp + "&" + i, Roles[i].rol__name);
                     if (j === 3) {
@@ -408,7 +408,7 @@ $(document).ready(function() {
             newlabel.innerHTML = titulo;
             document.getElementById(div).appendChild(newlabel);
         }
-        function crearImg(div, id) {    
+        function crearImg(div, id) {   
             var x = document.createElement("SPAN");
             x.setAttribute("class", "k-sprite po_bulleto1");
             x.setAttribute("id", id);
@@ -421,7 +421,7 @@ $(document).ready(function() {
             x.appendChild(t);
             document.getElementById(div).appendChild(x);
         }
-        function crearDiv(id, div, clase, align, style) {
+        function crearDiv(id, div, clase, align, style) {debugger
             var newDiv = document.createElement("DIV");
             newDiv.setAttribute("align", align);
             newDiv.setAttribute("class", clase);
@@ -452,7 +452,7 @@ function  crearLabel(id, titulo, div, fuente, color, tipo) {
     newlabel.innerHTML = titulo;
     document.getElementById(div).appendChild(newlabel);
 }
-function CrearCampo(){debugger
+    function CrearCampo(){
     var dropdownlist = $("#procesos").data("kendoComboBox");     
     var proceso = dropdownlist._prev;
     var dropdownlist1 = $("#grupos").data("kendoComboBox"); 
