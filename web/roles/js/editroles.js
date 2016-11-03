@@ -28,11 +28,14 @@ $('body').fadeIn(1000);
  
 document.getElementById("filtro").value = rol_name;
 
-
+var jSon=[];
 
 function agregarfuncion(e) {debugger
     
 var Selement=$('#jstree2').jstree('get_selected');
+if(Selement.length==1)
+{
+    
 var  servicio = new addfuciones();
 var  datajson = servicio.getjson();
 var  urlService = servicio.getUrlSir();
@@ -160,9 +163,150 @@ var piifuncion = "";
             
         }        
         });
- $("#arbol2").load("tree3.html"); 
-    
+ $("#arbol2").load("tree3.html");     
 }
+else
+{
+   var arreglo=Selement; 
+   var i=0;
+   var j=0;
+       
+    var  servicio = new addfuciones();
+     
+    var datajson = new Object();
+    var func = new Object();
+    func.piiportafolio= "";
+    func.piicapitulo= "";
+    func.piifuncion= "";
+    datajson.dsFunciones=[];
+      datajson.dsFunciones.funciones=[];
+
+    
+   for(i in Selement){debugger 
+       
+
+    Selement[i].toString(); 
+    
+    var lenght = Selement[i].length; 
+    var piiportafolio = "";
+    var piicapitulo = "";
+    var piifuncion = "";
+    switch(lenght) {
+    case 4:
+       piiportafolio =Selement[i].slice(0,3);
+       piiportafolio = parseInt(piiportafolio);
+       piicapitulo=0;
+       piifuncion=0;
+       datajson.dsFunciones.funciones[i].piiportafolio = piiportafolio;
+       datajson.dsFunciones.funciones[i].piirol = rol_cod;
+      break;
+    case 8:
+       piiportafolio=Selement[0].slice(0,3);
+       piiportafolio = parseInt(piiportafolio);
+       piicapitulo=Selement[0].slice(4,7);
+       piicapitulo=parseInt(piicapitulo);
+       
+       piifuncion=0;
+       
+       datajson.dsFunciones.funciones[0].piiportafolio = piiportafolio;
+       datajson.dsFunciones.funciones[0].piicapitulo = piicapitulo;
+       datajson.dsFunciones.funciones[0].piirol = rol_cod;
+     
+      break;
+       case 12:
+       piiportafolio=Selement[0].slice(0,3);
+       piiportafolio = parseInt(piiportafolio);
+       piicapitulo=Selement[0].slice(8,11);
+       piicapitulo=parseInt(piicapitulo);
+       
+       piifuncion=0;
+       
+       datajson.dsFunciones.funciones[0].piiportafolio = piiportafolio;
+       datajson.dsFunciones.funciones[0].piicapitulo = piicapitulo;
+       datajson.dsFunciones.funciones[0].piirol = rol_cod;
+     
+      break;
+      
+    case 13:
+        
+       piiportafolio=Selement[0].slice(0,3);
+       piiportafolio = parseInt(piiportafolio);
+       piicapitulo=Selement[0].slice(4,7);
+       piicapitulo=parseInt(piicapitulo); 
+       piifuncion=Selement[0].slice(8,12);
+       piifuncion=parseInt(piifuncion); 
+       
+       datajson.dsFunciones.funciones[0].piiportafolio = piiportafolio;
+       datajson.dsFunciones.funciones[0].piicapitulo = piicapitulo;
+       datajson.dsFunciones.funciones[0].piifuncion = piifuncion;
+       datajson.dsFunciones.funciones[0].piirol = rol_cod;
+      
+      
+    
+      break;
+      
+       case 16:
+       piiportafolio=Selement[0].slice(0,3);
+       piiportafolio = parseInt(piiportafolio);
+       piicapitulo=Selement[0].slice(12,15);
+       piicapitulo=parseInt(piicapitulo);
+       
+      piifuncion=0;
+       
+       datajson.dsFunciones.funciones[0].piiportafolio = piiportafolio;
+       datajson.dsFunciones.funciones[0].piicapitulo = piicapitulo;
+       datajson.dsFunciones.funciones[0].piirol = rol_cod;
+     
+      break;
+      
+       case 17:
+       piiportafolio=Selement[0].slice(0,3);
+       piiportafolio = parseInt(piiportafolio);
+       piicapitulo=Selement[0].slice(8,11);
+       piicapitulo=parseInt(piicapitulo); 
+       piifuncion=Selement[0].slice(12,16);
+       piifuncion=parseInt(piifuncion); 
+       
+       datajson.dsFunciones.funciones[0].piiportafolio = piiportafolio;
+       datajson.dsFunciones.funciones[0].piicapitulo = piicapitulo;
+       datajson.dsFunciones.funciones[0].piifuncion = piifuncion;
+       datajson.dsFunciones.funciones[0].piirol = rol_cod;
+      
+    break;
+    
+    case 21:
+        
+       piiportafolio=Selement[0].slice(0,3);
+       piiportafolio = parseInt(piiportafolio);
+       piicapitulo=Selement[0].slice(12,16);
+       piicapitulo=parseInt(piicapitulo); 
+       piifuncion=Selement[0].slice(16,20);
+       piifuncion=parseInt(piifuncion); 
+       
+       datajson.dsFunciones.funciones[0].piiportafolio = piiportafolio;
+       datajson.dsFunciones.funciones[0].piicapitulo = piicapitulo;
+       datajson.dsFunciones.funciones[0].piifuncion = piifuncion;
+       datajson.dsFunciones.funciones[0].piirol = rol_cod;
+      break;
+    
+
+    default:
+     
+
+    
+    
+      
+        }
+       
+       }
+          
+       
+   }
+}
+    
+
+    
+
            
     
 

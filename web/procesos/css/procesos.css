@@ -26,9 +26,9 @@ table{
     min-width: 150px;
 }
 
-.sidenavSup {
+.sidenavSup1 {
     border-style: solid;
-    border-color: #80BD28 #fff  #fff  #fff;
+    border-color: #cf0021 #fff  #fff  #fff;
 }
 
 .sidenavIzq {
@@ -78,7 +78,7 @@ table{
                 }
 
                    .k-grid tr:hover {
-  background: transparent;
+  background: red;
 }
 .k-grid tr:not(.k-state-selected):hover {
       background: none;
@@ -102,6 +102,12 @@ table{
       
       
   }
+.k-grid tr:hover {
+  background: transparent;
+}
+ .k-grid tr.k-alt:hover {
+  background: #f1f1f1;
+}
 #gridproceso {
     height:250px;
 
@@ -109,6 +115,7 @@ table{
    
     overflow: auto;
 }
+
 .po_bulleto1{
 	width: 34px;
 	height: 34px;

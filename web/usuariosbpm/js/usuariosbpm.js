@@ -32,11 +32,6 @@ function creausuario() {
                 	
                        e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
                         var id = this.dataItem($(e.currentTarget).closest("tr")).euserid;
-//                       var grid1 = $("#grid").data("kendoGrid");
-                       
-                        
-//                         var row = grid1.dataItem(grid1.select());
-//                        var s=0;
                         sessionStorage.setItem("Userid_bpm",id);
                         window.location = ("procesos_grupos.html");
                         //sessionStorage.setItem("Rolname",row.car__nom);
@@ -44,8 +39,6 @@ function creausuario() {
      
 $(document).ready(function () {
     
-    
- 
                     
     
     var consultar = new sirconsulta();
@@ -178,12 +171,18 @@ $(document).ready(function () {
                 }},
             {field: "epassword", title: "CLAVE", width: "50px", hidden: true, editor: passEditorPopup},
             {field: "epassword1", title: "REPITA CLAVE", width: "50px", hidden: true, editor: onkeypass},
-            {command: [{name: "detalle", text: " ", click: editar_usr, template: "<a class='k-grid-detalle'><span class='k-sprite admin_proff'></span></a>"},
-                       { name: "edit", text: "edit",  template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"}
+            {command: [{name: "detalle", text: "detalle", click: editar_usr, template: "<a class='k-grid-detalle'><span class='k-sprite admin_proff'></span></a>"},
+                       { name: "edit", text: "editar",  template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"}
                     
                        ], width: "100px"}
             ],
         editable: "popup",
+        rowTemplate: kendo.template($("#rowTemplateCmp").html()),
+        altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
+        dataBound: function () {
+            var results = dataSource.data();
+            changImgFunc(results);
+        },
         cancel: function (e) {
             e._defaultPrevented = true;
             $('#grid').data('kendoGrid').refresh();
@@ -357,7 +356,26 @@ $(document).ready(function () {
                 });
 
     }
-
+    //***************************************************
+function changImgFunc(results) {debugger
+    for (var i = 0; i < results.length; i++) {
+        var id = results[i].rpt_cmp_pos;
+        var spanE = "";
+        var aEdit = ""
+        if (i % 2 === 0) {
+            spanE = "spanEdit" + id;
+            aEdit = "aEdit" + id;
+        } else {
+            spanE = "altSpanEdit" + id;
+            aEdit = "aEdit" + id;
+        }
+        if ((results[i].rpt_cmp_fun)) {
+            document.getElementById(spanE).setAttribute("class", "k-sprite re_funcion");
+            document.getElementById(aEdit).setAttribute("class", "");
+            document.getElementById(spanE).setAttribute("onClick", "popUpFunciones(" + id + ",\'" + results[i].rpt_cmp_vis + "\')");
+        }
+    }
+}
 
     /**
      *  Funcion filtroJefe PARA EDIT POPUP SE EJECUTA CON EL EVENTO DE COMBOBOX

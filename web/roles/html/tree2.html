@@ -40,7 +40,7 @@
         alert(document.getElementById(data).id);
         }
                          var treeJson = JSON.parse(sessionStorage.getItem("txtJson2"));
-                         treeJson.plugins =  ["dnd","crrm","themes", "json_data","massload"];
+                         treeJson.plugins =  ["dnd","crrm","themes", "json_data"];
                          treeJson.core =  {"check_callback" : false ,"data":treeJson.core.data};
                         
                         $('#jstree2').jstree(treeJson)

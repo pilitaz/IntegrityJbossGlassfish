@@ -131,6 +131,7 @@ $(document).ready(function() {
      */   
     function grupos(){
         var dropdownlist = $("#procesos").data("kendoComboBox");
+        $("#grupos").empty();
         var x = dropdownlist.value();
         var y = dropdownlist.text();
         var consultar = new sirgrupos();
@@ -223,7 +224,8 @@ $(document).ready(function() {
             batch: false,
             severFiltering: true,                            
             schema: {
-                data: function (e) {
+                data: function (e) {debugger
+            //asdasdasd
                     var key1 = Object.keys(e)[0];
                     if (e[key1].eeEstados[0].Estado === "OK") {
                         var Json_usr = JSON.stringify(e[key1]); 
@@ -238,8 +240,7 @@ $(document).ready(function() {
                     id: "proc__name",
                     fields: {
                         proc__name:    {editable: false, nullable: false},
-                        grp__name:     {editable: false, nullable: false},
-                        
+                        grp__name:     {editable: false, nullable: false},                       
                         piiregrol:     {editable: false, nullable: false}
                     }
                 }
@@ -267,6 +268,9 @@ $(document).ready(function() {
         scrollable: true,
         sortable: true,
         detailInit: detailInit,
+        dataBound: function() {
+                            this.expandRow(this.tbody.find("tr.k-master-row"));
+                        },
         detailTemplate: kendo.template($("#template").html()),
         columns: [
             { field: "proc__name", title:"ID" }
@@ -296,6 +300,7 @@ $(document).ready(function() {
                 },             
                 parameterMap: function (options, operation) {
                     if (operation === "read") {
+
                         return JSON.stringify(datajsonusr);
                     }                  
                 }                               
@@ -308,7 +313,8 @@ $(document).ready(function() {
                 data: function (e) {
                     var key1 = Object.keys(e)[0];
                     if (e[key1].eeEstados[0].Estado === "OK") {
-                                        
+                        var Json_usr = JSON.stringify(e[key1]); 
+                        sessionStorage.setItem("Json_Usrbpm1",Json_usr); 
                         return e[key1][mapCud];
                     } else {
                         //alertDialogs(e[key1].eeEstados[0].Estado);
@@ -325,8 +331,12 @@ $(document).ready(function() {
             }
         });                                                             
         var grillad = detailRow.find(".orders").kendoGrid({
+            scrollable: false,
             dataSource:  datasourcey,                                            
             detailInit: detailInit1,
+            dataBound: function() {
+                            this.expandRow(this.tbody.find("tr.k-master-row"));
+                        },
             detailTemplate: kendo.template($("#template1").html()),
             columns: [
                 {field: "grp__name"},
@@ -345,6 +355,7 @@ $(document).ready(function() {
         var id = this.dataItem($(e.currentTarget).closest("tr"));
         var grp=id.grp__name;
         var id=id.id;
+        
         sessionStorage.setItem("Bpm_grp",grp);  
         sessionStorage.setItem("Bpm_id",id);  
         var myWindow = $("#window"),
@@ -380,7 +391,7 @@ $(document).ready(function() {
         var grp=id.grp__name;
         var id=id.id;       
         var Jsonbpm=[];
-        Jsonbpm = sessionStorage.getItem("Json_Usrbpm");                                           
+        Jsonbpm = sessionStorage.getItem("Json_Usrbpm1");                                           
         var Jsonbpm1  = JSON.parse(Jsonbpm);
         var Roles = Jsonbpm1.eebpm_rol;
         var i = 0;
@@ -471,7 +482,8 @@ function  crearLabel(id, titulo, div, fuente, color, tipo) {
             $('#gridproceso').data('kendoGrid').refresh();
         }
         var UrL= sessionStorage.getItem("url");  
-        myWindow1.kendoWindow({
+         $("#textarea").empty();
+            myWindow1.kendoWindow({
             draggable: true,
             height: "70%",
             modal: true,
@@ -489,11 +501,21 @@ function  crearLabel(id, titulo, div, fuente, color, tipo) {
             function reloadGrid() {
                 
     $("#textarea").data("kendoWindow").close();
-    
+   
+    }
+             function reloadGrid1() {
+                
+   
+    $("#window").data("kendoWindow").close();
     }
             
          function errorPopUp(){
     alertDialogs("Su solicitud sera procesada");
     reloadGrid();
+    
+    }
+         function errorPopUp1(){
+    alertDialogs("Su solicitud sera procesada");
+    reloadGrid1();
     
     }

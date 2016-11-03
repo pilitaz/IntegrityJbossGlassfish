@@ -67,6 +67,34 @@ and open the template in the editor.
                     </table>
                     <div class="sidenavSup"></div>
                 </div>
+                <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
+            <tr data-uid="#: uid #"> 
+
+                
+                <td>
+                    <span class="title">#: euserid #</span>
+                </td>
+                <td>
+                     <a  class='k-grid-detalle'><span id = "spanDelete#: euserid#" class='k-sprite admin_proff'></span></a>
+                     <a  class='k-grid-edit'><span id = "spanDelete#: euserid#" class='k-sprite po_editoff'></span></a>
+                </td>
+                
+            </tr>
+        </script>
+        <script id="altRowTemplateCmp" type="text/x-kendo-tmpl">
+            <tr class="k-alt" data-uid="#: uid #">
+              
+              
+                <td>
+                    <span class="title">#: euserid #</span>
+                </td>
+                <td>
+                     <a  class='k-grid-detalle'><span id = "span#: euserid#" class='k-sprite admin_proff'></span></a>
+                    <a class=" k-grid-edit"><span id = "aEdit#: euserid#" class='k-sprite po_editoff k-grid-edit'></span></a>
+                  
+            </td>
+            </tr>
+        </script>
                 <div id="outerWrapper">
                     <div id="grid"></div>                
                 </div> 

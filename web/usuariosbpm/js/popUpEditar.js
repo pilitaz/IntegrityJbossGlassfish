@@ -4,18 +4,44 @@ $(document).ready(function () {
 //    todos los elementos del servicio, segundo for deja habilidatos los roles que
 //    estan asigandos a ese usuario.
 //    
-var usr_name = sessionStorage.getItem("Userid_bpm");  
+    var usr_name = sessionStorage.getItem("Userid_bpm"); 
+    
     document.getElementById("demo1").innerHTML = usr_name;
-    var Jsonbpm=[];
-    Jsonbpm = sessionStorage.getItem("Json_Usrbpm");                                           
-    var Jsonbpm1  = JSON.parse(Jsonbpm);
-    var Roles = Jsonbpm1.eebpm_rol;
     var Bpm_grp =sessionStorage.getItem("Bpm_grp");  
     var Bpm_id =sessionStorage.getItem("Bpm_id"); 
     var cbh = document.getElementById('roles'); 
-    var i = 0;
-    var j=1;
-    for (i  in Roles ){
+        
+        var consultarusr = new sirRoles();
+        var datajson = consultarusr.getjson();
+        var urlServiceusr = consultarusr.getUrlSir();
+        
+
+        datajson.dsSIRbpm_rol.SIRbpm_rol[0].picproc__name = Bpm_id;
+          datajson.dsSIRbpm_rol.SIRbpm_rol[0].picgrp__name = Bpm_grp;
+        
+        
+        var Jsonbpm1;
+                                     
+            $.ajax({       
+            type: "POST",        
+            async: false,
+            data: JSON.stringify(datajson),
+            url: urlServiceusr,
+            dataType: "json",        
+            contentType: "application/json;",
+            complete: function(resp){
+                var Jsonbpm1  = JSON.parse(resp.responseText);
+                 var Json_usr = JSON.stringify(Jsonbpm1); 
+                        sessionStorage.setItem("Json_Usrbpm2",Json_usr); 
+            }        
+        });
+        
+        var json2 = sessionStorage.getItem("Json_Usrbpm2");
+        json2 = JSON.parse(json2);
+        var Roles = json2.dsSIRbpm_rol.eebpm_rol;
+        var i = 0;
+        var j=1;
+        for (i  in Roles ){
         crearDiv("divFiltr" + i, "K"+j+"-Container");
         crearImg("divFiltr" + i,Roles[i].rol__name+Roles[i].piiregrol );
         crearSpan("divFiltr" + i, Roles[i].rol__name);
@@ -25,10 +51,16 @@ var usr_name = sessionStorage.getItem("Userid_bpm");
             j++;
         }
     } 
-    for (i  in Roles){debugger
-        if(Roles[i].grp__name === Bpm_grp){
-            if(Roles[i].proc__name === Bpm_id){
-                $("#"+Roles[i].rol__name+Roles[i].piiregrol)
+    
+    
+    
+    var Roles1 = sessionStorage.getItem("Json_Usrbpm1"); 
+    var Roles1 = JSON.parse(Roles1);
+    var Roles1 = Roles1.eebpm_rol;
+    for (i  in Roles1){
+        if(Roles1[i].grp__name === Bpm_grp){
+            if(Roles1[i].proc__name === Bpm_id){
+                $("#"+Roles1[i].rol__name+Roles1[i].piiregrol)
                         .removeClass('k-sprite re_bullet1off').addClass('k-sprite po_bullet1');
             }
         }            
@@ -42,6 +74,18 @@ var usr_name = sessionStorage.getItem("Userid_bpm");
         newlabel.innerHTML = titulo;
         document.getElementById(div).appendChild(newlabel);
     }
+        $("#btnSave").kendoButton({
+        click: borrar,
+        
+    });
+    
+    function borrar(){debugger
+        parent.errorPopUp1();
+        
+    }
+    
+    
+    
 });
 function crearImg(div, id) {
     var x = document.createElement("SPAN");
@@ -65,7 +109,7 @@ function crearDiv(id, div, clase, align, style) {
     newDiv.id = id;
     document.getElementById(div).appendChild(newDiv);
 }
-function Click(e){debugger
+function Click(e){
     var estado = document.getElementById(e).getAttribute("estado");
     if(estado === "off"){
         $("#"+e).removeClass('k-sprite re_bullet1off').addClass('k-sprite po_bullet1');
@@ -89,7 +133,7 @@ function Click(e){debugger
             url: urlServiceusr,
             dataType: "json",        
             contentType: "application/json;",
-            complete: function(resp){debugger
+            complete: function(resp){
                 var Jsonbpm1  = JSON.parse(resp.responseText);
                 alert(Jsonbpm1.dsSICUDbpm_user.eeEstados[0].Estado);
             }        
