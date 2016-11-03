@@ -85,7 +85,7 @@
                             
                             //navigatable: true,
                             columns: [
-                                 { template: "<a class='k-grid-edit'><span class='k-sprite pro_playon'></span></a>", width: "60px"},
+                                 { template: "<a class='k-grid-edit'><span class='k-sprite pro_playon'></span></a>", width: "50px"},
                                 {field: "proc__name", title: "Procesos",  hidden:false},							                               
                         
                             {command:
@@ -95,7 +95,7 @@
                             {name: "editar", text: " ",  click: grafica, template: "<a class='k-grid-editar'><span class='k-sprite re_editoff'></span></a>"},
                             {name: "destroy", template: "<a class='k-grid-delete' href='' style='min-width:16px;'><span class='k-sprite re_cerrar'></span></a>"}
                         ],
-                width: "130px"}]    ,                            
+                        width: "120px"}],                            
                             //editable: "popup",
                             
                             cancel: function(e) {                                                                                   
@@ -107,7 +107,91 @@
                         });
 
                         
-                
+                    var consultar = new usrtask();
+    var datajson = consultar.getjson();
+    var urlService = consultar.getUrlSir();
+    var mapCud1 = "eebpm_task";
+    var datasourcex = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: urlService,
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; charset=utf-8"
+            },         
+            parameterMap: function (options, operation) {
+                if (operation === "read") {
+                    return JSON.stringify(datajson);
+                }
+            }
+        },
+        batch: false,
+        severFiltering: true,                            
+        schema: {
+            data: function (e) {debugger
+                var key1 = Object.keys(e)[0];
+                if (e[key1].eeEstados[0].Estado === "OK") {
+                    return e[key1][mapCud1];
+                } else {
+                   // alertDialogs(e[key1].eeEstados[0].Estado);
+                }
+            },
+            model: {
+                id: "task__id",
+                fields: {
+                    task__name:    {editable: false, nullable: false},
+                    proc__name:     {editable: false, nullable: false},
+                    task__ddt:       {editable: false, nullable: false},
+                    task__tst:       {editable: false, nullable: false},
+                    task__id:       {editable: false, nullable: false},
+                    task__dpr:       {editable: false, nullable: false}
+                }
+            }
+        }
+    });
+                        /**
+                         *  FUNCION CREAR GRILLA
+                         * Funcion cancel se ejecuta con el evento OnClick de EDIT grid
+                         *  cancel: function(e) {                                              
+                            e._defaultPrevented= true;
+                            $('#grid').data('kendoGrid').refresh();                                             
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh(); `}                                                                                       
+                       
+                         *  
+                         *  
+                         */     
+                        var grid1 = $("#chart").kendoGrid({
+                            dataSource: datasourcex,
+                            
+                            
+                            selectable: true,
+                            
+                            //navigatable: true,
+                            columns: [
+                                 { template: "<a class='k-grid-edit'><span class='k-sprite pro_playon'></span></a>", width: "50px"},
+                                {field: "task__name", title: "Tareas",  hidden:false},
+                                {field: "proc__name", title: "Procesos",  hidden:false},
+                                {field: "task__ddt", title: "Fecha de Inicio",  hidden:false},
+                                {field: "task__tst", title: "Fecha de Terminacion",  hidden:false},
+                                {field: "task__dpr", title: "Creado por",  hidden:false},
+                        
+                            {command:
+                        [
+                           
+                           
+                            {name: "destroy", template: "<a class='k-grid-delete' href='' style='min-width:16px;'><span class='k-sprite re_cerrar'></span></a>"}
+                        ],
+                width: "50px"}]    ,                            
+                            //editable: "popup",
+                            
+                            cancel: function(e) {                                                                                   
+                                e._defaultPrevented= true;
+                                $('#grid').data('kendoGrid').refresh();                                             
+                                $('#grid').data('kendoGrid').dataSource.read();
+                                $('#grid').data('kendoGrid').refresh();                                                                                        
+                            } 
+                        });
                         
                       
                       

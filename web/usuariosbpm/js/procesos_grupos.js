@@ -1,7 +1,7 @@
 function ir_usuarios(){
     window.location = ("usuariosbpm.html");    
 }
-$(document).ready(function() {
+$(document).ready(function()  {
     $('body').css('display', 'none');
     $('body').fadeIn(1000);
     $('.link').click(function() {
