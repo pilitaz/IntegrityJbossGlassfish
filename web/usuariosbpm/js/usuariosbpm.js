@@ -357,25 +357,55 @@ $(document).ready(function () {
 
     }
     //***************************************************
-function changImgFunc(results) {debugger
-    for (var i = 0; i < results.length; i++) {
-        var id = results[i].rpt_cmp_pos;
-        var spanE = "";
-        var aEdit = ""
-        if (i % 2 === 0) {
-            spanE = "spanEdit" + id;
-            aEdit = "aEdit" + id;
-        } else {
-            spanE = "altSpanEdit" + id;
-            aEdit = "aEdit" + id;
-        }
-        if ((results[i].rpt_cmp_fun)) {
-            document.getElementById(spanE).setAttribute("class", "k-sprite re_funcion");
-            document.getElementById(aEdit).setAttribute("class", "");
-            document.getElementById(spanE).setAttribute("onClick", "popUpFunciones(" + id + ",\'" + results[i].rpt_cmp_vis + "\')");
+    function changImgFunc(results) {debugger
+       
+        var consultar = new usr_proces();
+        var datajson = consultar.getjson();
+        var urlService = consultar.getUrlSir();
+        $.ajax({
+            type: "POST",
+            async: false,
+            data: JSON.stringify(datajson),
+            url: urlService,
+            dataType: "json",
+            contentType: "application/json;",
+            complete: function (resp) {
+                debugger
+                  var Jsonbpm1  = JSON.parse(resp.responseText);
+                  var Jsonbpm1=Jsonbpm1.dsSIRbpm_user_int.eebpm_user;
+                    var usr_proc = JSON.stringify(Jsonbpm1); 
+                  sessionStorage.setItem("usr_proc",usr_proc); 
+               
+                //Jsonbpm1.responseText.dsSICUDbpm_user.eeEstados[0].Estado
+              
+                
+            }
+        });
+        var usr_proc =  sessionStorage.getItem("usr_proc");
+        var usr_proc  = JSON.parse(usr_proc);
+        for (var i = 0; i < results.length; i++) {debugger
+            for (var j=0 in usr_proc){
+            
+               var id = results[i].euserid;
+               var usr_p = usr_proc[j].usr__cod;
+                 var n = usr_p.indexOf("_");
+                 var x = usr_p.length ;
+                 usr_p=usr_p.slice(0, n);
+                if(id===usr_p){
+                            
+               document.getElementById("span"+id).setAttribute("class", "k-sprite admin_pron");
+                            
+                            
+//                    $("#"+"span"+id)
+//                            .addClass('k-sprite admin_pron');
+            
+            }
+            }
+            
+     
+        
         }
     }
-}
 
     /**
      *  Funcion filtroJefe PARA EDIT POPUP SE EJECUTA CON EL EVENTO DE COMBOBOX

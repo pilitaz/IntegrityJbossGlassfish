@@ -45,6 +45,46 @@ function sirproceso() {
     };
     
 };
+//---------------------------------------------------------
+ function usr_proces() {
+   var urlSir = ipBpm + baseUsrBpm +"SIRbpm_user_int";
+    var json = {  
+   "dsSIRbpm_user_int":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid")
+         }
+      ],    
+        "SIRbpm_user": [
+          {
+        "piccia__nit": sessionStorage.getItem("companyNIT"), 
+        "picusr__bmp": "*"
+       }
+     ]
+   }
+}
+;
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
 //----------------------------------------------------------
  function sirconsulta() {
     var urlSir = ipServicios + baseServicio +"SirUsuarios";

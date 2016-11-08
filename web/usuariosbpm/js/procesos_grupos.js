@@ -131,7 +131,8 @@ $(document).ready(function()  {
      */   
     function grupos(){
         var dropdownlist = $("#procesos").data("kendoComboBox");
-        $("#grupos").empty();
+       
+        $("#grupos").data("kendoComboBox").text('');
         var x = dropdownlist.value();
         var y = dropdownlist.text();
         var consultar = new sirgrupos();
@@ -489,7 +490,7 @@ function  crearLabel(id, titulo, div, fuente, color, tipo) {
             modal: true,
             resizable: false,
             title: "Roles",
-            width: "60%",
+            width: "65%",
             content: UrL+"usuariosbpm/html/popUpAgregar.html",
             actions: [
                 "Close"

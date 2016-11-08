@@ -65,6 +65,8 @@
             }
         }
     });
+    var name = sessionStorage.getItem("usuario");
+    document.getElementById("demo").innerHTML = "Tareas de " +  name;
                         /**
                          *  FUNCION CREAR GRILLA
                          * Funcion cancel se ejecuta con el evento OnClick de EDIT grid
@@ -85,13 +87,12 @@
                             
                             //navigatable: true,
                             columns: [
-                                 { template: "<a class='k-grid-edit'><span class='k-sprite pro_playon'></span></a>", width: "50px"},
-                                {field: "proc__name", title: "Procesos",  hidden:false},							                               
-                        
+                                
+                            { field: "proc__name", title: "Procesos",  hidden:false},
                             {command:
                         [
                            
-                            {name: "play", text: " ", click: grilla, template: "<a class='k-grid-play'><span class='k-sprite re_playoff'></span></a>"},
+                            {name: "play", text: " ", click: grilla, template: "<a class='k-grid-play'><span class='k-sprite pro_playon'></span></a>"},
                             {name: "editar", text: " ",  click: grafica, template: "<a class='k-grid-editar'><span class='k-sprite re_editoff'></span></a>"},
                             {name: "destroy", template: "<a class='k-grid-delete' href='' style='min-width:16px;'><span class='k-sprite re_cerrar'></span></a>"}
                         ],
@@ -161,7 +162,7 @@
                          *  
                          *  
                          */     
-                        var grid1 = $("#chart").kendoGrid({
+                        var grid1 = $("#grid1").kendoGrid({
                             dataSource: datasourcex,
                             
                             
@@ -169,13 +170,13 @@
                             
                             //navigatable: true,
                             columns: [
-                                 { template: "<a class='k-grid-edit'><span class='k-sprite pro_playon'></span></a>", width: "50px"},
+                                
                                 {field: "task__name", title: "Tareas",  hidden:false},
-                                {field: "proc__name", title: "Procesos",  hidden:false},
+                                {field: "inst__name", title: "Creado por",  hidden:false},
                                 {field: "task__ddt", title: "Fecha de Inicio",  hidden:false},
                                 {field: "task__tst", title: "Fecha de Terminacion",  hidden:false},
                                 {field: "task__dpr", title: "Creado por",  hidden:false},
-                        
+                                
                             {command:
                         [
                            
@@ -204,53 +205,78 @@
                 function grafica(e){debugger
                     
                  
-                var entityGrid = $("#grid").data("kendoGrid");
-                var selectedItem = entityGrid.dataItem(entityGrid.select());
-                 document.getElementById("demo").innerHTML = selectedItem.id;      
-                    $("#chart").empty();
-                $("#chart").kendoChart({
-                title: {
-                    text: "Evolucion de tareas para " + selectedItem.id,
-                },
-                legend: {
-                    visible: false
-                },
-                seriesDefaults: {
-                    type: "bar"
-                },
-                series: [{
-                    name: "Total Visits",
-                    data: [56000, 63000, 74000, 91000, 117000, 138000]
-                }, {
-                    name: "Unique visitors",
-                    data: [52000, 34000, 23000, 48000, 67000, 83000]
-                }],
-                valueAxis: {
-                    max: 140000,
-                    line: {
-                        visible: false
-                    },
-                    minorGridLines: {
-                        visible: true
-                    },
-                    labels: {
-                        rotation: "auto"
-                    }
-                },
-                categoryAxis: {
-                    categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-                    majorGridLines: {
-                        visible: false
-                    }
-                },
-                tooltip: {
-                    visible: true,
-                    template: "#= series.name #: #= value #"
-                }
-            });
+//                    var entityGrid = $("#grid").data("kendoGrid");
+//                    var selectedItem = entityGrid.dataItem(entityGrid.select());
+//                    document.getElementById("demo").innerHTML = selectedItem.id;      
+//                    $("#chart").empty();
+//                    $("#chart").kendoChart({
+//                        title: {
+//                            text: "Evolucion de tareas para " + selectedItem.id,
+//                        },
+//                        legend: {
+//                            visible: false
+//                        },
+//                        seriesDefaults: {
+//                            type: "bar"
+//                        },
+//                        series: [{
+//                                name: "Total Visits",
+//                                data: [56000, 63000, 74000, 91000, 117000, 138000]
+//                            }, {
+//                                name: "Unique visitors",
+//                                data: [52000, 34000, 23000, 48000, 67000, 83000]
+//                            }],
+//                        valueAxis: {
+//                            max: 140000,
+//                            line: {
+//                                visible: false
+//                            },
+//                            minorGridLines: {
+//                                visible: true
+//                            },
+//                            labels: {
+//                                rotation: "auto"
+//                            }
+//                        },
+//                        categoryAxis: {
+//                            categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+//                            majorGridLines: {
+//                                visible: false
+//                            }
+//                        },
+//                        tooltip: {
+//                            visible: true,
+//                            template: "#= series.name #: #= value #"
+//                        }
+//                    });
+             //-------------------------------------
+             var myWindow1 = $("#textarea"),
+                undo = $("#undo");
+        function onClose() {
+            undo.fadeIn();
+//            $('#gridproceso').data('kendoGrid').refresh();
+//            $('#gridproceso').data('kendoGrid').dataSource.read();
+//            $('#gridproceso').data('kendoGrid').refresh();
+        }
+//        var UrL= sessionStorage.getItem("url");  
+         $("#textarea").empty();
+            myWindow1.kendoWindow({
+            draggable: true,
+            height: "70%",
+            modal: true,
+            resizable: false,
+            title: "Grafica _*",
+            width: "60%",
+            content: "popUpGrafica.html",
+            actions: [
+                "Close"
+            ],                               
+            close: onClose
+        }).data("kendoWindow").center().open();                 
+    }
+    
                         
-                        
-                    }       
+                    
 
                     
                         function grilla(e){debugger
@@ -293,11 +319,11 @@
             }
         }
     });
-                            $("#chart").empty();
-                            var entityGrid = $("#grid").data("kendoGrid");
-                            var selectedItem = entityGrid.dataItem(entityGrid.select());
-                            document.getElementById("demo").innerHTML = selectedItem.id; 
-                            var grid = $("#chart").kendoGrid({
+                            $("#grid1").empty();
+//                            var entityGrid = $("#grid").data("kendoGrid");
+//                            var selectedItem = entityGrid.dataItem(entityGrid.select());
+                           //document.getElementById("demo").innerHTML = selectedItem.id; 
+                            var grid = $("#grid1").kendoGrid({
                                 
                                 dataSource: datasource,
                             
