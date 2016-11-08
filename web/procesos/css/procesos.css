@@ -26,10 +26,9 @@ table{
     min-width: 150px;
 }
 
-
-.sidenavSup {
+.sidenavSup1 {
     border-style: solid;
-    border-color: #80BD28 #fff  #fff  #fff;
+    border-color: #cf0021 #fff  #fff  #fff;
 }
 
 .sidenavIzq {
@@ -78,18 +77,13 @@ table{
                     }
                 }
 
-                   .k-grid tr:hover {
-  background: transparent;
-}
+   
 .k-grid tr:not(.k-state-selected):hover {
       background: none;
       color: inherit;
   }
 
-  .k-grid tr.k-alt:not(.k-state-selected):hover {
-      background: #f1f1f1;
-      border:0;
-  }
+
   .k-detail-row{
        padding: 0;
        border:0;
@@ -103,6 +97,7 @@ table{
       
       
   }
+
 #gridproceso {
     height:250px;
 
@@ -110,6 +105,7 @@ table{
    
     overflow: auto;
 }
+
 .po_bulleto1{
 	width: 34px;
 	height: 34px;
@@ -146,13 +142,13 @@ table{
 }
 
 
-.k-grid-header
+/*.k-grid-header
 {
     height: 0;
     border-bottom-width: 0;
     display: none;
     overflow: hidden;
-}
+}*/
 
 
 

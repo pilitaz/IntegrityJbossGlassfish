@@ -88,6 +88,7 @@
                         
                         //var crudServiceBaseUrl = "http://190.144.16.114:8810/rest/Base/BaseIntegrity/SirUsuarios";
                         var mapCud = "ee_user3";
+                        var mapCud1 = "ee_user3";
                         dataSource = new kendo.data.DataSource({
                             transport: {
                                 read: {
@@ -119,10 +120,12 @@
                                         
                                     }
                                     if (operation === "create") {debugger
+                                    actjson.dssic_car.eesic_car[0].car__nom = options.car__nom;
+                                    return JSON.stringify(actjson);
                                         
-                                                    $('#grid').data('kendoGrid').refresh();
-            $('#grid').data('kendoGrid').dataSource.read();
-            $('#grid').data('kendoGrid').refresh();                                    
+                                    $('#grid').data('kendoGrid').refresh();
+                                    $('#grid').data('kendoGrid').dataSource.read();
+                                    $('#grid').data('kendoGrid').refresh();                                    
                                         
                                         
                                     }
@@ -132,10 +135,14 @@
                             batch: false,
                             severFiltering: true,                            
                             schema: {
-                                data: function (e) {
+                                data: function (e) {debugger
                                     var key1 = Object.keys(e)[0];
+                                    if(e[key1].eeEstados){
                                     if (e[key1].eeEstados[0].Estado === "OK") {
                                         return e[key1][mapCud];
+                                    }
+                                }else if(e[key1].dssic_car.dssic_car.eeEstados[0].Estado === "OK"){
+                                        return e[key1].dssic_car.dssic_car["eesic_car"];
                                     } else {
                                         alert(e[key1].eeEstados[0].Estado);
                                     }

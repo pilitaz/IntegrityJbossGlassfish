@@ -32,20 +32,13 @@ function creausuario() {
                 	
                        e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
                         var id = this.dataItem($(e.currentTarget).closest("tr")).euserid;
-//                       var grid1 = $("#grid").data("kendoGrid");
-                       
-                        
-//                         var row = grid1.dataItem(grid1.select());
-//                        var s=0;
                         sessionStorage.setItem("Userid_bpm",id);
-                        window.location = ("procesos&grupos.html");
+                        window.location = ("procesos_grupos.html");
                         //sessionStorage.setItem("Rolname",row.car__nom);
                     }
      
 $(document).ready(function () {
     
-    
- 
                     
     
     var consultar = new sirconsulta();
@@ -101,7 +94,7 @@ $(document).ready(function () {
                             return JSON.stringify(actjson);
                         } else
                         {
-                            window.alert('Las contraseñas no coinciden');
+                            window.alertDialogs('Las contraseñas no coinciden');
 
                         }
                     }
@@ -116,7 +109,7 @@ $(document).ready(function () {
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     return e[key1][mapCud];
                 } else {
-                    alert(e[key1].eeEstados[0].Estado);
+                    alertDialogs(e[key1].eeEstados[0].Estado);
                 }
             },
             model: {
@@ -178,12 +171,18 @@ $(document).ready(function () {
                 }},
             {field: "epassword", title: "CLAVE", width: "50px", hidden: true, editor: passEditorPopup},
             {field: "epassword1", title: "REPITA CLAVE", width: "50px", hidden: true, editor: onkeypass},
-            {command: [{name: "detalle", text: " ", click: editar_usr, template: "<a class='k-grid-detalle'><span class='k-sprite po_detalle'></span></a>"},
-                       { name: "edit", text: "edit",  template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"}
+            {command: [{name: "detalle", text: "detalle", click: editar_usr, template: "<a class='k-grid-detalle'><span class='k-sprite admin_proff'></span></a>"},
+                       { name: "edit", text: "editar",  template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"}
                     
                        ], width: "100px"}
             ],
         editable: "popup",
+        rowTemplate: kendo.template($("#rowTemplateCmp").html()),
+        altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
+        dataBound: function () {
+            var results = dataSource.data();
+            changImgFunc(results);
+        },
         cancel: function (e) {
             e._defaultPrevented = true;
             $('#grid').data('kendoGrid').refresh();
@@ -357,7 +356,56 @@ $(document).ready(function () {
                 });
 
     }
-
+    //***************************************************
+    function changImgFunc(results) {debugger
+       
+        var consultar = new usr_proces();
+        var datajson = consultar.getjson();
+        var urlService = consultar.getUrlSir();
+        $.ajax({
+            type: "POST",
+            async: false,
+            data: JSON.stringify(datajson),
+            url: urlService,
+            dataType: "json",
+            contentType: "application/json;",
+            complete: function (resp) {
+                debugger
+                  var Jsonbpm1  = JSON.parse(resp.responseText);
+                  var Jsonbpm1=Jsonbpm1.dsSIRbpm_user_int.eebpm_user;
+                    var usr_proc = JSON.stringify(Jsonbpm1); 
+                  sessionStorage.setItem("usr_proc",usr_proc); 
+               
+                //Jsonbpm1.responseText.dsSICUDbpm_user.eeEstados[0].Estado
+              
+                
+            }
+        });
+        var usr_proc =  sessionStorage.getItem("usr_proc");
+        var usr_proc  = JSON.parse(usr_proc);
+        for (var i = 0; i < results.length; i++) {debugger
+            for (var j=0 in usr_proc){
+            
+               var id = results[i].euserid;
+               var usr_p = usr_proc[j].usr__cod;
+                 var n = usr_p.indexOf("_");
+                 var x = usr_p.length ;
+                 usr_p=usr_p.slice(0, n);
+                if(id===usr_p){
+                            
+               document.getElementById("span"+id).setAttribute("class", "k-sprite admin_pron");
+                            
+                            
+//                    $("#"+"span"+id)
+//                            .addClass('k-sprite admin_pron');
+            
+            }
+            }
+            
+     
+        
+        }
+    }
 
     /**
      *  Funcion filtroJefe PARA EDIT POPUP SE EJECUTA CON EL EVENTO DE COMBOBOX

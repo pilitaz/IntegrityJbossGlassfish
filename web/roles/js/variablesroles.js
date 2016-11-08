@@ -43,58 +43,12 @@
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////
-function cudcreate () {
 
-    var urlCud = "http://190.144.16.114:8810/"+ "rest/Base/BaseIntegrity/" +"SicudUsuarios";
-    var json = {  
-       "dsee_user2":{  
-          "eeDatos":[  
-             {  
-            "picusrcod":sessionStorage.getItem("usuario"),
-            "picfiid":sessionStorage.getItem("picfiid"),
-            "local_ip":sessionStorage.getItem("ipPrivada"),
-            "remote_ip":sessionStorage.getItem("ipPublica")
-             }
-          ],
-          "ee_user2":[  
-             {  
-                "euserid":"apastori",
-                "euser__Name":"Ansaldo PastoriS",
-                "epassword":"**********",
-                "usr__mail":"apastori@quantumltda.com",
-                "usr__carp":"560187",
-                "usr__est":1,
-                "car__cod":9999,
-                "car__nom":"PORTALNOMINA",
-                "usr__jef":false,
-                "usr__codjef":"aduarte"
-             }
-          ]
-       }
-    };
-    this.setUrlCud = function (newname) {
-        if (newname) {
-            urlCud = newname;
-        }
-    };
-    this.getUrlCud = function () {
-        return urlCud;
-    };
-    
-    this.setjson = function (newname) {
-        if (newname) {
-            json = newname;
-        }
-    };
-    this.getjson= function () {
-        return json;
-    };
-};
 ////////////////////////////////////////////////////////////////////////////////
 function crearol() {
-   var urlSir = ipServicios + baseServicio +"SirCargos2";
+   var urlSir = ipServicios + baseServicio +"SICUDsic_car";
     var json = {  
-   "SIResic_car":{  
+   "dssic_car":{  
       "eeDatos":[  
          {  
             "picusrcod":sessionStorage.getItem("usuario"),
@@ -102,7 +56,13 @@ function crearol() {
             "local_ip":sessionStorage.getItem("ipPrivada"),
             "remote_ip":sessionStorage.getItem("ipPublica")
          }
-      ]
+      ],
+      "eesic_car":[
+      	{
+      	"car__nom": "",
+      	"car__est":1
+      	}
+      	]
    }
 };
     
