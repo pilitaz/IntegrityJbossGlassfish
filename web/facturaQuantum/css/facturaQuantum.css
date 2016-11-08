@@ -70,3 +70,7 @@ td{
     border-bottom: 1px solid;
     border-bottom-color: #DFDFDF;
 }
+
+.k-pager-info{
+    display: none;
+}
