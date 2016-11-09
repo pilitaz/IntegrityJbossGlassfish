@@ -228,7 +228,13 @@
 
                     
                         function grilla(e){
-                                        myWindow1.kendoWindow({
+                        var myWindow1 = $("#grillapopUp"),
+                undo = $("#undo");
+        function onClose() {
+            undo.fadeIn();
+        }
+         $("#grillapopUp").empty();
+                            myWindow1.kendoWindow({
             draggable: true,
             height: "70%",
             modal: true,
