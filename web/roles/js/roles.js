@@ -18,7 +18,7 @@
                      *   
                      *  
                      *  
-                     */ function newrol(){debugger
+                     */ function newrol(){
                         var grid1 = $("#grid").data("kendoGrid");
             		    var dataSource = $("#grid").data("kendoGrid").dataSource;
                             
@@ -27,7 +27,7 @@
                                 grid1.options.editable = "inline";
                             
                     }
-                    function editar_rol(){debugger
+                    function editar_rol(){
                 	
                     
                        var grid1 = $("#grid").data("kendoGrid");
@@ -114,12 +114,12 @@
                                     if (operation === "read") {
                                         return JSON.stringify(datajson);
                                     }
-                                    if (operation === "update") {debugger
+                                    if (operation === "update") {
                                         $('#grid').data('kendoGrid').refresh();
                                         return JSON.stringify(actjson);                                          
                                         
                                     }
-                                    if (operation === "create") {debugger
+                                    if (operation === "create") {
                                     actjson.dssic_car.eesic_car[0].car__nom = options.car__nom;
                                     return JSON.stringify(actjson);
                                         
@@ -135,7 +135,7 @@
                             batch: false,
                             severFiltering: true,                            
                             schema: {
-                                data: function (e) {debugger
+                                data: function (e) {
                                     var key1 = Object.keys(e)[0];
                                     if(e[key1].eeEstados){
                                     if (e[key1].eeEstados[0].Estado === "OK") {

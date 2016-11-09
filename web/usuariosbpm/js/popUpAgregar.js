@@ -43,7 +43,7 @@ $(document).ready(function () {
         
     });
     
-    function borrar(){debugger
+    function borrar(){
         parent.errorPopUp();
         
     }
@@ -73,7 +73,7 @@ function crearDiv(id, div, clase, align, style) {
     document.getElementById(div).appendChild(newDiv);
 }
 function Click(e) {
-    debugger
+    
     var estado = document.getElementById(e).getAttribute("estado");
     if (estado === "off") {
         $("#" + e).removeClass('k-sprite re_bullet1off').addClass('k-sprite po_bullet1');
@@ -105,7 +105,7 @@ function Click(e) {
             dataType: "json",
             contentType: "application/json;",
             complete: function (resp) {
-                debugger
+                
                 var Jsonbpm1 = JSON.parse(resp.responseText);
                 //Jsonbpm1.responseText.dsSICUDbpm_user.eeEstados[0].Estado
                 alertDialogs(Jsonbpm1.dsSICUDbpm_user.eeEstados[0].Estado);

@@ -129,7 +129,7 @@
         batch: false,
         severFiltering: true,                            
         schema: {
-            data: function (e) {debugger
+            data: function (e) {
                 var key1 = Object.keys(e)[0];
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     return e[key1][mapCud1];
@@ -202,7 +202,7 @@
                     });
                     
        
-                function grafica(e){debugger
+                function grafica(e){
                     
                  
 //                    var entityGrid = $("#grid").data("kendoGrid");
@@ -279,7 +279,7 @@
                     
 
                     
-                        function grilla(e){debugger
+                        function grilla(e){
                                            var consultar = new sirusuariobpm();
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();

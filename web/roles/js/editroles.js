@@ -13,7 +13,7 @@ $(window).resize(function () {
    
 });
 
-$(document).ready(function() {debugger
+$(document).ready(function() {
 
 
 $('body').css('display', 'none');
@@ -30,7 +30,7 @@ document.getElementById("filtro").value = rol_name;
 
 var jSon=[];
 
-function agregarfuncion(e) {debugger
+function agregarfuncion(e) {
     
 var Selement=$('#jstree2').jstree('get_selected');
 if(Selement.length==1)
@@ -182,7 +182,7 @@ else
       datajson.dsFunciones.funciones=[];
 
     
-   for(i in Selement){debugger 
+   for(i in Selement){ 
        
 
     Selement[i].toString(); 
@@ -312,7 +312,7 @@ else
 
 
 
-function eliminarfuncion(e) {debugger
+function eliminarfuncion(e) {
 var Selement=$('#jstree3').jstree('get_selected');
 var  servicio = new eliminarfunciones();
 var  datajson = servicio.getjson();

@@ -72,7 +72,7 @@ $(document).ready(function () {
                     var cclave1 = document.getElementById("clave1").value;
                     var cclave2 = document.getElementById("clave2").value;
                     if (cclave1 == "**********") {//EVULUAR CONTRASEÑA
-                        debugger;
+                        
                         actjson.dsee_user2.ee_user2[0] = options.models[0];
                         return JSON.stringify(actjson);
                     } else

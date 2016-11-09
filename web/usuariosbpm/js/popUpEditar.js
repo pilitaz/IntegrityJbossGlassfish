@@ -79,7 +79,7 @@ $(document).ready(function () {
         
     });
     
-    function borrar(){debugger
+    function borrar(){
         parent.errorPopUp1();
         
     }

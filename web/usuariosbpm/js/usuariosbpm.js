@@ -28,7 +28,7 @@ function creausuario() {
  *  var urlactualizar: url de servicio para actualizar / crear 
  *  var mapCud1: direccion de json para el esquema
  */
-                  function editar_usr(e){debugger
+                  function editar_usr(e){
                 	
                        e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
                         var id = this.dataItem($(e.currentTarget).closest("tr")).euserid;
@@ -84,7 +84,7 @@ $(document).ready(function () {
                     var cclave1 = document.getElementById("clave1").value;
                     var cclave2 = document.getElementById("clave2").value;
                     if (cclave1 == "**********") {//EVULUAR CONTRASEÑA
-                        debugger;
+                        
                         actjson.dsee_user2.ee_user2[0] = options.models[0];
                         return JSON.stringify(actjson);
                     } else
@@ -357,7 +357,7 @@ $(document).ready(function () {
 
     }
     //***************************************************
-    function changImgFunc(results) {debugger
+    function changImgFunc(results) {
        
         var consultar = new usr_proces();
         var datajson = consultar.getjson();
@@ -370,7 +370,7 @@ $(document).ready(function () {
             dataType: "json",
             contentType: "application/json;",
             complete: function (resp) {
-                debugger
+                
                   var Jsonbpm1  = JSON.parse(resp.responseText);
                   var Jsonbpm1=Jsonbpm1.dsSIRbpm_user_int.eebpm_user;
                     var usr_proc = JSON.stringify(Jsonbpm1); 
@@ -383,7 +383,7 @@ $(document).ready(function () {
         });
         var usr_proc =  sessionStorage.getItem("usr_proc");
         var usr_proc  = JSON.parse(usr_proc);
-        for (var i = 0; i < results.length; i++) {debugger
+        for (var i = 0; i < results.length; i++) {
             for (var j=0 in usr_proc){
             
                var id = results[i].euserid;

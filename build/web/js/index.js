@@ -16,6 +16,7 @@ $(document).ready(function() {
     sessionStorage.setItem("VideoAyuda","http://comunicacion349.wix.com/integrity#!reportes-tutoriales/w865s");//cambiar urlVideo con url link apenas este listo el video de ayuda   
     
     if(sessionStorage.getItem("loginintegrity")==="valido"){
+        
         $(window).trigger("resize");
         
         $("#btnCambiarClave").kendoButton({
@@ -24,15 +25,14 @@ $(document).ready(function() {
         $("#btnGuardarClave").kendoButton({
             
         });
-        menufunciones();
-        //tamanoShell();
+        menufunciones();        
         tamanoPagIni();
         correLinuxBack();
         document.getElementById("lbNombre").innerHTML = sessionStorage.getItem("usrnom");
         document.getElementById("lbEMail").innerHTML = sessionStorage.getItem("usrmail");    
         document.getElementById("imgUsuario").src = "../images/equipo/"+sessionStorage.getItem("usuario")+".png";
         document.getElementById("logoEmpresa").src = "data:image/png;base64," + sessionStorage.getItem("img");
-        document.getElementById("idFrame").src = urlIFrame+"actatareas/Start.jsp";
+        document.getElementById("idFrame").src = "fondo.html";
 //        document.getElementById("idFrame").src = "http://190.144.16.114:18800/PruebaHRD";
     }else{
         window.location.assign(sessionStorage.getItem("url"));
@@ -78,6 +78,12 @@ function cambiarImagen(imgId, estiloTd){
             document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
             var urlFrameNew = "http://"+ip+":"+puerto+"/"+servicio; 
             document.getElementById("idFrame").src = urlFrameNew;
+            document.getElementById("tdPerfil").style="display:none"
+        } 
+        else if(servicio === "procesos"){
+            $('#divDerecho').width($(window).width());
+            document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
+            document.getElementById("idFrame").src = sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html";
             document.getElementById("tdPerfil").style="display:none"
         }
         else if(servicio!=""){
@@ -323,13 +329,11 @@ function inicio(){
     window.location.assign("index.html");
 }
 
-function documentos(){
-    debugger
-    servicio="Documentos";
-    tamanoFunciones();
-    $("#tdPerfil").fadeOut("slow");
-    document.getElementById("idFrame").src = urlIFrame+servicio+"/Start.jsp";   
-}
+//function documentos(){
+//    mostrarDocumentos();    
+//    
+//    
+//}
 
 function abreFuncion(servicio){    
     tamanoFunciones();
@@ -460,8 +464,7 @@ function servLinuxSOption(programa) {
         }
     }).done(function () {
         if (permitirIngreso == '"OK"') {
-alert("hola");
-corre();
+            corre();
         } else {
             $("body").append("<div id='dialog'></div>");
              var dialog = $('#dialog');
@@ -522,6 +525,7 @@ function tamanoPagIni(width){
 }
 
 function tamanoFunciones(e){
+    
     estadoIfra = "PagFunciones";
     if(e){
         div_ancho=e;
@@ -541,4 +545,16 @@ function tamanoFunciones(e){
     $( "#idFrame" ).height( div_alto );
     $( "#idFrame" ).width( div_ancho - 35-20);
     $( "#includeArbol" ).height( div_alto -10);
+}
+
+function mostrarDocumentos(){                                  
+    var tamañoContenedor = $("#outerWrapper").width();    
+    var d = document.getElementById('divDocumentos');    
+    d.style.left = (tamañoContenedor-300)+'px';    
+    $("#divDocumentos").load("../documentos/html/documentos.html"); 
+    $("#divDocumentos").fadeIn("slow");    
+}
+function ocultarDocumentos(){
+    $("#divArbol").load("tree2.html");     
+    $("#divDocumentos").fadeOut("slow");
 }
