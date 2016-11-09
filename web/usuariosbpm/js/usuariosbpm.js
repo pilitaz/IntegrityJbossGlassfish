@@ -383,7 +383,7 @@ $(document).ready(function () {
         });
         var usr_proc =  sessionStorage.getItem("usr_proc");
         var usr_proc  = JSON.parse(usr_proc);
-        alert("hola")
+       
         for (var i = 0; i < results.length; i++) {
             for (var j=0 in usr_proc){
             
