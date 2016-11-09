@@ -414,18 +414,16 @@ function gridDetalle(){
     }).data("kendoGrid");
     
     function eliminarItem(e){ 
-        
         e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
         
-        itemID = this.dataItem($(e.currentTarget).closest("tr"));
+        var grid = $("#grid").data("kendoGrid");
+        var itemID = grid.dataItem(grid.select());
         
         for (var i=0; i<dataGridDetalle.length; i++){
             if(dataGridDetalle[i].ID===itemID.ID){
                 dataGridDetalle.splice(i, 1);
             }
         }
-        
-        //itemID=null;
         gridDetalle();
     }
     
