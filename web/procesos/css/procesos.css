@@ -77,18 +77,13 @@ table{
                     }
                 }
 
-                   .k-grid tr:hover {
-  background: red;
-}
+   
 .k-grid tr:not(.k-state-selected):hover {
       background: none;
       color: inherit;
   }
 
-  .k-grid tr.k-alt:not(.k-state-selected):hover {
-      background: #f1f1f1;
-      border:0;
-  }
+
   .k-detail-row{
        padding: 0;
        border:0;
@@ -102,12 +97,7 @@ table{
       
       
   }
-.k-grid tr:hover {
-  background: transparent;
-}
- .k-grid tr.k-alt:hover {
-  background: #f1f1f1;
-}
+
 #gridproceso {
     height:250px;
 

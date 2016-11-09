@@ -87,11 +87,10 @@
                             
                             //navigatable: true,
                             columns: [
-                                
+                            { template: "<a class='k-grid-play'><span class='k-sprite pro_bullet1'></span></a>", width: "50px"} ,    
                             { field: "proc__name", title: "Procesos",  hidden:false},
                             {command:
                         [
-                           
                             {name: "play", text: " ", click: grilla, template: "<a class='k-grid-play'><span class='k-sprite pro_playon'></span></a>"},
                             {name: "editar", text: " ",  click: grafica, template: "<a class='k-grid-editar'><span class='k-sprite re_editoff'></span></a>"},
                             {name: "destroy", template: "<a class='k-grid-delete' href='' style='min-width:16px;'><span class='k-sprite re_cerrar'></span></a>"}
@@ -158,7 +157,6 @@
                             $('#grid').data('kendoGrid').refresh();                                             
                             $('#grid').data('kendoGrid').dataSource.read();
                             $('#grid').data('kendoGrid').refresh(); `}                                                                                       
-                       
                          *  
                          *  
                          */     
@@ -172,7 +170,7 @@
                             columns: [
                                 
                                 {field: "task__name", title: "Tareas",  hidden:false},
-                                {field: "inst__name", title: "Creado por",  hidden:false},
+                                {field: "inst__name", title: "Proceso",  hidden:false},
                                 {field: "task__ddt", title: "Fecha de Inicio",  hidden:false},
                                 {field: "task__tst", title: "Fecha de Terminacion",  hidden:false},
                                 {field: "task__dpr", title: "Creado por",  hidden:false},
@@ -204,61 +202,11 @@
        
                 function grafica(e){
                     
-                 
-//                    var entityGrid = $("#grid").data("kendoGrid");
-//                    var selectedItem = entityGrid.dataItem(entityGrid.select());
-//                    document.getElementById("demo").innerHTML = selectedItem.id;      
-//                    $("#chart").empty();
-//                    $("#chart").kendoChart({
-//                        title: {
-//                            text: "Evolucion de tareas para " + selectedItem.id,
-//                        },
-//                        legend: {
-//                            visible: false
-//                        },
-//                        seriesDefaults: {
-//                            type: "bar"
-//                        },
-//                        series: [{
-//                                name: "Total Visits",
-//                                data: [56000, 63000, 74000, 91000, 117000, 138000]
-//                            }, {
-//                                name: "Unique visitors",
-//                                data: [52000, 34000, 23000, 48000, 67000, 83000]
-//                            }],
-//                        valueAxis: {
-//                            max: 140000,
-//                            line: {
-//                                visible: false
-//                            },
-//                            minorGridLines: {
-//                                visible: true
-//                            },
-//                            labels: {
-//                                rotation: "auto"
-//                            }
-//                        },
-//                        categoryAxis: {
-//                            categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-//                            majorGridLines: {
-//                                visible: false
-//                            }
-//                        },
-//                        tooltip: {
-//                            visible: true,
-//                            template: "#= series.name #: #= value #"
-//                        }
-//                    });
-             //-------------------------------------
              var myWindow1 = $("#textarea"),
                 undo = $("#undo");
         function onClose() {
             undo.fadeIn();
-//            $('#gridproceso').data('kendoGrid').refresh();
-//            $('#gridproceso').data('kendoGrid').dataSource.read();
-//            $('#gridproceso').data('kendoGrid').refresh();
         }
-//        var UrL= sessionStorage.getItem("url");  
          $("#textarea").empty();
             myWindow1.kendoWindow({
             draggable: true,
@@ -280,73 +228,27 @@
 
                     
                         function grilla(e){
-                                           var consultar = new sirusuariobpm();
-    var datajson = consultar.getjson();
-    var urlService = consultar.getUrlSir();
-    var mapCud = "eebpm_proc";
-    var datasource = new kendo.data.DataSource({
-        transport: {
-            read: {
-                url: urlService,
-                dataType: "json",
-                type: "POST",
-                contentType: "application/json; charset=utf-8"
-            },         
-            parameterMap: function (options, operation) {
-                if (operation === "read") {
-                    return JSON.stringify(datajson);
-                }
-            }
-        },
-        batch: false,
-        severFiltering: true,                            
-        schema: {
-            data: function (e) {
-                var key1 = Object.keys(e)[0];
-                if (e[key1].eeEstados[0].Estado === "OK") {
-                    return e[key1][mapCud];
-                } else {
-                   // alertDialogs(e[key1].eeEstados[0].Estado);
-                }
-            },
-            model: {
-                id: "proc__name",
-                fields: {
-                    proc__name:    {editable: false, nullable: false},
-                    proc__des:     {editable: false, nullable: false},
-                    piidreg:       {editable: false, nullable: false}
-                }
-            }
+                        var myWindow1 = $("#grillapopUp"),
+                undo = $("#undo");
+        function onClose() {
+            undo.fadeIn();
         }
-    });
-                            $("#grid1").empty();
-//                            var entityGrid = $("#grid").data("kendoGrid");
-//                            var selectedItem = entityGrid.dataItem(entityGrid.select());
-                           //document.getElementById("demo").innerHTML = selectedItem.id; 
-                            var grid = $("#grid1").kendoGrid({
-                                
-                                dataSource: datasource,
+         $("#grillapopUp").empty();
+                            myWindow1.kendoWindow({
+            draggable: true,
+            height: "70%",
+            modal: true,
+            resizable: false,
+            title: "",
+            width: "60%",
+            content: "popUpGrilla.html",
+            actions: [
+                "Close"
+            ],                               
+            close: onClose
+        }).data("kendoWindow").center().open();   
                             
-                            sortable: true,
-                            selectable: true,
-                            
-                            //navigatable: true,
-                            columns: [
-                                 { template: "<a ><span class='k-sprite pro_playon'></span></a>", width: "60px"},
-                                {field: "proc__name", title: "Procesos",  hidden:false},	
-                               
-                                {command: [{name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite pro_editoff'></span></a>"}],  width: "60px"} 
-                                ],                                
-                            
-                            
-                            cancel: function(e) {                                                                                   
-                                e._defaultPrevented= true;
-                                $('#grid').data('kendoGrid').refresh();                                             
-                                $('#grid').data('kendoGrid').dataSource.read();
-                                $('#grid').data('kendoGrid').refresh();                                                                                        
-                            } 
-                        });
-                        
+                      
                     }       
 
                     
