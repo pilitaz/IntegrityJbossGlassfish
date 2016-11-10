@@ -25,34 +25,23 @@
                 $(function() {
                     try{  
                            
-            function allowDrop(ev) {
-               ev.preventDefault();
-            }
-
        
-            function drag(ev) {
-            ev.dataTransfer.setData("text", ev.target.id);
-            }
-        function drop(ev) {
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        ev.target.appendChild(document.getElementById(data));
-        alert(document.getElementById(data).id);
-        }
-                         var treeJson = JSON.parse(sessionStorage.getItem("txtJson2"));
-                         treeJson.plugins =  ["dnd","crrm","themes", "json_data"];
+                        var txtjson = sessionStorage.getItem("txtJson2");
+                        txtjson = txtjson.replace(/(..\/css\/images\/leaf\.gif)/g, "../../css/images/leaf.gif");
+                         var treeJson = JSON.parse(txtjson);
+                            treeJson.plugins =  ["dnd","crrm","themes", "json_data","massload"];
                          treeJson.core =  {"check_callback" : false ,"data":treeJson.core.data};
                         
                         $('#jstree2').jstree(treeJson)
                                   .bind("click.jstree", function (e) {
              document.getElementById("demo").innerHTML = "Drop node " + data.node.id + " to " + data.parent;
-        })          
-        .bind("select_node.jstree", function (e,data) {
+        }).bind("select_node.jstree", function (e,data) {
              $('#jstree2').jstree(treeJson).check_while_dragging;
              var j= $('#jstree2').jstree('get_selected');
              
         
-    });         
+    });            
+                 
     
                           
                           

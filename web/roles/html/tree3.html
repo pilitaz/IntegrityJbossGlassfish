@@ -19,7 +19,7 @@
            
     
             try{
-                $(function() {debugger
+                $(function() {
                     
         try{  
                         
@@ -61,10 +61,10 @@ var jsonData=
                 dataarbol = dataarbol.replace(/Depende/g, "parent");
                 dataarbol = dataarbol.replace(/Nombre/g, "text");
                 dataarbol = dataarbol.replace(/Imagen/g, "icon");
-                dataarbol = dataarbol.replace(/CON IMAGEN/g, "../css/images/leaf.gif");
+                dataarbol = dataarbol.replace(/CON IMAGEN/g, "../../css/images/leaf.gif");
                 dataarbol = dataarbol.replace(/SIN IMAGEN/g, "");
                 dataarbol = dataarbol.replace(/Servicio/g, "columna5");
-                debugger;
+                
                 txtJson = "{ \"plugins\" : [\"dnd\",\"massload\",\"crrm\",\"themes\", \"json_data\"],\"core\" : {\"check_callback\" : true, \"data\" : " + dataarbol + "}}";                
                 var treeJson = JSON.parse(txtJson);
                          

@@ -13,7 +13,7 @@ $(window).resize(function () {
    
 });
 
-$(document).ready(function() {
+$(document).ready(function() {debugger
 
 
 $('body').css('display', 'none');
@@ -30,7 +30,7 @@ document.getElementById("filtro").value = rol_name;
 
 var jSon=[];
 
-function agregarfuncion(e) {
+function agregarfuncion(e) {debugger
     
 var Selement=$('#jstree2').jstree('get_selected');
 
@@ -109,7 +109,7 @@ json.dsFunciones.funciones=array1;
 
 
 
-function eliminarfuncion(e) {
+function eliminarfuncion(e) {debugger
     
 var Selement=$('#jstree3').jstree('get_selected');
 

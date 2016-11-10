@@ -981,3 +981,55 @@
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -608px -208px;
 }
+
+.in_mas{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -608px -258px;
+	cursor:pointer
+}
+.in_mas:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -658px -258px;
+	cursor:pointer
+}
+.in_mas:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -608px -258px;
+}
+.in_cerrar{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -608px -308px;
+	cursor:pointer
+}
+.in_cerrar:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -658px -308px;
+	cursor:pointer
+}
+.in_cerrar:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -608px -308px;
+}
+.in_graf{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -608px -358px;
+	cursor:pointer
+}
+.in_graf:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -658px -358px;
+	cursor:pointer
+}
+.in_graf:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -608px -358px;
+}

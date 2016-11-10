@@ -92,8 +92,8 @@
                             {command:
                         [
                             {name: "play", text: " ", click: grilla, template: "<a class='k-grid-play'><span class='k-sprite pro_playon'></span></a>"},
-                            {name: "editar", text: " ",  click: grafica, template: "<a class='k-grid-editar'><span class='k-sprite re_editoff'></span></a>"},
-                            {name: "destroy", template: "<a class='k-grid-delete' href='' style='min-width:16px;'><span class='k-sprite re_cerrar'></span></a>"}
+                            {name: "editar", text: " ",  click: grafica, template: "<a class='k-grid-editar'><span class='k-sprite in_graf '></span></a>"},
+                            {name: "destroy", template: "<a class='k-grid-delete' href='' style='min-width:16px;'><span class='k-sprite in_cerrar'></span></a>"}
                         ],
                         width: "120px"}],                            
                             //editable: "popup",
@@ -200,9 +200,9 @@
                     });
                     
        
-                function grafica(e){debugger
+                function grafica(e){
                     
-             var myWindow1 = $("#textarea"),
+        var myWindow1 = $("#textarea"),
                 undo = $("#undo");
         function onClose() {
             undo.fadeIn();

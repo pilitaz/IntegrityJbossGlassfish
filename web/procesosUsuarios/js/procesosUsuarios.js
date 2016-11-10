@@ -18,7 +18,7 @@
                      *   
                      *  
                      *  
-                     */ function newrol(){
+                     */ function newrol(){debugger
                         var grid1 = $("#grid").data("kendoGrid");
             		    var dataSource = $("#grid").data("kendoGrid").dataSource;
                             
@@ -27,15 +27,15 @@
                                 grid1.options.editable = "inline";
                             
                     }
-                    function editar_rol(){
+                    function editar_rol(){debugger
                 	
                     
                        var grid1 = $("#grid").data("kendoGrid");
                         
-                        var row = grid1.dataItem(grid1.select());
-                        sessionStorage.setItem("Idrol",row.car__cod);
-                         sessionStorage.setItem("Rolname",row.car__nom);
-                            window.location = ("editroles.html");
+//                        var row = grid1.dataItem(grid1.select());
+//                        sessionStorage.setItem("Idrol",row.car__cod);
+//                         sessionStorage.setItem("Rolname",row.car__nom);
+                            window.location = ("tareas.html");
                     }
                     
 
@@ -77,7 +77,7 @@
                      *  
                      */ 
                     $(document).ready(function () {                             
-                        var  consultar = new sirconsulta();
+                        var  consultar = new sirproceso();
                         var  datajson = consultar.getjson();
                         var  urlService = consultar.getUrlSir();
                         
@@ -87,7 +87,7 @@
                         
                         
                         //var crudServiceBaseUrl = "http://190.144.16.114:8810/rest/Base/BaseIntegrity/SirUsuarios";
-                        var mapCud = "ee_user3";
+                        var mapCud = "eebpm_proc";
                         var mapCud1 = "ee_user3";
                         dataSource = new kendo.data.DataSource({
                             transport: {
@@ -114,12 +114,12 @@
                                     if (operation === "read") {
                                         return JSON.stringify(datajson);
                                     }
-                                    if (operation === "update") {
+                                    if (operation === "update") {debugger
                                         $('#grid').data('kendoGrid').refresh();
                                         return JSON.stringify(actjson);                                          
                                         
                                     }
-                                    if (operation === "create") {
+                                    if (operation === "create") {debugger
                                     actjson.dssic_car.eesic_car[0].car__nom = options.car__nom;
                                     return JSON.stringify(actjson);
                                         
@@ -135,23 +135,24 @@
                             batch: false,
                             severFiltering: true,                            
                             schema: {
-                                data: function (e) {
+                                data: function (e) {debugger
                                     var key1 = Object.keys(e)[0];
                                     if(e[key1].eeEstados){
                                     if (e[key1].eeEstados[0].Estado === "OK") {
                                         return e[key1][mapCud];
                                     }
                                 }else if(e[key1].dssic_car.dssic_car.eeEstados[0].Estado === "OK"){
-                                        return e[key1].dssic_car.dssic_car["eesic_car"];
+                                        return e[key1].dssic_car.dssic_car["eebpm_proc"];
                                     } else {
                                         alert(e[key1].eeEstados[0].Estado);
                                     }
                                 },
                                 model: {
-                                    id: "car__cod",
+                                    id: "cia__nit",
                                     fields: {
-                                        car__cod:    {editable: false, nullable: false},
-                                        car__nom:    {editable: true, nullable: false},
+                                        proc__name:    {editable: false, nullable: false},
+                                        proc__des:    {editable: true, nullable: false},
+                                        cia__nit:    {editable: true, nullable: false},
                                         
                                     }
                                 }
@@ -182,9 +183,9 @@
                             //navigatable: true,
                             columns: [
                                 
-                                {field: "car__nom"    , title: "ROL",  hidden:false},							                               
-                                {command: [{name: "edit", click: editar_rol,text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"}],  width: "60px"} ],                                
-                            
+                                {field: "proc__des"    , title: "Descripcion de proceso",  hidden:false},							                               
+                                {command: [{name: "edit", click: editar_rol,text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite in_mas'></span></a>"}],  width: "60px"} ],                                
+                             
                             
                             cancel: function(e) {                                                                                   
                                 e._defaultPrevented= true;
@@ -197,9 +198,9 @@
                         
                         
                         $("#filtro").kendoAutoComplete({ 
-                            dataTextField: "car__nom",
-                            dataValueField: "car__nom",
-                            placeholder: "Rol...",  
+                            dataTextField: "proc__des",
+                            dataValueField: "cia__nit",
+                            placeholder: "Proceso...",  
                             dataSource: dataSource,                        
                             filter: "startswith"                    
                         });
