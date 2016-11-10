@@ -15,8 +15,7 @@ $(document).ready(function() {
     dsSIRgfc_fac.dsSIRgfc_fac.eetemp = new Array();
     dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0] = new Object();
     dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_ano = "2016";
-//    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro = "3019";
-    console.log(JSON.stringify(dsSIRgfc_fac))
+//    console.log(JSON.stringify(dsSIRgfc_fac))
      
     var dataSource = new kendo.data.DataSource({
         transport: {
@@ -61,7 +60,7 @@ $(document).ready(function() {
         height: gridheigth,
         sortable: true,
         pageable: true,
-        selectable: false,
+        selectable: false,        
         columns: [
             {
                 field: "fac__nro",
@@ -108,5 +107,29 @@ function crearFactura(){
     var servicio = "facturaQuantum";
     sessionStorage.setItem("servicio",servicio);
     window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html"));   
+}
+
+function popUpFiltros(){
+    $("body").append("<div id='windowFiltros'></div>");
+        var myWindow = $("#windowFiltros");
+        var undo = $("#undo");
+        
+        function onCloseWindowItemFac() {
+            document.getElementById("windowFiltros").remove();            
+            undo.fadeIn();  
+        }
+        
+        myWindow.kendoWindow({
+            width: "600px",
+            height: "auto",
+            title: "Busqueda",
+            content: sessionStorage.getItem("url")+ "/facturacion/html/popUpFiltros.html",
+            visible: false,
+            modal: true,
+            actions: [            
+                "Close"
+            ],
+            close: onCloseWindowItemFac
+        }).data("kendoWindow").center().open();
 }
 

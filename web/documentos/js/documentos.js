@@ -9,10 +9,11 @@ dsfiles.dsfiles.eeDatos[0].remote_ip = sessionStorage.getItem("ipPublica");
 console.log(JSON.stringify(dsfiles));
 
 $(document).ready(function () {
-    dataSource = new kendo.data.DataSource({
+    var dataSource = new kendo.data.DataSource({
         transport: {
             read:  {
                 type: "POST",
+//                url: "http://35.162.169.179:8810/rest/Base/BaseIntegrity/DocumentList",
                 url: ipServicios+baseServicio+"DocumentList",
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json'             

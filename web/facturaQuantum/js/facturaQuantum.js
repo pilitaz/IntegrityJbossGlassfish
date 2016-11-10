@@ -73,18 +73,13 @@ $(document).ready(function() {
  * @returns {undefined}
  */
 function iniDropDownList(){    
-    function onChangetSucursal(e){        
-        //        var autocompleteVendedor = $("#ipVendedor").data("kendoAutoComplete");
-        //        autocompleteVendedor.enable(true); 
-    };
-    
+        
     //carga el combo de sucursales
     $("#ipSucursal").kendoDropDownList({
         optionLabel: "Seleccione la sucursal",
         dataTextField: "suc__nom",
         dataValueField: "suc__cod",
-        template:'<div class="divElementDropDownList">#: data.suc__nom #</div>',
-        change: onChangetSucursal,
+        template:'<div class="divElementDropDownList">#: data.suc__nom #</div>',        
         dataSource: {
             transport: {
                 read: {
@@ -430,7 +425,9 @@ function gridDetalle(){
     function editarItem(e){
         
         e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
-        itemID = this.dataItem($(e.currentTarget).closest("tr"));
+        //itemID = this.dataItem($(e.currentTarget).closest("tr"));
+        var grid = $("#grid").data("kendoGrid");
+        itemID = grid.dataItem(grid.select());
         
         var widthPopUp = $("body").width();
         widthPopUp = widthPopUp * (60/100);
@@ -459,8 +456,6 @@ function gridDetalle(){
             ],
             close: onCloseWindowItemFacEdit
         }).data("kendoWindow").center().open();
-        
-        
     }
     
 }
