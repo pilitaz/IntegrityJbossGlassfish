@@ -67,7 +67,9 @@ td{
     width:300px;
     z-index: 10;
     overflow: auto;
-    background-image: url("../images/fondo-arbol.png");    
+
+    background-image: url("../images/fondo-arbol.png");
+    /*overflow: auto;*/
 }
 #divIFrame{
     position: absolute;
@@ -108,3 +110,35 @@ img{
     background-image: url("../images/fondo-arbol.png");
     overflow: auto
 }
+/*
+.k-toolbar{
+    
+background-color: Transparent;    
+  border: 0;
+}
+.k-button.k-button-icon.k-group-start{
+    
+    background-color: Transparent;
+        border: 0;
+} 
+.k-button.k-button-icon
+{
+     background-color: Transparent;   
+    border: 0;
+}
+.k-overflow-container.k-list-container.k-popup.k-group{
+     background-color: #48494B;  
+     border: 0;
+}
+
+.k-overflow-anchor.k-button
+{
+   
+     background-color: Transparent;
+     border: 0;
+}
+
+  .k-button.k-button-icon.k-state-focused,
+  .k-button.k-button-icon.k-state-focused:hover{
+      background-color: blue;
+  }*/
