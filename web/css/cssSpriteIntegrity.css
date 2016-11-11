@@ -310,6 +310,13 @@
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -208px -58px;
 }
+.re_bullet2on{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -208px -58px;
+	cursor:pointer
+}
+
 
 /* ??  */
 
