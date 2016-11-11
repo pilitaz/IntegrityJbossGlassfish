@@ -84,7 +84,7 @@ $(document).ready(function () {
                     var cclave1 = document.getElementById("clave1").value;
                     var cclave2 = document.getElementById("clave2").value;
                     if (cclave1 == "**********") {//EVULUAR CONTRASEÑA
-                        ;
+                        
                         actjson.dsee_user2.ee_user2[0] = options.models[0];
                         return JSON.stringify(actjson);
                     } else
@@ -383,6 +383,7 @@ $(document).ready(function () {
         });
         var usr_proc =  sessionStorage.getItem("usr_proc");
         var usr_proc  = JSON.parse(usr_proc);
+
        
         for (var i = 0; i < results.length; i++) {
             for (var j=0 in usr_proc){

@@ -551,7 +551,7 @@ function mostrarDocumentos(){
     var tamañoContenedor = $("#outerWrapper").width();    
     var d = document.getElementById('divDocumentos');    
     d.style.left = (tamañoContenedor-300)+'px';    
-    $("#divDocumentos").load("../documentos/html/documentos.html"); 
+    $("#divDocumentos").load(sessionStorage.getItem("url")+"documentos/html/documentos.html"); 
     $("#divDocumentos").fadeIn("slow");    
 }
 function ocultarDocumentos(){

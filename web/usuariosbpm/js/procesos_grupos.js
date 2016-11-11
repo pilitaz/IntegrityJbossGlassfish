@@ -188,7 +188,7 @@ $(document).ready(function()  {
         });
         
        function roles()
-       {debugger
+       {
            
         var dropdownlist = $("#procesos").data("kendoComboBox");
         var dropdownlist1 = $("#grupos").data("kendoComboBox");
@@ -225,7 +225,7 @@ $(document).ready(function()  {
             batch: false,
             severFiltering: true,                            
             schema: {
-                data: function (e) {debugger
+                data: function (e) {
             //asdasdasd
                     var key1 = Object.keys(e)[0];
                     if (e[key1].eeEstados[0].Estado === "OK") {
@@ -351,7 +351,7 @@ $(document).ready(function()  {
      * Crea el POP Up Para editar usuario desde la grilla
      * @param {type} e para buscar row selecionado
      */
-    function editar_usr(e){debugger
+    function editar_usr(e){
         e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
         var id = this.dataItem($(e.currentTarget).closest("tr"));
         var grp=id.grp__name;
@@ -361,7 +361,7 @@ $(document).ready(function()  {
         sessionStorage.setItem("Bpm_id",id);  
         var myWindow = $("#window"),
         undo = $("#undo");
-        function onClose() {debugger
+        function onClose() {
             undo.fadeIn();
             $('#gridproceso').data('kendoGrid').refresh();
             $('#gridproceso').data('kendoGrid').dataSource.read();
@@ -386,7 +386,7 @@ $(document).ready(function()  {
      * Crear segundo detalle para visualizar roles
      * @param {type} e captura datos del row desplegado
      */
-    function detailInit1(e) {debugger
+    function detailInit1(e) {
         e.preventDefault();
         var id = e.data;
         var grp=id.grp__name;
@@ -397,7 +397,7 @@ $(document).ready(function()  {
         var Roles = Jsonbpm1.eebpm_rol;
         var i = 0;
         var j=1;
-        for (i  in Roles){debugger
+        for (i  in Roles){
             if(Roles[i].grp__name === grp){
                 if(Roles[i].proc__name === id){
                     crearDiv("divFiltr"+Roles[i].piireg + "&" + Roles[i].piireggrp + "&" + i, Roles[i].piireg + "&" + Roles[i].piireggrp + "-" + "K"+j+"-Container");
@@ -433,7 +433,7 @@ $(document).ready(function()  {
             x.appendChild(t);
             document.getElementById(div).appendChild(x);
         }
-        function crearDiv(id, div, clase, align, style) {debugger
+        function crearDiv(id, div, clase, align, style) {
             var newDiv = document.createElement("DIV");
             newDiv.setAttribute("align", align);
             newDiv.setAttribute("class", clase);

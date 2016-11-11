@@ -1148,13 +1148,13 @@ exists or setup the property manually. For example like this:
             -->
     <target depends="init,-init-cos,compile,compile-jsps,-do-compile-single-jsp,-pre-dist,-do-tmp-dist-with-manifest,-do-tmp-dist-without-manifest" description="Debug project in IDE." if="netbeans.home" name="debug">
         <nbstartserver debugmode="true"/>
-        <antcall target="connect-debugger"/>
+        <antcall target="connect-"/>
         <nbdeploy clientUrlPart="${client.urlPart}" debugmode="true" forceRedeploy="true"/>
         <antcall target="debug-display-browser-old"/>
         <antcall target="debug-display-browser"/>
-        <antcall target="connect-client-debugger"/>
+        <antcall target="connect-client-"/>
     </target>
-    <target if="do.debug.server" name="connect-debugger" unless="is.debugged">
+    <target if="do.debug.server" name="connect-" unless="is.debugged">
         <condition property="listeningcp" value="sourcepath">
             <istrue value="${j2ee.compile.on.save}"/>
         </condition>
@@ -1173,26 +1173,26 @@ exists or setup the property manually. For example like this:
     <target if="do.display.browser.debug" name="debug-display-browser">
         <nbbrowse context="${browser.context}" url="${client.url}" urlPath="${client.urlPart}"/>
     </target>
-    <target if="do.debug.client" name="connect-client-debugger">
+    <target if="do.debug.client" name="connect-client-">
         <webproject1:nbjsdebugstart webUrl="${client.url}"/>
     </target>
     <target depends="init,compile-test-single" if="netbeans.home" name="-debug-start-debuggee-main-test">
         <fail unless="debug.class">Must select one file in the IDE or set debug.class</fail>
         <webproject1:debug classname="${debug.class}" classpath="${debug.test.classpath}"/>
     </target>
-    <target depends="init,compile-test-single,-debug-start-debugger-main-test,-debug-start-debuggee-main-test" if="netbeans.home" name="debug-test-with-main"/>
+    <target depends="init,compile-test-single,-debug-start--main-test,-debug-start-debuggee-main-test" if="netbeans.home" name="debug-test-with-main"/>
     <target depends="init,compile,compile-jsps,-do-compile-single-jsp,debug" if="netbeans.home" name="debug-single"/>
-    <target depends="init" if="netbeans.home" name="-debug-start-debugger-main-test">
+    <target depends="init" if="netbeans.home" name="-debug-start--main-test">
         <webproject1:nbjpdastart classpath="${debug.test.classpath}" name="${debug.class}"/>
     </target>
-    <target depends="init" if="netbeans.home" name="-debug-start-debugger">
+    <target depends="init" if="netbeans.home" name="-debug-start-">
         <webproject1:nbjpdastart name="${debug.class}"/>
     </target>
     <target depends="init,compile-single" if="netbeans.home" name="-debug-start-debuggee-single">
         <fail unless="debug.class">Must select one file in the IDE or set debug.class</fail>
         <webproject1:debug classname="${debug.class}"/>
     </target>
-    <target depends="init,compile-single,-debug-start-debugger,-debug-start-debuggee-single" if="netbeans.home" name="debug-single-main"/>
+    <target depends="init,compile-single,-debug-start-,-debug-start-debuggee-single" if="netbeans.home" name="debug-single-main"/>
     <target depends="init" name="-pre-debug-fix">
         <fail unless="fix.includes">Must set fix.includes</fail>
         <property name="javac.includes" value="${fix.includes}.java"/>
@@ -1399,11 +1399,11 @@ exists or setup the property manually. For example like this:
         <fail unless="test.method">Must select some method in the IDE or set test.method</fail>
         <webproject2:test-debug excludes="" includes="${javac.includes}" testClass="${test.class}" testMethod="${test.method}" testincludes="${test.class}" testmethods="${test.method}"/>
     </target>
-    <target depends="init,compile-test" if="netbeans.home+have.tests" name="-debug-start-debugger-test">
+    <target depends="init,compile-test" if="netbeans.home+have.tests" name="-debug-start--test">
         <webproject1:nbjpdastart classpath="${debug.test.classpath}" name="${test.class}"/>
     </target>
-    <target depends="init,compile-test,-debug-start-debugger-test,-debug-start-debuggee-test" name="debug-test"/>
-    <target depends="init,compile-test-single,-debug-start-debugger-test,-debug-start-debuggee-test-method" name="debug-test-method"/>
+    <target depends="init,compile-test,-debug-start--test,-debug-start-debuggee-test" name="debug-test"/>
+    <target depends="init,compile-test-single,-debug-start--test,-debug-start-debuggee-test-method" name="debug-test-method"/>
     <target depends="init,-pre-debug-fix,compile-test-single" if="netbeans.home" name="-do-debug-fix-test">
         <webproject1:nbjpdareload dir="${build.test.classes.dir}"/>
     </target>

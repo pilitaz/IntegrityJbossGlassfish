@@ -16,6 +16,7 @@ $(document).ready(function() {
     sessionStorage.setItem("VideoAyuda","http://comunicacion349.wix.com/integrity#!reportes-tutoriales/w865s");//cambiar urlVideo con url link apenas este listo el video de ayuda   
     
     if(sessionStorage.getItem("loginintegrity")==="valido"){
+        
         $(window).trigger("resize");
         
         $("#btnCambiarClave").kendoButton({
@@ -550,7 +551,7 @@ function mostrarDocumentos(){
     var tamañoContenedor = $("#outerWrapper").width();    
     var d = document.getElementById('divDocumentos');    
     d.style.left = (tamañoContenedor-300)+'px';    
-    $("#divDocumentos").load("../documentos/html/documentos.html"); 
+    $("#divDocumentos").load(sessionStorage.getItem("url")+"documentos/html/documentos.html"); 
     $("#divDocumentos").fadeIn("slow");    
 }
 function ocultarDocumentos(){

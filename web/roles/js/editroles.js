@@ -110,7 +110,6 @@ json.dsFunciones.funciones=array1;
 
 
 function eliminarfuncion(e) {
-    
 var Selement=$('#jstree3').jstree('get_selected');
 
    var arreglo=Selement; 
