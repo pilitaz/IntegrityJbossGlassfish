@@ -4,19 +4,33 @@
  * and open the template in the editor.
  */
 
-$(document).ready(function() {
+var dsSIRgfc_fac = new Object();
+dsSIRgfc_fac.dsSIRgfc_fac = new Object();
+dsSIRgfc_fac.dsSIRgfc_fac.eeDatos = new Array();
+dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0] = new Object();
+dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
+dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].fiid = sessionStorage.getItem("picfiid");        
+dsSIRgfc_fac.dsSIRgfc_fac.eetemp = new Array();
+dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0] = new Object();
+
+$(document).ready(function() {   
+    var fechaFin = new Date(sessionStorage.getItem("fechaSistema"));
+    fechaFin.setHours(0,0,0,0);
+    var fechaIni= new Date(sessionStorage.getItem("fechaSistema"));
+    fechaIni.setDate(fechaFin.getDate() - 90);    
     
-    var dsSIRgfc_fac = new Object();
-    dsSIRgfc_fac.dsSIRgfc_fac = new Object();
-    dsSIRgfc_fac.dsSIRgfc_fac.eeDatos = new Array();
-    dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0] = new Object();
-    dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
-    dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].fiid = sessionStorage.getItem("picfiid");        
-    dsSIRgfc_fac.dsSIRgfc_fac.eetemp = new Array();
-    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0] = new Object();
-    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_ano = "2016";
-//    console.log(JSON.stringify(dsSIRgfc_fac))
-     
+    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_ini = fechaIni;
+    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_fin = fechaFin;
+    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro_ini = "";
+    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro_fin = "";
+    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_est = "99";
+    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picter_nit = "*";
+
+    gridFacturas();
+});
+
+function gridFacturas(){
+    
     var dataSource = new kendo.data.DataSource({
         transport: {
             read:  {
@@ -34,8 +48,7 @@ $(document).ready(function() {
                     alertDialogs (e.message);
                 }
             }
-        },         
-        pageSize: 20,
+        },                 
         schema: {
             data:"dsSIRgfc_fac.eeSIRgfc_fac",
             model: {
@@ -59,8 +72,10 @@ $(document).ready(function() {
         dataSource: dataSource,
         height: gridheigth,
         sortable: true,
-        pageable: true,
-        selectable: false,        
+//        pageable: true,
+        selectable: false,
+        dataBound: disabledButton,
+//        dataBinding: disabledButton,        
         columns: [
             {
                 field: "fac__nro",
@@ -91,13 +106,14 @@ $(document).ready(function() {
             },
             {
                 command: [
-                    {name: "detalle", text: " ", click: imprimirFact, template: "<a class='k-grid-detalle'><span class='k-sprite admin_Print'></span></a>"}
+                    {name: "detalle", text: " ", click: imprimirFact, template: "<a class='k-grid-detalle'><span class='k-sprite admin_Print'></span></a>"},
+                    {name: "editar", text: " ", click: editarFactura, template: "<a class='k-grid-editar'><span class='k-sprite admin_Print'></span></a>"}
                 ], 
                 width: "100px"
             }
         ]
-    });    
-});
+    });
+}
 
 function imprimirFact(e){
     alertDialogs("proximamente");
@@ -109,27 +125,44 @@ function crearFactura(){
     window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html"));   
 }
 
+function editarFactura(e){
+    var servicio = "facturaQuantum";
+    sessionStorage.setItem("servicio",servicio);
+    window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html"));   
+}
+
 function popUpFiltros(){
     $("body").append("<div id='windowFiltros'></div>");
         var myWindow = $("#windowFiltros");
         var undo = $("#undo");
         
-        function onCloseWindowItemFac() {
+        function onCloseFiltros() {
             document.getElementById("windowFiltros").remove();            
             undo.fadeIn();  
         }
         
         myWindow.kendoWindow({
             width: "600px",
-            height: "auto",
+            height: "300px",
             title: "Busqueda",
             content: sessionStorage.getItem("url")+ "/facturacion/html/popUpFiltros.html",
             visible: false,
             modal: true,
+            resizable: false,
             actions: [            
                 "Close"
             ],
-            close: onCloseWindowItemFac
+            close: onCloseFiltros
         }).data("kendoWindow").center().open();
 }
 
+function closePopUpFiltros(){    
+    $("#windowFiltros").data("kendoWindow").close();
+}
+
+function disabledButton(){
+    debugger
+    var grid = $("#grid").data("kendoGrid");
+    var item = grid.dataItem(grid.select());
+        
+}

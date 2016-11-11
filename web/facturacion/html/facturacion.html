@@ -23,6 +23,7 @@ and open the template in the editor.
         <link href="../../css/kendo.metro.mobile.min.css" rel="stylesheet" type="text/css"/>        
         <link href="../../css/cssSpriteIntegrity.css" rel="stylesheet" type="text/css"/>
         <link href="../../css/integrity.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/facturacion.css" rel="stylesheet" type="text/css"/>
         
     </head>
     <body>
@@ -38,7 +39,31 @@ and open the template in the editor.
                 </td>
             </table>   
             <div class="sidenavSup"></div>                    
-        </div>        
+        </div>
+<!--        <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
+            <tr data-uid="#: uid #"> 
+                <td>
+                    <span class="title">#: euserid #</span>
+                </td>
+                <td>
+                     <a  class='k-grid-detalle'><span id = "span#: euserid#" class='k-sprite admin_proff'></span></a>
+                     <a  class='k-grid-edit'><span id = "spanDelete#: euserid#" class='k-sprite po_editoff'></span></a>
+                </td>
+                
+            </tr>
+        </script>
+        <script id="altRowTemplateCmp" type="text/x-kendo-tmpl">
+            <tr class="k-alt" data-uid="#: uid #">
+                <td>
+                    <span class="title">#: euserid #</span>
+                </td>
+                <td>
+                     <a  class='k-grid-detalle'><span id = "span#: euserid#" class='k-sprite admin_proff'></span></a>
+                    <a class=" k-grid-edit"><span id = "aEdit#: euserid#" class='k-sprite po_editoff k-grid-edit'></span></a>
+                  
+            </td>
+            </tr>
+        </script>-->
         <div class="container-fluid">            
             <div id="grid"></div>        
         </div>            
