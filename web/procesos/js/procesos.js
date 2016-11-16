@@ -87,17 +87,25 @@
                             
                             //navigatable: true,
                             columns: [
-                            { template: "<a class='k-grid-play'><span class='k-sprite pro_bullet1'></span></a>", width: "50px"} ,    
+//                            { template: "<a class='k-grid-play'><span class='k-sprite pro_bullet1'></span></a>", width: "50px"} ,    
                             { field: "proc__name", title: "Procesos",  hidden:false},
                             {command:
                         [
-                            {name: "play", text: " ", click: grilla, template: "<a class='k-grid-play'><span class='k-sprite pro_playon'></span></a>"},
+                            {name: "tareas", text: " ", click: grilla, template: "<a class='k-grid-tareas'><span class='k-sprite pro_mas'></span></a>"},
                             {name: "editar", text: " ",  click: grafica, template: "<a class='k-grid-editar'><span class='k-sprite in_graf '></span></a>"},
-                            {name: "destroy", template: "<a class='k-grid-delete' href='' style='min-width:16px;'><span class='k-sprite in_cerrar'></span></a>"}
+                            {name: "info", text: " ",  template: "<a class='k-grid-info'><span class='k-sprite in_cerrar'></span></a>"},
+                            {name: "play", text: " ",  template: "<a class='k-grid-play'><span class='k-sprite pro_playon '></span></a>"},
+                           
                         ],
-                        width: "120px"}],                            
-                            //editable: "popup",
+                        width: "180px"}],                            
+                            editable: "popup",
                             
+        rowTemplate: kendo.template($("#rowTemplateCmp").html()),
+        altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
+        dataBound: function () {
+            var results = dataSource.data();
+            changImgFunc(results);
+        },
                             cancel: function(e) {                                                                                   
                                 e._defaultPrevented= true;
                                 $('#grid').data('kendoGrid').refresh();                                             
@@ -251,6 +259,56 @@
                       
                     }       
 
-                    
+                       function changImgFunc(results) {
+       
+//        var consultar = new usr_proces();
+//        var datajson = consultar.getjson();
+//        var urlService = consultar.getUrlSir();
+//        $.ajax({
+//            type: "POST",
+//            async: false,
+//            data: JSON.stringify(datajson),
+//            url: urlService,
+//            dataType: "json",
+//            contentType: "application/json;",
+//            complete: function (resp) {
+//                
+//                  var Jsonbpm1  = JSON.parse(resp.responseText);
+//                  var Jsonbpm1=Jsonbpm1.dsSIRbpm_user_int.eebpm_user;
+//                    var usr_proc = JSON.stringify(Jsonbpm1); 
+//                  sessionStorage.setItem("usr_proc",usr_proc); 
+//               
+//                //Jsonbpm1.responseText.dsSICUDbpm_user.eeEstados[0].Estado
+//              
+//                
+//            }
+//        });
+//        var usr_proc =  sessionStorage.getItem("usr_proc");
+//        var usr_proc  = JSON.parse(usr_proc);
+//
+//       
+//        for (var i = 0; i < results.length; i++) {
+//            for (var j=0 in usr_proc){
+//            
+//               var id = results[i].euserid;
+//               var usr_p = usr_proc[j].usr__cod;
+//                 var n = usr_p.indexOf("_");
+//                 var x = usr_p.length ;
+//                 usr_p=usr_p.slice(0, n);
+//                if(id===usr_p){
+//                            
+//               document.getElementById("span"+id).setAttribute("class", "k-sprite admin_pron");
+//                            
+//                            
+////                    $("#"+"span"+id)
+////                            .addClass('k-sprite admin_pron');
+//            
+//            }
+//            }
+//            
+//     
+//        
+//        }
+    } 
                         
                         

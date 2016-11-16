@@ -24,7 +24,7 @@
                             
                                 grid1.options.editable = "popup";
                                 grid1.addRow();
-                                grid1.options.editable = "inline";
+                                grid1.options.editable = "popup";
                             
                     }
                     function editar_rol(){debugger
@@ -77,17 +77,18 @@
                      *  
                      */ 
                     $(document).ready(function () {                             
-                        var  consultar = new sirproceso();
+                        var windowTemplate = kendo.template($("#windowTemplate").html());
+                        var  consultar = new siractores();
                         var  datajson = consultar.getjson();
                         var  urlService = consultar.getUrlSir();
                         
-                        var  actualizar = new crearol();
+                        var  actualizar = new creaActor();
                         var  actjson = actualizar.getjson();
                         var  urlactualizar = actualizar.getUrlSir();
                         
                         
                         //var crudServiceBaseUrl = "http://190.144.16.114:8810/rest/Base/BaseIntegrity/SirUsuarios";
-                        var mapCud = "eebpm_proc";
+                        var mapCud = "eesic_actor";
                         var mapCud1 = "ee_user3";
                         dataSource = new kendo.data.DataSource({
                             transport: {
@@ -110,17 +111,37 @@
                                     type: "POST",
                                     contentType: "application/json; charset=utf-8"
                                 },
+                                 destroy: {
+                                    url: urlactualizar,
+                                    dataType: "json",
+                                    type: "DELETE",
+                                    contentType: "application/json; charset=utf-8"
+                                },
                                 parameterMap: function (options, operation) {
                                     if (operation === "read") {
                                         return JSON.stringify(datajson);
                                     }
                                     if (operation === "update") {debugger
-                                        $('#grid').data('kendoGrid').refresh();
-                                        return JSON.stringify(actjson);                                          
+                                    actjson.dssic_actor.eesic_actor[0].actor__cod = options.actor__cod;
+                                    actjson.dssic_actor.eesic_actor[0].actor__des = options.actor__des;
+                                    return JSON.stringify(actjson);
+                                        
                                         
                                     }
                                     if (operation === "create") {debugger
-                                    actjson.dssic_car.eesic_car[0].car__nom = options.car__nom;
+                                        options;
+                                    actjson.dssic_actor.eesic_actor[0].actor__cod = options.actor__cod;
+                                    actjson.dssic_actor.eesic_actor[0].actor__des = options.actor__des;
+                                    return JSON.stringify(actjson);
+                                        
+                                    $('#grid').data('kendoGrid').refresh();
+                                    $('#grid').data('kendoGrid').dataSource.read();
+                                    $('#grid').data('kendoGrid').refresh();                                     
+                                    }
+                                    if (operation === "destroy") {debugger
+                                        
+                                    actjson.dssic_actor.eesic_actor[0].actor__cod = options.actor__cod;
+                                    actjson.dssic_actor.eesic_actor[0].actor__des = options.actor__des;
                                     return JSON.stringify(actjson);
                                         
                                     $('#grid').data('kendoGrid').refresh();
@@ -129,6 +150,7 @@
                                         
                                         
                                     }
+                                    
                                 }
                                 
                             },
@@ -148,16 +170,21 @@
                                     }
                                 },
                                 model: {
-                                    id: "cia__nit",
+                                    id: "actor__cod",
                                     fields: {
-                                        proc__name:    {editable: false, nullable: false},
-                                        proc__des:    {editable: true, nullable: false},
-                                        cia__nit:    {editable: true, nullable: false},
+                                        actor__cod:    {editable: true, nullable: false},
+                                        actor__des:    {editable: true, nullable: false},
+                                       
                                         
                                     }
                                 }
                             }
                         });
+                        var window = $("#window1").kendoWindow({
+                            title: "Eliminar",
+                            visible: false, //the window will not appear before its .open method is called
+
+                        }).data("kendoWindow");
                         /**
                          *  FUNCION CREAR GRILLA
                          * Funcion cancel se ejecuta con el evento OnClick de EDIT grid
@@ -182,10 +209,28 @@
                             },
                             //navigatable: true,
                             columns: [
-                                
-                                {field: "proc__des"    , title: "Descripcion de proceso",  hidden:false},							                               
-                                {command: [{name: "edit", click: editar_rol,text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite in_mas'></span></a>"}],  width: "60px"} ],                                
-                             
+                                {field: "actor__cod", title: "Actor",  hidden:false},
+                                {field: "actor__des", title: "Descripción",  hidden:false},	
+                                 	
+                                {command: [{name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
+                                           {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: function(e){ debugger //add a click event listener on the delete button
+                        e.preventDefault(); //prevent page scroll reset
+                        var tr = $(e.target).closest("tr"); //get the row for deletion
+                        var data = this.dataItem(tr); //get the row data so it can be referred later
+                        window.content(windowTemplate(data)); //send the row data object to the template and render it
+                        window.center().open();
+
+                        $("#yesButton").click(function(){
+                             var dataSource = $("#grid").data("kendoGrid").dataSource;
+                            dataSource.remove(data);  //prepare a "destroy" request
+                            dataSource.sync();  //actually send the request (might be ommited if the autoSync option is enabled in the dataSource)
+                            window.close();
+                        });
+                        $("#noButton").click(function(){
+                            window.close();
+                        });
+                    } } ], width: "90px"}],
+                                editable: "popup",
                             
                             cancel: function(e) {                                                                                   
                                 e._defaultPrevented= true;
@@ -198,8 +243,8 @@
                         
                         
                         $("#filtro").kendoAutoComplete({ 
-                            dataTextField: "proc__des",
-                            dataValueField: "cia__nit",
+                            dataTextField: "actor__des",
+                            dataValueField: "actor__des",
                             placeholder: "Proceso...",  
                             dataSource: dataSource,                        
                             filter: "startswith"                    

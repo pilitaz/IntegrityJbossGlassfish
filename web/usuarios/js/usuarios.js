@@ -71,8 +71,7 @@ $(document).ready(function () {
 
                     var cclave1 = document.getElementById("clave1").value;
                     var cclave2 = document.getElementById("clave2").value;
-                    if (cclave1 == "**********") {//EVULUAR CONTRASEÑA
-                        
+                    if (cclave1 == "**********") {//EVULUAR CONTRASEÑA                       
                         actjson.dsee_user2.ee_user2[0] = options.models[0];
                         return JSON.stringify(actjson);
                     } else
@@ -111,6 +110,7 @@ $(document).ready(function () {
                     usr__est: {editable: true, nullable: false},
                     car__cod: {editable: false, nullable: false},
                     car__nom: {editable: true, nullable: false},
+                    actor__cod: {editable: true, nullable: false},
                     usr__jef: {editable: true, nullable: false, type: "boolean"},
                     usr__codjef: {editable: true, nullable: false}
                 }
@@ -134,13 +134,17 @@ $(document).ready(function () {
         dataSource: dataSource,
         sortable: true,
         columns: [
-            {field: "euser__Name", title: "NOMBRE COMPLETO", hidden: true},
+            {field: "euser__Name", title: "Nombre", hidden: true},
             {field: "euserid", title: "USUARIO", hidden: false},
             {field: "usr__mail", title: "CORREO", hidden: true},
             {field: "usr__carp", title: "CEDULA", hidden: true},
             {field: "car__nom", title: "ELIJA UN ROL", hidden: true, editor: filtroRol,
                 template: function (e) {
                     return e.car__nom;
+                }},
+            {field: "actor__cod", title: "ELIJA UN ACTOR", hidden: true, editor: filtroActor,
+                template: function (e) {
+                    return e.actor__cod;
                 }},
             {field: "usr__codjef", title: "ELIJA EL JEFE", hidden: true, editor: filtroJefe,
                 template: function (e) {
@@ -320,6 +324,59 @@ $(document).ready(function () {
                                 id: "car__cod",
                                 fields: {
                                     car__nom: {editable: false, nullable: false},
+                                }
+                            }
+                        }
+                    }
+
+                });
+
+    }
+ /**
+     * FUNCION FILTRO ACTOR EDIT POPUP SE EJECUTA CON EL EVENTO DE COMBOBOX
+     *  cONSULTA CAMPO  actor__cod
+     *  var  consultar obtiene funcion Sir para consultar
+     *  var datajson contiene el json para enviar al servicio de consulta
+     *  var urlService contiene url del servicio read 
+     *  
+     */
+
+    function filtroActor(container, options) {debugger
+        var consultar = new siractores();
+        var datajson = consultar.getjson();
+        var urlService = consultar.getUrlSir();
+        var mapCud1 = "eesic_actor";
+        $('<input  id = "rol" required name="' + options.field + '"/>')
+                .appendTo(container)
+                .kendoDropDownList({
+                    dataTextField: "actor__cod",
+                    dataValueField: "actor__cod",
+                    dataSource: {
+                        transport: {
+                            read: {
+                                url: urlService,
+                                dataType: "json",
+                                type: "POST",
+                                contentType: "application/json; charset=utf-8"
+                            },
+                            parameterMap: function (options, operation) {
+                                if (operation === "read") {
+                                    return JSON.stringify(datajson);
+                                }
+                            }
+                        },
+                        schema: {
+                            data: function (e) {
+                                var key1 = Object.keys(e)[0];
+                                if (e[key1].eeEstados[0].Estado === "OK") {
+                                    return e[key1][mapCud1];
+                                } else {
+                                }
+                            },
+                            model: {
+                                id: "actor__cod",
+                                fields: {
+                                    actor__cod: {editable: false, nullable: false},
                                 }
                             }
                         }

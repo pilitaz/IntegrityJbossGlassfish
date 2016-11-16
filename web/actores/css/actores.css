@@ -26,25 +26,27 @@ table{
 
 .sidenavSup {
     border-style: solid;
-    border-color: #80BD28 #fff  #fff  #fff;
+    border-color: #7EA700 #fff  #fff  #fff;
 }
 
 .sidenavIzq {
     border-style: solid;
-    border-color: #fff #fff #fff #E0E0E0;
+    border-color: #fff #fff #fff #7EA700;
     height: 100%;
 }
-
+.sidenavSub1{
+    border-style: solid;
+    border-color: #fff #fff #fff #7EA700;
+    height: 100%;
+}
 .letraParrafo{
     font-style: normal; 
     font-variant: normal;
     font-weight: normal;
     font-stretch: normal;
-    font-size: 17px;
+    font-size: 14px;
     line-height: normal;
     font-family: Verdana;
-    font-weight: bold;
-
 
 }
 .subTitulo{
@@ -59,62 +61,49 @@ table{
     vertical-align: center;
 }
 
-#arbol1 {
-    height:450px;
-
-    left: 0;
-    top: 0;
-    width:300px;
-    z-index: 10;
-    overflow: auto;
-}
-
-#arbol2 {
-    height:450px;
-
-    left: 0;
-    top: 0;
-    width:300px;
-    z-index: 10;
-    overflow: auto;
-}
 
 #outerWrapper{
-    background-color: #FFFFFF;
-    position:relative;
-    min-height:470px;
+  background-color: #FFFFFF;
+  position:relative;
+  min-height:470px;
 }
 #grid {
-    height:100%;
+  height:100%;
 }
-
+.k-grid.table tr.k-state-selected{
+    background:  #FFFFFF;
+}
 
 #wrapper {
-    width: 950px;
-    margin: 0 auto;
-}
-
+        width: 950px;
+        margin: 0 auto;
+        }
+        
 #header {
-    padding-top: 40px;
-    width: 950px;
-}
-
+        padding-top: 40px;
+        width: 950px;
+        }
+        
 p {
-    font-size: 1.4em;
-    width: 400px;
-}
-
+        font-size: 1.4em;
+        width: 400px;
+        }
+        
 a:link,     
 a:visited {
-    color: #a2b52d;
-    text-decoration: none;
-}
-
+        color: #a2b52d;
+        text-decoration: none;
+        }
+        
 a:hover, 
 a:focus {
-    border-bottom: 1px dotted #a2b52d;
+        border-bottom: 1px dotted #a2b52d;
+        }
+
+
+        .pt-page-moveFromLeft {
+    -webkit-animation: moveFromLeft .6s ease both;
+    animation: moveFromLeft .6s ease both;
 }
 
-.k-primary {
-    min-width: 150px;
-}
+html{}a.solink{position:fixed;top:50;width:100%;text-align:center;background:#f3f5f6;color:#cfd6d9;border:1px solid #cfd6d9;line-height:30px;text-decoration:none;transition:all .3s;z-index:999}a.solink::first-letter{text-transform:capitalize}a.solink:hover{color:#428bca}

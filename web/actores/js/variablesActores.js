@@ -7,22 +7,23 @@
  *  var url = sir.getUrlSir();
  *  var input = sir.getdataInputSir();
  */
-function sirproceso() {
-   var urlSir = ipBpm + baseUsrBpm +"SIRbpm_proc";
+function siractores() {
+   var urlSir = ipServicios + baseActores +"SIRsic_actor";
     var json = {  
-   "dsSIRbpm_proc":{  
+   "dssic_actor":{  
       "eeDatos":[  
          {  
             "picusrcod":sessionStorage.getItem("usuario"),
-            "picfiid":sessionStorage.getItem("picfiid")
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
-      ],    
-        "SIRbpm_proc": [
-          {
-        "piccia__nit": sessionStorage.getItem("companyNIT"),
-        "picproc__name": "*"
-       }
-     ]
+      ],
+      "SIRsic_actor":[  
+         {  
+            "picactor__cod":"*"
+         }
+      ]
    }
 };
     
@@ -84,10 +85,10 @@ function sirproceso() {
 ///////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////
-function crearol() {
-   var urlSir = ipServicios + baseServicio +"SICUDsic_car";
+function creaActor() {
+   var urlSir = ipServicios + baseActores +"SICUDsic_actor";
     var json = {  
-   "dssic_car":{  
+   "dssic_actor":{  
       "eeDatos":[  
          {  
             "picusrcod":sessionStorage.getItem("usuario"),
@@ -96,12 +97,12 @@ function crearol() {
             "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
-      "eesic_car":[
-      	{
-      	"car__nom": "",
-      	"car__est":1
-      	}
-      	]
+      "eesic_actor":[  
+         {  
+            "actor__cod":"*",
+            "actor__des":"*"
+         }
+      ]
    }
 };
     
