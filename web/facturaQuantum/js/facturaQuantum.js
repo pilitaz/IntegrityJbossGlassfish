@@ -12,8 +12,9 @@ var dataSource={};
 ip=sessionStorage.getItem("ip");
 puerto=sessionStorage.getItem("puerto");
 var itemID = null; 
+var dataCliente = null;
 
-$(document).ready(function() {
+$(document).ready(function() {   
     
     sessionStorage.setItem("cabeceraValida","false");    
     iniDropDownList();
@@ -67,6 +68,11 @@ $(document).ready(function() {
     
     var kendoDropDownListVendedor = $("#ipVendedor").data("kendoDropDownList");
     kendoDropDownListVendedor.enable(false); 
+        
+    if(sessionStorage.getItem("factura")){
+        var factura = JSON.parse(sessionStorage.getItem("factura"));
+        cargarFactura(factura);
+    }
 });
 /** 
  * Se encarga de cargar la información de los combobox de la cabecera de la factura
@@ -562,14 +568,17 @@ function onBlurTasaDeCambio(){
     }
 }
 
-function setInfoCliente(e){     
+function setInfoCliente(e){
     
-    var dataItem = this.dataItem(e.item.index()); 
-    var clienteNacional = dataItem.gfc__nal;    
-    sessionStorage.setItem("nitCliente", dataItem.ter__nit); // sessionStorage.setItem("
-    sessionStorage.setItem("listaPrecioCliente", dataItem.lis__num);
-    sessionStorage.setItem("codVendedor", dataItem.ven__cod);    
-    sessionStorage.setItem("opciondepago", dataItem.fac__pag);
+    if(dataCliente===null&&e){
+        dataCliente = this.dataItem(e.item.index()); 
+    }
+    
+    var clienteNacional = dataCliente.gfc__nal;    
+    sessionStorage.setItem("nitCliente", dataCliente.ter__nit); // sessionStorage.setItem("
+    sessionStorage.setItem("listaPrecioCliente", dataCliente.lis__num);
+    sessionStorage.setItem("codVendedor", dataCliente.ven__cod);    
+    sessionStorage.setItem("opciondepago", dataCliente.fac__pag);
     
     var kendoDropDownListVendedor = $("#ipVendedor").data("kendoDropDownList");
     kendoDropDownListVendedor.enable(true); 
@@ -646,8 +655,7 @@ function setInfoCliente(e){
                             alertDialogs("Debe seleccionar primero la sucursal");                       
                         }else{
                             authdssic_ven.dssic_ven.eetemp[0].picsuc_cod = $("#ipSucursal").val();
-                            authdssic_ven.dssic_ven.eetemp[0].piiven_cod = sessionStorage.getItem("codVendedor");
-                            //                            console.log("authdssic_ven 877 \n"+JSON.stringify(authdssic_ven));
+                            authdssic_ven.dssic_ven.eetemp[0].piiven_cod = sessionStorage.getItem("codVendedor");                            
                             if (operation === 'read') {
                                 authdssic_ven["eesic_ven1"] = [options];
                                 return JSON.stringify(authdssic_ven);
@@ -680,7 +688,7 @@ function setInfoCliente(e){
             }            
         }
     });
-    
+        
     var comboboxDivisa= $("#ipDivisa").data("kendoDropDownList");
     comboboxDivisa.enable(!clienteNacional);
     
@@ -691,6 +699,12 @@ function setInfoCliente(e){
     datepickerFechaTasa.enable(!clienteNacional);
     
     $("#ipActualizarTasa")[0].disabled = clienteNacional;
+    
+    if(!clienteNacional){
+        comboboxDivisa.value(dataCliente.mnd__cla);
+        numericTextBoxTasa.value(dataCliente.mnd__val);
+        datepickerFechaTasa.value(dataCliente.mnd__fec);
+    }
 }
 
 function codigoVendedor(e){
@@ -874,4 +888,127 @@ function imprimirFac(){
     dialog.fadeIn();
     alertDialogs("Próximamente");
     nuevaFactura();
+}
+
+function cargarFactura(factura){
+    var nombre_Cliente = factura.cdm__nom;
+    var estado;
+    try{
+        var dsSIRgfc_fac = new Object();
+        dsSIRgfc_fac.dsSIRgfc_fac = new Object();
+        dsSIRgfc_fac.dsSIRgfc_fac.eeDatos = new Array();
+        dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0] = new Object();
+        dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
+        dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].fiid = sessionStorage.getItem("picfiid");        
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp = new Array();
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0] = new Object();
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picsuc_cod = factura.suc__cod;
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picclc_cod = factura.clc__cod;
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].pidfac_fec = factura.fac__fec;
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro = factura.fac__nro;
+        
+                
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(dsSIRgfc_fac),
+            url: ipServicios+baseComercial+"SIRgfc_fac_act",            
+            dataType : "json",
+            contentType: "application/json;",
+            success: function (resp) {                  
+                estado = JSON.stringify(resp.dsSIRgfc_fac.eeEstados[0].Estado);                
+                factura = resp; 
+            },
+            error: function (e) {
+                kendo.alert(" Error al consumir el servicio.\n"+ e.status +" - "+ e.statusText);                
+            }
+        }).done(function(){
+            if(estado=='"OK"'){
+                
+                var kendoDropDownListSucursal = $("#ipSucursal").data("kendoDropDownList");
+                kendoDropDownListSucursal.value(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].suc__cod);
+                
+                var kendoDropDownListClaseDoc = $("#ipCDocumento").data("kendoDropDownList");
+                kendoDropDownListClaseDoc.value(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].cpto__cod);
+                
+                
+                $("#ipFecha").kendoDatePicker({        
+                    format: "yyyy/MM/dd",
+                    disableDates: ["sa", "su"],
+                    value: new Date(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__fec)     
+                });
+                
+                $("#ipFechaVencimiento").kendoDatePicker({        
+                    format: "yyyy/MM/dd",
+                    disableDates: ["sa", "su"],
+                    value: new Date(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__fec__venc) 
+                });
+                
+                authdsgfc_cli.dsgfc_cli.eetemp[0].picter_nit = factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].ter__nit;
+                //authdsgfc_cli.dsgfc_cli.eetemp[0].picter_raz = nombre_Cliente;
+                
+                $.ajax({
+                    type: "POST",
+                    data: JSON.stringify(authdsgfc_cli),
+                    url: ipServicios+baseParameters+"SIRgfc_cli",                                        
+                    dataType : "json",
+                    contentType: "application/json;",
+                    success: function (resp) { 
+                        if(resp.dsgfc_cli.eeEstados[0].Estado==="OK"){                            
+                            dataCliente = resp.dsgfc_cli.eegfc_cli[0];
+                            $("#ipCliente").val(dataCliente.ter__raz);
+                        }
+                        
+                    },
+                    error: function (e) {
+                        kendo.alert(" Error al consumir el servicio.\n"+ e.status +" - "+ e.statusText);                
+                    }
+                }).done(function(){
+                    setInfoCliente();
+                });
+                ;
+                var dataItemsFac = factura.dsSIRgfc_fac.eeSIRgfc_itms;
+                
+                for(var i=0; i<dataItemsFac.length ;i++){
+                    var valor = dataItemsFac[i].itms__val__u;                        
+                    valor = (valor * (parseFloat(1)-parseFloat(dataItemsFac[i].itms__pdt/100)));
+                    var total = parseFloat(dataItemsFac[i].itms__can) * (parseFloat(valor) * (parseFloat(1)+parseFloat(dataItemsFac[i].itms__piv/100)));
+                    
+                    var obj = {                       
+                        
+                        ID: i+1,
+                        CodConceptoDet:dataItemsFac[i].cpto__cod,
+                       // ConceptoDet: dataItemsFac[i],
+                        CodClaseArticulo: dataItemsFac[i].cla__cod,
+                       // ClaseArticulo: dataItemsFac[i],
+                       // Articulo: dataItemsFac[i],
+                        ArticuloId: dataItemsFac[i].art__cod,
+                        Descripcion: dataItemsFac[i].des__itms,
+                        Cantidad: parseInt(dataItemsFac[i].itms__can),                    
+                        Descuento: dataItemsFac[i].itms__pdt/100,
+                        IVA: dataItemsFac[i].itms__piv/100,
+                        ValorUnitario: dataItemsFac[i].itms__val__u,
+                        ValorTotal: total,
+                        //CodAmortizacion: dataItemsFac[i],
+                        DiasAmortizacion: dataItemsFac[i].ddif__dias,
+                        FechaAmortizacion: dataItemsFac[i].doc__fec__ini           
+                    }; 
+                    
+                    dataGridDetalle.push(obj);
+                }                
+                gridDetalle();
+            }else{
+                kendo.alert("Error cargando la información de la factura.\n"+estado)
+            }
+        });
+        
+    } catch (e) {
+        kendo.alert("Function: consumeServAjaxSIR Error: " + e.message);
+    }
+    //sessionStorage.removeItem("factura");    
+}
+
+function volverFacturacion(){
+    var servicio = "facturación";
+    sessionStorage.setItem("servicio",servicio);    
+    window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html")); 
 }

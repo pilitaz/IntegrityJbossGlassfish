@@ -6,7 +6,7 @@
 
 var hoy = new Date(sessionStorage.getItem("fechaSistema"));
 hoy.setHours(0,0,0,0);
-var objCliente;
+var objCliente = null;
 
 //var auth = new Object();
 //auth.dssic_suc = new Object();
@@ -28,17 +28,27 @@ authdsgfc_cli.dsgfc_cli.eetemp[0] = new Object();
 
 $(document).ready(function(){
     $("#ipfechaInicio").kendoDatePicker({
+        open: function() {
+            var calendar = this.dateView.calendar;            
+            calendar.wrapper.width(this.wrapper.width() - 6);
+        },
         culture: "es-CO",
         format: "yyyy/MM/dd",
-        value: new Date(hoy),
-        disableDates: ["sa", "su"]
+        max: new Date(hoy),
+        disableDates: ["sa", "su"],
+        footer: false
     });    
     $("#ipfechaFin").kendoDatePicker({
+        open: function() {
+            var calendar = this.dateView.calendar;            
+            calendar.wrapper.width(this.wrapper.width() - 6);
+        },
         culture: "es-CO",
         format: "yyyy/MM/dd",        
-        value: new Date(hoy),
+//        value: new Date(hoy),
         max: new Date(hoy),
-        disableDates: ["sa", "su"]
+        disableDates: ["sa", "su"],
+        footer: false
     }); 
     
 //    $("#ipSucursal").kendoDropDownList({
@@ -147,6 +157,7 @@ $(document).ready(function(){
     });
     
     var estados = [
+        { text: "Todos", value: "99" },
         { text: "No contabilizado", value: "0" },
         { text: "Contabilizado", value: "1" },
         { text: "Anulado", value: "9" }
@@ -165,22 +176,23 @@ $(document).ready(function(){
     });
 });
 
-function client(e){
+function client(e){    
     var dataItem = this.dataItem(e.item.index()); 
     objCliente = dataItem;
 }
 
 
-function buscarFacturas(){
-    debugger
-    var dsSIRgfc_fac = new Object();
-    dsSIRgfc_fac.dsSIRgfc_fac = new Object();
-    dsSIRgfc_fac.dsSIRgfc_fac.eeDatos = new Array();
-    dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0] = new Object();
-    dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
-    dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].fiid = sessionStorage.getItem("picfiid");        
-    dsSIRgfc_fac.dsSIRgfc_fac.eetemp = new Array();
-    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0] = new Object();
-    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_ano = "2016";
+function buscarFacturas(){    
+    parent.dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_ini = $("#ipfechaInicio").val();
+    parent.dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_fin = $("#ipfechaFin").val();
+    parent.dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro_ini = $("#ipNumeroInicio").val();
+    parent.dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro_fin = $("#ipNumeroFin").val();
+    parent.dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_est = $("#ipEstado").val;
+    if($("#ipCliente").val()!=="" && objCliente !==null){        
+        parent.dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picter_nit = objCliente.ter__nit;
+    }else{
+        parent.dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picter_nit = "*";
+    }
+    parent.gridFacturas();
+    parent.closePopUpFiltros();
 }
-
