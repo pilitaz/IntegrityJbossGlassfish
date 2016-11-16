@@ -1033,3 +1033,20 @@
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -608px -358px;
 }
+.po_back{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -558px;
+	cursor:pointer
+}
+.po_back:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -558px;
+	cursor:pointer
+}
+.po_back:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -558px;
+}
