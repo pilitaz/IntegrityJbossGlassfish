@@ -72,10 +72,7 @@ function gridFacturas(){
         dataSource: dataSource,
         height: gridheigth,
         sortable: true,
-//        pageable: true,
         selectable: false,
-        dataBound: disabledButton,
-//        dataBinding: disabledButton,        
         columns: [
             {
                 field: "fac__nro",
@@ -107,25 +104,30 @@ function gridFacturas(){
             {
                 command: [
                     {name: "detalle", text: " ", click: imprimirFact, template: "<a class='k-grid-detalle'><span class='k-sprite admin_Print'></span></a>"},
-                    {name: "editar", text: " ", click: editarFactura, template: "<a class='k-grid-editar'><span class='k-sprite admin_Print'></span></a>"}
+                    {name: "editar", text: " ", click: editarFactura, template: "<a class='k-grid-editar'><span class='k-sprite po_editon'></span></a>"}
                 ], 
                 width: "100px"
             }
         ]
     });
+    
+    function editarFactura(e){
+        
+        e.preventDefault();        
+        var factura = this.dataItem($(e.currentTarget).closest("tr"));
+                
+        var servicio = "facturaQuantum";
+        sessionStorage.setItem("servicio",servicio);
+        sessionStorage.setItem("factura",JSON.stringify(factura));
+        window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html"));   
+    }
 }
 
-function imprimirFact(e){
+function imprimirFact(e){S
     alertDialogs("proximamente");
 }
 
 function crearFactura(){
-    var servicio = "facturaQuantum";
-    sessionStorage.setItem("servicio",servicio);
-    window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html"));   
-}
-
-function editarFactura(e){
     var servicio = "facturaQuantum";
     sessionStorage.setItem("servicio",servicio);
     window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html"));   
@@ -158,11 +160,4 @@ function popUpFiltros(){
 
 function closePopUpFiltros(){    
     $("#windowFiltros").data("kendoWindow").close();
-}
-
-function disabledButton(){
-    debugger
-    var grid = $("#grid").data("kendoGrid");
-    var item = grid.dataItem(grid.select());
-        
 }
