@@ -71,6 +71,7 @@ $(document).ready(function() {
         
     if(sessionStorage.getItem("factura")){
         var factura = JSON.parse(sessionStorage.getItem("factura"));
+        sessionStorage.setItem("actualizarFactura", "true");
         cargarFactura(factura);
     }
 });
@@ -730,6 +731,11 @@ function guardarFactura(){
     var actualizarTasa = $("#ipActualizarTasa")["0"].checked;
     var numFactura = "";
     var msn = "";
+    var actualizacion=true;
+    
+    if(sessionStorage.getItem("actualizarFactura")==="true"){
+        
+    }
     
     var jSonData = new Object();
     jSonData.dsSIRgfc_fac = new Object();
@@ -891,8 +897,10 @@ function imprimirFac(){
 }
 
 function cargarFactura(factura){
-    var nombre_Cliente = factura.cdm__nom;
+        
     var estado;
+    document.getElementById('idNumerofactura').innerHTML = 'Nº '+factura.fac__nro;
+    
     try{
         var dsSIRgfc_fac = new Object();
         dsSIRgfc_fac.dsSIRgfc_fac = new Object();
@@ -923,7 +931,14 @@ function cargarFactura(factura){
             }
         }).done(function(){
             if(estado=='"OK"'){
-                
+                debugger
+                if(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__est===1||factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__est===9){
+                    $("#btnGuardar")["0"].firstChild.className = "k-icon po_saveoff_disabled";
+                    $("#btnGuardar")["0"].onclick = "";
+                    $("#btnGuardar").style = "pointer-events: none;";
+                    
+                    alert("la edición para este documento no esta habilitada");
+                }
                 var kendoDropDownListSucursal = $("#ipSucursal").data("kendoDropDownList");
                 kendoDropDownListSucursal.value(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].suc__cod);
                 
@@ -956,8 +971,7 @@ function cargarFactura(factura){
                         if(resp.dsgfc_cli.eeEstados[0].Estado==="OK"){                            
                             dataCliente = resp.dsgfc_cli.eegfc_cli[0];
                             $("#ipCliente").val(dataCliente.ter__raz);
-                        }
-                        
+                        }                        
                     },
                     error: function (e) {
                         kendo.alert(" Error al consumir el servicio.\n"+ e.status +" - "+ e.statusText);                

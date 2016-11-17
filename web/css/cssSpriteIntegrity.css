@@ -1057,3 +1057,12 @@
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -8px -558px;
 }
+
+.po_saveoff_disabled{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -408px;
+	cursor:pointer;
+        pointer-events: none;            
+}
+
