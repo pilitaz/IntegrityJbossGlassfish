@@ -3,7 +3,8 @@ var usuario;
 var password;
 
 function onLoad() {
-    //sessionStorage.clear();    
+    //sessionStorage.clear();
+    errorHtml();    
     var url =   document.URL;
     sessionStorage.setItem("url", url);
     var y =   document.URL.split("/");
@@ -23,6 +24,7 @@ function onLoad() {
  * 
  */
 function login() {
+    
     usuario = $("#usuario").val();
     password = $("#password").val();
     
@@ -123,4 +125,16 @@ function presionaEnter() {
             document.getElementById("btnLogin").click();
         }
     }, false);
+}
+/**
+ * funcion que coloca una notificacion en caso de error 
+ * @returns {undefined}
+ */
+function errorHtml(){
+    if((sessionStorage.getItem("errorHtml"))&&((sessionStorage.getItem("errorHtml")!==""))){
+        var d = new Date();
+        var centered = $("#centeredNotification").kendoNotification().data("kendoNotification");
+        centered.show("Ocurrió un error en el servidor tipo: "+sessionStorage.getItem("errorHtml"), "error");
+        sessionStorage.removeItem("errorHtml");
+    }
 }
