@@ -552,3 +552,7 @@ function ocultarDocumentos(){
     $("#divArbol").load("tree2.html");     
     $("#divDocumentos").fadeOut("slow");
 }
+function closeFrame(){
+    var friends = document.getElementById("idFrame");
+    friends.style.display = "none";
+}
