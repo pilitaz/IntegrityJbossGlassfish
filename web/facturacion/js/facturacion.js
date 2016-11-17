@@ -104,7 +104,7 @@ function gridFacturas(){
             {
                 command: [
                     {name: "detalle", text: " ", click: imprimirFact, template: "<a class='k-grid-detalle'><span class='k-sprite admin_Print'></span></a>"},
-//                    {name: "editar", text: " ", click: editarFactura, template: "<a class='k-grid-editar'><span class='k-sprite po_editon'></span></a>"}
+                    {name: "editar", text: " ", click: editarFactura, template: "<a class='k-grid-editar'><span class='k-sprite po_editon'></span></a>"}
                 ], 
                 width: "100px"
             }
@@ -124,6 +124,47 @@ function gridFacturas(){
 
 function imprimirFact(e){
     alertDialogs("proximamente");
+    var estado;
+    
+    
+    try{
+        var dsSIRgfc_fac = new Object();
+        dsSIRgfc_fac.dsSIRgfc_fac = new Object();
+        dsSIRgfc_fac.dsSIRgfc_fac.eeDatos = new Array();
+        dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0] = new Object();
+        dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
+        dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].fiid = sessionStorage.getItem("picfiid");        
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp = new Array();
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0] = new Object();
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picsuc_cod = factura.suc__cod;
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picclc_cod = factura.clc__cod;
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].pidfac_fec = factura.fac__fec;
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro = factura.fac__nro;        
+                
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(dsSIRgfc_fac),
+            url: ipServicios+baseComercial+"SIRgfc_fac_act",            
+            dataType : "json",
+            contentType: "application/json;",
+            success: function (resp) {                  
+                estado = JSON.stringify(resp.dsSIRgfc_fac.eeEstados[0].Estado);                
+                factura = resp; 
+            },
+            error: function (e) {
+                kendo.alert(" Error al consumir el servicio.\n"+ e.status +" - "+ e.statusText);                
+            }
+        }).done(function(){
+            if(estado=='"OK"'){
+                
+            }else{
+                alertDialogs("Error generando el PDF de la factura.\n"+estado);
+            }
+        });
+        
+    } catch (e) {
+        alertDialogs("Function: consumeServAjaxSIR Error: " + e.message);
+    }
 }
 
 function crearFactura(){
