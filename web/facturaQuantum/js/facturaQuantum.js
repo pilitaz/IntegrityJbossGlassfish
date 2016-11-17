@@ -279,7 +279,7 @@ function iniAutocomplete(){
         dataTextField: "ter__raz",
         dataValueField: "ter__nit",        
         placeholder: "Selecione un cliente...",
-        minLength: 3,
+        minLength: 4,
         filter: "contains",
         template:'<div class="divElementDropDownList">#: data.ter__raz #</div>',
         select: setInfoCliente,
@@ -297,7 +297,7 @@ function iniAutocomplete(){
                     try {
                         authdsgfc_cli.dsgfc_cli.eetemp[0].picter_raz = $("#ipCliente").val();                        
                         if (operation === 'read') {
-                            authdsgfc_cli["eegfc_cli"] = [options];
+//                            authdsgfc_cli["eegfc_cli"] = [options];
                             return JSON.stringify(authdsgfc_cli);
                         } 
                     } catch (e) {
@@ -1007,8 +1007,8 @@ function cargarFactura(factura){
     //sessionStorage.removeItem("factura");    
 }
 
-function volverFacturacion(){
-    var servicio = "facturación";
+function volverFacturacion(){    
+    var servicio = "facturacion";
     sessionStorage.setItem("servicio",servicio);    
     window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html")); 
 }
