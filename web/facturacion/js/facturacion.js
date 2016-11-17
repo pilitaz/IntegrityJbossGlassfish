@@ -103,8 +103,8 @@ function gridFacturas(){
             },
             {
                 command: [
-                    {name: "detalle", text: " ", click: imprimirFact, template: "<a class='k-grid-detalle'><span class='k-sprite admin_Print'></span></a>"},
-                    {name: "editar", text: " ", click: editarFactura, template: "<a class='k-grid-editar'><span class='k-sprite po_editon'></span></a>"}
+                    {name: "detalle", text: " ", click: imprimirFact, template: "<a class='k-grid-detalle'><span class='k-sprite admin_Print'></span></a>"}//,
+//                    {name: "editar", text: " ", click: editarFactura, template: "<a class='k-grid-editar'><span class='k-sprite po_editon'></span></a>"}
                 ], 
                 width: "100px"
             }
