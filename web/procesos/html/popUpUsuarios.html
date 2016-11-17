@@ -26,22 +26,41 @@
         <link href="../../css/kendo.customprocesos.css" rel="stylesheet" type="text/css"/>
         <script src="../../js/servicios.js" type="text/javascript"></script>
         <link href="../../css/cssSpriteIntegrity.css" rel="stylesheet" type="text/css"/>
-        <script src="../js/popUpGrilla.js" type="text/javascript"></script>
+        <script src="../js/popUpUsuarios.js" type="text/javascript"></script>
     </head>
     <body> 
         
             <div>
-                <table style="height: 50px; vertical-align: top">
-                    <td style="width: 50px;height: 50px"><a class="k-grid"  aling="center"><span class="k-sprite pro_bullet1"></span></a></td>
-                    <td ><h4 id = "subtitulo2" class="subTitulo">Tareas de proceso - </h4>
-                    <td><h4 id = "subtitulo" class="subTitulo"><p id="task1"></p></h4> </td>
-                   
-                   
-                </table>
+                    <table style="height: 50px; vertical-align: top">
+                        <td style="width: 50px;height: 50px"><a class="k-grid"  aling="center"><span class="k-sprite pro_bullet1"></span></a></td>
+                        <td style="width: 10%;height: 50px;" ><h4 id = "subtitulo" class="subTitulo">Usuarios</h4> </td>
+                        <td style="width: 90%; height: 50px; vertical-align: middle"class="navbar" > 
+
+
+                            <div class="container-fluid">                                                
+                                <button type="button" class="navbar-toggle" class="btn btn-default btn-circle btn-lg" data-toggle="collapse" data-target="#myNavbar">
+                                    <i class="glyphicon glyphicon-list"></i>
+                                </button>                                                                         
+                            </div>
+                            <div class="collapse navbar-collapse" id="myNavbar" style="text-align: left">
+                                <ul class="nav navbar-nav">   
+
+                                    <li> &nbsp;Buscar Por Nombre: &nbsp;<input id="filtro" vertical-align="center"/></li>
+                                     <li> &nbsp;Buscar Por Actor &nbsp;<input type="search" id="filtro2"/></li>
+                                    <li> &nbsp; Buscar Por Rol:&nbsp;<input type="search" id="filtro1"/></li>
+                                   
+
+
+                                </ul>
+                            </div>
+
+                        </td>
+                        
+                    </table>
                 <div class="sidenavSup"></div>
             </div>
        
-                                    <div id="grilla"></div>
-     <div id="grilla2" ></div>
+                                    <div id="grilla_usr" ></div>
+
     </body>
 </html>	

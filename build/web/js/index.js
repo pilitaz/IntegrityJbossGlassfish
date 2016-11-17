@@ -329,12 +329,6 @@ function inicio(){
     window.location.assign("index.html");
 }
 
-//function documentos(){
-//    mostrarDocumentos();    
-//    
-//    
-//}
-
 function abreFuncion(servicio){    
     tamanoFunciones();
     document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
