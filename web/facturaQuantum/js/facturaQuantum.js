@@ -977,10 +977,10 @@ function cargarFactura(factura){
                         
                         ID: i+1,
                         CodConceptoDet:dataItemsFac[i].cpto__cod,
-                       // ConceptoDet: dataItemsFac[i],
+                        ConceptoDet: dataItemsFac[i].cpto__des,
                         CodClaseArticulo: dataItemsFac[i].cla__cod,
-                       // ClaseArticulo: dataItemsFac[i],
-                       // Articulo: dataItemsFac[i],
+                        ClaseArticulo: dataItemsFac[i].cla__des,
+                        Articulo: dataItemsFac[i].art__des,
                         ArticuloId: dataItemsFac[i].art__cod,
                         Descripcion: dataItemsFac[i].des__itms,
                         Cantidad: parseInt(dataItemsFac[i].itms__can),                    
@@ -988,7 +988,7 @@ function cargarFactura(factura){
                         IVA: dataItemsFac[i].itms__piv/100,
                         ValorUnitario: dataItemsFac[i].itms__val__u,
                         ValorTotal: total,
-                        //CodAmortizacion: dataItemsFac[i],
+                        CodAmortizacion: dataItemsFac[i].pdif__cla,
                         DiasAmortizacion: dataItemsFac[i].ddif__dias,
                         FechaAmortizacion: dataItemsFac[i].doc__fec__ini           
                     }; 
@@ -1004,7 +1004,7 @@ function cargarFactura(factura){
     } catch (e) {
         kendo.alert("Function: consumeServAjaxSIR Error: " + e.message);
     }
-    //sessionStorage.removeItem("factura");    
+    sessionStorage.removeItem("factura");    
 }
 
 function volverFacturacion(){    
