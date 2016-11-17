@@ -103,7 +103,7 @@
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
         altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
         dataBound: function () {
-            var results = dataSource.data();
+            var results = datasource.data();
             changImgFunc(results);
         },
                             cancel: function(e) {                                                                                   
@@ -115,7 +115,7 @@
                         });
 
                         
-                    var consultar = new usrtask();
+    var consultar = new usrtask();
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();
     var mapCud1 = "eebpm_task";
@@ -200,7 +200,20 @@
                             } 
                         });
                         
-                      
+                          $("#filtro1").kendoComboBox({
+        dataTextField: "car__nom",
+        dataValueField: "car__cod",
+        placeholder: "Rol...",
+        dataSource: datasourcex,
+        change: function () {
+            var value = this.value();
+            if (value) {
+                grid1.data("kendoGrid").dataSource.filter({field: "car__cod", operator: "eq", value: value});
+            } else {
+                grid1.data("kendoGrid").dataSource.filter({});
+            }
+        },
+    });
                       
                     
                         
@@ -210,19 +223,21 @@
        
                 function grafica(e){
                     
-        var myWindow1 = $("#textarea"),
-                undo = $("#undo");
-        function onClose() {
+        var myWindow1 = $("#textarea"),undo = $("#undo");
+                
+        function onClose() {debugger
             undo.fadeIn();
+  $("#textarea").empty();
+        
         }
-         $("#textarea").empty();
+       
             myWindow1.kendoWindow({
             draggable: true,
             height: "70%",
             modal: true,
             resizable: false,
-            title: "Grafica _*",
-            width: "60%",
+            title: "Grafica",
+            width: "70%",
             content: "popUpGrafica.html",
             actions: [
                 "Close"
@@ -231,29 +246,40 @@
         }).data("kendoWindow").center().open();                 
     }
     
-                        
-                    
 
                     
-                        function grilla(e){
-                        var myWindow1 = $("#grillapopUp"),
-                undo = $("#undo");
-        function onClose() {
-            undo.fadeIn();
-        }
-         $("#grillapopUp").empty();
-                            myWindow1.kendoWindow({
+                        function grilla(e){debugger
+                            e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
+                        var id = this.dataItem($(e.currentTarget).closest("tr")).proc__name;
+                        sessionStorage.setItem("Proc_usuar",id);
+                        
+                        
+                        $("#grillapopUp").append("<div id='windowg'></div>");
+                        
+                            var myWindow2 = $("#windowg"),undo = $("#undo");
+                
+        function onClose1() {debugger
+            
+            $("#grillapopUp").empty();
+        }  
+        
+      
+         
+            myWindow2.kendoWindow({
             draggable: true,
             height: "70%",
             modal: true,
             resizable: false,
-            title: "",
-            width: "60%",
+            title: "Tareas",
+            width: "70%",
             content: "popUpGrilla.html",
+            deactivate: function() {
+                                this.destroy();                                           
+                            },
             actions: [
                 "Close"
             ],                               
-            close: onClose
+            close: onClose1
         }).data("kendoWindow").center().open();   
                             
                       

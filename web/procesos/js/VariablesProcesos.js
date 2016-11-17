@@ -1,7 +1,7 @@
 
 //-------------------------------------------------------------------------
 function sirusuariobpm() {
-    var urlSir =  ipBpm + baseUsrBpm + "SIRbpm_user";
+    var urlSir =  ipServicios + baseUsrBpm + "SIRbpm_user";
     var json = {  
    "dsSIRbpm_user":{  
       "eeDatos":[  
@@ -42,7 +42,7 @@ function sirusuariobpm() {
 
 //-------------------------------------------------------------------------
 function usrtask() {
-    var urlSir =  ipBpm + baseUsrBpm + "SIRbpm_task";
+    var urlSir =  ipServicios + baseUsrBpm + "SIRbpm_task";
     var json = {  
    "dsSIRbpm_task":{  
       "eeDatos":[  
@@ -81,3 +81,150 @@ function usrtask() {
     
 };
 //-----------------------------------------
+function sirtask_proces() {
+    var urlSir =  ipServicios + baseUsrBpm + "SIRbpm_task_proc";
+    var json = {  
+   "dsSIRbpm_task_proc":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid")
+         }
+      ],    
+        "SIRbpm_task_proc": [
+          {
+        "picproc__name": "*"
+       }
+     ]
+   } 
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+//-----------------------------------------------------------------------
+ function sirconsulta() {
+    var urlSir = ipServicios + baseServicio +"SirUsuarios";
+    var json = {  
+     "dsee_user2":{  
+      "eeDatos":[  
+      {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+    }
+    ]
+}
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+//---------------------------------------------------------------------------
+function serviRoles() {
+    var urlSir = ipServicios + baseServicio +"SirCargos2";
+    var json = {  
+   "SIResic_car":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+////------------------------------------
+function siractores() {
+   var urlSir = ipServicios + baseActores +"SIRsic_actor";
+    var json = {  
+   "dssic_actor":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "SIRsic_actor":[  
+         {  
+            "picactor__cod":"*"
+         }
+      ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
