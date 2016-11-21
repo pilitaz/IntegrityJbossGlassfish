@@ -182,12 +182,12 @@ function client(e){
 }
 
 
-function buscarFacturas(){    
+function buscarFacturas(){  
     parent.dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_ini = $("#ipfechaInicio").val();
     parent.dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_fin = $("#ipfechaFin").val();
     parent.dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro_ini = $("#ipNumeroInicio").val();
     parent.dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro_fin = $("#ipNumeroFin").val();
-    parent.dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_est = $("#ipEstado").val;
+    parent.dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_est = $("#ipEstado").val();
     if($("#ipCliente").val()!=="" && objCliente !==null){        
         parent.dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picter_nit = objCliente.ter__nit;
     }else{

@@ -71,6 +71,7 @@ $(document).ready(function() {
         
     if(sessionStorage.getItem("factura")){
         var factura = JSON.parse(sessionStorage.getItem("factura"));
+        sessionStorage.setItem("actualizarFactura", "true");
         cargarFactura(factura);
     }
 });
@@ -279,7 +280,7 @@ function iniAutocomplete(){
         dataTextField: "ter__raz",
         dataValueField: "ter__nit",        
         placeholder: "Selecione un cliente...",
-        minLength: 3,
+        minLength: 4,
         filter: "contains",
         template:'<div class="divElementDropDownList">#: data.ter__raz #</div>',
         select: setInfoCliente,
@@ -297,7 +298,7 @@ function iniAutocomplete(){
                     try {
                         authdsgfc_cli.dsgfc_cli.eetemp[0].picter_raz = $("#ipCliente").val();                        
                         if (operation === 'read') {
-                            authdsgfc_cli["eegfc_cli"] = [options];
+//                            authdsgfc_cli["eegfc_cli"] = [options];
                             return JSON.stringify(authdsgfc_cli);
                         } 
                     } catch (e) {
@@ -730,6 +731,11 @@ function guardarFactura(){
     var actualizarTasa = $("#ipActualizarTasa")["0"].checked;
     var numFactura = "";
     var msn = "";
+    var actualizacion=true;
+    
+    if(sessionStorage.getItem("actualizarFactura")==="true"){
+        
+    }
     
     var jSonData = new Object();
     jSonData.dsSIRgfc_fac = new Object();
@@ -891,8 +897,10 @@ function imprimirFac(){
 }
 
 function cargarFactura(factura){
-    var nombre_Cliente = factura.cdm__nom;
+        
     var estado;
+    document.getElementById('idNumerofactura').innerHTML = 'Nº '+factura.fac__nro;
+    
     try{
         var dsSIRgfc_fac = new Object();
         dsSIRgfc_fac.dsSIRgfc_fac = new Object();
@@ -923,7 +931,14 @@ function cargarFactura(factura){
             }
         }).done(function(){
             if(estado=='"OK"'){
-                
+                debugger
+                if(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__est===1||factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__est===9){
+                    $("#btnGuardar")["0"].firstChild.className = "k-icon po_saveoff_disabled";
+                    $("#btnGuardar")["0"].onclick = "";
+                    $("#btnGuardar").style = "pointer-events: none;";
+                    
+                    alert("la edición para este documento no esta habilitada");
+                }
                 var kendoDropDownListSucursal = $("#ipSucursal").data("kendoDropDownList");
                 kendoDropDownListSucursal.value(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].suc__cod);
                 
@@ -956,8 +971,7 @@ function cargarFactura(factura){
                         if(resp.dsgfc_cli.eeEstados[0].Estado==="OK"){                            
                             dataCliente = resp.dsgfc_cli.eegfc_cli[0];
                             $("#ipCliente").val(dataCliente.ter__raz);
-                        }
-                        
+                        }                        
                     },
                     error: function (e) {
                         kendo.alert(" Error al consumir el servicio.\n"+ e.status +" - "+ e.statusText);                
@@ -977,10 +991,10 @@ function cargarFactura(factura){
                         
                         ID: i+1,
                         CodConceptoDet:dataItemsFac[i].cpto__cod,
-                       // ConceptoDet: dataItemsFac[i],
+                        ConceptoDet: dataItemsFac[i].cpto__des,
                         CodClaseArticulo: dataItemsFac[i].cla__cod,
-                       // ClaseArticulo: dataItemsFac[i],
-                       // Articulo: dataItemsFac[i],
+                        ClaseArticulo: dataItemsFac[i].cla__des,
+                        Articulo: dataItemsFac[i].art__des,
                         ArticuloId: dataItemsFac[i].art__cod,
                         Descripcion: dataItemsFac[i].des__itms,
                         Cantidad: parseInt(dataItemsFac[i].itms__can),                    
@@ -988,7 +1002,7 @@ function cargarFactura(factura){
                         IVA: dataItemsFac[i].itms__piv/100,
                         ValorUnitario: dataItemsFac[i].itms__val__u,
                         ValorTotal: total,
-                        //CodAmortizacion: dataItemsFac[i],
+                        CodAmortizacion: dataItemsFac[i].pdif__cla,
                         DiasAmortizacion: dataItemsFac[i].ddif__dias,
                         FechaAmortizacion: dataItemsFac[i].doc__fec__ini           
                     }; 
@@ -1004,11 +1018,11 @@ function cargarFactura(factura){
     } catch (e) {
         kendo.alert("Function: consumeServAjaxSIR Error: " + e.message);
     }
-    //sessionStorage.removeItem("factura");    
+    sessionStorage.removeItem("factura");    
 }
 
-function volverFacturacion(){
-    var servicio = "facturación";
+function volverFacturacion(){    
+    var servicio = "facturacion";
     sessionStorage.setItem("servicio",servicio);    
     window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html")); 
 }

@@ -120,6 +120,7 @@ $(document).ready(function() {
         filter: "contains",
         template:'<div class="divElementDropDownList">#: data.art__des #</div>',
         select: onChangeArticulo,
+        dataBound: onDataBoundArticulo,
         dataSource: {
             type: "json",
             transport: {
@@ -189,7 +190,9 @@ $(document).ready(function() {
     
     $("#idIVA").kendoNumericTextBox({
         format: "p0",
-        step: 0.01
+        step: 0.01,
+        change: setValorTotal,        
+        spin: setValorTotal
     });
     
     $("#idValorUnitario").kendoNumericTextBox({        
@@ -310,10 +313,20 @@ $(document).ready(function() {
     }
     
     function setValorTotal(){
-        var cantidad = $("#ipCantidad").val();
-        var valor = $("#idValorUnitario").val();
         var iva = $("#idIVA").val();
+        if(iva>=1){
+           iva=iva/100;
+           var numerictextbox = $("#idIVA").data("kendoNumericTextBox");    
+           numerictextbox.value(iva);          
+        }
         var descuento = $("#idDescuento").val();
+        if(descuento>=1){            
+            descuento=descuento/100;
+            var numerictextbox = $("#idDescuento").data("kendoNumericTextBox");    
+            numerictextbox.value(descuento);            
+        }
+        var cantidad = $("#ipCantidad").val();
+        var valor = $("#idValorUnitario").val();        
         valor = (valor * (parseFloat(1)-parseFloat(descuento)));
         var total = parseFloat(cantidad) * (parseFloat(valor) * (parseFloat(1)+parseFloat(iva))); //idValorTotal
         
@@ -494,4 +507,8 @@ function btnCancelar(){
 
 function btnCancelarEditar(){
     parent.closePopUpEditar();
+}
+
+function onDataBoundArticulo(){    
+    $("#idArticulo").data("kendoAutoComplete");
 }
