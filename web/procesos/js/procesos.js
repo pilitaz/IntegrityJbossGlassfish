@@ -91,10 +91,10 @@
                             { field: "proc__name", title: "Procesos",  hidden:false},
                             {command:
                         [
-                            {name: "tareas", text: " ", click: grilla, template: "<a class='k-grid-tareas'><span class='k-sprite pro_mas'></span></a>"},
+                            {name: "tareas", text: " ", click: grilla, template: "<a class='k-grid-tareas'><span class='k-sprite pro_group'></span></a>"},
                             {name: "editar", text: " ",  click: grafica, template: "<a class='k-grid-editar'><span class='k-sprite in_graf '></span></a>"},
                             {name: "info", text: " ",  template: "<a class='k-grid-info'><span class='k-sprite in_cerrar'></span></a>"},
-                            {name: "play", text: " ",  template: "<a class='k-grid-play'><span class='k-sprite pro_playon '></span></a>"},
+                            {name: "play", text: " ",  template: "<a class='k-grid-play'><span class='k-sprite pro_playoff '></span></a>"},
                            
                         ],
                         width: "180px"}],                            
@@ -200,15 +200,70 @@
                             } 
                         });
                         
-                          $("#filtro1").kendoComboBox({
-        dataTextField: "car__nom",
-        dataValueField: "car__cod",
-        placeholder: "Rol...",
+         $('#grid').hover(function() {
+            $(this).css('background-color', 'Transparent');
+            $(this).contents('tr').css({'border': '1px solid red', 'border-left': 'none', 'border-right': 'none'});
+            $(this).contents('tr:first').css('border-left', '1px solid red');
+            $(this).contents('tr:last').css('border-right', '1px solid red');
+        },
+        function() {
+            $(this).css('background-color', 'Transparent');
+            $(this).contents('tr').css('border', 'none');
+        });
+
+// $("#grid").hover(
+//
+//      function() {
+// 
+//          $(this).css({ "border": "Solid Brown 1px" });
+//            $(this).css({ "border": "Solid Brown 1px" });
+//      },
+//
+// function() {
+//           $(this).css({ "border": "" });
+//
+//      });
+      //-------------------------------------------------
+        
+        $("#filtro_p").kendoComboBox({
+        dataTextField: "inst__name",
+        dataValueField: "inst__name",
+        placeholder: "Proceso ...",
         dataSource: datasourcex,
         change: function () {
             var value = this.value();
             if (value) {
-                grid1.data("kendoGrid").dataSource.filter({field: "car__cod", operator: "eq", value: value});
+                grid1.data("kendoGrid").dataSource.filter({field: "inst__name", operator: "eq", value: value});
+            } else {
+                grid1.data("kendoGrid").dataSource.filter({});
+            }
+        },
+    });
+//--------------------------------
+ $("#filtro_f").kendoComboBox({
+        dataTextField: "task__ddt",
+        dataValueField: "task__ddt",
+        placeholder: "Fecha...",
+        dataSource: datasourcex,
+        change: function () {
+            var value = this.value();
+            if (value) {
+                grid1.data("kendoGrid").dataSource.filter({field: "task__ddt", operator: "eq", value: value});
+            } else {
+                grid1.data("kendoGrid").dataSource.filter({});
+            }
+        },
+    });
+    //--------------------------------------
+     $("#filtro_t").kendoComboBox({
+        dataTextField: "task__dpr",
+        dataValueField: "task__dpr",
+        placeholder: "Creador...",
+        dataSource: datasourcex,
+        change: function () {
+            var value = this.value();
+            if (value) {
+                grid1.data("kendoGrid").dataSource.filter({field: "task__dpr", operator: "eq", value: value});
             } else {
                 grid1.data("kendoGrid").dataSource.filter({});
             }
@@ -230,7 +285,7 @@
   $("#textarea").empty();
         
         }
-       
+       var UrL= sessionStorage.getItem("url");  
             myWindow1.kendoWindow({
             draggable: true,
             height: "70%",
@@ -238,7 +293,7 @@
             resizable: false,
             title: "Grafica",
             width: "70%",
-            content: "popUpGrafica.html",
+            content: UrL+"procesos/html/popUpGrafica.html",
             actions: [
                 "Close"
             ],                               
@@ -264,15 +319,15 @@
         }  
         
       
-         
+            var UrL= sessionStorage.getItem("url");
             myWindow2.kendoWindow({
             draggable: true,
-            height: "70%",
+            height: "90%",
             modal: true,
             resizable: false,
             title: "Tareas",
-            width: "70%",
-            content: "popUpGrilla.html",
+            width: "90%",
+            content: UrL+"procesos/html/popUpGrilla.html",
             deactivate: function() {
                                 this.destroy();                                           
                             },

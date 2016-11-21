@@ -71,7 +71,7 @@ document.getElementById("task1").innerHTML = task ;
                         [
                            
                            
-                    {name: "usuarios", click: grilla1, template: "<a class='k-grid-usuarios' href='' style='min-width:16px;'><span class='k-sprite pro_detalle'></span></a>"}
+                    {name: "usuarios", click: grilla1, template: "<a class='k-grid-usuarios' href='' style='min-width:16px;'><span class='k-sprite pro_group'></span></a>"}
                 ],
                 width: "50px"}]    ,                            
         //editable: "popup",
@@ -81,7 +81,16 @@ document.getElementById("task1").innerHTML = task ;
                                                                                    
         } 
     });
-                        
+                    $('#grilla').hover(function() {
+            $(this).css('background-color', 'Transparent');
+            $(this).contents('td').css({'border': '1px solid blue', 'border-left': 'none', 'border-right': 'none'});
+            $(this).contents('td:first').css('border-left', '1px solid blue');
+            $(this).contents('td:last').css('border-right', '1px solid blue');
+        },
+        function() {
+            $(this).css('background-color', 'Transparent');
+            $(this).contents('td').css('border', 'none');
+        });             
                       
                              function grilla1(e){debugger
                             e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
@@ -99,15 +108,15 @@ document.getElementById("task1").innerHTML = task ;
         }  
         
       
-         
+         var UrL= sessionStorage.getItem("url");
             myWindow3.kendoWindow({
             draggable: true,
-            height: "90%",
+            height: "70%",
             modal: true,
             resizable: false,
             title: "Usuarios",
-            width: "90%",
-            content: "popUpUsuarios.html",
+            width: "70%",
+            content: UrL+"procesos/html/popUpUsuarios.html",
             
             actions: [
                 "Close"

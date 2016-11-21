@@ -135,28 +135,28 @@ $(document).ready(function () {
         sortable: true,
         columns: [
             {field: "euser__Name", title: "Nombre", hidden: true},
-            {field: "euserid", title: "USUARIO", hidden: false},
-            {field: "usr__mail", title: "CORREO", hidden: true},
-            {field: "usr__carp", title: "CEDULA", hidden: true},
-            {field: "car__nom", title: "ELIJA UN ROL", hidden: true, editor: filtroRol,
+            {field: "euserid", title: "Usuario", hidden: false},
+            {field: "usr__mail", title: "Correo", hidden: true},
+            {field: "usr__carp", title: "Cedula", hidden: true},
+            {field: "car__nom", title: "Elija un Rol", hidden: true, editor: filtroRol,
                 template: function (e) {
                     return e.car__nom;
                 }},
-            {field: "actor__cod", title: "ELIJA UN ACTOR", hidden: true, editor: filtroActor,
+            {field: "actor__cod", title: "Elija un actor", hidden: true, editor: filtroActor,
                 template: function (e) {
                     return e.actor__cod;
                 }},
-            {field: "usr__codjef", title: "ELIJA EL JEFE", hidden: true, editor: filtroJefe,
+            {field: "usr__codjef", title: "Elija un Jefe", hidden: true, editor: filtroJefe,
                 template: function (e) {
                     return e.usr__codjef;
                 }},
-            {field: "usr__jef", title: "JEFE DE AREA ", hidden: true},
-            {field: "usr__est", title: "ESTADO", hidden: true, editor: filtroestado,
+            {field: "usr__jef", title: "Jefe de Area ", hidden: true},
+            {field: "usr__est", title: "Estado", hidden: true, editor: filtroestado,
                 template: function (e) {
                     return e.usr__est;
                 }},
-            {field: "epassword", title: "CLAVE", width: "50px", hidden: true, editor: passEditorPopup},
-            {field: "epassword1", title: "REPITA CLAVE", width: "50px", hidden: true, editor: onkeypass},
+            {field: "epassword", title: "Clave", width: "50px", hidden: true, editor: passEditorPopup},
+            {field: "epassword1", title: "Repita clave", width: "50px", hidden: true, editor: onkeypass},
             {command: [{name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"}], width: "60px"}],
         editable: "popup",
         cancel: function (e) {
@@ -341,7 +341,7 @@ $(document).ready(function () {
      *  
      */
 
-    function filtroActor(container, options) {debugger
+    function filtroActor(container, options) {
         var consultar = new siractores();
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();
@@ -468,7 +468,7 @@ function filtroestado(container, options) {
  *  
  *  
  */        					function passEditorPopup(container, options) {
-    $('<input id ="clave1" type = \"password\"  onkeyup = \"mostrarcampo()\" required name="' + options.field + '" />')
+    $('<input id ="clave1" type = \"password\"  onkeyup = \"mostrarcampo(event)\" required name="' + options.field + '" />')
             .appendTo(container)
             .kendoMaskedTextBox({
             });
@@ -482,13 +482,13 @@ function filtroestado(container, options) {
  *  id clave2 campo para validar contraseña 
  *  
  */
-function onkeypass(container, options) {
+function onkeypass(container, options) {debugger
     $('<input id ="clave2" type = \"password\"" name="' + options.field + '" />')
             .appendTo(container)
             .kendoMaskedTextBox({
             });
     var buscarlabel = $("label").find("for");//BUSCAR TODOS LOS ELEMENTOS LABEL--<<  
-    Buscarlabel = buscarlabel.prevObject[9];
+    Buscarlabel = buscarlabel.prevObject[10];
     Buscarlabel.style.display = "none";
     document.getElementById("clave2").style.display = "none";
 }
@@ -500,11 +500,17 @@ function onkeypass(container, options) {
  *  
  *  
  */
-function mostrarcampo() {
+function mostrarcampo(e) {debugger
+   var Tecla= e.which;
+   
+    if (Tecla == 13)
+    {}
+    else
+    {
     document.getElementById("clave2").style.display = "";
     var buscarlabel = $("label").find("for");
-    Buscarlabel = buscarlabel.prevObject[9];
-    Buscarlabel.style.display = "";
+    Buscarlabel = buscarlabel.prevObject[10];
+    Buscarlabel.style.display = "";}    
 }
 
 /*  FUNCION RESIZE WINDOW 

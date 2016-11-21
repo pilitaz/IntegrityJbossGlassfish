@@ -76,28 +76,17 @@ table{
                         display: none !important;
                     }
                 }
+.k-grid tr td {
 
-   
-.k-grid tr:not(.k-state-selected):hover {
-      background: none;
-      color: inherit;
-  }
-
-
-  .k-detail-row{
-       padding: 0;
-       border:0;
-  }
-  .k-detail-cell{
-      padding: 0;
-      border:0;
-  }
-  .orders.k-grid.k-widget{
-            border:0;
-      
-      
-  }
-
+}
+  
+.k-grid td.k-state-selected:hover, .k-grid tr:hover {
+    border-bottom: 1px solid black;
+    border-right:1px solid black;
+        border-left:1px solid black;
+            border-top:1px solid black;
+    
+}
 #gridproceso {
     height:250px;
 
@@ -137,10 +126,17 @@ table{
   position:relative;
   min-height:470px;
 }
-#grid {
-  height:100%;
-}
+#grilla_usr{
+     height:250px;
 
+    /*width:550px;*/
+   
+    overflow: auto;
+}
+#bottn
+{
+    float:right;
+}
 
 /*.k-grid-header
 {
