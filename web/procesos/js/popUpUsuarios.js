@@ -1,5 +1,8 @@
 
-$(document).ready(function () {debugger 
+$(document).ready(function () {
+     $("#bottn").kendoButton({
+        //click: CrearCampo
+    });
   var consultar = new sirconsulta();
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();
@@ -106,7 +109,7 @@ $(document).ready(function () {debugger
                 }},
             {field: "epassword", title: "CLAVE", width: "50px", hidden: true, editor: passEditorPopup},
             {field: "epassword1", title: "REPITA CLAVE", width: "50px", hidden: true, editor: onkeypass},
-            {command: [{name: "editar", text: "editar", template: "<a class='k-grid-edit'><span class='k-sprite pro_detalle'></span></a>"}], width: "60px"}],
+            {command: [{name: "editar", text: "editar", template: "<a class='k-grid-edit'><span class='k-sprite pro_check'></span></a>"}], width: "60px"}],
         editable: "popup",
         cancel: function (e) {
             e._defaultPrevented = true;
