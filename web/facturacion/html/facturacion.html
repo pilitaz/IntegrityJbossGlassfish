@@ -32,7 +32,7 @@ and open the template in the editor.
                 <td style="width: 50px; height: 50px"><a class="k-grid"  aling="center"><span class="k-sprite po_bullet1"></span></a></td>
                 <td style="height: 50px;"><h4 id = "subtitulo" class="subTitulo">Facturas</h4></td> 
                 <td style="width: 50px; text-align: right; padding-right: 10px">
-                    <a id ="btnSearch" class="k-grid" onclick ="popUpFiltros()" aling="center"><span class="k-icon in_bullet2"></span></a>
+                    <a id ="btnSearch" class="k-grid" onclick ="popUpFiltros()" aling="center"><span class="k-icon po_look"></span></a>
                 </td>
                 <td style="width: 50px; text-align: right; padding-right: 10px">
                     <a id ="btnCrear" class="k-grid" onclick ="crearFactura()" aling="center"><span class="k-icon po_mas"></span></a>
@@ -40,30 +40,59 @@ and open the template in the editor.
             </table>   
             <div class="sidenavSup"></div>                    
         </div>
-<!--        <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
+        <script id="rowTemplateFac" type="text/x-kendo-tmpl">
             <tr data-uid="#: uid #"> 
                 <td>
-                    <span class="title">#: euserid #</span>
+                    <span class="title">#: fac__nro #</span>
                 </td>
                 <td>
-                     <a  class='k-grid-detalle'><span id = "span#: euserid#" class='k-sprite admin_proff'></span></a>
-                     <a  class='k-grid-edit'><span id = "spanDelete#: euserid#" class='k-sprite po_editoff'></span></a>
+                    <span class="title">#: ter__nit #</span>
+                </td>
+                <td>
+                    <span class="title">#: cdm__nom #</span>
+                </td>
+                <td>
+                    <span class="title">#: fac__fec #</span>
+                </td>
+                <td>
+                    <span class="title">#: fac__fec__venc #</span>
+                </td>
+                <td>
+                    <span class="title">#: fac__edo #</span>
+                </td>
+                <td>
+                     <a  class='k-grid-detalle'><span id = "imprimir#: fac__nro#" class='k-sprite admin_Print'></span></a>
+                     <a  class='k-grid-editar'><span id = "editar#: fac__nro#" class='k-sprite po_editon'></span></a>
                 </td>
                 
             </tr>
         </script>
-        <script id="altRowTemplateCmp" type="text/x-kendo-tmpl">
+        <script id="altRowTemplateFac" type="text/x-kendo-tmpl">
             <tr class="k-alt" data-uid="#: uid #">
                 <td>
-                    <span class="title">#: euserid #</span>
+                    <span class="title">#: fac__nro #</span>
                 </td>
                 <td>
-                     <a  class='k-grid-detalle'><span id = "span#: euserid#" class='k-sprite admin_proff'></span></a>
-                    <a class=" k-grid-edit"><span id = "aEdit#: euserid#" class='k-sprite po_editoff k-grid-edit'></span></a>
-                  
+                    <span class="title">#: ter__nit #</span>
+                </td>
+                <td>
+                    <span class="title">#: cdm__nom #</span>
+                </td>
+                <td>
+                    <span class="title">#: fac__fec #</span>
+                </td>
+                <td>
+                    <span class="title">#: fac__fec__venc #</span>
+                </td>
+                <td>
+                    <span class="title">#: fac__edo #</span>
+                </td>
+                <td>
+                     <a  class='k-grid-detalle'><span id = "imprimir#: fac__nro#" class='k-sprite admin_Print'></span></a>
+                     <a  class='k-grid-editar'><span id = "editar#: fac__nro#" class='k-sprite po_editon'></span></a>                  
             </td>
             </tr>
-        </script>-->
+        </script>
         <div class="container-fluid">            
             <div id="grid"></div>        
         </div>            
