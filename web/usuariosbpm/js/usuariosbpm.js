@@ -171,7 +171,7 @@ $(document).ready(function () {
                 }},
             {field: "epassword", title: "Clave", width: "50px", hidden: true, editor: passEditorPopup},
             {field: "epassword1", title: "Repita Clave", width: "50px", hidden: true, editor: onkeypass},
-            {command: [{name: "detalle", text: "detalle", click: editar_usr, template: "<a class='k-grid-detalle'><span class='k-sprite admin_proff'></span></a>"},
+            {command: [{name: "detalle", text: "detalle", click: editar_usr, template: "<a class='k-grid-detalle'><span class='k-sprite po_prooff'></span></a>"},
                        { name: "edit", text: "editar",  template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"}
                     
                        ], width: "100px"}
@@ -395,7 +395,7 @@ $(document).ready(function () {
                  usr_p=usr_p.slice(0, n);
                 if(id===usr_p){
                             
-               document.getElementById("span"+id).setAttribute("class", "k-sprite admin_pron");
+               document.getElementById("span"+id).setAttribute("class", "k-sprite po_pro");
                             
                             
 //                    $("#"+"span"+id)

@@ -937,39 +937,39 @@
 	background: url(../images/SpriteIntegrity.png) -608px -508px;
 }
 
-.admin_proff{
+.po_prooff{
 	width: 34px;
 	height: 34px;
-	background: url(../images/SpriteIntegrity.png) -608px -108px;
+	background: url(../images/SpriteIntegrity.png) -58px -608px;
 	cursor:pointer
 }
-.admin_proff:hover {
+.po_prooff:hover {
 	width: 34px;
 	height: 34px;	
-        background: url(../images/SpriteIntegrity.png) -658px -108px;
+        background: url(../images/SpriteIntegrity.png) -8px -608px;
 	cursor:pointer
 }
-.admin_proff:active {
+.po_prooff:active {
 	width: 34px;
 	height: 34px;	
-        background: url(../images/SpriteIntegrity.png) -608px -108px;
+        background: url(../images/SpriteIntegrity.png) -58px -608px;
 }
-.admin_pron{
+.po_pro{
 	width: 34px;
 	height: 34px;
-	background: url(../images/SpriteIntegrity.png) -658px -108px;
+	background: url(../images/SpriteIntegrity.png) -8px -608px;
 	cursor:pointer
 }
-.admin_pron:hover {
+.po_pro:hover {
 	width: 34px;
 	height: 34px;	
-        background: url(../images/SpriteIntegrity.png) -658px -108px;
+        background: url(../images/SpriteIntegrity.png) -58px -608px;
 	cursor:pointer
-}
-.admin_pron:active {
+}   
+.po_pro:active {
 	width: 34px;
 	height: 34px;	
-        background: url(../images/SpriteIntegrity.png) -608px -108px;
+        background: url(../images/SpriteIntegrity.png) -8px -608px;
 }
 .admin_Print{
 	width: 34px;
@@ -1024,24 +1024,80 @@
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -608px -308px;
 }
-.in_graf{
+.pro_graph{
 	
         width: 34px;
 	height: 34px;
-	background: url(../images/SpriteIntegrity.png) -658px -358px;
+	background: url(../images/SpriteIntegrity.png) -408px -858px;
 	cursor:pointer
 }
-.in_graf:hover {
+.pro_graph:hover {
         width: 34px;
 	height: 34px;
-	background: url(../images/SpriteIntegrity.png) -608px -358px;
+	background: url(../images/SpriteIntegrity.png) -458px -858px;
 	cursor:pointer
 }
-.in_graf:active {
+.pro_graph:active {
         width: 34px;
 	height: 34px;
-	background: url(../images/SpriteIntegrity.png) -658px -358px;	
+	background: url(../images/SpriteIntegrity.png) -408px -858px;	
 }
+
+.pro_graphoff{
+	
+        width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -858px;
+	cursor:pointer
+}
+.pro_graphoff:hover {
+        width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -408px -858px;
+	cursor:pointer
+}
+.pro_graphoff:active {
+        width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -858px;	
+}
+.pro_info{
+	
+        width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -408px -808px;
+	cursor:pointer
+}
+.pro_info:hover {
+        width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -808px;
+	cursor:pointer
+}
+.pro_info:active {
+        width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -408px -808px;	
+}
+.pro_infooff{
+	
+        width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -808px;
+	cursor:pointer
+}
+.pro_infooff:hover {
+        width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -408px -808px;
+	cursor:pointer
+}
+.pro_infooff:active {
+        width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -808px;	
+}
+
 .po_back{
 	width: 34px;
 	height: 34px;
@@ -1068,55 +1124,113 @@
         pointer-events: none;            
 }
 
+
+.pro_admin{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -408px -758px;
+	cursor:pointer
+}
+.pro_admin:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -758px;
+	cursor:pointer
+}
+.pro_admin:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -408px -758px;
+}
+
+.pro_adminoff{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -758px;
+	cursor:pointer
+}
+.pro_adminoff:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -408px -758px;
+	cursor:pointer
+}
+.pro_adminoff:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -758px;
+}
+
 .pro_check{
 	width: 34px;
 	height: 34px;
-	background: url(../images/SpriteIntegrity.png) -408px -558px;
+	background: url(../images/SpriteIntegrity.png) -408px -958px;
 	cursor:pointer
 }
 .pro_check:hover {
 	width: 34px;
 	height: 34px;
-	background: url(../images/SpriteIntegrity.png) -458px -558px;
+	background: url(../images/SpriteIntegrity.png) -458px -958px;
 	cursor:pointer
 }
 .pro_check:active {
 	width: 34px;
 	height: 34px;
-	background: url(../images/SpriteIntegrity.png) -408px -558px;
+	background: url(../images/SpriteIntegrity.png) -408px -958px;
+}
+
+.pro_checkoff{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -958px;
+	cursor:pointer
+}
+.pro_checkoff:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -408px -958px;
+	cursor:pointer
+}
+.pro_checkoff:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -958px;
+}
+
+
+
+.pro_groupoff{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -908px;
+	cursor:pointer
+}
+.pro_groupoff:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -408px -908px;
+	cursor:pointer
+}
+.pro_groupoff:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -908px;
 }
 .pro_group{
 	width: 34px;
 	height: 34px;
-	background: url(../images/SpriteIntegrity.png) -408px -608px;
+	background: url(../images/SpriteIntegrity.png) -408px -908px;
 	cursor:pointer
 }
 .pro_group:hover {
-	width: 34px;
+        width: 34px;
 	height: 34px;
-	background: url(../images/SpriteIntegrity.png) -458px -608px;
+	background: url(../images/SpriteIntegrity.png) -458px -908px;
 	cursor:pointer
 }
 .pro_group:active {
 	width: 34px;
 	height: 34px;
-	background: url(../images/SpriteIntegrity.png) -408px -608px;
-}
-.pro_groupon{
-	width: 34px;
-	height: 34px;
-	background: url(../images/SpriteIntegrity.png) -458px -608px;
-	cursor:pointer
-}
-.pro_groupon:hover {
-        width: 34px;
-	height: 34px;
-	background: url(../images/SpriteIntegrity.png) -458px -608px;
-	cursor:pointer
-}
-.pro_groupon:active {
-	width: 34px;
-	height: 34px;
-	background: url(../images/SpriteIntegrity.png) -458px -608px;
+	background: url(../images/SpriteIntegrity.png) -408px -908px;
 
 }

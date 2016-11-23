@@ -39,7 +39,9 @@
                 contentType: "application/json; charset=utf-8"
             },         
             parameterMap: function (options, operation) {
-                if (operation === "read") {
+                if (operation === "read") {debugger
+                    datajson.dsSIRbpm_proc.SIRbpm_proc[0].piccia__nit=sessionStorage.getItem("companyNIT");
+                    datajson.dsSIRbpm_proc.SIRbpm_proc[0].picusuario=sessionStorage.getItem("usuario");
                     return JSON.stringify(datajson);
                 }
             }
@@ -52,7 +54,7 @@
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     return e[key1][mapCud];
                 } else {
-                   // alertDialogs(e[key1].eeEstados[0].Estado);
+                   alertDialogs(e[key1].eeEstados[0].Estado);
                 }
             },
             model: {

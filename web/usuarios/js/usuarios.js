@@ -62,7 +62,7 @@ $(document).ready(function () {
                 if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
-                if ((operation === "update") || (operation === "create")) {
+                if ((operation === "update") || (operation === "create")) {debugger
                     var dropdownlist = $("#rol").data("kendoDropDownList");
 
                     var select = dropdownlist.selectedIndex;
