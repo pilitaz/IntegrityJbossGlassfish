@@ -22,6 +22,8 @@ and open the template in the editor.
         <link href="../css/procesos.css" rel="stylesheet" type="text/css"/>
         <link href="../../css/kendo.common.min.css" rel="stylesheet" type="text/css"/>
         <link href="../../css/kendo.customprocesos.css" rel="stylesheet" type="text/css"/>
+        
+        
         <link href="../../css/cssSpriteIntegrity.css" rel="stylesheet" type="text/css"/>
         <link href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.mobile.all.min.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -39,10 +41,10 @@ and open the template in the editor.
                 </td>
                 <td>
                 
-                     <a  class='k-grid-tareas'><span id = "spantarea#: proc__name#" class='k-sprite pro_mas'></span></a>
+                     <a  class='k-grid-tareas'><span id = "spantarea#: proc__name#" class='k-sprite pro_group'></span></a>
                      <a  class='k-grid-editar'><span id = "spanedit#: proc__name#" class='k-sprite in_graf'></span></a>
                      <a  class='k-grid-info'><span id = "spaninfo#: proc__name#" class='k-sprite in_cerrar'></span></a>
-                     <a  class='k-grid-play'><span id = "spanplay#: proc__name#" class='k-sprite pro_playon'></span></a>
+                     <a  class='k-grid-play'><span id = "spanplay#: proc__name#" class='k-sprite pro_playoff'></span></a>
                 </td>
                 
             </tr>
@@ -55,10 +57,10 @@ and open the template in the editor.
                     <span class="title">#: proc__name #</span>
                 </td>
                 <td>
-                     <a  class='k-grid-tareas'><span id = "spantarea#: proc__name#" class='k-sprite pro_mas'></span></a>
+                     <a  class='k-grid-tareas'><span id = "spantarea#: proc__name#" class='k-sprite pro_group'></span></a>
                      <a  class='k-grid-editar'><span id = "spanedit#: proc__name#" class='k-sprite in_graf'></span></a>
                      <a  class='k-grid-info'><span id = "spaninfo#: proc__name#" class='k-sprite in_cerrar'></span></a>
-                     <a  class='k-grid-play'><span id = "spanplay#: proc__name#" class='k-sprite pro_playon'></span></a>
+                     <a  class='k-grid-play'><span id = "spanplay#: proc__name#" class='k-sprite pro_playoff'></span></a>
               
             </td>
             </tr>
@@ -81,28 +83,35 @@ and open the template in the editor.
                   
                 <div id="outerWrapper">
                     
-                    <div id="grid"></div>   
-
-                    <div id ="demo" class="panel-heading subTitulo"></div>
-                    <div class="sidenavSup1"></div>
-                    <div id="grid"></div>   
+                      <div id="grid"></div>   
                  <div>
-                     <div class="container-fluid">                                                
-                                <button type="button" class="navbar-toggle" class="btn btn-default btn-circle btn-lg" data-toggle="collapse" data-target="#myNavbar">
+                     
+                     <table>
+                     <div class="container-fluid">     
+                         
+                             <td><div id ="demo" class="panel-heading subTitulo"></div></td>
+                             <td><button type="button" class="navbar-toggle" class="btn btn-default btn-circle btn-lg" data-toggle="collapse" data-target="#myNavbar">
                                     <i class="glyphicon glyphicon-list"></i>
                                 </button>                                                                         
                             </div>
-                            <div class="collapse navbar-collapse" id="myNavbar" style="text-align: left">
+                     
+                     <div class="collapse navbar-collapse" id="myNavbar" style="text-align: left">
                                 <ul class="nav navbar-nav">   
 
-                                    <li> &nbsp;Buscar Por Proceso: &nbsp;<input id="filtro" vertical-align="center"/></li>
-                                     <li> &nbsp;Fecha De Entrega &nbsp;<input type="search" id="filtro2"/></li>
-                                    <li> &nbsp; Tipo: &nbsp;<input type="search" id="filtro1"/></li>
+                                    <li> &nbsp;Buscar Por Proceso: &nbsp;<input id="filtro_p" vertical-align="center"/></li>
+                                     <li> &nbsp;Fecha De Entrega &nbsp;<input type="search" id="filtro_f"/></li>
+                                    <li> &nbsp; Creador: &nbsp;<input type="search" id="filtro_t"/></li>
                                    
 
 
                                 </ul>
-                            </div>
+                                
+                            </div></td>
+                         </table>
+                         
+                                
+                    <div class="sidenavSup1"></div>
+                            
                     <div id="grid1" ></div>   
                  </div>
                     

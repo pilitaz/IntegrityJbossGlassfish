@@ -1,21 +1,24 @@
 
 //-------------------------------------------------------------------------
 function sirusuariobpm() {
-    var urlSir =  ipServicios + baseUsrBpm + "SIRbpm_user";
-    var json = {  
-   "dsSIRbpm_user":{  
+    var urlSir =  ipServicios + baseUsrBpm + "SIRbpm_proc_own_task";
+    var json ={  
+   "dsSIRbpm_proc":{  
       "eeDatos":[  
          {  
             "picusrcod":sessionStorage.getItem("usuario"),
-            "picfiid":sessionStorage.getItem("picfiid")
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
-      ],    
-        "SIRbpm_user": [
-          {
-        "piccia__nit": sessionStorage.getItem("companyNIT"),
-        "picusr__bmp" : sessionStorage.getItem("usuario")
-       }
-     ]
+      ],
+      "SIRbpm_proc":[  
+         {  
+            "piccia__nit":"*",
+            "picproc__name":"*",
+            "picusuario":"*"
+         }
+      ]      
    }
 };
     

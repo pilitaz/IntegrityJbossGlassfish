@@ -183,7 +183,6 @@ function client(e){
 
 
 function buscarFacturas(){  
-    debugger
     parent.dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_ini = $("#ipfechaInicio").val();
     parent.dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_fin = $("#ipfechaFin").val();
     parent.dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro_ini = $("#ipNumeroInicio").val();
