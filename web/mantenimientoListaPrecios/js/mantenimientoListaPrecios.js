@@ -4,6 +4,13 @@
  * and open the template in the editor.
  */
 
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 var dsSIRgfc_fac = new Object();
 dsSIRgfc_fac.dsSIRgfc_fac = new Object();
 dsSIRgfc_fac.dsSIRgfc_fac.eeDatos = new Array();
@@ -26,10 +33,10 @@ $(document).ready(function() {
     dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_est = "99";
     dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picter_nit = "*";
 
-    gridFacturas();
+    gridListaDePrecios();
 });
 
-function gridFacturas(){
+function gridListaDePrecios(){
     
     var dataSource = new kendo.data.DataSource({
         transport: {
@@ -124,7 +131,7 @@ function gridFacturas(){
         var servicio = "facturaQuantum";
         sessionStorage.setItem("servicio",servicio);
         sessionStorage.setItem("factura",JSON.stringify(factura));
-        window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html"));   
+        window.location.replace(( sessionStorage.getItem("url")+"mantenimientoListaPrecios/html/"+servicio+".html"));   
     }
     
     function imprimirFact(e){        
@@ -173,10 +180,12 @@ function gridFacturas(){
     }
 }
 
-function crearFactura(){
-    var servicio = "facturaQuantum";
+
+
+function crearListaPrecios(){
+    var servicio = "listaPrecios";
     sessionStorage.setItem("servicio",servicio);
-    window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html"));   
+    window.location.replace(( sessionStorage.getItem("url")+"mantenimientoListaPrecios/html/"+servicio+".html"));   
 }
 
 function popUpFiltros(){
@@ -221,6 +230,9 @@ function changImgFunc(facturas) {
         }else if(facturas[i].fac__edo==="Anulado"){
             document.getElementById("imprimir"+id).setAttribute("class", "k-sprite po_print");
             document.getElementById("editar"+id).setAttribute("class", "k-sprite po_editoff");
-        }
+        }        
+        
+//        document.getElementById("span"+id).setAttribute("class", "k-sprite admin_pron");
+        
     }
 }
