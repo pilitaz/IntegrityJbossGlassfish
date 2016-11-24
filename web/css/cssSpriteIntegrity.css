@@ -1393,3 +1393,9 @@
 	background: url(../images/SpriteIntegrity.png) -408px -908px;
 
 }
+.transparente{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -358px -908px;
+	cursor:pointer
+}

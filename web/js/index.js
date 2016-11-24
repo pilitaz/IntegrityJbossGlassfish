@@ -12,7 +12,7 @@ var arreglo_funProg = new Array();
 var arreglo_funVideo = new Array();
 var arreglo_funRepor = new Array();
 estadoIfra = "PagInicio";
-$(document).ready(function() {
+$(document).ready(function() {debugger
     sessionStorage.setItem("VideoAyuda","http://comunicacion349.wix.com/integrity#!reportes-tutoriales/w865s");//cambiar urlVideo con url link apenas este listo el video de ayuda   
     
     if(sessionStorage.getItem("loginintegrity")==="valido"){
@@ -37,6 +37,7 @@ $(document).ready(function() {
     }else{
         window.location.assign(sessionStorage.getItem("url"));
     }
+     $("#k-icon.k-i-arrow-s").className="k-icon   k-i-hbars";
 });
 
 

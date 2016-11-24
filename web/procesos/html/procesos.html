@@ -34,16 +34,18 @@ and open the template in the editor.
     <body>
                         <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
             <tr data-uid="#: uid #"> 
-
+                <td>
+                <a  class='k-grid-bullet'><span class='k-sprite pro_bullet1'></span></a>
+                </td>
                 
                 <td>
                     <span class="title">#: proc__name #</span>
                 </td>
                 <td>
                 
-                     <a  class='k-grid-tareas'><span id = "spantarea#: proc__name#" class='k-sprite pro_group'></span></a>
-                     <a  class='k-grid-editar'><span id = "spanedit#: proc__name#" class='k-sprite in_graf'></span></a>
-                     <a  class='k-grid-info'><span id = "spaninfo#: proc__name#" class='k-sprite in_cerrar'></span></a>
+                     <a  class='k-grid-tareas'><span id = "spantarea#: proc__name#" class='k-sprite pro_groupoff'></span></a>
+                     <a  class='k-grid-editar'><span id = "spanedit#: proc__name#" class='k-sprite pro_graphoff'></span></a>
+                     <a  class='k-grid-info'><span id = "spaninfo#: proc__name#" class='k-sprite pro_infooff'></span></a>
                      <a  class='k-grid-play'><span id = "spanplay#: proc__name#" class='k-sprite pro_playoff'></span></a>
                 </td>
                 
@@ -52,14 +54,16 @@ and open the template in the editor.
         <script id="altRowTemplateCmp" type="text/x-kendo-tmpl">
             <tr class="k-alt" data-uid="#: uid #">
               
-              
+                <td>
+                     <a  class='k-grid-bullet'><span class='k-sprite pro_bullet1'></span></a>
+                </td>
                 <td>
                     <span class="title">#: proc__name #</span>
                 </td>
                 <td>
-                     <a  class='k-grid-tareas'><span id = "spantarea#: proc__name#" class='k-sprite pro_group'></span></a>
-                     <a  class='k-grid-editar'><span id = "spanedit#: proc__name#" class='k-sprite in_graf'></span></a>
-                     <a  class='k-grid-info'><span id = "spaninfo#: proc__name#" class='k-sprite in_cerrar'></span></a>
+                     <a  class='k-grid-tareas'><span id = "spantarea#: proc__name#" class='k-sprite pro_groupoff'></span></a>
+                     <a  class='k-grid-editar'><span id = "spanedit#: proc__name#" class='k-sprite pro_graphoff'></span></a>
+                     <a  class='k-grid-info'><span id = "spaninfo#: proc__name#" class='k-sprite  pro_infooff'></span></a>
                      <a  class='k-grid-play'><span id = "spanplay#: proc__name#" class='k-sprite pro_playoff'></span></a>
               
             </td>
