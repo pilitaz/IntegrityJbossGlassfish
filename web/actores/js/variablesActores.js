@@ -8,7 +8,7 @@
  *  var input = sir.getdataInputSir();
  */
 function siractores() {
-   var urlSir = ipServicios + baseActores +"SIRsic_actor";
+   var urlSir = ipServicios + baseParameters +"SIRsic_actor";
     var json = {  
    "dssic_actor":{  
       "eeDatos":[  
@@ -86,7 +86,7 @@ function siractores() {
 
 ////////////////////////////////////////////////////////////////////////////////
 function creaActor() {
-   var urlSir = ipServicios + baseActores +"SICUDsic_actor";
+   var urlSir = ipServicios + baseParameters +"SICUDsic_actor";
     var json = {  
    "dssic_actor":{  
       "eeDatos":[  

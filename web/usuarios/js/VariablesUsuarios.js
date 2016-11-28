@@ -127,7 +127,7 @@ function cudcreate () {
 };
 ////------------------------------------
 function siractores() {
-   var urlSir = ipServicios + baseActores +"SIRsic_actor";
+   var urlSir = ipServicios + baseParameters +"SIRsic_actor";
     var json = {  
    "dssic_actor":{  
       "eeDatos":[  
