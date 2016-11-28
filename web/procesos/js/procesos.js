@@ -281,7 +281,8 @@ $(document).ready(function () {
                     
        
 function grafica(e){
-                    
+    var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
+    if (adm=== true ){               
     var myWindow1 = $("#textarea"),undo = $("#undo");
                 
     function onClose() {debugger
@@ -302,7 +303,9 @@ function grafica(e){
             "Close"
         ],                               
         close: onClose
-    }).data("kendoWindow").center().open();                 
+    }).data("kendoWindow").center().open();    
+}
+else{}
 }
     
 
@@ -310,9 +313,10 @@ function grafica(e){
 function grilla(e){debugger
     e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
     var id = this.dataItem($(e.currentTarget).closest("tr")).proc__name;
+    var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
+    if (adm=== true ){
     sessionStorage.setItem("Proc_usuar",id);
-                        
-                        
+                                            
     $("#grillapopUp").append("<div id='windowg'></div>");
                         
     var myWindow2 = $("#windowg"),undo = $("#undo");
@@ -340,10 +344,12 @@ function grilla(e){debugger
         ],                               
         close: onClose1
     }).data("kendoWindow").center().open();   
-                            
+    }
+    else
+    {}
                       
 }       
-function disable(){}
+function disable(){debugger}
 function changImgFunc(results) {debugger
        
         
@@ -361,20 +367,16 @@ function changImgFunc(results) {debugger
         {
             var x = document.createElement("SPAN");
             x.setAttribute("class", "k-sprite transparente");
-            x.setAttribute("id","x"+results[i].proc__name );
-                             
+            x.setAttribute("id","x"+results[i].proc__name );             
             //document.getElementById("spantarea"+results[i].proc__name).style.display = 'none';
-            //document.getElementById("spanedit"+results[i].proc__name).style.display = 'none';
-                 
+            //document.getElementById("spanedit"+results[i].proc__name).style.display = 'none';                 
             //document.getElementById("spantarea"+results[i].proc__name).append(x);
             //document.getElementById("spanedit"+results[i].proc__name).append(x);
-                 
-                 
-                 
-                
-            $("#spantarea"+results[i].proc__name).empty();
-            $("#spanedit"+results[i].proc__name).empty();
+
+          
             
+                    $("#spantarea"+results[i].proc__name).onclick = "";
+                   $("#spanedit"+results[i].proc__name).onclick = "";
             document.getElementById("spantarea"+results[i].proc__name).setAttribute("class", "k-sprite transparente");
            document.getElementById("spantarea"+results[i].proc__name).setAttribute('onclick','disable();'); // for FF
             // button_element.onclick = function() {doSomething();}; 
