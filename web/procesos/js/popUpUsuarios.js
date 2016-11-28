@@ -109,8 +109,14 @@ $(document).ready(function () {
                 }},
             {field: "epassword", title: "CLAVE", width: "50px", hidden: true, editor: passEditorPopup},
             {field: "epassword1", title: "REPITA CLAVE", width: "50px", hidden: true, editor: onkeypass},
-            {command: [{name: "editar", text: "editar", template: "<a class='k-grid-edit'><span class='k-sprite pro_check'></span></a>"}], width: "60px"}],
-        editable: "popup",
+            {command: [{name: "check", text: "check" , click:cambiaColor , template: "<a class='k-grid-check'><span class='k-sprite pro_checkoff'></span></a>"}], width: "60px"}],
+        
+        rowTemplate: kendo.template($("#rowTemplateCmp").html()),
+        altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
+        dataBound: function () {
+            var results = dataSource.data();
+            changImgFunc(results);
+        },
         cancel: function (e) {
             e._defaultPrevented = true;
 
@@ -170,6 +176,16 @@ $(document).ready(function () {
         }
 
     });
+     function changImgFunc(results) {debugger}
+     function cambiaColor(e){debugger
+     
+     
+     var id = e.currentTarget.firstElementChild.id;
+     document.getElementById(id).setAttribute("class", "k-sprite pro_check");
+     document.getElementById(id).setAttribute("estado", "on");
+     
+     }
+     
     $("#filtro1").kendoComboBox({
         dataTextField: "car__nom",
         dataValueField: "car__cod",

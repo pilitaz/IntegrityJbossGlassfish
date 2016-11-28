@@ -71,7 +71,7 @@ document.getElementById("task1").innerHTML = task ;
                         [
                            
                            
-                    {name: "usuarios", click: grilla1, template: "<a class='k-grid-usuarios' href='' style='min-width:16px;'><span class='k-sprite pro_group'></span></a>"}
+                    {name: "usuarios", click: grilla1, template: "<a class='k-grid-usuarios' href='' style='min-width:16px;'><span class='k-sprite pro_groupoff'></span></a>"}
                 ],
                 width: "50px"}]    ,                            
         //editable: "popup",
