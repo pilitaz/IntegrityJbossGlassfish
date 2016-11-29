@@ -551,8 +551,8 @@ function mostrarDocumentos() {
     var tamañoContenedor = $("#outerWrapper").width();
     var d = document.getElementById('divDocumentos');
     d.style.left = (tamañoContenedor - 300) + 'px';
-    $("#divDocumentos").load(sessionStorage.getItem("url") + "documentos/html/documentos.html");
-    $("#divDocumentos").fadeIn("slow");
+    $("#divDocumentos").load("documentos.html");
+    $("#divDocumentos").fadeIn(2500);
 }
 function ocultarDocumentos() {
     $("#divArbol").load("tree2.html");
