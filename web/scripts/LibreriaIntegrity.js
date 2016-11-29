@@ -281,7 +281,7 @@ function identBrowser() {
  */
 function createDialog(titulo, contenido, ancho, alto, modal, cerrar, actions){
 //    $("#btnLogin").kendoButton().data("kendoButton")
-//    $("body").append("<div id='dialog1'></div>");
+    $("body").append("<div id='dialog1'></div>");
     var dialog = $('#dialog1');
     
     dialog.kendoDialog({
