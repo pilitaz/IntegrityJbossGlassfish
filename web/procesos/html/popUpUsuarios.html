@@ -13,7 +13,7 @@
         <link href="../../css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <script src="../../scripts/jqueryBotstrap.js" type="text/javascript"></script>
         <script src="../../scripts/bootstrap.js" type="text/javascript"></script>
-        <link href="../css/procesos.css" rel="stylesheet" type="text/css"/>
+
         <script src="../../scripts/jquery-1.10.2.js" type="text/javascript"></script>
         <script src="../../scripts/jquery-ui.js" type="text/javascript"></script>
         <script src="../../scripts/jquery.min.js" type="text/javascript"></script>
@@ -27,6 +27,7 @@
         <script src="../../js/servicios.js" type="text/javascript"></script>
         <link href="../../css/cssSpriteIntegrity.css" rel="stylesheet" type="text/css"/>
         <script src="../js/popUpUsuarios.js" type="text/javascript"></script>
+        <link href="../css/procesos.css" rel="stylesheet" type="text/css"/>
     </head>
     <body> 
         
@@ -62,15 +63,25 @@
         <div class="sidenavSup1"></div>
         <div id="grilla_usr" ></div>
         <div id="bottn" class="k-primary" style="align:left"> Agregar</div>
-                <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
+            
+        <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
             <tr data-uid="#: uid #"> 
 
                 
                 <td>
-                    <span class="title">#: euserid #</span>
+                    <span class="title">#: usr__cod #</span>
+                </td>
+                       <td>
+                    <span class="title">#: usr__name #</span>
+                </td>
+                       <td>
+                    <span class="title">#: car__nom #</span>
+                </td>
+                       <td>
+                    <span class="title">#: actor__des #</span>
                 </td>
                 <td>
-                     <a  class='k-grid-check'><span id = "span#: euserid#" class='k-sprite pro_checkoff'></span></a>
+                     <a  class='k-grid-check'><span id = "span#: usr__cod#" class='k-sprite pro_checkoff'></span></a>
                    
                 </td>
                 
@@ -79,15 +90,23 @@
          <script id="altRowTemplateCmp" type="text/x-kendo-tmpl">
             <tr class="k-alt" data-uid="#: uid #">
               
-              
+                
                 <td>
-                    <span class="title">#: euserid #</span>
+                    <span class="title">#: usr__cod #</span>
                 </td>
-                <td>
-                     <a  class='k-grid-check'><span id = "span#: euserid#" class='k-sprite pro_checkoff'></span></a>
-                   
-                  
+                       <td>
+                    <span class="title">#: usr__name #</span>
+                </td>
+                       <td>
+                    <span class="title">#: car__nom #</span>
+                </td>
+                       <td>
+                    <span class="title">#: actor__des #</span>
+                </td>
+              <td >
+                     <a  class='k-grid-check'><span id = "span#: usr__cod#" class='k-sprite pro_checkoff'></span></a>
             </td>
+    
             </tr>
         </script>
     
