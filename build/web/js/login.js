@@ -132,9 +132,21 @@ function presionaEnter() {
  */
 function errorHtml(){
     if((sessionStorage.getItem("errorHtml"))&&((sessionStorage.getItem("errorHtml")!==""))){
-        var d = new Date();
-        var centered = $("#centeredNotification").kendoNotification().data("kendoNotification");
-        centered.show("Ocurrió un error en el servidor tipo: "+sessionStorage.getItem("errorHtml"), "error");
+        var centered = $("#centeredNotification").kendoNotification({
+                        position: {
+                            pinned: true,
+                            top: 30,
+                            right: 30
+                        },
+                        autoHideAfter: 3000,
+                        stacking: "down",
+                        templates: [{
+                            type: "error",
+                            template: $("#errorTemplate").html()
+                        }]
+
+                    }).data("kendoNotification");
+        centered.show({title:"",message:"Ocurrió un error en el servidor tipo: "+sessionStorage.getItem("errorHtml")}, "error");
         sessionStorage.removeItem("errorHtml");
     }
 }

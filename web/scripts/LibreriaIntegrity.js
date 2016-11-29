@@ -280,9 +280,10 @@ function identBrowser() {
  * @returns {undefined}
  */
 function createDialog(titulo, contenido, ancho, alto, modal, cerrar, actions){
+//    $("#btnLogin").kendoButton().data("kendoButton")
+    $("body").append("<div id='dialog1'></div>");
+    var dialog = $('#dialog1');
     
-    $("body").append("<div id='dialog'></div>");
-    var dialog = $('#dialog');
     dialog.kendoDialog({
         width: ancho,
         heigh: alto,
@@ -296,9 +297,9 @@ function createDialog(titulo, contenido, ancho, alto, modal, cerrar, actions){
     
 }
 function onClose(e) {    
-    var dialog = $('#dialog');
+    var dialog = $('#dialog1');
     dialog.fadeIn(6000,function(){
-        document.getElementById("dialog").remove();
+        document.getElementById("dialog1").remove();
     });    
 }
 /**

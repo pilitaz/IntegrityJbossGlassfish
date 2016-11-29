@@ -22,7 +22,7 @@
             function redire() {
                 sessionStorage.setItem("errorHtml",500);
                 var y = document.URL.split("/");
-                window.location = y[0] + "//" + y[2] + "/" + y[3];
+                window.parent.location.href = y[0] + "//" + y[2] + "/" + y[3];
             }
         </script>
     </body>

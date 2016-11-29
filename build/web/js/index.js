@@ -136,7 +136,6 @@ function apagarBotones(id){
  * Abre la pagina de ayuda que esta almacenda como una variable de sesion, la pagina que despiegla por el momento esta en http://comunicacion349.wix.com/integrity#!reportes-tutoriales/w865sS
  */
 function ayuda(){
-    
     var video = sessionStorage.getItem("VideoAyuda");
     if(video){
         windowPopUp(video,"Ayuda");
@@ -146,7 +145,8 @@ function ayuda(){
 		'<p align="center" style="font-family:Tahoma;font-size:10pt;">Visite nuestro '+
 		'canal de tutoriales <b>Integrity</b> y conozca todas las posibilidades de nuestro sistema.'+
 		'<br></br></p><p align="center"><img src="images/video.png" alt="Soporte" width="500" height="307"></p></body></html>';
-        alert(htmlText);
+        alertDialogs(htmlText)
+        $("#dialog1").kendoButton().data("kendoButton")
     }
 }
 /**
@@ -192,17 +192,17 @@ function  windowPopUp(detalle,titulo){
             resizable: false,
             width: "60%",
             content: "http://comunicacion349.wixsite.com/integrity/reportes-tutoriales",
-            close: onClose
+            close: onClose  
         }).data("kendoWindow").center().open();
         
     }catch(e){
-        alert("Function: windowPopUp Error: "+e.message);
+        alertDialogs("Function: windowPopUp Error: "+e.message);
         console.log(e.message)
     }
 }
 
 function onClose() {
-    alert("cerrando");
+    alertDialogs("cerrando");
     $("#window").fadeIn();
 }
 
@@ -240,14 +240,14 @@ function guardarClave(){
                     cambioExitoso = JSON.stringify(resp.dslogin.eeEstados[0].Estado);                
                 },
                 error: function (e) {
-                    alert("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);
+                    alertDialogs("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);
                 }
             }).done(function(){
                 if (cambioExitoso=='"OK"') {
-                    alert("cambio existoso, sera redirigido al login");
+                    alertDialogs("cambio existoso, sera redirigido al login");
                     cerrarSesion();
                 }else{
-                    alert(cambioExitoso);
+                    alertDialogs(cambioExitoso);
                 }
                 
             });            
@@ -256,7 +256,7 @@ function guardarClave(){
             status.text("Datos incompletos");            
         }
     } catch (e) {
-        alert("Function: consumeServAjaxSIR Error: " + e.message);
+        alertDialogs("Function: consumeServAjaxSIR Error: " + e.message);
     }
 }
 /*
@@ -303,7 +303,7 @@ function menufunciones() {
                 sessionStorage.setItem("menuJsonIni",menuUsuario);                
             },
             error: function (e) {
-                alert("Error" + JSON.stringify(e));
+                alertDialogs("Error" + JSON.stringify(e));
             }
         }).done(function(){
             var dataarbol = sessionStorage.getItem("menuJsonIni");	
@@ -323,7 +323,7 @@ function menufunciones() {
         });
         
         
-    }catch(e){alert(e.message);}
+    }catch(e){alertDialogs(e.message);}
 }
 
 function inicio(){
@@ -391,7 +391,7 @@ function fijarPcf(){//apenas el usuario da click en alguna funcion del arbol tre
         abreFuncion(urlFSelec);
         ocultarArbol();
         
-    }catch(e){alert(e.message + " fijarPcf()");}
+    }catch(e){alertDialogs(e.message + " fijarPcf()");}
 }
 
 function correLinuxBack() {//corre las funciones del shell in a box
@@ -407,7 +407,7 @@ function correLinuxBack() {//corre las funciones del shell in a box
         
         
     } catch (e) {
-        alert(e.message + " corre");
+        alertDialogs(e.message + " corre");
     }
 }
 function corre(){//esta funcion se ejecuta por que la app IntegrityViejo la llama y su funcion es determinar si le muestra al usuario la plataforma linux Envevida o una cosola de wind   
@@ -461,8 +461,8 @@ function servLinuxSOption(programa) {
         if (permitirIngreso == '"OK"') {
             corre();
         } else {
-            $("body").append("<div id='dialog'></div>");
-             var dialog = $('#dialog');
+            $("body").append("<div id='dialogs'></div>");
+             var dialog = $('#dialogs');
                 dialog.kendoDialog({
                     width: "400px",
                     title: "Problemas con el inicio sesión en plataforma Caracter",
@@ -552,4 +552,8 @@ function mostrarDocumentos(){
 function ocultarDocumentos(){
     $("#divArbol").load("tree2.html");     
     $("#divDocumentos").fadeOut("slow");
+}
+function closeFrame(){
+    var friends = document.getElementById("idFrame");
+    friends.style.display = "none";
 }
