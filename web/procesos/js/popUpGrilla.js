@@ -61,10 +61,9 @@ document.getElementById("task1").innerHTML = task ;
                             
         //navigatable: true,
         columns: [
-                                
+            {field: "task__name", title: "Tarea",  hidden:false},      
             {field: "proc__name", title: "Nombre de proceso",  hidden:true},
-            {field: "task__name", title: "Tarea",  hidden:false},
-            {field: "type__task", title: "Tipo de tarea",  hidden:true},
+            {field: "type__task", title: "Tipo de tarea",  hidden:false},
 
             {command:
                         [
