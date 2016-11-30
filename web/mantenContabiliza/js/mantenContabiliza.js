@@ -9,7 +9,7 @@
  */
 $(window).resize(function () {
     var viewportHeight = $(window).height();
-    $('#outerWrapper').height(viewportHeight - 30);
+    $('#outerWrapper').height(viewportHeight - 50);
     $('.k-grid-content').height(viewportHeight - 100);
 });
 
@@ -29,7 +29,7 @@ function grid() {
     var obj = new sirconsultaMConta();
     var objRepo = obj.getjson();
     var urlRepo = obj.getUrlSir();
-    var mapDataRepo = obj.getMapData();
+    var mapData = obj.getMapData();
 
 
     var dataSource = new kendo.data.DataSource({
@@ -57,46 +57,50 @@ function grid() {
                 
                 var key1 = Object.keys(e)[0];
                 if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
-                    return e[key1][mapDataRepo];
+                    return e[key1][mapData];
                 } else {
-//                    alertDialog("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                    alertDialog("Error en el servicio" + e[key1].eeEstados[0].Estado);
                 }
             },
             model: {
-                id: "rpt_id",
+                id: "tcont__cod",
                 fields: {
-                    rpt_id: {validation: {required: true}, type: 'string'}
+                    tcont__des: {validation: {required: true}, type: 'string'}
                 }
             }
         }
     });
-    $("#grid .k-grid-header").css('display', 'none');
+//    $("#girdConta .k-grid-header").css('display', 'none');
     $(window).trigger("resize");
     $("#girdConta").kendoGrid({
         dataSource: dataSource,
         selectable: false,
         columns: [
+            
+            {field: "tcont__des", title: "&nbsp;", width: "100%"},
+            
             {command:
                         [
-                            {id: "play", text: " ", template: "<a class=''><span class='k-sprite re_bullet2on'></span></a>"}
-                        ],
-                title: "&nbsp;", width: "50px"},
-            {field: "rpt_nom", title: "&nbsp;", width: "100%"},
-            {command:
-                        [
-                            {name: "editar", text: " ", click: ClickEditar, template: "<a class='k-grid-editar'><span class='k-sprite re_editoff'></span></a>"},
-                            {name: "destroyed", click: clickEliminar,template: "<a class='k-grid-destroyed' href='' style='min-width:16px;'><span class='k-sprite re_cerrar'></span></a>"}
+                            {name: "editar", text: " ", click: ClickEditar, template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},
+                            {name: "destroyed", click: clickEliminar,template: "<a class='k-grid-destroyed' href='' style='min-width:16px;'><span class='k-sprite po_cerrar'></span></a>"}
                         ],
                 width: "100px"}],
         editable: "popup"
     });
-$("#grid .k-grid-header").css('display', 'none');
+$("#girdConta .k-grid-header").css('display', 'none');
 }
 
 function ClickEditar(e){
-    
+    e = this.dataItem($(e.currentTarget).closest("tr"));
+    sessionStorage.setItem("contaRow", JSON.stringify(e));
+    window.location.assign("../html/mantenContabilizaCU.html");
 }
 
 function clickEliminar(e){
     
+}
+
+function ClickCrear(){
+    sessionStorage.removeItem("contaRow");
+    window.location.assign("../html/mantenContabilizaCU.html");
 }

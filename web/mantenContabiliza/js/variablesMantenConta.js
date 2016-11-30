@@ -8,17 +8,23 @@
  *  var input = sir.getdataInputSir();
  */
  function sirconsultaMConta() {
-    var mapData = "ee_user2"; 
-    var urlSir = ipServicios + baseServicio +"SirUsuarios";
+    var mapData = "eesic_tcont"; 
+    var urlSir = ipServicios + baseParameters +"SIRsic_tcont";
     var json = {  
-     "dsee_user2":{  
+     "dssic_tcont":{  
       "eeDatos":[  
       {  
             "picusrcod":sessionStorage.getItem("usuario"),
             "picfiid":sessionStorage.getItem("picfiid"),
-            "local_ip":sessionStorage.getItem("ipPrivada"),
-            "remote_ip":sessionStorage.getItem("ipPublica")
+//            "local_ip":sessionStorage.getItem("ipPrivada"),
+//            "remote_ip":sessionStorage.getItem("ipPublica")
     }
+    ],
+     "eetemp": [
+      {
+        "piitcont__cod": 0, 
+        "picclc__cod": "*"
+      }
     ]
 }
 };
@@ -43,11 +49,11 @@
     
     this.setMapData =  function (newname) {
         if (newname) {
-            json = newname;
+            mapData = newname;
         }
     };
     this.getMapData= function () {
-        return json;
+        return mapData;
     };
     
 };
