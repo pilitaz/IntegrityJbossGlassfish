@@ -33,8 +33,8 @@
                          treeJson.core =  {"check_callback" : false ,"data":treeJson.core.data};
                         
                         $('#jstree2').jstree(treeJson)
-                                  .bind("click.jstree", function (e) {
-             document.getElementById("demo").innerHTML = "Drop node " + data.node.id + " to " + data.parent;
+                                  .bind("click.jstree", function (e) {debugger
+             //document.getElementById("demo").innerHTML = "Drop node " + data.node.id + " to " + data.parent;
         }).bind("select_node.jstree", function (e,data) {
              $('#jstree2').jstree(treeJson).check_while_dragging;
              var j= $('#jstree2').jstree('get_selected');

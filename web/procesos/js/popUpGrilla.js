@@ -57,15 +57,13 @@ document.getElementById("task1").innerHTML = task ;
     var grid1 = $("#grilla").kendoGrid({
         dataSource: datasourcex,
                             
-                            
-        selectable: true,
+
                             
         //navigatable: true,
         columns: [
-                                
+            {field: "task__name", title: "Tarea",  hidden:false},      
             {field: "proc__name", title: "Nombre de proceso",  hidden:true},
-            {field: "task__name", title: "Tarea",  hidden:false},
-            {field: "type__task", title: "Tipo de tarea",  hidden:true},
+            {field: "type__task", title: "Tipo de tarea",  hidden:false},
 
             {command:
                         [
@@ -93,19 +91,17 @@ document.getElementById("task1").innerHTML = task ;
         });             
                       
                              function grilla1(e){debugger
-                            e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
-                        var id = this.dataItem($(e.currentTarget).closest("tr")).proc__name;
-                        sessionStorage.setItem("Proc_usuar",id);
-                        
-                        
+                            e.preventDefault();
+                            var id = this.dataItem($(e.currentTarget).closest("tr")).task__name;
+                            var des =this.dataItem($(e.currentTarget).closest("tr")).type__task;
+                                 sessionStorage.setItem("Task_name",id);
+                                 sessionStorage.setItem("Task_type",des);
+                        $("#grilla2").empty();
                         $("#grilla2").append("<div id='windous'></div>");
                         
                             var myWindow3 = $("#windous"),undo = $("#undo");
                 
-        function onClose1() {debugger
-            
-            $("#grilla2").empty();
-        }  
+  
         
       
          var UrL= sessionStorage.getItem("url");
@@ -121,7 +117,11 @@ document.getElementById("task1").innerHTML = task ;
             actions: [
                 "Close"
             ],                               
-            close: onClose1
+           close: function () {
+            
+            $("#grilla2").empty();
+            this.destroy();
+        }
         }).data("kendoWindow").center().open();   
                             
                       
@@ -130,4 +130,10 @@ document.getElementById("task1").innerHTML = task ;
                         
                         
 });
+        
+function cerrar(){debugger
+    //onClosex();
+    $("#windous").data("kendoWindow").close();
+    
+}
                               

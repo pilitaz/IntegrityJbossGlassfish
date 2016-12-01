@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
      $("#bottn").kendoButton({
-        //click: CrearCampo
+        click: guardar
     });
   var consultar = new sirconsulta();
     var datajson = consultar.getjson();
@@ -10,7 +10,8 @@ $(document).ready(function () {
     var actualizar = new sirconsulta();
     var actjson = actualizar.getjson();
     var urlactualizar = actualizar.getUrlSir();
-    var mapCud = "ee_user2";
+    
+    var mapCud = "UserBPM";
     var mapCud1 = "ee_user3";
     var dataSource = new kendo.data.DataSource({
         transport: {
@@ -34,6 +35,8 @@ $(document).ready(function () {
             },
             parameterMap: function (options, operation) {
                 if (operation === "read") {
+                    datajson.dsUserBPM.SirUserBPM[0].picproc__name = sessionStorage.getItem("Proc_usuar");
+                    datajson.dsUserBPM.SirUserBPM[0].pictask__name= sessionStorage.getItem("Task_name");
                     return JSON.stringify(datajson);
                 }
 
@@ -50,19 +53,13 @@ $(document).ready(function () {
                 }
             },
             model: {
-                id: "usr__est",
+                id: "usr__cod",
                 fields: {
-                    euserid: {editable: true, nullable: false, validation: {required: true}},
-                    euser__Name: {editable: true, nullable: true, validation: {required: true}},
-                    epassword: {editable: true, nullable: false},
-                    usr__mail: {editable: true, nullable: false},
-                    usr__carp: {editable: true, nullable: false},
-                    usr__est: {editable: true, nullable: false},
-                    car__cod: {editable: false, nullable: false},
+                    usr__cod: {editable: true, nullable: false, validation: {required: true}},
+                    usr__name: {editable: true, nullable: true, validation: {required: true}},
                     car__nom: {editable: true, nullable: false},
-                    actor__cod: {editable: true, nullable: false},
-                    usr__jef: {editable: true, nullable: false, type: "boolean"},
-                    usr__codjef: {editable: true, nullable: false}
+                    actor__des: {editable: true, nullable: false}
+
                 }
             }
         }
@@ -80,394 +77,219 @@ $(document).ready(function () {
      *  
      */
    
-        var grid1 = $("#grilla_usr").kendoGrid({
+        var grid_usr = $("#grilla_usr").kendoGrid({
         dataSource: dataSource,
-        sortable: true,
-        scrollable:true,
-        pageSize: 5,
         columns: [
-            {field: "euser__Name", title: "Nombre", hidden: true},
-            {field: "euserid", title: "USUARIO", hidden: false},
-            {field: "usr__mail", title: "CORREO", hidden: true},
-            {field: "usr__carp", title: "CEDULA", hidden: true},
-            {field: "car__nom", title: "ELIJA UN ROL", hidden: true, editor: filtroRol,
-                template: function (e) {
-                    return e.car__nom;
-                }},
-            {field: "actor__cod", title: "ELIJA UN ACTOR", hidden: true, editor: filtroActor,
-                template: function (e) {
-                    return e.actor__cod;
-                }},
-            {field: "usr__codjef", title: "ELIJA EL JEFE", hidden: true, editor: filtroJefe,
-                template: function (e) {
-                    return e.usr__codjef;
-                }},
-            {field: "usr__jef", title: "JEFE DE AREA ", hidden: true},
-            {field: "usr__est", title: "ESTADO", hidden: true, editor: filtroestado,
-                template: function (e) {
-                    return e.usr__est;
-                }},
-            {field: "epassword", title: "CLAVE", width: "50px", hidden: true, editor: passEditorPopup},
-            {field: "epassword1", title: "REPITA CLAVE", width: "50px", hidden: true, editor: onkeypass},
-            {command: [{name: "check", text: "check" , click:cambiaColor , template: "<a class='k-grid-check'><span class='k-sprite pro_checkoff'></span></a>"}], width: "60px"}],
+            {field: "usr__cod", title: "Usuarios", hidden: false},
+            {field: "usr__name", title: "Nombre", hidden: false},
+            {field: "car__nom", title: "Rol", hidden: false},
+            {field: "actor__des", title: "Actor", hidden: false},
+            
+            {command: [{name: "check", text: "check" , width: "80px",click:cambiaColor , template: "<a class='k-grid-check'><span class='k-sprite pro_checkoff'></span></a>"}], width: "50px" }],
         
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
         altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
         dataBound: function () {
             var results = dataSource.data();
             changImgFunc(results);
+            filtros(results);
         },
         cancel: function (e) {
             e._defaultPrevented = true;
-
+            
         }
     });
-
-    $("#filtro").kendoAutoComplete({
-        dataTextField: "euserid",
-        dataValueField: "euserid",
+        $("#filtro").kendoAutoComplete({
+        dataTextField: "usr__name",
+        dataValueField: "usr__name",
         dataSource: dataSource,
         filter: "startswith",
         placeholder: "Nombre...",
     });
-    /**
-     *FUNCION FILTRO ROL TOOLBAR
-     * VAR VALUE = VALOR DE SELECCION DE FILTRO
-     *  #filtro1 = ID del combobox
-     *  consulta sobre campo : usr__est
-     *  
-     *  
-     */  
-    var consultar1 = new serviRoles();
-    var datajson1 = consultar1.getjson();
-    var urlService1 = consultar1.getUrlSir();
-
-    var datasource1 = new kendo.data.DataSource({
-        transport: {
-            read: {
-                url: urlService1,
-                dataType: "json",
-                type: "POST",
-                contentType: "application/json; charset=utf-8"
-            },
-            parameterMap: function (options, operation) {
-                if (operation === "read") {
-                    return JSON.stringify(datajson1);
-                }
-
-
+// 
+    function changImgFunc(results) {
+        
+        var i=0;
+       
+        for (i = 0; i < results.length; i++){
+            
+            if (results[i].user__contain__task==true){
+                
+                document.getElementById("span"+results[i].usr__cod).setAttribute("class", "k-sprite pro_check");
+                document.getElementById("span"+results[i].usr__cod).setAttribute("estado", "on");
+            }else{
+                document.getElementById("span"+results[i].usr__cod).setAttribute("estado", "off");
+                
             }
-        },
-        schema: {
-            data: function (e) {
-                var key1 = Object.keys(e)[0];
-                if (e[key1].eeEstados[0].Estado === "OK") {
-                    return e[key1][mapCud1];
-                } else {
-                }
-            },
-            model: {
-                id: "car__cod",
-                field: {
-                    car__nom: {editable: false, nullable: false}
-
-                }
-            }
+            
+            
         }
-
-    });
-     function changImgFunc(results) {debugger}
-     function cambiaColor(e){debugger
-     
-     
+    }
+    function guardar (e){debugger
+        
+        var nit = sessionStorage.getItem("companyNIT");
+        var proceso = sessionStorage.getItem("Proc_usuar");
+        var tarea= sessionStorage.getItem("Task_name");
+        var desTarea= sessionStorage.getItem("Task_type");
+      
+         var consultarUsr = new cudTareasXusr();
+        var data = consultarUsr.getjson();
+        var urlservicio = consultarUsr.getUrlSir();
+        
+      var data1 = grid_usr.data("kendoGrid").dataSource._pristineData;    
+      var i=0;
+      var array=[];
+      
+      
+      for  ( i = 0; i < data1.length; i++){
+          var name = data1[i].usr__cod;
+          var estado = document.getElementById("span"+name).getAttribute("estado");
+          if( estado==="on")
+            {
+                var json={};
+                json.cia__nit=nit;
+                json.proc__name=proceso;
+                json.task__name=tarea;
+                json.task__type=desTarea;
+                json.usr__cod = data1[i].usr__cod;
+                array.push(json);
+                
+            }
+      else
+      {
+          
+      }
+        }       
+         data.dsbpm_own_task.TTparam[0].picproc_name= proceso;
+          data.dsbpm_own_task.eebpm_own_task=array;
+               
+               
+               
+    $.ajax({
+        
+        type: "POST",        
+        async: false,
+        data: JSON.stringify(data),
+        url: urlservicio,
+        dataType: "json",        
+        contentType: "application/json;",
+        success: function (resp) {  debugger
+            if((resp.dsbpm_own_task.eeEstados["0"].Estado)=="OK")
+            {
+            parent.cerrar();
+    
+            }
+            else
+            {
+             alert("Error"+resp.dsbpm_own_task.eeEstados["0"].Estado);   
+            }
+        } 
+        
+        });
+    }
+    //-----------------------
+     function cambiaColor(e){
      var id = e.currentTarget.firstElementChild.id;
+     var estado = document.getElementById(id).getAttribute("estado");
+      if( estado==="on")
+      {
+     document.getElementById(id).setAttribute("class", "k-sprite pro_checkoff");
+     document.getElementById(id).setAttribute("estado", "off");
+      }
+      else
+      {
      document.getElementById(id).setAttribute("class", "k-sprite pro_check");
      document.getElementById(id).setAttribute("estado", "on");
-     
+      }
+              
+
      }
      
+     
+     function filtros (e){
+         
+  
+//         /**
+// * Filtro auto complete por nombre
+// */
+//
+        var data1 = grid_usr.data("kendoGrid").dataSource._pristineData;
+        var arrayOriginal = [];
+        var rol = [];
+        var i = 0;
+        for (i  in data1) {
+            if(data1[i] !== undefined){
+                arrayOriginal[i] = data1[i].car__nom;
+            }           
+        }
+        var rol = arrayOriginal.filter(function (elem, pos) {
+            return arrayOriginal.indexOf(elem) == pos;
+        });
+//---------------------------------------------------
+        var data1 = grid_usr.data("kendoGrid").dataSource._pristineData;
+        var arrayOriginal = [];
+        var actor = [];
+        var i = 0;
+        for (i  in data1) {
+            if(data1[i] !== undefined){
+                arrayOriginal[i] = data1[i].actor__des;
+            }            
+        }
+        var actor = arrayOriginal.filter(function (elem, pos) {
+            return arrayOriginal.indexOf(elem) == pos;
+        });
+
+
+//
+//     /**
+//     *FUNCION FILTRO ROL TOOLBAR
+//     * 
+//     *  
+//     * 
+//     *  
+//     *  
+//     */
+//     
     $("#filtro1").kendoComboBox({
-        dataTextField: "car__nom",
-        dataValueField: "car__cod",
+
         placeholder: "Rol...",
-        dataSource: datasource1,
+        dataSource: rol,
         change: function () {
             var value = this.value();
             if (value) {
-                grid1.data("kendoGrid").dataSource.filter({field: "car__cod", operator: "eq", value: value});
+                grid_usr.data("kendoGrid").dataSource.filter({field: "car__nom", operator: "eq", value: value});
             } else {
-                grid1.data("kendoGrid").dataSource.filter({});
+                grid_usr.data("kendoGrid").dataSource.filter({});
             }
         },
     });
 
 
     /**
-     *FUNCION FILTRO ESTADO TOOLBAR
-     * VAR VALUE = VALOR DE SELECCION DE FILTRO
-     *  #filtro2 = ID del combobox
-     *  consulta sobre campo : usr__est
+     *FUNCION FILTRO ACTOR TOOLBAR
+     * 
+     *  
+     * 
      *  
      *  
      */
-    var estados = [
-        {text: "Activo", valor: "1"},
-        {text: "Inactivo", valor: "0"},
-        {text: "Ingreso 1 vez", valor: "2"},
-        {text: "Retirado", valor: "3"},
-        {text: "Inactivo Manualmente", valor: "4"},
-        {text: "Deshabilitado", valor: "5"},
-        {text: "Inactivado Cambio De Clave", valor: "6"},
-    ];
+ 
 
     $("#filtro2").kendoComboBox({
-        dataTextField: "text",
-        dataValueField: "valor",
         autoBind: false,
-        placeholder: "Estado..",
-        dataSource: estados,
+        placeholder:"Actor..",
+        dataSource: actor,
         change: function () {
             var value1 = this.value();
             var value1 = parseInt(value1);
             if (value1 >= 0) {
-                grid1.data("kendoGrid").dataSource.filter({field: "usr__est", value: value1});
+                grid_usr.data("kendoGrid").dataSource.filter({field: "actor__des", value: value1});
             } else {
-                grid1.data("kendoGrid").dataSource.filter({});
+                grid_usr.data("kendoGrid").dataSource.filter({});
             }
         }
     });
 
-
-    /**
-     * FUNCION FILTRO ROL EDIT POPUP SE EJECUTA CON EL EVENTO DE COMBOBOX
-     *  cONSULTA CAMPO  car__nom
-     *  var  consultar obtiene funcion Sir para consultar
-     *  var datajson contiene el json para enviar al servicio de consulta
-     *  var urlService contiene url del servicio read 
-     *  
-     */
-
-    function filtroRol(container, options) {
-        var consultar = new serviRoles();
-        var datajson = consultar.getjson();
-        var urlService = consultar.getUrlSir();
-        var mapCud1 = "ee_user3";
-        $('<input  id = "rol" required name="' + options.field + '"/>')
-                .appendTo(container)
-                .kendoDropDownList({
-                    dataTextField: "car__nom",
-                    dataValueField: "car__nom",
-                    dataSource: {
-                        transport: {
-                            read: {
-                                url: urlService,
-                                dataType: "json",
-                                type: "POST",
-                                contentType: "application/json; charset=utf-8"
-                            },
-                            parameterMap: function (options, operation) {
-                                if (operation === "read") {
-                                    return JSON.stringify(datajson);
-                                }
-                            }
-                        },
-                        schema: {
-                            data: function (e) {
-                                var key1 = Object.keys(e)[0];
-                                if (e[key1].eeEstados[0].Estado === "OK") {
-                                    return e[key1][mapCud1];
-                                } else {
-                                }
-                            },
-                            model: {
-                                id: "car__cod",
-                                fields: {
-                                    car__nom: {editable: false, nullable: false},
-                                }
-                            }
-                        }
-                    }
-
-                });
-
-    }
- /**
-     * FUNCION FILTRO ACTOR EDIT POPUP SE EJECUTA CON EL EVENTO DE COMBOBOX
-     *  cONSULTA CAMPO  actor__cod
-     *  var  consultar obtiene funcion Sir para consultar
-     *  var datajson contiene el json para enviar al servicio de consulta
-     *  var urlService contiene url del servicio read 
-     *  
-     */
-
-    function filtroActor(container, options) {debugger
-        var consultar = new siractores();
-        var datajson = consultar.getjson();
-        var urlService = consultar.getUrlSir();
-        var mapCud1 = "eesic_actor";
-        $('<input  id = "rol" required name="' + options.field + '"/>')
-                .appendTo(container)
-                .kendoDropDownList({
-                    dataTextField: "actor__cod",
-                    dataValueField: "actor__cod",
-                    dataSource: {
-                        transport: {
-                            read: {
-                                url: urlService,
-                                dataType: "json",
-                                type: "POST",
-                                contentType: "application/json; charset=utf-8"
-                            },
-                            parameterMap: function (options, operation) {
-                                if (operation === "read") {
-                                    return JSON.stringify(datajson);
-                                }
-                            }
-                        },
-                        schema: {
-                            data: function (e) {
-                                var key1 = Object.keys(e)[0];
-                                if (e[key1].eeEstados[0].Estado === "OK") {
-                                    return e[key1][mapCud1];
-                                } else {
-                                }
-                            },
-                            model: {
-                                id: "actor__cod",
-                                fields: {
-                                    actor__cod: {editable: false, nullable: false},
-                                }
-                            }
-                        }
-                    }
-
-                });
-
-    }
-
-
-    /**
-     *  Funcion filtroJefe PARA EDIT POPUP SE EJECUTA CON EL EVENTO DE COMBOBOX
-     *  cONSULTA CAMPO  usr__codjef
-     *  var  consultar obtiene funcion Sir para consultar
-     *  var datajson contiene el json para enviar al servicio de consulta
-     *  var urlService contiene url del servicio read  
-     *  var arrayoriginal y array sin duplicados filtran datos de dropdown
-     */
-
-
-    function filtroJefe(container, options) {
-        var consultar = new sirconsulta();
-        var datajson = consultar.getjson();
-        var urlService = consultar.getUrlSir();
-
-
-        var data1 = grid1.data("kendoGrid").dataSource._pristineData;
-
-
-        var arrayOriginal = [];
-        var arraySinDuplicados = [];
-        var i = 0;
-        for (i  in data1) {
-            if(data1[i] !== undefined){
-                arrayOriginal[i] = data1[i].usr__codjef;
-            }
-            
-        }
-
-        var arraySinDuplicados = arrayOriginal.filter(function (elem, pos) {
-            return arrayOriginal.indexOf(elem) == pos;
-        });
-
-        $('<input required name="' + options.field + '"/>')
-                .appendTo(container)
-                .kendoDropDownList({
-                    dataSource: arraySinDuplicados
-
-                });
-    }
-
-
-
-});
-/**
- *  Funcion Filtro Estado PARA EDIT POPUP SE EJECUTA CON EL EVENTO DE COMBOBOX
- *  cONSULTA CAMPO  usr__est
- *  var  consultar obtiene funcion Sir para consultar
- *  var datajson contiene el json para enviar al servicio de consulta
- *  var urlService contiene url del servicio read 
- *  
- */
-function filtroestado(container, options) {
-    var consultar = new sirconsulta();
-    var datajson = consultar.getjson();
-    var urlService = consultar.getUrlSir();
-    var estados = [
-        {text: "Activo", valor: "1"},
-        {text: "Inactivo", valor: "0"},
-        {text: "Ingreso 1 vez", valor: "2"},
-        {text: "Retirado", valor: "3"},
-        {text: "Inactivo Manualmente", valor: "4"},
-        {text: "Deshabilitado", valor: "5"},
-        {text: "Inactivado Cambio De Clave", valor: "6"},
-    ];
-    $('<input required name="' + options.field + '"/>')
-            .appendTo(container)
-            .kendoDropDownList({
-                dataTextField: "text",
-                dataValueField: "valor",
-                dataSource: estados
-            });
-}
-/**
- * Funcion passEditorPopup se ejecuta en el evento onkeyup
- *  Id clave 1 primer campo de clave 
- *  
- *  
- *  
- *  
- */        					function passEditorPopup(container, options) {
-    $('<input id ="clave1" type = \"password\"  onkeyup = \"mostrarcampo()\" required name="' + options.field + '" />')
-            .appendTo(container)
-            .kendoMaskedTextBox({
-            });
-}
-
-/**
- * Funcion onkeypass para ocultar campo de clave
- *  
- *  var buscarlabel = busca el label de kendo edit.
- *  Buscarlabel.style.display= oculta el campo
- *  id clave2 campo para validar contraseña 
- *  
- */
-function onkeypass(container, options) {
-    $('<input id ="clave2" type = \"password\"" name="' + options.field + '" />')
-            .appendTo(container)
-            .kendoMaskedTextBox({
-            });
-    var buscarlabel = $("label").find("for");//BUSCAR TODOS LOS ELEMENTOS LABEL--<<  
-    Buscarlabel = buscarlabel.prevObject[9];
-    Buscarlabel.style.display = "none";
-    document.getElementById("clave2").style.display = "none";
-}
-/**
- * Funcion ocultarcampo para mostrar campo de clave
- *  
- *  var buscarlabel = busca el label de kendo edit.
- *  Buscarlabel.style.display=  muestra el campo
- *  
- *  
- */
-function mostrarcampo() {
-    document.getElementById("clave2").style.display = "";
-    var buscarlabel = $("label").find("for");
-    Buscarlabel = buscarlabel.prevObject[9];
-    Buscarlabel.style.display = "";
-}
-
-/*  FUNCION RESIZE WINDOW 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+         
+     }
+ });

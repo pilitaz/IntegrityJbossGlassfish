@@ -123,18 +123,25 @@ function sirtask_proces() {
 };
 //-----------------------------------------------------------------------
  function sirconsulta() {
-    var urlSir = ipServicios + baseServicio +"SirUsuarios";
+    var urlSir = ipServicios + baseUsrBpm +"SIRbpm_userFromPortal";
     var json = {  
-     "dsee_user2":{  
+   "dsUserBPM":{  
       "eeDatos":[  
-      {  
+         {  
             "picusrcod":sessionStorage.getItem("usuario"),
             "picfiid":sessionStorage.getItem("picfiid"),
             "local_ip":sessionStorage.getItem("ipPrivada"),
             "remote_ip":sessionStorage.getItem("ipPublica")
-    }
-    ]
-}
+         }
+      ],
+      "SirUserBPM":[  
+         {  
+            "picia__nit": sessionStorage.getItem("companyNIT"),
+            "picproc__name":"*",
+            "pictask__name":"*"
+         }
+      ]      
+   }
 };
     
     this.setUrlSir = function (newname) {
@@ -209,6 +216,103 @@ function siractores() {
             "picactor__cod":"*"
          }
       ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+//--------------------------------------------------------------
+function cudTareasXusr() {
+    var urlSir = ipServicios + baseUsrBpm +"SICUDbpm_own_task";
+    var json = {  
+   "dsbpm_own_task":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "TTparam":[  
+         {  
+            "piccia_nit": sessionStorage.getItem("companyNIT"),
+            "picproc_name":"*"
+         }
+      ],
+      "eebpm_own_task":[  
+         {  
+
+         
+         },
+                  {  
+            "cia__nit":"800001541",
+            "proc__name":"LoanApp_V3",
+            "task__name":"BookLoan123",
+            "task__type":"App",
+            "usr__cod":"aduarte"
+         }
+      ]      
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+
+//--------------------------------------------------------------
+function sirtask() {
+    var urlSir = ipServicios + baseUsrBpm +"SIRbpm_task";
+    var json = {  
+   "dsSIRbpm_task":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "SIRbpm_task":[  
+         {  
+            "pictask__name":"*",
+            "picproc__name":"*",
+            "piccia__nit":"800001541"
+         }
+      ]      
    }
 };
     

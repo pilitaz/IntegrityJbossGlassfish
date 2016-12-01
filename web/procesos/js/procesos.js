@@ -39,7 +39,7 @@ $(document).ready(function () {
                 contentType: "application/json; charset=utf-8"
             },         
             parameterMap: function (options, operation) {
-                if (operation === "read") {debugger
+                if (operation === "read") {
                     datajson.dsSIRbpm_proc.SIRbpm_proc[0].piccia__nit=sessionStorage.getItem("companyNIT");
                     datajson.dsSIRbpm_proc.SIRbpm_proc[0].picusuario=sessionStorage.getItem("usuario");
                     return JSON.stringify(datajson);
@@ -85,7 +85,7 @@ $(document).ready(function () {
         dataSource: datasource,
                             
                             
-        selectable: true,
+      
                             
         //navigatable: true,
         columns: [
@@ -119,7 +119,7 @@ $(document).ready(function () {
     });
 
                         
-    var consultar = new usrtask();
+    var consultar = new sirtask();
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();
     var mapCud1 = "eebpm_task";
@@ -152,11 +152,12 @@ $(document).ready(function () {
                 id: "task__id",
                 fields: {
                     task__name:    {editable: false, nullable: false},
-                    proc__name:     {editable: false, nullable: false},
+                    inst__name:     {editable: false, nullable: false},
+                    task__usr:       {editable: false, nullable: false},
                     task__ddt:       {editable: false, nullable: false},
-                    task__tst:       {editable: false, nullable: false},
                     task__id:       {editable: false, nullable: false},
-                    task__dpr:       {editable: false, nullable: false}
+                    task__dpr:       {editable: false, nullable: false},
+                    task__tst:       {editable: false, nullable: false}
                 }
             }
         }
@@ -176,7 +177,8 @@ $(document).ready(function () {
         dataSource: datasourcex,
                             
                             
-        selectable: true,
+
+
                             
         //navigatable: true,
         columns: [
@@ -191,7 +193,7 @@ $(document).ready(function () {
                         [
                            
                            
-                    {name: "destroy", template: "<a class='k-grid-delete' href='' style='min-width:16px;'><span class='k-sprite re_cerrar'></span></a>"}
+                    {name: "destroy", template: "<a class='k-grid-delete' href='' style='min-width:16px;'><span class='k-sprite pro_playoff'></span></a>"}
                 ],
                 width: "50px"}]    ,                            
         //editable: "popup",
@@ -204,16 +206,16 @@ $(document).ready(function () {
         } 
     });
                         
-    $('#grid').hover(function() {
-        $(this).css('background-color', 'Transparent');
-        $(this).contents('tr').css({'border': '1px solid red', 'border-left': 'none', 'border-right': 'none'});
-        $(this).contents('tr:first').css('border-left', '1px solid red');
-        $(this).contents('tr:last').css('border-right', '1px solid red');
-    },
-    function() {
-        $(this).css('background-color', 'Transparent');
-        $(this).contents('tr').css('border', 'none');
-    });
+//    $('#grid').hover(function() {
+//        $(this).css('background-color', 'Transparent');
+//        $(this).contents('tr').css({'border': '1px solid red', 'border-left': 'none', 'border-right': 'none'});
+//        $(this).contents('tr:first').css('border-left', '1px solid red');
+//        $(this).contents('tr:last').css('border-right', '1px solid red');
+//    },
+//    function() {
+//        $(this).css('background-color', 'Transparent');
+//        $(this).contents('tr').css('border', 'none');
+//    });
 
     // $("#grid").hover(
     //
@@ -314,6 +316,7 @@ function grilla(e){debugger
     e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
     var id = this.dataItem($(e.currentTarget).closest("tr")).proc__name;
     var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
+    
     if (adm=== true ){
     sessionStorage.setItem("Proc_usuar",id);
                                             
@@ -322,7 +325,7 @@ function grilla(e){debugger
     var myWindow2 = $("#windowg"),undo = $("#undo");
                 
     function onClose1() {debugger
-            
+            undo.fadeIn();
         $("#grillapopUp").empty();
     }  
         
