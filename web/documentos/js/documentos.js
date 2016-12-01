@@ -8,7 +8,7 @@ dsfiles.dsfiles.eeDatos[0].local_ip = sessionStorage.getItem("ipPrivada");
 dsfiles.dsfiles.eeDatos[0].remote_ip = sessionStorage.getItem("ipPublica");        
 console.log(JSON.stringify(dsfiles));
 
-$(document).ready(function () {debugger
+$(document).ready(function () {
     var dataSource = new kendo.data.DataSource({
         transport: {
             read:  {

@@ -5,43 +5,58 @@
  */
 
 /**
- * Funcion para mostrar un mensaje en un popUp de kendo
- * @param {type} mensaje string que contiene el mensaje
+ *  funcion para coger un textField y cambiarlo por los parametros de una funcion kendo
+ * @param {type} idElemento id del elementohtml
+ * @param {type} tipo tipo de dato
+ * @param {type} readonly solo lectura
  * @returns {undefined}
  */
-function  msnError(mensaje) { //pasar a carpeta scrips
-    var midiv = document.createElement("div");
-    midiv.setAttribute("id", "divPopUp");
-    midiv.setAttribute("vertical-align", "middle");
-    document.body.appendChild(midiv);
+function modTextboxPopupFl(idElemento, tipo, readonly) {
+//	if(lookup[idElemento]){
+//	  tipo= "lista";
+//	 }
+    elemento = $("#" + idElemento);
+    if (readonly) {
+        elemento.kendoMaskedTextBox();
+        elemento[0].disabled = true;
+    } else {
+        if (tipo == "decimal") {
+            elemento.kendoNumericTextBox();
+        } else if (tipo == "number") {
+            elemento.kendoNumericTextBox({format: "#"});
+        } else if (tipo == "money") {
+            elemento.kendoNumericTextBox({format: "c0",decimals: 3});
+        } else if ((tipo == "string") || (tipo == "Character")||(tipo == "")) {
+            elemento.kendoMaskedTextBox();
+        } else if (tipo == "date") {
+            elemento.kendoDatePicker({
+                format: "yyyy-MM-dd"
+            });
+        } else if (tipo == "hora") {
+            elemento.kendoTimePicker();
+        } else if (tipo == "logical") {
+            var lista = ["si", "no"];
+            elemento = elemento.kendoComboBox({
+                dataSource: lista,
+                filter: "contains",
+                suggest: true,
+                index: 0
+            });
+        } else if (tipo == "lista") {
 
-    midiv = document.createElement("div");
-    midiv.setAttribute("id", "labelMensaje");
-    midiv.setAttribute("align", "center");
-    document.getElementById("divPopUp").appendChild(midiv);
+            var lista = lookup[idElemento].des;
 
-    midiv = document.createElement("div");
-    midiv.setAttribute("id", "labelPopUp");
-    midiv.setAttribute("align", "right");
-    midiv.setAttribute("style", "vertical-align: middle;margin-right: 80px;margin-left: 60px");
-    document.getElementById("divPopUp").appendChild(midiv);
-
-    midiv = document.createElement("div");
-    midiv.setAttribute("id", "botones");
-    midiv.setAttribute("align", "right");
-    midiv.setAttribute("style", "vertical-align: middle; border-top: 1px solid #E0E0E0;position: static;right: 30px;overflow: hidden;");
-    document.getElementById("divPopUp").appendChild(midiv);
-
-    crearButton("ButtonCancel", "Aceptar", "botones", "k-button");
-    //$("#ButtonCancel").kendoButton();
-    document.getElementById("ButtonCancel").addEventListener("click", cerrarWindow);
-
-    crearEspacio_salto("jumpLine", 1, "labelMensaje");
-    crearLabel("labelmenBD", mensaje, "labelMensaje", "15px Verdana");
-    crearEspacio_salto("jumpLine", 2, "labelmenBD");
-    msnpopUpPeque("Aceptar", "tipo");
-    var elem = document.getElementById("ButtonCancel");
-    elem.value = "Aceptar";
+//			if(idElemento.substring(0,6)=="Codigo"){
+//				lista = lookup[idElemento].cod;
+//			}
+            elemento = elemento.kendoComboBox({
+                dataSource: lista,
+                filter: "contains",
+                suggest: true,
+                index: 0
+            });
+        }
+    }
 }
 function cerrarWindow() {
     $("#divPopUp").data("kendoWindow").close();
@@ -322,4 +337,24 @@ function alertDialogs (mensaje) {
     actions[0].text = "Salir";
     actions[0].action = onClose;
     createDialog("Atención", mensaje, "400px", "200px", true, true, actions);
+}
+/*
+ * funcion de kendo que sirve para mostrar un cargando en caso de que la funcion se demore mucho en cargar
+ * @param {type} target
+ * @returns {undefined}
+ */
+function displayLoading(target) {//funcion para poner bloquear una pantalla mientras consume un servicio la llama con
+    var element = $(target);
+    kendo.ui.progress(element, true);
+}
+
+
+/*
+ * funcion de kendo que sirve para cerrar un cargando en caso de que la funcion se demore mucho en cargar
+ * @param {type} target
+ * @returns {undefined}
+ */
+function closeLoading(target) {//funcion para poner bloquear una pantalla mientras consume un servicio la llama con
+    var element = $(target);
+    kendo.ui.progress(element, false);
 }
