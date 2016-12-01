@@ -13,6 +13,7 @@ var arreglo_funVideo = new Array();
 var arreglo_funRepor = new Array();
 estadoIfra = "PagInicio";
 $(document).ready(function () {
+    debugger
     sessionStorage.setItem("VideoAyuda", "http://comunicacion349.wix.com/integrity#!reportes-tutoriales/w865s");//cambiar urlVideo con url link apenas este listo el video de ayuda   
 
     if (sessionStorage.getItem("loginintegrity") === "valido") {
