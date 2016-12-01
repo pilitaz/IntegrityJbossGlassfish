@@ -154,10 +154,12 @@ $(document).ready(function () {
                     task__name:    {editable: false, nullable: false},
                     inst__name:     {editable: false, nullable: false},
                     task__usr:       {editable: false, nullable: false},
-                    task__ddt:       {editable: false, nullable: false},
+                    task__ddt:       {editable: false, nullable: false,type: "date"},
                     task__id:       {editable: false, nullable: false},
                     task__dpr:       {editable: false, nullable: false},
-                    task__tst:       {editable: false, nullable: false}
+                    task__tst:       {editable: false, nullable: false, type: "date"},
+                    task__des:       {editable: false, nullable: false},
+                    task__type:       {editable: false, nullable: false}
                 }
             }
         }
@@ -182,13 +184,14 @@ $(document).ready(function () {
                             
         //navigatable: true,
         columns: [
-                                
-            {field: "task__name", title: "Tareas",  hidden:false},
             {field: "inst__name", title: "Proceso",  hidden:false},
-            {field: "task__ddt", title: "Fecha de Inicio",  hidden:false},
-            {field: "task__tst", title: "Fecha de Terminacion",  hidden:false},
-            {field: "task__dpr", title: "Creado por",  hidden:false},
-                                
+            {field: "task__name", title: "Tareas",  hidden:false},
+            {field: "task__des", title: "Descripcion",  hidden:false},
+            
+            {field: "task__ddt", title: "Fecha de Inicio", format: "{0:MM/dd/yyyy h:mm tt}", hidden:false},
+            {field: "task__tst", title: "Fecha de entrega", format: "{0:MM/dd/yyyy h:mm tt}", hidden:false},
+            {field: "task__dpr", title: "Admin de proceso",  hidden:false},
+            {field: "task__type", title: "Tipo",  hidden:false},             
             {command:
                         [
                            

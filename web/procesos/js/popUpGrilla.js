@@ -63,7 +63,7 @@ document.getElementById("task1").innerHTML = task ;
         columns: [
             {field: "task__name", title: "Tarea",  hidden:false},      
             {field: "proc__name", title: "Nombre de proceso",  hidden:true},
-            {field: "type__task", title: "Tipo de tarea",  hidden:false},
+            {field: "type__task", title: "Tipo de tarea",  hidden:true},
 
             {command:
                         [
@@ -111,7 +111,7 @@ document.getElementById("task1").innerHTML = task ;
             modal: true,
             resizable: false,
             title: "Usuarios",
-            width: "70%",
+            width: "90%",
             content: UrL+"procesos/html/popUpUsuarios.html",
             
             actions: [

@@ -96,7 +96,7 @@ json.dsFunciones.funciones=array1;
         }        
         });
  $("#arbol2").load("tree3.html");        
-       
+        $("#arbol1").load("tree2.html"); 
        
    }
 
@@ -172,7 +172,7 @@ json.dsFunciones.funciones=array1;
         }        
         });
  $("#arbol2").load("tree3.html");        
-       
+        $("#arbol1").load("tree2.html"); 
 
 } 
  
