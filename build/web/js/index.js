@@ -13,7 +13,6 @@ var arreglo_funVideo = new Array();
 var arreglo_funRepor = new Array();
 estadoIfra = "PagInicio";
 $(document).ready(function () {
-    debugger
     sessionStorage.setItem("VideoAyuda", "http://comunicacion349.wix.com/integrity#!reportes-tutoriales/w865s");//cambiar urlVideo con url link apenas este listo el video de ayuda   
 
     if (sessionStorage.getItem("loginintegrity") === "valido") {
@@ -84,7 +83,7 @@ function cambiarImagen(imgId, estiloTd) {
             document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
             document.getElementById("idFrame").src = sessionStorage.getItem("url") + servicio + "/html/" + servicio + ".html";
             document.getElementById("tdPerfil").style = "display:none"
-        } else if (servicio != "") {
+        } else if (servicio !== "") {
             $('#divDerecho').width($(window).width());
             document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
             document.getElementById("idFrame").src = urlIFrame + servicio + "/Start.jsp";
