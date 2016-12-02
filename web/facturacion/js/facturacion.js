@@ -19,10 +19,12 @@ $(document).ready(function() {
     var fechaIni= new Date(sessionStorage.getItem("fechaSistema"));
     fechaIni.setDate(fechaFin.getDate() - 90);    
     
-    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_ini = fechaIni;
-    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_fin = fechaFin;
-    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro_ini = "3160";
-    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro_fin = "3170";
+//    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_ini = fechaIni;"2016/11/01"
+//    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_fin = fechaFin;
+    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_ini = "2016/11/01";
+    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_fin = "2016/12/01";
+    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro_ini = "";
+    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro_fin = "";
     dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_est = "99";
     dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picter_nit = "*";
 
@@ -104,9 +106,10 @@ function gridFacturas(){
             {
                 command: [
                     {name: "detalle", text: " ", click: imprimirFact, template: "<a class='k-grid-detalle'><span class='k-sprite po_print'></span></a>"},
-                    {name: "editar", text: " ", click: editarFactura, template: "<a class='k-grid-editar'><span class='k-sprite po_editon'></span></a>"}
+                    {name: "editar", text: " ", click: editarFactura, template: "<a class='k-grid-editar'><span class='k-sprite po_editon'></span></a>"},
+                    {name: "anular", text: " ", click: anularFactura, template: "<a class='k-grid-anular'><span class='k-sprite po_cerrar'></span></a>"}
                 ], 
-                width: "100px"
+                width: "150px"
             }
         ],
         rowTemplate: kendo.template($("#rowTemplateFac").html()),
@@ -123,7 +126,11 @@ function gridFacturas(){
                 
         var servicio = "facturaQuantum";
         sessionStorage.setItem("servicio",servicio);
-        sessionStorage.setItem("factura",JSON.stringify(factura));
+        sessionStorage.setItem("actualizarFactura", "true");
+        sessionStorage.setItem("facturaNumero", factura.fac__nro);
+        sessionStorage.setItem("facturasucursal", factura.suc__cod);
+        sessionStorage.setItem("facturaClaseDoc", factura.clc__cod);
+        sessionStorage.setItem("facturaFecha", factura.fac__fec);
         window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html"));   
     }
     
@@ -151,17 +158,17 @@ function gridFacturas(){
                 url: ipServicios+baseComercial+"SIRpdf",            
                 dataType : "json",
                 contentType: "application/json;",
-                success: function (resp) {                  
+                success: function (resp) {
+                    debugger
                     estado = JSON.stringify(resp.response.pocestado);                                    
                 },
                 error: function (e) {
                     kendo.alert(" Error al consumir el servicio.\n"+ e.status +" - "+ e.statusText);                
                 }
             }).done(function(){
-                if(estado=='"OK"'){
-                    alertDialogs(estado);
+                if(estado==='"OK"'){                    
                     $('#grid').data('kendoGrid').dataSource.read();
-                $('#grid').data('kendoGrid').refresh();
+                    $('#grid').data('kendoGrid').refresh();
                 }else{
                     alertDialogs("Error generando el PDF de la factura.\n"+estado);
                 }
@@ -170,6 +177,11 @@ function gridFacturas(){
         } catch (e) {
             alertDialogs("Function: consumeServAjaxSIR Error: " + e.message);
         }
+    }
+    
+    function anularFactura(e){        
+        e.preventDefault();        
+        var factura = this.dataItem($(e.currentTarget).closest("tr"));
     }
 }
 
@@ -209,18 +221,32 @@ function closePopUpFiltros(){
 }
 
 function changImgFunc(facturas) {
+    debugger
+    
+    var fechaSistema = new Date(sessionStorage.getItem("fechaSistema"));
+    var mesSistema = fechaSistema.getMonth();
+    
+    var fechaFactura;
+    var mesFactura;
     
     for (var i = 0; i < facturas.length; i++) {
         var id = facturas[i].fac__nro;
         if(facturas[i].fac__edo==="No Contabilizado"){
-            document.getElementById("imprimir"+id).setAttribute("class", "k-sprite po_print_off");
+            document.getElementById("imprimir"+id).setAttribute("class", "k-sprite po_print");
             document.getElementById("editar"+id).setAttribute("class", "k-sprite po_editon");
         }else if(facturas[i].fac__edo==="Contabilizado"){
-            document.getElementById("imprimir"+id).setAttribute("class", "k-sprite po_print");
-            document.getElementById("editar"+id).setAttribute("class", "k-sprite po_editoff");
+            document.getElementById("imprimir"+id).setAttribute("class", "k-sprite po_print_disabled");
+            document.getElementById("editar"+id).setAttribute("class", "k-sprite po_edit_disabled");
         }else if(facturas[i].fac__edo==="Anulado"){
             document.getElementById("imprimir"+id).setAttribute("class", "k-sprite po_print");
-            document.getElementById("editar"+id).setAttribute("class", "k-sprite po_editoff");
+            document.getElementById("editar"+id).setAttribute("class", "k-sprite po_edit_disabled");
+        }
+        
+        fechaFactura =  new Date((facturas[i].fac__fec).replace(/-/g, "/"));
+        mesFactura = fechaFactura.getMonth();
+        
+        if(mesSistema===mesFactura){
+            document.getElementById("anular"+id).setAttribute("class", "k-sprite po_cerrar");
         }
     }
 }

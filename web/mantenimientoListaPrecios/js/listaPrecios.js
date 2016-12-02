@@ -218,8 +218,7 @@ function gridDetalleListaPrecios(){
     
     function editarArticulo(e){
         
-        e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
-        //itemID = this.dataItem($(e.currentTarget).closest("tr"));
+        e.preventDefault();
         var grid = $("#gridDetalleListaPrecios").data("kendoGrid");
         itemID = grid.dataItem(grid.select());
         
@@ -232,8 +231,7 @@ function gridDetalleListaPrecios(){
         var myWindow = $("#windowArticulo");        
         var undo = $("#undo");
         
-        function onCloseWindowItemFacEdit() {
-            
+        function onCloseWindowItemFacEdit() {            
             document.getElementById("windowArticulo").remove();            
             undo.fadeIn();  
         }
@@ -282,4 +280,16 @@ function agregarArticuloDetalle(e){
         close: onCloseWindowItemFac
     }).data("kendoWindow").center().open();
     
+}
+
+function guardarListaPrecios(){
+    alert("guardarListaPrecios");
+}
+
+function validarListaPrecios(){
+    alert("validarListaPrecios");
+}
+
+function cargarListaPrecios(listaPrecios){
+    alert("cargarListaPrecios");
 }
