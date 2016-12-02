@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+var bandAlert = 0;//variable de bandera por que kendo tiene un bug que ejecuta dos veces la función de popUp alert
 /**
  * Funcion para ajustar el alto de la grilla 
  */
@@ -31,7 +32,11 @@ function grid() {
     var urlRepo = obj.getUrlSir();
     var mapData = obj.getMapData();
 
-
+    var objCU = new SICUDsic_tcont();
+    var objRepoD = objCU.getjson();
+    var urlRepoD = objCU.getUrlSir();
+    var mapDataRepoD = objCU.getMapData();
+    
     var dataSource = new kendo.data.DataSource({
         transport: {
             read: {
@@ -40,11 +45,21 @@ function grid() {
                 dataType: 'json',
                 type: "POST"
             },
+            destroy: {
+                url: urlRepoD,
+                type: "delete",
+                dataType: "json",
+                contentType: "application/json"
+            },
             parameterMap: function (options, operation) {
                 try {
                     if (operation === 'read') {
                         objRepo["obj"] = [options];
                         return JSON.stringify(objRepo);
+                    }else if (operation === 'destroy') {
+                        var key1 = Object.keys(objRepoD)[0];
+                        objRepoD[key1][mapDataRepoD] = [options];
+                        return JSON.stringify(objRepoD);
                     }
                 } catch (e) {
                     alertDialog("Error en el servicio"+ e.message);
@@ -70,7 +85,6 @@ function grid() {
             }
         }
     });
-//    $("#girdConta .k-grid-header").css('display', 'none');
     $(window).trigger("resize");
     $("#girdConta").kendoGrid({
         dataSource: dataSource,
@@ -84,7 +98,7 @@ function grid() {
                             {name: "editar", text: " ", click: ClickEditar, template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},
                             {name: "destroyed", click: clickEliminar,template: "<a class='k-grid-destroyed' href='' style='min-width:16px;'><span class='k-sprite po_cerrar'></span></a>"}
                         ],
-                width: "100px"}],
+                width: "90px"}],
         editable: "popup"
     });
 $("#girdConta .k-grid-header").css('display', 'none');
@@ -97,7 +111,33 @@ function ClickEditar(e){
 }
 
 function clickEliminar(e){
-    
+    try {
+        bandAlert++;
+        var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
+        e.preventDefault();
+        var dataItem = $("#girdConta").data("kendoGrid").dataItem($(e.target).closest("tr"));
+
+        if (bandAlert === 1) {
+            var actions = new Array();
+            actions[0] = new Object();
+            actions[0].text = "OK";
+            actions[0].action = function () {
+                var dataSource = $("#girdConta").data("kendoGrid").dataSource;
+                dataSource.remove(dataItem);
+                dataSource.sync();
+                bandAlert = 0;
+            };
+            actions[1] = new Object();
+            actions[1].text = "Cancelar";
+            actions[1].action = function () {
+                bandAlert = 0;
+            };
+            createDialog("Atención", "Esta seguro de eliminar el Reporte ---" + dataItem.rpt_nom + " ---?", "400px", "200px", true, true, actions);
+        }
+    } catch (e) {
+        $('#girdConta').data('kendoGrid').dataSource.read();
+        $('#girdConta').data('kendoGrid').refresh();
+    }
 }
 
 function ClickCrear(){

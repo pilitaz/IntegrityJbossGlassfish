@@ -59,8 +59,7 @@ $(document).ready(function() {
     
     var datepickerFechaTasa= $("#ipFechaTasa").data("kendoDatePicker");
     datepickerFechaTasa.readonly();
-    
-    gridDetalle();
+        
     
     var staticNotification = $("#staticNotification").kendoNotification({
         appendTo: "#appendto"
@@ -69,11 +68,13 @@ $(document).ready(function() {
     var kendoDropDownListVendedor = $("#ipVendedor").data("kendoDropDownList");
     kendoDropDownListVendedor.enable(false); 
         
-    if(sessionStorage.getItem("factura")){
-        var factura = JSON.parse(sessionStorage.getItem("factura"));
-        sessionStorage.setItem("actualizarFactura", "true");
-        cargarFactura(factura);
+    if(sessionStorage.getItem("actualizarFactura")){        
+        cargarFactura();
+        deshabilitarCampos();
+    }else{
+        gridDetalle();
     }
+    
 });
 /** 
  * Se encarga de cargar la información de los combobox de la cabecera de la factura
@@ -144,13 +145,13 @@ function iniDropDownList(){
     
     $("#ipCDocumento").kendoDropDownList({
         optionLabel: "Seleccione el tipo de documento",
-        dataTextField: "cpto__des",
-        dataValueField: "cpto__cod",      
-        template:'<div class="divElementDropDownList">#: data.cpto__des #</div>',
+        dataTextField: "clc__nom",
+        dataValueField: "clc__cod",      
+        template:'<div class="divElementDropDownList">#: data.clc__nom #</div>',
         dataSource: {
             transport: {
                 read: {
-                    url: ipServicios+"rest/Parameters/SIRgfc_cpto",
+                    url: ipServicios+baseParameters+"SIRsic_clc",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST"
@@ -158,8 +159,8 @@ function iniDropDownList(){
                 parameterMap: function (options, operation) {                    
                     try {                         
                         if (operation === 'read') {
-                            authdsgfc_cpto["eegfc_cpto"] = [options];                            
-                            return JSON.stringify(authdsgfc_cpto);
+                            authdssic_clc["eesic_tcont"] = [options];                            
+                            return JSON.stringify(authdssic_clc);
                         }	
                     } catch (e) {
                         alertDialogs(e.message);
@@ -169,17 +170,17 @@ function iniDropDownList(){
             schema: {
                 type: "json",
                 data:function (e){
-                    if(e.dsgfc_cpto.eeEstados[0].Estado==="OK"){
-                        return e.dsgfc_cpto.eegfc_cpto;
+                    if(e.dssic_clc.eeEstados[0].Estado==="OK"){
+                        return e.dssic_clc.eesic_clc;
                     }else{
-                        alertDialogs(e.dsgfc_cpto.eeEstados[0].Estado);
+                        alertDialogs(e.dssic_clc.eeEstados[0].Estado);
                     }
                 },
                 model: {
-                    id: "cpto__cod",
+                    id: "clc__cod",
                     fields: {
-                        cpto__cod: {validation: {required: true}, type: 'number'},
-                        cpto__des: {validation: {required: true}, type: 'string'}
+                        clc__cod: {validation: {required: true}, type: 'number'},
+                        clc__nom: {validation: {required: true}, type: 'string'}
                     }
                 }
             },
@@ -276,29 +277,29 @@ function iniDropDownList(){
 }
 
 function iniAutocomplete(){
-    $("#ipCliente").kendoAutoComplete({
-        dataTextField: "ter__raz",
+    
+    $("#ipNITCliente").kendoAutoComplete({
+        dataTextField: "ter__nit",
         dataValueField: "ter__nit",        
         placeholder: "Selecione un cliente...",
-        minLength: 4,
+        minLength: 6,
         filter: "contains",
-        template:'<div class="divElementDropDownList">#: data.ter__raz #</div>',
+        template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
         select: setInfoCliente,
         dataSource: {
             type: "json",
             serverFiltering: true,
             transport: {
                 read:{
-                    url: ipServicios+"rest/Parameters/SIRgfc_cli",
+                    url: ipServicios+baseParameters+"SIRgfc_cli",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST"
                 },
                 parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
                     try {
-                        authdsgfc_cli.dsgfc_cli.eetemp[0].picter_raz = $("#ipCliente").val();                        
+                        authdsgfc_cli.dsgfc_cli.eetemp[0].picter_nit = $("#ipNITCliente").val();                        
                         if (operation === 'read') {
-//                            authdsgfc_cli["eegfc_cli"] = [options];
                             return JSON.stringify(authdsgfc_cli);
                         } 
                     } catch (e) {
@@ -330,9 +331,62 @@ function iniAutocomplete(){
             }            
         }
     });
+    
+    $("#ipCliente").kendoAutoComplete({
+        dataTextField: "ter__raz",
+        dataValueField: "ter__nit",        
+        placeholder: "Selecione un cliente...",
+        minLength: 4,
+        filter: "contains",
+        template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
+        select: setInfoCliente,
+        dataSource: {
+            type: "json",
+            serverFiltering: true,
+            transport: {
+                read:{
+                    url: ipServicios+"rest/Parameters/SIRgfc_cli",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
+                    try {
+                        authdsgfc_cli.dsgfc_cli.eetemp[0].picter_raz = $("#ipCliente").val();                        
+                        if (operation === 'read') {
+                            return JSON.stringify(authdsgfc_cli);
+                        } 
+                    } catch (e) {
+                        alertDialogs(e.message);
+                    } 
+                }
+            },
+            schema: {
+                data: function (e){                    
+                    if(e.dsgfc_cli.eeEstados[0].Estado==="OK"){
+                        return e.dsgfc_cli.eegfc_cli;
+                    }else if(e.dsgfc_cli.eeEstados[0].Estado==="ERROR: Patrón de Búsqueda Insuficiente !!!"){
+                        
+                    }else{
+                        alertDialogs(e.dsgfc_cli.eeEstados[0].Estado);
+                    }
+                },
+                model:{}
+            },
+            error: function (xhr, error) {
+                alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+            },
+            change: function (e) {
+                //console.log("Change client");
+            },
+            requestStart: function (e) {
+                //console.log("Request Start servicio cliente");
+            }            
+        }
+    });
 }
-function gridDetalle(){  
-        
+function gridDetalle(){
+    
     var grid = $("#grid").kendoGrid({
         dataSource: dataGridDetalle,
         navigatable: true,
@@ -416,23 +470,59 @@ function gridDetalle(){
     }).data("kendoGrid");
     
     function eliminarItem(e){ 
+        
         e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
         
         var grid = $("#grid").data("kendoGrid");
         var itemID = grid.dataItem(grid.select());
+        var itemGuardado;
         
-        for (var i=0; i<dataGridDetalle.length; i++){
-            if(dataGridDetalle[i].ID===itemID.ID){
-                dataGridDetalle.splice(i, 1);
+        var authdsSIRgfc_fac = new Object();
+        authdsSIRgfc_fac.dsSIRgfc_fac = new Object();
+        authdsSIRgfc_fac.dsSIRgfc_fac.eeDatos = new Array();
+        authdsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0] = new Object();
+        authdsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
+        authdsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].fiid = sessionStorage.getItem("picfiid");
+        authdsSIRgfc_fac.dsSIRgfc_fac.eegfc_itms = new Array();
+        authdsSIRgfc_fac.dsSIRgfc_fac.eegfc_itms[0] = new Object();
+        authdsSIRgfc_fac.dsSIRgfc_fac.eegfc_itms[0].tcon__cod = itemID.CodConceptoDet;
+        authdsSIRgfc_fac.dsSIRgfc_fac.eegfc_itms[0].clc__cod = $("#ipCDocumento").val();
+        authdsSIRgfc_fac.dsSIRgfc_fac.eegfc_itms[0].fac__nro = sessionStorage.getItem("facturaNumero");
+        authdsSIRgfc_fac.dsSIRgfc_fac.eegfc_itms[0].fac__fec = $("#ipFecha").val();
+        authdsSIRgfc_fac.dsSIRgfc_fac.eegfc_itms[0].suc__cod = $("#ipSucursal").val();
+        authdsSIRgfc_fac.dsSIRgfc_fac.eegfc_itms[0].art__cod = itemID.ArticuloId;
+        authdsSIRgfc_fac.dsSIRgfc_fac.eegfc_itms[0].cla__cod = itemID.CodClaseArticulo;        
+        console.log(JSON.stringify(authdsSIRgfc_fac));
+        
+        $.ajax({
+            type: "DELETE",
+            data: JSON.stringify(authdsSIRgfc_fac),
+            url: ipServicios+baseComercial+"SICUDgfc_itms",
+            dataType : "json",
+            contentType: "application/json;",
+            success: function (resp) {                
+                itemGuardado = resp.dsSIRgfc_fac.eeEstados[0].Estado;                
+            },
+            error: function (e) {
+                console.log(JSON.stringify(e));
+                alertDialogs("Error consumiendo el servicio de guardar\n"+ e.status +" - "+ e.statusText);
             }
-        }
-        gridDetalle();
+        }).done(function(){
+            if(itemGuardado=="OK"){
+                cargarDatosGrilla();
+            }else{                    
+                alertDialogs("factura con errores  \n"+itemGuardado);
+                console.log("Datos  \n" + itemGuardado);                
+            }
+        });
+        
+        
     }
     
     function editarItem(e){
         
-        e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
-        //itemID = this.dataItem($(e.currentTarget).closest("tr"));
+        e.preventDefault();
+        
         var grid = $("#grid").data("kendoGrid");
         itemID = grid.dataItem(grid.select());
         
@@ -441,13 +531,13 @@ function gridDetalle(){
         var heightPopUp = $("body").height();
         heightPopUp = heightPopUp * (80/100);
         
-        $("body").append("<div id='windowItemEdit'></div>");
-        var myWindow = $("#windowItemEdit");        
+        $("body").append("<div id='windowItemFac'></div>");
+        var myWindow = $("#windowItemFac");        
         var undo = $("#undo");
         
         function onCloseWindowItemFacEdit() {
             
-            document.getElementById("windowItemEdit").remove();            
+            document.getElementById("windowItemFac").remove();            
             undo.fadeIn();  
         }
         
@@ -492,7 +582,7 @@ function validaCabecera(){
     jSonData.dsSIRgfc_fac.eeDatos[0].picfiid = fiid;
     jSonData.dsSIRgfc_fac.eegfc_fac = new Array();
     jSonData.dsSIRgfc_fac.eegfc_fac[0] = new Object();    
-    jSonData.dsSIRgfc_fac.eegfc_fac[0].cpto__cod = claDocumento;
+    jSonData.dsSIRgfc_fac.eegfc_fac[0].tcon__cod = claDocumento;
     jSonData.dsSIRgfc_fac.eegfc_fac[0].dpc__fec = fechaVencimeinto;
     jSonData.dsSIRgfc_fac.eegfc_fac[0].fac__est = "1"; // ???
     jSonData.dsSIRgfc_fac.eegfc_fac[0].fac__fec = fecha;
@@ -571,10 +661,18 @@ function onBlurTasaDeCambio(){
 
 function setInfoCliente(e){
     
-    if(dataCliente===null&&e){
-        dataCliente = this.dataItem(e.item.index()); 
+    if(e){
+        dataCliente = this.dataItem(e.item.index());         
     }
     
+    if($("#ipNITCliente").val()===""||$("#ipNITCliente").val()!==dataCliente.ter__nit){
+        $("#ipNITCliente").val(dataCliente.ter__nit);
+    }
+    
+    if($("#ipCliente").val()===""||$("#ipCliente").val()!==dataCliente.ter__raz){
+        $("#ipCliente").val(dataCliente.ter__raz);
+    }
+        
     var clienteNacional = dataCliente.gfc__nal;    
     sessionStorage.setItem("nitCliente", dataCliente.ter__nit); // sessionStorage.setItem("
     sessionStorage.setItem("listaPrecioCliente", dataCliente.lis__num);
@@ -713,7 +811,8 @@ function codigoVendedor(e){
     sessionStorage.setItem("codVendedor", dataItem.ven__cod);    
 }
 
-function guardarFactura(){    
+function guardarFactura(){
+    
     var usuario = sessionStorage.getItem("usuario");
     var fiid = sessionStorage.getItem("picfiid");
     var sucursal = $("#ipSucursal").val();
@@ -732,10 +831,7 @@ function guardarFactura(){
     var numFactura = "";
     var msn = "";
     var actualizacion=true;
-    
-    if(sessionStorage.getItem("actualizarFactura")==="true"){
-        
-    }
+    var verboHTML="POST";
     
     var jSonData = new Object();
     jSonData.dsSIRgfc_fac = new Object();
@@ -744,8 +840,8 @@ function guardarFactura(){
     jSonData.dsSIRgfc_fac.eeDatos[0].picusrcod = usuario;
     jSonData.dsSIRgfc_fac.eeDatos[0].fiid = fiid;
     jSonData.dsSIRgfc_fac.eegfc_fac = new Array();
-    jSonData.dsSIRgfc_fac.eegfc_fac[0] = new Object();    
-    jSonData.dsSIRgfc_fac.eegfc_fac[0].cpto__cod = claDocumento;
+    jSonData.dsSIRgfc_fac.eegfc_fac[0] = new Object();        
+    jSonData.dsSIRgfc_fac.eegfc_fac[0].clc__cod = claDocumento;
     jSonData.dsSIRgfc_fac.eegfc_fac[0].fac__fec = fecha;
     jSonData.dsSIRgfc_fac.eegfc_fac[0].fac__fec__venc = fechaVencimeinto;    
     jSonData.dsSIRgfc_fac.eegfc_fac[0].obs__fac = observaciones;
@@ -758,45 +854,23 @@ function guardarFactura(){
     jSonData.dsSIRgfc_fac.eegfc_fac[0].suc__cod = sucursal;
     jSonData.dsSIRgfc_fac.eegfc_fac[0].ter__nit = sessionStorage.getItem("nitCliente");
     jSonData.dsSIRgfc_fac.eegfc_fac[0].ven__cod = sessionStorage.getItem("codVendedor"); 
-    jSonData.dsSIRgfc_fac.eegfc_itms = new Array();
     
-    var jSonDataGrid = new Object();
-    jSonDataGrid = dataGridDetalle;
-    
-    $.each(jSonDataGrid, function(i,item){ 
-        
-        var jSonDetalle = new Object();
-        jSonDetalle.cpto__cod = jSonDataGrid[i].CodConceptoDet;
-        jSonDetalle.art__cod = jSonDataGrid[i].ArticuloId;
-        jSonDetalle.cla__cod = jSonDataGrid[i].CodClaseArticulo;
-        jSonDetalle.itms__can = jSonDataGrid[i].Cantidad;        
-        jSonDetalle.des__itms = jSonDataGrid[i].Descripcion;
-        jSonDetalle.itms__pdt = (jSonDataGrid[i].Descuento)*100;
-        jSonDetalle.itms__val__u = jSonDataGrid[i].ValorUnitario; 
-        jSonDetalle.lis__num = listaPrecios; 
-        jSonDetalle.itms__piv = (jSonDataGrid[i].IVA)*100;       
-        if(jSonDataGrid[i].CodAmortizacion!==""){
-            jSonDetalle.pdif__cla = jSonDataGrid[i].CodAmortizacion;
-            jSonDetalle.ddif__dias = jSonDataGrid[i].DiasAmortizacion;
-            jSonDetalle.doc__fec__ini = jSonDataGrid[i].FechaAmortizacion;
-        }
-        jSonData.dsSIRgfc_fac.eegfc_itms[i]=jSonDetalle;
-    })    
-    
-    console.log("jSonData "+JSON.stringify(jSonData));
+    if(sessionStorage.getItem("actualizarFactura")==="true"){        
+        verboHTML="PUT";
+        jSonData.dsSIRgfc_fac.eegfc_fac[0].fac__nro = sessionStorage.getItem("facturaNumero");
+    }
     
     $.ajax({
-        type: "POST",
+        type: verboHTML,
         data: JSON.stringify(jSonData),
-        url: ipServicios+"rest/Comercial/SICUDgfc_fac",
+        url: ipServicios+baseComercial+"SICUDgfc_fac",
         dataType : "json",
         contentType: "application/json;",
-        success: function (resp) {            
-            console.log(JSON.stringify(resp));                
+        success: function (resp) {
             facturaGuardada = JSON.stringify(resp.dsSIRgfc_fac.eeEstados[0].Estado); 
             if(facturaGuardada=='"OK"'){
                 msn = resp.dsSIRgfc_fac.eeSgfc_fac["0"].desmsg;
-                numFactura = resp.dsSIRgfc_fac.eeSgfc_fac["0"].facnro
+                numFactura = resp.dsSIRgfc_fac.eeSgfc_fac["0"].facnro;                
             }
         },
         error: function (e) {
@@ -805,17 +879,28 @@ function guardarFactura(){
         }
     }).done(function(){
         if(facturaGuardada=='"OK"'){
-            var actions = new Array();
-            actions[0] = new Object();
-            actions[0].text = "Crear nueva factura";
-            actions[0].primary = "true";
-            actions[0].action = nuevaFactura;
-//            actions[1] = new Object();
-//            actions[1].text = "Imprimir factura";            
-//            actions[1].action = "imprimirFac";     
+            var letf = ($("body").width()/2)-100;
+            document.getElementById('idNumerofactura').innerHTML = 'Nº '+numFactura;
+            var centered = $("#centeredNotification").kendoNotification({
+                position: {                
+                    top: 10,
+                    left: letf,
+                }
+            }).data("kendoNotification");
+            centered.show("El número de la factura es: "+numFactura, "success");
             
-            createDialog("Que desea hacer?", msn+" El número de la factura es: "+numFactura, "400px", "auto", true, false, actions);
-            console.log("Factura guardada \n" + facturaGuardada);                     
+            //            $("#btnAgregarItem").onclick ="agregarItemDetalle()";
+            //            document.getElementById('btnAgregarItem').onclick ="agregarItemDetalle()";
+            $("#btnAgregarItem")["0"].firstChild.className = "k-sprite po_mas";
+            
+            sessionStorage.setItem("actualizarFactura", "true");
+            sessionStorage.setItem("facturaNumero", numFactura);
+            sessionStorage.setItem("facturasucursal", $("#ipSucursal").val());
+            sessionStorage.setItem("facturaClaseDoc", $("#ipCDocumento").val());
+            sessionStorage.setItem("facturaFecha", $("#ipFecha").val());
+            
+            cargarDatosGrilla();
+                             
         }else{                    
             alertDialogs("factura con errores  \n"+facturaGuardada);
             console.log("Datos  \n" + facturaGuardada);                
@@ -826,37 +911,33 @@ function guardarFactura(){
 function agregarItemDetalle(e){
     itemID=null;
     
-    if(sessionStorage.getItem("cabeceraValida")==null || sessionStorage.getItem("cabeceraValida")=="false"){
-        validaCabecera();    
-    }else{    
+    var widthPopUp = $("body").width();
+    widthPopUp = widthPopUp * (60/100);
+    var heightPopUp = $("body").height();
+    heightPopUp = heightPopUp * (80/100);
     
-        var widthPopUp = $("body").width();
-        widthPopUp = widthPopUp * (60/100);
-        var heightPopUp = $("body").height();
-        heightPopUp = heightPopUp * (80/100);
-        
-        $("body").append("<div id='windowItemFac'></div>");
-        var myWindow = $("#windowItemFac");
-        var undo = $("#undo");
-        
-        function onCloseWindowItemFac() {
-            document.getElementById("windowItemFac").remove();            
-            undo.fadeIn();  
-        }
-        
-        myWindow.kendoWindow({
-            width: widthPopUp,
-            height: heightPopUp,
-            title: "Agregar",
-            content: sessionStorage.getItem("url")+ "/facturaQuantum/html/popupItemFactura.html",
-            visible: false,
-            modal: true,
-            actions: [            
-                "Close"
-            ],
-            close: onCloseWindowItemFac
-        }).data("kendoWindow").center().open();
+    $("body").append("<div id='windowItemFac'></div>");
+    var myWindow = $("#windowItemFac");
+    var undo = $("#undo");
+    
+    function onCloseWindowItemFac() {
+        document.getElementById("windowItemFac").remove();            
+        undo.fadeIn();  
     }
+    
+    myWindow.kendoWindow({
+        width: widthPopUp,
+        height: heightPopUp,
+        title: "Agregar",
+        content: sessionStorage.getItem("url")+ "/facturaQuantum/html/popupItemFactura.html",
+        visible: false,
+        modal: true,
+        actions: [            
+            "Close"
+        ],
+        close: onCloseWindowItemFac
+    }).data("kendoWindow").center().open();
+    //    }
 }
 
 function closePopUp(){    
@@ -864,7 +945,7 @@ function closePopUp(){
 }
 
 function closePopUpEditar(){    
-    $("#windowItemEdit").data("kendoWindow").close();
+    $("#windowItemFac").data("kendoWindow").close();
 }
 
 function onDataBoundOpcPago(e){
@@ -896,10 +977,10 @@ function imprimirFac(){
     nuevaFactura();
 }
 
-function cargarFactura(factura){
+function cargarFactura(){
         
     var estado;
-    document.getElementById('idNumerofactura').innerHTML = 'Nº '+factura.fac__nro;
+    document.getElementById('idNumerofactura').innerHTML = 'Nº '+sessionStorage.getItem("facturaNumero");
     
     try{
         var dsSIRgfc_fac = new Object();
@@ -910,11 +991,10 @@ function cargarFactura(factura){
         dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].fiid = sessionStorage.getItem("picfiid");        
         dsSIRgfc_fac.dsSIRgfc_fac.eetemp = new Array();
         dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0] = new Object();
-        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picsuc_cod = factura.suc__cod;
-        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picclc_cod = factura.clc__cod;
-        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].pidfac_fec = factura.fac__fec;
-        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro = factura.fac__nro;
-        
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picsuc_cod = sessionStorage.getItem("facturasucursal");
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picclc_cod = sessionStorage.getItem("facturaClaseDoc");
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].pidfac_fec = sessionStorage.getItem("facturaFecha");
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro = sessionStorage.getItem("facturaNumero");
                 
         $.ajax({
             type: "POST",
@@ -927,39 +1007,41 @@ function cargarFactura(factura){
                 factura = resp; 
             },
             error: function (e) {
-                kendo.alert(" Error al consumir el servicio.\n"+ e.status +" - "+ e.statusText);                
+                alertDialogs(" Error al consumir el servicio: cargarFactura/SIRgfc_fac_act \n"+ e.status +" - "+ e.statusText);                
             }
         }).done(function(){
-            if(estado=='"OK"'){
-                debugger
+            if(estado=='"OK"'){                
                 if(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__est===1||factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__est===9){
-                    $("#btnGuardar")["0"].firstChild.className = "k-icon po_saveoff_disabled";
-                    $("#btnGuardar")["0"].onclick = "";
-                    $("#btnGuardar").style = "pointer-events: none;";
-                    
-                    alert("la edición para este documento no esta habilitada");
+                    document.getElementById("btnGuardar").remove();            
+                    document.getElementById("btnAgregarItem").remove();
                 }
                 var kendoDropDownListSucursal = $("#ipSucursal").data("kendoDropDownList");
                 kendoDropDownListSucursal.value(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].suc__cod);
                 
                 var kendoDropDownListClaseDoc = $("#ipCDocumento").data("kendoDropDownList");
-                kendoDropDownListClaseDoc.value(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].cpto__cod);
+                kendoDropDownListClaseDoc.value(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].clc__cod);
+                
+                var fecha = new Date((factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__fec).replace(/-/g, "/"));
+                fecha.setHours(0,0,0,0);     
+                
+                var fechaVencimiento = new Date(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__fec__venc);
+                //fechaVencimiento.setHours(0,0,0,0);    
+                
                 
                 
                 $("#ipFecha").kendoDatePicker({        
                     format: "yyyy/MM/dd",
                     disableDates: ["sa", "su"],
-                    value: new Date(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__fec)     
+                    value: fecha
                 });
                 
                 $("#ipFechaVencimiento").kendoDatePicker({        
                     format: "yyyy/MM/dd",
                     disableDates: ["sa", "su"],
-                    value: new Date(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__fec__venc) 
+                    value: fechaVencimiento
                 });
                 
-                authdsgfc_cli.dsgfc_cli.eetemp[0].picter_nit = factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].ter__nit;
-                //authdsgfc_cli.dsgfc_cli.eetemp[0].picter_raz = nombre_Cliente;
+                authdsgfc_cli.dsgfc_cli.eetemp[0].picter_nit = factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].ter__nit;                
                 
                 $.ajax({
                     type: "POST",
@@ -974,55 +1056,127 @@ function cargarFactura(factura){
                         }                        
                     },
                     error: function (e) {
-                        kendo.alert(" Error al consumir el servicio.\n"+ e.status +" - "+ e.statusText);                
+                        alertDialogs(" Error al consumir el servicio: cargarFactura/SIRgfc_cli \n"+ e.status +" - "+ e.statusText);                        
                     }
                 }).done(function(){
                     setInfoCliente();
-                });
-                ;
-                var dataItemsFac = factura.dsSIRgfc_fac.eeSIRgfc_itms;
-                
-                for(var i=0; i<dataItemsFac.length ;i++){
-                    var valor = dataItemsFac[i].itms__val__u;                        
-                    valor = (valor * (parseFloat(1)-parseFloat(dataItemsFac[i].itms__pdt/100)));
-                    var total = parseFloat(dataItemsFac[i].itms__can) * (parseFloat(valor) * (parseFloat(1)+parseFloat(dataItemsFac[i].itms__piv/100)));
-                    
-                    var obj = {                       
-                        
-                        ID: i+1,
-                        CodConceptoDet:dataItemsFac[i].cpto__cod,
-                        ConceptoDet: dataItemsFac[i].cpto__des,
-                        CodClaseArticulo: dataItemsFac[i].cla__cod,
-                        ClaseArticulo: dataItemsFac[i].cla__des,
-                        Articulo: dataItemsFac[i].art__des,
-                        ArticuloId: dataItemsFac[i].art__cod,
-                        Descripcion: dataItemsFac[i].des__itms,
-                        Cantidad: parseInt(dataItemsFac[i].itms__can),                    
-                        Descuento: dataItemsFac[i].itms__pdt/100,
-                        IVA: dataItemsFac[i].itms__piv/100,
-                        ValorUnitario: dataItemsFac[i].itms__val__u,
-                        ValorTotal: total,
-                        CodAmortizacion: dataItemsFac[i].pdif__cla,
-                        DiasAmortizacion: dataItemsFac[i].ddif__dias,
-                        FechaAmortizacion: dataItemsFac[i].doc__fec__ini           
-                    }; 
-                    
-                    dataGridDetalle.push(obj);
-                }                
-                gridDetalle();
+                });                
+                cargarDatosGrilla()
             }else{
-                kendo.alert("Error cargando la información de la factura.\n"+estado)
+                alertDialogs("Error cargando la información de la factura.\n"+estado)
             }
         });
         
     } catch (e) {
-        kendo.alert("Function: consumeServAjaxSIR Error: " + e.message);
+        alertDialogs("Function: consumeServAjaxSIR Error: " + e.message);
     }
-    sessionStorage.removeItem("factura");    
+//    sessionStorage.removeItem("factura");    
+}
+
+function cargarDatosGrilla(){
+    dataGridDetalle=[];
+    try{        
+        if(sessionStorage.getItem("actualizarFactura")){
+            var factura;
+            var estado;
+            
+            var dsSIRgfc_fac = new Object();
+            dsSIRgfc_fac.dsSIRgfc_fac = new Object();
+            dsSIRgfc_fac.dsSIRgfc_fac.eeDatos = new Array();
+            dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0] = new Object();
+            dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
+            dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].fiid = sessionStorage.getItem("picfiid");        
+            dsSIRgfc_fac.dsSIRgfc_fac.eetemp = new Array();
+            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0] = new Object();
+            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picsuc_cod = sessionStorage.getItem("facturasucursal");
+            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picclc_cod = sessionStorage.getItem("facturaClaseDoc");
+            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].pidfac_fec = sessionStorage.getItem("facturaFecha");
+            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro = sessionStorage.getItem("facturaNumero");        
+            
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(dsSIRgfc_fac),
+                url: ipServicios+baseComercial+"SIRgfc_fac_act",            
+                dataType : "json",
+                contentType: "application/json;",
+                success: function (resp) { 
+                    estado = JSON.stringify(resp.dsSIRgfc_fac.eeEstados[0].Estado);                
+                    factura = resp; 
+                },
+                error: function (e) {
+                    alertDialogs(" Error al consumir el servicio: cargarDatosGrilla/SIRgfc_fac_act \n"+ e.status +" - "+ e.statusText);                
+                }
+            }).done(function(){
+                if(estado=='"OK"'){                    
+                    var dataItemsFac = factura.dsSIRgfc_fac.eeSIRgfc_itms;
+                    
+                    for(var i=0; i<dataItemsFac.length ;i++){
+                        var valor = dataItemsFac[i].itms__val__u;                        
+                        valor = (valor * (parseFloat(1)-parseFloat(dataItemsFac[i].itms__pdt/100)));
+                        var total = parseFloat(dataItemsFac[i].itms__can) * (parseFloat(valor) * (parseFloat(1)+parseFloat(dataItemsFac[i].itms__piv/100)));                    
+                        var obj = {                       
+                            
+                            ID: i+1,
+                            CodConceptoDet:dataItemsFac[i].tcon__cod,
+                            ConceptoDet: dataItemsFac[i].tcon__des,
+                            CodClaseArticulo: dataItemsFac[i].cla__cod,
+                            ClaseArticulo: dataItemsFac[i].cla__des,
+                            Articulo: dataItemsFac[i].art__des,
+                            ArticuloId: dataItemsFac[i].art__cod,
+                            Descripcion: dataItemsFac[i].des__itms,
+                            Cantidad: parseInt(dataItemsFac[i].itms__can),                    
+                            Descuento: dataItemsFac[i].itms__pdt/100,
+                            IVA: dataItemsFac[i].itms__piv/100,
+                            ValorUnitario: dataItemsFac[i].itms__val__u,
+                            ValorTotal: total,
+                            CodAmortizacion: dataItemsFac[i].pdif__cla,
+                            DiasAmortizacion: dataItemsFac[i].ddif__dias,
+                            FechaAmortizacion: dataItemsFac[i].doc__fec__ini           
+                        };
+                        dataGridDetalle.push(obj);
+                    }                    
+                }else{
+                    alertDialogs("Error cargando la información de la factura.\n"+estado)
+                }
+                gridDetalle();
+            });                        
+        }        
+    } catch (e) {
+        alertDialogs("Function: consumeServAjaxSIR Error: " + e.message);
+    }
 }
 
 function volverFacturacion(){    
     var servicio = "facturacion";
     sessionStorage.setItem("servicio",servicio);    
     window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html")); 
+}
+
+function deshabilitarCampos(){
+    debugger
+    var inputs = $("div").find("input");        
+    var kendoData;
+    var id;
+    var element;
+    
+    for(var i=0; i<inputs.length; i++){
+        debugger  
+        kendoData ="";
+        id = inputs[i].id;
+        if(id === ""){
+            continue;
+        }
+        if(inputs[i].dataset.role==="dropdownlist"){
+            kendoData = "kendoDropDownList";
+        }else if(inputs[i].dataset.role==="autocomplete"){
+            kendoData = "kendoAutoComplete";
+        }else if(inputs[i].dataset.role==="datepicker"){
+            kendoData = "kendoDatePicker";
+        }else if(inputs[i].dataset.role==="numerictextbox"){
+            kendoData = "kendoNumericTextBox";
+        }
+        console.log(inputs[i].attributes["0"].nodeValue + " :\t"+inputs[i].dataset.role +"\t"+kendoData);
+        element = $("#"+id).data(kendoData);
+        element.readonly(true);                        
+    }
 }

@@ -41,6 +41,8 @@
                             }
                             if(!$('#jstree2').jstree(true).is_parent(id[i])){                                
                                 var texto = id[i];
+                                var portaf = texto.split("P");
+                                sessionStorage.setItem("portafolio",portaf[0]);
                                 parent.fijarPcf(sessionStorage.setItem("pcf", texto));
                             }
                         }
