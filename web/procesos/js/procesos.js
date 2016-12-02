@@ -95,10 +95,10 @@ $(document).ready(function () {
             { field: "proc__name", title: "Procesos",  hidden:false},
             {command:
                         [
-                    {name: "tareas", text: " ", click: grilla, template: "<a class='k-grid-tareas'><span class='k-sprite pro_groupoff'></span></a>"},
+                    {name: "tareas", text: "", click: grilla, template: "<a title='comenzar' class='k-grid-tareas'><span  title='comenzar' class='k-sprite pro_groupoff'></span></a>"},
                     {name: "editar", text: " ",  click: grafica, template: "<a class='k-grid-editar'><span class='k-sprite pro_graphoff '></span></a>"},
                     {name: "info", text: " ",  template: "<a class='k-grid-info'><span class='k-sprite pro_infooff'></span></a>"},
-                    {name: "play", text: " ",  template: "<a class='k-grid-play'><span class='k-sprite pro_playoff '></span></a>"},
+                    {name: "play", text: " ",  click: iniciarProceso, template: "<a class='k-grid-play'><span class='k-sprite pro_playoff '></span></a>"},
                            
                 ],
                 width: "180px"}],                            
@@ -145,7 +145,7 @@ $(document).ready(function () {
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     return e[key1][mapCud1];
                 } else {
-                    // alertDialogs(e[key1].eeEstados[0].Estado);
+                  alertDialogs(e[key1].eeEstados[0].Estado);
                 }
             },
             model: {
@@ -188,8 +188,8 @@ $(document).ready(function () {
             {field: "task__name", title: "Tareas",  hidden:false},
             {field: "task__des", title: "Descripcion",  hidden:false},
             
-            {field: "task__ddt", title: "Fecha de Inicio", format: "{0:MM/dd/yyyy h:mm tt}", hidden:false},
-            {field: "task__tst", title: "Fecha de entrega", format: "{0:MM/dd/yyyy h:mm tt}", hidden:false},
+            {field: "task__tst", title: "Fecha de Inicio", format: "{0:MM/dd/yyyy h:mm tt}", hidden:false},
+            {field: "task__ddt", title: "Fecha de entrega", format: "{0:MM/dd/yyyy h:mm tt}", hidden:false},
             {field: "task__dpr", title: "Admin de proceso",  hidden:false},
             {field: "task__type", title: "Tipo",  hidden:false},             
             {command:
@@ -203,22 +203,22 @@ $(document).ready(function () {
                             
         cancel: function(e) {                                                                                   
             e._defaultPrevented= true;
-            $('#grid').data('kendoGrid').refresh();                                             
-            $('#grid').data('kendoGrid').dataSource.read();
-            $('#grid').data('kendoGrid').refresh();                                                                                        
+            $('#grid1').data('kendoGrid').refresh();                                             
+            $('#grid1').data('kendoGrid').dataSource.read();
+            $('#grid1').data('kendoGrid').refresh();                                                                                        
         } 
     });
                         
-//    $('#grid').hover(function() {
-//        $(this).css('background-color', 'Transparent');
-//        $(this).contents('tr').css({'border': '1px solid red', 'border-left': 'none', 'border-right': 'none'});
-//        $(this).contents('tr:first').css('border-left', '1px solid red');
-//        $(this).contents('tr:last').css('border-right', '1px solid red');
-//    },
-//    function() {
-//        $(this).css('background-color', 'Transparent');
-//        $(this).contents('tr').css('border', 'none');
-//    });
+    //    $('#grid').hover(function() {
+    //        $(this).css('background-color', 'Transparent');
+    //        $(this).contents('tr').css({'border': '1px solid red', 'border-left': 'none', 'border-right': 'none'});
+    //        $(this).contents('tr:first').css('border-left', '1px solid red');
+    //        $(this).contents('tr:last').css('border-right', '1px solid red');
+    //    },
+    //    function() {
+    //        $(this).css('background-color', 'Transparent');
+    //        $(this).contents('tr').css('border', 'none');
+    //    });
 
     // $("#grid").hover(
     //
@@ -283,34 +283,66 @@ $(document).ready(function () {
                         
                         
 });
-                    
-       
+
+function iniciarProceso(e){debugger
+    var adm = this.dataItem($(e.currentTarget).closest("tr")).id;
+    var consultar = new sistartaplication();
+    var datajson = consultar.getjson();
+    var urlService = consultar.getUrlSir();
+                        
+    datajson.dsAplication.SIRapp[0].picproc__name= adm;
+                   
+    $.ajax({
+        
+        type: "POST",        
+        async: false,
+        data: JSON.stringify(datajson),
+        url: urlService,
+        dataType: "json",        
+        contentType: "application/json;",
+        success: function (resp) {  debugger
+            if((resp.dsAplication.eeEstados["0"].Estado)=="OK")
+            {
+            
+             alertDialogs("Se ha inciado el proceso "+adm);
+            $('#grid1').data('kendoGrid').refresh();                                             
+            $('#grid1').data('kendoGrid').dataSource.read();
+            $('#grid1').data('kendoGrid').refresh(); 
+            }
+            else
+            {
+             alertDialogs("Error"+resp.dsAplication.eeEstados["0"].Estado);   
+            }
+        } 
+        
+        });
+}
 function grafica(e){
     var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
     if (adm=== true ){               
-    var myWindow1 = $("#textarea"),undo = $("#undo");
+        var myWindow1 = $("#textarea"),undo = $("#undo");
                 
-    function onClose() {debugger
-        undo.fadeIn();
-        $("#textarea").empty();
+        function onClose() {debugger
+            undo.fadeIn();
+            $("#textarea").empty();
         
+        }
+        var UrL= sessionStorage.getItem("url");  
+        myWindow1.kendoWindow({
+            draggable: true,
+            height: "70%",
+            modal: true,
+            resizable: false,
+            title: "Grafica",
+            width: "70%",
+            content: UrL+"procesos/html/popUpGrafica.html",
+            actions: [
+                "Close"
+            ],                               
+            close: onClose
+        }).data("kendoWindow").center().open();    
     }
-    var UrL= sessionStorage.getItem("url");  
-    myWindow1.kendoWindow({
-        draggable: true,
-        height: "70%",
-        modal: true,
-        resizable: false,
-        title: "Grafica",
-        width: "70%",
-        content: UrL+"procesos/html/popUpGrafica.html",
-        actions: [
-            "Close"
-        ],                               
-        close: onClose
-    }).data("kendoWindow").center().open();    
-}
-else{}
+    else{}
 }
     
 
@@ -321,44 +353,57 @@ function grilla(e){debugger
     var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
     
     if (adm=== true ){
-    sessionStorage.setItem("Proc_usuar",id);
+        sessionStorage.setItem("Proc_usuar",id);
                                             
-    $("#grillapopUp").append("<div id='windowg'></div>");
+        $("#grillapopUp").append("<div id='windowg'></div>");
                         
-    var myWindow2 = $("#windowg"),undo = $("#undo");
+        var myWindow2 = $("#windowg"),undo = $("#undo");
                 
-    function onClose1() {debugger
+        function onClose1() {debugger
             undo.fadeIn();
-        $("#grillapopUp").empty();
-    }  
+            $("#grillapopUp").empty();
+        }  
         
       
-    var UrL= sessionStorage.getItem("url");
-    myWindow2.kendoWindow({
-        draggable: true,
-        height: "90%",
-        modal: true,
-        resizable: false,
-        title: "Tareas",
-        width: "90%",
-        content: UrL+"procesos/html/popUpGrilla.html",
-        deactivate: function() {
-            this.destroy();                                           
-        },
-        actions: [
-            "Close"
-        ],                               
-        close: onClose1
-    }).data("kendoWindow").center().open();   
+        var UrL= sessionStorage.getItem("url");
+        myWindow2.kendoWindow({
+            draggable: true,
+            height: "90%",
+            modal: true,
+            resizable: false,
+            title: "Tareas",
+            width: "90%",
+            content: UrL+"procesos/html/popUpGrilla.html",
+            deactivate: function() {
+                this.destroy();                                           
+            },
+            actions: [
+                "Close"
+            ],                               
+            close: onClose1
+        }).data("kendoWindow").center().open();   
     }
     else
     {}
                       
 }       
-function disable(){debugger}
+function disable(){
+    
+
+}
 function changImgFunc(results) {debugger
        
         
+       
+    for (var i = 0; i < results.length; i++) {
+          
+        if(results[i].can__start===true){
+                            
+     document.getElementById("spanplay"+results[i].proc__name).setAttribute("class", "k-sprite pro_playon");
+     document.getElementById("spanplay"+results[i].proc__name).setAttribute("estado", "on");
+            
+        }else
+        {}}
 
        
     for (var i = 0; i < results.length; i++) {
@@ -381,10 +426,10 @@ function changImgFunc(results) {debugger
 
           
             
-                    $("#spantarea"+results[i].proc__name).onclick = "";
-                   $("#spanedit"+results[i].proc__name).onclick = "";
+            $("#spantarea"+results[i].proc__name).onclick = "";
+            $("#spanedit"+results[i].proc__name).onclick = "";
             document.getElementById("spantarea"+results[i].proc__name).setAttribute("class", "k-sprite transparente");
-           document.getElementById("spantarea"+results[i].proc__name).setAttribute('onclick','disable();'); // for FF
+            document.getElementById("spantarea"+results[i].proc__name).setAttribute('onclick','disable();'); // for FF
             // button_element.onclick = function() {doSomething();}; 
             document.getElementById("spanedit"+results[i].proc__name).setAttribute("class", "k-sprite transparente");
             document.getElementById("spanedit"+results[i].proc__name).setAttribute('onclick','disable();');

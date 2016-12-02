@@ -263,11 +263,11 @@ function cudTareasXusr() {
          
          },
                   {  
-            "cia__nit":"800001541",
-            "proc__name":"LoanApp_V3",
-            "task__name":"BookLoan123",
-            "task__type":"App",
-            "usr__cod":"aduarte"
+            "cia__nit":"*",
+            "proc__name":"*",
+            "task__name":"*",
+            "task__type":"*",
+            "usr__cod":"*"
          }
       ]      
    }
@@ -310,9 +310,86 @@ function sirtask() {
          {  
             "pictask__name":"*",
             "picproc__name":"*",
-            "piccia__nit":"800001541"
+            "piccia__nit": sessionStorage.getItem("companyNIT")
          }
       ]      
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+//-------------------------------------------------------
+function sistartaplication() {
+    var urlSir = ipServicios + baseUsrBpm +"SIStartAplication";
+    var json = {  
+   "dsAplication":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "SIRapp":[  
+         {  
+         	"picproc__name":"*",
+         	"picusr__cod": sessionStorage.getItem("usuario"),
+                "piccia__nit": sessionStorage.getItem("companyNIT")
+         }
+      ]      
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+//---------------------------------------------------------------------------
+function serviRoles() {
+    var urlSir = ipServicios + baseServicio +"SirCargos2";
+    var json = {  
+   "SIResic_car":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ]
    }
 };
     

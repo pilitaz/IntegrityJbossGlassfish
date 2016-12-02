@@ -85,7 +85,7 @@ $(document).ready(function () {
             {field: "car__nom", title: "Rol", hidden: false},
             {field: "actor__des", title: "Actor", hidden: false},
             
-            {command: [{name: "check", text: "check" , width: "80px",click:cambiaColor , template: "<a class='k-grid-check'><span class='k-sprite pro_checkoff'></span></a>"}], width: "50px" }],
+            {command: [{name: "check" ,text: "", width: "80px",click:cambiaColor , template: "<a class='k-grid-check title'><span class='k-sprite pro_checkoff'></span></a>"}], width: "50px" }],
         
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
         altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
@@ -108,7 +108,7 @@ $(document).ready(function () {
     });
 // 
     function changImgFunc(results) {
-        
+         //document.getElementById("7382b9f0-a33a-4b0b-bac0-e076f71dd743");
         var i=0;
        
         for (i = 0; i < results.length; i++){
@@ -188,7 +188,8 @@ $(document).ready(function () {
         });
     }
     //-----------------------
-     function cambiaColor(e){
+     function cambiaColor(e){debugger
+      
      var id = e.currentTarget.firstElementChild.id;
      var estado = document.getElementById(id).getAttribute("estado");
       if( estado==="on")
@@ -275,21 +276,37 @@ $(document).ready(function () {
      */
  
 
-    $("#filtro2").kendoComboBox({
-        autoBind: false,
-        placeholder:"Actor..",
+   $("#filtro2").kendoComboBox({
+
+        placeholder: "Actor...",
         dataSource: actor,
         change: function () {
-            var value1 = this.value();
-            var value1 = parseInt(value1);
-            if (value1 >= 0) {
-                grid_usr.data("kendoGrid").dataSource.filter({field: "actor__des", value: value1});
+            var value = this.value();
+            if (value) {
+                grid_usr.data("kendoGrid").dataSource.filter({field: "actor__des", operator: "eq", value: value});
             } else {
                 grid_usr.data("kendoGrid").dataSource.filter({});
             }
-        }
+        },
     });
 
          
      }
  });
+ 
+ function cargartodos(){debugger
+     
+     var grid = $("#grilla_usr").data("kendoGrid");
+    grid= grid._data;
+    var i=0;
+            for (i = 0; i < grid.length; i++){
+
+                document.getElementById("span"+grid[i].usr__cod).setAttribute("class", "k-sprite pro_check");
+                document.getElementById("span"+grid[i].usr__cod).setAttribute("estado", "on");
+
+                
+            
+            
+            
+        }
+ }

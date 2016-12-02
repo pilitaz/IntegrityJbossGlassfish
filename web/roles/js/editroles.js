@@ -30,8 +30,8 @@ document.getElementById("filtro").value = rol_name;
 
 var jSon=[];
 
-function agregarfuncion(e) {
-    
+function agregarfuncion(e) {debugger
+     
 var Selement=$('#jstree2').jstree('get_selected');
 
    var arreglo=Selement; 
@@ -80,7 +80,7 @@ var array = {};
 
 }
 json.dsFunciones.funciones=array1;  
-       
+      
 
     $.ajax({
         
@@ -95,7 +95,7 @@ json.dsFunciones.funciones=array1;
             
         }        
         });
- $("#arbol2").load("tree3.html");        
+        $("#arbol2").load("tree3.html");        
         $("#arbol1").load("tree2.html"); 
        
    }
@@ -153,11 +153,10 @@ var array = {};
                 array1.push(array);
  }
  
-
 }
 json.dsFunciones.funciones=array1;  
        
-
+displayLoading("#cargando");
     $.ajax({
         
         type: "DELETE",        
@@ -165,13 +164,16 @@ json.dsFunciones.funciones=array1;
         data: JSON.stringify(json),
         url: urlservice,
         dataType: "json",
-        
+
         contentType: "application/json;",
         success: function (resp) {  
-            
-        }        
-        });
- $("#arbol2").load("tree3.html");        
+        
+        }
+        }).done(function () {
+      closeLoading("#cargando");
+    });
+         
+        $("#arbol2").load("tree3.html");        
         $("#arbol1").load("tree2.html"); 
 
 } 
