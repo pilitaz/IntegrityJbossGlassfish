@@ -342,13 +342,13 @@
 .po_print{
 	width: 34px;
 	height: 34px;
-        background: url(../images/SpriteIntegrity.png) -58px -658px;	
+        background: url(../images/SpriteIntegrity.png) -58px -658px;               
 	cursor:pointer
 }
 .po_print:hover {
 	width: 34px;
 	height: 34px;
-        background: url(../images/SpriteIntegrity.png) -8px -658px;	
+        background: url(../images/SpriteIntegrity.png) -8px -658px; 
 	cursor:pointer
 }
 .po_print:active {
