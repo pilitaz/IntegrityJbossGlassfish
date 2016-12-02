@@ -57,7 +57,6 @@ function grid() {
                         objRepo["obj"] = [options];
                         return JSON.stringify(objRepo);
                     }else if (operation === 'destroy') {
-                        
                         var key1 = Object.keys(objRepoD)[0];
                         objRepoD[key1][mapDataRepoD] = [options];
                         return JSON.stringify(objRepoD);
@@ -136,8 +135,8 @@ function clickEliminar(e){
             createDialog("Atención", "Esta seguro de eliminar el Reporte ---" + dataItem.rpt_nom + " ---?", "400px", "200px", true, true, actions);
         }
     } catch (e) {
-        $('#grid').data('kendoGrid').dataSource.read();
-        $('#grid').data('kendoGrid').refresh();
+        $('#girdConta').data('kendoGrid').dataSource.read();
+        $('#girdConta').data('kendoGrid').refresh();
     }
 }
 

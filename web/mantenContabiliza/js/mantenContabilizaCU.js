@@ -82,7 +82,7 @@ function formatoInputs(inputs, serv) {
             }
             $("#" + inputs[i].id).val(stringCmp);
         }
-        if(inputs[i].tipo !== "servicio"){
+        if (inputs[i].tipo !== "servicio") {
             modTextboxPopupFl(inputs[i].id, inputs[i].tipo, inputs[i].read);
         }
     }
@@ -178,49 +178,50 @@ function comboDocumento(id) {
                         return e[key1][mapData];
                     } else {
                         alertDialog(e[key1].eeEstados[0].Estado);
-                    }},
-                            model: {
-                            id: "clc__cod",
-                                    fields: {
-                                    clc__nom: {validation: {required: true}, type: 'string'}
-                                }
-                            }
+                    }
+                },
+                model: {
+                    id: "clc__cod",
+                    fields: {
+                        clc__nom: {validation: {required: true}, type: 'string'}
+                    }
                 }
+            }
         }
-        
+
     }).data("kendoComboBox");
     combo.value(optionSelect);
 }
-function clickGuadarCabecera(){
-    
+function clickGuadarCabecera() {
+
     var obj = {
         "dssic_tcont": {
             "eeDatos": [{
-                "picusrcod": sessionStorage.getItem("usuario"),
-                "fiid": sessionStorage.getItem("picfiid")
-            }],
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "fiid": sessionStorage.getItem("picfiid")
+                }],
             "eesic_tcont": [{
-                "clc__cod": $("#inputClaseDocumento").val(),
-                "form__cod": "",
-                "mnd__ext": changeValBool($("#inputConcepto").val()),
-                "tcont__cod": $("#inputConcepto").val(),
-                "tcont__des": $("#inputDescripcion").val(),
-                "tcont__est": 0,
-                "tcont__fac": changeValBool($("#inputFacturacion").val()),
-                "tcont__form": "",
-                "tcon_dif": changeValBool($("#inputManejaDiferidos").val()),
-                "ter__reg ": $("#inputTipoRegimen").val()
-            }]
+                    "tcont__fac": changeValBool($("#inputFacturacion").val()),
+                    "tcont__form": "",
+                    "tcon_dif": changeValBool($("#inputManejaDiferidos").val()),
+                    "ter__reg": $("#inputTipoRegimen").val(),
+                    "clc__cod": $("#inputClaseDocumento").val(),
+                    "form__cod": "",
+                    "mnd__ext": changeValBool($("#inputMonedaExtranjera").val()),
+                    "tcont__cod": $("#inputConcepto").val(),
+                    "tcont__des": $("#inputDescripcion").val(),
+                    "tcont__est": 0,
+                }]
         }
-   };
-   if(sessionStorage.getItem("contaRow")){
-       sendServCU("PUT",obj);
-   }else{
-       sendServCU("POST",obj);
-   }
+    };
+    if (sessionStorage.getItem("contaRow")) {
+        sendServCU("PUT", obj);
+    } else {
+        sendServCU("POST", obj);
+    }
 }
 
-function sendServCU(verHtml,objJson){
+function sendServCU(verHtml, objJson) {
     var obj = new SICUDsic_tcont();
     var objInput = obj.getjson();
     var url = obj.getUrlSir();
@@ -235,7 +236,7 @@ function sendServCU(verHtml,objJson){
         dataType: "json",
         contentType: "application/json;",
         success: function (resp) {
-            
+
             var key1 = Object.keys(resp)[0];
             permitirIngreso = JSON.stringify(resp[key1].eeEstados[0].Estado);
             jsonResp = resp;
@@ -257,10 +258,10 @@ function sendServCU(verHtml,objJson){
     });
 }
 
-function changeValBool(text){
-    if(text==="si"){
+function changeValBool(text) {
+    if (text === "si") {
         return "true";
-    }else{
+    } else {
         return "false";
     }
 }

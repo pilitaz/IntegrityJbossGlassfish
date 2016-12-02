@@ -176,7 +176,7 @@ function sirDocumentos() {
  *  var input = sir.getdataInputSir();
  */
 function SICUDsic_tcont() {
-    var mapData = "eesic_clc";
+    var mapData = "eesic_tcont";
     var urlSir = ipServicios + baseParameters + "SICUDsic_tcont";
     var json = {
         "dssic_tcont": {
