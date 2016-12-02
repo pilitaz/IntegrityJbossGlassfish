@@ -19,14 +19,21 @@ authfacpag.dsfac_pag.eetemp = new Array();
 authfacpag.dsfac_pag.eetemp[0] = new Object();
 //console.log(JSON.stringify(authfacpag));
 
-var authdsgfc_cpto = new Object();
-authdsgfc_cpto.dsgfc_cpto = new Object();
-authdsgfc_cpto.dsgfc_cpto.eeDatos = new Array();
-authdsgfc_cpto.dsgfc_cpto.eeDatos[0] = new Object();
-authdsgfc_cpto.dsgfc_cpto.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
-authdsgfc_cpto.dsgfc_cpto.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
-//authdsgfc_cpto.dsgfc_cpto.eetemp = new Array();
-//authdsgfc_cpto.dsgfc_cpto.eetemp[0] = new Object();
+var authdssic_clc = new Object();
+authdssic_clc.dssic_clc = new Object();
+authdssic_clc.dssic_clc.eeDatos = new Array();
+authdssic_clc.dssic_clc.eeDatos[0] = new Object();
+authdssic_clc.dssic_clc.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
+authdssic_clc.dssic_clc.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
+
+var authdssic_tcont = new Object();
+authdssic_tcont.dssic_tcont = new Object();
+authdssic_tcont.dssic_tcont.eeDatos = new Array();
+authdssic_tcont.dssic_tcont.eeDatos[0] = new Object();
+authdssic_tcont.dssic_tcont.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
+authdssic_tcont.dssic_tcont.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
+authdssic_tcont.dssic_tcont.eetemp = new Array();
+authdssic_tcont.dssic_tcont.eetemp[0] = new Object();
 //console.log(JSON.stringify(authsic_clc));
 
 var authdssic_mnd = new Object();
