@@ -69,8 +69,7 @@ $(document).ready(function() {
     kendoDropDownListVendedor.enable(false); 
         
     if(sessionStorage.getItem("actualizarFactura")){        
-        cargarFactura();
-        deshabilitarCampos();
+        cargarFactura();        
     }else{
         gridDetalle();
     }
@@ -1016,7 +1015,9 @@ function cargarFactura(){
                 if(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__est===1||factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__est===9){
                     document.getElementById("btnGuardar").remove();            
                     document.getElementById("btnAgregarItem").remove();
+                    deshabilitarCampos();
                 }
+                debugger
                 var kendoDropDownListSucursal = $("#ipSucursal").data("kendoDropDownList");
                 kendoDropDownListSucursal.value(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].suc__cod);
                 kendoDropDownListSucursal.readonly(true)
@@ -1184,7 +1185,7 @@ function deshabilitarCampos(){
         if(id === ""){
             continue;
         }else if(id === "ipActualizarTasa"){
-            $("#ipActualizarTasa")[0].disabled = clienteNacional;
+            $("#ipActualizarTasa")[0].disabled = true;
             continue;
         }
         
@@ -1200,7 +1201,7 @@ function deshabilitarCampos(){
             console.log("No se encontro kendoData");
             continue
         }
-        
+        debugger
         element = $("#"+id).data(kendoData);
         element.readonly(true);
     }
@@ -1238,9 +1239,6 @@ function finalizarFactura(){
         actions[1] = new Object();
         actions[1].text = "Volver a facturación";        
         actions[1].action = volverFacturacion;
-//        actions[2] = new Object();
-//        actions[2].text = "Cancelar";        
-//        actions[2].action = volverFacturaQuantum;
         createDialog("", "A finalizado la edición de la factura ¿Que desea hacer?", "400px", "auto", true, true, actions);           
     }
 }
