@@ -159,7 +159,10 @@ function iniDropDownList(){
                 parameterMap: function (options, operation) {                    
                     try {                         
                         if (operation === 'read') {
-                            authdssic_clc["eesic_tcont"] = [options];                            
+//                            authdssic_tcont.dssic_tcont.eetemp = new Array();
+//                            authdssic_tcont.dssic_tcont.eetemp[0] = new Object();
+//                            authdssic_clc.dssic_clc.eetemp[0].piccod__por = sessionStorage.getItem("portafolio");
+//                            authdssic_clc["eesic_tcont"] = [options];                            
                             return JSON.stringify(authdssic_clc);
                         }	
                     } catch (e) {
@@ -385,8 +388,7 @@ function iniAutocomplete(){
         }
     });
 }
-function gridDetalle(){
-    
+function gridDetalle(){    
     var grid = $("#grid").kendoGrid({
         dataSource: dataGridDetalle,
         navigatable: true,
@@ -1017,23 +1019,33 @@ function cargarFactura(){
                 }
                 var kendoDropDownListSucursal = $("#ipSucursal").data("kendoDropDownList");
                 kendoDropDownListSucursal.value(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].suc__cod);
+                kendoDropDownListSucursal.readonly(true)
                 
                 var kendoDropDownListClaseDoc = $("#ipCDocumento").data("kendoDropDownList");
                 kendoDropDownListClaseDoc.value(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].clc__cod);
+                kendoDropDownListClaseDoc.readonly(true);
                 
                 var fecha = new Date((factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__fec).replace(/-/g, "/"));
-                fecha.setHours(0,0,0,0);     
+                fecha.setHours(0,0,0,0);
+            
+                var datepicker = $("#ipFecha").data("kendoDatePicker");
+                datepicker.value(fecha);
+                datepicker.readonly(true);
                 
-                var fechaVencimiento = new Date(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__fec__venc);
-                //fechaVencimiento.setHours(0,0,0,0);    
+                
+                var fechaVencimiento = new Date((factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__fec__venc).replace(/-/g, "/"));
+                //fechaVencimiento.setHours(0,0,0,0);                    
                 
                 
+//                $("#ipFecha").kendoDatePicker({        
+//                    format: "yyyy/MM/dd",
+//                    disableDates: ["sa", "su"],
+//                    value: fecha
+//                });
                 
-                $("#ipFecha").kendoDatePicker({        
-                    format: "yyyy/MM/dd",
-                    disableDates: ["sa", "su"],
-                    value: fecha
-                });
+                 var datepicker = $("#ipFecha").data("kendoDatePicker");
+                 datepicker.value(fecha);
+                 datepicker.readonly(true);
                 
                 $("#ipFechaVencimiento").kendoDatePicker({        
                     format: "yyyy/MM/dd",
@@ -1061,7 +1073,7 @@ function cargarFactura(){
                 }).done(function(){
                     setInfoCliente();
                 });                
-                cargarDatosGrilla()
+                cargarDatosGrilla();
             }else{
                 alertDialogs("Error cargando la información de la factura.\n"+estado)
             }
@@ -1107,34 +1119,38 @@ function cargarDatosGrilla(){
                     alertDialogs(" Error al consumir el servicio: cargarDatosGrilla/SIRgfc_fac_act \n"+ e.status +" - "+ e.statusText);                
                 }
             }).done(function(){
-                if(estado=='"OK"'){                    
-                    var dataItemsFac = factura.dsSIRgfc_fac.eeSIRgfc_itms;
-                    
-                    for(var i=0; i<dataItemsFac.length ;i++){
-                        var valor = dataItemsFac[i].itms__val__u;                        
-                        valor = (valor * (parseFloat(1)-parseFloat(dataItemsFac[i].itms__pdt/100)));
-                        var total = parseFloat(dataItemsFac[i].itms__can) * (parseFloat(valor) * (parseFloat(1)+parseFloat(dataItemsFac[i].itms__piv/100)));                    
-                        var obj = {                       
-                            
-                            ID: i+1,
-                            CodConceptoDet:dataItemsFac[i].tcon__cod,
-                            ConceptoDet: dataItemsFac[i].tcon__des,
-                            CodClaseArticulo: dataItemsFac[i].cla__cod,
-                            ClaseArticulo: dataItemsFac[i].cla__des,
-                            Articulo: dataItemsFac[i].art__des,
-                            ArticuloId: dataItemsFac[i].art__cod,
-                            Descripcion: dataItemsFac[i].des__itms,
-                            Cantidad: parseInt(dataItemsFac[i].itms__can),                    
-                            Descuento: dataItemsFac[i].itms__pdt/100,
-                            IVA: dataItemsFac[i].itms__piv/100,
-                            ValorUnitario: dataItemsFac[i].itms__val__u,
-                            ValorTotal: total,
-                            CodAmortizacion: dataItemsFac[i].pdif__cla,
-                            DiasAmortizacion: dataItemsFac[i].ddif__dias,
-                            FechaAmortizacion: dataItemsFac[i].doc__fec__ini           
-                        };
-                        dataGridDetalle.push(obj);
-                    }                    
+                if(estado=='"OK"'){
+                    if(factura.dsSIRgfc_fac.eeSIRgfc_itms){
+                        var dataItemsFac = factura.dsSIRgfc_fac.eeSIRgfc_itms;
+
+                        for(var i=0; i<dataItemsFac.length ;i++){
+                            var valor = dataItemsFac[i].itms__val__u;                        
+                            valor = (valor * (parseFloat(1)-parseFloat(dataItemsFac[i].itms__pdt/100)));
+                            var total = parseFloat(dataItemsFac[i].itms__can) * (parseFloat(valor) * (parseFloat(1)+parseFloat(dataItemsFac[i].itms__piv/100)));                    
+                            var obj = {                       
+
+                                ID: i+1,
+                                CodConceptoDet:dataItemsFac[i].tcon__cod,
+                                ConceptoDet: dataItemsFac[i].tcon__des,
+                                CodClaseArticulo: dataItemsFac[i].cla__cod,
+                                ClaseArticulo: dataItemsFac[i].cla__des,
+                                Articulo: dataItemsFac[i].art__des,
+                                ArticuloId: dataItemsFac[i].art__cod,
+                                Descripcion: dataItemsFac[i].des__itms,
+                                Cantidad: parseInt(dataItemsFac[i].itms__can),                    
+                                Descuento: dataItemsFac[i].itms__pdt/100,
+                                IVA: dataItemsFac[i].itms__piv/100,
+                                ValorUnitario: dataItemsFac[i].itms__val__u,
+                                ValorTotal: total,
+                                CodAmortizacion: dataItemsFac[i].pdif__cla,
+                                DiasAmortizacion: dataItemsFac[i].ddif__dias,
+                                FechaAmortizacion: dataItemsFac[i].doc__fec__ini           
+                            };
+                            dataGridDetalle.push(obj);
+                        }
+                    }else{
+                        gridDetalle();
+                    }                   
                 }else{
                     alertDialogs("Error cargando la información de la factura.\n"+estado)
                 }
@@ -1148,24 +1164,30 @@ function cargarDatosGrilla(){
 
 function volverFacturacion(){    
     var servicio = "facturacion";
-    sessionStorage.setItem("servicio",servicio);    
+    sessionStorage.setItem("servicio",servicio);
+    limpiarDatosFacturación();
     window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html")); 
 }
 
 function deshabilitarCampos(){
-    debugger
+    
     var inputs = $("div").find("input");        
     var kendoData;
     var id;
     var element;
     
     for(var i=0; i<inputs.length; i++){
-        debugger  
+          
         kendoData ="";
         id = inputs[i].id;
+        
         if(id === ""){
             continue;
+        }else if(id === "ipActualizarTasa"){
+            $("#ipActualizarTasa")[0].disabled = clienteNacional;
+            continue;
         }
+        
         if(inputs[i].dataset.role==="dropdownlist"){
             kendoData = "kendoDropDownList";
         }else if(inputs[i].dataset.role==="autocomplete"){
@@ -1174,9 +1196,72 @@ function deshabilitarCampos(){
             kendoData = "kendoDatePicker";
         }else if(inputs[i].dataset.role==="numerictextbox"){
             kendoData = "kendoNumericTextBox";
+        }else{
+            console.log("No se encontro kendoData");
+            continue
         }
-        console.log(inputs[i].attributes["0"].nodeValue + " :\t"+inputs[i].dataset.role +"\t"+kendoData);
+        
         element = $("#"+id).data(kendoData);
-        element.readonly(true);                        
+        element.readonly(true);
+    }
+    
+//    var buttons = $("div").find("a");        
+//    debugger
+//    for(var i=0; i<buttons.length; i++){
+//          
+//        
+//        id = buttons[i].id;
+//        
+////        console.log(buttons[i].attributes["0"].nodeValue + " :\t"+buttons[i].dataset.role +"\t"+kendoData);
+////        element = $("#"+id).data(kendoData);
+////        element.readonly(true);                        
+//    }
+}
+
+function finalizarFactura(){    
+    if(!sessionStorage.getItem("facturaNumero")){
+        var actions = new Array();
+        actions[0] = new Object();
+        actions[0].text = "Si";            
+        actions[0].action = volverFacturacion;
+        actions[1] = new Object();
+        actions[1].text = "No";
+        actions[1].primary = "true";
+        actions[1].action = volverFacturaQuantum;        
+        createDialog("", "Esta a punto de abandonar la pagina sin guardar los cambios ¿Desea continuar?", "400px", "auto", true, true, actions);           
+    }else{
+        var actions = new Array();
+        actions[0] = new Object();
+        actions[0].text = "Crear nueva factura"; 
+        actions[0].primary = "true";
+        actions[0].action = crearNuevaFactura;
+        actions[1] = new Object();
+        actions[1].text = "volver a facturación";        
+        actions[1].action = volverFacturacion;
+        actions[2] = new Object();
+        actions[2].text = "cancelar";        
+        actions[2].action = volverFacturaQuantum;
+        createDialog("", "A finalizado la edición de la factura ¿Que desea hacer?", "400px", "auto", true, true, actions);           
     }
 }
+
+function volverFacturaQuantum(){
+    return;
+}
+
+function crearNuevaFactura (){
+    limpiarDatosFacturación();
+    location.href=location.href
+//    window.onload();
+}
+
+function limpiarDatosFacturación(){
+    
+    sessionStorage.removeItem("actualizarFactura");
+    sessionStorage.removeItem("facturaNumero");
+    sessionStorage.removeItem("facturasucursal");
+    sessionStorage.removeItem("facturaClaseDoc");
+    sessionStorage.removeItem("facturaFecha");   
+    
+}
+
