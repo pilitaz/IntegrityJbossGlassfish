@@ -19,10 +19,10 @@ $(document).ready(function() {
     var fechaIni= new Date(sessionStorage.getItem("fechaSistema"));
     fechaIni.setDate(fechaFin.getDate() - 90);    
     
-//    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_ini = fechaIni;"2016/11/01"
-//    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_fin = fechaFin;
-    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_ini = "2016/11/01";
-    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_fin = "2016/12/01";
+    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_ini = fechaIni;
+    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_fin = fechaFin;
+//    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_ini = "2016/11/01";
+//    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_fin = "2016/12/01";
     dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro_ini = "";
     dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro_fin = "";
     dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_est = "99";
