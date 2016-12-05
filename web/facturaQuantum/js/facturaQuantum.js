@@ -315,7 +315,7 @@ function iniAutocomplete(){
                 data: function (e){                    
                     if(e.dsgfc_cli.eeEstados[0].Estado==="OK"){
                         return e.dsgfc_cli.eegfc_cli;
-                    }else if(e.dsgfc_cli.eeEstados[0].Estado==="ERROR: Patrón de Búsqueda Insuficiente !!!"){
+                    }else if(e.dsgfc_cli.eeEstados[0].Estado==="ERROR: Patrón de Búsqueda insuficiente !!!"){
                         
                     }else{
                         alertDialogs(e.dsgfc_cli.eeEstados[0].Estado);
@@ -1236,11 +1236,11 @@ function finalizarFactura(){
         actions[0].primary = "true";
         actions[0].action = crearNuevaFactura;
         actions[1] = new Object();
-        actions[1].text = "volver a facturación";        
+        actions[1].text = "Volver a facturación";        
         actions[1].action = volverFacturacion;
-        actions[2] = new Object();
-        actions[2].text = "cancelar";        
-        actions[2].action = volverFacturaQuantum;
+//        actions[2] = new Object();
+//        actions[2].text = "Cancelar";        
+//        actions[2].action = volverFacturaQuantum;
         createDialog("", "A finalizado la edición de la factura ¿Que desea hacer?", "400px", "auto", true, true, actions);           
     }
 }

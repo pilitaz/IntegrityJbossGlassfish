@@ -30,10 +30,10 @@ $(document).ready(function() {
                 parameterMap: function (options, operation) {                    
                     try {                         
                         if (operation === 'read') {
-                            
+                            debugger
                             authdssic_tcont.dssic_tcont.eetemp[0].piitcont__cod = 0;
                             authdssic_tcont.dssic_tcont.eetemp[0].picclc__cod = parent.$("#ipCDocumento").val();
-                            //authdssic_tcont["eesic_tcont"] = [options];                            
+                            authdssic_tcont["eesic_tcont"] = [options];                            
                             return JSON.stringify(authdssic_tcont);
                         }	
                     } catch (e) {
