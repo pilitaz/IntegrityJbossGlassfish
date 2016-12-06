@@ -19,6 +19,7 @@ $(document).ready(function() {
         dataTextField: "tcont__des",
         dataValueField: "tcont__cod",      
         template:'<div class="divElementDropDownList">#: data.tcont__des #</div>',
+        change: onChangeConceptoDet,
         dataSource: {
             transport: {
                 read: {
@@ -265,23 +266,17 @@ $(document).ready(function() {
     });
     
     function onChangeConceptoDet(e){
+        debugger
         
-        var codAmortizacion= e.sender.dataSource._data[e.sender.selectedIndex-1].pdif__cla;
+        var codAmortizacion= e.sender.dataSource._data[e.sender.selectedIndex-1].tcon_dif;
         var dropdownlist = $("#idCodigoAmortizacion").data("kendoDropDownList");
         var numericTextBoxTasa= $("#ipDiasAmortizacion").data("kendoNumericTextBox");
-        var datepickerFechaTasa= $("#ipFechaAmortizacion").data("kendoDatePicker");
+        var datepickerFechaTasa= $("#ipFechaAmortizacion").data("kendoDatePicker");        
         
-        if(codAmortizacion===0){
-            dropdownlist.enable(false);
-            numericTextBoxTasa.enable(false);            
-            datepickerFechaTasa.enable(false);
-        }else{
-            dropdownlist.enable(true);
-            numericTextBoxTasa.enable(true);            
-            datepickerFechaTasa.enable(true);
-            dropdownlist.value(codAmortizacion);
-            dropdownlist.readonly();   
-        }        
+        dropdownlist.enable(codAmortizacion);
+        numericTextBoxTasa.enable(codAmortizacion);            
+        datepickerFechaTasa.enable(codAmortizacion);
+        
     }
     
     function onChangeClase(e){

@@ -158,8 +158,8 @@ function iniDropDownList(){
                 parameterMap: function (options, operation) {                    
                     try {                         
                         if (operation === 'read') {
-//                            authdssic_tcont.dssic_tcont.eetemp = new Array();
-//                            authdssic_tcont.dssic_tcont.eetemp[0] = new Object();
+//                            authdssic_clc.dssic_clc.eetemp = new Array();
+//                            authdssic_clc.dssic_clc.eetemp[0] = new Object();
 //                            authdssic_clc.dssic_clc.eetemp[0].piccod__por = sessionStorage.getItem("portafolio");
 //                            authdssic_clc["eesic_tcont"] = [options];                            
                             return JSON.stringify(authdssic_clc);
@@ -389,12 +389,10 @@ function iniAutocomplete(){
 }
 function gridDetalle(){    
     var grid = $("#grid").kendoGrid({
-        dataSource: dataGridDetalle,
-        navigatable: true,
-        batch: false,
-        pageable: true,
-        selectable: "row",
-        height: 400,     
+        dataSource: dataGridDetalle,       
+        selectable: false,
+        height: 400,
+        //dataBound: borrarBotonesGrilla,
         columns: [
             {
                 field: "ConceptoDet",
@@ -456,6 +454,8 @@ function gridDetalle(){
                     {name: "eliminar", click: eliminarItem, template: "<a class='k-grid-eliminar'><span class='k-sprite po_cerrar'></span></a>"}
                 ] 
                 }],
+        rowTemplate: kendo.template($("#rowTemplateItem").html()),
+        altRowTemplate: kendo.template($("#altRowTemplateItem").html()),
         editable: {
             mode: "popup",
             window: {
@@ -467,7 +467,7 @@ function gridDetalle(){
         cancel: function (e) {            
             e._defaultPrevented = true;
             $('#grid').data('kendoGrid').refresh();
-        }
+        },        
     }).data("kendoGrid");
     
     function eliminarItem(e){ 
@@ -983,6 +983,7 @@ function cargarFactura(){
     var estado;
     document.getElementById('idNumerofactura').innerHTML = 'Nº '+sessionStorage.getItem("facturaNumero");
     
+    
     try{
         var dsSIRgfc_fac = new Object();
         dsSIRgfc_fac.dsSIRgfc_fac = new Object();
@@ -1015,9 +1016,10 @@ function cargarFactura(){
                 if(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__est===1||factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__est===9){
                     document.getElementById("btnGuardar").remove();            
                     document.getElementById("btnAgregarItem").remove();
-                    deshabilitarCampos();
-                }
-                debugger
+                    deshabilitarCampos();                    
+                }                
+                sessionStorage.setItem("facturaEstado", factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__est);
+                
                 var kendoDropDownListSucursal = $("#ipSucursal").data("kendoDropDownList");
                 kendoDropDownListSucursal.value(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].suc__cod);
                 kendoDropDownListSucursal.readonly(true)
@@ -1201,22 +1203,10 @@ function deshabilitarCampos(){
             console.log("No se encontro kendoData");
             continue
         }
-        debugger
+        
         element = $("#"+id).data(kendoData);
         element.readonly(true);
     }
-    
-//    var buttons = $("div").find("a");        
-//    debugger
-//    for(var i=0; i<buttons.length; i++){
-//          
-//        
-//        id = buttons[i].id;
-//        
-////        console.log(buttons[i].attributes["0"].nodeValue + " :\t"+buttons[i].dataset.role +"\t"+kendoData);
-////        element = $("#"+id).data(kendoData);
-////        element.readonly(true);                        
-//    }
 }
 
 function finalizarFactura(){    
@@ -1250,7 +1240,6 @@ function volverFacturaQuantum(){
 function crearNuevaFactura (){
     limpiarDatosFacturación();
     location.href=location.href
-//    window.onload();
 }
 
 function limpiarDatosFacturación(){
@@ -1261,5 +1250,23 @@ function limpiarDatosFacturación(){
     sessionStorage.removeItem("facturaClaseDoc");
     sessionStorage.removeItem("facturaFecha");   
     
+}
+
+function borrarBotonesGrilla(){    
+    if(sessionStorage.getItem("facturaEstado")==="1"||sessionStorage.getItem("facturaEstado")==="9"){
+        var buttons = $("body").find("a.k-grid-editar");
+        
+        for(var i=0; i<buttons.length; i++){
+            id = buttons[i].id;
+            document.getElementById(id).remove();
+        }
+        
+        var buttons = $("body").find("a.k-grid-eliminar");
+        
+        for(var i=0; i<buttons.length; i++){
+            id = buttons[i].id;
+            document.getElementById(id).remove();
+        }
+    }
 }
 

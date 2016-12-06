@@ -3,6 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var dsfiles = new Object();
+dsfiles.dsfiles = new Object();
+dsfiles.dsfiles.eeDatos = new Array();
+dsfiles.dsfiles.eeDatos[0] = new Object();
+dsfiles.dsfiles.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
+dsfiles.dsfiles.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
+dsfiles.dsfiles.eeDatos[0].local_ip = sessionStorage.getItem("ipPrivada");
+dsfiles.dsfiles.eeDatos[0].remote_ip = sessionStorage.getItem("ipPublica");
 
 var dsSIRgfc_fac = new Object();
 dsSIRgfc_fac.dsSIRgfc_fac = new Object();
@@ -130,12 +138,14 @@ function gridFacturas(){
         sessionStorage.setItem("facturaNumero", factura.fac__nro);
         sessionStorage.setItem("facturasucursal", factura.suc__cod);
         sessionStorage.setItem("facturaClaseDoc", factura.clc__cod);
-        sessionStorage.setItem("facturaFecha", factura.fac__fec);
+        sessionStorage.setItem("facturaFecha", factura.fac__fec);        
         window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html"));   
     }
     
-    function imprimirFact(e){        
+    function imprimirFact(e){
+        debugger
         e.preventDefault();        
+        var archivo
         var factura = this.dataItem($(e.currentTarget).closest("tr"));
         
         try{
@@ -159,13 +169,27 @@ function gridFacturas(){
                 dataType : "json",
                 contentType: "application/json;",
                 success: function (resp) {                    
-                    estado = JSON.stringify(resp.response.pocestado);                                    
+                    estado = JSON.stringify(resp.response.pocestado);   
+                    archivo = resp.response.pocarchivo;
+                    archivo = archivo.split("\\")[2];
+                    sessionStorage.setItem("documento",3246+".pdf");
                 },
                 error: function (e) {
                     kendo.alert(" Error al consumir el servicio.\n"+ e.status +" - "+ e.statusText);                
                 }
             }).done(function(){
-                if(estado==='"OK"'){                    
+                if(estado==='"OK"'){
+                    
+                    var actions = new Array();
+                    actions[0] = new Object();
+                    actions[0].text = "Ver online";            
+                    actions[0].action = showFile;
+                    actions[1] = new Object();
+                    actions[1].text = "Original";
+                    actions[1].primary = "true";
+                    actions[1].action = getFile;                    
+                    createDialog("", "Archivo creado exitosamente "+sessionStorage.getItem("documento")+" que desea hacer ", "400px", "auto", true, true, actions);   
+                    
                     $('#grid').data('kendoGrid').dataSource.read();
                     $('#grid').data('kendoGrid').refresh();
                 }else{
@@ -298,4 +322,90 @@ function changImgFunc(facturas) {
             document.getElementById("anular"+id).setAttribute("class", "k-sprite po_cerrar");
         }
     }
+}
+
+/**
+ * Permite ver en el navegador el archivo
+ * @param {type} e
+ * @returns {undefined}
+ */
+
+function showFile(e){
+    try{        
+        var archivo = sessionStorage.getItem("documento");
+        dsfiles.dsfiles.SIRfile = new Array();
+        dsfiles.dsfiles.SIRfile[0] = new Object();
+        dsfiles.dsfiles.SIRfile[0].pilfilename = archivo;
+       //console.log("dsfiles\n"+JSON.stringify(dsfiles));
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(dsfiles),
+            url: ipServicios+baseServicio+"GetDocument",
+            dataType : "json",
+            contentType: "application/json;",
+            success: function (resp) {                
+                documentobase64 = JSON.stringify(resp.response.polfile);
+                documentobase64 = documentobase64.replace(/"/g, "");                 
+                sessionStorage.setItem("documentobase64",documentobase64);                
+            },
+            error: function (e) {
+                kendo.alert("Error" + JSON.stringify(e));
+            }
+        }).done(function(){
+            var tipoArchivo = sessionStorage.getItem("documento").split(".")[sessionStorage.getItem("documento").split(".").length-1];            
+            if (tipoArchivo==="pdf"){
+                var dataURI = "data:application/pdf;base64,"+ sessionStorage.getItem("documentobase64");                
+            }else if(tipoArchivo==="gif"||tipoArchivo==="jpeg"||tipoArchivo==="png"||tipoArchivo==="pjpeg"||tipoArchivo==="tiff"){
+                var dataURI = "data:image/"+tipoArchivo+";base64,"+ sessionStorage.getItem("documentobase64");
+            }
+            else {
+                var dataURI = "data:text/plain;base64,"+ sessionStorage.getItem("documentobase64");
+            }            
+            var a = document.createElement("a");
+            a.target = "_blank";
+            a.href = dataURI;
+            a.click();
+        });
+    }catch(e){
+        kendo.alert(e.message);
+    }
+}
+
+/**
+ * Descarga el archivo en su formato original
+ * @param {type} e
+ * @returns {undefined}
+ */
+function getFile(e){    
+    try{
+        var archivo = sessionStorage.getItem("documento");
+        dsfiles.dsfiles.SIRfile = new Array();
+        dsfiles.dsfiles.SIRfile[0] = new Object();
+        dsfiles.dsfiles.SIRfile[0].pilfilename = archivo;
+        
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(dsfiles),
+            url: ipServicios+baseServicio+"GetDocument",
+            dataType : "json",
+            contentType: "application/json;",
+            success: function (resp) {                
+                documentobase64 = JSON.stringify(resp.response.polfile);
+                documentobase64 = documentobase64.replace(/"/g, "");                 
+                sessionStorage.setItem("documentobase64",documentobase64);                
+            },
+            error: function (e) {
+                alert("Error" + JSON.stringify(e));
+            }
+        }).done(function(){            
+            var dataURI = "data:text/plain;base64,"+ sessionStorage.getItem("documentobase64");            
+            kendo.saveAs({
+                dataURI: dataURI,
+                fileName: sessionStorage.getItem("documento")
+            });
+
+        });
+    }catch(e){
+        kendo.alert(e.message);
+    }   
 }

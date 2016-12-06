@@ -364,7 +364,7 @@
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -858px -658px;
         cursor:pointer;
-        pointer-events: none;   
+/*        pointer-events: none;   */
 }
 
 /* ——  */
