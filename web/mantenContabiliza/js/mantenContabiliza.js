@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-var bandAlert = 0;//variable de bandera por que kendo tiene un bug que ejecuta dos veces la función de popUp alert
 /**
  * Funcion para ajustar el alto de la grilla 
  */
@@ -112,12 +111,11 @@ function ClickEditar(e){
 
 function clickEliminar(e){
     try {
-        bandAlert++;
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
         var dataItem = $("#girdConta").data("kendoGrid").dataItem($(e.target).closest("tr"));
 
-        if (bandAlert === 1) {
+        
             var actions = new Array();
             actions[0] = new Object();
             actions[0].text = "OK";
@@ -133,7 +131,7 @@ function clickEliminar(e){
                 bandAlert = 0;
             };
             createDialog("Atención", "Esta seguro de eliminar el Reporte ---" + dataItem.rpt_nom + " ---?", "400px", "200px", true, true, actions);
-        }
+       
     } catch (e) {
         $('#girdConta').data('kendoGrid').dataSource.read();
         $('#girdConta').data('kendoGrid').refresh();

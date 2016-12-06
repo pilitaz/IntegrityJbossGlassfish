@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+var bandAlert = 0;
 /**
  *  funcion para coger un textField y cambiarlo por los parametros de una funcion kendo
  * @param {type} idElemento id del elementohtml
@@ -295,7 +295,9 @@ function identBrowser() {
  * @returns {undefined}
  */
 function createDialog(titulo, contenido, ancho, alto, modal, cerrar, actions){
+    bandAlert++;
 //    $("#btnLogin").kendoButton().data("kendoButton")
+    if (bandAlert === 1) {
     $("body").append("<div id='dialog1'></div>");
     var dialog = $('#dialog1');
     
@@ -309,12 +311,12 @@ function createDialog(titulo, contenido, ancho, alto, modal, cerrar, actions){
         actions: actions,
         close: onClose        
     });
-    
+    }
 }
 function onClose(e) {    
     var dialog = $('#dialog1');
     dialog.fadeIn(6000,function(){
-        document.getElementById("dialog1").remove();
+        document.getElementById("dialog1").remove();bandAlert = 0;
     });    
 }
 /**
@@ -323,6 +325,7 @@ function onClose(e) {
  */
 function closeWin() {
     $("#dialog").data("kendoDialog").close();
+    
     document.getElementById("#dialog").remove();
 }
 /**
