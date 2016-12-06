@@ -34,6 +34,7 @@ authdssic_tcont.dssic_tcont.eeDatos[0].picusrcod = sessionStorage.getItem("usuar
 authdssic_tcont.dssic_tcont.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
 authdssic_tcont.dssic_tcont.eetemp = new Array();
 authdssic_tcont.dssic_tcont.eetemp[0] = new Object();
+
 //console.log(JSON.stringify(authsic_clc));
 
 var authdssic_mnd = new Object();

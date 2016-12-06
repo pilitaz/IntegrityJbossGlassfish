@@ -19,10 +19,10 @@ $(document).ready(function() {
     var fechaIni= new Date(sessionStorage.getItem("fechaSistema"));
     fechaIni.setDate(fechaFin.getDate() - 90);    
     
-//    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_ini = fechaIni;"2016/11/01"
-//    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_fin = fechaFin;
-    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_ini = "2016/11/01";
-    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_fin = "2016/12/01";
+    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_ini = fechaIni;
+    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_fin = fechaFin;
+//    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_ini = "2016/11/01";
+//    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_fin = "2016/12/01";
     dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro_ini = "";
     dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro_fin = "";
     dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_est = "99";
@@ -158,8 +158,7 @@ function gridFacturas(){
                 url: ipServicios+baseComercial+"SIRpdf",            
                 dataType : "json",
                 contentType: "application/json;",
-                success: function (resp) {
-                    debugger
+                success: function (resp) {                    
                     estado = JSON.stringify(resp.response.pocestado);                                    
                 },
                 error: function (e) {
@@ -180,8 +179,59 @@ function gridFacturas(){
     }
     
     function anularFactura(e){        
-        e.preventDefault();        
+        e.preventDefault();   
+        
         var factura = this.dataItem($(e.currentTarget).closest("tr"));
+        
+        var fechaSistema = new Date(sessionStorage.getItem("fechaSistema"));
+        var mesSistema = fechaSistema.getMonth();
+        
+        var fechaFactura = new Date((factura.fac__fec).replace(/-/g, "/"));
+        var mesFactura = fechaFactura.getMonth();
+        
+        if(mesSistema!==mesFactura){
+            return
+        }
+        
+        try{
+            var dsSIRgfc_fac = new Object();
+            dsSIRgfc_fac.dsSIRgfc_fac = new Object();
+            dsSIRgfc_fac.dsSIRgfc_fac.eeDatos = new Array();
+            dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0] = new Object();
+            dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
+            dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].fiid = sessionStorage.getItem("picfiid");        
+            dsSIRgfc_fac.dsSIRgfc_fac.eetemp = new Array();
+            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0] = new Object();
+            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picsuc_cod = factura.suc__cod;
+            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picclc_cod = factura.clc__cod;
+            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].pidfac_fec = factura.fac__fec;
+            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro = factura.fac__nro;        
+            
+            $.ajax({
+                type: "PUT",
+                data: JSON.stringify(dsSIRgfc_fac),
+                url: ipServicios+baseComercial+"SICUDgfc_fac_Anu",            
+                dataType : "json",
+                contentType: "application/json;",
+                success: function (resp) {                    
+                    estado = JSON.stringify(resp.dsSIRgfc_fac.eeEstados["0"].Estado);                                    
+                },
+                error: function (e) {
+                    kendo.alert(" Error al consumir el servicio.\n"+ e.status +" - "+ e.statusText);                
+                }
+            }).done(function(){
+                if(estado==='"OK"'){                    
+                    $('#grid').data('kendoGrid').dataSource.read();
+                    $('#grid').data('kendoGrid').refresh();
+                }else{
+                    alertDialogs("Error anulando la factura.\n"+estado);
+                }
+            });
+            
+        } catch (e) {
+            alertDialogs("Function: consumeServAjaxSIR Error: " + e.message);
+        }
+        
     }
 }
 
@@ -220,8 +270,7 @@ function closePopUpFiltros(){
     $("#windowFiltros").data("kendoWindow").close();
 }
 
-function changImgFunc(facturas) {
-    debugger
+function changImgFunc(facturas) {   
     
     var fechaSistema = new Date(sessionStorage.getItem("fechaSistema"));
     var mesSistema = fechaSistema.getMonth();
@@ -245,7 +294,7 @@ function changImgFunc(facturas) {
         fechaFactura =  new Date((facturas[i].fac__fec).replace(/-/g, "/"));
         mesFactura = fechaFactura.getMonth();
         
-        if(mesSistema===mesFactura){
+        if(mesSistema===mesFactura && facturas[i].fac__edo!=="Anulado"){
             document.getElementById("anular"+id).setAttribute("class", "k-sprite po_cerrar");
         }
     }

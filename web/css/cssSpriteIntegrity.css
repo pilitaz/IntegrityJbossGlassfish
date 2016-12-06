@@ -342,13 +342,13 @@
 .po_print{
 	width: 34px;
 	height: 34px;
-        background: url(../images/SpriteIntegrity.png) -58px -658px;	
+        background: url(../images/SpriteIntegrity.png) -58px -658px;               
 	cursor:pointer
 }
 .po_print:hover {
 	width: 34px;
 	height: 34px;
-        background: url(../images/SpriteIntegrity.png) -8px -658px;	
+        background: url(../images/SpriteIntegrity.png) -8px -658px; 
 	cursor:pointer
 }
 .po_print:active {
@@ -489,19 +489,19 @@
 
 /* ——  */
 
-.po_check{
+.po_check_sup{
 	width: 34px;
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -8px -958px;
 	cursor:pointer
 }
-.po_check:hover {
+.po_check_sup:hover {
 	width: 34px;
 	height: 34px;
-	background: url(../images/SpriteIntegrity.png) -808px -958px;
+	background: url(../images/SpriteIntegrity.png) -58px -958px;
 	cursor:pointer
 }
-.po_check:active {
+.po_check_sup:active {
 	width: 34px;
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -8px -958px;
@@ -509,10 +509,30 @@
 
 /* ——  */
 
-.po_check_disabled{
+.po_check{
 	width: 34px;
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -58px -958px;
+	cursor:pointer
+}
+.po_check:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -958px;
+	cursor:pointer
+}
+.po_check:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -958px;
+}
+
+/* ——  */
+
+.po_check_disabled{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -858px -958px;
 	cursor:pointer;
         pointer-events: none;            
 }
