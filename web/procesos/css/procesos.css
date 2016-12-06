@@ -85,7 +85,20 @@ table{
    
     overflow: auto;
 }
+#grid{
+    height:200px;
 
+    /*width:550px;*/
+   
+    overflow: auto;
+}
+#grid1 {
+    height:200px;
+
+    /*width:550px;*/
+   
+    overflow: auto;
+}
 .po_bulleto1{
 	width: 34px;
 	height: 34px;
@@ -142,7 +155,9 @@ table{
       background: #f1f1f1;
   }
 
-
+.red {
+    color: red;
+}
 
 
 html{}a.solink{position:fixed;top:50;width:100%;text-align:center;background:#f3f5f6;color:#cfd6d9;border:1px solid #cfd6d9;line-height:30px;text-decoration:none;transition:all .3s;z-index:999}a.solink::first-letter{text-transform:capitalize}a.solink:hover{color:#428bca}

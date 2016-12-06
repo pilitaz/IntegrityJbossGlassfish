@@ -32,14 +32,14 @@ and open the template in the editor.
 
     </head>
     <body>
-                        <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
+            <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
             <tr data-uid="#: uid #"> 
-                <td>
+                <td> 
                 <a  class='k-grid-bullet'><span class='k-sprite pro_bullet1'></span></a>
                 </td>
                 
                 <td>
-                    <span class="title">#: proc__name #</span>
+                    <span class="title" id ="#: proc__name #">#: proc__name # </span>
                 </td>
                 <td>
                 
@@ -68,8 +68,62 @@ and open the template in the editor.
               
             </td>
             </tr>
+    
         </script>
         
+            <script id="rowTemplateCmp1" type="text/x-kendo-tmpl">
+            <tr data-uid="#: uid #"> 
+
+                
+                               <td>
+                    <span class="title" id ="#: inst__name ##: task__name ##: inst__name #">#: inst__name # </span>
+                </td>
+                <td>
+                    <span class="title" id ="#: inst__name ##: task__name ##: task__name #">#: task__name # </span>
+                </td>                <td>
+                    <span class="title" id ="#: inst__name ##: task__name ##: task__des #">#: task__des # </span>
+                </td>                <td>
+                    <span class="title" id ="#: inst__name ##: task__name ##: task__tst #">#: task__tst # </span>
+                </td>                <td>
+                    <span class="title" id ="#: inst__name ##: task__name ##: task__ddt #">#: task__ddt # </span>
+                </td>                <td>
+                    <span class="title" id ="#: inst__name ##: task__name ##: task__dpr #">#: task__dpr # </span>
+                </td>                <td>
+                    <span class="title" id ="#: inst__name ##: task__name ##: task__type #">#: task__type # </span>
+                </td>
+                <td>
+                     <a  class='k-grid-iniciar'><span title='iniciar' id = "spaniniciar#: inst__name #" class='k-sprite pro_playoff'></span></a>
+
+                    </td>
+                
+            </tr>
+        </script>
+        <script id="altRowTemplateCmp1" type="text/x-kendo-tmpl">
+            <tr class="k-alt" data-uid="#: uid #">
+              
+                                                             <td>
+                    <span class="title" id ="#: inst__name ##: task__name ##: inst__name #">#: inst__name # </span>
+                </td>
+                <td>
+                    <span class="title" id ="#: inst__name ##: task__name ##: task__name #">#: task__name # </span>
+                </td>                <td>
+                    <span class="title" id ="#: inst__name ##: task__name ##: task__des #">#: task__des # </span>
+                </td>                <td>
+                    <span class="title" id ="#: inst__name ##: task__name ##: task__tst #">#: task__tst # </span>
+                </td>                <td>
+                    <span class="title" id ="#: inst__name ##: task__name ##: task__ddt #">#: task__ddt # </span>
+                </td>                <td>
+                    <span class="title" id ="#: inst__name ##: task__name ##: task__dpr #">#: task__dpr # </span>
+                </td>                <td>
+                    <span class="title" id ="#: inst__name ##: task__name ##: task__type #">#: task__type # </span>
+                </td>
+                <td>
+                     <a  class='k-grid-iniciar'><span title='iniciar' id = "spaniniciar#: inst__name #" class='k-sprite pro_playoff'></span></a>
+
+                    </td>
+            </tr>
+    
+        </script>
         <div class="mainContainer">
             <div>
                 <div>

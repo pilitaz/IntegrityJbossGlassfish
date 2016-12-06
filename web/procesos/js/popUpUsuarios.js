@@ -79,6 +79,7 @@ $(document).ready(function () {
    
         var grid_usr = $("#grilla_usr").kendoGrid({
         dataSource: dataSource,
+        filterable:true,
         columns: [
             {field: "usr__cod", title: "Usuarios", hidden: false},
             {field: "usr__name", title: "Nombre", hidden: false},
