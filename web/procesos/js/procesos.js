@@ -253,7 +253,7 @@ $(document).ready(function () {
                         
 });
 
-function iniciarProceso(e){debugger
+function iniciarProceso(e){
     var adm = this.dataItem($(e.currentTarget).closest("tr")).id;
     var consultar = new sistartaplication();
     var datajson = consultar.getjson();
@@ -269,7 +269,7 @@ function iniciarProceso(e){debugger
         url: urlService,
         dataType: "json",        
         contentType: "application/json;",
-        success: function (resp) {  debugger
+        success: function (resp) {
             if((resp.dsAplication.eeEstados["0"].Estado)=="OK")
             {
             
@@ -291,7 +291,7 @@ function grafica(e){
     if (adm=== true ){               
         var myWindow1 = $("#textarea"),undo = $("#undo");
                 
-        function onClose() {debugger
+        function onClose() {
             undo.fadeIn();
             $("#textarea").empty();
         
@@ -316,7 +316,7 @@ function grafica(e){
     
 
                     
-function grilla(e){debugger
+function grilla(e){
     e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
     var id = this.dataItem($(e.currentTarget).closest("tr")).proc__name;
     var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
@@ -328,7 +328,7 @@ function grilla(e){debugger
                         
         var myWindow2 = $("#windowg"),undo = $("#undo");
                 
-        function onClose1() {debugger
+        function onClose1() {
             undo.fadeIn();
             $("#grillapopUp").empty();
         }  
@@ -360,7 +360,7 @@ function disable(){
     
 
 }
-function changImgFunc1(results) {
+function changImgFunc1(results) {debugger
     var consultar = new serviTime();
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();
@@ -418,7 +418,7 @@ function changImgFunc1(results) {
         
     }
     
-    for (var i = 0; i < results.length; i++) {debugger
+    for (var i = 0; i < results.length; i++) {
      
     var fecha2 = new Date(results[i].task__ddt);
     var mesServicio = fecha2.getMonth()+1;
@@ -470,7 +470,7 @@ function changImgFunc1(results) {
 
 }
 
-function changImgFunc(results) {debugger
+function changImgFunc(results) {
        
         
        
