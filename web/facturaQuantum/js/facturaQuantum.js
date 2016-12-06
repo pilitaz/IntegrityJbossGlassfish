@@ -392,7 +392,7 @@ function gridDetalle(){
         dataSource: dataGridDetalle,       
         selectable: false,
         height: 400,
-        //dataBound: borrarBotonesGrilla,
+        dataBound: borrarBotonesGrilla,
         columns: [
             {
                 field: "ConceptoDet",
@@ -430,7 +430,7 @@ function gridDetalle(){
             {
                 field: "ValorTotal",
                 title: "Valor total",
-                format: "{0:c}"
+                template: '#= kendo.toString(ValorTotal, "{0:c}" ) #'
             },
             {
                 field: "codAmortizacion",
