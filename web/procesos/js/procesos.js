@@ -177,30 +177,25 @@ $(document).ready(function () {
      */     
     var grid1 = $("#grid1").kendoGrid({
         dataSource: datasourcex,
-                            
-                            
-
-
-                            
-        //navigatable: true,
         columns: [
             {field: "inst__name", title: "Proceso",  hidden:false},
             {field: "task__name", title: "Tareas",  hidden:false},
-            {field: "task__des", title: "Descripcion",  hidden:false},
-            
-            {field: "task__tst", title: "Fecha de Inicio", format: "{0:MM/dd/yyyy h:mm tt}", hidden:false},
-            {field: "task__ddt", title: "Fecha de entrega", format: "{0:MM/dd/yyyy h:mm tt}", hidden:false},
+            {field: "task__des", title: "Descripcion",  hidden:false},               
+            {field: "task__tst", title: "Fecha de Inicio", format: "{0:dd/MM/yyyy h:mm tt}", hidden:false},           
+            {field: "task__ddt", title: "Fecha de entrega", format: "{0:dd/MM/yyyy h:mm tt}", hidden:false},
             {field: "task__dpr", title: "Admin de proceso",  hidden:false},
             {field: "task__type", title: "Tipo",  hidden:false},             
             {command:
                         [
-                           
-                           
-                    {name: "destroy", template: "<a class='k-grid-delete' href='' style='min-width:16px;'><span class='k-sprite pro_playoff'></span></a>"}
+                    {name: "inciar", template: "<a class='k-grid-iniciar' href='' style='min-width:16px;'><span class='k-sprite pro_playoff'></span></a>"}
                 ],
-                width: "50px"}]    ,                            
-        //editable: "popup",
-                            
+                width: "50px"}], 
+        rowTemplate: kendo.template($("#rowTemplateCmp1").html()),
+        altRowTemplate: kendo.template($("#altRowTemplateCmp1").html()),
+        dataBound: function () {
+            var results1 = datasourcex.data();
+            changImgFunc1(results1);
+        },
         cancel: function(e) {                                                                                   
             e._defaultPrevented= true;
             $('#grid1').data('kendoGrid').refresh();                                             
@@ -208,32 +203,6 @@ $(document).ready(function () {
             $('#grid1').data('kendoGrid').refresh();                                                                                        
         } 
     });
-                        
-    //    $('#grid').hover(function() {
-    //        $(this).css('background-color', 'Transparent');
-    //        $(this).contents('tr').css({'border': '1px solid red', 'border-left': 'none', 'border-right': 'none'});
-    //        $(this).contents('tr:first').css('border-left', '1px solid red');
-    //        $(this).contents('tr:last').css('border-right', '1px solid red');
-    //    },
-    //    function() {
-    //        $(this).css('background-color', 'Transparent');
-    //        $(this).contents('tr').css('border', 'none');
-    //    });
-
-    // $("#grid").hover(
-    //
-    //      function() {
-    // 
-    //          $(this).css({ "border": "Solid Brown 1px" });
-    //            $(this).css({ "border": "Solid Brown 1px" });
-    //      },
-    //
-    // function() {
-    //           $(this).css({ "border": "" });
-    //
-    //      });
-    //-------------------------------------------------
-        
     $("#filtro_p").kendoComboBox({
         dataTextField: "inst__name",
         dataValueField: "inst__name",
@@ -391,6 +360,116 @@ function disable(){
     
 
 }
+function changImgFunc1(results) {
+    var consultar = new serviTime();
+    var datajson = consultar.getjson();
+    var urlService = consultar.getUrlSir();
+    
+     $.ajax({
+            type: "POST",
+            async: false,
+            data: JSON.stringify(datajson),
+            url: urlService,
+            dataType : "json",  
+            contentType: "application/json;",
+            success: function (resp) {             
+                sessionStorage.setItem("Fecha_Hora",resp.dstime.eetime["0"].systime);
+                               
+            },
+            error: function (e) {
+               
+            }
+        });
+    
+    
+    
+    
+    
+    //var asdas =  sessionStorage.getItem("Fecha_Hora");"2016-12-06T10:5:44.937";
+    var s =   sessionStorage.getItem("Fecha_Hora");
+    var x = s.replace("T", " ");
+    var fechaSistema =  new Date(x);
+    //var fechaSistema = new Date(sessionStorage.getItem("Fecha_Hora"));
+    var mesSistema = fechaSistema.getMonth()+1;
+    var diaSistema = fechaSistema.getDate();
+    var AñoSistema = fechaSistema.getUTCFullYear();
+    var horaSistema = fechaSistema.getHours();
+    var minSistema = fechaSistema.getMinutes();
+
+
+    
+    for (var i = 0; i < results.length; i++) {
+    var fecha1 = new Date(results[i].task__tst);
+    var mesSistema1 = fecha1.getMonth()+1;
+    var diaSistema1 = fecha1.getDate();
+    var AñoSistema1 = fecha1.getUTCFullYear();
+    var horaSitema1 = fecha1.getHours();
+    var minSistema1 = fecha1.getMinutes();
+    
+    var fecha2 = new Date(results[i].task__ddt);
+    var mesSistema2 = fecha2.getMonth()+1;
+    var diaSistema2 = fecha2.getDate();
+    var AñoSistema2 = fecha2.getUTCFullYear();
+    var horaSitema2 = fecha2.getHours();
+    var minSistema2 = fecha2.getMinutes();
+    
+        document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__tst).innerHTML  = diaSistema1+"/"+mesSistema1+"/"+AñoSistema1 + " "+horaSitema1+":"+minSistema1; 
+        document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__ddt).innerHTML  = diaSistema2+"/"+mesSistema2+"/"+AñoSistema2 + " "+horaSitema2+":"+minSistema1; 
+        
+    }
+    
+    for (var i = 0; i < results.length; i++) {debugger
+     
+    var fecha2 = new Date(results[i].task__ddt);
+    var mesServicio = fecha2.getMonth()+1;
+    var diaServicio = fecha2.getDate();
+    var AñoServicio = fecha2.getUTCFullYear();
+    var horaServicio = fecha2.getHours();
+    var minServicio = fecha2.getMinutes();
+    
+    var fechaSistema = AñoSistema+diaSistema+mesSistema;
+        if ((mesServicio<mesSistema || diaServicio<diaSistema || AñoServicio<AñoSistema)){
+            
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].inst__name).style.color = 'red';  
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__name).style.color = 'red'; 
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__des).style.color = 'red'; 
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__tst).style.color = 'red'; 
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__ddt).style.color = 'red'; 
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__dpr).style.color = 'red'; 
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__type).style.color = 'red'; 
+                
+                    
+    }
+    else{
+        if(diaServicio=diaSistema ){
+           
+            if (horaSistema > horaServicio  ){
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].inst__name).style.color = 'red';  
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__name).style.color = 'red'; 
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__des).style.color = 'red'; 
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__tst).style.color = 'red'; 
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__ddt).style.color = 'red'; 
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__dpr).style.color = 'red'; 
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__type).style.color = 'red'; 
+                    }else{
+            if (horaServicio == horaSistema &&   minSistema >= minServicio ){
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].inst__name).style.color = 'red';  
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__name).style.color = 'red'; 
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__des).style.color = 'red'; 
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__tst).style.color = 'red'; 
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__ddt).style.color = 'red'; 
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__dpr).style.color = 'red'; 
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__type).style.color = 'red'; 
+                    }
+                    }
+                        
+                    }
+    }
+    
+ }
+
+}
+
 function changImgFunc(results) {debugger
        
         
