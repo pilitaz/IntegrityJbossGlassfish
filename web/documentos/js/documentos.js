@@ -143,7 +143,7 @@ function getFileAsPDF(e) {
             }
         }).done(function () {
             var dataURI = "data:text/plain;base64," + sessionStorage.getItem("documentobase64");
-            archivo = archivo.replace(/.[a-z]+/g, ".pdf");
+            archivo = archivo.replace(/\.[a-z]+/g, ".pdf");
             kendo.saveAs({
                 dataURI: dataURI,
                 fileName: archivo
