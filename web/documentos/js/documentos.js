@@ -5,24 +5,24 @@ dsfiles.dsfiles.eeDatos[0] = new Object();
 dsfiles.dsfiles.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
 dsfiles.dsfiles.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
 dsfiles.dsfiles.eeDatos[0].local_ip = sessionStorage.getItem("ipPrivada");
-dsfiles.dsfiles.eeDatos[0].remote_ip = sessionStorage.getItem("ipPublica");        
+dsfiles.dsfiles.eeDatos[0].remote_ip = sessionStorage.getItem("ipPublica");
 console.log(JSON.stringify(dsfiles));
-
+var grid = "";
 $(document).ready(function () {
     var dataSource = new kendo.data.DataSource({
         transport: {
-            read:  {
+            read: {
                 type: "POST",
 //                url: "http://35.162.169.179:8810/rest/Base/BaseIntegrity/DocumentList",
-                url: ipServicios+baseServicio+"DocumentList",
+                url: ipServicios + baseServicio + "DocumentList",
                 contentType: "application/json; charset=utf-8",
-                dataType: 'json'             
+                dataType: 'json'
             },
             parameterMap: function (options, operation) {
-                try{                    
-                    if (operation === 'read') {                                
+                try {
+                    if (operation === 'read') {
                         return JSON.stringify(dsfiles);
-                    }                     
+                    }
                 } catch (e) {
                     kendo.alert(e.message);
                 }
@@ -31,175 +31,177 @@ $(document).ready(function () {
         batch: true,
         pageSize: 20,
         schema: {
-            data:"dsfiles.ttfiles",
+            data: "dsfiles.ttfiles",
             model: {
                 fields: {
-                    nomfile: { type: "string" },
-                    tamfile: { type: "integer" },
-                    fecfile: { type: "date:MM-dd-yyyy"}
+                    nomfile: {type: "string"},
+                    tamfile: {type: "integer"},
+                    fecfile: {type: "date:MM-dd-yyyy"}
                 }
             }
         }
     });
-    
-    $("#grid").kendoGrid({
+
+    grid = $("#grid").kendoGrid({
         dataSource: dataSource,
         change: onChange,
         selectable: "row",
         scrollable: false,
-        filterable: {
-            mode: "row"            
-        },        
         //height: 100%,        
         columns: [
-            { 
-                field: "nomfile", 
-                title: "&nbsp;", 
-                width: "auto", 
-                filterable: {
-                    cell: {
-                        showOperators: false,
-                        operator: "contains"
-                    }
-                } 
+            {
+               field: "nomfile",
             }
         ]
     });
+    //para ocultar el header de la grilla
+    $("#grid .k-grid-header").css('display', 'none');
 });
 
-function onChange(arg) {    
-    var selected = $.map(this.select(), function(item) {
+function onChange(arg) {
+    var selected = $.map(this.select(), function (item) {
         return $(item).text();
     });
     sessionStorage.setItem("documento", selected);
-    var tipoArchivo = sessionStorage.getItem("documento").split(".")[sessionStorage.getItem("documento").split(".").length-1];
-    
+    var tipoArchivo = sessionStorage.getItem("documento").split(".")[sessionStorage.getItem("documento").split(".").length - 1];
+
     var actions = new Array();
     actions[0] = new Object();
-    actions[0].text = "Ver online";            
+    actions[0].text = "Ver online";
     actions[0].action = showFile;
     actions[1] = new Object();
     actions[1].text = "Original";
     actions[1].primary = "true";
     actions[1].action = getFile;
-    if(tipoArchivo!=="pdf"){
+    if (tipoArchivo !== "pdf") {
         actions[2] = new Object();
-        actions[2].text = "Como pdf";            
+        actions[2].text = "Como pdf";
         actions[2].action = getFileAsPDF;
     }
-    createDialog("", "El archivo seleccinado es "+selected+" que desea hacer ", "400px", "auto", true, true, actions);   
-    
+    createDialog("Documentos", "El archivo seleccinado es " + selected + " que desea hacer ", "400px", "auto", true, true, actions);
+
 }
 /**
  * Descarga el archivo en su formato original
  * @param {type} e
  * @returns {undefined}
  */
-function getFile(e){    
-    try{
+function getFile(e) {
+    try {
         var archivo = sessionStorage.getItem("documento");
         dsfiles.dsfiles.SIRfile = new Array();
         dsfiles.dsfiles.SIRfile[0] = new Object();
         dsfiles.dsfiles.SIRfile[0].pilfilename = archivo;
-        
+
         $.ajax({
             type: "POST",
             data: JSON.stringify(dsfiles),
-            url: ipServicios+baseServicio+"GetDocument",
-            dataType : "json",
+            url: ipServicios + baseServicio + "GetDocument",
+            dataType: "json",
             contentType: "application/json;",
-            success: function (resp) {                
+            success: function (resp) {
                 documentobase64 = JSON.stringify(resp.response.polfile);
-                documentobase64 = documentobase64.replace(/"/g, "");                 
-                sessionStorage.setItem("documentobase64",documentobase64);                
+                documentobase64 = documentobase64.replace(/"/g, "");
+                sessionStorage.setItem("documentobase64", documentobase64);
             },
             error: function (e) {
                 alert("Error" + JSON.stringify(e));
             }
-        }).done(function(){            
-            var dataURI = "data:text/plain;base64,"+ sessionStorage.getItem("documentobase64");            
+        }).done(function () {
+            var dataURI = "data:text/plain;base64," + sessionStorage.getItem("documentobase64");
             kendo.saveAs({
                 dataURI: dataURI,
                 fileName: sessionStorage.getItem("documento")
             });
 
         });
-    }catch(e){
+    } catch (e) {
         kendo.alert(e.message);
-    }   
+    }
 }
 
-function getFileAsPDF(e){
-    try{
+function getFileAsPDF(e) {
+    try {
         var archivo = sessionStorage.getItem("documento");
         dsfiles.dsfiles.SIRfile = new Array();
         dsfiles.dsfiles.SIRfile[0] = new Object();
         dsfiles.dsfiles.SIRfile[0].pilfilename = archivo;
-        
+
         $.ajax({
             type: "POST",
             data: JSON.stringify(dsfiles),
-            url: ipServicios+baseServicio+"DocumentAsPdf",
-            dataType : "json",
+            url: ipServicios + baseServicio + "DocumentAsPdf",
+            dataType: "json",
             contentType: "application/json;",
-            success: function (resp) {                
+            success: function (resp) {
                 documentobase64 = JSON.stringify(resp.response.polfile);
-                documentobase64 = documentobase64.replace(/"/g, "");                 
-                sessionStorage.setItem("documentobase64",documentobase64);                
+                documentobase64 = documentobase64.replace(/"/g, "");
+                sessionStorage.setItem("documentobase64", documentobase64);
             },
             error: function (e) {
                 alert("Error" + JSON.stringify(e));
             }
-        }).done(function(){
-            var dataURI = "data:text/plain;base64,"+ sessionStorage.getItem("documentobase64");
-            archivo = archivo.replace(/.[a-z]+/g, ".pdf");            
+        }).done(function () {
+            var dataURI = "data:text/plain;base64," + sessionStorage.getItem("documentobase64");
+            archivo = archivo.replace(/.[a-z]+/g, ".pdf");
             kendo.saveAs({
                 dataURI: dataURI,
                 fileName: archivo
             });
         });
-    }catch(e){
+    } catch (e) {
         kendo.alert(e.message);
     }
 }
 
-function showFile(e){
-    try{        
+function showFile(e) {
+    try {
         var archivo = sessionStorage.getItem("documento");
         dsfiles.dsfiles.SIRfile = new Array();
         dsfiles.dsfiles.SIRfile[0] = new Object();
         dsfiles.dsfiles.SIRfile[0].pilfilename = archivo;
-       //console.log("dsfiles\n"+JSON.stringify(dsfiles));
+        //console.log("dsfiles\n"+JSON.stringify(dsfiles));
         $.ajax({
             type: "POST",
             data: JSON.stringify(dsfiles),
-            url: ipServicios+baseServicio+"GetDocument",
-            dataType : "json",
+            url: ipServicios + baseServicio + "GetDocument",
+            dataType: "json",
             contentType: "application/json;",
-            success: function (resp) {                
+            success: function (resp) {
                 documentobase64 = JSON.stringify(resp.response.polfile);
-                documentobase64 = documentobase64.replace(/"/g, "");                 
-                sessionStorage.setItem("documentobase64",documentobase64);                
+                documentobase64 = documentobase64.replace(/"/g, "");
+                sessionStorage.setItem("documentobase64", documentobase64);
             },
             error: function (e) {
                 kendo.alert("Error" + JSON.stringify(e));
             }
-        }).done(function(){
-            var tipoArchivo = sessionStorage.getItem("documento").split(".")[sessionStorage.getItem("documento").split(".").length-1];            
-            if (tipoArchivo==="pdf"){
-                var dataURI = "data:application/pdf;base64,"+ sessionStorage.getItem("documentobase64");                
-            }else if(tipoArchivo==="gif"||tipoArchivo==="jpeg"||tipoArchivo==="png"||tipoArchivo==="pjpeg"||tipoArchivo==="tiff"){
-                var dataURI = "data:image/"+tipoArchivo+";base64,"+ sessionStorage.getItem("documentobase64");
+        }).done(function () {
+            var tipoArchivo = sessionStorage.getItem("documento").split(".")[sessionStorage.getItem("documento").split(".").length - 1];
+            if (tipoArchivo === "pdf") {
+                var dataURI = "data:application/pdf;base64," + sessionStorage.getItem("documentobase64");
+            } else if (tipoArchivo === "gif" || tipoArchivo === "jpeg" || tipoArchivo === "png" || tipoArchivo === "pjpeg" || tipoArchivo === "tiff") {
+                var dataURI = "data:image/" + tipoArchivo + ";base64," + sessionStorage.getItem("documentobase64");
+            } else {
+                var dataURI = "data:text/plain;base64," + sessionStorage.getItem("documentobase64");
             }
-            else {
-                var dataURI = "data:text/plain;base64,"+ sessionStorage.getItem("documentobase64");
-            }            
             var a = document.createElement("a");
             a.target = "_blank";
             a.href = dataURI;
             a.click();
         });
-    }catch(e){
+    } catch (e) {
         kendo.alert(e.message);
     }
 }
+/**
+ * funcion para filtrar los elementos de la grilla al oprimir una tecla dentro del input buscarDoc
+ * @param {type} param
+ */
+$("#buscarDoc").keyup(function () {
+    var value = this.value;
+    if (value) {
+        grid.data("kendoGrid").dataSource.filter({field: "nomfile", operator: "contains", value: value});
+    } else {
+        grid.data("kendoGrid").dataSource.filter({});
+    }
+});

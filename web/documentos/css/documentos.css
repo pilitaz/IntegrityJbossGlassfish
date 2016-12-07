@@ -15,23 +15,6 @@ body{
     color: #cecece;
 }
 
-.k-header{    
-    display: none;
-    background-color: gold;
-    border-color: #323232;
-    color: #cecece;
-}
-
-.k-grid-header{    
-    background-color: #505050;
-    border-color: #323232;
-}
-
-.k-grid-header-wrap{
-    display: none;
-    background-color: #505050;
-    border-color: #323232;
-}
 
 .k-filter-row th:hover{    
     background-color: #505050;
