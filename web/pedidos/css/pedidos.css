@@ -7,4 +7,18 @@ and open the template in the editor.
     Created on : 6/12/2016, 03:49:39 PM
     Author     : jenny
 */
+.k-grid tr:hover {
+    background: transparent;
+}
+.k-grid tr:not(.k-state-selected):hover {
+    color: #80BD28;
+}
+
+.k-grid tr.k-alt:not(.k-state-selected):hover {
+    background: #f1f1f1;
+}
+
+.k-window-titlebar .k-header {
+    display: none;
+}
 
