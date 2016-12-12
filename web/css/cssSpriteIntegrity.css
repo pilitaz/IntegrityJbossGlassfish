@@ -1269,7 +1269,12 @@
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -408px -458px;
 }
-
+.pro_play{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -408px -458px;
+	cursor:pointer
+}
 /* ——  */
 
 .pro_playoff{
@@ -1470,14 +1475,22 @@
 	background: url(../images/SpriteIntegrity.png) -408px -808px;
 }
 
-/* ——  */
+.pro_infoin{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -408px -808px;
+	cursor:pointer
+}
 
-.pro_infooff{
-	
+.pro_infout{
         width: 34px;
 	height: 34px;
-	background: url(../images/SpriteIntegrity.png) -458px -808px;
-	cursor:pointer
+	background: url(../images/SpriteIntegrity.png) -458px -808px;	
+}
+.pro_infooff{
+        width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -808px;	
 }
 .pro_infooff:hover {
         width: 34px;
