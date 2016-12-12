@@ -61,7 +61,7 @@ function grid() {
                         return JSON.stringify(objRepoD);
                     }
                 } catch (e) {
-                    alertDialog("Error en el servicio"+ e.message);
+                    alertDialogs("Error en el servicio"+ e.message);
                 }
             }
         },
@@ -72,13 +72,16 @@ function grid() {
                 if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
                     return e[key1][mapData];
                 } else {
-                    alertDialog("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                    alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
                 }
             },
             model: {
-                id: "tcont__cod",
+                id: "ped__num",
                 fields: {
-                    tcont__des: {validation: {required: true}, type: 'string'}
+                    ped__num: {validation: {required: true}, type: 'string'},
+                    ped__fec: {validation: {required: true}, type: 'string'},
+                    ter__nit: {validation: {required: true}, type: 'string'},
+//                    ter__nit: {validation: {required: true}, type: 'string'},
                 }
             }
         }
@@ -86,26 +89,40 @@ function grid() {
     $(window).trigger("resize");
     $("#gridPedidos").kendoGrid({
         dataSource: dataSource,
+        dataBound: ondataBound,
         selectable: false,
         columns: [
             
-            {field: "tcont__des", title: "&nbsp;", width: "100%"},
-            
+            {field: "ped__num", title: "Número de Pedido"},
+            {field: "ped__fec", title: "Fecha de Pedido"},
+            {field: "ter__nit", title: "Nit"},
+//            {field: "ter__nit", title: "&nbsp;"},
             {command:
                         [
+                            {name: "aprovar", click: ClickAprov,template: "<a class='k-grid-aprovar' href='' style='min-width:16px;'><span class='k-sprite po_cerrar'></span></a>"},
                             {name: "editar", text: " ", click: ClickEditar, template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},
                             {name: "destroyed", click: clickEliminar,template: "<a class='k-grid-destroyed' href='' style='min-width:16px;'><span class='k-sprite po_cerrar'></span></a>"}
                         ],
-                width: "90px"}],
-        editable: "popup"
+                width: "150px"}],
+        editable: "popup",
+        rowTemplate: kendo.template($("#rowTemplate").html()),
+        altRowTemplate: kendo.template($("#altRowTemplate").html()),
     });
-    $("#gridPedidos .k-grid-header").css('display', 'none');
+//    $("#gridPedidos .k-grid-header").css('display', 'none');
+}
+function ondataBound(){
+    
 }
 function crearPedido(){
   popUpPedidoCU();   
 }
+function ClickAprov(){
+    
+}
 function ClickEditar(e){
     e = this.dataItem($(e.currentTarget).closest("tr"));
+    debugger
+    sessionStorage.setItem("regPedidos",JSON.stringify(e));
     popUpPedidoCU();
     
 }
