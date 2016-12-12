@@ -90,7 +90,7 @@ $(document).ready(function () {
         //navigatable: true,
         columns: [
             //                            { template: "<a class='k-grid-play'><span class='k-sprite pro_bullet1'></span></a>", width: "50px"} ,    
-            {name: "play", text: " ",  template: "<a class='k-grid-bullet'><span class='k-sprite pro_bullet1 '></span></a>",width: "50px"},
+            {name: "play", text: " ",  template: "<a class='k-grid-bullet'><span class='k-sprite pro_bullet'></span></a>",width: "50px"},
                            
             { field: "proc__name", title: "Procesos",  hidden:false},
             {command:
@@ -177,12 +177,24 @@ $(document).ready(function () {
      */     
     var grid1 = $("#grid1").kendoGrid({
         dataSource: datasourcex,
+        sortable: true,
+        filterable: {
+            mode: "row",
+            operators: {
+                string: {
+                    startswith: "Incia Con",
+                    contains: "Contiene",
+                    eq: "Es igual a",
+                    neq: "No es igual a"
+                }
+            }
+        },
         columns: [
             {field: "inst__name", title: "Proceso",  hidden:false},
             {field: "task__name", title: "Tareas",  hidden:false},
             {field: "task__des", title: "Descripcion",  hidden:false},               
-            {field: "task__tst", title: "Fecha de Inicio", format: "{0:dd/MM/yyyy h:mm tt}", hidden:false},           
-            {field: "task__ddt", title: "Fecha de entrega", format: "{0:dd/MM/yyyy h:mm tt}", hidden:false},
+            {field: "task__tst", title: "Fecha de Inicio",  hidden:false},           
+            {field: "task__ddt", title: "Fecha de entrega",  hidden:false},
             {field: "task__dpr", title: "Admin de proceso",  hidden:false},
             {field: "task__type", title: "Tipo",  hidden:false},             
             {command:
@@ -203,57 +215,57 @@ $(document).ready(function () {
             $('#grid1').data('kendoGrid').refresh();                                                                                        
         } 
     });
-    $("#filtro_p").kendoComboBox({
-        dataTextField: "inst__name",
-        dataValueField: "inst__name",
-        placeholder: "Proceso ...",
-        dataSource: datasourcex,
-        change: function () {
-            var value = this.value();
-            if (value) {
-                grid1.data("kendoGrid").dataSource.filter({field: "inst__name", operator: "eq", value: value});
-            } else {
-                grid1.data("kendoGrid").dataSource.filter({});
-            }
-        },
-    });
-    //--------------------------------
-    $("#filtro_f").kendoComboBox({
-        dataTextField: "task__ddt",
-        dataValueField: "task__ddt",
-        placeholder: "Fecha...",
-        dataSource: datasourcex,
-        change: function () {
-            var value = this.value();
-            if (value) {
-                grid1.data("kendoGrid").dataSource.filter({field: "task__ddt", operator: "eq", value: value});
-            } else {
-                grid1.data("kendoGrid").dataSource.filter({});
-            }
-        },
-    });
-    //--------------------------------------
-    $("#filtro_t").kendoComboBox({
-        dataTextField: "task__dpr",
-        dataValueField: "task__dpr",
-        placeholder: "Creador...",
-        dataSource: datasourcex,
-        change: function () {
-            var value = this.value();
-            if (value) {
-                grid1.data("kendoGrid").dataSource.filter({field: "task__dpr", operator: "eq", value: value});
-            } else {
-                grid1.data("kendoGrid").dataSource.filter({});
-            }
-        },
-    });
+//    $("#filtro_p").kendoComboBox({
+//        dataTextField: "inst__name",
+//        dataValueField: "inst__name",
+//        placeholder: "Proceso ...",
+//        dataSource: datasourcex,
+//        change: function () {
+//            var value = this.value();
+//            if (value) {
+//                grid1.data("kendoGrid").dataSource.filter({field: "inst__name", operator: "eq", value: value});
+//            } else {
+//                grid1.data("kendoGrid").dataSource.filter({});
+//            }
+//        },
+//    });
+//    //--------------------------------
+//    $("#filtro_f").kendoComboBox({
+//        dataTextField: "task__ddt",
+//        dataValueField: "task__ddt",
+//        placeholder: "Fecha...",
+//        dataSource: datasourcex,
+//        change: function () {
+//            var value = this.value();
+//            if (value) {
+//                grid1.data("kendoGrid").dataSource.filter({field: "task__ddt", operator: "eq", value: value});
+//            } else {
+//                grid1.data("kendoGrid").dataSource.filter({});
+//            }
+//        },
+//    });
+//    //--------------------------------------
+//    $("#filtro_t").kendoComboBox({
+//        dataTextField: "task__dpr",
+//        dataValueField: "task__dpr",
+//        placeholder: "Creador...",
+//        dataSource: datasourcex,
+//        change: function () {
+//            var value = this.value();
+//            if (value) {
+//                grid1.data("kendoGrid").dataSource.filter({field: "task__dpr", operator: "eq", value: value});
+//            } else {
+//                grid1.data("kendoGrid").dataSource.filter({});
+//            }
+//        },
+//    });
                       
                     
                         
                         
 });
 
-function iniciarProceso(e){debugger
+function iniciarProceso(e){
     var adm = this.dataItem($(e.currentTarget).closest("tr")).id;
     var consultar = new sistartaplication();
     var datajson = consultar.getjson();
@@ -269,7 +281,7 @@ function iniciarProceso(e){debugger
         url: urlService,
         dataType: "json",        
         contentType: "application/json;",
-        success: function (resp) {  debugger
+        success: function (resp) {
             if((resp.dsAplication.eeEstados["0"].Estado)=="OK")
             {
             
@@ -291,7 +303,7 @@ function grafica(e){
     if (adm=== true ){               
         var myWindow1 = $("#textarea"),undo = $("#undo");
                 
-        function onClose() {debugger
+        function onClose() {
             undo.fadeIn();
             $("#textarea").empty();
         
@@ -316,7 +328,7 @@ function grafica(e){
     
 
                     
-function grilla(e){debugger
+function grilla(e){
     e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
     var id = this.dataItem($(e.currentTarget).closest("tr")).proc__name;
     var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
@@ -328,7 +340,7 @@ function grilla(e){debugger
                         
         var myWindow2 = $("#windowg"),undo = $("#undo");
                 
-        function onClose1() {debugger
+        function onClose1() {
             undo.fadeIn();
             $("#grillapopUp").empty();
         }  
@@ -360,7 +372,8 @@ function disable(){
     
 
 }
-function changImgFunc1(results) {
+function changImgFunc1(results) {debugger
+   var results =  $('#grid1').data('kendoGrid')._data;
     var consultar = new serviTime();
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();
@@ -418,7 +431,7 @@ function changImgFunc1(results) {
         
     }
     
-    for (var i = 0; i < results.length; i++) {debugger
+    for (var i = 0; i < results.length; i++) {
      
     var fecha2 = new Date(results[i].task__ddt);
     var mesServicio = fecha2.getMonth()+1;
@@ -441,7 +454,7 @@ function changImgFunc1(results) {
                     
     }
     else{
-        if(diaServicio=diaSistema ){
+        if(diaServicio===diaSistema ){
            
             if (horaSistema > horaServicio  ){
             document.getElementById(results[i].inst__name+results[i].task__name+results[i].inst__name).style.color = 'red';  
@@ -470,7 +483,7 @@ function changImgFunc1(results) {
 
 }
 
-function changImgFunc(results) {debugger
+function changImgFunc(results) {
        
         
        

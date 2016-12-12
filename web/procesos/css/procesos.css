@@ -85,20 +85,20 @@ table{
    
     overflow: auto;
 }
-#grid{
+/*#grid{
     height:200px;
 
-    /*width:550px;*/
+    width:550px;
    
     overflow: auto;
 }
 #grid1 {
     height:200px;
 
-    /*width:550px;*/
+    width:550px;
    
     overflow: auto;
-}
+}*/
 .po_bulleto1{
 	width: 34px;
 	height: 34px;

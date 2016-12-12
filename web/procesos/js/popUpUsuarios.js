@@ -3,6 +3,8 @@ $(document).ready(function () {
      $("#bottn").kendoButton({
         click: guardar
     });
+    
+    
   var consultar = new sirconsulta();
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();
@@ -34,7 +36,7 @@ $(document).ready(function () {
                 contentType: "application/json; charset=utf-8"
             },
             parameterMap: function (options, operation) {
-                if (operation === "read") {
+                if (operation === "read") {debugger
                     datajson.dsUserBPM.SirUserBPM[0].picproc__name = sessionStorage.getItem("Proc_usuar");
                     datajson.dsUserBPM.SirUserBPM[0].pictask__name= sessionStorage.getItem("Task_name");
                     return JSON.stringify(datajson);
@@ -55,10 +57,10 @@ $(document).ready(function () {
             model: {
                 id: "usr__cod",
                 fields: {
-                    usr__cod: {editable: true, nullable: false, validation: {required: true}},
-                    usr__name: {editable: true, nullable: true, validation: {required: true}},
-                    car__nom: {editable: true, nullable: false},
-                    actor__des: {editable: true, nullable: false}
+                    usr__cod: {editable: true, nullable: false,type:"string", validation: {required: true}},
+                    usr__name: {editable: true, nullable: true, type:"string",validation: {required: true}},
+                    car__nom: {editable: true, nullable: false,type:"string" },
+                    actor__des: {editable: true, nullable: false,type:"string"}
 
                 }
             }
@@ -76,12 +78,26 @@ $(document).ready(function () {
      *  
      *  
      */
-   
-        var grid_usr = $("#grilla_usr").kendoGrid({
+    
+    var grid_usr = $("#grilla_usr").kendoGrid({
         dataSource: dataSource,
-        filterable:true,
+        sortable: true,
+        filterable: {
+            mode: "row",
+            operators: {
+                string: {
+                    startswith: "Incia con",
+                    contains: "Contiene",
+                    eq: "Es igual a",
+                    neq: "No es igual a"
+                }
+            }
+        },
         columns: [
-            {field: "usr__cod", title: "Usuarios", hidden: false},
+            {field: "usr__cod", title: "Usuarios", hidden: false , filterable: {
+                    cell: {
+                        operator: "contains"
+                    }}},
             {field: "usr__name", title: "Nombre", hidden: false},
             {field: "car__nom", title: "Rol", hidden: false},
             {field: "actor__des", title: "Actor", hidden: false},
@@ -100,18 +116,20 @@ $(document).ready(function () {
             
         }
     });
-        $("#filtro").kendoAutoComplete({
-        dataTextField: "usr__name",
-        dataValueField: "usr__name",
-        dataSource: dataSource,
-        filter: "startswith",
-        placeholder: "Nombre...",
-    });
-// 
-    function changImgFunc(results) {
+//    $("#filtro").kendoAutoComplete({
+//        dataTextField: "usr__name",
+//        dataValueField: "usr__name",
+//        dataSource: dataSource,
+//        filter: "startswith",
+//        placeholder: "Nombre...",
+//    });
+    // 
+    function changImgFunc(results) {debugger
+         var results =  $('#grilla_usr').data('kendoGrid')._data;
          //document.getElementById("7382b9f0-a33a-4b0b-bac0-e076f71dd743");
+
+        
         var i=0;
-       
         for (i = 0; i < results.length; i++){
             
             if (results[i].user__contain__task==true){
@@ -125,6 +143,21 @@ $(document).ready(function () {
             
             
         }
+        var datosCheck = [];
+           for (i = 0; i < results.length; i++){debugger
+           var check = document.getElementById("span"+results[i].usr__cod);
+             if (check.className === "k-sprite pro_check"){
+                 datosCheck[i]=results[i].usr__cod;
+             }
+             
+             
+          }       
+      
+        $("#cargados").kendoDropDownList({
+        placeholder: "...",
+        dataSource: datosCheck,
+    });
+        
     }
     function guardar (e){debugger
         
@@ -190,7 +223,18 @@ $(document).ready(function () {
     }
     //-----------------------
      function cambiaColor(e){debugger
-      
+         var results =  $('#grilla_usr').data('kendoGrid')._data;
+        var datosCheck = [];
+        var i =0;
+        for (i = 0; i < results.length; i++){debugger
+            var check = document.getElementById("span"+results[i].usr__cod);
+            if (check.className === "k-sprite pro_check"){
+                datosCheck[i]=results[i].usr__cod;
+            }
+        }       
+        var dropdownlist = $("#cargados").data("kendoDropDownList");
+        dropdownlist.setDataSource(datosCheck);
+   
      var id = e.currentTarget.firstElementChild.id;
      var estado = document.getElementById(id).getAttribute("estado");
       if( estado==="on")
@@ -209,39 +253,37 @@ $(document).ready(function () {
      
      
      function filtros (e){
-         
-  
-//         /**
-// * Filtro auto complete por nombre
-// */
-//
-        var data1 = grid_usr.data("kendoGrid").dataSource._pristineData;
-        var arrayOriginal = [];
-        var rol = [];
-        var i = 0;
-        for (i  in data1) {
-            if(data1[i] !== undefined){
-                arrayOriginal[i] = data1[i].car__nom;
-            }           
-        }
-        var rol = arrayOriginal.filter(function (elem, pos) {
-            return arrayOriginal.indexOf(elem) == pos;
-        });
-//---------------------------------------------------
-        var data1 = grid_usr.data("kendoGrid").dataSource._pristineData;
-        var arrayOriginal = [];
-        var actor = [];
-        var i = 0;
-        for (i  in data1) {
-            if(data1[i] !== undefined){
-                arrayOriginal[i] = data1[i].actor__des;
-            }            
-        }
-        var actor = arrayOriginal.filter(function (elem, pos) {
-            return arrayOriginal.indexOf(elem) == pos;
-        });
-
-
+//         
+//  
+////         /**
+//// * Filtro auto complete por nombre
+//// */
+////
+//        var data1 = grid_usr.data("kendoGrid").dataSource._pristineData;
+//        var arrayOriginal = [];
+//        var rol = [];
+//        var i = 0;
+//        for (i  in data1) {
+//            if(data1[i] !== undefined){
+//                arrayOriginal[i] = data1[i].car__nom;
+//            }           
+//        }
+//        var rol = arrayOriginal.filter(function (elem, pos) {
+//            return arrayOriginal.indexOf(elem) == pos;
+//        });
+////---------------------------------------------------
+//        var data1 = grid_usr.data("kendoGrid").dataSource._pristineData;
+//        var arrayOriginal = [];
+//        var actor = [];
+//        var i = 0;
+//        for (i  in data1) {
+//            if(data1[i] !== undefined){
+//                arrayOriginal[i] = data1[i].actor__des;
+//            }            
+//        }
+//        var actor = arrayOriginal.filter(function (elem, pos) {
+//            return arrayOriginal.indexOf(elem) == pos;
+//        });
 //
 //     /**
 //     *FUNCION FILTRO ROL TOOLBAR
@@ -252,19 +294,19 @@ $(document).ready(function () {
 //     *  
 //     */
 //     
-    $("#filtro1").kendoComboBox({
-
-        placeholder: "Rol...",
-        dataSource: rol,
-        change: function () {
-            var value = this.value();
-            if (value) {
-                grid_usr.data("kendoGrid").dataSource.filter({field: "car__nom", operator: "eq", value: value});
-            } else {
-                grid_usr.data("kendoGrid").dataSource.filter({});
-            }
-        },
-    });
+//    $("#filtro1").kendoComboBox({
+//
+//        placeholder: "Rol...",
+//        dataSource: rol,
+//        change: function () {
+//            var value = this.value();
+//            if (value) {
+//                grid_usr.data("kendoGrid").dataSource.filter({field: "car__nom", operator: "eq", value: value});
+//            } else {
+//                grid_usr.data("kendoGrid").dataSource.filter({});
+//            }
+//        },
+//    });
 
 
     /**
@@ -276,38 +318,67 @@ $(document).ready(function () {
      *  
      */
  
-
-   $("#filtro2").kendoComboBox({
-
-        placeholder: "Actor...",
-        dataSource: actor,
-        change: function () {
-            var value = this.value();
-            if (value) {
-                grid_usr.data("kendoGrid").dataSource.filter({field: "actor__des", operator: "eq", value: value});
-            } else {
-                grid_usr.data("kendoGrid").dataSource.filter({});
-            }
-        },
-    });
+//
+//   $("#filtro2").kendoComboBox({
+//
+//        placeholder: "Actor...",
+//        dataSource: actor,
+//        change: function () {
+//            var value = this.value();
+//            if (value) {
+//                grid_usr.data("kendoGrid").dataSource.filter({field: "actor__des", operator: "eq", value: value});
+//            } else {
+//                grid_usr.data("kendoGrid").dataSource.filter({});
+//            }
+//        },
+//    });
 
          
      }
- });
- 
- function cargartodos(){debugger
+      // $("span.k-icon k-i-filter")[0].className = "k-icon   k-i-hbars";
      
+
+ });
+
+ 
+ function cargartodos(){debugger     
      var grid = $("#grilla_usr").data("kendoGrid");
     grid= grid._data;
     var i=0;
             for (i = 0; i < grid.length; i++){
-
                 document.getElementById("span"+grid[i].usr__cod).setAttribute("class", "k-sprite pro_check");
                 document.getElementById("span"+grid[i].usr__cod).setAttribute("estado", "on");
-
-                
-            
-            
-            
         }
+        var results =  $('#grilla_usr').data('kendoGrid')._data;
+        var datosCheck = [];
+        var i =0;
+        for (i = 0; i < results.length; i++){debugger
+            var check = document.getElementById("span"+results[i].usr__cod);
+            if (check.className === "k-sprite pro_check"){
+                datosCheck[i]=results[i].usr__cod;
+            }
+        }       
+        var dropdownlist = $("#cargados").data("kendoDropDownList");
+        dropdownlist.setDataSource(datosCheck);
+ }
+  
+ function borrartodos(){debugger     
+     var grid = $("#grilla_usr").data("kendoGrid");
+    grid= grid._data;
+    var i=0;
+            for (i = 0; i < grid.length; i++){
+                document.getElementById("span"+grid[i].usr__cod).setAttribute("class", "k-sprite pro_checkoff");
+                document.getElementById("span"+grid[i].usr__cod).setAttribute("estado", "off");
+        }
+        var results =  $('#grilla_usr').data('kendoGrid')._data;
+        var datosCheck = [];
+        var i =0;
+        for (i = 0; i < results.length; i++){debugger
+            var check = document.getElementById("span"+results[i].usr__cod);
+            if (check.className === "k-sprite pro_check"){
+                datosCheck[i]=results[i].usr__cod;
+            }
+        }       
+        var dropdownlist = $("#cargados").data("kendoDropDownList");
+        dropdownlist.setDataSource(datosCheck);
  }
