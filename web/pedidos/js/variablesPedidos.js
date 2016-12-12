@@ -13,20 +13,25 @@
  *  var input = sir.getdataInputSir();
  */
 function sirConsultaPedidos() {
-    var mapData = "eesic_tcont";
-    var urlSir = ipServicios + baseParameters + "SIRsic_tcont";
+    var mapData = "eegpd_ped";
+    var urlSir = ipServicios + baseComercial + "SIRgpd_ped";
     var json = {
-        "dssic_tcont": {
-            "eeDatos": [
+            "dsgpd_ped": {
+		"eeDatos":[
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
                     "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
                 }
             ],
             "eetemp": [
                 {
-                    "piitcont__cod": 0,
-                    "picclc__cod": "*"
+                    "picsuc__cod": "*",
+                    "picclc__cod": "*",
+                    "pidped__fec": "?",
+                    "piiped__num": 0,
+                    "picusuario": "*"
                 }
             ]
         }
