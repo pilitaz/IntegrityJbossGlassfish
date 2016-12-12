@@ -18,7 +18,11 @@ function iniAutocomplete(){
 }
 
 function iniDropDownList(){    
-        
+        var obj = new sirConsultaSucursal();
+    var objJson = obj.getjson();
+    var url = obj.getUrlSir();
+    var mapData = obj.getMapData();
+    
     //carga el combo de sucursales
     $("#ipSucursal").kendoDropDownList({
         optionLabel: "Seleccione la sucursal",
@@ -28,7 +32,7 @@ function iniDropDownList(){
         dataSource: {
             transport: {
                 read: {
-                    url: ipServicios+"rest/Parameters/SIRSucursalagencia",
+                    url: url,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST"
@@ -36,23 +40,28 @@ function iniDropDownList(){
                 parameterMap: function (options, operation) {
                     try {
                         if (operation === 'read') {
-                            auth.dssic_suc.eetemp[0].piccia_nit = sessionStorage.getItem("companyNIT");                            
-                            auth["eesic_suc"] = [options];
-                            return JSON.stringify(auth);
+                            var key1 = Object.keys(objJson)[0];
+                            var key2 = Object.keys(objJson[key1])[1];
+                            objJson[key1][key2][0].piccia_nit = sessionStorage.getItem("companyNIT");                            
+                            
+                            return JSON.stringify(objJson);
                         }	
                     } catch (e) {
-                        alertDialogs(e.message);
+                        alertDialogs("Error en el servicio"+ e.message);
                     }
                 },
             },
             schema: {
                 type: "json",
                 data:function (e){
-                    if(e.dssic_suc.eeEstados[0].Estado==="OK"){
-                        return e.dssic_suc.eesic_suc;
-                    }else{
-                        alertDialogs(e.dssic_suc.eeEstados[0].Estado);
-                    }
+                    var key1 = Object.keys(e)[0];
+                    if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                    return e[key1][mapData];
+                } else {
+                    alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                }
+                    
+                    
                 },
                 model: {
                     id: "suc__cod",
