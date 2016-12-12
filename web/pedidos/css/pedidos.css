@@ -22,3 +22,9 @@ and open the template in the editor.
     display: none;
 }
 
+.sidenavSup2 {
+    border-style: solid;
+    border-color: #80BD28 #fff  #fff  #fff;
+    height: 100%;
+}
+
