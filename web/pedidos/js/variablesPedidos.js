@@ -80,23 +80,23 @@ function siCudPedidos() {
     var json = {
         "dssic_tcont": {
             "eeDatos": [{
-                "picusrcod": sessionStorage.getItem("usuario"),
-                "fiid": sessionStorage.getItem("picfiid")
-            }],
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "fiid": sessionStorage.getItem("picfiid")
+                }],
             "eesic_tcont": [{
-                "clc__cod": "",
-                "form__cod": 0,
-                "mnd__ext": false,
-                "tcont__cod": 0,
-                "tcont__des": "",
-                "tcont__est": 0,
-                "tcont__fac": false,
-                "tcont__form": "",
-                "tcon_dif": false,
-                "ter__reg ": ""
-            }]
+                    "clc__cod": "",
+                    "form__cod": 0,
+                    "mnd__ext": false,
+                    "tcont__cod": 0,
+                    "tcont__des": "",
+                    "tcont__est": 0,
+                    "tcont__fac": false,
+                    "tcont__form": "",
+                    "tcon_dif": false,
+                    "ter__reg ": ""
+                }]
         }
-   }
+    }
 
     this.setUrlSir = function (newname) {
         if (newname) {
@@ -128,7 +128,7 @@ function siCudPedidos() {
 };
 
 /**
- * Funcion para obtener la url y el json de entrada para la lista de Pedidos
+ * Funcion para obtener la url y el json de entrada para la surcursal de Pedidos
  *  
  *  ejemplo
  *  var sir = new sirEjemplo();
@@ -140,20 +140,111 @@ function sirConsultaSucursal() {
     var urlSir = ipServicios + baseParameters + "SIRSucursalagencia";
     var json = 
             {  
-   "dssic_suc":{  
-      "eeDatos":[  
-         {  
-            "picusrcod": sessionStorage.getItem("usuario"),
-                    "picfiid": sessionStorage.getItem("picfiid"),
-//                  "local_ip":sessionStorage.getItem("ipPrivada"),
-//                  "remote_ip":sessionStorage.getItem("ipPublica")
-         }],
-      "eetemp": [
-      	{
-          "piccia_nit": ""
-      	}]
-   }
+                "dssic_suc":{  
+                    "eeDatos":[  
+                {  
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),                    
+                }],
+            "eetemp": [
+                {
+                    "piccia_nit": ""
+                }]
+        }
+    };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
 };
+
+
+function sirConsultaDivisa() {
+    var mapData = "eesic_mnd";
+    var urlSir = ipServicios + baseParameters + "SIRsic_mnd";
+    var json = 
+            {  
+                "dssic_mnd":{  
+                   "eeDatos":[  
+                      {  
+                         "picusrcod": sessionStorage.getItem("usuario"),
+                         "picfiid": sessionStorage.getItem("picfiid"), 
+                      }
+                   ]
+                }
+            };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
+};
+
+function sirConsultaCliente() {
+    var mapData = "eegfc_cli";
+    var urlSir = ipServicios + baseParameters + "SIRgfc_cli";
+    var json = 
+            {
+                    "dsgfc_cli" : {
+                            "eeDatos" : [{
+                                            "picusrcod": sessionStorage.getItem("usuario"),
+                                            "picfiid": sessionStorage.getItem("picfiid"), 
+                                    }
+                            ],
+                            "eetemp" : [{
+                                            "picter_raz" : "",
+                                            "picter_nit" : "",
+                                    }
+                            ]
+                    }
+            };
 
     this.setUrlSir = function (newname) {
         if (newname) {
