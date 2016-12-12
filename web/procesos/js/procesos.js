@@ -90,7 +90,7 @@ $(document).ready(function () {
         //navigatable: true,
         columns: [
             //                            { template: "<a class='k-grid-play'><span class='k-sprite pro_bullet1'></span></a>", width: "50px"} ,    
-            {name: "play", text: " ",  template: "<a class='k-grid-bullet'><span class='k-sprite pro_bullet1 '></span></a>",width: "50px"},
+            {name: "play", text: " ",  template: "<a class='k-grid-bullet'><span class='k-sprite pro_bullet'></span></a>",width: "50px"},
                            
             { field: "proc__name", title: "Procesos",  hidden:false},
             {command:
@@ -177,12 +177,24 @@ $(document).ready(function () {
      */     
     var grid1 = $("#grid1").kendoGrid({
         dataSource: datasourcex,
+        sortable: true,
+        filterable: {
+            mode: "row",
+            operators: {
+                string: {
+                    startswith: "Incia Con",
+                    contains: "Contiene",
+                    eq: "Es igual a",
+                    neq: "No es igual a"
+                }
+            }
+        },
         columns: [
             {field: "inst__name", title: "Proceso",  hidden:false},
             {field: "task__name", title: "Tareas",  hidden:false},
             {field: "task__des", title: "Descripcion",  hidden:false},               
-            {field: "task__tst", title: "Fecha de Inicio", format: "{0:dd/MM/yyyy h:mm tt}", hidden:false},           
-            {field: "task__ddt", title: "Fecha de entrega", format: "{0:dd/MM/yyyy h:mm tt}", hidden:false},
+            {field: "task__tst", title: "Fecha de Inicio",  hidden:false},           
+            {field: "task__ddt", title: "Fecha de entrega",  hidden:false},
             {field: "task__dpr", title: "Admin de proceso",  hidden:false},
             {field: "task__type", title: "Tipo",  hidden:false},             
             {command:
@@ -203,50 +215,50 @@ $(document).ready(function () {
             $('#grid1').data('kendoGrid').refresh();                                                                                        
         } 
     });
-    $("#filtro_p").kendoComboBox({
-        dataTextField: "inst__name",
-        dataValueField: "inst__name",
-        placeholder: "Proceso ...",
-        dataSource: datasourcex,
-        change: function () {
-            var value = this.value();
-            if (value) {
-                grid1.data("kendoGrid").dataSource.filter({field: "inst__name", operator: "eq", value: value});
-            } else {
-                grid1.data("kendoGrid").dataSource.filter({});
-            }
-        },
-    });
-    //--------------------------------
-    $("#filtro_f").kendoComboBox({
-        dataTextField: "task__ddt",
-        dataValueField: "task__ddt",
-        placeholder: "Fecha...",
-        dataSource: datasourcex,
-        change: function () {
-            var value = this.value();
-            if (value) {
-                grid1.data("kendoGrid").dataSource.filter({field: "task__ddt", operator: "eq", value: value});
-            } else {
-                grid1.data("kendoGrid").dataSource.filter({});
-            }
-        },
-    });
-    //--------------------------------------
-    $("#filtro_t").kendoComboBox({
-        dataTextField: "task__dpr",
-        dataValueField: "task__dpr",
-        placeholder: "Creador...",
-        dataSource: datasourcex,
-        change: function () {
-            var value = this.value();
-            if (value) {
-                grid1.data("kendoGrid").dataSource.filter({field: "task__dpr", operator: "eq", value: value});
-            } else {
-                grid1.data("kendoGrid").dataSource.filter({});
-            }
-        },
-    });
+//    $("#filtro_p").kendoComboBox({
+//        dataTextField: "inst__name",
+//        dataValueField: "inst__name",
+//        placeholder: "Proceso ...",
+//        dataSource: datasourcex,
+//        change: function () {
+//            var value = this.value();
+//            if (value) {
+//                grid1.data("kendoGrid").dataSource.filter({field: "inst__name", operator: "eq", value: value});
+//            } else {
+//                grid1.data("kendoGrid").dataSource.filter({});
+//            }
+//        },
+//    });
+//    //--------------------------------
+//    $("#filtro_f").kendoComboBox({
+//        dataTextField: "task__ddt",
+//        dataValueField: "task__ddt",
+//        placeholder: "Fecha...",
+//        dataSource: datasourcex,
+//        change: function () {
+//            var value = this.value();
+//            if (value) {
+//                grid1.data("kendoGrid").dataSource.filter({field: "task__ddt", operator: "eq", value: value});
+//            } else {
+//                grid1.data("kendoGrid").dataSource.filter({});
+//            }
+//        },
+//    });
+//    //--------------------------------------
+//    $("#filtro_t").kendoComboBox({
+//        dataTextField: "task__dpr",
+//        dataValueField: "task__dpr",
+//        placeholder: "Creador...",
+//        dataSource: datasourcex,
+//        change: function () {
+//            var value = this.value();
+//            if (value) {
+//                grid1.data("kendoGrid").dataSource.filter({field: "task__dpr", operator: "eq", value: value});
+//            } else {
+//                grid1.data("kendoGrid").dataSource.filter({});
+//            }
+//        },
+//    });
                       
                     
                         
@@ -361,6 +373,7 @@ function disable(){
 
 }
 function changImgFunc1(results) {debugger
+   var results =  $('#grid1').data('kendoGrid')._data;
     var consultar = new serviTime();
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();
@@ -441,7 +454,7 @@ function changImgFunc1(results) {debugger
                     
     }
     else{
-        if(diaServicio=diaSistema ){
+        if(diaServicio===diaSistema ){
            
             if (horaSistema > horaServicio  ){
             document.getElementById(results[i].inst__name+results[i].task__name+results[i].inst__name).style.color = 'red';  
