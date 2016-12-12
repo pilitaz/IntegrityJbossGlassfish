@@ -7,4 +7,15 @@ and open the template in the editor.
     Created on : 6/12/2016, 03:52:14 PM
     Author     : jenny
 */
+td{
+    padding: 5px
+}
 
+div{
+    padding-left: 5px;
+    padding-right: 5px;    
+}
+
+table{
+    padding: 2px;
+}
