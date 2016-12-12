@@ -26,12 +26,12 @@ $(document).ready(function () {
  * @returns {undefined}
  */
 function grid() {
-    var obj = new sirconsultaMConta();
+    var obj = new sirConsultaPedidos();
     var objRepo = obj.getjson();
     var urlRepo = obj.getUrlSir();
     var mapData = obj.getMapData();
 
-    var objCU = new SICUDsic_tcont();
+    var objCU = new siCudPedidos();
     var objRepoD = objCU.getjson();
     var urlRepoD = objCU.getUrlSir();
     var mapDataRepoD = objCU.getMapData();
@@ -68,7 +68,6 @@ function grid() {
         schema: {
             type: "json",
             data: function (e) {
-                
                 var key1 = Object.keys(e)[0];
                 if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
                     return e[key1][mapData];
@@ -85,7 +84,7 @@ function grid() {
         }
     });
     $(window).trigger("resize");
-    $("#girdConta").kendoGrid({
+    $("#gridPedidos").kendoGrid({
         dataSource: dataSource,
         selectable: false,
         columns: [
@@ -100,27 +99,30 @@ function grid() {
                 width: "90px"}],
         editable: "popup"
     });
-$("#girdConta .k-grid-header").css('display', 'none');
+    $("#gridPedidos .k-grid-header").css('display', 'none');
 }
-
+function crearPedido(){
+    var servicio = "pedido";
+    sessionStorage.setItem("servicio",servicio);
+    window.location.replace(( sessionStorage.getItem("url")+"pedidos/html/"+servicio+".html"));   
+}
 function ClickEditar(e){
     e = this.dataItem($(e.currentTarget).closest("tr"));
-    sessionStorage.setItem("contaRow", JSON.stringify(e));
-    window.location.assign("../html/mantenContabilizaCU.html");
+    
 }
 
 function clickEliminar(e){
     try {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
-        var dataItem = $("#girdConta").data("kendoGrid").dataItem($(e.target).closest("tr"));
+        var dataItem = $("#gridPedidos").data("kendoGrid").dataItem($(e.target).closest("tr"));
 
         
             var actions = new Array();
             actions[0] = new Object();
             actions[0].text = "OK";
             actions[0].action = function () {
-                var dataSource = $("#girdConta").data("kendoGrid").dataSource;
+                var dataSource = $("#gridPedidos").data("kendoGrid").dataSource;
                 dataSource.remove(dataItem);
                 dataSource.sync();
                 bandAlert = 0;
@@ -133,12 +135,8 @@ function clickEliminar(e){
             createDialog("Atención", "Esta seguro de eliminar el Reporte ---" + dataItem.rpt_nom + " ---?", "400px", "200px", true, true, actions);
        
     } catch (e) {
-        $('#girdConta').data('kendoGrid').dataSource.read();
-        $('#girdConta').data('kendoGrid').refresh();
+        $('#gridPedidos').data('kendoGrid').dataSource.read();
+        $('#gridPedidos').data('kendoGrid').refresh();
     }
 }
 
-function ClickCrear(){
-    sessionStorage.removeItem("contaRow");
-    window.location.assign("../html/mantenContabilizaCU.html");
-}
