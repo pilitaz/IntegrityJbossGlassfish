@@ -182,7 +182,14 @@ function sirConsultaSucursal() {
 
 };
 
-
+/**
+ * Funcion para obtener la url y el json de entrada para la Divisa de Pedidos
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
 function sirConsultaDivisa() {
     var mapData = "eesic_mnd";
     var urlSir = ipServicios + baseParameters + "SIRsic_mnd";
@@ -227,6 +234,69 @@ function sirConsultaDivisa() {
 
 };
 
+/**
+ * Funcion para obtener la url y el json de entrada para el Condiciones de pago de pedidos
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function sirConsultaCondicionesDePago() {
+    var mapData = "eefac_pag";
+    var urlSir = ipServicios + baseParameters + "SIRfac_pag";
+    var json = 
+            {
+                    "dsfac_pag" : {
+                            "eeDatos" : [{
+                                            "picusrcod": sessionStorage.getItem("usuario"),
+                                            "picfiid": sessionStorage.getItem("picfiid"), 
+                                    }
+                            ],
+                            "eetemp" : [{                                            
+                                            "piifac_pag" : ""
+                                    }
+                            ]
+                    }
+            };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
+};
+
+/**
+ * Funcion para obtener la url y el json de entrada para el Cliente de pedidos
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
 function sirConsultaCliente() {
     var mapData = "eegfc_cli";
     var urlSir = ipServicios + baseParameters + "SIRgfc_cli";
@@ -244,6 +314,63 @@ function sirConsultaCliente() {
                                     }
                             ]
                     }
+            };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
+};
+
+/**
+ * Funcion para obtener la url y el json de entrada para el Vendedor de pedidos
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function sirConsultaVendedor() {
+    var mapData = "eesic_ven1";
+    var urlSir = ipServicios + baseParameters + "SIRsic_ven";
+    var json = 
+            {
+                    "dssic_ven" : {
+                            "eeDatos" : [{
+                                            "picusrcod" : sessionStorage.getItem("usuario"),
+                                            "fiid" : sessionStorage.getItem("picfiid")
+                                    }
+                            ],
+                            "eetemp" : [{
+                                            "picsuc_cod" : "",
+                                            "piiven_cod" : ""
+                                    }
+                            ]
+                    },
+                    "eesic_ven1" : [{}]
             };
 
     this.setUrlSir = function (newname) {

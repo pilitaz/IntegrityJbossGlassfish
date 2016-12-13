@@ -3,9 +3,9 @@ $(document).ready(function () {
      $("#bottn").kendoButton({
         click: guardar
     });
-    
-    
-  var consultar = new sirconsulta();
+    var tarea = sessionStorage.getItem("Task_name");
+     document.getElementById("procName").innerHTML = tarea;
+    var consultar = new sirconsulta();
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();
 
@@ -223,17 +223,7 @@ $(document).ready(function () {
     }
     //-----------------------
      function cambiaColor(e){debugger
-         var results =  $('#grilla_usr').data('kendoGrid')._data;
-        var datosCheck = [];
-        var i =0;
-        for (i = 0; i < results.length; i++){debugger
-            var check = document.getElementById("span"+results[i].usr__cod);
-            if (check.className === "k-sprite pro_check"){
-                datosCheck[i]=results[i].usr__cod;
-            }
-        }       
-        var dropdownlist = $("#cargados").data("kendoDropDownList");
-        dropdownlist.setDataSource(datosCheck);
+
    
      var id = e.currentTarget.firstElementChild.id;
      var estado = document.getElementById(id).getAttribute("estado");
@@ -247,8 +237,18 @@ $(document).ready(function () {
      document.getElementById(id).setAttribute("class", "k-sprite pro_check");
      document.getElementById(id).setAttribute("estado", "on");
       }
-              
-
+                      var results =  $('#grilla_usr').data('kendoGrid')._data;
+        var datosCheck = [];
+        var i =0;
+        for (i = 0; i < results.length; i++){debugger
+            var check = document.getElementById("span"+results[i].usr__cod);
+            if (check.className === "k-sprite pro_check"){
+                datosCheck[i]=results[i].usr__cod;
+            }
+        }       
+       
+ var dropdownlist = $("#cargados").data("kendoDropDownList");
+        dropdownlist.setDataSource(datosCheck);
      }
      
      
@@ -339,17 +339,57 @@ $(document).ready(function () {
      
 
  });
-
+//funcion que carga todos los usuarios
+//cambia el estado de todos los check en On, y cuando lo hace 
+//refresca el datasource del dropdown
  
  function cargartodos(){debugger     
+     
+     var estado = document.getElementById("cargar").attributes[2].nodeValue;
+    
+     if (estado === "cero"){
+    document.getElementById("cargar").setAttribute("class", "k-sprite pro_check1"); 
+    document.getElementById("cargar").setAttribute("estado", "on");   
+    
      var grid = $("#grilla_usr").data("kendoGrid");
     grid= grid._data;
     var i=0;
             for (i = 0; i < grid.length; i++){
                 document.getElementById("span"+grid[i].usr__cod).setAttribute("class", "k-sprite pro_check");
                 document.getElementById("span"+grid[i].usr__cod).setAttribute("estado", "on");
-        }
-        var results =  $('#grilla_usr').data('kendoGrid')._data;
+        } 
+        
+     }
+     else
+     {
+         if (estado === "on"){
+            document.getElementById("cargar").setAttribute("class", "k-sprite pro_checkoff1"); 
+            document.getElementById("cargar").setAttribute("estado", "off"); 
+            var grid = $("#grilla_usr").data("kendoGrid");
+            grid= grid._data;
+            var i=0;
+            for (i = 0; i < grid.length; i++){
+                document.getElementById("span"+grid[i].usr__cod).setAttribute("class", "k-sprite pro_checkoff");
+                document.getElementById("span"+grid[i].usr__cod).setAttribute("estado", "off");
+        } 
+             
+         }
+                  if (estado === "off"){
+            document.getElementById("cargar").setAttribute("class", "k-sprite pro_check1"); 
+            document.getElementById("cargar").setAttribute("estado", "on"); 
+            var grid = $("#grilla_usr").data("kendoGrid");
+            grid= grid._data;
+            var i=0;
+            for (i = 0; i < grid.length; i++){
+                document.getElementById("span"+grid[i].usr__cod).setAttribute("class", "k-sprite pro_check");
+                document.getElementById("span"+grid[i].usr__cod).setAttribute("estado", "on");
+        } 
+             
+         }
+         
+     }
+
+                var results =  $('#grilla_usr').data('kendoGrid')._data;
         var datosCheck = [];
         var i =0;
         for (i = 0; i < results.length; i++){debugger
@@ -357,10 +397,13 @@ $(document).ready(function () {
             if (check.className === "k-sprite pro_check"){
                 datosCheck[i]=results[i].usr__cod;
             }
-        }       
+        } 
         var dropdownlist = $("#cargados").data("kendoDropDownList");
         dropdownlist.setDataSource(datosCheck);
- }
+ 
+     
+     
+     }
   
  function borrartodos(){debugger     
      var grid = $("#grilla_usr").data("kendoGrid");
