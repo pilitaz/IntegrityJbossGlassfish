@@ -74,26 +74,24 @@ function sirConsultaPedidos() {
  *  var url = sir.getUrlSir();
  *  var input = sir.getdataInputSir();
  */
-function siCudPedidos() {
-    var mapData = "eesic_tcont";
-    var urlSir = ipServicios + baseParameters + "SICUDsic_tcont";
+function consultaCabeceraPedido() {
+    var mapData = "eegpd_ped";
+    var urlSir = ipServicios + baseComercial + "SIRgpd_ped";    
+
     var json = {
-        "dssic_tcont": {
+        "dsgpd_ped": {
             "eeDatos": [{
                     "picusrcod": sessionStorage.getItem("usuario"),
-                    "fiid": sessionStorage.getItem("picfiid")
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
                 }],
-            "eesic_tcont": [{
-                    "clc__cod": "",
-                    "form__cod": 0,
-                    "mnd__ext": false,
-                    "tcont__cod": 0,
-                    "tcont__des": "",
-                    "tcont__est": 0,
-                    "tcont__fac": false,
-                    "tcont__form": "",
-                    "tcon_dif": false,
-                    "ter__reg ": ""
+            "eetemp": [{
+                    "picsuc__cod": "*",
+                    "picclc__cod": "*",
+                    "pidped__fec": "?",
+                    "piiped__num": 0,
+                    "picusuario": "*"
                 }]
         }
     }
