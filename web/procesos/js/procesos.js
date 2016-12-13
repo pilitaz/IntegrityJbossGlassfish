@@ -95,13 +95,14 @@ $(document).ready(function () {
             { field: "proc__name", title: "Procesos",  hidden:false},
             {command:
                         [
+                     {name: "proceso", text: "", click: grafica, template: "<a title='procesos' class='k-grid-proceso'><span  title='comenzar' class='k-sprite pro_prooff'></span></a>"},
                     {name: "tareas", text: "", click: grilla, template: "<a title='comenzar' class='k-grid-tareas'><span  title='comenzar' class='k-sprite pro_groupoff'></span></a>"},
                     {name: "editar", text: " ",  click: grafica, template: "<a class='k-grid-editar'><span class='k-sprite pro_graphoff '></span></a>"},
                     {name: "info", text: " ",  template: "<a class='k-grid-info'><span class='k-sprite pro_infooff'></span></a>"},
                     {name: "play", text: " ",  click: iniciarProceso, template: "<a class='k-grid-play'><span class='k-sprite pro_playoff '></span></a>"},
                            
                 ],
-                width: "180px"}],                            
+                width: "220px"}],                            
         editable: "popup",
                             
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
@@ -266,37 +267,67 @@ $(document).ready(function () {
 });
 
 function iniciarProceso(e){
-    var adm = this.dataItem($(e.currentTarget).closest("tr")).id;
-    var consultar = new sistartaplication();
-    var datajson = consultar.getjson();
-    var urlService = consultar.getUrlSir();
-                        
-    datajson.dsAplication.SIRapp[0].picproc__name= adm;
-                   
-    $.ajax({
+    
+        var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
+             $("#formvacations").append("<div id='windowform'></div>");
+        var myWindow1 = $("#windowform"),undo = $("#undo");
+                
+        function onClose() {
+            undo.fadeIn();
+            $("#windowform").empty();
+        }
         
-        type: "POST",        
-        async: false,
-        data: JSON.stringify(datajson),
-        url: urlService,
-        dataType: "json",        
-        contentType: "application/json;",
-        success: function (resp) {
-            if((resp.dsAplication.eeEstados["0"].Estado)=="OK")
-            {
-            
-             alertDialogs("Se ha inciado el proceso "+adm);
-            $('#grid1').data('kendoGrid').refresh();                                             
-            $('#grid1').data('kendoGrid').dataSource.read();
-            $('#grid1').data('kendoGrid').refresh(); 
-            }
-            else
-            {
-             alertDialogs("Error"+resp.dsAplication.eeEstados["0"].Estado);   
-            }
-        } 
-        
-        });
+        var UrL= sessionStorage.getItem("url");  
+        myWindow1.kendoWindow({
+            draggable: true,
+            height: "80%",
+            modal: true,
+            resizable: false,
+            title: "Solicitud De Vacaciones",
+            width: "50%",
+            content: UrL+"procesos/html/formVacations.html",
+            actions: [
+                "Close"
+            ],                               
+            close: onClose
+        }).data("kendoWindow").center().open();    
+    
+  
+    
+    
+//    
+//    
+//    var adm = this.dataItem($(e.currentTarget).closest("tr")).id;
+//    var consultar = new sistartaplication();
+//    var datajson = consultar.getjson();
+//    var urlService = consultar.getUrlSir();
+//                        
+//    datajson.dsAplication.SIRapp[0].picproc__name= adm;
+//                   
+//    $.ajax({
+//        
+//        type: "POST",        
+//        async: false,
+//        data: JSON.stringify(datajson),
+//        url: urlService,
+//        dataType: "json",        
+//        contentType: "application/json;",
+//        success: function (resp) {
+//            if((resp.dsAplication.eeEstados["0"].Estado)=="OK")
+//            {
+//            
+//             alertDialogs("Se ha inciado el proceso "+adm);
+//            $('#grid1').data('kendoGrid').refresh();                                             
+//            $('#grid1').data('kendoGrid').dataSource.read();
+//            $('#grid1').data('kendoGrid').refresh(); 
+//            }
+//            else
+//            {
+//             alertDialogs("Error"+resp.dsAplication.eeEstados["0"].Estado);   
+//            }
+//        } 
+//        
+//        });
 }
 function grafica(e){
     var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;

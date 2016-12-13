@@ -28,17 +28,18 @@ table{
 
 .sidenavSup1 {
     border-style: solid;
-    border-color: #cf0021 #fff  #fff  #fff;
+    border-color: #cf0021  #fff   #fff  #fff;
 }
 
-.sidenavIzq {
+.sidenavIzq1{
     border-style: solid;
-    border-color: #fff #fff #fff #E0E0E0;
+    border: 1;
+    border-color:  #fff  #fff  #fff #cf0021 ;
     height: 100%;
 }
-.sidenavDer {
+.sidenavInf {
     border-style: solid;
-    border-color: #fff #E0E0E0 #fff  #fff ;
+    border-color: #fff  #fff  #E0E0E0  #fff ;
     height: 100%;
 }
 .letraParrafo{
@@ -51,12 +52,12 @@ table{
     font-family: Verdana;
 
 }
-.subTitulo{
+.subTituloform{
     font-style: normal; 
     font-variant: normal;
     font-weight: normal;
     font-stretch: normal;
-    font-size: 17px;
+    font-size: 13px;
     line-height: normal;
     font-family: Verdana;
     font-weight: bold;
@@ -65,12 +66,17 @@ table{
 .mensaje{
     
     font-size: 14px;
-
     font-family: Verdana;
     font-weight: bold;
     vertical-align: center;
    
 }
+.btnSend {
+
+    width: 300px; /* Full width */
+    height: 100px; /* Full height */
+}
+
  @media screen and (max-width: 1023px) {
                     div.k-window {
                         display: none !important;
@@ -85,20 +91,7 @@ table{
    
     overflow: auto;
 }
-/*#grid{
-    height:200px;
 
-    width:550px;
-   
-    overflow: auto;
-}
-#grid1 {
-    height:200px;
-
-    width:550px;
-   
-    overflow: auto;
-}*/
 .po_bulleto1{
 	width: 34px;
 	height: 34px;
