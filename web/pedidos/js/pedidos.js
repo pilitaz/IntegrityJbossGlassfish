@@ -113,6 +113,35 @@ function grid() {
 function ondataBound(){
     
 }
+
+function btnFltrPedido(){
+    $("body").append("<div id='windowFiltros'></div>");
+        var myWindow = $("#windowFiltros");
+        var undo = $("#undo");
+        
+        function onCloseFiltros() {
+            document.getElementById("windowFiltros").remove();            
+            undo.fadeIn();  
+        }
+        
+        myWindow.kendoWindow({
+            width: "600px",
+            height: "300px",
+            title: "Busqueda",
+            content: sessionStorage.getItem("url")+ "/pedidos/html/popUpFiltros.html",
+            visible: false,
+            modal: true,
+            resizable: false,
+            actions: [            
+                "Close"
+            ],
+            close: onCloseFiltros
+        }).data("kendoWindow").center().open();
+}
+
+function closePopUpFiltros(){    
+    $("#windowFiltros").data("kendoWindow").close();
+}
 function crearPedido(){
   popUpPedidoCU();   
 }
