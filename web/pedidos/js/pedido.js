@@ -17,6 +17,7 @@ $(document).ready(function() {
     iniDropDownList();
     
     iniAutocomplete();
+    $("#buttonCab").kendoButton();
     
     
 });
