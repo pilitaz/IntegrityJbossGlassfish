@@ -56,19 +56,12 @@ document.getElementById("task1").innerHTML = task ;
      */     
     var grid1 = $("#grilla").kendoGrid({
         dataSource: datasourcex,
-                            
-
-                            
-        //navigatable: true,
         columns: [
             {field: "task__name", title: "Tarea",  hidden:false},      
             {field: "proc__name", title: "Nombre de proceso",  hidden:true},
             {field: "type__task", title: "Tipo de tarea",  hidden:true},
-
             {command:
                         [
-                           
-                           
                     {name: "usuarios", click: grilla1, template: "<a class='k-grid-usuarios' href='' style='min-width:16px;'><span class='k-sprite pro_groupoff'></span></a>"}
                 ],
                 width: "50px"}]    ,                            

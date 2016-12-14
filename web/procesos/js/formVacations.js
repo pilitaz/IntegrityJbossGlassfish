@@ -8,6 +8,7 @@ function ayuda(){debugger
     if (estado ==="on"){
         $("#mensaje").empty();
          $("#ayuda").empty();
+        document.getElementById("btnayuda").setAttribute("class", "k-sprite pro_infout");
         document.getElementById("btnayuda").setAttribute("estado", "off");
     }
     else

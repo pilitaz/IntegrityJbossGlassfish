@@ -1314,6 +1314,25 @@
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -408px -558px;
 }
+/* ——  */
+
+.pro_backoff{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -558px;
+	cursor:pointer
+}
+.pro_backoff:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -408px -558px;
+	cursor:pointer
+}
+.pro_backoff:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -558px;
+}
 
 /* ——  */
 
@@ -1485,7 +1504,8 @@
 .pro_infout{
         width: 34px;
 	height: 34px;
-	background: url(../images/SpriteIntegrity.png) -458px -808px;	
+	background: url(../images/SpriteIntegrity.png) -458px -808px;
+        cursor:pointer
 }
 .pro_infooff{
         width: 34px;

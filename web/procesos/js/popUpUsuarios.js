@@ -1,8 +1,45 @@
-
+var fantasma = [];
 $(document).ready(function () {
-     $("#bottn").kendoButton({
+    
+     $("#buttonAgregar").kendoButton({
         click: guardar
     });
+        var estados = [
+        {text: "Todos", valor: "A"},
+        {text: "Seleccionados", valor: "B"},
+        {text: "No Seleccionados", valor: "C"},
+
+    ];
+
+    $("#cargados").kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "valor",
+        placeholder: "Todos..",
+        dataSource: estados,
+        change: function (e) {debugger
+            var value1 = [];
+            var grid = $("#grilla_usr").data("kendoGrid");
+           var grid1 = grid._data;
+            var i=0;
+            var datosCheck = [];
+            for (i = 0; i < grid1.length; i++){
+                var check = document.getElementById("span"+grid1[i].usr__cod);
+                if (check.className === "k-sprite pro_check"){
+                    datosCheck[i]=grid1[i].usr__cod;
+                }
+                
+             
+          }   
+          debugger;
+          
+            var value1 = datosCheck;
+            
+        var grilla = $("#grilla_usr").data("kendoGrid");
+        grilla.setDataSource(datosCheck);
+                //grid1.data("kendoGrid").dataSource.filter({});
+            
+        }
+    });     
     var tarea = sessionStorage.getItem("Task_name");
      document.getElementById("procName").innerHTML = tarea;
     var consultar = new sirconsulta();
@@ -36,7 +73,7 @@ $(document).ready(function () {
                 contentType: "application/json; charset=utf-8"
             },
             parameterMap: function (options, operation) {
-                if (operation === "read") {debugger
+                if (operation === "read") {
                     datajson.dsUserBPM.SirUserBPM[0].picproc__name = sessionStorage.getItem("Proc_usuar");
                     datajson.dsUserBPM.SirUserBPM[0].pictask__name= sessionStorage.getItem("Task_name");
                     return JSON.stringify(datajson);
@@ -46,10 +83,25 @@ $(document).ready(function () {
         },
         batch: true,
         schema: {
-            data: function (e) {
+            data: function (e) {debugger
                 var key1 = Object.keys(e)[0];
                 if (e[key1].eeEstados[0].Estado === "OK") {
+                    var i=0;
+                    var name;
+                   // e[key1].dsUserBPM.UserBPM[i].user__contain__task
+                     for (i = 0; i < e.dsUserBPM.UserBPM.length; i++){
+                             if( e.dsUserBPM.UserBPM[i].user__contain__task==true){
+                                 name=e.dsUserBPM.UserBPM[i].usr__cod;
+                                fantasma.push(name);
+                                 
+                             }
+                         
+                     }
+                       
+                    
+                    
                     return e[key1][mapCud];
+                    
                 } else {
                     alert(e[key1].eeEstados[0].Estado);
                 }
@@ -125,39 +177,35 @@ $(document).ready(function () {
 //    });
     // 
     function changImgFunc(results) {debugger
-         var results =  $('#grilla_usr').data('kendoGrid')._data;
-         //document.getElementById("7382b9f0-a33a-4b0b-bac0-e076f71dd743");
-
-        
+        var datos =  $('#grilla_usr').data('kendoGrid')._data;
+        var results = fantasma; 
         var i=0;
-        for (i = 0; i < results.length; i++){
-            
-            if (results[i].user__contain__task==true){
-                
-                document.getElementById("span"+results[i].usr__cod).setAttribute("class", "k-sprite pro_check");
-                document.getElementById("span"+results[i].usr__cod).setAttribute("estado", "on");
-            }else{
-                document.getElementById("span"+results[i].usr__cod).setAttribute("estado", "off");
-                
-            }
-            
+        var j=0;
+        var  temporal;
+        
+          
+            for (i = 0; i < results.length; i++){
+           
+                if (document.getElementById("span"+results[i])){
+                document.getElementById("span"+results[i]).setAttribute("class", "k-sprite pro_check");
+                document.getElementById("span"+results[i]).setAttribute("estado", "on");
+                }
             
         }
-        var datosCheck = [];
-           for (i = 0; i < results.length; i++){debugger
-           var check = document.getElementById("span"+results[i].usr__cod);
-             if (check.className === "k-sprite pro_check"){
-                 datosCheck[i]=results[i].usr__cod;
-             }
-             
-             
-          }       
-      
-        $("#cargados").kendoDropDownList({
-        placeholder: "...",
-        dataSource: datosCheck,
-    });
         
+        if (fantasma.length >=1 ){
+            for (j = 0; j < results.length; j++){
+                
+                for (i = 0; i < fantasma.length; i++){
+                    
+                    if (document.getElementById("span"+fantasma[i])){
+                        document.getElementById("span"+fantasma[i]).setAttribute("class", "k-sprite pro_check");
+                        document.getElementById("span"+fantasma[i]).setAttribute("estado", "on");
+                    }
+                    
+                }
+            }
+        }
     }
     function guardar (e){debugger
         
@@ -165,37 +213,35 @@ $(document).ready(function () {
         var proceso = sessionStorage.getItem("Proc_usuar");
         var tarea= sessionStorage.getItem("Task_name");
         var desTarea= sessionStorage.getItem("Task_type");
-      
-         var consultarUsr = new cudTareasXusr();
+        
+        var consultarUsr = new cudTareasXusr();
         var data = consultarUsr.getjson();
         var urlservicio = consultarUsr.getUrlSir();
         
-      var data1 = grid_usr.data("kendoGrid").dataSource._pristineData;    
-      var i=0;
-      var array=[];
+        var data1 = grid_usr.data("kendoGrid").dataSource._pristineData;    
+        var i=0;
+        var array=[];
       
       
-      for  ( i = 0; i < data1.length; i++){
-          var name = data1[i].usr__cod;
-          var estado = document.getElementById("span"+name).getAttribute("estado");
-          if( estado==="on")
-            {
+      for  ( i = 0; i < fantasma.length; i++){
+          //var name = data1[i].usr__cod;
+          //var estado = document.getElementById("span"+name).getAttribute("estado");
+
                 var json={};
                 json.cia__nit=nit;
                 json.proc__name=proceso;
                 json.task__name=tarea;
                 json.task__type=desTarea;
-                json.usr__cod = data1[i].usr__cod;
+                json.usr__cod = fantasma[i];
                 array.push(json);
                 
-            }
-      else
-      {
-          
-      }
-        }       
+            
+     
+        }   
+        
+         
          data.dsbpm_own_task.TTparam[0].picproc_name= proceso;
-          data.dsbpm_own_task.eebpm_own_task=array;
+         data.dsbpm_own_task.eebpm_own_task=array;
                
                
                
@@ -207,7 +253,7 @@ $(document).ready(function () {
         url: urlservicio,
         dataType: "json",        
         contentType: "application/json;",
-        success: function (resp) {  debugger
+        success: function (resp) { 
             if((resp.dsbpm_own_task.eeEstados["0"].Estado)=="OK")
             {
             parent.cerrar();
@@ -222,43 +268,66 @@ $(document).ready(function () {
         });
     }
     //-----------------------
-     function cambiaColor(e){debugger
+    function cambiaColor(e){debugger
+        
+        //        var grid = $("#grilla_usr").data("kendoGrid");
+        //        var grid1 = grid._data;
+        //        var i=0;
+        //        var datosCheck = [];
+        //        for (i = 0; i < grid1.length; i++){
+        //            var check = document.getElementById("span"+grid1[i].usr__cod);
+        //            if (check.className === "k-sprite pro_check"){
+        //                datosCheck[i]=grid1[i].usr__cod;
+        //            }
+        //        }
+        var i=0;
+        var id = e.currentTarget.firstElementChild.id;
+        var temporal;
+        var estado = document.getElementById(id).getAttribute("estado");
+        if( estado==="on")
+        {
+            document.getElementById(id).setAttribute("class", "k-sprite pro_checkoff");
+            document.getElementById(id).setAttribute("estado", "off");
+           temporal = id;
+            temporal = temporal.replace("span","");
+           if (fantasma.length>=1)
+           {
+             for (i = 0; i < fantasma.length; i++){
+               if  ( fantasma[i]==temporal){
+                    fantasma.splice(i, 1);
+               }
+                
+             }   
+               
+           }
+        }
+        else
+        {
+            document.getElementById(id).setAttribute("class", "k-sprite pro_check");
+            document.getElementById(id).setAttribute("estado", "on");
+            temporal = id;
+            temporal = temporal.replace("span","");
+            fantasma.push(temporal);
+            
+        var data1 = fantasma;
+        var arrayOriginal = fantasma;
 
-   
-     var id = e.currentTarget.firstElementChild.id;
-     var estado = document.getElementById(id).getAttribute("estado");
-      if( estado==="on")
-      {
-     document.getElementById(id).setAttribute("class", "k-sprite pro_checkoff");
-     document.getElementById(id).setAttribute("estado", "off");
-      }
-      else
-      {
-     document.getElementById(id).setAttribute("class", "k-sprite pro_check");
-     document.getElementById(id).setAttribute("estado", "on");
-      }
-                      var results =  $('#grilla_usr').data('kendoGrid')._data;
-        var datosCheck = [];
-        var i =0;
-        for (i = 0; i < results.length; i++){debugger
-            var check = document.getElementById("span"+results[i].usr__cod);
-            if (check.className === "k-sprite pro_check"){
-                datosCheck[i]=results[i].usr__cod;
-            }
-        }       
-       
- var dropdownlist = $("#cargados").data("kendoDropDownList");
-        dropdownlist.setDataSource(datosCheck);
-     }
-     
-     
+        var rol = arrayOriginal.filter(function (elem, pos) {
+            return arrayOriginal.indexOf(elem) == pos;
+        });
+        fantasma=rol;
+        }
+        
+    }
+    
+    
      function filtros (e){
 //         
 //  
 ////         /**
 //// * Filtro auto complete por nombre
 //// */
-////
+//////
 //        var data1 = grid_usr.data("kendoGrid").dataSource._pristineData;
 //        var arrayOriginal = [];
 //        var rol = [];
@@ -284,21 +353,21 @@ $(document).ready(function () {
 //        var actor = arrayOriginal.filter(function (elem, pos) {
 //            return arrayOriginal.indexOf(elem) == pos;
 //        });
-//
-//     /**
-//     *FUNCION FILTRO ROL TOOLBAR
-//     * 
-//     *  
-//     * 
-//     *  
-//     *  
-//     */
-//     
+
+     /**
+     *FUNCION FILTRO ROL TOOLBAR
+     * 
+     *  
+     * 
+     *  
+     *  
+     */
+     
 //    $("#filtro1").kendoComboBox({
 //
 //        placeholder: "Rol...",
 //        dataSource: rol,
-//        change: function () {
+//        change: function () {debugger
 //            var value = this.value();
 //            if (value) {
 //                grid_usr.data("kendoGrid").dataSource.filter({field: "car__nom", operator: "eq", value: value});
@@ -343,7 +412,7 @@ $(document).ready(function () {
 //cambia el estado de todos los check en On, y cuando lo hace 
 //refresca el datasource del dropdown
  
- function cargartodos(){debugger     
+ function cargartodos(){  
      
      var estado = document.getElementById("cargar").attributes[2].nodeValue;
     
@@ -389,17 +458,7 @@ $(document).ready(function () {
          
      }
 
-                var results =  $('#grilla_usr').data('kendoGrid')._data;
-        var datosCheck = [];
-        var i =0;
-        for (i = 0; i < results.length; i++){debugger
-            var check = document.getElementById("span"+results[i].usr__cod);
-            if (check.className === "k-sprite pro_check"){
-                datosCheck[i]=results[i].usr__cod;
-            }
-        } 
-        var dropdownlist = $("#cargados").data("kendoDropDownList");
-        dropdownlist.setDataSource(datosCheck);
+
  
      
      
@@ -413,15 +472,9 @@ $(document).ready(function () {
                 document.getElementById("span"+grid[i].usr__cod).setAttribute("class", "k-sprite pro_checkoff");
                 document.getElementById("span"+grid[i].usr__cod).setAttribute("estado", "off");
         }
-        var results =  $('#grilla_usr').data('kendoGrid')._data;
-        var datosCheck = [];
-        var i =0;
-        for (i = 0; i < results.length; i++){debugger
-            var check = document.getElementById("span"+results[i].usr__cod);
-            if (check.className === "k-sprite pro_check"){
-                datosCheck[i]=results[i].usr__cod;
-            }
-        }       
-        var dropdownlist = $("#cargados").data("kendoDropDownList");
-        dropdownlist.setDataSource(datosCheck);
+    
+       
+ }
+ function volver(){
+     parent.cerrar();
  }

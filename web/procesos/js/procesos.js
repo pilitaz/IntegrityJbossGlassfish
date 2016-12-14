@@ -200,7 +200,7 @@ $(document).ready(function () {
             {field: "task__type", title: "Tipo",  hidden:false},             
             {command:
                         [
-                    {name: "inciar", template: "<a class='k-grid-iniciar' href='' style='min-width:16px;'><span class='k-sprite pro_playoff'></span></a>"}
+                    {name: "inciar", click: iniciarTarea, template: "<a class='k-grid-iniciar' href='' style='min-width:16px;'><span class='k-sprite pro_playoff'></span></a>"}
                 ],
                 width: "50px"}], 
         rowTemplate: kendo.template($("#rowTemplateCmp1").html()),
@@ -266,9 +266,8 @@ $(document).ready(function () {
                         
 });
 
-function iniciarProceso(e){
-    
-        var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
+function iniciarTarea(e){debugger
+            //var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
              $("#formvacations").append("<div id='windowform'></div>");
         var myWindow1 = $("#windowform"),undo = $("#undo");
                 
@@ -294,40 +293,40 @@ function iniciarProceso(e){
     
   
     
+}
+function iniciarProceso(e){
     
-//    
-//    
-//    var adm = this.dataItem($(e.currentTarget).closest("tr")).id;
-//    var consultar = new sistartaplication();
-//    var datajson = consultar.getjson();
-//    var urlService = consultar.getUrlSir();
-//                        
-//    datajson.dsAplication.SIRapp[0].picproc__name= adm;
-//                   
-//    $.ajax({
-//        
-//        type: "POST",        
-//        async: false,
-//        data: JSON.stringify(datajson),
-//        url: urlService,
-//        dataType: "json",        
-//        contentType: "application/json;",
-//        success: function (resp) {
-//            if((resp.dsAplication.eeEstados["0"].Estado)=="OK")
-//            {
-//            
-//             alertDialogs("Se ha inciado el proceso "+adm);
-//            $('#grid1').data('kendoGrid').refresh();                                             
-//            $('#grid1').data('kendoGrid').dataSource.read();
-//            $('#grid1').data('kendoGrid').refresh(); 
-//            }
-//            else
-//            {
-//             alertDialogs("Error"+resp.dsAplication.eeEstados["0"].Estado);   
-//            }
-//        } 
-//        
-//        });
+    var adm = this.dataItem($(e.currentTarget).closest("tr")).id;
+    var consultar = new sistartaplication();
+    var datajson = consultar.getjson();
+    var urlService = consultar.getUrlSir();
+                        
+    datajson.dsAplication.SIRapp[0].picproc__name= adm;
+                   
+    $.ajax({
+        
+        type: "POST",        
+        async: false,
+        data: JSON.stringify(datajson),
+        url: urlService,
+        dataType: "json",        
+        contentType: "application/json;",
+        success: function (resp) {
+            if((resp.dsAplication.eeEstados["0"].Estado)=="OK")
+            {
+            
+             alertDialogs("Se ha inciado el proceso "+adm);
+            $('#grid1').data('kendoGrid').refresh();                                             
+            $('#grid1').data('kendoGrid').dataSource.read();
+            $('#grid1').data('kendoGrid').refresh(); 
+            }
+            else
+            {
+             alertDialogs("Error"+resp.dsAplication.eeEstados["0"].Estado);   
+            }
+        } 
+        
+        });
 }
 function grafica(e){
     var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
