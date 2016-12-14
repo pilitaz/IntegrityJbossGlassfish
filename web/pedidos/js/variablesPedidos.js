@@ -74,26 +74,24 @@ function sirConsultaPedidos() {
  *  var url = sir.getUrlSir();
  *  var input = sir.getdataInputSir();
  */
-function siCudPedidos() {
-    var mapData = "eesic_tcont";
-    var urlSir = ipServicios + baseParameters + "SICUDsic_tcont";
+function consultaCabeceraPedido() {
+    var mapData = "eegpd_ped";
+    var urlSir = ipServicios + baseComercial + "SIRgpd_ped";    
+
     var json = {
-        "dssic_tcont": {
+        "dsgpd_ped": {
             "eeDatos": [{
                     "picusrcod": sessionStorage.getItem("usuario"),
-                    "fiid": sessionStorage.getItem("picfiid")
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
                 }],
-            "eesic_tcont": [{
-                    "clc__cod": "",
-                    "form__cod": 0,
-                    "mnd__ext": false,
-                    "tcont__cod": 0,
-                    "tcont__des": "",
-                    "tcont__est": 0,
-                    "tcont__fac": false,
-                    "tcont__form": "",
-                    "tcon_dif": false,
-                    "ter__reg ": ""
+            "eetemp": [{
+                    "picsuc__cod": "*",
+                    "picclc__cod": "*",
+                    "pidped__fec": "?",
+                    "piiped__num": 0,
+                    "picusuario": "*"
                 }]
         }
     }
@@ -373,6 +371,75 @@ function sirConsultaVendedor() {
                     "eesic_ven1" : [{}]
             };
 
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
+};
+
+/**
+ * Funcion para obtener la url y el json de entrada para el Vendedor de pedidos
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function SICUDPedido() {
+    var mapData = "eegpd_ped";
+    var urlSir = ipServicios + baseComercial + "SICUDgpd_ped";
+    var json = 
+            {
+                    "dsSICUDgpd_ped": {
+                            "eeDatos": [{
+                                    "picusrcod": sessionStorage.getItem("usuario"),
+                                    "picfiid": sessionStorage.getItem("picfiid"),
+                                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                                    "remote_ip":sessionStorage.getItem("ipPublica")
+                            }],
+                            "eegpd_ped": [{
+                                    "ciu__cod": "",
+                                    "com__con": "",
+                                    "dpc__par": "",
+                                    "clc__cod": "",
+                                    "mnd__cla": "",
+                                    "pago__cod": "",
+                                    "ped__fec": "",
+                                    "ped__fec__ent": "",
+                                    "ped__num": "",
+                                    "ped__obs": "",
+                                    "ped__pqs": "",
+                                    "suc__cod": "",
+                                    "ter__dir": "",
+                                    "ter__nit": "",
+                                    "ter__tel": "",
+                                    "ven__cod": ""
+                            }]
+                    }
+            };
     this.setUrlSir = function (newname) {
         if (newname) {
             urlSir = newname;
