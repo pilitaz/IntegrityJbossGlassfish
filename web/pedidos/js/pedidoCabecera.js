@@ -14,15 +14,18 @@ $(document).ready(function() {
         format: "yyyy/MM/dd",
         value: new Date(sessionStorage.getItem("fechaSistema")),
         disableDates: ["sa", "su"]
-    });    
+    });
+    
+    $("#buttonCab").kendoButton();
     
     iniDropDownList();
     
     iniAutocomplete();
     
     if(sessionStorage.getItem("regPedidos")){
-        setInfoCabeceraPedido()
+        setInfoCabeceraPedido();
     }
+    
     
     
 });
@@ -422,7 +425,8 @@ function setInfoCliente(e){
 function setInfoCabeceraPedido(){
     
     var pedido = JSON.parse(sessionStorage.getItem("regPedidos"));
-    var infoPedido="";
+    document.getElementById('idNumeroPedido').innerHTML = 'Nº '+pedido.ped__num;
+    $("#buttonCab")["0"].childNodes["0"].data="Actualizar";
     
     var obj = new sirConsultaCliente();
     var objJson = obj.getjson();
@@ -478,4 +482,32 @@ function setInfoCabeceraPedido(){
     } catch (e) {
         alertDialogs("Function: consumeServAjaxSIR Error: " + e.message);
     }
+}
+
+function guardarCabecera(){
+    
+    var verbo="POST"
+    if($("#buttonCab")["0"].childNodes["0"].data==="Actualizar");{
+        verbo="PUT";
+    }
+    
+    var obj = new SICUDPedido();
+    var objJson = obj.getjson();
+    var url = obj.getUrlSir();
+    var mapData = obj.getMapData();
+    var key1 = Object.keys(objJson)[0];
+    var key2 = Object.keys(objJson[key1])[1];                                
+    objJson[key1][key2][0].suc__cod = $("#ipSucursal").val();
+    objJson[key1][key2][0].ter__nit = $("#ipNITCliente").val();
+    objJson[key1][key2][0].pago__cod = $("#ipSucursal").val();
+    objJson[key1][key2][0].mnd__cla = $("#ipCdePago").val();    
+    objJson[key1][key2][0].ven__cod = $("#ipVendedor").val();
+    objJson[key1][key2][0].ped__fec = $("#ipFecha").val();
+    objJson[key1][key2][0].com__con = $("#ipEstablecimiento").val();
+    objJson[key1][key2][0].ter__dir = $("#ipDireccion").val();
+    objJson[key1][key2][0].ter__tel = $("#ipTelefono").val();
+    objJson[key1][key2][0].ciu__cod = $("#ipCiudad").val();
+    objJson[key1][key2][0].ped__pqs = $("#ipSolicitante").val();
+    
+    
 }

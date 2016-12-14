@@ -38,7 +38,7 @@ and open the template in the editor.
                         <tr>
                             <td style="width: 50px"><a class="k-grid"  aling="center"><span class="k-sprite po_bullet1"></span></a></td>
                             <td>
-                                <h1 id = "subtitulo" class="subTitulo">Pedido <label id="idNumerofactura"></label></h1>                                
+                                <h1 id = "subtitulo" class="subTitulo">Pedido <label id="idNumeroPedido"></label></h1>                                
                             </td>                            
                         </tr>
                     </table>
@@ -120,7 +120,7 @@ and open the template in the editor.
                                     <label class="letraParrafo">Dirección</label>
                                 </td>
                                 <td style="width: 75%">
-                                    <input id="ipDirección" class="k-textbox" value="" style="width: 100%"/>
+                                    <input id="ipDireccion" class="k-textbox" value="" style="width: 100%"/>
                                 </td>
                             </tr>
                             <tr>
@@ -144,7 +144,7 @@ and open the template in the editor.
                                     <label class="letraParrafo">Solicitante</label>
                                 </td>
                                 <td style="width: 75%">
-                                    <input id="ipDirección" class="k-textbox" value="" style="width: 100%"/>
+                                    <input id="ipSolicitante" class="k-textbox" value="" style="width: 100%"/>
                                 </td>
                             </tr>
                         </table>
@@ -170,7 +170,7 @@ and open the template in the editor.
         
         <!--</ul>-->
     </body>
-    <footer><button id="buttonCab" class="k-primary" style="width: 99%;height: 40px; vertical-align: middle;">Guardar Cabecera</button><br>
+    <footer><button id="buttonCab" class="k-primary" style="width: 99%;height: 40px; vertical-align: middle;" onclick="guardarCabecera()">Guardar Cabecera</button><br>
     </footer>
     
 </html>
