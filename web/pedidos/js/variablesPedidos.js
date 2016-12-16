@@ -16,7 +16,7 @@ function sirConsultaPedidos() {
     var mapData = "eegpd_ped";
     var urlSir = ipServicios + baseComercial + "SIRgpd_ped";
     var json = {
-            "dsgpd_ped": {
+            "dsSIRgpd_ped": {
 		"eeDatos":[
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
@@ -25,7 +25,7 @@ function sirConsultaPedidos() {
                     "remote_ip":sessionStorage.getItem("ipPublica")
                 }
             ],
-            "eetemp": [
+            "eeSIRgpd_ped": [
                 {
                     "picsuc__cod": "*",
                     "picclc__cod": "*",
