@@ -3,6 +3,7 @@
         <link href="../css/style2min.css" rel="stylesheet" type="text/css"/>
         <script src="../scripts/jquery-2.2.0.min.js" type="text/javascript"></script>
         <script src="../scripts/jstree.min.js" type="text/javascript"></script>
+        <script src="../scripts/kendo.all.min.js" type="text/javascript"></script>
         
     </head>
     <body>
@@ -19,8 +20,8 @@
                 $(function() {
                     try{                        
                         $('#jstree2').jstree(JSON.parse(sessionStorage.getItem("txtJson2")));
-                        if(sessionStorage.getItem("pcf")){
-                            $('#jstree2').jstree(true).select_node(sessionStorage.getItem("pcf"));
+                        if(sessionStorage.getItem("pcfAct")){
+                            $('#jstree2').jstree(true).select_node(sessionStorage.getItem("pcfAct"));
                         }
                     }catch(e){alert("funcion Arbol: el json que recibe no es correcto ----"+e.message);}
                     $('#jstree2').on('dblclick', function () {                        
@@ -31,6 +32,7 @@
                             sessionStorage.removeItem('cabeceraLast');
                         }var id=$('#jstree2').jstree(false).get_selected();
                         var id=$('#jstree2').jstree(true).get_selected();
+                        sessionStorage.setItem("pcfAct",id);
                         sessionStorage.setItem("ncf",$('#jstree2').jstree(true).get_text($('#jstree2').jstree(true).get_selected()))
                         for(var i=0;i<id.length;i++){
                             if($('#jstree2').jstree(true).is_open(id[i])){

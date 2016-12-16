@@ -5,7 +5,7 @@
  */
 
 var hoy = new Date(sessionStorage.getItem("fechaSistema"));
-hoy.setHours(0,0,0,0);
+hoy.setHours(0, 0, 0, 0);
 var objCliente = null;
 
 //var auth = new Object();
@@ -26,10 +26,10 @@ authdsgfc_cli.dsgfc_cli.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
 authdsgfc_cli.dsgfc_cli.eetemp = new Array();
 authdsgfc_cli.dsgfc_cli.eetemp[0] = new Object();
 
-$(document).ready(function(){
+$(document).ready(function () {
     $("#ipfechaInicio").kendoDatePicker({
-        open: function() {
-            var calendar = this.dateView.calendar;            
+        open: function () {
+            var calendar = this.dateView.calendar;
             calendar.wrapper.width(this.wrapper.width() - 6);
         },
         culture: "es-CO",
@@ -37,27 +37,35 @@ $(document).ready(function(){
         max: new Date(hoy),
         disableDates: ["sa", "su"],
         footer: false
-    });    
+    });
     $("#ipfechaFin").kendoDatePicker({
-        open: function() {
-            var calendar = this.dateView.calendar;            
+        open: function () {
+            var calendar = this.dateView.calendar;
             calendar.wrapper.width(this.wrapper.width() - 6);
         },
         culture: "es-CO",
-        format: "yyyy/MM/dd",        
+        format: "yyyy/MM/dd",
 //        value: new Date(hoy),
         max: new Date(hoy),
         disableDates: ["sa", "su"],
         footer: false
-    }); 
-    
+    });
+
     $("#btBuscar").kendoButton({
+        click: buscarPedidos
     });
 });
 
 
 
 
-function buscarFacturas(){  
-    
+function buscarPedidos() {
+    var obj = [{
+            "picsuc__cod": "*",
+            "picclc__cod": "*",
+            "pidped__fec": $("#ipfechaFin").val(),
+            "piiped__num": 0,
+            "picusuario": "*"
+        }];
+    parent.sendAjax(obj, "POST", "");
 }
