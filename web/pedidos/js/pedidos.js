@@ -10,7 +10,7 @@
 var dataSourcePedidos = {};
 $(window).resize(function () {
     var viewportHeight = $(window).height();
-    $('#outerWrapper').height(viewportHeight - 50);
+    $('#outerWrapper').height(viewportHeight - 60);
     $('.k-grid-content').height(viewportHeight - 100);
 });
 
@@ -216,6 +216,9 @@ function popUpPedidoCU() {
 
 
 function sendAjax(data, verHtml) {
+    $("#windowFiltros").data("kendoWindow").close();
+    
+    displayLoading("#gridPedidos");
     var obj = new sirConsultaPedidos();
     var objPedi = obj.getjson();
     var urlPedi = obj.getUrlSir();
@@ -237,13 +240,14 @@ function sendAjax(data, verHtml) {
             var key1 = Object.keys(resp)[0];
             permitirIngreso = JSON.stringify(resp[key1].eeEstados[0].Estado);
             jsonResp = resp;
+             closeLoading("#gridPedidos");
         },
         error: function (e) {
-            parent.errorPopUp("Error al consumir el servicio de CrearFunciones" + e.status + " - " + e.statusText);
+            alertDialogs("Error al consumir el servicio de CrearFunciones" + e.status + " - " + e.statusText);
+             closeLoading("#gridPedidos");
         }
     }).done(function () {
         if (permitirIngreso == '"OK"') {
-//            closeLoading("#operaciones");
             if (verHtml === "POST") {
                 var key1 = Object.keys(jsonResp)[0];
                 var dataSource = new kendo.data.DataSource({
@@ -254,14 +258,13 @@ function sendAjax(data, verHtml) {
                 $('#gridPedidos').data('kendoGrid').dataSource.read();
                 $('#gridPedidos').data('kendoGrid').refresh();
             }
-
+            
+            
         } else {
 //            closeLoading("#operaciones");
-            parent.errorPopUp("Problemas con el creación de funciones .\n" + permitirIngreso);
+            alertDialogs("Problemas con el creación de funciones .\n" + permitirIngreso);
         }
-        $("#btnSaveFiltros").kendoButton({
-            enable: true
-        });
+        closeLoading("#gridPedidos");
     });
 
 }
