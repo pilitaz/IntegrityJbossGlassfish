@@ -95,6 +95,14 @@ and open the template in the editor.
                                     <input id="ipVendedor" style="width: 100%"/>
                                 </td>
                             </tr>
+                            <tr>
+                                <td style="width: 25%">
+                                    <label class="letraParrafo">Solicitante</label>
+                                </td>
+                                <td style="width: 75%">
+                                    <input id="ipSolicitante" class="k-textbox" value="" style="width: 100%"/>
+                                </td>
+                            </tr>
                         </table>                        
                     </div>
                     <div class="col-md-6">                        
@@ -104,7 +112,15 @@ and open the template in the editor.
                                     <label class="letraParrafo">Fecha:</label>
                                 </td>
                                 <td style="width: 75%">
-                                    <input id="ipFecha" value="" style="width: 100%" onChange="calcularFechaVencimiento()"/>
+                                    <input id="ipFecha" value="" style="width: 100%"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 25%">
+                                    <label class="letraParrafo">Fecha entrega:</label>
+                                </td>
+                                <td style="width: 75%">
+                                    <input id="ipFechaEntrega" value="" style="width: 100%"/>
                                 </td>
                             </tr>
                             <tr>
@@ -138,15 +154,7 @@ and open the template in the editor.
                                 <td style="width: 75%">
                                     <input id="ipCiudad" value="" style="width: 100%"/>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 25%">
-                                    <label class="letraParrafo">Solicitante</label>
-                                </td>
-                                <td style="width: 75%">
-                                    <input id="ipSolicitante" class="k-textbox" value="" style="width: 100%"/>
-                                </td>
-                            </tr>
+                            </tr>                            
                         </table>
                     </div>                   
                 </div>
@@ -158,7 +166,7 @@ and open the template in the editor.
                                     <label class="letraParrafo">Observaciones:</label><br>
                                 </td>
                                 <td>
-                                    <textarea id="txtAObservaciones" data-bind="value: textareaValue" class="k-textbox" style="height: 40px; width: 100%;"></textarea>
+                                    <textarea id="txtAObservacionePedido" data-bind="value: textareaValue" class="k-textbox" style="height: 40px; width: 100%;"></textarea>
                                 </td>
                             </tr>                            
                         </table>

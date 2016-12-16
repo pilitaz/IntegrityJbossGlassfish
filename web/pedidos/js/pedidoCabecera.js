@@ -16,6 +16,13 @@ $(document).ready(function() {
         disableDates: ["sa", "su"]
     });
     
+    $("#ipFechaEntrega").kendoDatePicker({
+        culture: "es-CO",
+        format: "yyyy/MM/dd",
+        value: new Date(sessionStorage.getItem("fechaSistema")),
+        disableDates: ["sa", "su"]
+    });
+    
     $("#buttonCab").kendoButton();
     
     iniDropDownList();
@@ -503,11 +510,38 @@ function guardarCabecera(){
     objJson[key1][key2][0].mnd__cla = $("#ipCdePago").val();    
     objJson[key1][key2][0].ven__cod = $("#ipVendedor").val();
     objJson[key1][key2][0].ped__fec = $("#ipFecha").val();
+    objJson[key1][key2][0].ped__fec__ent = $("#ipFecha").val();
     objJson[key1][key2][0].com__con = $("#ipEstablecimiento").val();
     objJson[key1][key2][0].ter__dir = $("#ipDireccion").val();
     objJson[key1][key2][0].ter__tel = $("#ipTelefono").val();
     objJson[key1][key2][0].ciu__cod = $("#ipCiudad").val();
     objJson[key1][key2][0].ped__pqs = $("#ipSolicitante").val();
+    objJson[key1][key2][0].obs__ped = $("#txtAObservacionePedido").val();
     
-    
+    try{
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(objJson),
+            url: url,
+            dataType : "json",
+            contentType: "application/json;",
+            success: function (e) { 
+                
+                var key1 = Object.keys(e)[0];
+                if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                    return e[key1][mapData];
+                } else {
+                    alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                }
+            },
+            error: function (e) {
+                alertDialogs(" Error al consumir el servicio "+ e.status +" - "+ e.statusText);                
+            }
+        }).done(function(e){
+            debugger
+            ///setInfoCliente();
+        });
+    } catch (e) {
+        alertDialogs("Function: consumeServAjaxSIR Error: " + e.message);
+    }
 }
