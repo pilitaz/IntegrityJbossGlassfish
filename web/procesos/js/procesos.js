@@ -146,7 +146,7 @@ $(document).ready(function () {
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     return e[key1][mapCud1];
                 } else {
-                  alertDialogs(e[key1].eeEstados[0].Estado);
+                  alertDialogs("El usuario no tiene tareas asiganadas");
                 }
             },
             model: {
