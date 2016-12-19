@@ -547,10 +547,15 @@ function tamanoFunciones(e) {
 }
 
 function mostrarDocumentos() {
+    gridDDoc()
     var tamañoContenedor = $("#outerWrapper").width();
     var d = document.getElementById('divDocumentos');
     d.style.left = (tamañoContenedor - 300) + 'px';
-    $("#divDocumentos").load("documentos.html");
+//    document.getElementById("divDocumentos1").src = sessionStorage.getItem("url") + "/html/" + "documentos" + ".html";
+//    $("#divDocumentos").load("documentos.html");
+//    $('#gridDoc').data('kendoGrid').dataSource.read();
+//        $('#gridDoc').data('kendoGrid').refresh();
+
     $("#divDocumentos").fadeIn(2500);
 }
 function ocultarDocumentos() {
@@ -561,3 +566,100 @@ function closeFrame() {
     var friends = document.getElementById("idFrame");
     friends.style.display = "none";
 }
+
+function onChange(arg) {
+    var selected = $.map(this.select(), function (item) {
+        return $(item).text();
+    });
+    sessionStorage.setItem("documento", selected);
+    var tipoArchivo = sessionStorage.getItem("documento").split(".")[sessionStorage.getItem("documento").split(".").length - 1];
+
+    var actions = new Array();
+    actions[0] = new Object();
+    actions[0].text = "Ver online";
+    actions[0].action = showFile;
+    actions[1] = new Object();
+    actions[1].text = "Original";
+    actions[1].primary = "true";
+    actions[1].action = getFile;
+    if (tipoArchivo !== "pdf") {
+        actions[2] = new Object();
+        actions[2].text = "Como pdf";
+        actions[2].action = getFileAsPDF;
+    }
+    bandAlert = 0;
+    createDialog("Documentos", "El archivo seleccinado es " + selected + " que desea hacer ", "400px", "auto", true, true, actions);
+
+}
+var dsfiles = new Object();
+dsfiles.dsfiles = new Object();
+dsfiles.dsfiles.eeDatos = new Array();
+dsfiles.dsfiles.eeDatos[0] = new Object();
+dsfiles.dsfiles.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
+dsfiles.dsfiles.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
+dsfiles.dsfiles.eeDatos[0].local_ip = sessionStorage.getItem("ipPrivada");
+dsfiles.dsfiles.eeDatos[0].remote_ip = sessionStorage.getItem("ipPublica");
+var grid = "";
+alertDialogs()
+function gridDDoc(){
+    var dataSource = new kendo.data.DataSource({
+        transport: {
+            read: {
+                type: "POST",
+//                url: "http://35.162.169.179:8810/rest/Base/BaseIntegrity/DocumentList",
+                url: ipServicios + baseServicio + "DocumentList",
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json'
+            },
+            parameterMap: function (options, operation) {
+                try {
+                    if (operation === 'read') {
+                        return JSON.stringify(dsfiles);
+                    }
+                } catch (e) {
+                    kendo.alert(e.message);
+                }
+            }
+        },
+        batch: true,
+        pageSize: 20,
+        schema: {
+            data: "dsfiles.ttfiles",
+            model: {
+                fields: {
+                    nomfile: {type: "string"},
+                    tamfile: {type: "integer"},
+                    fecfile: {type: "date:MM-dd-yyyy"}
+                }
+            }
+        }
+    });
+
+    grid = $("#gridDoc").kendoGrid({
+        dataSource: dataSource,
+        change: onChange,
+        selectable: "row",
+        scrollable: false,
+        //height: 100%,        
+        columns: [
+            {
+               field: "nomfile",
+            }
+        ]
+    });
+    //para ocultar el header de la grilla
+    $("#gridDoc .k-grid-header").css('display', 'none');
+};
+
+
+/**
+ * funcion para filtrar los elementos de la grilla al oprimir una tecla dentro del input buscarDoc
+ * @param {type} param
+ */function fltrDoc() {
+    var value = $("#buscarDoc").val();
+    if (value) {
+        grid.data("kendoGrid").dataSource.filter({field: "nomfile", operator: "contains", value: value});
+    } else {
+        grid.data("kendoGrid").dataSource.filter({});
+    }
+};

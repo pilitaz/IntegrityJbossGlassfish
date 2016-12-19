@@ -16,7 +16,7 @@ function sirConsultaPedidos() {
     var mapData = "eegpd_ped";
     var urlSir = ipServicios + baseComercial + "SIRgpd_ped";
     var json = {
-            "dsgpd_ped": {
+            "dsSIRgpd_ped": {
 		"eeDatos":[
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
@@ -25,7 +25,7 @@ function sirConsultaPedidos() {
                     "remote_ip":sessionStorage.getItem("ipPublica")
                 }
             ],
-            "eetemp": [
+            "eeSIRgpd_ped": [
                 {
                     "picsuc__cod": "*",
                     "picclc__cod": "*",
@@ -423,20 +423,21 @@ function SICUDPedido() {
                             "eegpd_ped": [{
                                     "ciu__cod": "",
                                     "com__con": "",
-                                    "dpc__par": "",
+                                    "dpc__par": "false",
                                     "clc__cod": "",
                                     "mnd__cla": "",
                                     "pago__cod": "",
                                     "ped__fec": "",
                                     "ped__fec__ent": "",
                                     "ped__num": "",
-                                    "ped__obs": "",
+                                    "obs__ped": "",
                                     "ped__pqs": "",
                                     "suc__cod": "",
                                     "ter__dir": "",
                                     "ter__nit": "",
                                     "ter__tel": "",
-                                    "ven__cod": ""
+                                    "ven__cod": "",
+                                    "gpd__est": 0,
                             }]
                     }
             };
