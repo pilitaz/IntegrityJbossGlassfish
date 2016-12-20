@@ -17,6 +17,7 @@ and open the template in the editor.
         <script src="../../scripts/kendo.culture.es-CO.min.js" type="text/javascript"></script>
         <script src="../../scripts/LibreriaIntegrity.js" type="text/javascript"></script>
         <script src="../../js/servicios.js" type="text/javascript"></script>
+        <script src="../js/variablesPedidos.js" type="text/javascript"></script>
         <script src="../js/popUpFiltros.js" type="text/javascript"></script>
         <link href="../../css/kendo.common.min.css" rel="stylesheet" type="text/css"/>                        
         <link href="../../css/kendo.metro.min.css" rel="stylesheet" type="text/css"/>
@@ -25,49 +26,35 @@ and open the template in the editor.
         <link href="../../css/integrity.css" rel="stylesheet" type="text/css"/>
         <link href="../css/popUpFiltros.css" rel="stylesheet" type="text/css"/>
     </head>
-    <body>
+    <body>        
         <br>
-        <br>
-        <br>
-        <table >
-<!--            <tr>
+        <br>        
+        <table style="width: 100%" >
+            <tr>
                 <td class="tdIzquierdo">
-                    <label class="letraParrafo">Sucursal/Agencia:</label>
+                    <label>Estado</label>
+                </td>                
+                <td class="tdDerecho">                    
+                    <input id="ipEstadoPedido" style="width: 100%"/>
                 </td>
-                <td class="tdDerecho" colspan="2">
-                    <input id="ipSucursal" style="width: 100%" />
-                </td>
-            </tr>-->
+            </tr>
             <tr>
                 <td class="tdIzquierdo">
                     <label>Fecha</label>
-                </td>
-                <td class="tdDerecho">
-                    <label>desde:</label>
-                    <input id="ipfechaInicio" style="width: 100%" />
-                </td>
-                <td class="tdDerecho">
-                    <label>hasta:</label>
+                </td>                
+                <td class="tdDerecho">                    
                     <input id="ipfechaFin" style="width: 100%" />
                 </td>
             </tr>
             <tr>
                 <td class="tdIzquierdo">
-                    <label>Número de factura</label>
+                    <label>Número de pedido</label>
+                </td>                
+                <td class="tdDerecho">                    
+                    <input id="ipNumeroPedido" style="width: 100%" class="k-textbox"/>
                 </td>
-                <td class="tdDerecho">
-                    <label>desde:</label>
-                    <input id="ipNumeroInicio" style="width: 100%" class="k-textbox" />
-                </td>
-                <td class="tdDerecho">
-                    <label>hasta:</label>
-                    <input id="ipNumeroFin" style="width: 100%" class="k-textbox"/>
-                </td>
-            </tr>
-            
-           
+            </tr>            
         </table>
-       
-    </body> <div class="footer"><button id="btBuscar"  class="k-primary" style="width: 99%;height: 40px; vertical-align: middle;">Guardar Cabecera</button><br>
+    </body> <div class="footer"><button id="btBuscar"  class="k-primary" style="width: 99%;height: 40px; vertical-align: middle;">Buscar</button><br>
     </div>
 </html>

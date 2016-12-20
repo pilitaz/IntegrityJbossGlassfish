@@ -390,7 +390,7 @@ function iniAutocomplete(){
 function gridDetalle(){    
     var grid = $("#grid").kendoGrid({
         dataSource: dataGridDetalle,       
-        selectable: false,
+        selectable: true,
         height: 400,
         dataBound: borrarBotonesGrilla,
         columns: [
@@ -1127,6 +1127,7 @@ function cargarDatosGrilla(){
                         var dataItemsFac = factura.dsSIRgfc_fac.eeSIRgfc_itms;
 
                         for(var i=0; i<dataItemsFac.length ;i++){
+                            
                             var valor = dataItemsFac[i].itms__val__u;                        
                             valor = (valor * (parseFloat(1)-parseFloat(dataItemsFac[i].itms__pdt/100)));
                             var total = parseFloat(dataItemsFac[i].itms__can) * (parseFloat(valor) * (parseFloat(1)+parseFloat(dataItemsFac[i].itms__piv/100)));                    
@@ -1139,7 +1140,7 @@ function cargarDatosGrilla(){
                                 ClaseArticulo: dataItemsFac[i].cla__des,
                                 Articulo: dataItemsFac[i].art__des,
                                 ArticuloId: dataItemsFac[i].art__cod,
-                                Descripcion: dataItemsFac[i].des__itms,
+                                Descripcion: dataItemsFac[i].itms__des["0"], 
                                 Cantidad: parseInt(dataItemsFac[i].itms__can),                    
                                 Descuento: dataItemsFac[i].itms__pdt/100,
                                 IVA: dataItemsFac[i].itms__piv/100,

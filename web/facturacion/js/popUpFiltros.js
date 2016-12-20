@@ -8,15 +8,6 @@ var hoy = new Date(sessionStorage.getItem("fechaSistema"));
 hoy.setHours(0,0,0,0);
 var objCliente = null;
 
-//var auth = new Object();
-//auth.dssic_suc = new Object();
-//auth.dssic_suc.eeDatos = new Array();
-//auth.dssic_suc.eeDatos[0] = new Object();
-//auth.dssic_suc.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
-//auth.dssic_suc.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
-//auth.dssic_suc.eetemp = new Array();
-//auth.dssic_suc.eetemp[0] = new Object();
-
 var authdsgfc_cli = new Object();
 authdsgfc_cli.dsgfc_cli = new Object();
 authdsgfc_cli.dsgfc_cli.eeDatos = new Array();
@@ -50,56 +41,6 @@ $(document).ready(function(){
         disableDates: ["sa", "su"],
         footer: false
     }); 
-    
-//    $("#ipSucursal").kendoDropDownList({
-//        optionLabel: "Seleccione la sucursal",
-//        dataTextField: "suc__nom",
-//        dataValueField: "suc__cod",
-//        change: client,
-//        template:'<div class="divElementDropDownList">#: data.suc__nom #</div>',        
-//        dataSource: {
-//            transport: {
-//                read: {
-//                    url: ipServicios+"rest/Parameters/SIRSucursalagencia",
-//                    contentType: "application/json; charset=utf-8",
-//                    dataType: "json",
-//                    type: "POST"
-//                },
-//                parameterMap: function (options, operation) {
-//                    try {
-//                        if (operation === 'read') {
-//                            auth.dssic_suc.eetemp[0].piccia_nit = sessionStorage.getItem("companyNIT");
-//                            //console.log(JSON.stringify(auth));
-//                            auth["eesic_suc"] = [options];
-//                            return JSON.stringify(auth);
-//                        }	
-//                    } catch (e) {
-//                        alertDialogs(e.message);
-//                    }
-//                },
-//            },
-//            schema: {
-//                type: "json",
-//                data:function (e){
-//                    if(e.dssic_suc.eeEstados[0].Estado==="OK"){
-//                        return e.dssic_suc.eesic_suc;
-//                    }else{
-//                        alertDialogs(e.dssic_suc.eeEstados[0].Estado);
-//                    }
-//                },
-//                model: {
-//                    id: "suc__cod",
-//                    fields: {
-//                        suc__cod: {validation: {required: true}, type: 'string'},
-//                        suc__nom: {validation: {required: true}, type: 'string'}
-//                    }
-//                }
-//            },
-//            error: function (xhr, error) {
-//                alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
-//            }
-//        }        
-//    });
     
     $("#ipCliente").kendoAutoComplete({
         dataTextField: "ter__raz",
@@ -157,7 +98,7 @@ $(document).ready(function(){
     });
     
     var estados = [
-        { text: "Todos", value: "99" },
+        { text: "Todos", value: "*" },
         { text: "No contabilizado", value: "0" },
         { text: "Contabilizado", value: "1" },
         { text: "Anulado", value: "9" }

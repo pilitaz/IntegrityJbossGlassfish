@@ -33,7 +33,7 @@ $(document).ready(function() {
 //    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_fec_fin = "2016/12/01";
     dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro_ini = "";
     dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro_fin = "";
-    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_est = "99";
+    dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_est = "*";
     dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picter_nit = "*";
 
     gridFacturas();
@@ -143,7 +143,7 @@ function gridFacturas(){
     }
     
     function imprimirFact(e){
-        debugger
+        
         e.preventDefault();        
         var archivo
         var factura = this.dataItem($(e.currentTarget).closest("tr"));
@@ -172,7 +172,8 @@ function gridFacturas(){
                     estado = JSON.stringify(resp.response.pocestado);   
                     archivo = resp.response.pocarchivo;
                     archivo = archivo.split("\\")[2];
-                    sessionStorage.setItem("documento",3246+".pdf");
+                    sessionStorage.setItem("documento",archivo+".pdf");
+                    
                 },
                 error: function (e) {
                     kendo.alert(" Error al consumir el servicio.\n"+ e.status +" - "+ e.statusText);                
