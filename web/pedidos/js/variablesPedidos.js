@@ -530,3 +530,59 @@ function sirConsultaEstablecimiento() {
 
 };
 
+/**
+ * Funcion para obtener la url y el json de entrada para la lista de Pedidos
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function sirConsultaCiudad() {
+    var mapData = "eesic_ciu";
+    var urlSir = ipServicios + baseContabilidad + "SIRsic_ciu";
+    var json = {
+                        "dsSIRsic_ciu": {
+                                "eeDatos": [{
+                                            "picusrcod": sessionStorage.getItem("usuario"),
+                                            "picfiid": sessionStorage.getItem("picfiid"),
+                                            "local_ip":sessionStorage.getItem("ipPrivada"),
+                                            "remote_ip":sessionStorage.getItem("ipPublica")
+                                }],
+                                "eeSIRsic_ciu": [{
+                                        "picciu_cod": "*"
+
+                                }]
+
+                        }
+                };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
+};
+

@@ -291,6 +291,61 @@ function iniDropDownList(){
         dataValueField: "com__con", 
         placeholder: "Selecione un establecimiento...",
     });
+    
+    var objCiudad = new sirConsultaCiudad();    
+    var objJsonCiudad = objCiudad.getjson();
+    var urlCiudad = objCiudad.getUrlSir();
+    var mapDataCiudad = objCiudad.getMapData();
+    
+    //carga el combo de ciudad
+    $("#ipCiudad").kendoDropDownList({
+        optionLabel: "Seleccione la ciudad",
+        dataTextField: "ciu__nom",
+        dataValueField: "ciu__cod",
+        template:'<div class="divElementDropDownList">#: data.ciu__nom #</div>',        
+        dataSource: {
+            transport: {
+                read: {
+                    url: urlCiudad,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) {
+                    try {
+                        if (operation === 'read') {                            
+                            return JSON.stringify(objJsonCiudad);
+                        }	
+                    } catch (e) {
+                        alertDialogs("Error en el servicio"+ e.message);
+                    }
+                },
+            },
+            schema: {
+                type: "json",
+                data:function (e){
+                    debugger
+                    var key1 = Object.keys(e)[0];
+                    if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                        return e[key1][mapDataCiudad];
+                    } else {
+                        alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                    }
+                },
+                model: {
+                    id: "ciu__cod",
+                    fields: {
+                        ciu__cod: {validation: {required: true}, type: 'string'},
+                        ciu__nom: {validation: {required: true}, type: 'string'}
+                    }
+                }
+            },
+            error: function (xhr, error) {
+                alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+            }
+        }
+        
+    });
 }
 
 function setInfoCliente(e){
@@ -506,6 +561,12 @@ function setInfoCliente(e){
 function setInfoCabeceraPedido(){
     
     var pedido = JSON.parse(sessionStorage.getItem("regPedidos"));
+    
+    var kendoDropDownListSucursal = $("#ipSucursal").data("kendoDropDownList");
+    debugger
+    kendoDropDownListSucursal.value(pedido.suc__cod);
+    kendoDropDownListSucursal.readonly(true);
+    
     document.getElementById('idNumeroPedido').innerHTML = 'Nº '+pedido.ped__num;
     $("#buttonCab")["0"].childNodes["0"].data="Actualizar";//
     
@@ -516,11 +577,7 @@ function setInfoCabeceraPedido(){
     
     var key1 = Object.keys(objJson)[0];
     var key2 = Object.keys(objJson[key1])[1];                                
-    objJson[key1][key2][0].picter_nit = pedido.ter__nit;    
-    
-    var kendoDropDownListSucursal = $("#ipSucursal").data("kendoDropDownList");
-    kendoDropDownListSucursal.value(pedido.suc__cod);
-    kendoDropDownListSucursal.readonly(true);
+    objJson[key1][key2][0].picter_nit = pedido.ter__nit;
     
     var kendoDropDownListDivisa = $("#ipDivisa").data("kendoDropDownList");
     kendoDropDownListDivisa.value(pedido.mnd__cla.toUpperCase());
