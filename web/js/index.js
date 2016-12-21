@@ -406,6 +406,8 @@ function correLinuxBack() {//corre las funciones del shell in a box
         document.getElementById("includeTerm").src = "http://" + ip + ":" + portLinux + "/"
                 + "?u="
                 + sessionStorage.getItem("usuario")
+                + "_"
+                + sessionStorage.getItem("companyNIT")
                 + "&p="
                 + sessionStorage.getItem("contra");
 
