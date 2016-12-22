@@ -15,10 +15,6 @@ $(window).resize(function () {
 });
 
 $(document).ready(function () {
-
-//    document.getElementById("accessDiv").style.display = "none";
-//    var url = sessionStorage.getItem("url");
-//    createStyleSheet(url);
     grid();
 });
 
@@ -28,7 +24,7 @@ $(document).ready(function () {
  */
 function grid() {
     var obj = new sirConsultaPedidos();
-    var objRepo = obj.getjson();
+    var jsonFiltroPedidos = obj.getjson();
     var urlRepo = obj.getUrlSir();
     var mapData = obj.getMapData();
 
@@ -53,9 +49,15 @@ function grid() {
             },
             parameterMap: function (options, operation) {
                 try {
-                    if (operation === 'read') {
-                        objRepo["obj"] = [options];
-                        return JSON.stringify(objRepo);
+                    if (operation === 'read') {                        
+                         if(sessionStorage.getItem("jsonFiltroPedidos")){
+                             jsonFiltroPedidos = JSON.parse(sessionStorage.getItem("jsonFiltroPedidos"));                             
+                         }else{
+                            var key1 = Object.keys(jsonFiltroPedidos)[0];
+                            var key2 = Object.keys(jsonFiltroPedidos[key1])[1];
+                            jsonFiltroPedidos[key1][key2][0].pidped_fec = sessionStorage.getItem("fechaSistema");
+                        }                        
+                        return JSON.stringify(jsonFiltroPedidos);
                     } else if (operation === 'destroy') {
                         var key1 = Object.keys(objRepoD)[0];
                         objRepoD[key1][mapDataRepoD] = [options];
@@ -68,13 +70,13 @@ function grid() {
         },
         schema: {
             type: "json",
-            data: function (e) {
+            data: function (e) {                
                 var key1 = Object.keys(e)[0];
                 if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
                     return e[key1][mapData];
                 } else {
                     alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
-                }
+                }                
             },
             model: {
                 id: "ped__num",
@@ -87,7 +89,7 @@ function grid() {
             }
         }
     });
-    $(window).trigger("resize");
+    $(window).trigger("resize");    
     $("#gridPedidos").kendoGrid({
         dataSource: dataSourcePedidos,
         dataBound: ondataBound,
@@ -108,10 +110,9 @@ function grid() {
         rowTemplate: kendo.template($("#rowTemplate").html()),
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
     });
-//    $("#gridPedidos .k-grid-header").css('display', 'none');
 }
 function ondataBound() {
-
+    sessionStorage.removeItem("jsonFiltroPedidos");
 }
 
 function btnFltrPedido() {
@@ -149,10 +150,13 @@ function ClickAprov() {
 
 }
 function ClickEditar(e) {
-    e = this.dataItem($(e.currentTarget).closest("tr"));
-    debugger
+    e = this.dataItem($(e.currentTarget).closest("tr"));    
+    var servicio="pedido"
+    sessionStorage.setItem("servicio",servicio);
     sessionStorage.setItem("regPedidos", JSON.stringify(e));
-    popUpPedidoCU();
+    window.location.replace(( sessionStorage.getItem("url")+"pedidos/html/"+servicio+".html"));   
+    
+//    popUpPedidoCU();
 
 }
 
@@ -183,88 +187,4 @@ function clickEliminar(e) {
         $('#gridPedidos').data('kendoGrid').dataSource.read();
         $('#gridPedidos').data('kendoGrid').refresh();
     }
-}
-function popUpPedidoCU() {
-    var widthPopUp = $("body").width();
-    widthPopUp = widthPopUp * (80 / 100);
-    var heightPopUp = $("body").height();
-    heightPopUp = heightPopUp * (50 / 100);
-
-    $("body").append("<div id='windowPedidoCabecera'></div>");
-    var myWindow = $("#windowPedidoCabecera");
-    var undo = $("#undo");
-
-    function onCloseWindowItemFac() {
-        document.getElementById("windowPedidoCabecera").remove();
-        undo.fadeIn();
-    }
-
-    myWindow.kendoWindow({
-        width: widthPopUp,
-        height: heightPopUp,
-        title: "Crear",
-        content: sessionStorage.getItem("url") + "/pedidos/html/pedidoCabecera.html",
-        visible: false,
-        modal: true,
-        actions: [
-            "Close"
-        ],
-        close: onCloseWindowItemFac
-    }).data("kendoWindow").center().open();
-}
-
-
-
-function sendAjax(data, verHtml) {
-    $("#windowFiltros").data("kendoWindow").close();
-    
-    displayLoading("#gridPedidos");
-    var obj = new sirConsultaPedidos();
-    var objPedi = obj.getjson();
-    var urlPedi = obj.getUrlSir();
-    var mapData = obj.getMapData();
-    objPedi = {
-        "dsSICUDRep_rpt": {
-            "eerep_rpt_fun": data,
-        }
-    }
-    var jsonResp = "";
-    var permitirIngreso = "";
-    $.ajax({
-        type: verHtml,
-        data: JSON.stringify(objPedi),
-        url: urlPedi,
-        dataType: "json",
-        contentType: "application/json;",
-        success: function (resp) {
-            var key1 = Object.keys(resp)[0];
-            permitirIngreso = JSON.stringify(resp[key1].eeEstados[0].Estado);
-            jsonResp = resp;
-             closeLoading("#gridPedidos");
-        },
-        error: function (e) {
-            alertDialogs("Error al consumir el servicio de CrearFunciones" + e.status + " - " + e.statusText);
-             closeLoading("#gridPedidos");
-        }
-    }).done(function () {
-        if (permitirIngreso == '"OK"') {
-            if (verHtml === "POST") {
-                var key1 = Object.keys(jsonResp)[0];
-                var dataSource = new kendo.data.DataSource({
-                    data: jsonResp[key1][mapData]
-                });
-
-                $('#gridPedidos').data('kendoGrid').setDataSource(dataSource);
-                $('#gridPedidos').data('kendoGrid').dataSource.read();
-                $('#gridPedidos').data('kendoGrid').refresh();
-            }
-            
-            
-        } else {
-//            closeLoading("#operaciones");
-            alertDialogs("Problemas con el creación de funciones .\n" + permitirIngreso);
-        }
-        closeLoading("#gridPedidos");
-    });
-
 }

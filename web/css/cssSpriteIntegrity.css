@@ -111,6 +111,28 @@
         pointer-events: none;            
 }
 
+/* ——  */
+
+.po_edit_sup{
+	width: 34px;
+	height: 34px;
+        background: url(../images/SpriteIntegrity.png) -8px -108px;	
+	cursor:pointer
+}
+.po_edit_sup:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -108px;        
+	cursor:pointer
+}
+.po_edit_sup:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -108px;
+}
+
+/* ——  */
+
 .po_detalle{
 	width: 34px;
 	height: 34px;

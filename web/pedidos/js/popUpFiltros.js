@@ -4,40 +4,7 @@
  * and open the template in the editor.
  */
 
-var hoy = new Date(sessionStorage.getItem("fechaSistema"));
-hoy.setHours(0, 0, 0, 0);
-var objCliente = null;
-
-//var auth = new Object();
-//auth.dssic_suc = new Object();
-//auth.dssic_suc.eeDatos = new Array();
-//auth.dssic_suc.eeDatos[0] = new Object();
-//auth.dssic_suc.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
-//auth.dssic_suc.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
-//auth.dssic_suc.eetemp = new Array();
-//auth.dssic_suc.eetemp[0] = new Object();
-
-var authdsgfc_cli = new Object();
-authdsgfc_cli.dsgfc_cli = new Object();
-authdsgfc_cli.dsgfc_cli.eeDatos = new Array();
-authdsgfc_cli.dsgfc_cli.eeDatos[0] = new Object();
-authdsgfc_cli.dsgfc_cli.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
-authdsgfc_cli.dsgfc_cli.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
-authdsgfc_cli.dsgfc_cli.eetemp = new Array();
-authdsgfc_cli.dsgfc_cli.eetemp[0] = new Object();
-
-$(document).ready(function () {
-    $("#ipfechaInicio").kendoDatePicker({
-        open: function () {
-            var calendar = this.dateView.calendar;
-            calendar.wrapper.width(this.wrapper.width() - 6);
-        },
-        culture: "es-CO",
-        format: "yyyy/MM/dd",
-        max: new Date(hoy),
-        disableDates: ["sa", "su"],
-        footer: false
-    });
+$(document).ready(function () {    
     $("#ipfechaFin").kendoDatePicker({
         open: function () {
             var calendar = this.dateView.calendar;
@@ -45,10 +12,29 @@ $(document).ready(function () {
         },
         culture: "es-CO",
         format: "yyyy/MM/dd",
-//        value: new Date(hoy),
-        max: new Date(hoy),
+        max: new Date(sessionStorage.getItem("fechaSistema")),
         disableDates: ["sa", "su"],
         footer: false
+    });
+    
+    var estadosPedido = [
+        { text: "Todos", value: "*" },
+        { text: "Creado", value: "1" },
+        { text: "Aprovado", value: "2" },
+        { text: "Asignado", value: "3" },
+        { text: "Despachado", value: "4" },        
+        { text: "Facturado", value: "5" },
+        { text: "Anulado", value: "6" },
+        { text: "Cerrado", value: "7" },
+    ];
+    
+    
+    $("#ipEstadoPedido").kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "value",
+        dataSource: estadosPedido,
+        index: 0,
+        
     });
 
     $("#btBuscar").kendoButton({
@@ -60,12 +46,17 @@ $(document).ready(function () {
 
 
 function buscarPedidos() {
-    var obj = [{
-            "picsuc__cod": "*",
-            "picclc__cod": "*",
-            "pidped__fec": $("#ipfechaFin").val(),
-            "piiped__num": 0,
-            "picusuario": "*"
-        }];
-    parent.sendAjax(obj, "POST", "");
+    var obj = new sirConsultaPedidos();
+    var jsonFiltroPedidos = obj.getjson();
+    var urlRepo = obj.getUrlSir();
+    var mapData = obj.getMapData();
+    
+    var key1 = Object.keys(jsonFiltroPedidos)[0];
+    var key2 = Object.keys(jsonFiltroPedidos[key1])[1];
+    jsonFiltroPedidos[key1][key2][0].pidped_fec = $("#ipfechaFin").val();
+    jsonFiltroPedidos[key1][key2][0].piiped_num = $("#ipNumeroPedido").val();
+    jsonFiltroPedidos[key1][key2][0].piiped_est = $("#ipEstadoPedido").val();    
+    sessionStorage.setItem("jsonFiltroPedidos", JSON.stringify(jsonFiltroPedidos));    
+    parent.grid();
+    parent.closePopUpFiltros();
 }
