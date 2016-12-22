@@ -197,10 +197,10 @@ function  windowPopUp(detalle, titulo) {
     }
 }
 
-function onClose() {
-    alertDialogs("cerrando");
-    $("#window").fadeIn();
-}
+//function onClose() {
+//    alertDialogs("cerrando");
+//    $("#window").fadeIn();
+//}
 
 function cambiarClave() {
     reemplazarDiv("divBtCambiarClave", "cambiarClave");
@@ -208,7 +208,7 @@ function cambiarClave() {
 
 function guardarClave() {
     try {
-        if (document.getElementById("IpClave").value == document.getElementById("IpRClave").value) {
+        if (document.getElementById("IpClave").value === document.getElementById("IpRClave").value) {
             console.log("claves iguales")
             var cambioExitoso;
             var jSonData = new Object();
@@ -239,7 +239,7 @@ function guardarClave() {
                     alertDialogs("Error al consumir el servicio de login.\n" + e.status + " - " + e.statusText);
                 }
             }).done(function () {
-                if (cambioExitoso == '"OK"') {
+                if (cambioExitoso === '"OK"') {
                     alertDialogs("cambio existoso, sera redirigido al login");
                     cerrarSesion();
                 } else {
@@ -249,7 +249,7 @@ function guardarClave() {
             });
             reemplazarDiv("cambiarClave", "divBtCambiarClave");
         } else {
-            status.text("Datos incompletos");
+            alertDialogs("Datos incompletos");
         }
     } catch (e) {
         alertDialogs("Function: consumeServAjaxSIR Error: " + e.message);
@@ -306,7 +306,7 @@ function menufunciones() {
             }
         }).done(function () {
             var dataarbol = sessionStorage.getItem("menuJsonIni");
-            if (permitirIngreso == '"OK"') {
+            if (permitirIngreso === '"OK"') {
                 if (dataarbol) {
                     dataarbol = dataarbol.replace(/Codigo/g, "id");
                     dataarbol = dataarbol.replace(/Depende/g, "parent");
@@ -406,6 +406,8 @@ function correLinuxBack() {//corre las funciones del shell in a box
         document.getElementById("includeTerm").src = "http://" + ip + ":" + portLinux + "/"
                 + "?u="
                 + sessionStorage.getItem("usuario")
+                + "_"
+                + sessionStorage.getItem("companyNIT")
                 + "&p="
                 + sessionStorage.getItem("contra");
 
@@ -437,7 +439,8 @@ function servLinuxSOption(programa) {
             ],
             "eeParametros": [
                 {
-                    "picprograma": programa
+                    "picprograma": programa,
+                    "piccianit": sessionStorage.getItem("companyNIT")
                 }
             ]
         }
@@ -600,7 +603,7 @@ dsfiles.dsfiles.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
 dsfiles.dsfiles.eeDatos[0].local_ip = sessionStorage.getItem("ipPrivada");
 dsfiles.dsfiles.eeDatos[0].remote_ip = sessionStorage.getItem("ipPublica");
 var grid = "";
-alertDialogs()
+
 function gridDDoc(){
     var dataSource = new kendo.data.DataSource({
         transport: {
