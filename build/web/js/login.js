@@ -58,8 +58,8 @@ function login() {
                 var buttonObject = $("#btnLogin").kendoButton().data("kendoButton");
                 buttonObject.enable(true);
             }
-        }).done(function(){
-            if(permitirIngreso=='"OK"'){  
+        }).done(function(){            
+            if(permitirIngreso==='"OK"'){  
                 var fechaSistema=jsonResp.dslogin.eesiccia[0].fecsis;
                 fechaSistema = fechaSistema.replace(/-/g, "/"); 
                 console.log("Usuario con permiso de ingresar \n" + permitirIngreso);                    
@@ -78,8 +78,9 @@ function login() {
                 sessionStorage.setItem("loginintegrity","valido");
                 sessionStorage.setItem("hibrido",jsonResp.dslogin.eesiccia[0].ciaserv);
                 sessionStorage.setItem("portLinux",jsonResp.dslogin.eesiccia[0].ciapuerto);
+                
                 window.location.assign("html/index.html");
-            }else{
+            }else{                
                 var actions = new Array();
                 actions[0] = new Object();
                 actions[0].text = "Intentar de nuevo";
