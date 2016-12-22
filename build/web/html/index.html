@@ -28,6 +28,8 @@ and open the template in the editor.
         <!--<script src="../scripts/kendo.all.min.js" type="text/javascript"></script>-->
         <script src="../scripts/LibreriaIntegrity.js" type="text/javascript"></script>
         <script src="../js/index.js" type="text/javascript" ></script>
+        <link href="../documentos/css/documentos.css" rel="stylesheet" type="text/css"/>
+        <script src="../documentos/js/fileReader.js" type="text/javascript"></script>
         
         
         <link href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.mobile.all.min.css" rel="stylesheet" type="text/css" />
@@ -172,14 +174,26 @@ and open the template in the editor.
                                         </tr>
                                     </table>
                                 </div>
+                                <div id="divDocumentos" hidden="hidden">
+                                    <table style="width: 100%">
+                                        <tr>               
+                                            <td style="padding: 0px 0px 0px 10px; width: 35px">                    
+                                                <img src="../images/documentos.png"/>                        
+                                            </td>
+                                            <td style="padding: 0px 0px 0px 0px; vertical-align: middle">
+                                                <font color="#ffffff" size="4">Documentos</font>
+                                            </td>                                                
+                                        </tr>
+                                    </table>
+                                    <input type="text" id="buscarDoc" onkeyup="fltrDoc()"name="buscarDoc" class="k-textbox" placeholder="Documento" title="Buscar Documento" style="width: 100%" />
+                                    <div id="gridDoc"></div>
+                                </div>
                                 <div id="divArbol" hidden="hidden"></div>
-                                <div id="divDocumentos" hidden="hidden"></div>
                             </div>
                         </td>
                     </tr>
                 </table>            
             </div>
-        </div>
-        <div id="window" hidden="hidden"></div>        
+        </div>        
     </body>
 </html>

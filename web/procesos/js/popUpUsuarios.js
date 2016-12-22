@@ -13,7 +13,7 @@ $(document).ready(function () {
         dataValueField: "valor",
         placeholder: "Todos..",
         dataSource: estados,
-        change: function (e) {debugger
+        change: function (e) {
             var valor = this._old;
             var grid = $("#grilla_usr").data("kendoGrid")._data;
             var datosCheck = [];
@@ -91,7 +91,7 @@ $(document).ready(function () {
         },
         batch: true,
         schema: {
-            data: function (e) {debugger
+            data: function (e) {
                 var key1 = Object.keys(e)[0];
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     var i=0;
@@ -366,14 +366,11 @@ $(document).ready(function () {
 //cambia el estado de todos los check en On, y cuando lo hace 
 //refresca el datasource del dropdown
 
-function cargartodos(){  debugger
-    
-    var estado = document.getElementById("cargar").attributes[2].nodeValue;
-    
+function cargartodos(){ 
+    var estado = document.getElementById("cargar").attributes[2].nodeValue;   
     if (estado === "cero"){
         document.getElementById("cargar").setAttribute("class", "k-sprite pro_check1"); 
-        document.getElementById("cargar").setAttribute("estado", "on");   
-        
+        document.getElementById("cargar").setAttribute("estado", "on");          
         var grid = $("#grilla_usr").data("kendoGrid");
         grid= grid._data;
         var i=0;
@@ -425,7 +422,7 @@ function cargartodos(){  debugger
         } 
     }
 }
-function borrartodos(){debugger     
+function borrartodos(){    
 var grid = $("#grilla_usr").data("kendoGrid");
 grid= grid._data;
 var i=0;
