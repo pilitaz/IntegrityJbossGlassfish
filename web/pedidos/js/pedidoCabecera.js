@@ -628,7 +628,7 @@ function guardarCabecera(){
     
     var verbo="POST"
     if($("#buttonCab")["0"].childNodes["0"].data==="Actualizar");{
-        verbo="PUT";
+        verbo="POST";
     }
     debugger
     var obj = new SICUDPedido();
@@ -639,7 +639,7 @@ function guardarCabecera(){
     var key2 = Object.keys(objJson[key1])[1];                                
     objJson[key1][key2][0].suc__cod = $("#ipSucursal").val();
     objJson[key1][key2][0].ter__nit = $("#ipNITCliente").val();
-    objJson[key1][key2][0].pago__cod = $("#ipSucursal").val();
+    objJson[key1][key2][0].pago__cod = $("#ipCdePago").val();
     objJson[key1][key2][0].mnd__cla = $("#ipDivisa").val();    
     objJson[key1][key2][0].ven__cod = $("#ipVendedor").val();
     objJson[key1][key2][0].ped__fec = $("#ipFecha").val();
