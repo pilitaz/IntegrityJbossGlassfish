@@ -207,6 +207,7 @@ function cambiarClave() {
 }
 
 function guardarClave() {
+    
     try {
         if (document.getElementById("IpClave").value === document.getElementById("IpRClave").value) {
             console.log("claves iguales")
@@ -405,9 +406,7 @@ function correLinuxBack() {//corre las funciones del shell in a box
         var portLinux = sessionStorage.getItem("portLinux");
         document.getElementById("includeTerm").src = "http://" + ip + ":" + portLinux + "/"
                 + "?u="
-                + sessionStorage.getItem("usuario")
-                + "_"
-                + sessionStorage.getItem("companyNIT")
+                + sessionStorage.getItem("usuario")                
                 + "&p="
                 + sessionStorage.getItem("contra");
 
