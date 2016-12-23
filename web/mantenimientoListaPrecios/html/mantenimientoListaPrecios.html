@@ -24,7 +24,7 @@ and open the template in the editor.
         <link href="../../css/cssSpriteIntegrity.css" rel="stylesheet" type="text/css"/>
         <link href="../../css/integrity.css" rel="stylesheet" type="text/css"/>
         <link href="../css/mantenimientoListaPrecios.css" rel="stylesheet" type="text/css"/>
-        
+        <script src="../js/variablesListaPrecios.js" type="text/javascript"></script>
     </head>
     <body>
         <div id="divSubtitulo">
@@ -43,40 +43,43 @@ and open the template in the editor.
         <script id="rowTemplateListaPrecios" type="text/x-kendo-tmpl">
             <tr data-uid="#: uid #"> 
                 <td>
-                    <span class="title">#: lis_num #</span>
+                    <span class="title">#: lis__des #</span>
                 </td>
                 <td>
-                    <span class="title">#: lis_det #</span>
+                    <span class="title">#: lis__fin #</span>
+                </td> 
+        <td>
+                    <span class="title">#: lis__ffi #</span>
                 </td>
                 <td>
-                    <span class="title">#: fecha_ini #</span>
-                </td>
-                <td>
-                    <span class="title">#: fecha_fin #</span>
-                </td>                
-                <td>
-                     <a  class='k-grid-aprobar'><span id = "aprobar#: lis_num#" class='k-sprite po_check' onclick="aprobar()"></span></a>
-                     <a  class='k-grid-editar'><span id = "editar#: lis_num#" class='k-sprite po_editon'></span></a>
+                    <span class="title">#: mnd__cla #</span>
+                </td>                <td>
+                     <a  class='k-grid-aprobar'><span id = "aprobar#: lis__num#" class='k-sprite po_check' onclick="aprobar()" ></span></a>
+                     <a  class='k-grid-editar'><span id = "editar#: lis__num#" class='k-sprite po_editon'></span></a>
+                     <a  class='k-grid-copy'><span id = "copy#: lis__num#" class='k-sprite po_copy'></span></a>
+                     <a  class='k-grid-destroyed'><span id = "destroyed#: lis__num#" class='k-sprite po_cerrar'></span></a>
                 </td>                
             </tr>
         </script>
         <script id="altRowTemplateListaPrecios" type="text/x-kendo-tmpl">
             <tr class="k-alt" data-uid="#: uid #">
                 <td>
-                    <span class="title">#: lis_num #</span>
+                    <span class="title">#: lis__des #</span>
                 </td>
                 <td>
-                    <span class="title">#: lis_det #</span>
+                    <span class="title">#: lis__fin #</span>
                 </td>
                 <td>
-                    <span class="title">#: fecha_ini #</span>
+                    <span class="title">#: lis__ffi #</span>
                 </td>
                 <td>
-                    <span class="title">#: fecha_fin #</span>
-                </td>                
+                    <span class="title">#: mnd__cla #</span>
+                </td>
                 <td>
-                     <a  class='k-grid-aprobar'><span id = "aprobar#: lis_num#" class='k-sprite po_check' onclick="aprobar()" ></span></a>
-                     <a  class='k-grid-editar'><span id = "editar#: lis_num#" class='k-sprite po_editon'></span></a>
+                     <a  class='k-grid-aprobar'><span id = "aprobar#: lis__num#" class='k-sprite po_check' onclick="aprobar()" ></span></a>
+                     <a  class='k-grid-editar'><span id = "editar#: lis__num#" class='k-sprite po_editon'></span></a>
+                     <a  class='k-grid-copy'><span id = "copy#: lis__num#" class='k-sprite po_copy'></span></a>
+                     <a  class='k-grid-destroyed'><span id = "destroyed#: lis__num#" class='k-sprite po_cerrar'></span></a>
                 </td>
             </tr>
         </script>

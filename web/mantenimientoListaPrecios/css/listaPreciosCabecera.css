@@ -1,0 +1,31 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 21-dic-2016, 8:51:13
+    Author     : Quantum
+*/
+footer {
+            background-color: #333;
+            width: 100%;
+            bottom: 0;
+            position: fixed;
+            left: -10px;
+        }
+div{
+    padding: 2px;
+}
+
+table{
+    padding: 2px;
+}
+
+td{
+    padding: 5px
+}
+
+.k-pager-info{
+    display: none;
+}
