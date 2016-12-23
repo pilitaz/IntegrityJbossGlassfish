@@ -40,7 +40,6 @@ function login() {
         jSonData.dslogin.ttdatauser[0].picusrpass = password;
         jSonData.dslogin.ttdatauser[0].local_ip = sessionStorage.getItem("ipPrivada");
         jSonData.dslogin.ttdatauser[0].remote_ip = sessionStorage.getItem("ipPublica");
-        console.log(JSON.stringify(jSonData));
         var jsonResp = "";
         var permitirIngreso;
         $.ajax({
@@ -61,7 +60,7 @@ function login() {
         }).done(function(){            
             if(permitirIngreso==='"OK"'){  
                 var fechaSistema=jsonResp.dslogin.eesiccia[0].fecsis;
-                fechaSistema = fechaSistema.replace(/-/g, "/"); 
+                fechaSistema = fechaSistema.replace(/-/g, "/");    
                 sessionStorage.setItem("usrnom",jsonResp.dslogin.eesicusuarios[0].usrnom);
                 sessionStorage.setItem("usuario",usuario.split("@")[0]+ "_"+jsonResp.dslogin.eesiccia[0].cianit);
                 sessionStorage.setItem("usrmail",jsonResp.dslogin.eesicusuarios[0].usrmail);
@@ -87,7 +86,6 @@ function login() {
                 
                 createDialog("Problemas con el inicio sesión", permitirIngreso, "400px", "auto", true, false, actions);
                 
-                console.log("Usuario no puede ingresar \n" + permitirIngreso);
                 var buttonObject = $("#btnLogin").kendoButton().data("kendoButton");
                 buttonObject.enable(true);             
             }

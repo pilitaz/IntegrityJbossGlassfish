@@ -33,6 +33,55 @@ and open the template in the editor.
 
     </head>
     <body>
+                        <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
+                    <tr data-uid="#: uid #"> 
+            
+                    <td>
+                    <span class="title" id ="#: trr__cod #">#: trr__cod # </span>
+                    </td>                    
+                    <td>
+                    <span class="title" id ="#: trr__nom #">#: trr__nom # </span>
+                    </td>
+                    <td>
+                    <span class="title" id ="#: rgeo__cod #">#: rgeo__cod # </span>
+                    </td>
+                    <td>
+                    <a  class='k-grid-check'><span title='check' id = "spanproceso#: trr__cod##: trr__nom##: rgeo__cod#" class='k-sprite po_check_disabled'></span></a>
+                    </td>
+            
+                    <td>
+                    <a  class='k-grid-edit'><span title='' id = "spanproceso#: rgeo__cod#" class='k-sprite po_editoff'></span></a>
+                    <a  class='k-grid-deletae'><span title='' id = "spantarea#: rgeo__cod#" class='k-sprite po_cerrar'></span></a>
+                    </td>
+            
+                    </tr>
+        </script>
+        <script id="altRowTemplateCmp" type="text/x-kendo-tmpl">
+                    <tr class="k-alt" data-uid="#: uid #">
+                    
+         
+                    <td>
+                    <span class="title" id ="#: trr__cod #">#: trr__cod # </span>
+                    </td>                    
+                    <td>
+                    <span class="title" id ="#: trr__nom #">#: trr__nom # </span>
+                    </td>
+                    <td>
+                    <span class="title" id ="#: rgeo__cod #">#: rgeo__cod # </span>
+                    </td>
+                    <td>
+                    <a  class='k-grid-check'><span title='check' id = "spanproceso#: trr__cod##: trr__nom##: rgeo__cod#" class='k-sprite po_check_disabled'></span></a>
+                    </td>
+            
+                    <td>
+                    <a  class='k-grid-edit'><span title='' id = "spanproceso#: rgeo__cod#" class='k-sprite po_editoff'></span></a>
+                    <a  class='k-grid-deletae'><span title='' id = "spantarea#: rgeo__cod#" class='k-sprite po_cerrar'></span></a>
+                    </td>
+            
+                    </td>
+                    </tr>
+    
+        </script>
         <div id="window1"></div>
         <script type="text/x-kendo-template" id="windowTemplate">
 

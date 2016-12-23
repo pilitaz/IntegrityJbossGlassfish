@@ -12,6 +12,10 @@ var arreglo_funProg = new Array();
 var arreglo_funVideo = new Array();
 var arreglo_funRepor = new Array();
 estadoIfra = "PagInicio";
+var timer = {};
+var timerOut = 0;
+
+
 $(document).ready(function () {
     sessionStorage.setItem("VideoAyuda", "http://comunicacion349.wix.com/integrity#!reportes-tutoriales/w865s");//cambiar urlVideo con url link apenas este listo el video de ayuda   
 
@@ -24,8 +28,9 @@ $(document).ready(function () {
         $("#btnGuardarClave").kendoButton({
         });
         menufunciones();
+        cargaDocumentos();
         tamanoPagIni();
-        correLinuxBack();
+        correLinuxBackTimmer(6000);
         document.getElementById("lbNombre").innerHTML = sessionStorage.getItem("usrnom");
         document.getElementById("lbEMail").innerHTML = sessionStorage.getItem("usrmail");
         document.getElementById("imgUsuario").src = "../images/equipo/" + sessionStorage.getItem("usuario") + ".png";
@@ -36,8 +41,17 @@ $(document).ready(function () {
         window.location.assign(sessionStorage.getItem("url"));
     }
     $("#k-icon.k-i-arrow-s").className = "k-icon   k-i-hbars";
-});
 
+});
+/**
+ * funciona para ejecutar la funcion correlinux cada t milisegundos
+ * @returns {undefined}
+ */
+function correLinuxBackTimmer(t) {
+    correLinuxBack();
+    timer = setInterval(correLinuxBack, t); //empezar el timer
+
+}
 
 $(window).resize(function () {
     var viewportHeight = $(window).height();
@@ -193,7 +207,6 @@ function  windowPopUp(detalle, titulo) {
 
     } catch (e) {
         alertDialogs("Function: windowPopUp Error: " + e.message);
-        console.log(e.message)
     }
 }
 
@@ -209,8 +222,7 @@ function cambiarClave() {
 function guardarClave() {
     
     try {
-        if (document.getElementById("IpClave").value === document.getElementById("IpRClave").value) {
-            console.log("claves iguales")
+        if (document.getElementById("IpClave").value == document.getElementById("IpRClave").value) {
             var cambioExitoso;
             var jSonData = new Object();
             jSonData.dslogin = new Object();
@@ -225,7 +237,6 @@ function guardarClave() {
             jSonData.dslogin.ee_userPAS[0].epassword = document.getElementById("IpClave").value;
             jSonData.dslogin.ee_userPAS[0].usrmail = sessionStorage.getItem("usrmail");
 
-            console.log("url servicio cambio clave " + ipServicios + baseServicio + "cambiopass\n" + JSON.stringify(jSonData));
 
             $.ajax({
                 type: "POST",
@@ -318,7 +329,8 @@ function menufunciones() {
                     dataarbol = dataarbol.replace(/Servicio/g, "columna5");
                     txtJson = "{ \"plugins\" : [],\"core\" : { \"data\" : " + dataarbol + "}}";
                     sessionStorage.setItem("txtJson2", txtJson);
-                    $("#divArbol").load("tree2.html");
+                    cargarArbol();
+
                 }
             } else {
                 alertDialogs(permitirIngreso);
@@ -330,6 +342,7 @@ function menufunciones() {
         alertDialogs(e.message);
     }
 }
+
 
 function inicio() {
     window.location.assign("index.html");
@@ -400,19 +413,67 @@ function fijarPcf() {//apenas el usuario da click en alguna funcion del arbol tr
 }
 
 function correLinuxBack() {//corre las funciones del shell in a box
-    try {
-        var ip = (((sessionStorage.getItem("url").split("/"))[2]).split(":"))[0];
 
-        var portLinux = sessionStorage.getItem("portLinux");
-        document.getElementById("includeTerm").src = "http://" + ip + ":" + portLinux + "/"
-                + "?u="
-                + sessionStorage.getItem("usuario")                
-                + "&p="
-                + sessionStorage.getItem("contra");
+    if (timerOut < 3) {
 
 
-    } catch (e) {
-        alertDialogs(e.message + " corre");
+        var obj = new POST_SIRlogged();
+        var objLogged = obj.getjson();
+        var urlServ = obj.getUrlSir();
+        var mapData = obj.getMapData();
+
+        var jsonResp = "";
+        var permitirIngreso = "";
+        var verHtml = "POST";
+        $.ajax({
+            type: verHtml,
+            data: JSON.stringify(objLogged),
+            url: urlServ,
+            dataType: "json",
+            contentType: "application/json;",
+            success: function (resp) {
+                var key1 = Object.keys(resp)[0];
+                permitirIngreso = JSON.stringify(resp[key1].eeEstados[0].Estado);
+                jsonResp = resp;
+            },
+            error: function (e) {
+                alertDialogs("Error al consumir el servicio de POST_SIRlogged" + e.status + " - " + e.statusText);
+            }
+        }).done(function () {
+            if (permitirIngreso === '"OK"') {
+                if (verHtml === "POST") {
+                    var key1 = Object.keys(jsonResp)[0];
+                    var loggIn = jsonResp[key1][mapData][0].isLogged;
+                    if (loggIn) {
+                        clearInterval(timer)//limpiar el timer
+                    } else {
+                        try {
+
+                            var ip = (((sessionStorage.getItem("url").split("/"))[2]).split(":"))[0];
+                            var portLinux = sessionStorage.getItem("portLinux");
+                            document.getElementById("includeTerm").src = "http://" + ip + ":" + portLinux + "/"
+                                    + "?u="
+                                    + sessionStorage.getItem("usuario")
+                                    + "&p="
+                                    + sessionStorage.getItem("contra");
+                        } catch (e) {
+                            alertDialogs(e.message + " corre");
+                        }
+                    }
+
+                }
+
+            } else {
+                //            closeLoading("#operaciones");
+                alertDialogs("Problemas con el el ingreso del usuario en la plataforma Linux .\n" + permitirIngreso);
+            }
+
+        });
+        timerOut++;
+    } else {
+        alertDialogs("No fue posdible conectarse a la terminal de Integrity.");
+        clearInterval(timer)//limpiar el timer
+
     }
 }
 function corre() {//esta funcion se ejecuta por que la app IntegrityViejo la llama y su funcion es determinar si le muestra al usuario la plataforma linux Envevida o una cosola de wind   
@@ -479,7 +540,6 @@ function servLinuxSOption(programa) {
                     {text: 'Intentar de nuevo', primary: true, action: IntentarNuevamente}
                 ]
             });
-            console.log("Usuario no puede ingresar \n" + permitirIngreso);
             var buttonObject = $("#btnLogin").kendoButton().data("kendoButton")
             buttonObject.enable(true);
         }
@@ -549,19 +609,11 @@ function tamanoFunciones(e) {
 }
 
 function mostrarDocumentos() {
-    gridDDoc()
-    var tamañoContenedor = $("#outerWrapper").width();
-    var d = document.getElementById('divDocumentos');
-    d.style.left = (tamañoContenedor - 300) + 'px';
-//    document.getElementById("divDocumentos1").src = sessionStorage.getItem("url") + "/html/" + "documentos" + ".html";
-//    $("#divDocumentos").load("documentos.html");
-//    $('#gridDoc').data('kendoGrid').dataSource.read();
-//        $('#gridDoc').data('kendoGrid').refresh();
-
-    $("#divDocumentos").fadeIn(2500);
+    $('#grid').data('kendoGrid').dataSource.read();
+    $('#grid').data('kendoGrid').refresh();
+    $("#divDocumentos").fadeIn("slow");
 }
 function ocultarDocumentos() {
-    $("#divArbol").load("tree2.html");
     $("#divDocumentos").fadeOut("slow");
 }
 function closeFrame() {
@@ -569,99 +621,11 @@ function closeFrame() {
     friends.style.display = "none";
 }
 
-function onChange(arg) {
-    var selected = $.map(this.select(), function (item) {
-        return $(item).text();
-    });
-    sessionStorage.setItem("documento", selected);
-    var tipoArchivo = sessionStorage.getItem("documento").split(".")[sessionStorage.getItem("documento").split(".").length - 1];
-
-    var actions = new Array();
-    actions[0] = new Object();
-    actions[0].text = "Ver online";
-    actions[0].action = showFile;
-    actions[1] = new Object();
-    actions[1].text = "Original";
-    actions[1].primary = "true";
-    actions[1].action = getFile;
-    if (tipoArchivo !== "pdf") {
-        actions[2] = new Object();
-        actions[2].text = "Como pdf";
-        actions[2].action = getFileAsPDF;
-    }
-    bandAlert = 0;
-    createDialog("Documentos", "El archivo seleccinado es " + selected + " que desea hacer ", "400px", "auto", true, true, actions);
-
+function cargaDocumentos() {
+    var tamañoContenedor = $("#outerWrapper").width();
+    var d = document.getElementById('divDocumentos');
+    d.style.left = (tamañoContenedor - 300) + 'px';
+    //la funcion documento esta en la documentos.js
+    documentos();
 }
-var dsfiles = new Object();
-dsfiles.dsfiles = new Object();
-dsfiles.dsfiles.eeDatos = new Array();
-dsfiles.dsfiles.eeDatos[0] = new Object();
-dsfiles.dsfiles.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
-dsfiles.dsfiles.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
-dsfiles.dsfiles.eeDatos[0].local_ip = sessionStorage.getItem("ipPrivada");
-dsfiles.dsfiles.eeDatos[0].remote_ip = sessionStorage.getItem("ipPublica");
-var grid = "";
 
-function gridDDoc(){
-    var dataSource = new kendo.data.DataSource({
-        transport: {
-            read: {
-                type: "POST",
-//                url: "http://35.162.169.179:8810/rest/Base/BaseIntegrity/DocumentList",
-                url: ipServicios + baseServicio + "DocumentList",
-                contentType: "application/json; charset=utf-8",
-                dataType: 'json'
-            },
-            parameterMap: function (options, operation) {
-                try {
-                    if (operation === 'read') {
-                        return JSON.stringify(dsfiles);
-                    }
-                } catch (e) {
-                    kendo.alert(e.message);
-                }
-            }
-        },
-        batch: true,
-        pageSize: 20,
-        schema: {
-            data: "dsfiles.ttfiles",
-            model: {
-                fields: {
-                    nomfile: {type: "string"},
-                    tamfile: {type: "integer"},
-                    fecfile: {type: "date:MM-dd-yyyy"}
-                }
-            }
-        }
-    });
-
-    grid = $("#gridDoc").kendoGrid({
-        dataSource: dataSource,
-        change: onChange,
-        selectable: "row",
-        scrollable: false,
-        //height: 100%,        
-        columns: [
-            {
-               field: "nomfile",
-            }
-        ]
-    });
-    //para ocultar el header de la grilla
-    $("#gridDoc .k-grid-header").css('display', 'none');
-};
-
-
-/**
- * funcion para filtrar los elementos de la grilla al oprimir una tecla dentro del input buscarDoc
- * @param {type} param
- */function fltrDoc() {
-    var value = $("#buscarDoc").val();
-    if (value) {
-        grid.data("kendoGrid").dataSource.filter({field: "nomfile", operator: "contains", value: value});
-    } else {
-        grid.data("kendoGrid").dataSource.filter({});
-    }
-};

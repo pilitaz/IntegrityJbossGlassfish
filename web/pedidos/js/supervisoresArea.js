@@ -117,42 +117,34 @@ $(document).ready(function () {
                 }
                 if (operation === "update") {debugger
                     var cedula = $("#cedula").data("kendoDropDownList").text();
-                     var region = $("#region").data("kendoDropDownList").text();
-                     var x=0;
-                    if (options.sre__est===true){x=1;}
-                    else{x=0;}
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod=region;  
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod=options.sre__cod; 
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__est=x; 
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__nit=cedula; 
+                     //var region = $("#region").data("kendoDropDownList").text();
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].sar__cod=options.sar__cod;  
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].pai__cod=options.pai__cod;  
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ter__nit=cedula;                     
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].sar__est=options.sar__est;   
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ageo__cod=options.ageo__cod; 
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ter__raz=options.ter__raz;
                     return JSON.stringify(actjson);                   
                 }
                 if (operation === "create") {debugger
                      var cedula = $("#cedula").data("kendoDropDownList").text();
-                     var region = $("#region").data("kendoDropDownList").text();
-                     var x=0;
-                    if (options.sar__est===true){x=1;}
-                    else{x=0;}
-                    actjson.dsSICUDgpd_sar.eegpd_sar[0].pai__cod=region;  
-                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ter__nit=cedula; 
-                    
-                    actjson.dsSICUDgpd_sar.eegpd_sar[0].sar__est=x;   
+                     //var region = $("#region").data("kendoDropDownList").text();
+
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].pai__cod=options.pai__cod;  
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ter__nit=cedula;                     
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].sar__est=options.sar__est;   
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].ageo__cod=options.ageo__cod; 
-                    
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ter__raz=options.ter__raz;
                     return JSON.stringify(actjson);          
                     $('#grid').data('kendoGrid').refresh();
                     $('#grid').data('kendoGrid').dataSource.read();
                     $('#grid').data('kendoGrid').refresh();                                     
                 }
                 if (operation === "destroy") {debugger
-                    var x=0;    
-                    if (options.sar__est==true){x=1;}
-                        else{x=0;}
-                    
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].sar__cod=options.sar__cod;  
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].pai__cod=options.pai__cod;  
-                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ter__nit=options.ter__nit; 
-                    
-                    actjson.dsSICUDgpd_sar.eegpd_sar[0].sar__est=x;   
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ter__nit=options.ter__nit;                     
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].sar__est=options.sar__est;   
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].ageo__cod=options.ageo__cod; 
                     
                     return JSON.stringify(actjson); 
@@ -184,11 +176,12 @@ $(document).ready(function () {
             model: {
                 id: "sar__cod",
                 fields: {
-                    sar__cod:    {editable: true, nullable: false},
+                    sar__cod:    {editable: false, nullable: false},
                     ter__nit:    {editable: true, nullable: false},
                     ageo__cod:    {editable: true, nullable: false},
                     pai__cod:    {editable: true, nullable: false},
-                    sar__est:    {editable: true, nullable: false,type: "boolean"},         
+                    ter__raz:    {editable: true, nullable: false},
+                    sar__est:    {editable: true, nullable: false},         
                 }
             }
         }
@@ -225,25 +218,28 @@ $(document).ready(function () {
         },
         //navigatable: true,
         columns: [
-            {field: "pai__cod", title: "Codigo",  hidden:false,editor: regionCod,
-                template: function (e) {debugger
-                    return e.pai__cod;
-                }},  
+            {field: "sar__cod", title: "Codigo",  hidden:false},
+            {field: "pai__cod", title: "Codigo Pais"},  
             {field: "ter__nit", title: "Cedula",  hidden:false,editor: filtroestado,
                 template: function (e) {debugger
                     return e.ter__nit;
                 }},   
-          
+             {field: "ter__raz", title: "Nombre",  hidden:false},
              {field: "ageo__cod", title: "Cod Area",  hidden:false},
             {
                 field: "sar__est",
                 title: "Estado",
-                template: '<input style="text-align:center" type="checkbox" #= sar__est ? "checked=checked" : "" # disabled="disabled" ></input>',
+                template: "<a class='k-grid-check'><span class='k-sprite po_check_disabled'></span></a>",
                 width: "80px"},
             {command: [{name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "90px"}],
         editable: "popup",
-                            
+        rowTemplate: kendo.template($("#rowTemplateCmp").html()),
+        altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
+        dataBound: function () {
+            var results = dataSource.data();
+            changImgFunc(results);
+        },                                       
         cancel: function(e) {                                                                                   
             e._defaultPrevented= true;
             $('#grid').data('kendoGrid').refresh();                                             
@@ -253,8 +249,8 @@ $(document).ready(function () {
     });
                
     $("#filtro").kendoAutoComplete({ 
-        dataTextField: "pai__cod",  
-        dataValueField: "pai__cod",
+        dataTextField: "sar__cod",  
+        dataValueField: "sar__cod",
         placeholder: "Codigo...",  
         dataSource: dataSource,                        
         filter: "startswith"                    
@@ -301,7 +297,7 @@ $(document).ready(function () {
             .appendTo(container)
             .kendoDropDownList({
                 dataTextField: "text",
-                dataValueField: "valor",
+                dataValueField: "text",
                 dataSource: estados
             });
 }                       
@@ -321,12 +317,23 @@ $(document).ready(function () {
           
             .kendoDropDownList({
                 dataTextField: "text",
-                dataValueField: "valor",               
+                dataValueField: "text",               
                 dataSource: estados
             });
                
 }      
 });
                     
-                    
+                              
+function changImgFunc(results) {debugger
+
+    for (var i = 0; i < results.length; i++) {
+        if (document.getElementById("spanproceso"+results[i].sar__cod+results[i].ter__nit+results[i].ageo__cod)){
+        if(results[i].sar__est==1){                            
+     document.getElementById("spanproceso"+results[i].sar__cod+results[i].ter__nit+results[i].ageo__cod).setAttribute("class", "k-sprite po_check_sup");
+     document.getElementById("spanproceso"+results[i].sar__cod+results[i].ter__nit+results[i].ageo__cod).setAttribute("estado", "on");
+        }else
+        {}}
+}
+}          
 

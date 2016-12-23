@@ -528,7 +528,13 @@
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -8px -958px;
 }
-
+/* ——  */
+.po_checkon{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -958px;
+	
+}
 /* ——  */
 
 .po_check{
