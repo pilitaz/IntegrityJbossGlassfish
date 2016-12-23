@@ -403,7 +403,8 @@ function cudSupArea() {
           "ter__nit":"",
           "ageo__cod":0,
           "pai__cod":"",
-          "sar__est":0
+          "sar__est":0,
+          "ter__raz":""
          }
       ]      
    }

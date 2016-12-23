@@ -288,7 +288,7 @@ $(document).ready(function () {
      *  
      */
 
-    function filtroRol(container, options) {
+    function filtroRol(container, options) {debugger
         var consultar = new serviRoles();
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();

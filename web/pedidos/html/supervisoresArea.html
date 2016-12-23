@@ -33,6 +33,64 @@ and open the template in the editor.
 
     </head>
     <body>
+                        <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
+                    <tr data-uid="#: uid #"> 
+                    <td>
+                    <span class="title" id ="#: sar__cod #">#: sar__cod # </span>
+                    </td>
+                    <td>
+                    <span class="title" id ="#: pai__cod #">#: pai__cod # </span>
+                    </td>                    
+                    <td>
+                    <span class="title" id ="#: ter__nit #">#: ter__nit # </span>
+                    </td>                   
+                    <td>
+                    <span class="title" id ="#: ter__raz #">#: ter__raz # </span>
+                    </td>
+                    <td>
+                    <span class="title" id ="#: ageo__cod #">#: ageo__cod # </span>
+                    </td>
+                    <td>
+                    <a  class='k-grid-check'><span title='check' id = "spanproceso#: sar__cod##: ter__nit##: ageo__cod#" class='k-sprite po_check_disabled'></span></a>
+                    </td>           
+                    <td>
+                    <a  class='k-grid-edit'><span title='' id = "spanproceso#: ageo__cod#" class='k-sprite po_editoff'></span></a>
+                    <a  class='k-grid-deletae'><span title='' id = "spantarea#: ageo__cod#" class='k-sprite po_cerrar'></span></a>
+                    </td>
+            
+                    </tr>
+        </script>
+        <script id="altRowTemplateCmp" type="text/x-kendo-tmpl">
+                    <tr class="k-alt" data-uid="#: uid #">
+                                      
+                    <td>
+                    <span class="title" id ="#: sar__cod #">#: sar__cod # </span>
+                    </td>
+                     <td>
+                    <span class="title" id ="#: pai__cod #">#: pai__cod # </span>
+                    </td>                    
+                    <td>
+                    <span class="title" id ="#: ter__nit #">#: ter__nit # </span>
+                    </td>
+                    <td>
+                    <span class="title" id ="#: ter__raz #">#: ter__raz # </span>
+                    </td>
+                    <td>
+                    <span class="title" id ="#: ageo__cod #">#: ageo__cod # </span>
+                    </td>
+                    <td>
+                    <a  class='k-grid-check'><span title='check' id = "spanproceso#: sar__cod##: ter__nit##: ageo__cod#" class='k-sprite po_check_disabled'></span></a>
+                    </td>
+            
+                    <td>
+                    <a  class='k-grid-edit'><span title='' id = "spanproceso#: ageo__cod#" class='k-sprite po_editoff'></span></a>
+                    <a  class='k-grid-deletae'><span title='' id = "spantarea#: ageo__cod#" class='k-sprite po_cerrar'></span></a>
+                    </td>
+         
+                    
+                    </tr>
+    
+        </script>
         <div id="window1"></div>
         <script type="text/x-kendo-template" id="windowTemplate">
 
