@@ -110,50 +110,31 @@ img{
     background-image: url("../images/fondo-arbol.png");
     overflow: auto
 }
-/*
-.k-toolbar{
-    
-    background-color: Transparent;    
-    border: 0;
+.k-alt{
+    background-color: #656565;
 }
 
-.k-button:hover{
-    min-width: 20px;
-    background: Transparent;
-    border: 0;
-} 
-
-.k-toolbar.k-widget.k-toolbar-resizable{
-    
-    background-color: Transparent;
-    border: 0;
+.k-grid.k-widget{
+    background-color: #505050;
+    border-color: #323232;
+    color: #cecece;
 }
 
-.k-button.k-button-icon.k-group-start{
-    
-    background-color: Transparent;
-    border: 0;
-} 
-.k-button.k-button-icon
-{
-    background-color: Transparent;   
-    border: 0;
-}
-.k-overflow-container.k-list-container.k-popup.k-group{
-    background-color: #48494B;  
-    border: 0;
+
+.k-filter-row th:hover{    
+    background-color: #505050;
+    border-color: #323232;
 }
 
-.k-overflow-anchor.k-button
-{
-    
-    background-color: Transparent;
-    border: 0;
+.k-filter-row th{    
+    background-color: #505050;
+    border-color: #323232;
 }
 
-.k-button.k-button-icon.k-state-focused,
-.k-button.k-button-icon.k-state-focused:hover{
-    background-color: blue;
-    border: 0;
+.k-window-titlebar{    
+    background-color: #ffffff;
 }
-*/
+
+.k-grid td {
+    padding-left: 20px;
+}
