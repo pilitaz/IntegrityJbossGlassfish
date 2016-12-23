@@ -62,10 +62,8 @@ function login() {
             if(permitirIngreso==='"OK"'){  
                 var fechaSistema=jsonResp.dslogin.eesiccia[0].fecsis;
                 fechaSistema = fechaSistema.replace(/-/g, "/"); 
-                console.log("Usuario con permiso de ingresar \n" + permitirIngreso);                    
-                console.log("jsonResp\n" + JSON.stringify(jsonResp));   
                 sessionStorage.setItem("usrnom",jsonResp.dslogin.eesicusuarios[0].usrnom);
-                sessionStorage.setItem("usuario",usuario);
+                sessionStorage.setItem("usuario",usuario.split("@")[0]+ "_"+jsonResp.dslogin.eesiccia[0].cianit);
                 sessionStorage.setItem("usrmail",jsonResp.dslogin.eesicusuarios[0].usrmail);
                 sessionStorage.setItem("picfiid",jsonResp.dslogin.ttdatauser[0].picfiid);                    
                 sessionStorage.setItem("poccargo",jsonResp.dslogin.ttdatauser[0].poccargo);
