@@ -146,7 +146,7 @@ $(document).ready(function () {
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     return e[key1][mapCud1];
                 } else {
-                  alertDialogs(e[key1].eeEstados[0].Estado);
+                  alertDialogs("El usuario no tiene tareas asiganadas");
                 }
             },
             model: {
@@ -166,7 +166,7 @@ $(document).ready(function () {
         }
     });
     /**
-     *  FUNCION CREAR GRILLA
+     *  FUNCION CREAR GRILLA DE TAREAS
      * Funcion cancel se ejecuta con el evento OnClick de EDIT grid
      *  cancel: function(e) {                                              
                             e._defaultPrevented= true;
@@ -265,9 +265,9 @@ $(document).ready(function () {
                         
                         
 });
+//funcion que incia la tarea de acuerdo a los parametros diseñados
 
 function iniciarTarea(e){debugger
-            //var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
              $("#formvacations").append("<div id='windowform'></div>");
         var myWindow1 = $("#windowform"),undo = $("#undo");
                 
@@ -291,9 +291,9 @@ function iniciarTarea(e){debugger
             close: onClose
         }).data("kendoWindow").center().open();    
     
-  
-    
 }
+//funcion para inciar proceso, envia peticion al servicio 
+//y luego refresca la grilla
 function iniciarProceso(e){
     
     var adm = this.dataItem($(e.currentTarget).closest("tr")).id;
@@ -328,6 +328,7 @@ function iniciarProceso(e){
         
         });
 }
+//funcion para crear grafica 
 function grafica(e){
     var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
     if (adm=== true ){               
@@ -355,27 +356,21 @@ function grafica(e){
     }
     else{}
 }
-    
-
-                    
+//    
+//Funcion para crear la grilla de tareas por poceseo 
+//Se crea un html llamado popupgrilla                    
 function grilla(e){
-    e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
+    e.preventDefault();
     var id = this.dataItem($(e.currentTarget).closest("tr")).proc__name;
-    var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
-    
+    var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;  
     if (adm=== true ){
-        sessionStorage.setItem("Proc_usuar",id);
-                                            
-        $("#grillapopUp").append("<div id='windowg'></div>");
-                        
-        var myWindow2 = $("#windowg"),undo = $("#undo");
-                
+        sessionStorage.setItem("Proc_usuar",id);                                           
+        $("#grillapopUp").append("<div id='windowg'></div>");                       
+        var myWindow2 = $("#windowg"),undo = $("#undo");                
         function onClose1() {
             undo.fadeIn();
             $("#grillapopUp").empty();
-        }  
-        
-      
+        }       
         var UrL= sessionStorage.getItem("url");
         myWindow2.kendoWindow({
             draggable: true,
@@ -400,7 +395,6 @@ function grilla(e){
 }       
 function disable(){
     
-
 }
 function changImgFunc1(results) {debugger
    var results =  $('#grid1').data('kendoGrid')._data;
@@ -419,28 +413,17 @@ function changImgFunc1(results) {debugger
                 sessionStorage.setItem("Fecha_Hora",resp.dstime.eetime["0"].systime);
                                
             },
-            error: function (e) {
-               
+            error: function (e) {              
             }
         });
-    
-    
-    
-    
-    
-    //var asdas =  sessionStorage.getItem("Fecha_Hora");"2016-12-06T10:5:44.937";
     var s =   sessionStorage.getItem("Fecha_Hora");
     var x = s.replace("T", " ");
     var fechaSistema =  new Date(x);
-    //var fechaSistema = new Date(sessionStorage.getItem("Fecha_Hora"));
     var mesSistema = fechaSistema.getMonth()+1;
     var diaSistema = fechaSistema.getDate();
     var AñoSistema = fechaSistema.getUTCFullYear();
     var horaSistema = fechaSistema.getHours();
     var minSistema = fechaSistema.getMinutes();
-
-
-    
     for (var i = 0; i < results.length; i++) {
     var fecha1 = new Date(results[i].task__tst);
     var mesSistema1 = fecha1.getMonth()+1;
@@ -458,7 +441,6 @@ function changImgFunc1(results) {debugger
     
         document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__tst).innerHTML  = diaSistema1+"/"+mesSistema1+"/"+AñoSistema1 + " "+horaSitema1+":"+minSistema1; 
         document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__ddt).innerHTML  = diaSistema2+"/"+mesSistema2+"/"+AñoSistema2 + " "+horaSitema2+":"+minSistema1; 
-        
     }
     
     for (var i = 0; i < results.length; i++) {
@@ -479,13 +461,10 @@ function changImgFunc1(results) {debugger
             document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__tst).style.color = 'red'; 
             document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__ddt).style.color = 'red'; 
             document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__dpr).style.color = 'red'; 
-            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__type).style.color = 'red'; 
-                
-                    
+            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__type).style.color = 'red';       
     }
     else{
         if(diaServicio===diaSistema ){
-           
             if (horaSistema > horaServicio  ){
             document.getElementById(results[i].inst__name+results[i].task__name+results[i].inst__name).style.color = 'red';  
             document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__name).style.color = 'red'; 
@@ -504,8 +483,7 @@ function changImgFunc1(results) {debugger
             document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__dpr).style.color = 'red'; 
             document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__type).style.color = 'red'; 
                     }
-                    }
-                        
+                    }                       
                     }
     }
     
@@ -514,52 +492,28 @@ function changImgFunc1(results) {debugger
 }
 
 function changImgFunc(results) {
-       
-        
-       
+
     for (var i = 0; i < results.length; i++) {
-          
-        if(results[i].can__start===true){
-                            
+        if(results[i].can__start===true){                            
      document.getElementById("spanplay"+results[i].proc__name).setAttribute("class", "k-sprite pro_playon");
      document.getElementById("spanplay"+results[i].proc__name).setAttribute("estado", "on");
-            
         }else
         {}}
-
-       
-    for (var i = 0; i < results.length; i++) {
-          
+ 
+    for (var i = 0; i < results.length; i++) {        
         if(results[i].adm===true){
-                            
-              
-            // $("#"+"span"+results[i].proc__name).setAttribute('display','none'); 
-            //                            .addClass('k-sprite admin_pron');
-            
         }else
         {
             var x = document.createElement("SPAN");
             x.setAttribute("class", "k-sprite transparente");
             x.setAttribute("id","x"+results[i].proc__name );             
-            //document.getElementById("spantarea"+results[i].proc__name).style.display = 'none';
-            //document.getElementById("spanedit"+results[i].proc__name).style.display = 'none';                 
-            //document.getElementById("spantarea"+results[i].proc__name).append(x);
-            //document.getElementById("spanedit"+results[i].proc__name).append(x);
-
-          
-            
             $("#spantarea"+results[i].proc__name).onclick = "";
             $("#spanedit"+results[i].proc__name).onclick = "";
             document.getElementById("spantarea"+results[i].proc__name).setAttribute("class", "k-sprite transparente");
             document.getElementById("spantarea"+results[i].proc__name).setAttribute('onclick','disable();'); // for FF
-            // button_element.onclick = function() {doSomething();}; 
             document.getElementById("spanedit"+results[i].proc__name).setAttribute("class", "k-sprite transparente");
             document.getElementById("spanedit"+results[i].proc__name).setAttribute('onclick','disable();');
         }
-
-            
-     
-        
     }
 } 
                         

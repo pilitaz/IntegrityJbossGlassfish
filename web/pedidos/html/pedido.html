@@ -10,18 +10,18 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <scrlbt src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></scrlbt>
-        <scrlbt src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scrlbt>
-        <scrlbt src="../../scrlbts/jquery-2.2.0.min.js" type="text/javascrlbt"></scrlbt> 
-        <scrlbt src="../../scrlbts/jquery.min.js" type="text/javascrlbt"></scrlbt>
-        <scrlbt src="../../scrlbts/jquery-ui.js" type="text/javascrlbt"></scrlbt>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="../../scripts/jquery-2.2.0.min.js" type="text/javascript"></script> 
+        <script src="../../scripts/jquery.min.js" type="text/javascript"></script>
+        <script src="../../scripts/jquery-ui.js" type="text/javascript"></script>
         <link href="../../css/kendo.common.min.css" rel="stylesheet" type="text/css"/>
-        <scrlbt src="../js/variablesPedidos.js" type="text/javascrlbt"></scrlbt>
-        <scrlbt src="../../scrlbts/kendo.all.min.js" type="text/javascrlbt"></scrlbt>
-        <scrlbt src="../../scrlbts/LibreriaIntegrity.js" type="text/javascrlbt"></scrlbt>
-        <scrlbt src="../../js/servicios.js" type="text/javascrlbt"></scrlbt>
-        <scrlbt src="../js/variablesFacturacion.js" type="text/javascrlbt"></scrlbt>
-        <scrlbt src="../js/pedidoCabecera.js" type="text/javascrlbt"></scrlbt>
+        <script src="../js/variablesPedidos.js" type="text/javascript"></script>
+        <script src="../../scripts/kendo.all.min.js" type="text/javascript"></script>
+        <script src="../../scripts/LibreriaIntegrity.js" type="text/javascript"></script>
+        <script src="../../js/servicios.js" type="text/javascript"></script>
+        
+        <script src="../js/pedido.js" type="text/javascript"></script>
         <link href="../../css/kendo.metro.min.css" rel="stylesheet" type="text/css"/>
         <link href="../../css/kendo.metro.mobile.min.css" rel="stylesheet" type="text/css"/>
         <link href="../../css/integrity.css" rel="stylesheet" type="text/css"/>
@@ -37,16 +37,16 @@ and open the template in the editor.
                     <table style="width: 100%">
                         <tr>
                             <td style="width: 50px; text-align: right; padding-right: 20">
-                                <a id ="btnGuardar" class="k-grid" onclick ="" aling="center"><span class="k-icon po_back"></span></a>
+                                <a id ="btnGuardar" class="k-grid" onclick ="volverPedidos()" aling="center"><span class="k-icon po_back"></span></a>
                             </td>
                             <td>
                                 <h1 id = "subtitulo" class="subTitulo">Pedido <label id="idNumeroPedido"></label></h1>                                
                             </td>
                             <td style="width: 50px; text-align: right; padding-right: 20">
-                                <a id ="btnGuardar" class="k-grid" onclick ="" aling="center"><span class="k-icon po_editon"></span></a>
+                                <a id ="btnGuardar" class="k-grid" onclick ="popUpPedidoCU()" aling="center"><span class="k-icon po_edit_sup"></span></a>
                             </td>
                             <td style="width: 50px; text-align: right; padding-right: 20">
-                                <a id ="btnGuardar" class="k-grid" onclick ="" aling="center"><span class="k-icon po_mas"></span></a>
+                                <a id ="btnGuardar" class="k-grid" onclick ="nuevoPedido()" aling="center"><span class="k-icon po_mas"></span></a>
                             </td>
                         </tr>
                     </table>
@@ -103,6 +103,14 @@ and open the template in the editor.
                                     <label id="lbVendedor" class="letraParrafo" style="width: 100%"/>
                                 </td>
                             </tr>
+                            <tr>
+                                <td style="width: 25%">
+                                    <label class="letraParrafo">Solicitante</label>
+                                </td>
+                                <td style="width: 75%">
+                                    <label id="lbSolicitante" class="letraParrafo" style="width: 100%"/>
+                                </td>
+                            </tr>
                         </table>                        
                     </div>
                     <div class="col-md-6">                        
@@ -113,6 +121,14 @@ and open the template in the editor.
                                 </td>
                                 <td style="width: 75%">
                                     <label id="lbFecha" class="letraParrafo" style="width: 100%" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 25%">
+                                    <label class="letraParrafo">Fecha entrega:</label>
+                                </td>
+                                <td style="width: 75%">
+                                    <label id="lbFechaEntrega" class="letraParrafo" style="width: 100%" />
                                 </td>
                             </tr>
                             <tr>
@@ -146,15 +162,7 @@ and open the template in the editor.
                                 <td style="width: 75%">
                                     <label id="lbCiudad" class="letraParrafo" style="width: 100%"/>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 25%">
-                                    <label class="letraParrafo">Solicitante</label>
-                                </td>
-                                <td style="width: 75%">
-                                    <label id="lbSolicitante" class="letraParrafo" style="width: 100%"/>
-                                </td>
-                            </tr>
+                            </tr>                            
                         </table>
                     </div>                   
                 </div>
@@ -166,7 +174,7 @@ and open the template in the editor.
                                     <label class="letraParrafo">Observaciones:</label><br>
                                 </td>
                                 <td>
-                                    <textarea id="txtAObservaciones" data-bind="value: textareaValue" class="k-textbox" style="height: 40px; width: 100%;"></textarea>
+                                    <label id="lbObservaciones" class="letraParrafo" style="width: 100%"/>                                    
                                 </td>
                             </tr>                            
                         </table>

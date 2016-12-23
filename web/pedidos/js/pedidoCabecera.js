@@ -212,6 +212,9 @@ function iniDropDownList(){
             error: function (xhr, error) {
                 alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
             }
+        },
+        change: function (e) {
+            alert("Detecte un cambio")
         }
         
     });
@@ -324,7 +327,7 @@ function iniDropDownList(){
             schema: {
                 type: "json",
                 data:function (e){
-                    debugger
+                    
                     var key1 = Object.keys(e)[0];
                     if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
                         return e[key1][mapDataCiudad];
@@ -562,8 +565,7 @@ function setInfoCabeceraPedido(){
     
     var pedido = JSON.parse(sessionStorage.getItem("regPedidos"));
     
-    var kendoDropDownListSucursal = $("#ipSucursal").data("kendoDropDownList");
-    debugger
+    var kendoDropDownListSucursal = $("#ipSucursal").data("kendoDropDownList");    
     kendoDropDownListSucursal.value(pedido.suc__cod);
     kendoDropDownListSucursal.readonly(true);
     
@@ -626,9 +628,9 @@ function guardarCabecera(){
     
     var verbo="POST"
     if($("#buttonCab")["0"].childNodes["0"].data==="Actualizar");{
-        verbo="POST";
+        verbo="PUT";
     }
-    
+    debugger
     var obj = new SICUDPedido();
     var objJson = obj.getjson();
     var url = obj.getUrlSir();
@@ -638,7 +640,7 @@ function guardarCabecera(){
     objJson[key1][key2][0].suc__cod = $("#ipSucursal").val();
     objJson[key1][key2][0].ter__nit = $("#ipNITCliente").val();
     objJson[key1][key2][0].pago__cod = $("#ipSucursal").val();
-    objJson[key1][key2][0].mnd__cla = $("#ipCdePago").val();    
+    objJson[key1][key2][0].mnd__cla = $("#ipDivisa").val();    
     objJson[key1][key2][0].ven__cod = $("#ipVendedor").val();
     objJson[key1][key2][0].ped__fec = $("#ipFecha").val();
     objJson[key1][key2][0].ped__fec__ent = $("#ipFechaEntrega").val();
@@ -669,7 +671,7 @@ function guardarCabecera(){
                 alertDialogs(" Error al consumir el servicio "+ e.status +" - "+ e.statusText);                
             }
         }).done(function(e){
-            
+            parent.closePopUpCabecera()
         });
     } catch (e) {
         alertDialogs("Function: consumeServAjaxSIR Error: " + e.message);

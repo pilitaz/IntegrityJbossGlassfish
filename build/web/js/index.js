@@ -210,16 +210,17 @@ function  windowPopUp(detalle, titulo) {
     }
 }
 
-function onClose() {
-    alertDialogs("cerrando");
-    $("#window").fadeIn();
-}
+//function onClose() {
+//    alertDialogs("cerrando");
+//    $("#window").fadeIn();
+//}
 
 function cambiarClave() {
     reemplazarDiv("divBtCambiarClave", "cambiarClave");
 }
 
 function guardarClave() {
+    
     try {
         if (document.getElementById("IpClave").value == document.getElementById("IpRClave").value) {
             var cambioExitoso;
@@ -250,7 +251,7 @@ function guardarClave() {
                     alertDialogs("Error al consumir el servicio de login.\n" + e.status + " - " + e.statusText);
                 }
             }).done(function () {
-                if (cambioExitoso == '"OK"') {
+                if (cambioExitoso === '"OK"') {
                     alertDialogs("cambio existoso, sera redirigido al login");
                     cerrarSesion();
                 } else {
@@ -260,7 +261,7 @@ function guardarClave() {
             });
             reemplazarDiv("cambiarClave", "divBtCambiarClave");
         } else {
-            status.text("Datos incompletos");
+            alertDialogs("Datos incompletos");
         }
     } catch (e) {
         alertDialogs("Function: consumeServAjaxSIR Error: " + e.message);
@@ -317,7 +318,7 @@ function menufunciones() {
             }
         }).done(function () {
             var dataarbol = sessionStorage.getItem("menuJsonIni");
-            if (permitirIngreso == '"OK"') {
+            if (permitirIngreso === '"OK"') {
                 if (dataarbol) {
                     dataarbol = dataarbol.replace(/Codigo/g, "id");
                     dataarbol = dataarbol.replace(/Depende/g, "parent");
@@ -498,7 +499,8 @@ function servLinuxSOption(programa) {
             ],
             "eeParametros": [
                 {
-                    "picprograma": programa
+                    "picprograma": programa,
+                    "piccianit": sessionStorage.getItem("companyNIT")
                 }
             ]
         }
@@ -626,3 +628,4 @@ function cargaDocumentos() {
     //la funcion documento esta en la documentos.js
     documentos();
 }
+

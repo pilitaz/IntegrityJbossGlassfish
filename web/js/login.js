@@ -40,7 +40,6 @@ function login() {
         jSonData.dslogin.ttdatauser[0].picusrpass = password;
         jSonData.dslogin.ttdatauser[0].local_ip = sessionStorage.getItem("ipPrivada");
         jSonData.dslogin.ttdatauser[0].remote_ip = sessionStorage.getItem("ipPublica");
-        console.log(JSON.stringify(jSonData));
         var jsonResp = "";
         var permitirIngreso;
         $.ajax({
@@ -58,12 +57,10 @@ function login() {
                 var buttonObject = $("#btnLogin").kendoButton().data("kendoButton");
                 buttonObject.enable(true);
             }
-        }).done(function(){
-            if(permitirIngreso=='"OK"'){  
+        }).done(function(){            
+            if(permitirIngreso==='"OK"'){  
                 var fechaSistema=jsonResp.dslogin.eesiccia[0].fecsis;
-                fechaSistema = fechaSistema.replace(/-/g, "/"); 
-                console.log("Usuario con permiso de ingresar \n" + permitirIngreso);                    
-                console.log("jsonResp\n" + JSON.stringify(jsonResp));   
+                fechaSistema = fechaSistema.replace(/-/g, "/");    
                 sessionStorage.setItem("usrnom",jsonResp.dslogin.eesicusuarios[0].usrnom);
                 sessionStorage.setItem("usuario",usuario);
                 sessionStorage.setItem("usrmail",jsonResp.dslogin.eesicusuarios[0].usrmail);
@@ -78,8 +75,9 @@ function login() {
                 sessionStorage.setItem("loginintegrity","valido");
                 sessionStorage.setItem("hibrido",jsonResp.dslogin.eesiccia[0].ciaserv);
                 sessionStorage.setItem("portLinux",jsonResp.dslogin.eesiccia[0].ciapuerto);
+                
                 window.location.assign("html/index.html");
-            }else{
+            }else{                
                 var actions = new Array();
                 actions[0] = new Object();
                 actions[0].text = "Intentar de nuevo";
@@ -88,7 +86,6 @@ function login() {
                 
                 createDialog("Problemas con el inicio sesión", permitirIngreso, "400px", "auto", true, false, actions);
                 
-                console.log("Usuario no puede ingresar \n" + permitirIngreso);
                 var buttonObject = $("#btnLogin").kendoButton().data("kendoButton");
                 buttonObject.enable(true);             
             }
