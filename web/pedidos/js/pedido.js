@@ -69,18 +69,6 @@ function gridDetallePedido(){
     
     var dataSourcePedido = new kendo.data.DataSource({
         data : JSON.parse(sessionStorage.getItem("regPedidos")).eegpd_ped_det,
-//        schema: {
-//            type: "json",            
-//            model: {
-//               // id: "ped__num",
-//                fields: {
-//                    cla__cod: {validation: {required: true}, type: 'string'},
-//                    art__des: {validation: {required: true}, type: 'string'},
-//                    ped__can: {validation: {required: true}, type: 'string'},
-//                    ter__nit: {validation: {required: true}, type: 'string'},
-//                }
-//            }
-//        }
     });
     
     debugger
@@ -93,6 +81,10 @@ function gridDetallePedido(){
         //dataBound: borrarBotonesGrilla,
         columns: [            
             {
+                field: "lis__num",
+                title: "Lista de precios"
+            },
+            {
                 field: "cla__cod",
                 title: "Clase de articulo"
             },
@@ -101,19 +93,29 @@ function gridDetallePedido(){
                 title: "Articulo"
             },                       
             {
-                field: "ped__can",
-                title: "Cantidad"
+                field: "pre__pcod",
+                title: "Presentación"
             },
-//            {
-//                field: "ValorUnitario",
-//                title: "Valor unitario",
-//                format: "{0:c}"
-//            },
-//            {
-//                field: "ValorTotal",
-//                title: "Valor total",
-//                template: '#= kendo.toString(ValorTotal, "{0:c}" ) #'
-//            },            
+            {
+                field: "lpd__pre",
+                title: "Valor unitario",
+                format: "{0:c}"
+            },
+            {
+                field: "ped__can",
+                title: "Cantidad",
+                format: "{0:n}"
+            },
+            {
+                field: "ped__dct",
+                title: "Descuento",
+                format: "{0:n}"
+            },
+            {
+                field: "ped__iva",
+                title: "IVA",
+                format: "{0:n}"
+            },
             { command: [
                     {name: "editar", click: "", template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},
                     {name: "eliminar", click: "", template: "<a class='k-grid-eliminar'><span class='k-sprite po_cerrar'></span></a>"}
