@@ -350,9 +350,11 @@ function inicio() {
 
 function abreFuncion(servicio) {
     tamanoFunciones();
+    debugger
     document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
     $("#tdPerfil").fadeOut("slow");
     $('#divDerecho').width($(window).width());
+    var regex = /\/\w+\/html\/\w+.html/g;
     apagarBotones();
     cambiarFondoTD("tdVerde");
     if (servicio.slice(0, 5) === "html&") {
@@ -366,7 +368,11 @@ function abreFuncion(servicio) {
         sessionStorage.setItem("sesion", sessionStorage.getItem("picfiid"));
         servLinuxSOption(servicio);
         //document.getElementById("idFrame").src = urlIFrame + "IntegrityViejo/Start.jsp";        
-    } else {
+    } else if(regex.test(servicio)){        
+        sessionStorage.setItem("servicio", servicio);
+        document.getElementById("idFrame").src = sessionStorage.getItem("url") + servicio;
+    }
+    else {
         document.getElementById("idFrame").src = urlIFrame + servicio + "/Start.jsp";
     }
 
