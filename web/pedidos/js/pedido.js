@@ -5,17 +5,17 @@ $(document).ready(function () {
    document.getElementById('idNumeroPedido').innerHTML = 'Nº '+pedido.ped__num;
    document.getElementById('lbSucursal').innerHTML = pedido.suc__cod;
    document.getElementById('lbNITCliente').innerHTML = pedido.ter__nit;
-   document.getElementById('lbCliente').innerHTML = "pendiente";
-   document.getElementById('lbCdePago').innerHTML = pedido.pago__cod;
-   document.getElementById('lbDivisa').innerHTML = pedido.mnd__cla;
-   document.getElementById('lbVendedor').innerHTML = pedido.ven__cod;
+   document.getElementById('lbCliente').innerHTML = pedido.ter__raz;
+   document.getElementById('lbCdePago').innerHTML = pedido.pago__nom;
+   document.getElementById('lbDivisa').innerHTML = pedido.mnd__nom;
+   document.getElementById('lbVendedor').innerHTML = pedido.ven__nom;
    document.getElementById('lbSolicitante').innerHTML = pedido.ped__pqs;
    document.getElementById('lbFecha').innerHTML = pedido.ped__fec;
    document.getElementById('lbFechaEntrega').innerHTML = pedido.ped__fec__ent;
-   document.getElementById('lbEstablecimiento').innerHTML = pedido.ped__num;
+   document.getElementById('lbEstablecimiento').innerHTML = pedido.com__con;
    document.getElementById('lbDireccion').innerHTML = pedido.ter__dir;
    document.getElementById('lbTelefono').innerHTML = pedido.ter__tel;
-   document.getElementById('lbCiudad').innerHTML = pedido.ciu__cod;
+   document.getElementById('lbCiudad').innerHTML = pedido.ciu__nom;
    document.getElementById('lbObservaciones').innerHTML = pedido.obs__ped;
    
 });
