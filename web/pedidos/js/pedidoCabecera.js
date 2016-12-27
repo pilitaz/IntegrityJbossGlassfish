@@ -34,7 +34,11 @@ $(document).ready(function() {
     
     
 });
-
+/**
+ * Metodo que inicia los el autocomplete del cliente (NIT - razón social)
+ * 
+ * @returns {undefined}
+ */
 function iniAutocomplete(){
     
     var obj = new sirConsultaCliente();
@@ -67,6 +71,7 @@ function iniAutocomplete(){
                             var key1 = Object.keys(objJson)[0];
                             var key2 = Object.keys(objJson[key1])[1];
                             objJson[key1][key2][0].picter_nit = $("#ipNITCliente").val();
+                            objJson[key1][key2][0].picter_raz = "";
                             return JSON.stringify(objJson);
                         } 
                     } catch (e) {
@@ -122,6 +127,7 @@ function iniAutocomplete(){
                         if (operation === 'read') {
                             var key1 = Object.keys(objJson)[0];
                             var key2 = Object.keys(objJson[key1])[1];
+                            objJson[key1][key2][0].picter_nit = "";
                             objJson[key1][key2][0].picter_raz = $("#ipCliente").val();
                             return JSON.stringify(objJson);
                             return JSON.stringify(authdsgfc_cli);
@@ -156,7 +162,11 @@ function iniAutocomplete(){
         }
     });
 }
-
+/**
+ * inicia los DropDownList que no dependen de otros campos
+ * 
+ * @returns {undefined}
+ */
 function iniDropDownList(){    
     var obj = new sirConsultaSucursal();    
     var objJson = obj.getjson();
@@ -350,7 +360,11 @@ function iniDropDownList(){
         
     });
 }
-
+/**
+ * Metodo que coloca la información del cliente en los campos que de algua forma dependen de el.
+ * @param {type} e
+ * @returns {undefined}
+ */
 function setInfoCliente(e){
     
     if(e){
@@ -561,6 +575,10 @@ function setInfoCliente(e){
     });
 }
 
+/**
+ * 
+ * @returns {undefined}
+ */
 function setInfoCabeceraPedido(){
     
     var pedido = JSON.parse(sessionStorage.getItem("regPedidos"));
@@ -623,7 +641,10 @@ function setInfoCabeceraPedido(){
         alertDialogs("Function: consumeServAjaxSIR Error: " + e.message);
     }
 }
-
+/**
+ * 
+ * @returns {undefined}
+ */
 function guardarCabecera(){
     
     var verbo="POST"

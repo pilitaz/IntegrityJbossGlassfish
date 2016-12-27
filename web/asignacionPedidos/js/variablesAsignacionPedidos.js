@@ -7,8 +7,8 @@
  *  var input = sir.getdataInputSir();
  */
 function sirConsultaAsignarPedidos() {
-    var mapData = "eegpd_ped";
-    var urlSir = ipServicios + baseComercial + "SIRped_det_prov";
+    var mapData = "eegpd_ped_det";
+    var urlSir = ipServicios + baseComercial + "SIRgpd_pdet_prov";
     var json = {
         "dsSIRped_det_prov": {
             "eeDatos":[
@@ -19,8 +19,8 @@ function sirConsultaAsignarPedidos() {
                     "remote_ip":sessionStorage.getItem("ipPublica")
                 }
             ],
-            "eeSIRped_det_prov": [{
-                    "piccia_nit": sessionStorage.getItem("companyNIT"),
+            "eeSIRgpd_pdet_prov": [{
+                   // "piccia_nit": sessionStorage.getItem("companyNIT"),
                     "piitipo": 0
                     
                 }]
