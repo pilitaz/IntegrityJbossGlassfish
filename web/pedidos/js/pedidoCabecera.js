@@ -224,9 +224,8 @@ function iniDropDownList(){
             }
         },
         change: function (e) {
-            alert("Detecte un cambio")
-        }
-        
+
+        }        
     });
     
     
@@ -529,10 +528,8 @@ function setInfoCliente(e){
                         
                         if (operation === 'read') {
                             var key1 = Object.keys(objJsonEstablecimiento)[0];
-                            var key2 = Object.keys(objJsonEstablecimiento[key1])[1];                                
-                            objJsonEstablecimiento[key1][key2][0].picsuc_cod = $("#ipSucursal").val();
-                            objJsonEstablecimiento[key1][key2][0].piccom_con = "*";
-                            objJsonEstablecimiento[key1][key2][0].picter_nit = dataCliente.ter__nit;
+                            var key2 = Object.keys(objJsonEstablecimiento[key1])[1];
+                            objJsonEstablecimiento[key1][key2][0].picter__nit = dataCliente.ter__nit;
                             return JSON.stringify(objJsonEstablecimiento);
                         } 
 
@@ -557,19 +554,22 @@ function setInfoCliente(e){
                 alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
             }
         },
-        dataBound: function (e) {
-            if(e.sender.dataSource._data.length===1){
+        dataBound: function (e) {            
+            if(e.sender.dataSource._data.length===1){                
                 var dataItemEstablicimiento = e.sender.dataSource._data["0"]; 
                 $("#ipDireccion").val(dataItemEstablicimiento.ter__dir);
                 $("#ipTelefono").val(dataItemEstablicimiento.ter__tel);
+                var dropdownlist = $("#ipCiudad").data("kendoDropDownList");
+                dropdownlist.value(dataItemEstablicimiento.ciu__cod);            
             }
         },
-        change: function (e) {
-            alert("Change");
+        change: function (e) {            
             if(e.sender.selectedIndex){
                 var dataItemEstablicimiento = e.sender._data[e.sender.selectedIndex-1];
                 $("#ipDireccion").val(dataItemEstablicimiento.ter__dir);
                 $("#ipTelefono").val(dataItemEstablicimiento.ter__tel);
+                var dropdownlist = $("#ipCiudad").data("kendoDropDownList");
+                dropdownlist.value(dataItemEstablicimiento.ciu__cod);            
             }
         }
     });
@@ -642,7 +642,7 @@ function setInfoCabeceraPedido(){
     }
 }
 /**
- * 
+ * Guarda la cabecera del pedido 
  * @returns {undefined}
  */
 function guardarCabecera(){
@@ -650,8 +650,7 @@ function guardarCabecera(){
     var verbo="POST"
     if($("#buttonCab")["0"].childNodes["0"].data==="Actualizar");{
         verbo="POST";
-    }
-    debugger
+    }    
     var obj = new SICUDPedido();
     var objJson = obj.getjson();
     var url = obj.getUrlSir();

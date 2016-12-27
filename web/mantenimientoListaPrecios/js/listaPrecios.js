@@ -5,6 +5,10 @@
  */
 
 var dataGridDetalleListaPrecios = [];
+var dataSourceAdd = [];
+var dataSourceUpdate = [];
+var dataSourceDelete = [];
+
 
 
 $(document).ready(function () {
@@ -67,6 +71,7 @@ $(document).ready(function () {
         }
     });
 
+
     $("#ipFechaInicio").kendoDatePicker({
         culture: "es-CO",
         format: "yyyy/MM/dd",
@@ -87,6 +92,11 @@ $(document).ready(function () {
     authdssic_mnd.dssic_mnd.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
     authdssic_mnd.dssic_mnd.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
 
+    var objCU = new SICUDgpr_lis();
+    var objD = objCU.getjson();
+    var urlD = objCU.getUrlSir();
+    var mapDataD = "eegpr_lpd";
+
     $("#ipDivisa").kendoDropDownList({
         optionLabel: "Seleccione la moneda",
         dataTextField: "mnd__des ",
@@ -100,11 +110,37 @@ $(document).ready(function () {
                     dataType: "json",
                     type: "POST"
                 },
+                create: {
+                    url: urlD,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    type: "POST"
+                },
                 parameterMap: function (options, operation) {
                     try {
                         if (operation === 'read') {
                             authdssic_mnd["eesic_mnd"] = [options];
                             return JSON.stringify(authdssic_mnd);
+                        } else if (operation === 'create') {
+                            var key1 = Object.keys(objD)[0];
+                            objD[key1][mapDataD] = [options];
+                            objD[key1][mapDataD] = [
+                                {
+                                    "lis__num": 4,
+                                    "cla__cod": 2,
+                                    "cla__des": "producto terminado",
+                                    "art__cod": "999999",
+                                    "art__des": "WORKGROUP RDBMS VER 1.9E",
+                                    "lpd__pre": 11111,
+                                    "lpd__esd": "1",
+                                    "top__dct": 90,
+                                    "lpd__esh": "9999999",
+                                    "pre__pcod": "1",
+                                    "pre__des": "",
+                                    "piindicador": 0
+                                }
+                            ]
+                            return JSON.stringify(objD);
                         }
                     } catch (e) {
                         alertDialogs(e.message);
@@ -134,17 +170,17 @@ $(document).ready(function () {
         }
 
     });
-    debugger
     cambiarInput();
-    cargarDatosGrilla()
+    cargarDatosGrilla();
     gridDetalleListaPrecios();
 });
 
 function gridDetalleListaPrecios() {
-
+//    datasource1();
     var grid = $("#gridDetalleListaPrecios").kendoGrid({
         dataSource: dataGridDetalleListaPrecios,
-//        dataSource: {            
+//        dataSource: {
+//            data: dataGridDetalleListaPrecios,
 //            schema: {
 //                model: {
 //                    fields: {
@@ -159,121 +195,97 @@ function gridDetalleListaPrecios() {
 //            },
 //            pageSize: 20
 //        },
-        navigatable: true,
         batch: false,
-        pageable: true,
-        selectable: "row",
+        pageable: false,
         columns: [
             {
-                field: "lis__num",
-                title: "lis__num",
-            },
-            {
                 field: "cla__des",
-                title: "cla__des"
+                title: "Clase Articulo"
             },
             {
                 field: "art__des",
-                title: "art__des"
+                title: "Articulo"
             },
             {
                 field: "lpd__pre",
-                title: "lpd__pre",
+                title: "Precio",
                 format: "{0:c}"
             },
-            {
-                field: "lpd__esh",
-                title: "lpd__esh"
-            },
+//            {
             {
                 field: "pre__pcod",
-                title: "pre__pcod"
+                title: "Presentacíón"
             },
             {command: [
-                    {name: "editar", click: editarArticulo, template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},
-                    {name: "eliminar", click: eliminarArticulo, template: "<a class='k-grid-eliminar'><span class='k-sprite po_cerrar'></span></a>"}
-                ]
+                    {name: "editar", click: editarLPrecio, template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},
+                    {name: "eliminar", click: eliminarLPrecio, template: "<a class='k-grid-eliminar'><span class='k-sprite po_cerrar'></span></a>"}
+                ],
+                width: "100px"
             }],
         editable: {
             mode: "popup",
             window: {
                 title: "Editar",
                 animation: false,
-                width: "700px"
             }
         },
     }).data("kendoGrid");
 
-    function eliminarArticulo(e) {
+    function eliminarLPrecio(e) {
         e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
 
         var grid = $("#gridDetalleListaPrecios").data("kendoGrid");
         var itemID = grid.dataItem(grid.select());
 
-        for (var i = 0; i < dataGridDetalleListaPrecios.length; i++) {
-            if (dataGridDetalleListaPrecios[i].ID === itemID.ID) {
-                dataGridDetalleListaPrecios.splice(i, 1);
-            }
-        }
-        gridDetalle();
+//        for (var i = 0; i < dataGridDetalleListaPrecios.length; i++) {
+//            if (dataGridDetalleListaPrecios[i].ID === itemID.ID) {
+//                dataSourceDelete.push(itemID);
+//                dataGridDetalleListaPrecios.splice(i, 1);
+//            }
+//        }
+        CUGrilla([itemID], "DELETE");
+        gridDetalleListaPrecios();
     }
 
-    function editarArticulo(e) {
+    function editarLPrecio(e) {
 
+        sessionStorage.removeItem("operaDEtalle");
+        sessionStorage.removeItem("objEditDet");
         e.preventDefault();
         var grid = $("#gridDetalleListaPrecios").data("kendoGrid");
         itemID = grid.dataItem(grid.select());
-
-        var widthPopUp = $("body").width();
-        widthPopUp = widthPopUp * (60 / 100);
-        var heightPopUp = $("body").height();
-        heightPopUp = heightPopUp * (80 / 100);
-
-        $("body").append("<div id='windowArticulo'></div>");
-        var myWindow = $("#windowArticulo");
-        var undo = $("#undo");
-
-        function onCloseWindowItemFacEdit() {
-            document.getElementById("windowArticulo").remove();
-            undo.fadeIn();
-        }
-
-        myWindow.kendoWindow({
-            width: widthPopUp,
-            height: heightPopUp,
-            title: "Editar",
-            content: sessionStorage.getItem("url") + "/listaPrecios/html/popupArticuloLista.html",
-            visible: false,
-            modal: true,
-            actions: [
-                "Close"
-            ],
-            close: onCloseWindowItemFacEdit
-        }).data("kendoWindow").center().open();
+        sessionStorage.setItem("operaDEtalle", "PUT");
+        sessionStorage.setItem("objEditDet", JSON.stringify(itemID));
+        popupCU("Editar");
     }
 }
 
-function agregarArticuloDetalle(e) {
-
+function agregarItemDetalle() {
+    sessionStorage.removeItem("operaDEtalle");
+    sessionStorage.removeItem("objEditDet");
+    sessionStorage.setItem("operaDEtalle", "POST");
+    popupCU("Agregar");
+}
+function popupCU(titulo) {
     var widthPopUp = $("body").width();
-    widthPopUp = widthPopUp * (60 / 100);
+    widthPopUp = widthPopUp * (35 / 100);
     var heightPopUp = $("body").height();
-    heightPopUp = heightPopUp * (80 / 100);
+    heightPopUp = heightPopUp * (30 / 100);
 
-    $("body").append("<div id='windowArticulo'></div>");
-    var myWindow = $("#windowArticulo");
+    $("body").append("<div id='windowListPre'></div>");
+    var myWindow = $("#windowListPre");
     var undo = $("#undo");
 
     function onCloseWindowItemFac() {
-        document.getElementById("windowArticulo").remove();
+        document.getElementById("windowListPre").remove();
         undo.fadeIn();
     }
 
     myWindow.kendoWindow({
         width: widthPopUp,
         height: heightPopUp,
-        title: "Agregar",
-        content: sessionStorage.getItem("url") + "/listaPrecios/html/popupArticuloLista.html",
+        title: titulo,
+        content: sessionStorage.getItem("url") + "/mantenimientoListaPrecios/html/popupListaPrecios.html",
         visible: false,
         modal: true,
         actions: [
@@ -281,7 +293,13 @@ function agregarArticuloDetalle(e) {
         ],
         close: onCloseWindowItemFac
     }).data("kendoWindow").center().open();
-
+}
+function closePopUp() {
+    dataGridDetalleListaPrecios = [];
+    cargarDatosGrilla();
+    $('#gridDetalleListaPrecios').data('kendoGrid').dataSource.read();
+    $('#gridDetalleListaPrecios').data('kendoGrid').refresh();
+    $("#windowListPre").data("kendoWindow").close();
 }
 
 function volver() {
@@ -296,12 +314,12 @@ function cargarDatosGrilla(objCab, ope) {
     var objLPreciosDeta = obj.getjson();
     var urlSir = obj.getUrlSir();
     var mapData = obj.getMapData();
-    if (sessionStorage.getItem("opeListPre") === "edit"){
+    if (sessionStorage.getItem("opeListPre") === "edit") {
         if (sessionStorage.getItem("listaPrecios")) {
             objLPreciosDeta.dsSIRgpr_lis_det.eeSIRgpr_lis[0].piilis_num = JSON.parse(sessionStorage.getItem("listaPrecios")).lis__num;
         }
     }
-    
+
 
     var respuesta = ""
     var jsonResp = "";
@@ -325,7 +343,75 @@ function cargarDatosGrilla(objCab, ope) {
         if (permitirIngreso == '"OK"') {
             var key1 = Object.keys(jsonResp)[0];
             if (jsonResp[key1][mapData]) {
-                debugger
+                var longArr = jsonResp[key1][mapData];
+                for (var i = 0; i < longArr.length; i++) {
+//                            var valor = dataItemsFac[i].itms__val__u;                        
+//                            valor = (valor * (parseFloat(1)-parseFloat(dataItemsFac[i].itms__pdt/100)));
+//                            var total = parseFloat(dataItemsFac[i].itms__can) * (parseFloat(valor) * (parseFloat(1)+parseFloat(dataItemsFac[i].itms__piv/100)));                    
+                    var obj = {
+                        ID: i,
+                        lis__num: longArr[i]["lis__num"],
+                        cla__cod: longArr[i]["cla__cod"],
+                        cla__des: longArr[i]["cla__des"],
+                        art__cod: longArr[i]["art__cod"],
+                        art__des: longArr[i]["art__des"],
+                        lpd__pre: longArr[i]["lpd__pre"],
+                        lpd__esd: longArr[i]["lpd__esd"],
+                        top__dct: longArr[i]["top__dct"],
+                        lpd__esh: longArr[i]["lpd__esh"],
+                        pre__pcod: longArr[i]["pre__pcod"],
+                        pre__des: longArr[i]["pre__des"]
+
+                    };
+                    dataGridDetalleListaPrecios.push(obj);
+                }
+//                dataGridDetalleListaPrecios = jsonResp[key1][mapData];
+            } else {
+                gridDetalleListaPrecios();
+            }
+        } else {
+            alertDialogs("Error cargando la información de la lista de Precios.\n" + permitirIngreso);
+        }
+        gridDetalleListaPrecios();
+    });
+}
+
+
+function CUGrilla(obj1, ope) {
+    var obj = new SICUDgpr_lis();
+    var objLPreciosDetaD = obj.getjson();
+    var urlSirD = obj.getUrlSir();
+    var mapDataD = "eegpr_lpd";
+//    if (sessionStorage.getItem("opeListPre") === "edit") {
+//        if (sessionStorage.getItem("listaPrecios")) {
+//            objLPreciosDeta.dsSIRgpr_lis_det.eeSIRgpr_lis[0].piilis_num = JSON.parse(sessionStorage.getItem("listaPrecios")).lis__num;
+//        }
+//    }
+    var key1 = Object.keys(objLPreciosDetaD)[0];
+    objLPreciosDetaD[key1][mapDataD] = obj1;
+    delete objLPreciosDetaD[key1]["eegpr_lis"];
+    var respuesta = ""
+    var jsonResp = "";
+    var permitirIngreso = "";
+    $.ajax({
+        type: ope,
+        data: JSON.stringify(objLPreciosDetaD),
+        url: urlSirD,
+        async: false,
+        dataType: "json",
+        contentType: "application/json;",
+        success: function (resp) {
+            var key1 = Object.keys(resp)[0];
+            permitirIngreso = JSON.stringify(resp[key1].eeEstados[0].Estado);
+            jsonResp = resp;
+        },
+        error: function (e) {
+            alertDialogs(" Error al consumir el servicio: cargarDatosGrilla/SIRgpr_lis_det \n" + e.status + " - " + e.statusText);
+        }
+    }).done(function () {
+        if (permitirIngreso == '"OK"') {
+            var key1 = Object.keys(jsonResp)[0];
+            if (jsonResp[key1][mapDataD]) {
 //                        var longArr = jsonResp[key1][mapData];
 //                        for(var i=0; i<longArr.length ;i++){
 ////                            var valor = dataItemsFac[i].itms__val__u;                        
@@ -352,7 +438,7 @@ function cargarDatosGrilla(objCab, ope) {
 //                            };
 //                            dataGridDetalle.push(obj);
 //                        }
-                dataGridDetalleListaPrecios = jsonResp[key1][mapData];
+//                dataGridDetalleListaPrecios = jsonResp[key1][mapData];
             } else {
                 gridDetalleListaPrecios();
             }
@@ -362,7 +448,6 @@ function cargarDatosGrilla(objCab, ope) {
         gridDetalleListaPrecios();
     });
 }
-
 function cambiarInput() {
     var ope = sessionStorage.getItem("opeListPre");
     if (ope === "edit") {
@@ -371,7 +456,7 @@ function cambiarInput() {
         $("#ipFechaFin").val(obj.lis__ffi);
         $("#ipDescripcion").val(obj.lis__des);
         $("#ipDivisa").data("kendoDropDownList").value(obj.mnd__cla);
-    }else{
+    } else {
         $("#ipFechaInicio").val("");
         $("#ipFechaFin").val("");
         $("#ipDescripcion").val("");
@@ -381,7 +466,76 @@ function cambiarInput() {
 function guardarListaPrecios() {
     alert("guardarListaPrecios");
 }
+function datasource1() {
 
+    var objCU = new SICUDgpr_lis();
+    var objD = objCU.getjson();
+    var urlD = objCU.getUrlSir();
+    var mapDataD = "eegpr_lpd";
+
+    var obj = new SIRgpr_lis_det();
+    var objLPreciosDeta = obj.getjson();
+    var urlSir = obj.getUrlSir();
+    var mapData = obj.getMapData();
+
+    dataGridDetalleListaPrecios = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: urlSir,
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                type: "POST"
+            },
+            create: {
+                url: urlD,
+                type: "delete",
+                dataType: "json",
+                contentType: "application/json"
+            },
+            parameterMap: function (options, operation) {
+                try {
+                    if (operation === 'read') {
+//                        objLPrecios["obj"] = [options];
+                        return JSON.stringify(objLPreciosDeta);
+                    } else if (operation === 'create') {
+                        var key1 = Object.keys(objD)[0];
+                        objD[key1][mapDataD] = [options];
+                        objD[key1][mapDataD] = [
+                            {
+                                "lis__num": 4,
+                                "cla__cod": 2,
+                                "cla__des": "producto terminadoalex",
+                                "art__cod": "999999",
+                                "art__des": "WORKGROUP RDBMS VER 1.9E",
+                                "lpd__pre": 11111,
+                                "lpd__esd": "1",
+                                "top__dct": 90,
+                                "lpd__esh": "9999999",
+                                "pre__pcod": "1",
+                                "pre__des": "",
+                                "piindicador": 0
+                            }
+                        ];
+                        return JSON.stringify(objD);
+                    }
+                } catch (e) {
+                    alertDialogs("Error en el servicio" + e.message);
+                }
+            }
+        },
+        schema: {
+            type: "json",
+            data: function (e) {
+                var key1 = Object.keys(e)[0];
+                if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                    return e[key1][mapData];
+                } else {
+                    alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                }
+            },
+        }
+    });
+}
 function validarListaPrecios() {
     alert("validarListaPrecios");
 }
