@@ -6,10 +6,10 @@
 
 $(document).ready(function () {    
     $("#ipfechaFin").kendoDatePicker({
-        open: function () {
-            var calendar = this.dateView.calendar;
-            calendar.wrapper.width(this.wrapper.width() - 6);
-        },
+//        open: function () {
+//            var calendar = this.dateView.calendar;
+//            calendar.wrapper.width(this.wrapper.width() - 6);
+//        },
         culture: "es-CO",
         format: "yyyy/MM/dd",
         max: new Date(sessionStorage.getItem("fechaSistema")),
@@ -20,7 +20,7 @@ $(document).ready(function () {
     var estadosPedido = [
         { text: "Todos", value: "*" },
         { text: "Creado", value: "1" },
-        { text: "Aprovado", value: "2" },
+        { text: "Aprobado", value: "2" },
         { text: "Asignado", value: "3" },
         { text: "Despachado", value: "4" },        
         { text: "Facturado", value: "5" },
