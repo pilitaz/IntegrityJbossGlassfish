@@ -13,10 +13,10 @@ function sirpedidos() {
    "dsSIRgpd_est":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "SIRgpd_est":[  
@@ -54,10 +54,10 @@ function CreaEstadoPedido() {
    "dsSICUDgpd_est":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "eegpd_est":[  
@@ -98,10 +98,10 @@ function sirCliente() {
    "dsSIRgpd_cli_est":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "SIRgpd_cli_est":[  
@@ -181,10 +181,10 @@ function sirPresupuesto() {
    "dsSIRgpd_pre_est":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "SIRgpd_pre_est":[  
@@ -222,10 +222,10 @@ function cudPresupuesto() {
    "dsSICUDgpd_pre_est":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "eegpd_pre_est":[  
@@ -263,10 +263,10 @@ function sirTerritorios() {
    "dsSIRgpd_sre":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "SIRgpd_sre":[  
@@ -305,10 +305,10 @@ function cudTerritorios() {
    "dsSICUDgpd_sre":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "eegpd_sre":[  
@@ -348,10 +348,10 @@ function sirSupArea() {
    "dsSIRgpd_sar":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "SIRgpd_sar":[  
@@ -391,10 +391,10 @@ function cudSupArea() {
    "dsSICUDgpd_sar":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "eegpd_sar":[  
@@ -437,10 +437,10 @@ function sirTerritorio() {
    "dsSIRgpd_trr":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "SIRgpd_trr":[  
@@ -480,10 +480,10 @@ function cudTerritorio() {
    "dsSICUDgpd_trr":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "eegpd_trr":[  
@@ -524,10 +524,10 @@ function sirSupTerritorio() {
    "dsSIRgpd_str":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "SIRgpd_str":[  
@@ -566,10 +566,10 @@ function cudSupTerritorio() {
    "dsSIRgpd_str":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "SIRgpd_str":[  
@@ -608,10 +608,10 @@ function sirAnulaPedido() {
    "dsSIRgpd_anu":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "SIRgpd_anu":[  
@@ -649,10 +649,10 @@ function cudAnulaPedido() {
    "dsSICUDgpd_anu":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "eegpd_anu":[  
@@ -691,10 +691,10 @@ function sirCobradores() {
    "dsSIRgpd_cbr":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "SIRgpd_cbr":[  
@@ -732,10 +732,10 @@ function cudCobradores() {
    "dsSICUDgpd_cbr":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "eegpd_cbr":[  
@@ -774,10 +774,10 @@ function sirPrioridades() {
    "dsSIRgpd_pri":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "SIRgpd_pri":[  
@@ -815,10 +815,10 @@ function cudPrioridades() {
    "dsSICUDgpd_pri":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "eegpd_pri":[  
@@ -858,10 +858,10 @@ function sirRegionGeografica() {
                 "dsSIRgpr_rgeo":{ 
                     "eeDatos":[ 
                 { 
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
                     
                 }
             ], 
@@ -901,10 +901,10 @@ function cudRegionGeografica() {
                 "dsSIRgpr_rgeo":{ 
                     "eeDatos":[ 
                 { 
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
                     
                 }
             ], 
@@ -943,10 +943,10 @@ function sirBarrios() {
    "dsSIRgpd_bar":{  
       "eeDatos":[  
          {  
-            "picusrcod":"reita_800001541",
-            "picfiid":"46563924305606215",
-            "local_ip":"172.21.24.105",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "SIRgpd_bar":[  
