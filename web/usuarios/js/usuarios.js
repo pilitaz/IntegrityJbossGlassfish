@@ -38,6 +38,7 @@ $(document).ready(function () {
     var urlactualizar = actualizar.getUrlCud();
     var mapCud = "ee_user2";
     var mapCud1 = "ee_user3";
+    try {
     var dataSource = new kendo.data.DataSource({
         transport: {
             read: {
@@ -74,14 +75,21 @@ $(document).ready(function () {
                     if (cclave1 == "**********") {//EVULUAR CONTRASEÑA                       
                         actjson.dsee_user2.ee_user2[0] = options.models[0];
                         return JSON.stringify(actjson);
+                        $('#grid').data('kendoGrid').refresh();
+                        $('#grid').data('kendoGrid').dataSource.read(); 
+                        $('#grid').data('kendoGrid').refresh();
                     } else
                     {
                         if (cclave1 === cclave2) {
                             actjson.dsee_user2.ee_user2[0] = options.models[0];
                             return JSON.stringify(actjson);
+                            $('#grid').data('kendoGrid').refresh();
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh();
                         } else
                         {
-                            window.alert('Las contraseñas no coinciden');
+                            alertDialogs("Las contraseñas no coinciden");
+                            
 
                         }
                     }
@@ -95,8 +103,14 @@ $(document).ready(function () {
                 var key1 = Object.keys(e)[0];
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     return e[key1][mapCud];
+                                $('#grid').data('kendoGrid').refresh();
+            $('#grid').data('kendoGrid').dataSource.read();
+            $('#grid').data('kendoGrid').refresh();
                 } else {
-                    alert(e[key1].eeEstados[0].Estado);
+                    alertDialogs("Error"+e[key1].eeEstados[0].Estado);
+                                $('#grid').data('kendoGrid').refresh();
+            $('#grid').data('kendoGrid').dataSource.read();
+            $('#grid').data('kendoGrid').refresh();
                 }
             },
             model: {
@@ -116,7 +130,8 @@ $(document).ready(function () {
                 }
             }
         }
-    });
+    })
+;
     /**
      *  FUNCION CREAR GRILLA
      * Funcion cancel se ejecuta con el evento OnClick de EDIT grid
@@ -166,7 +181,14 @@ $(document).ready(function () {
             $('#grid').data('kendoGrid').refresh();
         }
     });
-
+    }catch(e){
+         $('#grid').data('kendoGrid').dataSource.read();
+         $('#grid').data('kendoGrid').refresh();
+       
+        alertDialogs("Error en la consulta de"+e);
+       
+                           
+    }
     /**
      * FUNCION AUTOCOMPLETADO NOMBRE TOOLBAR
      * VAR VALUE = VALOR DE SELECCION DE FILTRO
@@ -297,42 +319,42 @@ $(document).ready(function () {
                 .appendTo(container)
                 .kendoDropDownList({
                     dataTextField: "car__nom",
-                    dataValueField: "car__nom",
-                    dataSource: {
-                        transport: {
-                            read: {
-                                url: urlService,
-                                dataType: "json",
-                                type: "POST",
-                                contentType: "application/json; charset=utf-8"
-                            },
-                            parameterMap: function (options, operation) {
-                                if (operation === "read") {
-                                    return JSON.stringify(datajson);
-                                }
-                            }
-                        },
-                        schema: {
-                            data: function (e) {
-                                var key1 = Object.keys(e)[0];
-                                if (e[key1].eeEstados[0].Estado === "OK") {
-                                    return e[key1][mapCud1];
-                                } else {
-                                }
-                            },
-                            model: {
-                                id: "car__cod",
-                                fields: {
-                                    car__nom: {editable: false, nullable: false},
-                                }
-                            }
+            dataValueField: "car__nom",
+            dataSource: {
+                transport: {
+                    read: {
+                        url: urlService,
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation === "read") {
+                            return JSON.stringify(datajson);
                         }
                     }
+                },
+                schema: {
+                    data: function (e) {
+                        var key1 = Object.keys(e)[0];
+                        if (e[key1].eeEstados[0].Estado === "OK") {
+                            return e[key1][mapCud1];
+                        } else {
+                        }
+                    },
+                    model: {
+                        id: "car__cod",
+                        fields: {
+                            car__nom: {editable: false, nullable: false},
+                        }
+                    }
+                }
+            }
 
-                });
+        });
 
     }
- /**
+    /**
      * FUNCION FILTRO ACTOR EDIT POPUP SE EJECUTA CON EL EVENTO DE COMBOBOX
      *  cONSULTA CAMPO  actor__cod
      *  var  consultar obtiene funcion Sir para consultar
@@ -350,39 +372,39 @@ $(document).ready(function () {
                 .appendTo(container)
                 .kendoDropDownList({
                     dataTextField: "actor__cod",
-                    dataValueField: "actor__cod",
-                    dataSource: {
-                        transport: {
-                            read: {
-                                url: urlService,
-                                dataType: "json",
-                                type: "POST",
-                                contentType: "application/json; charset=utf-8"
-                            },
-                            parameterMap: function (options, operation) {
-                                if (operation === "read") {
-                                    return JSON.stringify(datajson);
-                                }
-                            }
-                        },
-                        schema: {
-                            data: function (e) {
-                                var key1 = Object.keys(e)[0];
-                                if (e[key1].eeEstados[0].Estado === "OK") {
-                                    return e[key1][mapCud1];
-                                } else {
-                                }
-                            },
-                            model: {
-                                id: "actor__cod",
-                                fields: {
-                                    actor__cod: {editable: false, nullable: false},
-                                }
-                            }
+            dataValueField: "actor__cod",
+            dataSource: {
+                transport: {
+                    read: {
+                        url: urlService,
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation === "read") {
+                            return JSON.stringify(datajson);
                         }
                     }
+                },
+                schema: {
+                    data: function (e) {
+                        var key1 = Object.keys(e)[0];
+                        if (e[key1].eeEstados[0].Estado === "OK") {
+                            return e[key1][mapCud1];
+                        } else {
+                        }
+                    },
+                    model: {
+                        id: "actor__cod",
+                        fields: {
+                            actor__cod: {editable: false, nullable: false},
+                        }
+                    }
+                }
+            }
 
-                });
+        });
 
     }
 
@@ -425,7 +447,7 @@ $(document).ready(function () {
                 .kendoDropDownList({
                     dataSource: arraySinDuplicados
 
-                });
+        });
     }
 
 
@@ -456,9 +478,9 @@ function filtroestado(container, options) {
             .appendTo(container)
             .kendoDropDownList({
                 dataTextField: "text",
-                dataValueField: "valor",
-                dataSource: estados
-            });
+        dataValueField: "valor",
+        dataSource: estados
+    });
 }
 /**
  * Funcion passEditorPopup se ejecuta en el evento onkeyup
@@ -501,16 +523,16 @@ function onkeypass(container, options) {debugger
  *  
  */
 function mostrarcampo(e) {debugger
-   var Tecla= e.which;
+    var Tecla= e.which;
    
     if (Tecla == 13)
     {}
     else
     {
-    document.getElementById("clave2").style.display = "";
-    var buscarlabel = $("label").find("for");
-    Buscarlabel = buscarlabel.prevObject[10];
-    Buscarlabel.style.display = "";}    
+        document.getElementById("clave2").style.display = "";
+        var buscarlabel = $("label").find("for");
+        Buscarlabel = buscarlabel.prevObject[10];
+        Buscarlabel.style.display = "";}    
 }
 
 /*  FUNCION RESIZE WINDOW 

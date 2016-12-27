@@ -226,7 +226,7 @@ $(document).ready(function () {
                 template: function (e) {debugger
                     return e.rgeo__cod;
                 }}, 
-            {field: "ter__nit", title: "Cedula",  hidden:false,editor: filtroestado,
+            {field: "ter__nit", title: "NIT",  hidden:false,editor: filtroestado,
                 template: function (e) {debugger
                     return e.ter__nit;
                 }},   
@@ -338,9 +338,9 @@ function changImgFunc(results) {debugger
 
     for (var i = 0; i < results.length; i++) {
         if (document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod)){
-        if(results[i].sre__est==1){                            
+        if(results[i].sre__est==0){                            
      document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_check_sup");
-     document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("estado", "on");
+    
         }else
         {}}
 }

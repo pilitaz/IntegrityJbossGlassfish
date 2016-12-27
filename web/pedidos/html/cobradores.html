@@ -33,6 +33,47 @@ and open the template in the editor.
 
     </head>
     <body>
+                           <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
+                    <tr data-uid="#: uid #"> 
+            
+                    <td>
+                    <span class="title" id ="#: cbr__cod #">#: cbr__cod # </span>
+                    </td>                    
+                    <td>
+                    <span class="title" id ="#: ter__nit #">#: ter__nit # </span>
+                    </td>
+                    <td>
+                    <a  class='k-grid-check'><span title='check' id = "spanproceso#: cbr__cod #" class='k-sprite po_check_disabled'></span></a>
+                    </td>
+                    <td>
+                    <a  class='k-grid-edit'><span title='' id = "spanproceso#: ter__nit #" class='k-sprite po_editoff'></span></a>
+                    <a  class='k-grid-deletae'><span title='' id = "spantarea#: ter__nit #" class='k-sprite po_cerrar'></span></a>
+                    </td>
+            
+                    </tr>
+        </script>
+        <script id="altRowTemplateCmp" type="text/x-kendo-tmpl">
+                    <tr class="k-alt" data-uid="#: uid #">
+                    
+         
+                    <td>
+                    <span class="title" id ="#: cbr__cod #">#: cbr__cod # </span>
+                    </td>                    
+                    <td>
+                    <span class="title" id ="#: ter__nit #">#: ter__nit # </span>
+                    </td>
+                    <td>
+                    <a  class='k-grid-check'><span title='check' id = "spanproceso#: cbr__cod #" class='k-sprite po_check_disabled'></span></a>
+                    </td>
+                    <td>
+                    <a  class='k-grid-edit'><span title='' id = "spanproceso#: ter__nit #" class='k-sprite po_editoff'></span></a>
+                    <a  class='k-grid-deletae'><span title='' id = "spantarea#: ter__nit #" class='k-sprite po_cerrar'></span></a>
+                    </td>
+            
+                    </td>
+                    </tr>
+    
+        </script>
         <div id="window1"></div>
         <script type="text/x-kendo-template" id="windowTemplate">
 
@@ -47,7 +88,7 @@ and open the template in the editor.
                     
                     <table style="height: 50px; vertical-align: top">
                         <td style="width: 50px;height: 50px"><a class="k-grid"  aling="center"><span class="k-sprite po_bullet1"></span></a></td>
-                        <td style="width: 20%;height: 50px;" ><h4 id = "subtitulo" class="subTitulo">Cobradores</h4> </td>
+                        <td style="width: 20%;height: 50px;" ><h4 id = "subtitulo" class="subTitulo">Cobradores </h4> </td>
                         <td style="width: 80%; height: 50px; vertical-align: middle" class="navbar" > 
                             
                             
@@ -59,7 +100,7 @@ and open the template in the editor.
                             <div class="collapse navbar-collapse" id="myNavbar" style="text-align: left">
                                 <ul class="nav navbar-nav">    
                                     
-                                    <li> &nbsp;Buscar Por &nbsp;<input id="filtro" aling="center"/></li>
+                                    <li> &nbsp;Nit cobrador &nbsp;<input id="filtro" aling="center"/></li>
                                     
                                     
                                 </ul>

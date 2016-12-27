@@ -491,6 +491,7 @@ function cudTerritorio() {
           "trr__cod":0,
           "trr__nom":"",
           "rgeo__cod":0,
+          "rgeo__nom":"",
           "trr__est":0
          }
       ]
@@ -641,3 +642,171 @@ function sirAnulaPedido() {
     };
     
 };
+///////////////////////////////////////////////////////////////
+function cudAnulaPedido() {
+   var urlSir = ipServicios + baseComercial +"SICUDgpd_anu";
+    var json = {  
+   "dsSICUDgpd_anu":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "eegpd_anu":[  
+         {  
+          "anu__cod":0,
+          "anu__des":"",
+          "gpd__est":0
+         }
+      ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///////////////////////////////////////////////////////////////
+function sirCobradores() {
+   var urlSir = ipServicios + baseComercial +"SIRgpd_cbr";
+    var json = {  
+   "dsSIRgpd_cbr":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "SIRgpd_cbr":[  
+         {  
+          "piicbr__cod":0,
+          "picter__nit":"*"
+         }
+      ]      
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///////////////////////////////////////////////////////////////
+function cudCobradores() {
+   var urlSir = ipServicios + baseComercial +"SICUDgpd_cbr";
+    var json = {  
+   "dsSICUDgpd_cbr":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "eegpd_cbr":[  
+         {  
+          "cbr__cod":0,
+          "ter__nit":"",
+          "cbr__est":0
+         }
+      ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///////////////////////////////////////////////////////////////
+function sirPrioridades() {
+   var urlSir = ipServicios + baseComercial +"SIRgpd_pri";
+    var json = {  
+   "dsSIRgpd_pri":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "SIRgpd_pri":[  
+         {  
+          "piipri__cod":0,
+          "picpri__des":"*"
+         }
+      ]      
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+
+

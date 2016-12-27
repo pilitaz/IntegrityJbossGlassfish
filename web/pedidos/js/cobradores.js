@@ -75,15 +75,15 @@ $(document).ready(function() {
  */ 
 $(document).ready(function () {                             
     var windowTemplate = kendo.template($("#windowTemplate").html());
-    var  consultar = new sirAnulaPedido();
+    var  consultar = new sirCobradores();
     var  datajson = consultar.getjson();
     var  urlService = consultar.getUrlSir();
                         
-    var  actualizar = new cudTerritorios();
+    var  actualizar = new cudCobradores();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
 
-    var mapCud = "eegpd_anu";
+    var mapCud = "eegpd_cbr";
     dataSource = new kendo.data.DataSource({
         transport: {
             read: {
@@ -116,40 +116,27 @@ $(document).ready(function () {
                     return JSON.stringify(datajson);
                 }
                 if (operation === "update") {debugger
-                    var cedula = $("#cedula").data("kendoDropDownList").text();
-                     var region = $("#region").data("kendoDropDownList").text();
-                     var x=0;
-                    if (options.sre__est===true){x=1;}
-                    else{x=0;}
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod=region;  
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod=options.sre__cod; 
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__est=x; 
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__nit=cedula; 
+                   actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__cod=options.cbr__cod;   
+                   actjson.dsSICUDgpd_cbr.eegpd_cbr[0].ter__nit=options.ter__nit;  
+                   actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__est=parseInt(options.cbr__est);
                     return JSON.stringify(actjson);
                                         
                                         
                 }
                 if (operation === "create") {debugger
-                     var cedula = $("#cedula").data("kendoDropDownList").text();
-                     var region = $("#region").data("kendoDropDownList").text();
-                     var x=0;
-                    if (options.sre__est===true){x=1;}
-                    else{x=0;}
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod=region;  
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod=options.sre__cod; 
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__est=x; 
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__nit=cedula; 
+                     
+                    actjson.dsSICUDgpd_cbr.eegpd_cbr[0].ter__nit=options.ter__nit;  
+                    actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__est=parseInt(options.cbr__est);
+ 
                     return JSON.stringify(actjson);          
                     $('#grid').data('kendoGrid').refresh();
                     $('#grid').data('kendoGrid').dataSource.read();
                     $('#grid').data('kendoGrid').refresh();                                     
                 }
                 if (operation === "destroy") {debugger
-                         
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod=options.rgeo__cod;  
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod=options.sre__cod; 
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__est=options.sre__est; 
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__nit=options.ter__nit; 
+                   actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__cod=options.cbr__cod;       
+                   actjson.dsSICUDgpd_cbr.eegpd_cbr[0].ter__nit=options.ter__nit;  
+                   actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__est=parseInt(options.cbr__est); 
                     
                     return JSON.stringify(actjson);
                                         
@@ -175,10 +162,11 @@ $(document).ready(function () {
                     }
                 }},
             model: {
-                id: "anu__cod",
+                id: "cbr__cod",
                 fields: {
-                    anu__cod:    {editable: true, nullable: false},
-                    anu__des:    {editable: true, nullable: false},          
+                    cbr__cod:    {editable: false, nullable: false},
+                    ter__nit:    {editable: true, nullable: false},   
+                    cbr__est:    {editable: true, nullable: false}
                 }
             }
         }
@@ -215,12 +203,23 @@ $(document).ready(function () {
         },
         //navigatable: true,
         columns: [ 
-            {field: "anu__cod", title: "Cod Anulacion",  hidden:false},  
-            {field: "anu__des", title: "Descripcion Anulacion",  hidden:false},
+            {field: "cbr__cod", title: "Cod Cobrador",  hidden:false},  
+            {field: "ter__nit", title: "NIT",  hidden:false},
+             {
+                field: "cbr__est",
+                title: "Estado",
+                template: "<a class='k-grid-check'><span class='k-sprite po_check_disabled'></span></a>",
+                width: "80px"
+            },
             {command: [{name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "90px"}],
         editable: "popup",
-                            
+        rowTemplate: kendo.template($("#rowTemplateCmp").html()),
+        altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
+        dataBound: function () {
+            var results = dataSource.data();
+            changImgFunc(results);
+        },                         
         cancel: function(e) {                                                                                   
             e._defaultPrevented= true;
             $('#grid').data('kendoGrid').refresh();                                             
@@ -232,7 +231,7 @@ $(document).ready(function () {
     $("#filtro").kendoAutoComplete({ 
         dataTextField: "ter__nit",  
         dataValueField: "ter__nit",
-        placeholder: "Cedula...",  
+        placeholder: "Cobrador...",  
         dataSource: dataSource,                        
         filter: "startswith"                    
     });
@@ -256,7 +255,7 @@ $(document).ready(function () {
         actions[1].action = function () {
             bandAlert = 0;
         };
-        createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.anu__des + " ---?", "400px", "200px", true, true, actions);
+        createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.ter__nit + " ---?", "400px", "200px", true, true, actions);
 
     } catch (e) {
         alert(e);
@@ -306,4 +305,14 @@ $(document).ready(function () {
 });
                     
                     
+ function changImgFunc(results) {debugger
 
+    for (var i = 0; i < results.length; i++) {
+        if (document.getElementById("spanproceso"+results[i].cbr__cod)){
+        if(results[i].cbr__est===0){                            
+     document.getElementById("spanproceso"+results[i].cbr__cod).setAttribute("class", "k-sprite po_check_sup");
+    
+        }else
+        {}}
+}
+ }

@@ -79,7 +79,7 @@ $(document).ready(function () {
     var  datajson = consultar.getjson();
     var  urlService = consultar.getUrlSir();
                         
-    var  actualizar = new cudTerritorios();
+    var  actualizar = new cudAnulaPedido();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
 
@@ -115,30 +115,18 @@ $(document).ready(function () {
                 if (operation === "read") {debugger
                     return JSON.stringify(datajson);
                 }
-                if (operation === "update") {debugger
-                    var cedula = $("#cedula").data("kendoDropDownList").text();
-                     var region = $("#region").data("kendoDropDownList").text();
-                     var x=0;
-                    if (options.sre__est===true){x=1;}
-                    else{x=0;}
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod=region;  
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod=options.sre__cod; 
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__est=x; 
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__nit=cedula; 
+                if (operation === "update") {
+                    
+                   actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__cod=options.anu__cod;  
+                   actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__des=options.anu__des;
+                   actjson.dsSICUDgpd_anu.eegpd_anu[0].gpd__est=options.gpd__est;     
                     return JSON.stringify(actjson);
                                         
                                         
                 }
                 if (operation === "create") {debugger
-                     var cedula = $("#cedula").data("kendoDropDownList").text();
-                     var region = $("#region").data("kendoDropDownList").text();
-                     var x=0;
-                    if (options.sre__est===true){x=1;}
-                    else{x=0;}
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod=region;  
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod=options.sre__cod; 
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__est=x; 
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__nit=cedula; 
+                   actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__des=options.anu__des;
+                   actjson.dsSICUDgpd_anu.eegpd_anu[0].gpd__est=options.gpd__est; 
                     return JSON.stringify(actjson);          
                     $('#grid').data('kendoGrid').refresh();
                     $('#grid').data('kendoGrid').dataSource.read();
@@ -146,10 +134,9 @@ $(document).ready(function () {
                 }
                 if (operation === "destroy") {debugger
                          
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod=options.rgeo__cod;  
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod=options.sre__cod; 
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__est=options.sre__est; 
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__nit=options.ter__nit; 
+                   actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__cod=options.anu__cod;  
+                   actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__des=options.anu__des;
+                   actjson.dsSICUDgpd_anu.eegpd_anu[0].gpd__est=options.gpd__est;  
                     
                     return JSON.stringify(actjson);
                                         
@@ -177,7 +164,7 @@ $(document).ready(function () {
             model: {
                 id: "anu__cod",
                 fields: {
-                    anu__cod:    {editable: true, nullable: false},
+                    anu__cod:    {editable: false, nullable: false},
                     anu__des:    {editable: true, nullable: false},          
                 }
             }
@@ -217,10 +204,20 @@ $(document).ready(function () {
         columns: [ 
             {field: "anu__cod", title: "Cod Anulacion",  hidden:false},  
             {field: "anu__des", title: "Descripcion Anulacion",  hidden:false},
+            {
+                field: "gpd__est",
+                title: "Estado",
+                template: "<a class='k-grid-check'><span class='k-sprite po_check_disabled'></span></a>",
+                width: "80px"},
             {command: [{name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "90px"}],
         editable: "popup",
-                            
+        rowTemplate: kendo.template($("#rowTemplateCmp").html()),
+        altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
+        dataBound: function () {
+            var results = dataSource.data();
+            changImgFunc(results);
+        },                                          
         cancel: function(e) {                                                                                   
             e._defaultPrevented= true;
             $('#grid').data('kendoGrid').refresh();                                             
@@ -265,45 +262,19 @@ $(document).ready(function () {
     }
 }                   
                         
- function filtroestado(container, options) {debugger
-
-    var estados = [
-        {text: "1010161021", valor: "1"},
-        {text: "1032381122", valor: "2"},
-        {text: "79563068", valor: "3"},
-        {text: "77189658", valor: "4"},
-        {text: "444444221", valor: "5"},
-        {text: "52960858", valor: "6"},
-        {text: "52185067", valor: "7"}  
-    ];
-    $('<input id="cedula" required name="' + options.field + '"/>')
-            .appendTo(container)
-            .kendoDropDownList({
-                dataTextField: "text",
-                dataValueField: "valor",
-                dataSource: estados
-            });
-}                       
-
-                        
- function regionCod(container, options) {
-
-    var estados = [
-        {text: "101001", valor: "1"},
-        {text: "157001", valor: "2"},
-
-    ];
-    $('<input id="region" required name="' + options.field + '"/>'+options.model.rgeo__cod)
-            .appendTo(container)
-          
-            .kendoDropDownList({
-                dataTextField: "text",
-                dataValueField: "valor",               
-                dataSource: estados
-            });
-               
-}      
+   
 });
-                    
+ 
+  function changImgFunc(results) {debugger
+
+    for (var i = 0; i < results.length; i++) {
+        if (document.getElementById("spanproceso"+results[i].anu__cod+results[i].anu__des)){
+        if(results[i].gpd__est===1){                            
+     document.getElementById("spanproceso"+results[i].anu__cod+results[i].anu__des).setAttribute("class", "k-sprite po_check_sup");
+    
+        }else
+        {}}
+}
+ }
                     
 
