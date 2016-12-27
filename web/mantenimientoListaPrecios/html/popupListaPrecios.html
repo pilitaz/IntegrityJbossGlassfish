@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Item Factura</title>
+        <title>Item Lista</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">       
         <script src="../../scripts/jquery-2.2.0.min.js" type="text/javascript"></script>
@@ -17,31 +17,48 @@ and open the template in the editor.
         <script src="../../scripts/kendo.culture.es-CO.min.js" type="text/javascript"></script>
         <script src="../../scripts/LibreriaIntegrity.js" type="text/javascript"></script>
         <script src="../../js/servicios.js" type="text/javascript"></script>
-        <script src="../js/popupArticuloLista.js" type="text/javascript"></script>
+        <script src="../js/popupListaPrecios.js" type="text/javascript"></script>
         <link href="../../css/kendo.common.min.css" rel="stylesheet" type="text/css"/>                        
         <link href="../../css/kendo.metro.min.css" rel="stylesheet" type="text/css"/>
         <link href="../../css/kendo.metro.mobile.min.css" rel="stylesheet" type="text/css"/>        
         <link href="../../css/cssSpriteIntegrity.css" rel="stylesheet" type="text/css"/>
         <link href="../../css/integrity.css" rel="stylesheet" type="text/css"/>        
-        <link href="../css/popupArticuloLista.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/popupListaPrecios.css" rel="stylesheet" type="text/css"/>
+        <script src="../js/variablesListaPrecios.js" type="text/javascript"></script>
     </head>
     <body>
         <br>
         <table style="width: 100%;">
             <tr>
                 <td class="tdIzquierdo">
-                    <label class="letraParrafo">Còdigo de grupo:</label>
+                    <label class="letraParrafo">Clase Artículo:</label>
                 </td>
                 <td class="tdDerecho">
-                    <input id="ipCodigoGrupo" style="width: 100%" required/>
+                    <input id="idClaseArticulo"  style=" width: 100%" required/>
                 </td>
             </tr>            
             <tr>
                 <td class="tdIzquierdo">
-                    <label class="letraParrafo">Articulo</label>
+                    <label class="letraParrafo">Artículo</label>
                 </td>
                 <td class="tdDerecho">
-                    <input id="idArticulo" style="width: 100%"/>
+                    <input id="idArticulo"  style="width: 100%"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdIzquierdo">
+                    <label class="letraParrafo">Precio</label>
+                </td>
+                <td class="tdDerecho">
+                    <input id="idPrecio"   style="width: 100%"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdIzquierdo">
+                    <label class="letraParrafo">Descripción</label>
+                </td>
+                <td class="tdDerecho">
+                    <input id="idDescripcion" class="k-textbox"  style="width: 100%" required/>
                 </td>
             </tr>
             <tr>
@@ -49,36 +66,13 @@ and open the template in the editor.
                     <label class="letraParrafo">Presentación</label>
                 </td>
                 <td class="tdDerecho">
-                    <input id="ipPresentacion" style="width: 100%" required/>
+                    <input id="idPresentacion"   style="width: 100%" required/>
                 </td>
             </tr>
-            <tr>
-                <td class="tdIzquierdo">
-                    <label class="letraParrafo">Valor unitario</label>
-                </td>
-                <td class="tdDerecho">
-                    <input id="idValorUnitario" style="width: 100%" required/>
-                </td>
-            </tr>
-            <tr>
-                <td class="tdIzquierdo">
-                    <label class="letraParrafo">Descuento</label>
-                </td>
-                <td class="tdDerecho">
-                    <input id="idDescuento" style="width: 100%" required/>
-                </td>
-            </tr>
-            <tr>
-                <td class="tdIzquierdo">
-                    <label class="letraParrafo">Descuento máxímo</label>
-                </td>
-                <td class="tdDerecho">
-                    <input id="idDescuento" style="width: 100%" required/>
-                </td>
-            </tr>
+            
             <tr>
                 <td class="tdBotones" colspan="2" >
-                    <button id="btAgregar" class="k-primary" onclick="agregarArticulo()" >Agregar</button>
+                    <button id="btAgregar" class="k-primary" onclick="agregarPrecio()" >Agregar</button>
                     <button id="btCancelar" class="k-primary" onclick="btnCancelar()" >Cancelar</button>
                 </td>                
             </tr>

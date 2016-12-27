@@ -42,49 +42,51 @@ and open the template in the editor.
         </div>
         <script id="rowTemplateListaPrecios" type="text/x-kendo-tmpl">
             <tr data-uid="#: uid #"> 
-                <td>
-                    <span class="title">#: lis__des #</span>
-                </td>
-                <td>
-                    <span class="title">#: lis__fin #</span>
-                </td> 
-        <td>
-                    <span class="title">#: lis__ffi #</span>
-                </td>
-                <td>
-                    <span class="title">#: mnd__cla #</span>
-                </td>                <td>
-                     <a  class='k-grid-aprobar'><span id = "aprobar#: lis__num#" class='k-sprite po_check' onclick="aprobar()" ></span></a>
-                     <a  class='k-grid-editar'><span id = "editar#: lis__num#" class='k-sprite po_editon'></span></a>
-                     <a  class='k-grid-copy'><span id = "copy#: lis__num#" class='k-sprite po_copy'></span></a>
-                     <a  class='k-grid-destroyed'><span id = "destroyed#: lis__num#" class='k-sprite po_cerrar'></span></a>
-                </td>                
+            <td>
+            <span class="title">#: lis__des #</span>
+            </td>
+            <td>
+            <span class="title">#: lis__fin #</span>
+            </td> 
+            <td>
+            <span class="title">#: lis__ffi #</span>
+            </td>
+            <td>
+            <span class="title">#: mnd__cla #</span>
+            </td>                <td>
+            <a  class='k-grid-aprobar'><span id = "aprobar#: lis__num#" class='k-sprite po_check' onclick="aprobar()" ></span></a>
+            <a  class='k-grid-editar'><span id = "editar#: lis__num#" class='k-sprite po_editon'></span></a>
+            <a  class='k-grid-copy'><span id = "copy#: lis__num#" class='k-sprite po_copy'></span></a>
+            <a  class='k-grid-destroyed'><span id = "destroyed#: lis__num#" class='k-sprite po_cerrar'></span></a>
+            </td>                
             </tr>
         </script>
         <script id="altRowTemplateListaPrecios" type="text/x-kendo-tmpl">
             <tr class="k-alt" data-uid="#: uid #">
-                <td>
-                    <span class="title">#: lis__des #</span>
-                </td>
-                <td>
-                    <span class="title">#: lis__fin #</span>
-                </td>
-                <td>
-                    <span class="title">#: lis__ffi #</span>
-                </td>
-                <td>
-                    <span class="title">#: mnd__cla #</span>
-                </td>
-                <td>
-                     <a  class='k-grid-aprobar'><span id = "aprobar#: lis__num#" class='k-sprite po_check' onclick="aprobar()" ></span></a>
-                     <a  class='k-grid-editar'><span id = "editar#: lis__num#" class='k-sprite po_editon'></span></a>
-                     <a  class='k-grid-copy'><span id = "copy#: lis__num#" class='k-sprite po_copy'></span></a>
-                     <a  class='k-grid-destroyed'><span id = "destroyed#: lis__num#" class='k-sprite po_cerrar'></span></a>
-                </td>
+            <td>
+            <span class="title">#: lis__des #</span>
+            </td>
+            <td>
+            <span class="title">#: lis__fin #</span>
+            </td>
+            <td>
+            <span class="title">#: lis__ffi #</span>
+            </td>
+            <td>
+            <span class="title">#: mnd__cla #</span>
+            </td>
+            <td>
+            <a  class='k-grid-aprobar'><span id = "aprobar#: lis__num#" class='k-sprite po_check' onclick="aprobar()" ></span></a>
+            <a  class='k-grid-editar'><span id = "editar#: lis__num#" class='k-sprite po_editon'></span></a>
+            <a  class='k-grid-copy'><span id = "copy#: lis__num#" class='k-sprite po_copy'></span></a>
+            <a  class='k-grid-destroyed'><span id = "destroyed#: lis__num#" class='k-sprite po_cerrar'></span></a>
+            </td>
             </tr>
         </script>
-        <div class="container-fluid">            
-            <div id="grid"></div>        
-        </div>            
+        <div id="outerWrapper">
+            <div >            
+                <div id="grid"></div>        
+            </div>
+        </div>
     </body>
 </html>
