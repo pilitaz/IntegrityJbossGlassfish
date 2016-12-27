@@ -71,7 +71,7 @@ function gridDetallePedido(){
         data : JSON.parse(sessionStorage.getItem("regPedidos")).eegpd_ped_det,
     });
     
-    debugger
+    
     //var dataGridDetalle = JSON.parse(sessionStorage.getItem("regPedidos")).eegpd_ped_det;
     
     var grid = $("#gridDetallePedido").kendoGrid({

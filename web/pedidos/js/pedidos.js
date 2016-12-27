@@ -17,7 +17,7 @@ $(window).resize(function () {
 });
 
 $(document).ready(function () {
-    debugger
+    
     sessionStorage.setItem("usuario","alex_800001541");
 sessionStorage.setItem("ipPrivada","172.21.24.66");
 sessionStorage.setItem("ipPublica","190.144.16.114");
