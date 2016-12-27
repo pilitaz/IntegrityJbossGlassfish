@@ -491,10 +491,9 @@ function sirConsultaEstablecimiento() {
                                             "remote_ip":sessionStorage.getItem("ipPublica")
                                     }
                             ],
-                            "eeSIRgpd_cli_suc" : [{
-                                            "picsuc_cod" : "00101",
-                                            "piccom_con" : "*",
-                                            "picter_nit" : "*"
+                            "SIRgpd_cli_suc" : [{                                            
+                                            "piccom__con" : "*",
+                                            "picter__nit" : "*"
                                     }
                             ]
 
