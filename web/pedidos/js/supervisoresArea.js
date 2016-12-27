@@ -170,7 +170,10 @@ $(document).ready(function () {
                         return e[key1][mapCud];
                     }else
                     {
-                    alertDialogs("Error"+e[key1].eeEstados[0].Estado);    
+                    alertDialogs("Error"+e[key1].eeEstados[0].Estado); 
+                    $('#grid').data('kendoGrid').refresh();
+                    $('#grid').data('kendoGrid').dataSource.read();
+                    $('#grid').data('kendoGrid').refresh();
                     }
                 }},
             model: {
@@ -220,7 +223,7 @@ $(document).ready(function () {
         columns: [
             {field: "sar__cod", title: "Codigo",  hidden:false},
             {field: "pai__cod", title: "Codigo Pais"},  
-            {field: "ter__nit", title: "Cedula",  hidden:false,editor: filtroestado,
+            {field: "ter__nit", title: "NIT",  hidden:false,editor: filtroestado,
                 template: function (e) {debugger
                     return e.ter__nit;
                 }},   
@@ -329,7 +332,7 @@ function changImgFunc(results) {debugger
 
     for (var i = 0; i < results.length; i++) {
         if (document.getElementById("spanproceso"+results[i].sar__cod+results[i].ter__nit+results[i].ageo__cod)){
-        if(results[i].sar__est==1){                            
+        if(results[i].sar__est==0){                            
      document.getElementById("spanproceso"+results[i].sar__cod+results[i].ter__nit+results[i].ageo__cod).setAttribute("class", "k-sprite po_check_sup");
      document.getElementById("spanproceso"+results[i].sar__cod+results[i].ter__nit+results[i].ageo__cod).setAttribute("estado", "on");
         }else

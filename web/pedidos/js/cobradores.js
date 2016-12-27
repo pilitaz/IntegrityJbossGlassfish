@@ -165,7 +165,7 @@ $(document).ready(function () {
                 id: "cbr__cod",
                 fields: {
                     cbr__cod:    {editable: false, nullable: false},
-                    ter__nit:    {editable: true, nullable: false},   
+                    ter__nit:    {editable: false, nullable: false},   
                     cbr__est:    {editable: true, nullable: false}
                 }
             }
