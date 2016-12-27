@@ -6,10 +6,10 @@
 
 $(document).ready(function () {    
     $("#ipfechaFin").kendoDatePicker({
-        open: function () {
-            var calendar = this.dateView.calendar;
-            calendar.wrapper.width(this.wrapper.width() - 6);
-        },
+//        open: function () {
+//            var calendar = this.dateView.calendar;
+//            calendar.wrapper.width(this.wrapper.width() - 6);
+//        },
         culture: "es-CO",
         format: "yyyy/MM/dd",
         max: new Date(sessionStorage.getItem("fechaSistema")),
