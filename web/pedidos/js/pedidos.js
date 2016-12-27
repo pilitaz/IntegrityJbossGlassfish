@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+
+
 /**
  * Funcion para ajustar el alto de la grilla 
  */
@@ -15,6 +17,13 @@ $(window).resize(function () {
 });
 
 $(document).ready(function () {
+    
+    sessionStorage.setItem("usuario","alex_800001541");
+sessionStorage.setItem("ipPrivada","172.21.24.66");
+sessionStorage.setItem("ipPublica","190.144.16.114");
+sessionStorage.setItem("fechaSistema","2016/12/27");
+sessionStorage.setItem("picfiid","41136226684744032534");
+sessionStorage.setItem("companyNIT","800001541");
     grid();
 });
 
@@ -190,10 +199,13 @@ function clickEliminar(e) {
 }
 
 function popUpPedidoCU() {
+    
+    sessionStorage.removeItem("regPedidos");
+    
     var widthPopUp = $("body").width();
     widthPopUp = widthPopUp * (80 / 100);
     var heightPopUp = $("body").height();
-    heightPopUp = heightPopUp * (50 / 100);
+    heightPopUp = heightPopUp * (60 / 100);
 
     $("body").append("<div id='windowPedidoCabecera'></div>");
     var myWindow = $("#windowPedidoCabecera");

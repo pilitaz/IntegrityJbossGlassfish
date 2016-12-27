@@ -808,5 +808,128 @@ function sirPrioridades() {
     };
     
 };
-
-
+///////////////////////////////////////////////////////////////
+function cudPrioridades() {
+   var urlSir = ipServicios + baseComercial +"SIRgpd_pri";
+    var json = {  
+   "dsSIRgpd_pri":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "SIRgpd_pri":[  
+         {  
+          "piipri__cod":0,
+          "picpri__des":"*"
+         }
+      ]      
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///////////////////////////////////////////////////////////////
+function cudPrioridades() {
+   var urlSir = ipServicios + baseComercial +"SIRgpd_pri";
+    var json = {  
+   "dsSIRgpd_pri":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "SIRgpd_pri":[  
+         {  
+          "piipri__cod":0,
+          "picpri__des":"*"
+         }
+      ]      
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///////////////////////////////////////////////////////////////
+function sirRegionGeografica() {
+   var urlSir = ipServicios + baseComercial +"SIRgpr_rgeo";
+   var json =
+            { 
+                "dsSIRgpr_rgeo":{ 
+                    "eeDatos":[ 
+                { 
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+                    
+                }
+            ], 
+            "eeSIRgpr_rgeo": [
+                {
+                    "piirgeo__cod": 0,
+                    "picusuario": "*"
+                }
+            ]
+        }
+    };
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};

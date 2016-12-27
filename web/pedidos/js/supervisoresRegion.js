@@ -315,22 +315,51 @@ $(document).ready(function () {
 
                         
  function regionCod(container, options) {
+        var consultar = new sirRegionGeografica();
+        var datajson = consultar.getjson();
+        var urlService = consultar.getUrlSir();
+        var mapCud1 = "eegpr_rgeo";
+        $('<input  id = "region" required name="' + options.field + '"/>')
+                .appendTo(container)
+                .kendoDropDownList({
+            dataTextField: "rgeo__cod",
+            dataValueField: "rgeo__cod",
+            dataSource: {
+                transport: {
+                    read: {
+                        url: urlService,
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation === "read") {
+                            return JSON.stringify(datajson);
+                        }
+                    }
+                },
+                schema: {
+                    data: function (e) {
+                        var key1 = Object.keys(e)[0];
+                        if (e[key1].eeEstados[0].Estado === "OK") {
+                            return e[key1][mapCud1];
+                        } else {
+                            alertDialogs("Error Con Servicio Regiones"+e[key1].eeEstados[0].Estado);
+                        }
+                    },
+                    model: {
+                        id: "rgeo__cod",
+                        fields: {
+                            rgeo__cod: {editable: false, nullable: false},
+                        }
+                    }
+                }
+            }
 
-    var estados = [
-        {text: "101001", valor: 1},
-        {text: "157001", valor: 2},
-         {text: "257001", valor: 3},
-
-    ];
-    $('<input id="region" required name="' + options.field + '"/>'+options.model.rgeo__cod)
-            .appendTo(container)         
-            .kendoDropDownList({
-                dataTextField: "text",
-                dataValueField: "text",               
-                dataSource: estados
-            });
-               
-}      
+        });
+ }
+       
+    
 });
                     
                     
