@@ -529,10 +529,11 @@
 	background: url(../images/SpriteIntegrity.png) -8px -958px;
 }
 /* ——  */
-.po_check_green{
+.po_checkAct{
 	width: 34px;
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -8px -958px;	
+        cursor:pointer
 }
 
 /* ——  */
@@ -557,19 +558,19 @@
 
 
 /* ——  */
-.po_check_gray{
+.po_checkCreate{
 	width: 34px;
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -58px -958px;
 	cursor:pointer
 }
-.po_check_gray:hover {
+.po_checkCreate:hover {
 	width: 34px;
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -8px -958px;
 	cursor:pointer
 }
-.po_check_gray:active {
+.po_checkCreate:active {
 	width: 34px;
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -58px -958px;
@@ -595,6 +596,15 @@
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -8px -1008px;
 }
+/* ——  */
+
+.po_checkBloq{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -1058px;
+	
+}
+
 /* ——  */
 
 .po_inactivo{

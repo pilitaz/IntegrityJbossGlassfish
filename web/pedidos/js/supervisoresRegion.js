@@ -240,7 +240,7 @@ $(document).ready(function () {
             {
                 field: "sre__est",
                 title: "Estado",
-                template: "<a class='k-grid-check'><span class='k-sprite po_check_gray'></span></a>",
+                template: "<a class='k-grid-check'><span class='k-sprite po_checkCreate'></span></a>",
                 width: "70px"
             },
             {command: [{name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
@@ -444,15 +444,15 @@ function changImgFunc(results) {debugger
     for (var i = 0; i < results.length; i++) {
         if (document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod)){
         if(results[i].sre__est==0){                            
-            document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite ");   
+            document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_checkAct");   
 
         }
         if(results[i].sre__est==99){     
-        document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_check_gray");
+        document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_checkCreate");
 
         }
         if(results[i].sre__est==1){     
-        document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_checkon");
+        document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_checkBloq");
 
         }
         }
