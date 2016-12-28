@@ -555,6 +555,7 @@
 	background: url(../images/SpriteIntegrity.png) -58px -958px;
 }
 
+
 /* ——  */
 
 .po_check_disabled{
@@ -564,6 +565,7 @@
 	cursor:pointer;
         pointer-events: none;            
 }
+
 
 /* ——  */
 
@@ -584,7 +586,25 @@
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -8px -1008px;
 }
+/* ——  */
 
+.po_inactivo{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -1058px;
+	cursor:pointer
+}
+.po_inactivo:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -958px;
+	cursor:pointer
+}
+.po_inactivo:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -1058px;
+}
 
 /**********************************************/
 /**********************************************/

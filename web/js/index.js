@@ -349,8 +349,7 @@ function inicio() {
 }
 
 function abreFuncion(servicio) {
-    tamanoFunciones();
-    debugger
+    tamanoFunciones();    
     document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
     $("#tdPerfil").fadeOut("slow");
     $('#divDerecho').width($(window).width());
