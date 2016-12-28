@@ -86,26 +86,23 @@ table{
                     }
                 }
   
+.cedula::-ms-clear {
+    display: none;
+}
 
 
-
+#bottn
+{
+    float:right;
+}
 #outerWrapper{
   background-color: #FFFFFF;
   position:relative;
   min-height:470px;
 }
-#grilla_usr{
-     height:250px;
-
-    /*width:550px;*/
-   
-    overflow: auto;
+#grid {
+  height:470px;
 }
-#bottn
-{
-    float:right;
-}
-
 
 
 .k-grid tr:hover {

@@ -7,6 +7,54 @@
  *  var url = sir.getUrlSir();
  *  var input = sir.getdataInputSir();
  */
+function sirConsultaCliente() {
+    var mapData = "eegfc_cli";
+    var urlSir = ipServicios + baseParameters + "SIRgfc_cli";
+    var json = 
+            {
+                    "dsgfc_cli" : {
+                            "eeDatos" : [{
+                                            "picusrcod": sessionStorage.getItem("usuario"),
+                                            "picfiid": sessionStorage.getItem("picfiid"), 
+                                    }
+                            ],
+                            "eetemp" : [{
+                                            "picter_raz" : "",
+                                            "picter_nit" : "",
+                                    }
+                            ]
+                    }
+            };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
+};
+/////////////////////////////////////////////////////////////////////
 function sirpedidos() {
    var urlSir = ipServicios + baseComercial +"SIRgpd_est";
     var json = {  
@@ -140,10 +188,10 @@ function cudCliente() {
    "dsSICUDgpd_cli_est":{  
       "eeDatos":[  
          {  
-            "picusrcod":sessionStorage.getItem("usuario"),
-            "picfiid":sessionStorage.getItem("picfiid"),
-            "local_ip":sessionStorage.getItem("ipPrivada"),
-            "remote_ip":sessionStorage.getItem("ipPublica")
+            "picusrcod":"reita_800001541",
+            "picfiid":"46563924305606215",
+            "local_ip":"172.21.24.105",
+            "remote_ip":"190.144.16.114"
          }
       ],
       "eegpd_cli_est":[  
@@ -810,9 +858,9 @@ function sirPrioridades() {
 };
 ///////////////////////////////////////////////////////////////
 function cudPrioridades() {
-   var urlSir = ipServicios + baseComercial +"SIRgpd_pri";
+   var urlSir = ipServicios + baseComercial +"SICUDgpd_pri";
     var json = {  
-   "dsSIRgpd_pri":{  
+   "dsSICUDgpd_pri":{  
       "eeDatos":[  
          {  
             "picusrcod":sessionStorage.getItem("usuario"),
@@ -821,12 +869,12 @@ function cudPrioridades() {
             "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
-      "SIRgpd_pri":[  
+      "eegpd_pri":[  
          {  
-          "piipri__cod":0,
-          "picpri__des":"*"
+          "pri__cod":0,
+          "pri__des":""
          }
-      ]      
+      ]
    }
 };
     
@@ -849,47 +897,7 @@ function cudPrioridades() {
     };
     
 };
-///////////////////////////////////////////////////////////////
-function cudPrioridades() {
-   var urlSir = ipServicios + baseComercial +"SIRgpd_pri";
-    var json = {  
-   "dsSIRgpd_pri":{  
-      "eeDatos":[  
-         {  
-            "picusrcod":sessionStorage.getItem("usuario"),
-            "picfiid":sessionStorage.getItem("picfiid"),
-            "local_ip":sessionStorage.getItem("ipPrivada"),
-            "remote_ip":sessionStorage.getItem("ipPublica")
-         }
-      ],
-      "SIRgpd_pri":[  
-         {  
-          "piipri__cod":0,
-          "picpri__des":"*"
-         }
-      ]      
-   }
-};
-    
-    this.setUrlSir = function (newname) {
-        if (newname) {
-            urlSir = newname;
-        }
-    };
-    this.getUrlSir = function () {
-        return urlSir;
-    };
-    
-    this.setjson = function (newname) {
-        if (newname) {
-            json = newname;
-        }
-    };
-    this.getjson = function () {
-        return json;
-    };
-    
-};
+
 ///////////////////////////////////////////////////////////////
 function sirRegionGeografica() {
    var urlSir = ipServicios + baseComercial +"SIRgpr_rgeo";
@@ -913,6 +921,91 @@ function sirRegionGeografica() {
             ]
         }
     };
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///////////////////////////////////////////////////////////////
+function cudRegionGeografica() {
+   var urlSir = ipServicios + baseComercial +"SIRgpr_rgeo";
+   var json =
+            { 
+                "dsSIRgpr_rgeo":{ 
+                    "eeDatos":[ 
+                { 
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+                    
+                }
+            ], 
+            "eeSIRgpr_rgeo": [
+                {
+                    "piirgeo__cod": 0,
+                    "picusuario": "*"
+                }
+            ]
+        }
+    };
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///////////////////////////////////////////////////////////////
+function sirBarrios() {
+   var urlSir = ipServicios + baseComercial +"SIRgpd_bar";
+   var json ={  
+   "dsSIRgpd_bar":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "SIRgpd_bar":[  
+         {  
+          "picciu__cod":"*",
+          "piibar__cod":0,
+          "picbar__dsc":"*"
+         }
+      ]      
+   }
+};
     
     this.setUrlSir = function (newname) {
         if (newname) {

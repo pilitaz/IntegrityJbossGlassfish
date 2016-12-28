@@ -75,15 +75,15 @@ $(document).ready(function() {
  */ 
 $(document).ready(function () {                             
     var windowTemplate = kendo.template($("#windowTemplate").html());
-    var  consultar = new sirCobradores();
+    var  consultar = new sirBarrios();
     var  datajson = consultar.getjson();
     var  urlService = consultar.getUrlSir();
                         
-    var  actualizar = new cudCobradores();
+    var  actualizar = new cudAnulaPedido();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
 
-    var mapCud = "eegpd_cbr";
+    var mapCud = "eegpd_bar";
     dataSource = new kendo.data.DataSource({
         transport: {
             read: {
@@ -115,28 +115,28 @@ $(document).ready(function () {
                 if (operation === "read") {debugger
                     return JSON.stringify(datajson);
                 }
-                if (operation === "update") {debugger
-                   actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__cod=options.cbr__cod;   
-                   actjson.dsSICUDgpd_cbr.eegpd_cbr[0].ter__nit=options.ter__nit;  
-                   actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__est=parseInt(options.cbr__est);
+                if (operation === "update") {
+                    
+                   //actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__cod=options.anu__cod;  
+                   //actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__des=options.anu__des;
+                   //actjson.dsSICUDgpd_anu.eegpd_anu[0].gpd__est=options.gpd__est;     
                     return JSON.stringify(actjson);
                                         
                                         
                 }
                 if (operation === "create") {debugger
-                     
-                    actjson.dsSICUDgpd_cbr.eegpd_cbr[0].ter__nit=options.ter__nit;  
-                    actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__est=parseInt(options.cbr__est);
- 
+                   actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__des=options.anu__des;
+                   actjson.dsSICUDgpd_anu.eegpd_anu[0].gpd__est=options.gpd__est; 
                     return JSON.stringify(actjson);          
                     $('#grid').data('kendoGrid').refresh();
                     $('#grid').data('kendoGrid').dataSource.read();
                     $('#grid').data('kendoGrid').refresh();                                     
                 }
                 if (operation === "destroy") {debugger
-                   actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__cod=options.cbr__cod;       
-                   actjson.dsSICUDgpd_cbr.eegpd_cbr[0].ter__nit=options.ter__nit;  
-                   actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__est=parseInt(options.cbr__est); 
+                         
+                   actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__cod=options.anu__cod;  
+                   actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__des=options.anu__des;
+                   actjson.dsSICUDgpd_anu.eegpd_anu[0].gpd__est=options.gpd__est;  
                     
                     return JSON.stringify(actjson);
                                         
@@ -156,23 +156,19 @@ $(document).ready(function () {
                 if(e[key1].eeEstados){
                     if (e[key1].eeEstados[0].Estado === "OK") {
                         return e[key1][mapCud];
-                        $('#grid').data('kendoGrid').refresh();
-                    $('#grid').data('kendoGrid').dataSource.read();
-                    $('#grid').data('kendoGrid').refresh();
                     }else
                     {
-                    alertDialogs("Error"+e[key1].eeEstados[0].Estado);
-                    $('#grid').data('kendoGrid').refresh();
-                    $('#grid').data('kendoGrid').dataSource.read();
-                    $('#grid').data('kendoGrid').refresh();
+                    alertDialogs("Error"+e[key1].eeEstados[0].Estado);    
                     }
                 }},
             model: {
-                id: "cbr__cod",
+                id: "bar__cod",
                 fields: {
-                    cbr__cod:    {editable: false, nullable: false},
-                    ter__nit:    {editable: true, nullable: false},   
-                    cbr__est:    {editable: true, nullable: false}
+                    ciu__cod:    {editable: true, nullable: false},
+                    bar__cod:    {editable: true, nullable: false},  
+                     bar__dsc:    {editable: true, nullable: false},   
+                      bar__str:    {editable: true, nullable: false},   
+                       bar__est:    {editable: true, nullable: false},   
                 }
             }
         }
@@ -194,12 +190,9 @@ $(document).ready(function () {
      *  
      *  
      */
-    var gridheigth = $("body").height();
-    gridheigth = gridheigth*0.12 + gridheigth;
     var grid1 = $("#grid").kendoGrid({
         dataSource: dataSource,
                             
-        height: gridheigth,
         sortable: true,
                            
         pageable: {
@@ -209,34 +202,24 @@ $(document).ready(function () {
         },
         //navigatable: true,
         columns: [ 
-            {field: "cbr__cod", title: "Cod Cobrador",  hidden:false},  
-            {field: "ter__nit", title: "NIT",  hidden:false,editor: filtroestado,
-                template: function (e) {debugger
-                    return e.ter__nit;
-                }}, 
-             {
-                field: "cbr__est",
+            {field: "ciu__cod", title: "Cod Ciudad",  hidden:false},  
+            {field: "bar__cod", title: "Cod Barrio",  hidden:false},
+            {field: "bar__dsc", title: "Descripcion Barrio",  hidden:false},
+            {field: "bar__str", title: "Estrato de Barrio",  hidden:false},
+            {
+                field: "bar__est",
                 title: "Estado",
                 template: "<a class='k-grid-check'><span class='k-sprite po_check_disabled'></span></a>",
-                width: "80px"
-            },
+                width: "80px"},
             {command: [{name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "90px"}],
         editable: "popup",
-        edit: function(e) {debugger
-    if (!e.model.isNew()) {
-      // Disable the editor of the "id" column when editing data items
-      $("#cedula")[0].value = e.model.ter__nit;
-     $("#cedula")[0].readOnly="true";
-     
-    }
-  } ,
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
         altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
         dataBound: function () {
             var results = dataSource.data();
             changImgFunc(results);
-        },                         
+        },                                          
         cancel: function(e) {                                                                                   
             e._defaultPrevented= true;
             $('#grid').data('kendoGrid').refresh();                                             
@@ -246,9 +229,9 @@ $(document).ready(function () {
     });
                
     $("#filtro").kendoAutoComplete({ 
-        dataTextField: "ter__nit",  
-        dataValueField: "ter__nit",
-        placeholder: "Cobrador...",  
+        dataTextField: "bar__dsc",  
+        dataValueField: "bar__dsc",
+        placeholder: "Barrio...",  
         dataSource: dataSource,                        
         filter: "startswith"                    
     });
@@ -272,7 +255,7 @@ $(document).ready(function () {
         actions[1].action = function () {
             bandAlert = 0;
         };
-        createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.ter__nit + " ---?", "400px", "200px", true, true, actions);
+        createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.bar__dsc + " ---?", "400px", "200px", true, true, actions);
 
     } catch (e) {
         alert(e);
@@ -281,102 +264,19 @@ $(document).ready(function () {
     }
 }                   
                         
- function filtroestado(container, options) {debugger
-
-     var obj = new sirConsultaCliente();
-    var objJson = obj.getjson();
-    var url = obj.getUrlSir();
-    var mapData = obj.getMapData();
-    $('<input id="cedula" required name=""/>')
-            .appendTo(container)
-            .kendoAutoComplete({
-        dataTextField: "ter__nit",
-        dataValueField: "ter__nit",        
-        placeholder: "Selecione un cliente...",
-        minLength: 6,
-        filter: "contains",
-        template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
-        //select: setInfoCliente,
-        dataSource: {
-            type: "json",
-            serverFiltering: true,
-            transport: {
-                read:{
-                    url: url,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    type: "POST"
-                },
-                parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
-                    try {
-                                          
-                        if (operation === 'read') {
-                            var key1 = Object.keys(objJson)[0];
-                            var key2 = Object.keys(objJson[key1])[1];
-                            objJson[key1][key2][0].picter_nit = $("#cedula").val();
-                            objJson[key1][key2][0].picter_raz = "";
-                            return JSON.stringify(objJson);
-                        } 
-                    } catch (e) {
-                        alertDialogs(e.message);
-                    }                                    
-                }
-            },
-            schema: {
-                data: function (e){                    
-                    var key1 = Object.keys(e)[0];
-                    if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
-                        return e[key1][mapData];
-                    }else if(e[key1].eeEstados[0].Estado==="ERROR: Patrón de Búsqueda insuficiente "){
-                        
-                    }else{
-                        alertDialogs(e[key1].eeEstados[0].Estado);
-                    }
-                },
-                model:{}
-            },
-            error: function (xhr, error) {
-                alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
-            },
-            change: function (e) {
-                //console.log("Change client");
-            },
-            requestStart: function (e) {
-                //console.log("Request Start servicio cliente");
-            }            
-        }
-    });
-}                       
-
-                        
- function regionCod(container, options) {
-
-    var estados = [
-        {text: "101001", valor: "1"},
-        {text: "157001", valor: "2"},
-
-    ];
-    $('<input id="region" required name="' + options.field + '"/>'+options.model.rgeo__cod)
-            .appendTo(container)
-          
-            .kendoDropDownList({
-                dataTextField: "text",
-                dataValueField: "valor",               
-                dataSource: estados
-            });
-               
-}      
+   
 });
-                    
-                    
- function changImgFunc(results) {debugger
+ 
+  function changImgFunc(results) {debugger
 
     for (var i = 0; i < results.length; i++) {
-        if (document.getElementById("spanproceso"+results[i].cbr__cod)){
-        if(results[i].cbr__est===0){                            
-     document.getElementById("spanproceso"+results[i].cbr__cod).setAttribute("class", "k-sprite po_check_sup");
+        if (document.getElementById("spanproceso"+results[i].bar__cod+results[i].bar__dsc)){
+        if(results[i].gpd__est===0){                            
+     document.getElementById("spanproceso"+results[i].bar__cod+results[i].bar__dsc).setAttribute("class", "k-sprite po_check_sup");
     
         }else
         {}}
 }
  }
+                    
+
