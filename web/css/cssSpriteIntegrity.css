@@ -1461,7 +1461,13 @@
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -408px -708px;
 }
-
+/* ——  */
+.check_off_d {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -758px;
+	
+}
 /* ——  */
 
 .pro_admin{

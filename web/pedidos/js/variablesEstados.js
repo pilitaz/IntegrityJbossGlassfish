@@ -7,6 +7,54 @@
  *  var url = sir.getUrlSir();
  *  var input = sir.getdataInputSir();
  */
+function sirConsultaCliente() {
+    var mapData = "eegfc_cli";
+    var urlSir = ipServicios + baseParameters + "SIRgfc_cli";
+    var json = 
+            {
+                    "dsgfc_cli" : {
+                            "eeDatos" : [{
+                                            "picusrcod": sessionStorage.getItem("usuario"),
+                                            "picfiid": sessionStorage.getItem("picfiid"), 
+                                    }
+                            ],
+                            "eetemp" : [{
+                                            "picter_raz" : "",
+                                            "picter_nit" : "",
+                                    }
+                            ]
+                    }
+            };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
+};
+/////////////////////////////////////////////////////////////////////
 function sirpedidos() {
    var urlSir = ipServicios + baseComercial +"SIRgpd_est";
     var json = {  

@@ -156,16 +156,22 @@ $(document).ready(function () {
                 if(e[key1].eeEstados){
                     if (e[key1].eeEstados[0].Estado === "OK") {
                         return e[key1][mapCud];
+                        $('#grid').data('kendoGrid').refresh();
+                    $('#grid').data('kendoGrid').dataSource.read();
+                    $('#grid').data('kendoGrid').refresh();
                     }else
                     {
-                    alertDialogs("Error"+e[key1].eeEstados[0].Estado);    
+                    alertDialogs("Error"+e[key1].eeEstados[0].Estado);
+                    $('#grid').data('kendoGrid').refresh();
+                    $('#grid').data('kendoGrid').dataSource.read();
+                    $('#grid').data('kendoGrid').refresh();
                     }
                 }},
             model: {
                 id: "cbr__cod",
                 fields: {
                     cbr__cod:    {editable: false, nullable: false},
-                    ter__nit:    {editable: false, nullable: false},   
+                    ter__nit:    {editable: true, nullable: false},   
                     cbr__est:    {editable: true, nullable: false}
                 }
             }
@@ -204,7 +210,10 @@ $(document).ready(function () {
         //navigatable: true,
         columns: [ 
             {field: "cbr__cod", title: "Cod Cobrador",  hidden:false},  
-            {field: "ter__nit", title: "NIT",  hidden:false},
+            {field: "ter__nit", title: "NIT",  hidden:false,editor: filtroestado,
+                template: function (e) {debugger
+                    return e.ter__nit;
+                }}, 
              {
                 field: "cbr__est",
                 title: "Estado",
@@ -214,6 +223,14 @@ $(document).ready(function () {
             {command: [{name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "90px"}],
         editable: "popup",
+        edit: function(e) {debugger
+    if (!e.model.isNew()) {
+      // Disable the editor of the "id" column when editing data items
+      $("#cedula")[0].value = e.model.ter__nit;
+     $("#cedula")[0].readOnly="true";
+     
+    }
+  } ,
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
         altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
         dataBound: function () {
@@ -266,22 +283,69 @@ $(document).ready(function () {
                         
  function filtroestado(container, options) {debugger
 
-    var estados = [
-        {text: "1010161021", valor: "1"},
-        {text: "1032381122", valor: "2"},
-        {text: "79563068", valor: "3"},
-        {text: "77189658", valor: "4"},
-        {text: "444444221", valor: "5"},
-        {text: "52960858", valor: "6"},
-        {text: "52185067", valor: "7"}  
-    ];
-    $('<input id="cedula" required name="' + options.field + '"/>')
+     var obj = new sirConsultaCliente();
+    var objJson = obj.getjson();
+    var url = obj.getUrlSir();
+    var mapData = obj.getMapData();
+    $('<input id="cedula" required name=""/>')
             .appendTo(container)
-            .kendoDropDownList({
-                dataTextField: "text",
-                dataValueField: "valor",
-                dataSource: estados
-            });
+            .kendoAutoComplete({
+        dataTextField: "ter__nit",
+        dataValueField: "ter__nit",        
+        placeholder: "Selecione un cliente...",
+        minLength: 6,
+        filter: "contains",
+        template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
+        //select: setInfoCliente,
+        dataSource: {
+            type: "json",
+            serverFiltering: true,
+            transport: {
+                read:{
+                    url: url,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
+                    try {
+                                          
+                        if (operation === 'read') {
+                            var key1 = Object.keys(objJson)[0];
+                            var key2 = Object.keys(objJson[key1])[1];
+                            objJson[key1][key2][0].picter_nit = $("#cedula").val();
+                            objJson[key1][key2][0].picter_raz = "";
+                            return JSON.stringify(objJson);
+                        } 
+                    } catch (e) {
+                        alertDialogs(e.message);
+                    }                                    
+                }
+            },
+            schema: {
+                data: function (e){                    
+                    var key1 = Object.keys(e)[0];
+                    if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                        return e[key1][mapData];
+                    }else if(e[key1].eeEstados[0].Estado==="ERROR: Patrón de Búsqueda insuficiente "){
+                        
+                    }else{
+                        alertDialogs(e[key1].eeEstados[0].Estado);
+                    }
+                },
+                model:{}
+            },
+            error: function (xhr, error) {
+                alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+            },
+            change: function (e) {
+                //console.log("Change client");
+            },
+            requestStart: function (e) {
+                //console.log("Request Start servicio cliente");
+            }            
+        }
+    });
 }                       
 
                         
