@@ -240,7 +240,7 @@ $(document).ready(function () {
             {
                 field: "sre__est",
                 title: "Estado",
-                template: "<a class='k-grid-check'><span class='k-sprite po_check_disabled'></span></a>",
+                template: "<a class='k-grid-check'><span class='k-sprite po_check_gray'></span></a>",
                 width: "70px"
             },
             {command: [{name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
@@ -444,29 +444,18 @@ function changImgFunc(results) {debugger
     for (var i = 0; i < results.length; i++) {
         if (document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod)){
         if(results[i].sre__est==0){                            
-            document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite check_off_d");   
+            document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite ");   
 
         }
         if(results[i].sre__est==99){     
-        document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_check_sup");
+        document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_check_gray");
+
+        }
+        if(results[i].sre__est==1){     
+        document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_checkon");
 
         }
         }
 }
-// 
-//    for (var i = 0; i < results.length; i++) {        
-//        if(results[i].adm===true){
-//        }else
-//        {
-//            var x = document.createElement("SPAN");
-//            x.setAttribute("class", "k-sprite transparente");
-//            x.setAttribute("id","x"+results[i].proc__name );             
-//            $("#spantarea"+results[i].proc__name).onclick = "";
-//            $("#spanedit"+results[i].proc__name).onclick = "";
-//            document.getElementById("spantarea"+results[i].proc__name).setAttribute("class", "k-sprite transparente");
-//            document.getElementById("spantarea"+results[i].proc__name).setAttribute('onclick','disable();'); // for FF
-//            document.getElementById("spanedit"+results[i].proc__name).setAttribute("class", "k-sprite transparente");
-//            document.getElementById("spanedit"+results[i].proc__name).setAttribute('onclick','disable();');
-//        }
-//    }
+
 } 
