@@ -647,9 +647,13 @@ function setInfoCabeceraPedido(){
  */
 function guardarCabecera(){
     
-    var verbo="POST"
+    var verbo="POST";
+    var numPedido="";
+    var clcCod="";
     if($("#buttonCab")["0"].childNodes["0"].data==="Actualizar");{
-        verbo="POST";
+        verbo="PUT";
+        numPedido = JSON.parse(sessionStorage.getItem("regPedidos")).ped__num;        
+        clcCod  = JSON.parse(sessionStorage.getItem("regPedidos")).clc__cod;
     }    
     var obj = new SICUDPedido();
     var objJson = obj.getjson();
@@ -670,6 +674,8 @@ function guardarCabecera(){
     objJson[key1][key2][0].ciu__cod = $("#ipCiudad").val();
     objJson[key1][key2][0].ped__pqs = $("#ipSolicitante").val();
     objJson[key1][key2][0].obs__ped = $("#txtAObservacionePedido").val();
+    objJson[key1][key2][0].ped__num = numPedido;
+    objJson[key1][key2][0].clc__cod = clcCod;
     
     try{
         $.ajax({
@@ -678,8 +684,7 @@ function guardarCabecera(){
             url: url,
             dataType : "json",
             contentType: "application/json;",
-            success: function (e) { 
-                
+            success: function (e) {                 
                 var key1 = Object.keys(e)[0];
                 if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
                     return e[key1][mapData];
@@ -691,7 +696,11 @@ function guardarCabecera(){
                 alertDialogs(" Error al consumir el servicio "+ e.status +" - "+ e.statusText);                
             }
         }).done(function(e){
-            parent.closePopUpCabecera()
+            if($("#buttonCab")["0"].childNodes["0"].data==="Guardar"){
+              parent.grid();
+            }
+            debugger
+            parent.closePopUpCabecera();
         });
     } catch (e) {
         alertDialogs("Function: consumeServAjaxSIR Error: " + e.message);

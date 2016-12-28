@@ -21,9 +21,14 @@ function gridAsignacionPedidos(){
                 type: "POST"                
             },            
             parameterMap: function (options, operation) {                
-                
+                var fecha= new Date(sessionStorage.getItem("fechaSistema"));
+                fecha.setHours(0,0,0,0);
+                fecha.setDate(fecha.getDate() - 90);                
                 try {
-                    if (operation === 'read') {                                                
+                    if (operation === 'read') {
+                        var key1 = Object.keys(jsonAsignarPedidos)[0];
+                        var key2 = Object.keys(jsonAsignarPedidos[key1])[1];
+                        jsonAsignarPedidos[key1][key2][0].pidfecha = fecha;//sessionStorage.getItem("fechaSistema");
                         return JSON.stringify(jsonAsignarPedidos);                        
                     }
                 } catch (e) {
@@ -31,51 +36,57 @@ function gridAsignacionPedidos(){
                 }
             }
         },
-        schema: {
-           
+        schema: {           
             data: function (e) {                
                 var key1 = Object.keys(e)[0];
-                if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
-                    
+                if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {                    
                     return e[key1][mapData];
                 } else {
                     alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
                 }                
             },
             model: {
-                id: "ped__num",
+                //id: "ped__num",
                 fields: {
-                    ped__num: {validation: {required: true}, type: 'string'},
-                    cla__cod: {validation: {required: true}, type: 'string'},
-                    art__cod: {validation: {required: true}, type: 'string'},
-                    ped__can: {validation: {required: true}, type: 'string'},
-                    ped__fec: {validation: {required: true}, type: 'string'},                    
+                    ped__num: {type: 'string', editable: false},
+                    cla__cod: {type: 'string', editable: false},
+                    cla__des: {type: 'string', editable: false},
+                    art__cod: {type: 'string', editable: false},
+                    art__des: {type: 'string', editable: false},
+                    ped__can: {type: 'string', editable: false},
+                    ped__pend: {type: 'string', editable: false},
+                    ped__aasi: {type: 'number', editable: true},
+                    ped__fec: {type: 'string', editable: false},                    
                 }
             }
-        }
+        },
+        group: { field: "ped__num"}
     });
     //$(window).trigger("resize");    
     $("#gridAsignacionPedidos").kendoGrid({
         dataSource: dataSourceAsignarPedidos,
-//        dataBound: ondataBound,
-        selectable: false,
+        selectable: false,        
         columns: [
             {field: "ped__num", title: "Número de Pedido"},
-            {field: "cla__cod", title: "Clase articulo"},
-            {field: "art__cod", title: "Articulo"},
-            {field: "ped__can", title: "Cantidad"},
+            {field: "cla__des", title: "Clase articulo"},
+            {field: "art__des", title: "Articulo"},
+            {field: "ped__can", title: "Cantidad solicitada"},
+            {field: "ped__pend", title: "Pendiente"},
+            {field: "ped__aasi", title: "Asignados"},
             {field: "ped__fec", title: "fecha"},
-//            {command:
-//                        [
-//                            {name: "aprovar", click: ClickAprov, template: "<a class='k-grid-aprovar' href='' style='min-width:16px;'><span class='k-sprite po_cerrar'></span></a>"},
-//                            {name: "editar", text: " ", click: ClickEditar, template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},
-//                            {name: "destroyed", click: clickEliminar, template: "<a class='k-grid-destroyed' href='' style='min-width:16px;'><span class='k-sprite po_cerrar'></span></a>"}
-//                        ],
-//                width: "150px"}
+            {command:[
+                    {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},                    
+                ],
+                width: "150px"}
         ],
-//        editable: "popup",
-//        rowTemplate: kendo.template($("#rowTemplate").html()),
-//        altRowTemplate: kendo.template($("#altRowTemplate").html()),
+        editable: {
+            mode: "popup",
+            window: {
+                title: "Editar",
+                animation: false,
+                width: 600
+            }
+        },
     });
 }
 

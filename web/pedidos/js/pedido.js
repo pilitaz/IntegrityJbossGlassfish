@@ -77,8 +77,7 @@ function gridDetallePedido(){
     var grid = $("#gridDetallePedido").kendoGrid({
         dataSource: dataSourcePedido,       
         selectable: false,
-        height: 500,
-        //dataBound: borrarBotonesGrilla,
+        height: 500,        
         columns: [            
             {
                 field: "lis__num",

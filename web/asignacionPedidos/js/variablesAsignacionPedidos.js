@@ -10,22 +10,20 @@ function sirConsultaAsignarPedidos() {
     var mapData = "eegpd_ped_det";
     var urlSir = ipServicios + baseComercial + "SIRgpd_pdet_prov";
     var json = {
-        "dsSIRped_det_prov": {
-            "eeDatos":[
-                {
-                    "picusrcod": sessionStorage.getItem("usuario"),
-                    "picfiid": sessionStorage.getItem("picfiid"),
-                    "local_ip":sessionStorage.getItem("ipPrivada"),
-                    "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "eeSIRgpd_pdet_prov": [{
-                   // "piccia_nit": sessionStorage.getItem("companyNIT"),
-                    "piitipo": 0
-                    
-                }]
-        }
-    };
+                        "dsSIRgpd_pdet_prov": {
+                                "eeDatos": [{
+                                        "picusrcod": "proveedor_800001541",//sessionStorage.getItem("usuario"),
+                                        "picfiid": sessionStorage.getItem("picfiid"),
+                                        "local_ip": sessionStorage.getItem("ipPrivada"),
+                                        "remote_ip": sessionStorage.getItem("ipPublica")
+
+                                }],
+                                "eeSIRgpd_pdet_prov": [{
+                                        "piitipo": 0,
+                                        "pidfecha": ""
+                                }]
+                        }
+                };
 
     this.setUrlSir = function (newname) {
         if (newname) {
