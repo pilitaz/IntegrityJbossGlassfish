@@ -378,7 +378,14 @@ function setInfoCliente(e){
         $("#ipCliente").val(dataCliente.ter__raz);
     }
         
-    var clienteNacional = dataCliente.gfc__nal;    
+    var clienteNacional = dataCliente.gfc__nal;  
+    
+    if(clienteNacional){
+        var kendoDropDownListDivisa = $("#ipDivisa").data("kendoDropDownList");
+        kendoDropDownListDivisa.value("CO");
+        kendoDropDownListDivisa.readonly(true);  
+    }
+        
     sessionStorage.setItem("nitCliente", dataCliente.ter__nit); // sessionStorage.setItem("
     sessionStorage.setItem("listaPrecioCliente", dataCliente.lis__num);
     sessionStorage.setItem("codVendedor", dataCliente.ven__cod);    
@@ -599,16 +606,16 @@ function setInfoCabeceraPedido(){
     var key2 = Object.keys(objJson[key1])[1];                                
     objJson[key1][key2][0].picter_nit = pedido.ter__nit;
     
-    var kendoDropDownListDivisa = $("#ipDivisa").data("kendoDropDownList");
-    kendoDropDownListDivisa.value(pedido.mnd__cla.toUpperCase());
-    kendoDropDownListDivisa.readonly(true);
-    
     var fecha = new Date(pedido.ped__fec.replace(/-/g, "/"));
     fecha.setHours(0,0,0,0);
     
     var datepicker = $("#ipFecha").data("kendoDatePicker");
     datepicker.value(fecha);
     datepicker.readonly(true);
+    
+    $("#ipSolicitante").val(pedido.ped__pqs);
+    
+    $("#txtAObservacionePedido").val(pedido.obs__ped);
     
     var key1 = Object.keys(objJson)[0];
     var key2 = Object.keys(objJson[key1])[1];                                
@@ -650,7 +657,7 @@ function guardarCabecera(){
     var verbo="POST";
     var numPedido="";
     var clcCod="";
-    if($("#buttonCab")["0"].childNodes["0"].data==="Actualizar");{
+    if($("#buttonCab")["0"].childNodes["0"].data==="Actualizar"){
         verbo="PUT";
         numPedido = JSON.parse(sessionStorage.getItem("regPedidos")).ped__num;        
         clcCod  = JSON.parse(sessionStorage.getItem("regPedidos")).clc__cod;
@@ -695,12 +702,47 @@ function guardarCabecera(){
             error: function (e) {
                 alertDialogs(" Error al consumir el servicio "+ e.status +" - "+ e.statusText);                
             }
-        }).done(function(e){
-            if($("#buttonCab")["0"].childNodes["0"].data==="Guardar"){
-              parent.grid();
+        }).done(function(e){            
+            var key1 = Object.keys(objJson)[0];
+            var key2 = Object.keys(objJson[key1])[1]; 
+            var pedido = e[key1][key2][0]; 
+            
+            var objFiltroPedidos = new sirConsultaPedidos();
+            var jsonFiltroPedidos = objFiltroPedidos.getjson();
+            var urlFiltroPedidos = objFiltroPedidos.getUrlSir();
+            var mapDataFiltroPedidos = objFiltroPedidos.getMapData();
+            
+            var key1 = Object.keys(jsonFiltroPedidos)[0];
+            var key2 = Object.keys(jsonFiltroPedidos[key1])[1];
+            jsonFiltroPedidos[key1][key2][0].pidped_fec = pedido.ped__fec;
+            jsonFiltroPedidos[key1][key2][0].piiped_num = pedido.ped__num;
+            jsonFiltroPedidos[key1][key2][0].picsuc_cod = pedido.suc__cod;
+            console.log(JSON.stringify(jsonFiltroPedidos));
+            try{                
+                $.ajax({
+                    type: "POST",
+                    data: JSON.stringify(jsonFiltroPedidos),
+                    url: urlFiltroPedidos,
+                    dataType : "json",
+                    contentType: "application/json;",
+                    success: function (e) {                        
+                        if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                            return e[key1][mapDataFiltroPedidos];
+                        } else {
+                            alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                        }
+                    },
+                    error: function (e) {
+                        alertDialogs(" Error al consumir el servicio 733"+ e.status +" - "+ e.statusText);                
+                    }
+                }).done(function(e){
+                    var pedido = e[key1][mapDataFiltroPedidos][0];
+                    sessionStorage.setItem("regPedidos", JSON.stringify(pedido));                                         
+                    parent.closePopUpCabecera();
+                });
+            }catch (e) {
+                alertDialogs("Function: consumeServAjaxSIR Error: 740 " + e.message);
             }
-            debugger
-            parent.closePopUpCabecera();
         });
     } catch (e) {
         alertDialogs("Function: consumeServAjaxSIR Error: " + e.message);

@@ -204,7 +204,7 @@ function popUpPedidoCU() {
     var myWindow = $("#windowPedidoCabecera");
     var undo = $("#undo");
 
-    function onCloseWindowItemFac() {
+    function onCloseWindowCabPedido() {
         document.getElementById("windowPedidoCabecera").remove();
         undo.fadeIn();
     }
@@ -219,10 +219,11 @@ function popUpPedidoCU() {
         actions: [
             "Close"
         ],
-        close: onCloseWindowItemFac
+        close: onCloseWindowCabPedido
     }).data("kendoWindow").center().open();
 }
 
-function closePopUpCabecera(){    
+function closePopUpCabecera(){       
     $("#windowPedidoCabecera").data("kendoWindow").close();
+    window.location.replace(( sessionStorage.getItem("url")+"pedidos/html/pedido"+".html"));  
 }
