@@ -32,3 +32,7 @@ and open the template in the editor.
   position:relative;
   min-height:470px;
 }
+.dropdownlist{
+    width: 5px;
+	height: 5px;
+}

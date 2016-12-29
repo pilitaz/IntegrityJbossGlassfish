@@ -123,13 +123,14 @@ $(document).ready(function () {
             }
         }
     });
-    
+
     var objP = new SIRgpr_pre();
     var objArtP = objP.getjson();
     var urlSirP = objP.getUrlSir();
     var mapDataP = objP.getMapData();
     $("#idPresentacion").kendoDropDownList({
         dataTextField: 'pre__des',
+        dataValueField: "pre__pcod",
         optionLabel: "Seleccionar Presentación...",
         select: onSelectPres,
         dataSource: {
@@ -173,19 +174,19 @@ $(document).ready(function () {
             }
         }
     });
-    
+
     if (sessionStorage.getItem("objEditDet")) {
         obj = JSON.parse(sessionStorage.getItem("objEditDet"));
-        
+
         $("#idClaseArticulo").data("kendoDropDownList").value(obj.cla__cod);
         $("#idArticulo").data("kendoAutoComplete").value(obj.art__des);
         art_cod = obj.art__cod;
         $("#idPrecio").val(parseInt(obj.lpd__pre));
         pre_pcod = obj.pre__pcod;
-        $("#idPresentacion").data("kendoDropDownList").search(obj.pre__des);
+        $("#idPresentacion").data("kendoDropDownList").value(obj.pre__pcod);
     }
-$("#idPrecio").kendoNumericTextBox({
-        format: "c0"                
+    $("#idPrecio").kendoNumericTextBox({
+        format: "c0"
     });
 });
 function onChangeClase(e) {
@@ -199,18 +200,18 @@ function onDataBoundArticulo() {
 
 function onSelectArt(e) {
     art_cod = e.dataItem.art__cod;
-                        
-                    }
-                    
+
+}
+
 function onSelectPres(e) {
     pre_pcod = e.dataItem.pre__pcod;
- }
+}
 function btnCancelar() {
     parent.closePopUp();
 }
 
 function agregarPrecio() {
-    
+
     var obj = [
         {
             "lis__num": JSON.parse(sessionStorage.getItem("listaPrecios")).lis__num,
@@ -222,14 +223,12 @@ function agregarPrecio() {
             "lpd__esd": "1",
             "top__dct": 90,
             "lpd__esh": "9999999",
-            "pre__pcod": pre_pcod, 
+            "pre__pcod": pre_pcod,
             "pre__des": $("#idPresentacion").data("kendoDropDownList").text(), //servicio presentacion
         }
     ];
     parent.CUGrilla(obj, sessionStorage.getItem("operaDEtalle"));
 
-//    parent.dataGridDetalle.push(obj);
-//    parent.gridDetalle();
     parent.closePopUp();
 
 }

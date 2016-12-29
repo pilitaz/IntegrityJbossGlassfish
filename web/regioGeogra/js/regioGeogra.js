@@ -15,7 +15,8 @@ $(document).ready(function() {
     /*variable para adicionar los campos requeridos y el tipo de dato*/
     /*editable: false --- ocultar en grilla*/
     var fieldShema = {
-		rgeo__cod: { type: 'integer'},            rgeo__nom: { type: 'string'},
+		rgeo__cod: { type: 'integer'},
+            rgeo__nom: { type: 'string'},
 	}
     
     /*variable id es el id correspondiente a la tabla a cansultar*/
@@ -41,7 +42,8 @@ $(document).ready(function() {
     /*hiden: true --- ocultar en grilla*/
     var columns = [
 		btnDer,
-		{field: "rgeo__cod", title: "Codigo Region Geografica",width: "100%"},            {field: "rgeo__nom", title: "Nombre Region Geo.",width: "100%"},
+//		{field: "rgeo__cod", title: "Codigo Region Geografica",width: "100%"},
+            {field: "rgeo__nom", title: "Nombre Region Geo.",width: "100%"},
 		btnIzq
 	];
 	
@@ -139,6 +141,53 @@ function deleteRow(e){
 	}); 
 }
 
-function rgeo__codList(container, options){       var obj = new listargeo__cod();       var dataSource = obj.getdataSource();       $('<input id="idrgeo__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({               dataTextField: "text",               dataValueField: "value",               dataSource: dataSource,               index: 0,       });}function listargeo__cod () {       this.setdataSource = function (newname) {        if (newname) {            dataSource = newname;               }       };    this.getdataSource = function () {        return dataSource;       };};function rgeo__nomList(container, options){       var obj = new listargeo__nom();       var dataSource = obj.getdataSource();       $('<input id="idrgeo__nom" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({               dataTextField: "text",               dataValueField: "value",               dataSource: dataSource,               index: 0,       });}function listargeo__nom () {       this.setdataSource = function (newname) {        if (newname) {            dataSource = newname;               }       };    this.getdataSource = function () {        return dataSource;       };};
+function rgeo__codList(container, options){
+       var obj = new listargeo__cod();
+       var dataSource = obj.getdataSource();
+       $('<input id="idrgeo__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
+               dataTextField: "text",
+               dataValueField: "value",
+               dataSource: dataSource,
+               index: 0,
+       });
+}
+
+function listargeo__cod () {
+
+
+       this.setdataSource = function (newname) {
+        if (newname) {
+            dataSource = newname;
+               }
+       };
+    this.getdataSource = function () {
+        return dataSource;
+       };
+};
+
+
+function rgeo__nomList(container, options){
+       var obj = new listargeo__nom();
+       var dataSource = obj.getdataSource();
+       $('<input id="idrgeo__nom" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
+               dataTextField: "text",
+               dataValueField: "value",
+               dataSource: dataSource,
+               index: 0,
+       });
+}
+
+function listargeo__nom () {
+
+
+       this.setdataSource = function (newname) {
+        if (newname) {
+            dataSource = newname;
+               }
+       };
+    this.getdataSource = function () {
+        return dataSource;
+       };
+};
 
 

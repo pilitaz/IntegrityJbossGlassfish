@@ -30,12 +30,10 @@ and open the template in the editor.
         <div id="divSubtitulo">
             <table style="height: 50px; vertical-align: top; width: 100%">
                 <td style="width: 50px; height: 50px"><a class="k-grid"  aling="center"><span class="k-sprite po_bullet1"></span></a></td>
-                <td style="height: 50px;"><h4 id = "subtitulo" class="subTitulo">Listas de precios</h4></td> 
+                <td style="height: 50px;"><h4 id = "subtitulo" class="subTitulo">Listas de precios</h4></td>
+                <td style="height: auto"> <input id="fltrFIn" style="width: 25%" required/> <input id="fltrEst" style="width: 250px" required/> </td>
                 <td style="width: 50px; text-align: right; padding-right: 10px">
-                    <a id ="btnSearch" class="k-grid" onclick ="popUpFiltros()" aling="center"><span class="k-icon po_look"></span></a>
-                </td>
-                <td style="width: 50px; text-align: right; padding-right: 10px">
-                    <a id ="btnCrear" class="k-grid" onclick ="crearListaPrecios()" aling="center"><span class="k-icon po_mas"></span></a>
+                    <a id ="btnCrear" class="k-grid" onclick ="crearListaPrecios()" aling="center"><span class="k-sprite po_mas"></span></a>
                 </td>                
             </table>   
             <div class="sidenavSup"></div>                    
@@ -54,7 +52,7 @@ and open the template in the editor.
             <td>
             <span class="title">#: mnd__cla #</span>
             </td>                <td>
-            <a  class='k-grid-aprobar'><span id = "aprobar#: lis__num#" class='k-sprite po_check' onclick="aprobar()" ></span></a>
+            <a  class='k-grid-aprobar'><span id = "aprobar#: lis__num#" class='k-sprite po_check' ></span></a>
             <a  class='k-grid-editar'><span id = "editar#: lis__num#" class='k-sprite po_editon'></span></a>
             <a  class='k-grid-copy'><span id = "copy#: lis__num#" class='k-sprite po_copy'></span></a>
             <a  class='k-grid-destroyed'><span id = "destroyed#: lis__num#" class='k-sprite po_cerrar'></span></a>
@@ -76,7 +74,7 @@ and open the template in the editor.
             <span class="title">#: mnd__cla #</span>
             </td>
             <td>
-            <a  class='k-grid-aprobar'><span id = "aprobar#: lis__num#" class='k-sprite po_check' onclick="aprobar()" ></span></a>
+            <a  class='k-grid-aprobar'><span id = "aprobar#: lis__num#" class='k-sprite po_check' ></span></a>
             <a  class='k-grid-editar'><span id = "editar#: lis__num#" class='k-sprite po_editon'></span></a>
             <a  class='k-grid-copy'><span id = "copy#: lis__num#" class='k-sprite po_copy'></span></a>
             <a  class='k-grid-destroyed'><span id = "destroyed#: lis__num#" class='k-sprite po_cerrar'></span></a>

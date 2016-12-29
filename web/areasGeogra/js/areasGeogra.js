@@ -15,7 +15,8 @@ $(document).ready(function() {
     /*variable para adicionar los campos requeridos y el tipo de dato*/
     /*editable: false --- ocultar en grilla*/
     var fieldShema = {
-		ageo__cod: { type: 'integer'},            ageo__nom: { type: 'string'},
+		ageo__cod: { type: 'integer'},
+            ageo__nom: { type: 'string'},
 	}
     
     /*variable id es el id correspondiente a la tabla a cansultar*/
@@ -27,6 +28,7 @@ $(document).ready(function() {
     /*variables para adicionar los botones de la grilla*/        
     var btnC = true;        
     var btnUD = [
+        {name: "aprobar",  template: "<a class='k-grid-aprobar'><span class='k-sprite po_check'></span></a>"},
 		{name: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
         {name: "Delete", click: deleteRow, template: "<a class='k-grid-Delete'><span class='k-sprite po_cerrar'></span></a>"},
 	];
@@ -35,13 +37,14 @@ $(document).ready(function() {
 	];
     //var btnDer = {command: btnDetalle, title: "&nbsp;", width: "100px" };
 	var btnDer = {};
-    var btnIzq = { command: btnUD, title: "&nbsp;", width: "100px" };
+    var btnIzq = { command: btnUD, title: "&nbsp;", width: "150px" };
     
     /*variables para poner los campos visibles tanto en popUp como en grilla, en caso de no colocarlos no apareceran en ni en popup ni engrilla */
     /*hiden: true --- ocultar en grilla*/
     var columns = [
 		btnDer,
-		{field: "ageo__cod", title: "Codigo Area Geografica",width: "100%"},            {field: "ageo__nom", title: "Nombre",width: "100%"},
+//		{field: "ageo__cod", title: "Codigo Area Geografica",width: "100%"},
+            {field: "ageo__nom", title: "Area Geográfica",width: "100%"},
 		btnIzq
 	];
 	
@@ -139,6 +142,85 @@ function deleteRow(e){
 	}); 
 }
 
-function ageo__codList(container, options){       var obj = new listaageo__cod();       var dataSource = obj.getdataSource();       $('<input id="idageo__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({               dataTextField: "text",               dataValueField: "value",               dataSource: dataSource,               index: 0,       });}function listaageo__cod () {       this.setdataSource = function (newname) {        if (newname) {            dataSource = newname;               }       };    this.getdataSource = function () {        return dataSource;       };};function ageo__nomList(container, options){       var obj = new listaageo__nom();       var dataSource = obj.getdataSource();       $('<input id="idageo__nom" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({               dataTextField: "text",               dataValueField: "value",               dataSource: dataSource,               index: 0,       });}function listaageo__nom () {       this.setdataSource = function (newname) {        if (newname) {            dataSource = newname;               }       };    this.getdataSource = function () {        return dataSource;       };};
+function ageo__codList(container, options){
+       var obj = new listaageo__cod();
+       var dataSource = obj.getdataSource();
+       $('<input id="idageo__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
+               dataTextField: "text",
+               dataValueField: "value",
+               dataSource: dataSource,
+               index: 0,
+       });
+}
 
+function listaageo__cod () {
+
+
+       this.setdataSource = function (newname) {
+        if (newname) {
+            dataSource = newname;
+               }
+       };
+    this.getdataSource = function () {
+        return dataSource;
+       };
+};
+
+
+function ageo__nomList(container, options){
+       var obj = new listaageo__nom();
+       var dataSource = obj.getdataSource();
+       $('<input id="idageo__nom" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
+               dataTextField: "text",
+               dataValueField: "value",
+               dataSource: dataSource,
+               index: 0,
+       });
+}
+
+function listaageo__nom () {
+
+
+       this.setdataSource = function (newname) {
+        if (newname) {
+            dataSource = newname;
+               }
+       };
+    this.getdataSource = function () {
+        return dataSource;
+       };
+};
+// function aprobarArea(e){
+//     try {
+//        var fila = $("#grid").data("kendoGrid")._data[($(e.currentTarget).closest("tr")["0"].sectionRowIndex)];
+//        e.preventDefault();
+//        var dataItem = fila;
+//
+//
+//        var actions = new Array();
+//        actions[0] = new Object();
+//        actions[0].text = "OK";
+//        actions[0].action = function () {
+//            if (fila.cla__est !== 1) {
+//                if (fila.cla__est === 99) {
+//                    fila.cla__est = 0;
+//                } else {
+//                    fila.cla__est = fila.cla__est + 1;
+//                }
+//            }
+//            sendAjaxAClase("PUT", [fila]);
+//            bandAlert = 0;
+//        };
+//        actions[1] = new Object();
+//        actions[1].text = "Cancelar";
+//        actions[1].action = function () {
+//            bandAlert = 0;
+//        };
+//        createDialog("Atención", "Esta seguro de modificar el estado del registro ---" + fila.cla__est + " ---?", "400px", "200px", true, true, actions);
+//
+//    } catch (e) {
+//        $('#grid').data('kendoGrid').dataSource.read();
+//        $('#grid').data('kendoGrid').refresh();
+//    }
+// }
 

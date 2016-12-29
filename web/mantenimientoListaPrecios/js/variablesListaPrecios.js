@@ -31,7 +31,8 @@ function SIRgpr_lis() {
                     "piicla_cod": 0,
                     "piilis_num": 0,
                     "picmnd_cla": "*",
-                    "piilis_est": 0
+                    "piilis_est": 99,
+                    "pidfecha": sessionStorage.getItem("fechaSistema"),
                 }
             ]
         }
@@ -91,11 +92,15 @@ function SIRgpr_lis_det() {
             ],
             "eeSIRgpr_lis": [
                 {
-                    "picart_cod": "*",
-                    "piicla_cod": 0,
-                    "piilis_num": 0,
-                    "picmnd_cla": "*",
-                    "piilis_est": -1
+                    "cla__des": "",
+                    "art__cod": "",
+                    "art__des": "",
+                    "lpd__pre": 0,
+                    "lpd__esd": "1",
+                    "top__dct": 90,
+                    "lpd__esh": "9999999",
+                    "pre__pcod": "",
+                    "pre__des": "",
                 }
             ]
         }
@@ -213,7 +218,6 @@ function SICUDgpr_lisDet() {
             ],
             "eegpr_lpd": [
                 {
-                    
                     "cla__des": "",
                     "art__cod": "",
                     "art__des": "",
