@@ -357,15 +357,60 @@ function agregarItem(){
         url: urlDetalePed,
         dataType : "json",
         contentType: "application/json;",
-        success: function (resp) {            
-            itemGuardado = resp.dsSIRgfc_fac.eeEstados[0].Estado;                        
+        success: function (e) {
+            if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                itemGuardado = e[key1].eeEstados[0].Estado;
+            } else {
+                alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+            }
+//            itemGuardado = resp.dsSIRgfc_fac.eeEstados[0].Estado;                        
         },
         error: function (e) {            
             alertDialogs("Error consumiendo el servicio de guardar\n"+ e.status +" - "+ e.statusText);
         }
-    }).done(function(){
+    }).done(function(e){
         if(itemGuardado=="OK"){
-            debugger            
+            
+            var key1 = Object.keys(jsonDetalePed)[0];
+            var key2 = Object.keys(jsonDetalePed[key1])[1]; 
+            var pedido = e[key1][key2][0]; 
+            
+            var objFiltroPedidos = new sirConsultaPedidos();
+            var jsonFiltroPedidos = objFiltroPedidos.getjson();
+            var urlFiltroPedidos = objFiltroPedidos.getUrlSir();
+            var mapDataFiltroPedidos = objFiltroPedidos.getMapData();
+            
+            var key1 = Object.keys(jsonFiltroPedidos)[0];
+            var key2 = Object.keys(jsonFiltroPedidos[key1])[1];
+            jsonFiltroPedidos[key1][key2][0].pidped_fec = pedido.ped__fec;
+            jsonFiltroPedidos[key1][key2][0].piiped_num = pedido.ped__num;
+            jsonFiltroPedidos[key1][key2][0].picsuc_cod = pedido.suc__cod;
+            console.log(JSON.stringify(jsonFiltroPedidos));
+            try{                
+                $.ajax({
+                    type: "POST",
+                    data: JSON.stringify(jsonFiltroPedidos),
+                    url: urlFiltroPedidos,
+                    dataType : "json",
+                    contentType: "application/json;",
+                    success: function (e) {                        
+                        if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                            return e[key1][mapDataFiltroPedidos];
+                        } else {
+                            alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                        }
+                    },
+                    error: function (e) {
+                        alertDialogs(" Error al consumir el servicio 733"+ e.status +" - "+ e.statusText);                
+                    }
+                }).done(function(e){
+                    var pedido = e[key1][mapDataFiltroPedidos][0];
+                    sessionStorage.setItem("regPedidos", JSON.stringify(pedido));                                         
+                    parent.closePopUpCabecera();
+                });
+            }catch (e) {
+                alertDialogs("Function: consumeServAjaxSIR Error: 740 " + e.message);
+            }
             parent.closePopUp();
         }else{                    
             alertDialogs("factura con errores  \n"+itemGuardado);
