@@ -249,7 +249,7 @@ $(document).ready(function () {
         edit: function(e) {debugger
     if (!e.model.isNew()) {
       // Disable the editor of the "id" column when editing data items
-       e.container.find("input[name=sre__est]")
+       e.container.find("input[name=sre__est]")[0].readOnly="true"
       //$("#cedula")[0].value = e.model.sre__est;
       //$("#cedula")[0].readOnly="true";
      
@@ -468,10 +468,10 @@ function changImgFunc(results) {debugger
 }
 
 } 
-function disable(){debugger
+function disable(e){debugger
     
 }
-function active(){debugger
+function active(e){debugger
     
 }
 
