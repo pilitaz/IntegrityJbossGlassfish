@@ -63,7 +63,7 @@ $(document).ready(function () {
                 if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
-                if ((operation === "update") || (operation === "create")) {debugger
+                if ((operation === "update") ){debugger
                     var dropdownlist = $("#rol").data("kendoDropDownList");
 
                     var select = dropdownlist.selectedIndex;
@@ -82,6 +82,41 @@ $(document).ready(function () {
                     {
                         if (cclave1 === cclave2) {
                             actjson.dsee_user2.ee_user2[0] = options.models[0];
+                            return JSON.stringify(actjson);
+                            $('#grid').data('kendoGrid').refresh();
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh();
+                        } else
+                        {
+                            alertDialogs("Las contraseñas no coinciden");
+                            
+
+                        }
+                    }
+
+                    }
+                    if ((operation === "create") ){debugger
+                    var dropdownlist = $("#rol").data("kendoDropDownList");
+                    var nit = sessionStorage.getItem("companyNIT");
+                    var select = dropdownlist.selectedIndex;
+                    
+                    options.models[0].car__cod = dropdownlist.dataSource._data[select].car__cod;
+                    options.models[0].car__nom = dropdownlist.text();
+                    
+                    var cclave1 = document.getElementById("clave1").value;
+                    var cclave2 = document.getElementById("clave2").value;
+                    if (cclave1 == "**********") {//EVULUAR CONTRASEÑA                       
+                        actjson.dsee_user2.ee_user2[0] = options.models[0];
+                        actjson.dsee_user2.ee_user2[0].cia__nit=nit;
+                        return JSON.stringify(actjson);
+                        $('#grid').data('kendoGrid').refresh();
+                        $('#grid').data('kendoGrid').dataSource.read(); 
+                        $('#grid').data('kendoGrid').refresh();
+                    } else
+                    {
+                        if (cclave1 === cclave2) {
+                            actjson.dsee_user2.ee_user2[0] = options.models[0];
+                            actjson.dsee_user2.ee_user2[0].NIT=nit;
                             return JSON.stringify(actjson);
                             $('#grid').data('kendoGrid').refresh();
                             $('#grid').data('kendoGrid').dataSource.read();

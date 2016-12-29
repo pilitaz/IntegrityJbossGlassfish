@@ -116,20 +116,23 @@ $(document).ready(function () {
                     return JSON.stringify(datajson);
                 }
                 if (operation === "update") {debugger
-                    var cedula = $("#cedula").data("kendoDropDownList").text();
+                    var cedula = $("#cedula")[0].value;
                      var region = $("#region").data("kendoDropDownList").text();
                      var x=0;
-                    if (options.sre__est===true){x=1;}
+                    if (options.sre__est===1){x=1;}
                     else{x=0;}
                     actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod=region;  
                     actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod=options.sre__cod; 
                     actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__est=options.sre__est; 
                     actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__nit=cedula; 
                     return JSON.stringify(actjson);
+                    $('#grid').data('kendoGrid').refresh();
+                    $('#grid').data('kendoGrid').dataSource.read();
+                    $('#grid').data('kendoGrid').refresh();
 
                 }
                 if (operation === "create") {debugger
-                    var cedula = $("#cedula").data("kendoDropDownList").text();
+                   var cedula = $("#cedula")[0].value;
                     var region = $("#region").data("kendoDropDownList").text();
                     var x=0;
                     if (options.sre__est===true){x=1;}
@@ -174,7 +177,10 @@ $(document).ready(function () {
                         return e[key1][mapCud];
                     }else
                     {
-                    alertDialogs("Error"+e[key1].eeEstados[0].Estado);    
+                    alertDialogs("Error"+e[key1].eeEstados[0].Estado); 
+                        $('#grid').data('kendoGrid').refresh();                                             
+                        $('#grid').data('kendoGrid').dataSource.read();
+                        $('#grid').data('kendoGrid').refresh();
                     }
                 }},
             model: {
@@ -206,12 +212,12 @@ $(document).ready(function () {
      *  
      *  
      */
-    var gridheigth = $("body").height();
-    gridheigth = gridheigth*0.12 + gridheigth;
+//    var gridheigth = $("body").height();
+//    gridheigth = gridheigth*0.008 + gridheigth;
     var grid1 = $("#grid").kendoGrid({
         dataSource: dataSource,
                             
-        height: gridheigth,
+        
         sortable: true,
                            
         pageable: {
@@ -221,7 +227,7 @@ $(document).ready(function () {
         },
         //navigatable: true,
         columns: [
-            {field: "sre__cod", title: "Cod ",  hidden:false},
+            {field: "sre__cod", title: "Cod Supervisor ",  hidden:false},
             {field: "rgeo__cod", title: "Cod Region",  hidden:false,editor: regionCod,
                 template: function (e) {debugger
                     return e.rgeo__cod;
@@ -230,17 +236,25 @@ $(document).ready(function () {
                 template: function (e) {debugger
                     return e.ter__nit;
                 }},   
-              {field: "ter__raz", title: "Nombre",  hidden:false},
-            
-            
+            {field: "ter__raz", title: "Nombre",  hidden:false},
             {
                 field: "sre__est",
                 title: "Estado",
-                template: "<a class='k-grid-check'><span class='k-sprite po_check_disabled'></span></a>",
-                width: "70px"},
+                template: "<a class='k-grid-check'><span class='k-sprite po_checkCreate'></span></a>",
+                width: "70px"
+            },
             {command: [{name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "90px"}],
         editable: "popup",
+        edit: function(e) {debugger
+    if (!e.model.isNew()) {
+      // Disable the editor of the "id" column when editing data items
+       e.container.find("input[name=sre__est]")
+      //$("#cedula")[0].value = e.model.sre__est;
+      //$("#cedula")[0].readOnly="true";
+     
+    }
+    } ,
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
         altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
         dataBound: function () {
@@ -303,18 +317,91 @@ $(document).ready(function () {
         
         	
     ];
+    var obj = new sirConsultaCliente();
+    var objJson = obj.getjson();
+    var url = obj.getUrlSir();
+    var mapData = obj.getMapData();
     $('<input id="cedula" required name="' + options.field + '"/>')
             .appendTo(container)
-            .kendoDropDownList({
-                autoBind: false,
-                dataTextField: "text",
-                dataValueField: "text",
-                dataSource: estados,
-            });
+            .kendoAutoComplete({
+        dataTextField: "ter__nit",
+        dataValueField: "ter__nit",        
+        placeholder: "Selecione un cliente...",
+        minLength: 6,
+        filter: "contains",
+        template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
+        //select: setInfoCliente,
+        dataSource: {
+            type: "json",
+            serverFiltering: true,
+            transport: {
+                read:{
+                    url: url,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
+                    try {
+                                          
+                        if (operation === 'read') {
+                            var key1 = Object.keys(objJson)[0];
+                            var key2 = Object.keys(objJson[key1])[1];
+                            objJson[key1][key2][0].picter_nit = $("#cedula").val();
+                            objJson[key1][key2][0].picter_raz = "";
+                            return JSON.stringify(objJson);
+                        } 
+                    } catch (e) {
+                        alertDialogs(e.message);
+                    }                                    
+                }
+            },
+            schema: {
+                data: function (e){                    
+                    var key1 = Object.keys(e)[0];
+                    if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                        return e[key1][mapData];
+                    }else if(e[key1].eeEstados[0].Estado==="ERROR: Patrón de Búsqueda insuficiente !!!"){
+                        
+                    }else{
+                        alertDialogs(e[key1].eeEstados[0].Estado);
+                    }
+                },
+                model:{}
+            },
+            error: function (xhr, error) {
+                alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+            },
+            change: function (e) {
+                //console.log("Change client");
+            },
+            requestStart: function (e) {
+                //console.log("Request Start servicio cliente");
+            }            
+        }
+    });
+            
 }                       
 
                         
- function regionCod(container, options) {
+// function regionCod(container, options) {
+//
+//    var estados = [
+//        {text: "101001", valor: 1},
+//        {text: "157001", valor: 2},
+//         {text: "257001", valor: 3},
+//
+//    ];
+//    $('<input id="region" required name="' + options.field + '"/>'+options.model.rgeo__cod)
+//            .appendTo(container)         
+//            .kendoDropDownList({
+//                dataTextField: "text",
+//                dataValueField: "text",               
+//                dataSource: estados
+//            });
+//               
+//} 
+function regionCod(container, options) {
         var consultar = new sirRegionGeografica();
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();
@@ -358,8 +445,6 @@ $(document).ready(function () {
 
         });
  }
-       
-    
 });
                     
                     
@@ -368,25 +453,25 @@ function changImgFunc(results) {debugger
     for (var i = 0; i < results.length; i++) {
         if (document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod)){
         if(results[i].sre__est==0){                            
-     document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_check_sup");
-    
-        }else
-        {}}
+            document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_checkAct");   
+            document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("onclick", "disable();");
+        }
+        if(results[i].sre__est==99){     
+        document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_checkCreate");
+        document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("onclick", "active();");
+        }
+        if(results[i].sre__est==1){     
+        document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_checkBloq");
+
+        }
+        }
 }
-// 
-//    for (var i = 0; i < results.length; i++) {        
-//        if(results[i].adm===true){
-//        }else
-//        {
-//            var x = document.createElement("SPAN");
-//            x.setAttribute("class", "k-sprite transparente");
-//            x.setAttribute("id","x"+results[i].proc__name );             
-//            $("#spantarea"+results[i].proc__name).onclick = "";
-//            $("#spanedit"+results[i].proc__name).onclick = "";
-//            document.getElementById("spantarea"+results[i].proc__name).setAttribute("class", "k-sprite transparente");
-//            document.getElementById("spantarea"+results[i].proc__name).setAttribute('onclick','disable();'); // for FF
-//            document.getElementById("spanedit"+results[i].proc__name).setAttribute("class", "k-sprite transparente");
-//            document.getElementById("spanedit"+results[i].proc__name).setAttribute('onclick','disable();');
-//        }
-//    }
+
 } 
+function disable(){debugger
+    
+}
+function active(){debugger
+    
+}
+

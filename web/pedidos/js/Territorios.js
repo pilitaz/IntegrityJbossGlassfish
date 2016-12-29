@@ -202,12 +202,11 @@ $(document).ready(function () {
      *  
      *  
      */
-    var gridheigth = $("body").height();
-    gridheigth = gridheigth*0.12 + gridheigth;
+   
     var grid1 = $("#grid").kendoGrid({
         dataSource: dataSource,
                             
-        height: gridheigth,
+        
         sortable: true,
                            
         pageable: {

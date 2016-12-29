@@ -79,7 +79,7 @@ $(document).ready(function () {
     var  datajson = consultar.getjson();
     var  urlService = consultar.getUrlSir();
                         
-    var  actualizar = new cudAnulaPedido();
+    var  actualizar = new cudPrioridades();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
 
@@ -117,16 +117,14 @@ $(document).ready(function () {
                 }
                 if (operation === "update") {
                     
-                   actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__cod=options.anu__cod;  
-                   actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__des=options.anu__des;
-                   actjson.dsSICUDgpd_anu.eegpd_anu[0].gpd__est=options.gpd__est;     
+                   actjson.dsSICUDgpd_pri.eegpd_pri[0].pri__des=options.pri__des;     
                     return JSON.stringify(actjson);
                                         
                                         
                 }
                 if (operation === "create") {debugger
-                   actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__des=options.anu__des;
-                   actjson.dsSICUDgpd_anu.eegpd_anu[0].gpd__est=options.gpd__est; 
+                   
+                   actjson.dsSICUDgpd_pri.eegpd_pri[0].pri__des=options.pri__des; 
                     return JSON.stringify(actjson);          
                     $('#grid').data('kendoGrid').refresh();
                     $('#grid').data('kendoGrid').dataSource.read();
@@ -134,9 +132,8 @@ $(document).ready(function () {
                 }
                 if (operation === "destroy") {debugger
                          
-                   actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__cod=options.anu__cod;  
-                   actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__des=options.anu__des;
-                   actjson.dsSICUDgpd_anu.eegpd_anu[0].gpd__est=options.gpd__est;  
+                   actjson.dsSICUDgpd_pri.eegpd_pri[0].pri__cod=options.pri__cod;
+                   actjson.dsSICUDgpd_pri.eegpd_pri[0].pri__des=options.pri__des;  
                     
                     return JSON.stringify(actjson);
                                         
@@ -164,7 +161,7 @@ $(document).ready(function () {
             model: {
                 id: "pri__cod",
                 fields: {
-                    pri__cod:    {editable: true, nullable: false},
+                    pri__cod:    {editable: false, nullable: false},
                     pri__des:    {editable: true, nullable: false},          
                 }
             }
