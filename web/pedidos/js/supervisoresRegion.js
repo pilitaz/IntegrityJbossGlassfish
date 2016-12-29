@@ -246,6 +246,15 @@ $(document).ready(function () {
             {command: [{name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "90px"}],
         editable: "popup",
+        edit: function(e) {debugger
+    if (!e.model.isNew()) {
+      // Disable the editor of the "id" column when editing data items
+       e.container.find("input[name=sre__est]")
+      //$("#cedula")[0].value = e.model.sre__est;
+      //$("#cedula")[0].readOnly="true";
+     
+    }
+    } ,
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
         altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
         dataBound: function () {
@@ -445,11 +454,11 @@ function changImgFunc(results) {debugger
         if (document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod)){
         if(results[i].sre__est==0){                            
             document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_checkAct");   
-
+            document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("onclick", "disable();");
         }
         if(results[i].sre__est==99){     
         document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_checkCreate");
-
+        document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("onclick", "active();");
         }
         if(results[i].sre__est==1){     
         document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_checkBloq");
@@ -459,3 +468,10 @@ function changImgFunc(results) {debugger
 }
 
 } 
+function disable(){debugger
+    
+}
+function active(){debugger
+    
+}
+
