@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
+
+<!--To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+and open the template in the editor.-->
+
 <html>
     <head>
         <title>Supervisores De Region </title>
@@ -30,71 +30,63 @@ and open the template in the editor.
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link href="../css/estadoPedido.css" rel="stylesheet" type="text/css"/>
         <script src="../../js/servicios.js" type="text/javascript"></script>
-
+        
     </head>
     <body>
-                <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
-                    <tr data-uid="#: uid #"> 
-                    <td>
-                    <span class="title" id ="#: sre__cod #">#: sre__cod # </span>
-                    </td>
-                    <td>
-                    <span class="title" id ="#: rgeo__cod #">#: rgeo__cod # </span>
-                    </td>                    
-                    <td>
-                    <span class="title" id ="#: ter__nit #">#: ter__nit # </span>
-                    </td>
-                    <td>
-                    <span class="title" id ="#: ter__raz #">#: ter__raz # </span>
-                    </td>
-                    
-                    <td>
-                    <a  class='k-grid-check'><span title='check' id = "spanproceso#: rgeo__cod##: ter__nit##: sre__cod#" class='k-sprite po_checkCreate'></span></a>
-                    </td>
+        <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
+            <tr data-uid="#: uid #"> 
+            <td>
+            <span class="title" id ="#: sre__cod #">#: sre__cod # </span>
+            </td>
+            <td>
+            <span class="title" id ="#: rgeo__cod #">#: rgeo__cod # </span>
+            </td>                    
+            <td>
+            <span class="title" id ="#: ter__nit #">#: ter__nit # </span>
+            </td>
+            <td>
+            <span class="title" id ="#: ter__raz #">#: ter__raz # </span>
+            </td>
+            <td>
+            <a  class='k-grid-check'><span title='check' id = "spanproceso#: rgeo__cod##: ter__nit##: sre__cod#" class='k-sprite po_checkCreate'></span></a> 
+            <a  class='k-grid-edit'><span title='' id = "spanproceso#: sre__cod#" class='k-sprite po_editoff'></span></a>
+            <a  class='k-grid-deletae'><span title='' id = "spantarea#: sre__cod#" class='k-sprite po_cerrar'></span></a>
+                   
+            </td>
             
-                    <td>
-                    <a  class='k-grid-edit'><span title='' id = "spanproceso#: sre__cod#" class='k-sprite po_editoff'></span></a>
-                    <a  class='k-grid-deletae'><span title='' id = "spantarea#: sre__cod#" class='k-sprite po_cerrar'></span></a>
-                    </td>
-            
-                    </tr>
+            </tr>
         </script>
         <script id="altRowTemplateCmp" type="text/x-kendo-tmpl">
-                    <tr class="k-alt" data-uid="#: uid #">
-                    
-                    <td>
-                    <span class="title" id ="#: sre__cod #">#: sre__cod # </span>
-                    </td>
-                    <td>
-                    <span class="title" id ="#: rgeo__cod #">#: rgeo__cod # </span>
-                    </td>                    
-                    <td>
-                    <span class="title" id ="#: ter__nit #">#: ter__nit # </span>
-                    </td>
-                    <td>
-                    <span class="title" id ="#: ter__raz #">#: ter__raz # </span>
-                    </td>
-
-                    <td>
-                    <a  class='k-grid-check'><span title='check' id = "spanproceso#: rgeo__cod##: ter__nit##: sre__cod#" class='k-sprite po_checkCreate'></span></a>
-                    </td>
+            <tr class="k-alt" data-uid="#: uid #">
             
-                    <td>
-                    <a  class='k-grid-edit'><span title='' id = "spanproceso#: sre__cod#" class='k-sprite po_editoff'></span></a>
-                    <a  class='k-grid-deletae'><span title='' id = "spantarea#: sre__cod#" class='k-sprite po_cerrar'></span></a>
-
-                    </td>
-                    </tr>
-    
+            <td>
+            <span class="title" id ="#: sre__cod #">#: sre__cod # </span>
+            </td>
+            <td>
+            <span class="title" id ="#: rgeo__cod #">#: rgeo__cod # </span>
+            </td>                    
+            <td>
+            <span class="title" id ="#: ter__nit #">#: ter__nit # </span>
+            </td>
+            <td>
+            <span class="title" id ="#: ter__raz #">#: ter__raz # </span>
+            </td>
+            <td>
+            <a  class='k-grid-check'><span title='check' id = "spanproceso#: rgeo__cod##: ter__nit##: sre__cod#" class='k-sprite po_checkCreate'></span></a>
+            <a  class='k-grid-edit'><span title='' id = "spanproceso#: sre__cod#" class='k-sprite po_editoff'></span></a>
+            <a  class='k-grid-deletae'><span title='' id = "spantarea#: sre__cod#" class='k-sprite po_cerrar'></span></a>           
+            </td>
+            </tr>
+            
         </script>
         
         <div id="window1"></div>
         <script type="text/x-kendo-template" id="windowTemplate">
-
+            
             Esta seguro que desea eliminar <strong>#= gpd__des # /  </strong> 
-                    <br>
-                    <button class="k-button" id="yesButton">Si</button>
-                    <button class="k-button" id="noButton"> No</button>
+            <br>
+            <button class="k-button" id="yesButton">Si</button>
+            <button class="k-button" id="noButton"> No</button>
         </script>
         
         

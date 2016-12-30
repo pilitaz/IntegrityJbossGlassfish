@@ -95,7 +95,7 @@ $(document).ready(function () {
             { field: "proc__name", title: "Procesos",  hidden:false},
             {command:
                         [
-                     {name: "proceso", text: "", click: grafica, template: "<a title='procesos' class='k-grid-proceso'><span  title='comenzar' class='k-sprite pro_prooff'></span></a>"},
+                    {name: "proceso", text: "", click: grafica, template: "<a title='procesos' class='k-grid-proceso'><span  title='comenzar' class='k-sprite pro_prooff'></span></a>"},
                     {name: "tareas", text: "", click: grilla, template: "<a title='comenzar' class='k-grid-tareas'><span  title='comenzar' class='k-sprite pro_groupoff'></span></a>"},
                     {name: "editar", text: " ",  click: grafica, template: "<a class='k-grid-editar'><span class='k-sprite pro_graphoff '></span></a>"},
                     {name: "info", text: " ",  template: "<a class='k-grid-info'><span class='k-sprite pro_infooff'></span></a>"},

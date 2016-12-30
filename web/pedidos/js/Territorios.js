@@ -227,7 +227,7 @@ $(document).ready(function () {
                 field: "trr__est",
                 title: "Estado",
                 
-                template: "<a class='k-grid-check'><span class='k-sprite po_check_disabled'></span></a>",
+                template: "<a class='k-grid-check'><span class='k-sprite po_checkCreate'></span></a>",
                 width: "80px"
             },
             {command: [{name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
