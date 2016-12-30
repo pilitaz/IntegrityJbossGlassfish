@@ -339,6 +339,8 @@ function agregarItem(){
     
     var key1 = Object.keys(jsonDetalePed)[0];
     var key2 = Object.keys(jsonDetalePed[key1])[1];
+    debugger
+    jsonDetalePed[key1][key2][0].suc__cod = pedido.suc__cod;
     jsonDetalePed[key1][key2][0].clc__cod = codClaseArticulo;
     jsonDetalePed[key1][key2][0].ped__fec = pedido.ped__fec;//lista del cliente        
     jsonDetalePed[key1][key2][0].ped__num = pedido.ped__num;
