@@ -5,12 +5,6 @@
  */
 
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 var dsSIRgfc_fac = new Object();
 dsSIRgfc_fac.dsSIRgfc_fac = new Object();
 dsSIRgfc_fac.dsSIRgfc_fac.eeDatos = new Array();
@@ -41,9 +35,65 @@ $(document).ready(function () {
     dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picter_nit = "*";
 
     gridListaDePrecios();
+    var data = [
+        {text: "Creado", value: "99", clase: "po_checkCreate"},
+        {text: "Activo", value: "0", clase: "po_checkAct"},
+        {text: "Bloqueado", value: "1", clase: "po_checkBloq"}
+    ];
+    $("#fltrFIn").kendoDatePicker({
+        open: function () {
+            var calendar = this.dateView.calendar;
+            calendar.wrapper.width(this.wrapper.width() - 6);
+        },
+        change: onChangeFltr,
+        culture: "es-CO",
+        format: "yyyy/MM/dd",
+        value: new Date(sessionStorage.getItem("fechaSistema")),
+        disableDates: ["sa", "su"]
+    });
+    $("#fltrFIn").val(sessionStorage.getItem("fechaSistema"));
+    $("#fltrEst").kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "value",
+        change: onChangeFltr,
+        valueTemplate: "<span>#:data.text#</span>",
+        template: "<a class='k-grid-aprobar' '><span class='k-sprite #: data.clase #'></span></a>" +
+                '<span class="k-state-default"><h0>#: data.text #</h0>',
+        dataSource: data,
+        width: 400
+    });
 });
 
-function gridListaDePrecios() {
+function onChangeFltr() {
+    var json = {
+        "dsSIRgpr_lis": {
+            "eeDatos": [
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip": sessionStorage.getItem("ipPrivada"),
+                    "remote_ip": sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "eeSIRgpr_lis": [
+                {
+                    "picart_cod": "*",
+                    "piicla_cod": 0,
+                    "piilis_num": 0,
+                    "picmnd_cla": "*",
+                    "piilis_est": $("#fltrEst").val(),
+                    "pidfecha": $("#fltrFIn").val(),
+                }
+            ]
+        }
+    }
+    var obj = new SIRgpr_lis();
+    obj.setjson(json);
+    var objLPrecios = obj.getjson();
+    gridListaDePrecios(json);
+}
+
+function gridListaDePrecios(jsonSir) {
     var obj = new SIRgpr_lis();
     var objLPrecios = obj.getjson();
     var urlSir = obj.getUrlSir();
@@ -53,7 +103,10 @@ function gridListaDePrecios() {
     var objD = objCU.getjson();
     var urlD = objCU.getUrlSir();
     var mapDataD = objCU.getMapData();
-    
+    if (jsonSir) {
+        objLPrecios = jsonSir;
+    }
+
     dataSourceLPrecios = new kendo.data.DataSource({
         transport: {
             read: {
@@ -120,7 +173,7 @@ function gridListaDePrecios() {
 //            {field: "ter__nit", title: "&nbsp;"},
             {command:
                         [
-                            {name: "aprovar", click: aprobarListaPrecios, template: "<a class='k-grid-aprovar' href='' style='min-width:16px;'><span class='k-sprite po_cerrar'></span></a>"},
+                            {name: "aprobar", text: " ", click: aprobarListaPrecios, template: "<a class='k-grid-aprobar' '><span class='k-sprite po_cerrar'></span></a>"},
                             {name: "editar", text: " ", click: editarListaPrecios, template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},
                             {name: "copy", template: "<a class='k-grid-copy' href='' style='min-width:16px;'><span class='k-sprite po_copy'></span></a>"},
                             {name: "destroyed", click: clickEliminar, template: "<a class='k-grid-destroyed' href='' style='min-width:16px;'><span class='k-sprite po_cerrar'></span></a>"}
@@ -135,59 +188,50 @@ function gridListaDePrecios() {
 }
 
 function aprobarListaPrecios(e) {
-    e.preventDefault();
-    var listaPrecios = this.dataItem($(e.currentTarget).closest("tr"));
+    try {
+        var fila = $("#grid").data("kendoGrid")._data[($(e.currentTarget).closest("tr")["0"].sectionRowIndex)];
+        e.preventDefault();
+        var dataItem = fila;
 
-    var servicio = "listaPrecios";
-    sessionStorage.setItem("servicio", servicio);
-    sessionStorage.setItem("listaPrecios", JSON.stringify(listaPrecios));
-    window.location.replace((sessionStorage.getItem("url") + "mantenimientoListaPrecios/html/" + servicio + ".html"));
+
+        var actions = new Array();
+        actions[0] = new Object();
+        actions[0].text = "OK";
+        actions[0].action = function () {
+            if (fila.lis__est !== 1) {
+                if (fila.lis__est === 99) {
+                    fila.lis__est = 0;
+                } else {
+                    fila.lis__est = fila.lis__est + 1;
+                }
+            }
+            sendAjaxLpre("PUT", [fila]);
+            bandAlert = 0;
+        };
+        actions[1] = new Object();
+        actions[1].text = "Cancelar";
+        actions[1].action = function () {
+            bandAlert = 0;
+        };
+        createDialog("Atención", "Esta seguro de modificar el estado del registro ---" + fila.lis__des + " ---?", "400px", "200px", true, true, actions);
+
+    } catch (e) {
+        $('#grid').data('kendoGrid').dataSource.read();
+        $('#grid').data('kendoGrid').refresh();
+    }
 }
+
 
 function editarListaPrecios(e) {
     e.preventDefault();
     var listaPrecios = this.dataItem($(e.currentTarget).closest("tr"));
 
     sessionStorage.removeItem("opeListPre");
-    sessionStorage.setItem("opeListPre","edit");
+    sessionStorage.setItem("opeListPre", "edit");
     var servicio = "listaPrecios";
     sessionStorage.setItem("servicio", servicio);
     sessionStorage.setItem("listaPrecios", JSON.stringify(listaPrecios));
     window.location.replace((sessionStorage.getItem("url") + "mantenimientoListaPrecios/html/" + servicio + ".html"));
-}
-
-
-function crearListaPrecios() {
-    
-    sessionStorage.removeItem("opeListPre");
-    sessionStorage.setItem("listaPrecios","{'lis__num':'0'}");
-    sessionStorage.setItem("opeListPre","create");
-    var servicio = "listaPreciosCabecera";
-    sessionStorage.setItem("servicio", servicio);
-    
-    $("body").append("<div id='windowCab'></div>");
-    var myWindow = $("#windowCab");
-    var undo = $("#undo");
-
-    function onCloseCabecera() {
-        document.getElementById("windowCab").remove();
-        undo.fadeIn();
-    }
-
-    myWindow.kendoWindow({
-        width: "60%",
-        height: "40%",
-        title: "Busqueda",
-        content: sessionStorage.getItem("url") + "/mantenimientoListaPrecios/html/"+ servicio + ".html",
-        visible: false,
-        modal: true,
-        resizable: false,
-        actions: [
-            "Close"
-        ],
-        close: onCloseCabecera
-    }).data("kendoWindow").center().open();
-//    window.location.replace((sessionStorage.getItem("url") + "mantenimientoListaPrecios/html/" + servicio + ".html"));
 }
 
 function clickEliminar(e) {
@@ -214,83 +258,117 @@ function clickEliminar(e) {
         createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.lis__des + " ---?", "400px", "200px", true, true, actions);
 
     } catch (e) {
-        $('#gridPedidos').data('kendoGrid').dataSource.read();
-        $('#gridPedidos').data('kendoGrid').refresh();
+        $('#grid').data('kendoGrid').dataSource.read();
+        $('#grid').data('kendoGrid').refresh();
     }
 }
 
-function popUpFiltros() {
-    $("body").append("<div id='windowFiltros'></div>");
-    var myWindow = $("#windowFiltros");
+function crearListaPrecios() {
+
+    sessionStorage.removeItem("opeListPre");
+    sessionStorage.setItem("listaPrecios", "{'lis__num':'0'}");
+    sessionStorage.setItem("opeListPre", "create");
+    var servicio = "listaPreciosCabecera";
+    sessionStorage.setItem("servicio", servicio);
+
+    $("body").append("<div id='windowCab'></div>");
+    var myWindow = $("#windowCab");
     var undo = $("#undo");
 
-    function onCloseFiltros() {
-        document.getElementById("windowFiltros").remove();
+    function onCloseCabecera() {
+        document.getElementById("windowCab").remove();
         undo.fadeIn();
     }
 
     myWindow.kendoWindow({
-        width: "600px",
-        height: "300px",
-        title: "Busqueda",
-        content: sessionStorage.getItem("url") + "/facturacion/html/popUpFiltros.html",
+        width: "60%",
+        height: "40%",
+        title: "Agregar",
+        content: sessionStorage.getItem("url") + "/mantenimientoListaPrecios/html/" + servicio + ".html",
         visible: false,
         modal: true,
         resizable: false,
         actions: [
             "Close"
         ],
-        close: onCloseFiltros
+        close: onCloseCabecera
     }).data("kendoWindow").center().open();
+//    window.location.replace((sessionStorage.getItem("url") + "mantenimientoListaPrecios/html/" + servicio + ".html"));
 }
+
+
+
+
 
 function closePopUpFiltros() {
     $("#windowFiltros").data("kendoWindow").close();
 }
 
 function changImgFunc(listasPrecio) {
-//    <!--        lis_num: { type: "number" },
-//                    lis_det: { type: "string" },
-//                    fecha_ini: { type: "string" },                    
-//                    fecha_fin-->
 
     for (var i = 0; i < listasPrecio.length; i++) {
         var id = listasPrecio[i].lis__num;
-        if (listasPrecio[i].usuario_aprueba === "true") {
-            document.getElementById("aprobar" + id).setAttribute("class", "k-sprite po_check");
-            //document.getElementById("aprobar"+id).onclick = aprobar;
-        } else {
-            $("#aprobar" + id + "")["0"].className = "k-icon po_check_disabled";
-            //$("#aprobar"+id+"").style = "pointer-events: none;";
-//            document.getElementById("aprobar"+id).setAttribute("class", "k-sprite po_check_disabled");
-//            document.getElementById("aprobar"+id).onclick = "";
-//            document.getElementById("aprobar"+id).ondblclick = "";
+        debugger
+        if (listasPrecio[i].lis__est === 0) {
+            $("#aprobar" + id + "")["0"].className = "k-sprite po_checkAct";
+        } else if (listasPrecio[i].lis__est === 1) {
+            $("#aprobar" + id + "")["0"].className = "k-sprite po_checkBloq";
+        } else if (listasPrecio[i].lis__est === 99) {
+            $("#aprobar" + id + "")["0"].className = "k-sprite po_checkCreate";
         }
-
-//        else if(listasPrecio[i].fac__edo==="Contabilizado"){
-//            document.getElementById("imprimir"+id).setAttribute("class", "k-sprite po_print");
-//            document.getElementById("editar"+id).setAttribute("class", "k-sprite po_editoff");
-//        }else if(listasPrecio[i].fac__edo==="Anulado"){
-//            document.getElementById("imprimir"+id).setAttribute("class", "k-sprite po_print");
-//            document.getElementById("editar"+id).setAttribute("class", "k-sprite po_editoff");
-//        }
     }
 }
 
-function aprobar() {
-    alert("aprobar");
-}
 
-function cabGuard(jsonResp){
-   
+
+function cabGuard(jsonResp) {
+
 
     sessionStorage.removeItem("opeListPre");
-    sessionStorage.setItem("opeListPre","edit");
+    sessionStorage.setItem("opeListPre", "edit");
     var servicio = "listaPrecios";
     sessionStorage.setItem("servicio", servicio);
     sessionStorage.setItem("listaPrecios", jsonResp);
     window.location.replace((sessionStorage.getItem("url") + "mantenimientoListaPrecios/html/" + servicio + ".html"));
-    
+
     var myWindow = $("#windowCab");
     myWindow.data("kendoWindow").close();
+}
+
+function sendAjaxLpre(verHtml, obj) {
+    var objCU = new SICUDgpr_lis();
+    var objD = objCU.getjson();
+    var urlD = objCU.getUrlSir();
+    var mapDataD = objCU.getMapData();
+    var key1 = Object.keys(objD)[0];
+    objD[key1][mapDataD] = obj;
+
+    var jsonResp = "";
+    var permitirIngreso = "";
+    $.ajax({
+        type: verHtml,
+        data: JSON.stringify(objD),
+        url: urlD,
+        async: false,
+        dataType: "json",
+        contentType: "application/json;",
+        success: function (resp) {
+            var key1 = Object.keys(resp)[0];
+            permitirIngreso = JSON.stringify(resp[key1].eeEstados[0].Estado);
+            jsonResp = resp;
+            bandAlert = 0;
+        },
+        error: function (e) {
+            alertDialogs("Error al consumir el servicio de crear lista de precios" + e.status + " - " + e.statusText);
+            bandAlert = 0;
+        }
+    }).done(function () {
+        if (permitirIngreso == '"OK"') {
+            $('#grid').data('kendoGrid').dataSource.read();
+            $('#grid').data('kendoGrid').refresh();
+        } else {
+            alertDialogs("Problemas con el creación de crear lista de precios .\n" + permitirIngreso);
+        }
+
+    });
 }

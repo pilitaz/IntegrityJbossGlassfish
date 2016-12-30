@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
+var lis__est = 99;
+var lis__num = 0;
 $(document).ready(function () {
-
     var authdsinv_cla = new Object();
     authdsinv_cla.dsinv_cla = new Object();
     authdsinv_cla.dsinv_cla.eeDatos = new Array();
@@ -16,62 +15,22 @@ $(document).ready(function () {
     authdsinv_cla.dsinv_cla.eetemp = new Array();
     authdsinv_cla.dsinv_cla.eetemp[0] = new Object();
 
-//    $("#idClaseArticulo").kendoDropDownList({
-//        dataTextField: 'cla__des',
-//        dataValueField: 'cla__cod',
-//        optionLabel: "Seleccionar clase de articulo...",
-//        template: '<div class="divElementDropDownList">#: data.cla__des #</div>',
-//        dataSource: {
-//            type: "json",
-//            transport: {
-//                read: {
-//                    url: ipServicios + baseParameters + "SIRinv_cla",
-//                    contentType: "application/json; charset=utf-8",
-//                    dataType: "json",
-//                    type: "POST"
-//                },
-//                parameterMap: function (options, operation) {
-//                    try {
-//                        authdsinv_cla.dsinv_cla.eetemp[0].picsuc_cod = "00101";
-//                        if (operation === 'read') {
-//                            authdsinv_cla["eeinv_cla"] = [options];
-//                            return JSON.stringify(authdsinv_cla);
-//                        }
-//                    } catch (e) {
-//                        alertDialogs(e.message);
-//                    }
-//                }
-//            },
-//            schema: {
-//                type: "json",
-//                data: function (e) {
-//                    if (e.dsinv_cla.eeEstados[0].Estado === "OK") {
-//                        return e.dsinv_cla.eeinv_cla;
-//                    } else {
-//                        alertDialogs(e.dsinv_cla.eeEstados[0].Estado);
-//                    }
-//                },
-//                model: {
-//                    id: "cla__cod",
-//                    fields: {
-//                        cla__cod: {validation: {required: true}, type: 'number'},
-//                        cla__des: {validation: {required: true}, type: 'string'}
-//                    }
-//                }
-//            },
-//            error: function (xhr, error) {
-//                alertDialogs("Error de conexion del servidor " + xhr.xhr.status + " " + xhr.errorThrown);
-//            }
-//        }
-//    });
 
     $("#ipFechaInicio").kendoDatePicker({
+        open: function () {
+            var calendar = this.dateView.calendar;
+            calendar.wrapper.width(this.wrapper.width() - 6);
+        },
         culture: "es-CO",
         format: "yyyy/MM/dd",
         value: new Date(sessionStorage.getItem("fechaSistema")),
         disableDates: ["sa", "su"]
     });
     $("#ipFechaFin").kendoDatePicker({
+        open: function () {
+            var calendar = this.dateView.calendar;
+            calendar.wrapper.width(this.wrapper.width() - 6);
+        },
         culture: "es-CO",
         format: "yyyy/MM/dd",
         value: new Date(sessionStorage.getItem("fechaSistema")),
@@ -132,10 +91,25 @@ $(document).ready(function () {
         }
 
     });
+    var ope = sessionStorage.getItem("opeListPre");
+    if (ope === "edit") {
+        var obj = JSON.parse(sessionStorage.getItem("listaPrecios"));
+        lis__est = obj.lis__est;
+        lis__num = obj.lis__num;
+        $("#ipFechaInicio").val(obj.lis__fin);
+        $("#ipFechaFin").val(obj.lis__ffi);
+        $("#ipDescripcion").val(obj.lis__des);
+        $("#ipDivisa").data("kendoDropDownList").value(obj.mnd__cla);
+    }
     $("#buttonCab").kendoButton();
 });
 function clickBtnCabecera() {
-    sendAjaxAddCmpCon("POST");
+    var ope = sessionStorage.getItem("opeListPre");
+    if (ope === "edit") {
+        sendAjaxAddCmpCon("PUT");
+    }else{
+        sendAjaxAddCmpCon("POST");
+    }
 }
 
 function sendAjaxAddCmpCon(verHtml) {
@@ -147,10 +121,10 @@ function sendAjaxAddCmpCon(verHtml) {
     objD[key1][mapDataD][0] =
             {
                 "lis__des": $("#ipDescripcion").val(),
-                "lis__est": 0,
+                "lis__est": lis__est,
                 "lis__ffi": $("#ipFechaFin").val(),
                 "lis__fin": $("#ipFechaInicio").val(),
-                "lis__num": 0,
+                "lis__num": lis__num,
                 "mnd__cla": $("#ipDivisa").data("kendoDropDownList").value(),
             };
 

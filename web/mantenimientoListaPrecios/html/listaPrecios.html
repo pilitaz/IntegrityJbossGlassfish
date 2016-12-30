@@ -34,14 +34,14 @@ and open the template in the editor.
                             <td>
                                 <h1 id = "subtitulo" class="subTitulo">Lista de precios <label id="idNumerofactura"></label></h1>                                
                             </td>
-<!--                            <td style="width: 50px; text-align: right;">
-                                <a id ="btnGuardar" class="k-grid" onclick ="guardarListaPrecios()" aling="center"><span class="k-icon po_copy"></span></a>
-                            </td>-->
+                            <td style="width: 50px; text-align: right;">
+                                <a id ="btnGuardar" class="k-grid" onclick ="editCab()"><span class="k-sprite po_edit_sup"></span></a>
+                            </td>
 <!--                            <td style="width: 50px; text-align: right;">
                                 <a id ="btnGuardar" class="k-grid" onclick ="guardarFactura()" aling="center"><span class="k-icon po_saveon"></span></a>
                             </td>-->
                             <td style="width: 50px; text-align: right; padding-right: 10px">
-                                <a id ="btnCrear" class="k-grid" onclick ="volver()" aling="center"><span class="k-icon po_back"></span></a>
+                                <a id ="btnCrear" class="k-grid" onclick ="volver()" aling="center"><span class="k-sprite po_back"></span></a>
                             </td>
                         </tr>
                     </table>
@@ -64,7 +64,7 @@ and open the template in the editor.
                                         <label class="letraParrafo" >Descripción</label>
                                     </td>
                                     <td style="width: 70%">
-                                        <input id="ipDescripcion" class="k-textbox" style="width: 100%" required/>
+                                        <label id="ipDescripcion"  style="width: 100%" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -72,7 +72,7 @@ and open the template in the editor.
                                         <label class="letraParrafo">Divisa</label>
                                     </td>
                                     <td style="width: 70%">
-                                        <input id="ipDivisa" style="width: 100%"/>
+                                        <label id="ipDivisa" style="width: 100%"/>
                                     </td>
                                 </tr>
                             </table>
@@ -84,7 +84,7 @@ and open the template in the editor.
                                         <label class="letraParrafo">Fecha inicio:</label>
                                     </td>
                                     <td style="width: 70%">
-                                        <input id="ipFechaInicio" style="width: 100%" required/>
+                                        <label id="ipFechaInicio" style="width: 100%"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -92,7 +92,7 @@ and open the template in the editor.
                                         <label class="letraParrafo">Fecha fin:</label>
                                     </td>
                                     <td style="width: 70%">
-                                        <input id="ipFechaFin" style="width: 100%" required/>
+                                        <label id="ipFechaFin" style="width: 100%"/>
                                     </td>
                                 </tr>                                
                             </table>
@@ -130,7 +130,7 @@ and open the template in the editor.
                                 <h1 id = "subtitulo" class="subTitulo">Detalle</h1>
                             </td>
                             <td style="text-align: right; padding-right: 20">
-                                <a id ="btnCrear" class="k-grid" onclick ="agregarItemDetalle()" aling="center"><span class="k-icon po_mas"></span></a>
+                                <a id ="btnCrear" class="k-grid" onclick ="agregarItemDetalle()" aling="center"><span class="k-sprite po_mas"></span></a>
                             </td>
                         </tr>
                     </table>                    

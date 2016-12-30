@@ -17,13 +17,6 @@ $(window).resize(function () {
 });
 
 $(document).ready(function () {
-    
-    sessionStorage.setItem("usuario","alex_800001541");
-sessionStorage.setItem("ipPrivada","172.21.24.66");
-sessionStorage.setItem("ipPublica","190.144.16.114");
-sessionStorage.setItem("fechaSistema","2016/12/27");
-sessionStorage.setItem("picfiid","41136226684744032534");
-sessionStorage.setItem("companyNIT","800001541");
     grid();
 });
 
@@ -211,7 +204,7 @@ function popUpPedidoCU() {
     var myWindow = $("#windowPedidoCabecera");
     var undo = $("#undo");
 
-    function onCloseWindowItemFac() {
+    function onCloseWindowCabPedido() {
         document.getElementById("windowPedidoCabecera").remove();
         undo.fadeIn();
     }
@@ -226,10 +219,11 @@ function popUpPedidoCU() {
         actions: [
             "Close"
         ],
-        close: onCloseWindowItemFac
+        close: onCloseWindowCabPedido
     }).data("kendoWindow").center().open();
 }
 
-function closePopUpCabecera(){    
+function closePopUpCabecera(){       
     $("#windowPedidoCabecera").data("kendoWindow").close();
+    window.location.replace(( sessionStorage.getItem("url")+"pedidos/html/pedido"+".html"));  
 }

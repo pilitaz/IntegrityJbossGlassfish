@@ -19,7 +19,7 @@ function sir () {
 					"remote_ip":sessionStorage.getItem("ipPublica")
 				}
 			],
-			"SIRgpr_cla":[  
+			"eeSIRgpr_cla":[  
 				{  
 					"piicla__cli" : 0,
                     "piccial__cod" : "*"
@@ -58,7 +58,7 @@ function cud () {
     var url = ipServicios+baseComercial+"SICUDgpr_cla";
     var mapCud = "eegpr_cla";
     var dataInputCud = {
-		"dsgpr_cla":{  
+		"dsSICUDgpr_cla":{  
 			"eeDatos":[  
 				{  
 					"picusrcod":sessionStorage.getItem("usuario"),

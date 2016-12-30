@@ -55,14 +55,6 @@ and open the template in the editor.
             </tr>
             <tr>
                 <td class="tdIzquierdo">
-                    <label class="letraParrafo">Descripción</label>
-                </td>
-                <td class="tdDerecho">
-                    <input id="idDescripcion" class="k-textbox"  style="width: 100%" required/>
-                </td>
-            </tr>
-            <tr>
-                <td class="tdIzquierdo">
                     <label class="letraParrafo">Presentación</label>
                 </td>
                 <td class="tdDerecho">
@@ -72,8 +64,11 @@ and open the template in the editor.
             
             <tr>
                 <td class="tdBotones" colspan="2" >
-                    <button id="btAgregar" class="k-primary" onclick="agregarPrecio()" >Agregar</button>
-                    <button id="btCancelar" class="k-primary" onclick="btnCancelar()" >Cancelar</button>
+                    <div style="float:right; margin-right:10px;">
+                        <button id="btAgregar" class="k-primary" onclick="agregarPrecio()" >Agregar</button>
+                        <button id="btCancelar" class="k-primary" onclick="btnCancelar()" >Cancelar</button>
+                    </div>
+                    
                 </td>                
             </tr>
         </table>                    

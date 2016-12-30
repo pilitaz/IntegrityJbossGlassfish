@@ -41,7 +41,38 @@ and open the template in the editor.
         <div id="outerWrapper">
             <div id="grid" name="grid"></div>
         </div>
-        <div>
-        </div>
+        <script id="rowTemplate" type="text/x-kendo-tmpl">
+            <tr data-uid="#: uid #">
+            
+            <td>
+            <span class="title">#: cla__cli #</span>
+            </td>
+            <td>
+            <span class="title">#: cla__nom #</span>
+            </td> 
+            <td>
+            <a  class='k-grid-aprobar'><span id = "aprobar#: cla__cli#" class='k-sprite po_check' ></span></a>
+            <a  class='k-grid-editar'><span id = "editar#: cla__cli#" class='k-sprite po_editon'></span></a>
+            <a  class='k-grid-destroyed'><span id = "destroyed#: cla__cli#" class='k-sprite po_cerrar'></span></a>
+            </td>                
+            </tr>
+        </script>
+        <script id="altRowTemplate" type="text/x-kendo-tmpl">
+            <tr class="k-alt" data-uid="#: uid #">
+            
+            <td>
+            <span class="title">#: cla__cli #</span>
+            </td>
+            <td>
+            <span class="title">#: cla__nom #</span>
+            </td>
+            
+            <td>
+            <a  class='k-grid-aprobar'><span id = "aprobar#: cla__cli#" class='k-sprite po_check'  ></span></a>
+            <a  class='k-grid-edit'><span id = "edit#: cla__cli#" class='k-sprite po_editon'></span></a>
+            <a  class='k-grid-destroyed'><span id = "destroyed#: cla__cli#" class='k-sprite po_cerrar'></span></a>
+            </td>
+            </tr>
+        </script>
     </body>
 </html>

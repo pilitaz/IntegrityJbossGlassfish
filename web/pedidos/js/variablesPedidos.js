@@ -585,3 +585,188 @@ function sirConsultaCiudad() {
 
 };
 
+/**
+ * Funcion para obtener la url y el json de entrada para la lista de Pedidos
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function sirConsultaClasesDeArticulos() {
+    var mapData = "eeinv_cla";
+    var urlSir = ipServicios + baseParameters + "SIRinv_cla";
+ 
+    var json = {
+            "dsinv_cla": {
+		"eeDatos":[
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "fiid": sessionStorage.getItem("picfiid"),
+                }
+                ],
+                "eetemp": [
+                    {
+                        "picsuc_cod": "*"
+                    }
+                ]
+            }
+        };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
+};
+
+/**
+ * Funcion para obtener la url y el json de entrada para el autocomplete de articulo
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function sirConsultaArticulos() {
+    var mapData = "eeinv_art";
+    var urlSir = ipServicios + baseParameters + "SIRinv_art";
+    
+    var json = {
+            "dsinv_art": {
+		"eeDatos":[
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "fiid": sessionStorage.getItem("picfiid"),
+                }
+                ],
+                "eetemp": [
+                    {
+                        "piicla_cod": "*",
+                        "piilis_num": 1
+                    }
+                ]
+            }
+        };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
+};
+
+
+/**
+ * Funcion para obtener la url y el json de entrada guardar el detalle del pedido
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function SICUDDetallePedido() {
+    var mapData = "eegpd_ped_det";
+    var urlSir = ipServicios + baseComercial + "SICUDgpd_ped_det";
+    
+    var json = {
+            "dsSICUDgpd_ped_det": {
+		"eeDatos":[
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
+                }
+                ],
+                "eegpd_ped_det": [
+                {
+                    "suc__cod": "*",
+                    "clc__cod": "*",
+                    "ped__fec": "*",
+                    "ped__num": 0,
+                    "lis__num": 0,
+                    "cla__cod": 0,
+                    "art__cod": "*",
+                    "pre__pcod": "*",
+                    "ped__can": 0,
+                    "lpd__pre": 0,
+                    "ped__dct": 0,
+                    "ped__iva": 0
+                    }
+                ]
+            }
+        };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
+};

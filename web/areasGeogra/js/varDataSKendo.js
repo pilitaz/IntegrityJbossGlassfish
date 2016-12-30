@@ -19,7 +19,7 @@ function sir () {
 					"remote_ip":sessionStorage.getItem("ipPublica")
 				}
 			],
-			"SIRgpr_ageo":[  
+			"eeSIRgpr_ageo":[  
 				{  
 					"piiageo__cod" : 0
 				}
@@ -57,7 +57,7 @@ function cud () {
     var url = ipServicios+baseComercial+"SICUDgpr_ageo";
     var mapCud = "eegpr_ageo";
     var dataInputCud = {
-		"dsgpr_ageo":{  
+		"dsSICUDgpr_ageo":{  
 			"eeDatos":[  
 				{  
 					"picusrcod":sessionStorage.getItem("usuario"),

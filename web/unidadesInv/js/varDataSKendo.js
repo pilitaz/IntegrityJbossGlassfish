@@ -19,7 +19,7 @@ function sir () {
 					"remote_ip":sessionStorage.getItem("ipPublica")
 				}
 			],
-			"SIRinv_uni":[  
+			"eeSIRinv_uni":[  
 				{  
 					"picuni__cod" : "*",
                     "picuni__des" : "*"
@@ -58,7 +58,7 @@ function cud () {
     var url = ipServicios+baseInventarios+"SICUDinv_uni";
     var mapCud = "eeinv_uni";
     var dataInputCud = {
-		"dsinv_uni":{  
+		"dsSICUDinv_uni":{  
 			"eeDatos":[  
 				{  
 					"picusrcod":sessionStorage.getItem("usuario"),
