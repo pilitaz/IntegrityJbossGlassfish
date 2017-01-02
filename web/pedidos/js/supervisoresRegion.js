@@ -545,7 +545,7 @@ function changeEst(e){debugger
         actions[1].action = function () {debugger
             bandAlert = 0;
         };
-        createDialog("Atención", "Esta seguro de cambiar estado de Registro ---" + seleccion.rgeo__cod + " ---?", "400px", "200px", true, true, actions);
+        createDialog("Atención", "Esta seguro de cambiar estado de Registro ---" + seleccion.sre__cod + " ---?", "400px", "200px", true, true, actions);
 
     } catch (e) {debugger
         createDialog(e);
