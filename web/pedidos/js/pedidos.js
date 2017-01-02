@@ -103,7 +103,7 @@ function grid() {
 //            {field: "ter__nit", title: "&nbsp;"},
             {command:
                         [
-                            {name: "aprovar", click: ClickAprov, template: "<a class='k-grid-aprovar' href='' style='min-width:16px;'><span class='k-sprite po_cerrar'></span></a>"},
+                            {name: "aprobar", click: clickAprob, template: "<a class='k-grid-aprobar' href='' style='min-width:16px;'><span class='k-sprite po_check'></span></a>"},
                             {name: "editar", text: " ", click: ClickEditar, template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},
                             {name: "destroyed", click: clickEliminar, template: "<a class='k-grid-destroyed' href='' style='min-width:16px;'><span class='k-sprite po_cerrar'></span></a>"}
                         ],
@@ -148,7 +148,7 @@ function closePopUpFiltros() {
 function crearPedido() {
     popUpPedidoCU();
 }
-function ClickAprov() {
+function clickAprob() {
 
 }
 function ClickEditar(e) {

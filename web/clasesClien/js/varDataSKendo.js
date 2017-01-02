@@ -10,22 +10,23 @@ function sir () {
     var url = ipServicios+baseComercial+"SIRgpr_cla";
     var mapSir = "eegpr_cla";
     var dataInputSir = {
-		"dsSIRgpr_cla":{  
-			"eeDatos":[  
-				{  
-					"picusrcod":sessionStorage.getItem("usuario"),
-					"picfiid":sessionStorage.getItem("picfiid"),
-					"local_ip":sessionStorage.getItem("ipPrivada"),
-					"remote_ip":sessionStorage.getItem("ipPublica")
-				}
-			],
-			"eeSIRgpr_cla":[  
-				{  
-					"piicla__cli" : 0,
-                    "piccial__cod" : "*"
-				}
-			]
-		}
+            "dsSIRgpr_cla":{  
+                "eeDatos":[  
+                    {  
+                        "picusrcod":sessionStorage.getItem("usuario"),
+                        "picfiid":sessionStorage.getItem("picfiid"),
+                        "local_ip":sessionStorage.getItem("ipPrivada"),
+                        "remote_ip":sessionStorage.getItem("ipPublica")
+                    }
+                ],
+                "eeSIRgpr_cla":[  
+                    {  
+                        "piicla__cli" : 0,
+                        "piccial__cod" : "*",
+                        "piiclaest": -1,
+                    }
+                ]
+            }
 	};
     this.setUrlSir = function (newname) {
         if (newname) {
