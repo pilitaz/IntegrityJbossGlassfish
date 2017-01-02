@@ -6,6 +6,7 @@ var inputsir = objSir.getdataInputSir();
 
 $(document).ready(function() {
     var data = [
+        {text: "Todos", value: "-1", clase: ""},
         {text: "Creado", value: "99", clase: "po_checkCreate"},
         {text: "Activo", value: "0", clase: "po_checkAct"},
         {text: "Bloqueado", value: "1", clase: "po_checkBloq"}
@@ -110,7 +111,8 @@ function grilla(){
                         return JSON.stringify(inputsir);
                     }
                     else {
-                        var key1 = Object.keys(inputCud)[0] 
+                        var key1 = Object.keys(inputCud)[0];
+                        options.cla__est = 99;
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
                     }
@@ -124,6 +126,13 @@ function grilla(){
             data: function (e) {
                 var key1 = Object.keys(e)[0];
                 if (e[key1].eeEstados[0].Estado === "OK") {
+                    if(e[key1][mapSir]){
+                        for (var i = 0;i<e[key1][mapSir].length;i++){
+//                        e[key1][mapSir][i].id = i;
+                    }
+                    }else{
+                        grilla();
+                    }
                     return e[key1][mapSir];
                 } else {
                     alertDialogs(e[key1].eeEstados[0].Estado);
@@ -148,7 +157,14 @@ function grilla(){
         editable: "popup",
         rowTemplate: kendo.template($("#rowTemplate").html()),
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
-        dataBound:changImgFunc
+        dataBound:changImgFunc,
+        edit: function (e) {
+            if (!e.model.isNew()) {
+                e.container.kendoWindow("title", "Editar");
+            } else {
+                e.container.kendoWindow("title", "Crear");
+            }
+        }
     });
 }
 
@@ -178,14 +194,32 @@ $(window).resize(function () {
 });
 
 function deleteRow(e){
-    var grid = $("#grid").data("kendoGrid");
-    e.preventDefault(); //prevent page scroll reset
-    var tr = $(e.target).closest("tr"); //get the row for deletion
-    var data = this.dataItem(tr); //get the row data so it can be referred later
-    kendo.confirm("¿Esta seguro de eliminar este registro?").then(function () {
-        grid.dataSource.remove(data)  //prepare a "destroy" request
-        grid.dataSource.sync()
-    }); 
+     try {
+        var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
+        e.preventDefault();
+        var dataItem = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"));
+
+
+        var actions = new Array();
+        actions[0] = new Object();
+        actions[0].text = "OK";
+        actions[0].action = function () {
+            var dataSource = $("#grid").data("kendoGrid").dataSource;
+            dataSource.remove(dataItem);
+            dataSource.sync();
+            bandAlert = 0;
+        };
+        actions[1] = new Object();
+        actions[1].text = "Cancelar";
+        actions[1].action = function () {
+            bandAlert = 0;
+        };
+        createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.lis__des + " ---?", "400px", "200px", true, true, actions);
+
+    } catch (e) {
+        $('#grid').data('kendoGrid').dataSource.read();
+        $('#grid').data('kendoGrid').refresh();
+    }
 }
 
 //function cla__cliList(container, options){
