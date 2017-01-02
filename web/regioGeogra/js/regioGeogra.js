@@ -275,3 +275,41 @@ function changImgFunc(e){
     
 }
 
+function sendAjaxAClase(verHtml, obj) {
+    var objCU = new cud();
+    var objD = objCU.getdataInputCud();
+    var urlD = objCU.getUrlCud();
+    var mapDataD = objCU.getmapCud();
+    var key1 = Object.keys(objD)[0];
+    objD[key1][mapDataD] = obj;
+
+    var jsonResp = "";
+    var permitirIngreso = "";
+    $.ajax({
+        type: verHtml,
+        data: JSON.stringify(objD),
+        url: urlD,
+        async: false,
+        dataType: "json",
+        contentType: "application/json;",
+        success: function (resp) {
+            var key1 = Object.keys(resp)[0];
+            permitirIngreso = JSON.stringify(resp[key1].eeEstados[0].Estado);
+            jsonResp = resp;
+            bandAlert = 0;
+        },
+        error: function (e) {
+            alertDialogs("Error al consumir el servicio de crear lista de precios" + e.status + " - " + e.statusText);
+            bandAlert = 0;
+        }
+    }).done(function () {
+        if (permitirIngreso == '"OK"') {
+            $('#grid').data('kendoGrid').dataSource.read();
+            $('#grid').data('kendoGrid').refresh();
+        } else {
+            alertDialogs("Problemas con el creación de crear lista de precios .\n" + permitirIngreso);
+        }
+
+    });
+}
+
