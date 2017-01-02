@@ -6,6 +6,7 @@ var inputsir = objSir.getdataInputSir();
 
 $(document).ready(function() {
     var data = [
+        {text: "Todos", value: "-1", clase: ""},
         {text: "Creado", value: "99", clase: "po_checkCreate"},
         {text: "Activo", value: "0", clase: "po_checkAct"},
         {text: "Bloqueado", value: "1", clase: "po_checkBloq"}
