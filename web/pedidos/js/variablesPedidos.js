@@ -30,7 +30,7 @@ function sirConsultaPedidos() {
                     "picsuc_cod": "*",                    
                     "pidped_fec": "?",
                     "piiped_num": 0,
-                    "piiped_est": -1
+                    "piiped_est": 0
                 }
             ]
         }
@@ -732,7 +732,7 @@ function SICUDDetallePedido() {
                     "lis__num": 0,
                     "cla__cod": 0,
                     "art__cod": "*",
-                    "pre__pcod": "un",
+                    "pre__pcod": "*",
                     "ped__can": 0,
                     "lpd__pre": 0,
                     "ped__dct": 0,
