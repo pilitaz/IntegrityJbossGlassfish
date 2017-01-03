@@ -97,6 +97,7 @@ $(document).ready(function() {
                 parameterMap: function (options, operation) {                  
                     try {
                         if (operation === 'read') {
+                            
                             var key1 = Object.keys(jsonArticulos)[0];
                             var key2 = Object.keys(jsonArticulos[key1])[1];
                             jsonArticulos[key1][key2][0].piicla_cod = $("#idClaseArticulo").val();
@@ -331,7 +332,7 @@ function agregarItem(){
 //    if(parent.itemID !== null){
 //       verboHTML="PUT" ;
 //    }
-
+debugger
     var objDetalePed = new SICUDDetallePedido();
     var jsonDetalePed = objDetalePed.getjson();
     var urlDetalePed = objDetalePed.getUrlSir();
@@ -339,13 +340,14 @@ function agregarItem(){
     
     var key1 = Object.keys(jsonDetalePed)[0];
     var key2 = Object.keys(jsonDetalePed[key1])[1];
-    jsonDetalePed[key1][key2][0].clc__cod = codClaseArticulo;
+    jsonDetalePed[key1][key2][0].suc__cod = pedido.suc__cod;
+    jsonDetalePed[key1][key2][0].clc__cod = pedido.clc__cod;
     jsonDetalePed[key1][key2][0].ped__fec = pedido.ped__fec;//lista del cliente        
     jsonDetalePed[key1][key2][0].ped__num = pedido.ped__num;
     jsonDetalePed[key1][key2][0].lis__num = sessionStorage.getItem("listaPrecioCliente");
     jsonDetalePed[key1][key2][0].cla__cod = codClaseArticulo;//lista del cliente        
     jsonDetalePed[key1][key2][0].art__cod = codArticulo;    
-    //jsonDetalePed[key1][key2][0].pre__pcod = sessionStorage.getItem("listaPrecioCliente");//lista del cliente        
+    jsonDetalePed[key1][key2][0].pre__pcod = objArticulo.uni__cod;
     jsonDetalePed[key1][key2][0].ped__can = cantidad;
     jsonDetalePed[key1][key2][0].lpd__pre = valorUnitario;
     jsonDetalePed[key1][key2][0].ped__dct = descuento;   

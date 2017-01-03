@@ -267,7 +267,7 @@ $(document).ready(function () {
 });
 //funcion que incia la tarea de acuerdo a los parametros diseñados
 
-function iniciarTarea(e){debugger
+function iniciarTarea(e){
              $("#formvacations").append("<div id='windowform'></div>");
         var myWindow1 = $("#windowform"),undo = $("#undo");
                 
@@ -396,7 +396,7 @@ function grilla(e){
 function disable(){
     
 }
-function changImgFunc1(results) {debugger
+function changImgFunc1(results) {
    var results =  $('#grid1').data('kendoGrid')._data;
     var consultar = new serviTime();
     var datajson = consultar.getjson();

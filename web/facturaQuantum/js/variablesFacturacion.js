@@ -77,13 +77,13 @@ authdsinv_cla.dsinv_cla.eetemp[0] = new Object();
 //console.log(JSON.stringify(authdsinv_cla));
 
 var authdsinv_art = new Object();
-authdsinv_art.dsinv_art = new Object();
-authdsinv_art.dsinv_art.eeDatos = new Array();
-authdsinv_art.dsinv_art.eeDatos[0] = new Object();
-authdsinv_art.dsinv_art.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
-authdsinv_art.dsinv_art.eeDatos[0].fiid = sessionStorage.getItem("picfiid");
-authdsinv_art.dsinv_art.eetemp = new Array();
-authdsinv_art.dsinv_art.eetemp[0] = new Object();
+authdsinv_art.dsSIRinv_art = new Object();
+authdsinv_art.dsSIRinv_art.eeDatos = new Array();
+authdsinv_art.dsSIRinv_art.eeDatos[0] = new Object();
+authdsinv_art.dsSIRinv_art.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
+authdsinv_art.dsSIRinv_art.eeDatos[0].fiid = sessionStorage.getItem("picfiid");
+authdsinv_art.dsSIRinv_art.eeSIRinv_art = new Array();
+authdsinv_art.dsSIRinv_art.eeSIRinv_art[0] = new Object();
 //console.log(JSON.stringify(authdsinv_art));
 
 var authdsgpr_lis = new Object();

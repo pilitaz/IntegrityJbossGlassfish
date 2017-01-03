@@ -18,7 +18,7 @@ $(window).resize(function () {
  *   
  *  
  *  
- */ function newrol(){debugger
+ */ function newrol(){
     var grid1 = $("#grid").data("kendoGrid");
     var dataSource = $("#grid").data("kendoGrid").dataSource;
                             
@@ -27,7 +27,7 @@ $(window).resize(function () {
     grid1.options.editable = "popup";
                             
 }
-function editar_rol(){debugger
+function editar_rol(){
                 	
                     
     var grid1 = $("#grid").data("kendoGrid");
@@ -112,10 +112,10 @@ $(document).ready(function () {
                 contentType: "application/json; charset=utf-8"
             },
             parameterMap: function (options, operation) {
-                if (operation === "read") {debugger
+                if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
-                if (operation === "update") {debugger
+                if (operation === "update") {
                     var cedula = $("#cedula").data("kendoDropDownList").text();
                      var region = $("#region").data("kendoDropDownList").text();
                      var x=0;
@@ -129,7 +129,7 @@ $(document).ready(function () {
                                         
                                         
                 }
-                if (operation === "create") {debugger
+                if (operation === "create") {
                      var cedula = $("#cedula").data("kendoDropDownList").text();
                      var region = $("#region").data("kendoDropDownList").text();
                      var x=0;
@@ -144,7 +144,7 @@ $(document).ready(function () {
                     $('#grid').data('kendoGrid').dataSource.read();
                     $('#grid').data('kendoGrid').refresh();                                     
                 }
-                if (operation === "destroy") {debugger
+                if (operation === "destroy") {
                          
                     actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod=options.rgeo__cod;  
                     actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod=options.sre__cod; 
@@ -164,7 +164,7 @@ $(document).ready(function () {
         batch: false,
         severFiltering: true,                            
         schema: {
-            data: function (e) {debugger
+            data: function (e) {
                 var key1 = Object.keys(e)[0];
                 if(e[key1].eeEstados){
                     if (e[key1].eeEstados[0].Estado === "OK") {
@@ -220,7 +220,7 @@ $(document).ready(function () {
         columns: [ 
             {field: "str__cod", title: "Cod Supervisor",  hidden:false},
             {field: "ter__nit", title: "Nit",  hidden:false,editor: filtroestado,
-                template: function (e) {debugger
+                template: function (e) {
                     return e.ter__nit;
                 }},   
             {field: "ter__raz", title: "Nombre",  hidden:false},
@@ -241,7 +241,7 @@ $(document).ready(function () {
                     {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "140px"}],
              editable: "popup",
-                edit: function(e) {debugger
+                edit: function(e) {
             if (!e.model.isNew()) {//caso en el que el popup es editar
 
                 e.container.find("input[name=ter__raz]")[0].readOnly="true"
@@ -280,7 +280,7 @@ $(document).ready(function () {
         filter: "startswith"                    
     });
 
-     function clickEliminar(e) {debugger
+     function clickEliminar(e) {
     try {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
@@ -308,7 +308,7 @@ $(document).ready(function () {
     }
 }                   
                         
- function filtroestado(container, options) {debugger
+ function filtroestado(container, options) {
 
     var estados = [
         {text: "1010161021", valor: "1"},
@@ -368,7 +368,7 @@ $(document).ready(function () {
             }
         }
         // for para colorear chulo de ventas
-        for (var i = 0; i < results.length; i++) {debugger
+        for (var i = 0; i < results.length; i++) {
             if (document.getElementById("spanvta"+results[i].str__cod+results[i].ter__nit+results[i].trr__cod)){
                 if(results[i].str__vta===true){                            
                     document.getElementById("spanvta"+results[i].str__cod+results[i].ter__nit+results[i].trr__cod).setAttribute("class", "k-sprite po_check");   
@@ -379,7 +379,7 @@ $(document).ready(function () {
             }
         }
         // for para colorear chulo de recaudo
-        for (var i = 0; i < results.length; i++) {debugger
+        for (var i = 0; i < results.length; i++) {
             if (document.getElementById("spanrec"+results[i].str__cod+results[i].ter__nit+results[i].trr__cod)){
                 if(results[i].str__rec===true){                            
                     document.getElementById("spanrec"+results[i].str__cod+results[i].ter__nit+results[i].trr__cod).setAttribute("class", "k-sprite po_check");   
@@ -392,7 +392,7 @@ $(document).ready(function () {
         }
 
     } 
-    function changeEst(e){debugger
+    function changeEst(e){
     var  actualizar = new cudSupArea();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
@@ -402,7 +402,7 @@ $(document).ready(function () {
         var actions = new Array();
         actions[0] = new Object();
         actions[0].text = "OK";
-        actions[0].action = function () {debugger
+        actions[0].action = function () {
             if(seleccion.sar__est==0){  
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].sar__cod=seleccion.sar__cod;  
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].pai__cod=seleccion.pai__cod;  
@@ -418,7 +418,7 @@ $(document).ready(function () {
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_sar.eeEstados[0].Estado)=="OK")
                         {     
                             $('#grid').data('kendoGrid').refresh();
@@ -452,7 +452,7 @@ $(document).ready(function () {
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_sar.eeEstados[0].Estado)=="OK")
                         {          
                             $('#grid').data('kendoGrid').refresh();
@@ -474,12 +474,12 @@ $(document).ready(function () {
         };
         actions[1] = new Object();
         actions[1].text = "Cancelar";
-        actions[1].action = function () {debugger
+        actions[1].action = function () {
             bandAlert = 0;
         };
         createDialog("Atención", "Esta seguro de cambiar el estado de Registro ---" + seleccion.sar__cod + " ---?", "400px", "200px", true, true, actions);
 
-    } catch (e) {debugger
+    } catch (e) {
         createDialog(e);
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();
@@ -487,7 +487,7 @@ $(document).ready(function () {
     
  
 } 
-    function ventas(e){debugger
+    function ventas(e){
     var  actualizar = new cudSupArea();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
@@ -497,7 +497,7 @@ $(document).ready(function () {
         var actions = new Array();
         actions[0] = new Object();
         actions[0].text = "OK";
-        actions[0].action = function () {debugger
+        actions[0].action = function () {
             if(seleccion.sar__est==0){  
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].sar__cod=seleccion.sar__cod;  
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].pai__cod=seleccion.pai__cod;  
@@ -513,7 +513,7 @@ $(document).ready(function () {
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_sar.eeEstados[0].Estado)=="OK")
                         {     
                             $('#grid').data('kendoGrid').refresh();
@@ -547,7 +547,7 @@ $(document).ready(function () {
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_sar.eeEstados[0].Estado)=="OK")
                         {          
                             $('#grid').data('kendoGrid').refresh();
@@ -569,12 +569,12 @@ $(document).ready(function () {
         };
         actions[1] = new Object();
         actions[1].text = "Cancelar";
-        actions[1].action = function () {debugger
+        actions[1].action = function () {
             bandAlert = 0;
         };
         createDialog("Atención", "Esta seguro de cambiar el estado de Registro ---" + seleccion.sar__cod + " ---?", "400px", "200px", true, true, actions);
 
-    } catch (e) {debugger
+    } catch (e) {
         createDialog(e);
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();
@@ -582,7 +582,7 @@ $(document).ready(function () {
     
  
 } 
-    function recaudo(e){debugger
+    function recaudo(e){
     var  actualizar = new cudSupArea();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
@@ -592,7 +592,7 @@ $(document).ready(function () {
         var actions = new Array();
         actions[0] = new Object();
         actions[0].text = "OK";
-        actions[0].action = function () {debugger
+        actions[0].action = function () {
             if(seleccion.sar__est==0){  
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].sar__cod=seleccion.sar__cod;  
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].pai__cod=seleccion.pai__cod;  
@@ -608,7 +608,7 @@ $(document).ready(function () {
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_sar.eeEstados[0].Estado)=="OK")
                         {     
                             $('#grid').data('kendoGrid').refresh();
@@ -642,7 +642,7 @@ $(document).ready(function () {
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_sar.eeEstados[0].Estado)=="OK")
                         {          
                             $('#grid').data('kendoGrid').refresh();
@@ -664,12 +664,12 @@ $(document).ready(function () {
         };
         actions[1] = new Object();
         actions[1].text = "Cancelar";
-        actions[1].action = function () {debugger
+        actions[1].action = function () {
             bandAlert = 0;
         };
         createDialog("Atención", "Esta seguro de cambiar el estado de Registro ---" + seleccion.sar__cod + " ---?", "400px", "200px", true, true, actions);
 
-    } catch (e) {debugger
+    } catch (e) {
         createDialog(e);
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();

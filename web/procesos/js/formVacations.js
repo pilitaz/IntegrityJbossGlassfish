@@ -3,7 +3,7 @@ $(document).ready(function () {
 
 });
                               
-function ayuda(){debugger
+function ayuda(){
     var estado = document.getElementById("btnayuda").attributes[3].nodeValue;
     if (estado ==="on"){
         $("#mensaje").empty();

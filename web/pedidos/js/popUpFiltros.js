@@ -18,7 +18,7 @@ $(document).ready(function () {
     });
     
     var estadosPedido = [
-        { text: "Todos", value: "*" },
+        { text: "Todos", value: "-1" },
         { text: "Creado", value: "1" },
         { text: "Aprobado", value: "2" },
         { text: "Asignado", value: "3" },
