@@ -10,22 +10,24 @@ function sir () {
     var url = ipServicios+baseComercial+"SIRgpr_ageo";
     var mapSir = "eegpr_ageo";
     var dataInputSir = {
-		"dsSIRgpr_ageo":{  
-			"eeDatos":[  
-				{  
-					"picusrcod":sessionStorage.getItem("usuario"),
-					"picfiid":sessionStorage.getItem("picfiid"),
-					"local_ip":sessionStorage.getItem("ipPrivada"),
-					"remote_ip":sessionStorage.getItem("ipPublica")
-				}
-			],
-			"eeSIRgpr_ageo":[  
-				{  
-					"piiageo__cod" : 0
-				}
-			]
-		}
-	};
+        "dsSIRgpr_ageo": {
+            "eeDatos": [
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip": sessionStorage.getItem("ipPrivada"),
+                    "remote_ip": sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "eeSIRgpr_ageo": [
+                {
+                    "piiageo__cod": 0,
+                    "picusuario": "*",
+                    "piiageo__est": -1
+                }
+            ]
+        }
+    };
     this.setUrlSir = function (newname) {
         if (newname) {
             url = newname;

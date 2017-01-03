@@ -95,4 +95,93 @@ function cud () {
 		};
 };
 
+function SIRgpr_ageo () {
+    var url = ipServicios+baseComercial+"SIRgpr_ageo";
+    var mapSir = "eegpr_ageo";
+    var dataInputSir = {
+        "dsSIRgpr_ageo": {
+            "eeDatos": [
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip": sessionStorage.getItem("ipPrivada"),
+                    "remote_ip": sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "eeSIRgpr_ageo": [
+                {
+                    "piiageo__cod": 0,
+                    "picusuario": "*",
+                    "piiageo__est": -1
+                }
+            ]
+        }
+    };
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            url = newname;
+		}
+	};
+    this.getUrlSir = function () {
+        return url;
+	};
+    this.setmapSir = function (newname) {
+        if (newname) {
+            mapSir = newname;
+		}
+	};
+    this.getmapSir = function () {
+        return mapSir;
+	};
+    this.setdataInputSir = function (newname) {
+        if (newname) {
+            dataInputSir = newname;
+		}
+	};
+    this.getdataInputSir = function () {
+        return dataInputSir;
+	};
+};
+
+function SIRsic_ciu_pais () {
+    var url = ipServicios+baseParameters+"SIRsic_ciu_pais";
+    var mapSir = "eesic_ciu";
+    var dataInputSir = {
+        "dsSIRsic_ciu": {
+            "eeDatos": [
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip": sessionStorage.getItem("ipPrivada"),
+                    "remote_ip": sessionStorage.getItem("ipPublica")
+                }
+            ]
+        }
+    };
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            url = newname;
+		}
+	};
+    this.getUrlSir = function () {
+        return url;
+	};
+    this.setmapSir = function (newname) {
+        if (newname) {
+            mapSir = newname;
+		}
+	};
+    this.getmapSir = function () {
+        return mapSir;
+	};
+    this.setdataInputSir = function (newname) {
+        if (newname) {
+            dataInputSir = newname;
+		}
+	};
+    this.getdataInputSir = function () {
+        return dataInputSir;
+	};
+};
+
 

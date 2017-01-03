@@ -3,6 +3,7 @@ var objSir = new sir();
 var urlSir = objSir.getUrlSir(); 
 var mapSir = objSir.getmapSir();
 var inputsir = objSir.getdataInputSir();
+var est= "cla__est";
 
 $(document).ready(function() {
     var data = [
@@ -48,7 +49,7 @@ function grilla(){
     
     /*variable id es el id correspondiente a la tabla a cansultar*/
     var model = {
-        id:"cla__cli",	
+        id:"id",	
         fields: fieldShema
     };
 	
@@ -70,7 +71,7 @@ function grilla(){
     /*hiden: true --- ocultar en grilla*/
     var columns = [
         //btnDer,
-        {field: "cla__cli", title: "ID",width: "100%"},
+//        {field: "cla__cli", title: "ID",width: "100%"},
         {field: "cla__nom", title: "Clase Cliente",width: "100%"},
         //            {field: "act__cod", title: "Actividad",width: "100%"},
         //            {field: "cto__cod", title: "Centro de Actividad",width: "100%"},
@@ -110,9 +111,15 @@ function grilla(){
                     if (operation === 'read') {
                         return JSON.stringify(inputsir);
                     }
+                     else if (operation === 'create') {
+                        var key1 = Object.keys(inputCud)[0]
+                        options[est] = 99;
+                        inputCud[key1][mapCud] = [options];
+                        return JSON.stringify(inputCud);
+                        
+                    }
                     else {
                         var key1 = Object.keys(inputCud)[0];
-                        options.cla__est = 99;
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
                     }
@@ -128,7 +135,7 @@ function grilla(){
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     if(e[key1][mapSir]){
                         for (var i = 0;i<e[key1][mapSir].length;i++){
-//                        e[key1][mapSir][i].id = i;
+                        e[key1][mapSir][i].id = i;
                     }
                     }else{
                         grilla();
@@ -157,9 +164,12 @@ function grilla(){
         editable: "popup",
         rowTemplate: kendo.template($("#rowTemplate").html()),
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
-        dataBound:changImgFunc,
         edit: function (e) {
             if (!e.model.isNew()) {
+                if(e.model[est] != 99 ){
+                    e.container.find("input[name=cla__nom]")[0].readOnly="true";
+                    e.container.find("div.k-edit-buttons")[0].style.display = "none";
+                }
                 e.container.kendoWindow("title", "Editar");
             } else {
                 e.container.kendoWindow("title", "Crear");
@@ -193,29 +203,31 @@ $(window).resize(function () {
     $('#outerWrapper').height(viewportHeight - 61);
 });
 
-function deleteRow(e){
-     try {
+function deleteRow(e) {
+    try {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
         var dataItem = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"));
-
-
-        var actions = new Array();
-        actions[0] = new Object();
-        actions[0].text = "OK";
-        actions[0].action = function () {
-            var dataSource = $("#grid").data("kendoGrid").dataSource;
-            dataSource.remove(dataItem);
-            dataSource.sync();
-            bandAlert = 0;
-        };
-        actions[1] = new Object();
-        actions[1].text = "Cancelar";
-        actions[1].action = function () {
-            bandAlert = 0;
-        };
-        createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.lis__des + " ---?", "400px", "200px", true, true, actions);
-
+        if (dataItem[est] == 99) {
+            debugger
+            var actions = new Array();
+            actions[0] = new Object();
+            actions[0].text = "OK";
+            actions[0].action = function () {
+                var dataSource = $("#grid").data("kendoGrid").dataSource;
+                dataSource.remove(dataItem);
+                dataSource.sync();
+                bandAlert = 0;
+            };
+            actions[1] = new Object();
+            actions[1].text = "Cancelar";
+            actions[1].action = function () {
+                bandAlert = 0;
+            };
+            createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.cla__nom + " ---?", "400px", "200px", true, true, actions);
+        }else{
+            alertDialogs("El registro no puede ser eliminado.")
+        }
     } catch (e) {
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();
@@ -373,20 +385,7 @@ function deleteRow(e){
 
 
 //-------------------------------------------------
-function changImgFunc(e){
-    var objClase = e.sender._data;
-    for (var i = 0; i < objClase.length; i++) {
-        var id = objClase[i].cla__cli;
-        if (objClase[i].cla__est === 0) {
-            $("#aprobar" + id + "")["0"].className = "k-sprite po_checkAct";
-        } else if (objClase[i].cla__est === 1) {
-            $("#aprobar" + id + "")["0"].className = "k-sprite po_checkBloq";
-        } else if (objClase[i].cla__est === 99) {
-            $("#aprobar" + id + "")["0"].className = "k-sprite po_checkCreate";
-        }
-    }
-    
-}
+
 function aprobarClase(e) {
     try {
         var fila = $("#grid").data("kendoGrid")._data[($(e.currentTarget).closest("tr")["0"].sectionRowIndex)];
@@ -398,11 +397,11 @@ function aprobarClase(e) {
         actions[0] = new Object();
         actions[0].text = "OK";
         actions[0].action = function () {
-            if (fila.cla__est !== 1) {
-                if (fila.cla__est === 99) {
-                    fila.cla__est = 0;
+            if (fila[est] !== 1) {
+                if (fila[est] === 99) {
+                    fila[est] = 0;
                 } else {
-                    fila.cla__est = fila.cla__est + 1;
+                    fila[est] = fila[est] + 1;
                 }
             }
             sendAjaxAClase("PUT", [fila]);
@@ -413,7 +412,7 @@ function aprobarClase(e) {
         actions[1].action = function () {
             bandAlert = 0;
         };
-        createDialog("Atención", "Esta seguro de modificar el estado del registro ---" + fila.cla__est + " ---?", "400px", "200px", true, true, actions);
+        createDialog("Atención", "Esta seguro de modificar el estado del registro ---" + fila[est] + " ---?", "400px", "200px", true, true, actions);
 
     } catch (e) {
         $('#grid').data('kendoGrid').dataSource.read();
