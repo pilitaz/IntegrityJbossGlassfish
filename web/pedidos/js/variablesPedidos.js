@@ -30,7 +30,7 @@ function sirConsultaPedidos() {
                     "picsuc_cod": "*",                    
                     "pidped_fec": "?",
                     "piiped_num": 0,
-                    "piiped_est": 0
+                    "piiped_est": -1
                 }
             ]
         }
@@ -652,17 +652,17 @@ function sirConsultaClasesDeArticulos() {
  */
 function sirConsultaArticulos() {
     var mapData = "eeinv_art";
-    var urlSir = ipServicios + baseParameters + "SIRinv_art";
+    var urlSir = ipServicios + baseInventarios + "SIRinv_art";
     
     var json = {
-            "dsinv_art": {
+            "dsSIRinv_art": {
 		"eeDatos":[
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
                     "fiid": sessionStorage.getItem("picfiid"),
                 }
                 ],
-                "eetemp": [
+                "eeSIRinv_art": [
                     {
                         "piicla_cod": "*",
                         "piilis_num": 1

@@ -89,9 +89,11 @@ $(document).ready(function () {
                     type: "POST"
                 },
                 parameterMap: function (options, operation) {
+                    
                     var key1 = Object.keys(objArt)[0];
-                    objArt[key1]["eetemp"][0].piicla_cod = $("#idClaseArticulo").val();
-                    objArt[key1]["eetemp"][0].picart_des = $("#idArticulo").val();
+                    var key2 = Object.keys(objArt[key1])[1];
+                    objArt[key1][key2][0].piicla_cod = $("#idClaseArticulo").val();
+                    objArt[key1][key2][0].picart_des = $("#idArticulo").val();
                     try {
                         if (operation === 'read') {
                             return JSON.stringify(objArt);

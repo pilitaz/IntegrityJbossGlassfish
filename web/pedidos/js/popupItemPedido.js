@@ -97,6 +97,7 @@ $(document).ready(function() {
                 parameterMap: function (options, operation) {                  
                     try {
                         if (operation === 'read') {
+                            debugger
                             var key1 = Object.keys(jsonArticulos)[0];
                             var key2 = Object.keys(jsonArticulos[key1])[1];
                             jsonArticulos[key1][key2][0].piicla_cod = $("#idClaseArticulo").val();

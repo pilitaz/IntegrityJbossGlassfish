@@ -163,7 +163,7 @@ function volver() {
 }
 
 function cargarDatosGrilla(objCab, ope) {
-    debugger
+    
     var obj = new SIRgpr_lis_det();
     var objLPreciosDeta = obj.getjson();
     var urlSir = obj.getUrlSir();
@@ -330,7 +330,7 @@ function editCab() {
 //    window.location.replace((sessionStorage.getItem("url") + "mantenimientoListaPrecios/html/" + servicio + ".html"));
 }
 function cabGuard(jsonResp) {
-    debugger
+    
     sessionStorage.setItem("listaPrecios", jsonResp);
     cambiarInput();
     var myWindow = $("#windowCab");

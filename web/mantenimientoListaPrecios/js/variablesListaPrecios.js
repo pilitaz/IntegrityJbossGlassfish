@@ -272,9 +272,9 @@ function SICUDgpr_lisDet() {
  */
 function SIRinv_art() {
     var mapData = "eeinv_art";
-    var urlSir = ipServicios + baseParameters + "SIRinv_art";
+    var urlSir = ipServicios + baseInventarios + "SIRinv_art";
     var json = {
-        "dsinv_art": {
+        "dsSIRinv_art": {
             "eeDatos": [
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
@@ -283,7 +283,7 @@ function SIRinv_art() {
                     "remote_ip": sessionStorage.getItem("ipPublica")
                 }
             ],
-            "eetemp": [
+            "eeSIRinv_art": [
                 {
                     "piicla_cod": "",
                     "picart_des": ""

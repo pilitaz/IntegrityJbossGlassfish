@@ -489,7 +489,7 @@ function filtroestado(container, options) {
  *  
  *  
  *  
- */ function passEditorPopup(container, options) {debugger
+ */ function passEditorPopup(container, options) {
     $('<input id ="clave1" type = \"password\"  onkeyup = \"mostrarcampo(event)\" required name="' + options.field + '" />')
             .appendTo(container)
             .kendoMaskedTextBox({
@@ -504,7 +504,7 @@ function filtroestado(container, options) {
  *  id clave2 campo para validar contraseña 
  *  
  */
-function onkeypass(container, options) {debugger
+function onkeypass(container, options) {
     $('<input id ="clave2" type = \"password\"" name="' + options.field + '" />')
             .appendTo(container)
             .kendoMaskedTextBox({
@@ -523,7 +523,7 @@ function onkeypass(container, options) {debugger
  *  
  */
 
-function mostrarcampo(e) {debugger
+function mostrarcampo(e) {
    var Tecla= e.which;
    
     if (Tecla == 13)

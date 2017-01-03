@@ -18,7 +18,7 @@ $(window).resize(function () {
  *   
  *  
  *  
- */ function newrol(){debugger
+ */ function newrol(){
     var grid1 = $("#grid").data("kendoGrid");
     var dataSource = $("#grid").data("kendoGrid").dataSource;
                             
@@ -27,7 +27,7 @@ $(window).resize(function () {
     grid1.options.editable = "popup";
                             
 }
-function editar_rol(){debugger
+function editar_rol(){
                 	
                     
     var grid1 = $("#grid").data("kendoGrid");
@@ -112,10 +112,10 @@ $(document).ready(function () {
                 contentType: "application/json; charset=utf-8"
             },
             parameterMap: function (options, operation) {
-                if (operation === "read") {debugger
+                if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
-                if (operation === "update") {debugger
+                if (operation === "update") {
                     var cedula = $("#cedula").data("kendoDropDownList").text();  
                      actjson.dsSICUDgpd_trr.eegpd_trr[0].trr__cod=options.trr__cod;
                     actjson.dsSICUDgpd_trr.eegpd_trr[0].rgeo__cod=parseInt(cedula);  
@@ -126,7 +126,7 @@ $(document).ready(function () {
                                         
                                         
                 }
-                if (operation === "create") {debugger
+                if (operation === "create") {
                      var cedula = $("#cedula").data("kendoDropDownList").text();
                     
                     actjson.dsSICUDgpd_trr.eegpd_trr[0].rgeo__cod=parseInt(cedula);  
@@ -139,7 +139,7 @@ $(document).ready(function () {
                     $('#grid').data('kendoGrid').dataSource.read();
                     $('#grid').data('kendoGrid').refresh();                                     
                 }
-                if (operation === "destroy") {debugger
+                if (operation === "destroy") {
                     //var cedula = $("#cedula").data("kendoDropDownList").text();
                     actjson.dsSICUDgpd_trr.eegpd_trr[0].trr__cod=options.trr__cod;
                     actjson.dsSICUDgpd_trr.eegpd_trr[0].rgeo__cod=options.rgeo__cod;  
@@ -163,7 +163,7 @@ $(document).ready(function () {
         batch: false,
         severFiltering: true,                            
         schema: {
-            data: function (e) {debugger
+            data: function (e) {
                 var key1 = Object.keys(e)[0];
                 if(e[key1].eeEstados){
                     if (e[key1].eeEstados[0].Estado === "OK") {
@@ -219,7 +219,7 @@ $(document).ready(function () {
             {field: "trr__cod", title: "Codigo Terrotorio ",  hidden:false},  
             {field: "trr__nom", title: "Territorio ",  hidden:false},   
             {field: "rgeo__cod", title: "Cod Region",  hidden:false,editor: region,
-                template: function (e) {debugger
+                template: function (e) {
                     return e.rgeo__cod;
                 }},
              {field: "rgeo__nom", title: "Region",  hidden:false},
@@ -255,7 +255,7 @@ $(document).ready(function () {
         filter: "startswith"                    
     });
 
-     function clickEliminar(e) {debugger
+     function clickEliminar(e) {
     try {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
@@ -283,7 +283,7 @@ $(document).ready(function () {
     }
 }                   
                         
- function region(container, options) {debugger
+ function region(container, options) {
 
     var estados = [
         {text: "101001", valor: "1"},
@@ -297,7 +297,7 @@ $(document).ready(function () {
                 dataSource: estados
             });
 }                       
-function region(container, options) {debugger
+function region(container, options) {
 
     var estados = [
         {text: "101001", valor: "1"},
@@ -331,7 +331,7 @@ function region(container, options) {debugger
 }      
 });
                     
- function changImgFunc(results) {debugger
+ function changImgFunc(results) {
 
     for (var i = 0; i < results.length; i++) {
         if (document.getElementById("spanproceso"+results[i].trr__cod+results[i].trr__nom+results[i].rgeo__cod)){

@@ -307,8 +307,7 @@ function closePopUpFiltros() {
 function changImgFunc(listasPrecio) {
 
     for (var i = 0; i < listasPrecio.length; i++) {
-        var id = listasPrecio[i].lis__num;
-        debugger
+        var id = listasPrecio[i].lis__num;        
         if (listasPrecio[i].lis__est === 0) {
             $("#aprobar" + id + "")["0"].className = "k-sprite po_checkAct";
         } else if (listasPrecio[i].lis__est === 1) {

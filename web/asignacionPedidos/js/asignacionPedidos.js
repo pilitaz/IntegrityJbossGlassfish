@@ -37,12 +37,14 @@ function gridAsignacionPedidos(){
                 
                 var fecha= new Date(sessionStorage.getItem("fechaSistema"));
                 fecha.setHours(0,0,0,0);
-                fecha.setDate(fecha.getDate() - 90);                
+                var fechaIni= new Date(sessionStorage.getItem("fechaSistema"));
+                fechaIni.setDate(fecha.getDate() - 90);
+
                 try {
                     if (operation === 'read') {
                         var key1 = Object.keys(jsonAsignarPedidos)[0];
                         var key2 = Object.keys(jsonAsignarPedidos[key1])[1];
-                        jsonAsignarPedidos[key1][key2][0].pidfecha = fecha;//sessionStorage.getItem("fechaSistema");
+                        jsonAsignarPedidos[key1][key2][0].pidfecha = fechaIni;//sessionStorage.getItem("fechaSistema");
                         return JSON.stringify(jsonAsignarPedidos);                        
                     }
                     if (operation === "update") {                       
