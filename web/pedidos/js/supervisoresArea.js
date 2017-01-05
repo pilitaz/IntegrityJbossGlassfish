@@ -327,6 +327,7 @@ $(document).ready(function () {
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();
     }
+
 }    
     function nombre(container, options) {
         var obj = new sirConsultaCliente();
@@ -398,7 +399,9 @@ $(document).ready(function () {
         });    
           
       }
-    function filtroestado(container, options) {debugger
+                 
+    function filtroestado(container, options) {
+
 
         var obj = new sirConsultaCliente();
         var objJson = obj.getjson();
@@ -676,8 +679,9 @@ function changeEst(e){
         };
         createDialog("Atención", "Esta seguro de cambiar el estado de Registro ---" + seleccion.sar__cod + " ---?", "400px", "200px", true, true, actions);
 
-    } catch (e) {debugger
-        alertDialogs("Error");  
+    } catch (e) {
+        createDialog(e);
+
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();
     }

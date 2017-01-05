@@ -328,6 +328,7 @@ function region(container, options) {
 });
                     
  function changImgFunc(results) {
+
     for (var i = 0; i < results.length; i++) {
             if (document.getElementById("spanproceso"+results[i].trr__cod+results[i].trr__nom+results[i].rgeo__cod)){
                 if(results[i].trr__est==0){                            
