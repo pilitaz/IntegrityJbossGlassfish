@@ -58,7 +58,7 @@ function grilla(obj) {
     var columns = [
 //        btnDer,
         {field: "uni__cod", title: "Cod. Und.Med", width: "100%"},
-        {field: "uni__des", title: "Descripcion", width: "100%"},
+        {field: "uni__des", title: "Descripción", width: "100%"},
         {field: "uni__can", title: "Unidad de Cantidad", editor: uni__canList, template: "#=uni__can.text#", width: "100%"},
 //        {field: "uni__est", title: "Estado", width: "100%"},
         {field: "uni__pes", title: "Unidad de Peso", editor: uni__pesList, template: "#=uni__pes.text#", width: "100%"},
