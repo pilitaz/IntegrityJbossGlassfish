@@ -487,7 +487,9 @@ function sirSupArea() {
                     "piisar__cod":0,
                     "picter__nit":"*",
                     "piiageo__cod":0,
+                    "sar__est":-1,
                     "picpai__cod":"*"
+                    
                 }
             ]      
         }

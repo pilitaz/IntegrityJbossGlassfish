@@ -254,6 +254,7 @@ $(document).ready(function () {
         dataSource: dataSource,                        
         filter: "startswith"                    
     });
+
       function nombre(container, options) {
         var obj = new sirConsultaCliente();
         var objJson = obj.getjson();
@@ -324,7 +325,11 @@ $(document).ready(function () {
         });    
           
       }
-     function clickEliminar(e) {debugger
+   
+
+
+     function clickEliminar(e) {
+
     try {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
@@ -440,6 +445,7 @@ $(document).ready(function () {
 });
                     
                     
+
 
 
     function changImgFunc(results , e) {debugger

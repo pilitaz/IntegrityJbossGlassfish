@@ -115,27 +115,34 @@ $(document).ready(function () {
                 if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
-                if (operation === "update") {debugger
-                    actjson.dsSICUDgpd_est.eegpd_est[0].gpd__des=options.gpd__des;  
-                    actjson.dsSICUDgpd_est.eegpd_est[0].gpd__est=options.gpd__est;
-                    actjson.dsSICUDgpd_est.eegpd_est[0].ctr__est=options.ctr__est;
+
+                if (operation === "update") {
+                    actjson;
+                    actjson.dsSICUDgpd_est.eegpd_est["0"].gpd__des=options.gpd__des;
+                    actjson.dsSICUDgpd_est.eegpd_est["0"].gpd__est=options.gpd__est;
+                    //actjson.dssic_actor.eesic_actor[0].actor__cod = options.actor__cod;
+                    //actjson.dssic_actor.eesic_actor[0].actor__des = options.actor__des;
+
                     return JSON.stringify(actjson);
                     $('#grid').data('kendoGrid').refresh();                                             
                     $('#grid').data('kendoGrid').dataSource.read();
                     $('#grid').data('kendoGrid').refresh();                    
                                         
                 }
+
                 if (operation === "create") {debugger
                    
                     actjson.dsSICUDgpd_est.eegpd_est[0].gpd__des=options.gpd__des;  
                     actjson.dsSICUDgpd_est.eegpd_est[0].gpd__est=options.gpd__est;            
                     actjson.dsSICUDgpd_est.eegpd_est[0].ctr__est=99;
-                    return JSON.stringify(actjson);
-                    $('#grid').data('kendoGrid').refresh();
-                    $('#grid').data('kendoGrid').dataSource.read();
-                    $('#grid').data('kendoGrid').refresh();      
-                  // window.location.reload();                                  
-                }
+
+                }                                 
+
+
+                if (operation === "destroy") {
+                    actjson.dsSICUDgpd_est.eegpd_est["0"].gpd__des=options.gpd__des;
+                    actjson.dsSICUDgpd_est.eegpd_est["0"].gpd__est=options.gpd__est;   
+
                     return JSON.stringify(actjson);
                                         
                     $('#grid').data('kendoGrid').refresh();
@@ -395,7 +402,3 @@ $(document).ready(function () {
                    
                 
 
-                if (operation === "destroy") {debugger
-                    actjson.dsSICUDgpd_est.eegpd_est[0].gpd__des=options.gpd__des;  
-                    actjson.dsSICUDgpd_est.eegpd_est[0].gpd__est=options.gpd__est;
-                    actjson.dsSICUDgpd_est.eegpd_est[0].ctr__est=options.ctr__est;
