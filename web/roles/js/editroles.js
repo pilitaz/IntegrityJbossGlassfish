@@ -30,7 +30,7 @@ document.getElementById("filtro").value = rol_name;
 
 var jSon=[];
 
-function agregarfuncion(e) {debugger
+function agregarfuncion(e) {
      
 var Selement=$('#jstree2').jstree('get_selected');
 

@@ -97,6 +97,7 @@ $(document).ready(function() {
                 parameterMap: function (options, operation) {                  
                     try {
                         if (operation === 'read') {
+                            
                             var key1 = Object.keys(jsonArticulos)[0];
                             var key2 = Object.keys(jsonArticulos[key1])[1];
                             jsonArticulos[key1][key2][0].piicla_cod = $("#idClaseArticulo").val();
@@ -296,13 +297,12 @@ $(document).ready(function() {
         numerictextbox.readonly();
     }
     
-//    if(parent.itemID !== null){        
-//        console.log("Cargando edicón item: "+parent.itemID.ID);
-//        $("#btAgregar")["0"].attributes[2].nodeValue = "agregarItem()";
-//        $("#btAgregar")["0"].textContent= "Actualizar";                
-//        $("#btCancelar")["0"].attributes[2].nodeValue = "btnCancelarEditar()";
-//        setInformacionItem();
-//    }
+    if(parent.itemPedido !== null){                
+        $("#btAgregar")["0"].attributes[2].nodeValue = "agregarItem()";
+        $("#btAgregar")["0"].textContent= "Actualizar";                
+        $("#btCancelar")["0"].attributes[2].nodeValue = "btnCancelarEditar()";
+        setInformacionItem();
+    }
 });
 
 
@@ -328,9 +328,9 @@ function agregarItem(){
     
     var verboHTML= "POST";
     
-//    if(parent.itemID !== null){
-//       verboHTML="PUT" ;
-//    }
+    if(parent.itemPedido !== null){
+       verboHTML="PUT" ;
+    }
 
     var objDetalePed = new SICUDDetallePedido();
     var jsonDetalePed = objDetalePed.getjson();
@@ -339,15 +339,14 @@ function agregarItem(){
     
     var key1 = Object.keys(jsonDetalePed)[0];
     var key2 = Object.keys(jsonDetalePed[key1])[1];
-    debugger
     jsonDetalePed[key1][key2][0].suc__cod = pedido.suc__cod;
-    jsonDetalePed[key1][key2][0].clc__cod = codClaseArticulo;
+    jsonDetalePed[key1][key2][0].clc__cod = pedido.clc__cod;
     jsonDetalePed[key1][key2][0].ped__fec = pedido.ped__fec;//lista del cliente        
     jsonDetalePed[key1][key2][0].ped__num = pedido.ped__num;
     jsonDetalePed[key1][key2][0].lis__num = sessionStorage.getItem("listaPrecioCliente");
     jsonDetalePed[key1][key2][0].cla__cod = codClaseArticulo;//lista del cliente        
     jsonDetalePed[key1][key2][0].art__cod = codArticulo;    
-    //jsonDetalePed[key1][key2][0].pre__pcod = sessionStorage.getItem("listaPrecioCliente");//lista del cliente        
+    jsonDetalePed[key1][key2][0].pre__pcod = objArticulo.uni__cod;
     jsonDetalePed[key1][key2][0].ped__can = cantidad;
     jsonDetalePed[key1][key2][0].lpd__pre = valorUnitario;
     jsonDetalePed[key1][key2][0].ped__dct = descuento;   
@@ -370,49 +369,8 @@ function agregarItem(){
         error: function (e) {            
             alertDialogs("Error consumiendo el servicio de guardar\n"+ e.status +" - "+ e.statusText);
         }
-    }).done(function(e){
-        if(itemGuardado=="OK"){
-            
-            var key1 = Object.keys(jsonDetalePed)[0];
-            var key2 = Object.keys(jsonDetalePed[key1])[1]; 
-            var pedido = e[key1][key2][0]; 
-            
-            var objFiltroPedidos = new sirConsultaPedidos();
-            var jsonFiltroPedidos = objFiltroPedidos.getjson();
-            var urlFiltroPedidos = objFiltroPedidos.getUrlSir();
-            var mapDataFiltroPedidos = objFiltroPedidos.getMapData();
-            
-            var key1 = Object.keys(jsonFiltroPedidos)[0];
-            var key2 = Object.keys(jsonFiltroPedidos[key1])[1];
-            jsonFiltroPedidos[key1][key2][0].pidped_fec = pedido.ped__fec;
-            jsonFiltroPedidos[key1][key2][0].piiped_num = pedido.ped__num;
-            jsonFiltroPedidos[key1][key2][0].picsuc_cod = pedido.suc__cod;
-            console.log(JSON.stringify(jsonFiltroPedidos));
-            try{                
-                $.ajax({
-                    type: "POST",
-                    data: JSON.stringify(jsonFiltroPedidos),
-                    url: urlFiltroPedidos,
-                    dataType : "json",
-                    contentType: "application/json;",
-                    success: function (e) {                        
-                        if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
-                            return e[key1][mapDataFiltroPedidos];
-                        } else {
-                            alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
-                        }
-                    },
-                    error: function (e) {
-                        alertDialogs(" Error al consumir el servicio 733"+ e.status +" - "+ e.statusText);                
-                    }
-                }).done(function(e){
-                    var pedido = e[key1][mapDataFiltroPedidos][0];
-                    sessionStorage.setItem("regPedidos", JSON.stringify(pedido));                                         
-                    parent.closePopUpCabecera();
-                });
-            }catch (e) {
-                alertDialogs("Function: consumeServAjaxSIR Error: 740 " + e.message);
-            }
+    }).done(function(e){        
+        if(itemGuardado==="OK"){
             parent.closePopUp();
         }else{                    
             alertDialogs("factura con errores  \n"+itemGuardado);
@@ -424,48 +382,34 @@ function agregarItem(){
 
 function setInformacionItem(){
     
-    var kendoDropDownListConcepto = $("#ipConceptoDet").data("kendoDropDownList");    
-    kendoDropDownListConcepto.value(parent.itemID.CodConceptoDet);
-        
+   
     var kendoDropDownListClaseArticulo = $("#idClaseArticulo").data("kendoDropDownList");    
-    kendoDropDownListClaseArticulo.value(parent.itemID.CodClaseArticulo);
+    kendoDropDownListClaseArticulo.value(parent.itemPedido.cla__cod);
     
     $("#idArticulo").parent().removeClass(".k-input");
-    $("#idArticulo").val(parent.itemID.Articulo);
+    $("#idArticulo").val(parent.itemPedido.art__des);
     
-    $("#idDescripcion").val(parent.itemID.Descripcion);
-
+    objArticulo.art__des = parent.itemPedido.art__des;
+    objArticulo.art__cod = parent.itemPedido.art__cod;
+    objArticulo.uni__cod = parent.itemPedido.pre__pcod;
+    
     var numerictextboxCantidad = $("#ipCantidad").data("kendoNumericTextBox");    
-    numerictextboxCantidad.value(parent.itemID.Cantidad);
+    numerictextboxCantidad.value(parent.itemPedido.ped__can);
     
     var numerictextboxDescuento = $("#idDescuento").data("kendoNumericTextBox");    
-    numerictextboxDescuento.value(parent.itemID.Descuento);
+    numerictextboxDescuento.value(parent.itemPedido.ped__dct);
+    numerictextboxDescuento.readonly();
     
     var numerictextboxIVA = $("#idIVA").data("kendoNumericTextBox");    
-    numerictextboxIVA.value(parent.itemID.IVA);
+    numerictextboxIVA.value(parent.itemPedido.ped__iva/100);
+    numerictextboxIVA.readonly();
     
     var numerictextboxValorUnitario = $("#idValorUnitario").data("kendoNumericTextBox");    
-    numerictextboxValorUnitario.value(parent.itemID.ValorUnitario);
+    numerictextboxValorUnitario.value(parent.itemPedido.lpd__pre);
     
     var numerictextboxValorTotal = $("#idValorTotal").data("kendoNumericTextBox");    
-    numerictextboxValorTotal.value(parent.itemID.ValorTotal);
+    numerictextboxValorTotal.value(parent.itemPedido.lpd__pre * parent.itemPedido.ped__can);
     
-    var kendoDropDownListClaseArticulo = $("#idCodigoAmortizacion").data("kendoDropDownList");    
-    kendoDropDownListClaseArticulo.value(parent.itemID.CodAmortizacion);
-    
-    var numerictextboxValorTotal = $("#ipDiasAmortizacion").data("kendoNumericTextBox");    
-    numerictextboxValorTotal.value(parent.itemID.DiasAmortizacion);
-    
-    $("#ipFechaVencimiento").kendoDatePicker({        
-	format: "yyyy/MM/dd",
-	disableDates: ["sa", "su"],
-	value: new Date(parent.itemID.FechaAmortizacion)        
-    }); 
-    
-//    idItem = parent.itemID.ID;
-//    objArticulo.art__cod = parent.itemID.ArticuloId;
-//    objArticulo.art__des = parent.itemID.Articulo;    
-    //parent.itemID=null;
 }
 
 function btnCancelar(){

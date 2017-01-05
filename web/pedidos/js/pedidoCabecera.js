@@ -736,7 +736,6 @@ function guardarCabecera(){
                         alertDialogs(" Error al consumir el servicio 733"+ e.status +" - "+ e.statusText);                
                     }
                 }).done(function(e){
-                    debugger
                     var pedido = e[key1][mapDataFiltroPedidos][0];
                     sessionStorage.setItem("regPedidos", JSON.stringify(pedido));                                         
                     parent.closePopUpCabecera();

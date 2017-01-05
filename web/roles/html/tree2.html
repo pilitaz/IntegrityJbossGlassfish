@@ -4,7 +4,7 @@
         <script src="../../scripts/jquery-2.2.0.min.js" type="text/javascript"></script>
         <script src="../../scripts/jstree.min.js" type="text/javascript"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
         
     </head>
     <body>
@@ -28,28 +28,28 @@
        
                         var txtjson = sessionStorage.getItem("txtJson2");
                         txtjson = txtjson.replace(/(..\/css\/images\/leaf\.gif)/g, "../../css/images/leaf.gif");
-                         var treeJson = JSON.parse(txtjson);
-                            treeJson.plugins =  ["dnd","crrm","themes", "json_data","massload"];
-                         treeJson.core =  {"check_callback" : false ,"data":treeJson.core.data};
+                        var treeJson = JSON.parse(txtjson);
+                        treeJson.plugins =  ["dnd","crrm","themes", "json_data","massload"];
+                        treeJson.core =  {"check_callback" : false ,"data":treeJson.core.data};
                         
                         $('#jstree2').jstree(treeJson)
-                                  .bind("click.jstree", function (e) {
-             //document.getElementById("demo").innerHTML = "Drop node " + data.node.id + " to " + data.parent;
-        }).bind("select_node.jstree", function (e,data) {
-             $('#jstree2').jstree(treeJson).check_while_dragging;
-             var j= $('#jstree2').jstree('get_selected');
+                                .bind("click.jstree", function (e) {
+                                    //document.getElementById("demo").innerHTML = "Drop node " + data.node.id + " to " + data.parent;
+                        }).bind("select_node.jstree", function (e,data) {
+                            $('#jstree2').jstree(treeJson).check_while_dragging;
+                            var j= $('#jstree2').jstree('get_selected');
              
         
-    });            
+                        });            
                  
     
                           
                           
                         if(sessionStorage.getItem("pcf")){
                             $('#jstree2').jstree(true).select_node(sessionStorage.getItem("pcf"));
-                            }
-                        }catch(e){alert(e.message);}
-                        $('#jstree2').on('dblclick', function () {
+                        }
+                    }catch(e){alert(e.message);}
+                    $('#jstree2').on('dblclick', function () {
                         if(sessionStorage.getItem("cabeceraLast")||(sessionStorage.getItem("cabeceraNew"))||(sessionStorage.getItem("cabeceraTitu"))||(sessionStorage.getItem("cabeceraLlaves"))){
                             sessionStorage.removeItem('cabeceraTitu');
                             sessionStorage.removeItem('cabeceraNew');

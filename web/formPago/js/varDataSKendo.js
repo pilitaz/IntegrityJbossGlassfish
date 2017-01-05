@@ -7,10 +7,11 @@
 
 //////////////////////////////////////////////////////////////////////////////////////
 function sir() {
-    var url = ipServicios + baseInventarios + "SIRinv_uni";
-    var mapSir = "eeinv_uni";
+    var url = ipServicios + baseParameters + "SIRfac_pag";
+    ;
+    var mapSir = "eefac_pag";
     var dataInputSir = {
-        "dsSIRinv_uni": {
+        "dsfac_pag": {
             "eeDatos": [
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
@@ -19,12 +20,11 @@ function sir() {
                     "remote_ip": sessionStorage.getItem("ipPublica")
                 }
             ],
-            "eeSIRinv_uni": [
+            "eetemp": [
                 {
-                    "picuni__cod": "*",
-                    "picuni__des": "*",
-                    "picuni__est": -1,
-//                    "picusuario": 0
+                    "piicla_cli": 0,
+                    "piifac_pag": 0,
+                    "piifac_est": -1
                 }
             ]
         }
@@ -58,10 +58,10 @@ function sir() {
 
 ///////////////////////////////////////////////////////////////////////////////////////
 function cud() {
-    var url = ipServicios + baseInventarios + "SICUDinv_uni";
-    var mapCud = "eeinv_uni";
+    var url = ipServicios + baseParameters + "SICUDfac_pag";
+    var mapCud = "eefac_pag";
     var dataInputCud = {
-        "dsSICUDinv_uni": {
+        "dsSICUDfac_pag": {
             "eeDatos": [
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
@@ -98,4 +98,51 @@ function cud() {
 }
 ;
 
-
+function SIRgpr_cla() {
+    var url = ipServicios+baseComercial+"SIRgpr_cla";
+    var mapSir = "eegpr_cla";
+    var dataInputSir = {
+            "dsSIRgpr_cla":{  
+                "eeDatos":[  
+                    {  
+                        "picusrcod":sessionStorage.getItem("usuario"),
+                        "picfiid":sessionStorage.getItem("picfiid"),
+                        "local_ip":sessionStorage.getItem("ipPrivada"),
+                        "remote_ip":sessionStorage.getItem("ipPublica")
+                    }
+                ],
+                "eeSIRgpr_cla":[  
+                    {  
+                        "piicla__cli" : 0,
+                        "piccial__cod" : "*",
+                        "piiclaest": 0,
+                    }
+                ]
+            }
+	};
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            url = newname;
+		}
+	};
+    this.getUrlSir = function () {
+        return url;
+	};
+    this.setmapSir = function (newname) {
+        if (newname) {
+            mapSir = newname;
+		}
+	};
+    this.getmapSir = function () {
+        return mapSir;
+	};
+    this.setdataInputSir = function (newname) {
+        if (newname) {
+            dataInputSir = newname;
+		}
+	};
+    this.getdataInputSir = function () {
+        return dataInputSir;
+	};
+}
+;

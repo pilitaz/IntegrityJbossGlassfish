@@ -63,7 +63,7 @@ $(document).ready(function () {
                 if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
-                if ((operation === "update") ){debugger
+                if ((operation === "update") ){
                     var dropdownlist = $("#rol").data("kendoDropDownList");
 
                     var select = dropdownlist.selectedIndex;
@@ -95,7 +95,7 @@ $(document).ready(function () {
                     }
 
                     }
-                    if ((operation === "create") ){debugger
+                    if ((operation === "create") ){
                     var dropdownlist = $("#rol").data("kendoDropDownList");
                     var nit = sessionStorage.getItem("companyNIT");
                     var select = dropdownlist.selectedIndex;
@@ -542,7 +542,7 @@ function filtroestado(container, options) {
  *  id clave2 campo para validar contraseña 
  *  
  */
-function onkeypass(container, options) {debugger
+function onkeypass(container, options) {
     $('<input id ="clave2" type = \"password\"" name="' + options.field + '" />')
             .appendTo(container)
             .kendoMaskedTextBox({
@@ -560,7 +560,7 @@ function onkeypass(container, options) {debugger
  *  
  *  
  */
-function mostrarcampo(e) {debugger
+function mostrarcampo(e) {
     var Tecla= e.which;
    
     if (Tecla == 13)

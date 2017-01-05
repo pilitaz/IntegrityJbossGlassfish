@@ -18,7 +18,7 @@ $(window).resize(function () {
  *   
  *  
  *  
- */ function newrol(){debugger
+ */ function newrol(){
     var grid1 = $("#grid").data("kendoGrid");
     var dataSource = $("#grid").data("kendoGrid").dataSource;
                             
@@ -27,7 +27,7 @@ $(window).resize(function () {
     grid1.options.editable = "popup";
                             
 }
-function editar_rol(){debugger
+function editar_rol(){
                 	
                     
     var grid1 = $("#grid").data("kendoGrid");
@@ -127,10 +127,10 @@ $(document).ready(function () {
                 contentType: "application/json; charset=utf-8"
             },
             parameterMap: function (options, operation) {
-                if (operation === "read") {debugger
+                if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
-                if (operation === "update") {debugger
+                if (operation === "update") {
                     var pais = $("#pais").data("kendoDropDownList").value();
                      var area = $("#area").data("kendoDropDownList").value();
 
@@ -146,7 +146,7 @@ $(document).ready(function () {
                     $('#grid').data('kendoGrid').refresh();   
                     
                 }
-                if (operation === "create") {debugger
+                if (operation === "create") {
                      var pais = $("#pais").data("kendoDropDownList").value();
                      var area = $("#area").data("kendoDropDownList").value();
 
@@ -160,7 +160,7 @@ $(document).ready(function () {
                     $('#grid').data('kendoGrid').dataSource.read();
                     $('#grid').data('kendoGrid').refresh();                                     
                 }
-                if (operation === "destroy") {debugger
+                if (operation === "destroy") {
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].sar__cod=options.sar__cod;  
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].pai__cod=options.pai__cod;  
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].ter__nit=options.ter__nit;                     
@@ -179,7 +179,7 @@ $(document).ready(function () {
         batch: false,
         severFiltering: true,                            
         schema: {
-            data: function (e) {debugger
+            data: function (e) {
                 var key1 = Object.keys(e)[0];
                 if(e[key1].eeEstados){
                     if (e[key1].eeEstados[0].Estado === "OK") {
@@ -262,7 +262,7 @@ $(document).ready(function () {
                     {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "140px"}],
         editable: "popup",
-                edit: function(e) {debugger
+                edit: function(e) {
             if (!e.model.isNew()) {//caso en el que el popup es editar
 
                 //e.container.find("input[name=ter__raz]")[0].readOnly="true"
@@ -301,7 +301,7 @@ $(document).ready(function () {
         filter: "startswith"                    
     });
 
-     function clickEliminar(e) {debugger
+     function clickEliminar(e) {
     try {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
@@ -468,7 +468,7 @@ $(document).ready(function () {
         });
             
     }                       
-  function areaCod(container, options) {debugger
+  function areaCod(container, options) {
         
         var consultar = new sirAreaGeo();
         var datajson = consultar.getjson();
@@ -515,7 +515,7 @@ $(document).ready(function () {
 
         });
     }
-    function paisCod(container, options) {debugger
+    function paisCod(container, options) {
         
         var consultar = new sirPaises();
         var datajson = consultar.getjson();
@@ -568,7 +568,7 @@ $(document).ready(function () {
                     
                               
 
-   function changImgFunc(results , e) {debugger
+   function changImgFunc(results , e) {
      
         for (var i = 0; i < results.length; i++) {
             if (document.getElementById("spanproceso"+results[i].sar__cod+results[i].ter__nit+results[i].ageo__cod)){
@@ -589,7 +589,7 @@ $(document).ready(function () {
 
     } 
 
-function changeEst(e){debugger
+function changeEst(e){
     var  actualizar = new cudSupArea();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
@@ -599,7 +599,7 @@ function changeEst(e){debugger
         var actions = new Array();
         actions[0] = new Object();
         actions[0].text = "OK";
-        actions[0].action = function () {debugger
+        actions[0].action = function () {
             if(seleccion.sar__est==0){  
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].sar__cod=seleccion.sar__cod;  
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].pai__cod=seleccion.pai__cod;  
@@ -615,7 +615,7 @@ function changeEst(e){debugger
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_sar.eeEstados[0].Estado)=="OK")
                         {     
                             $('#grid').data('kendoGrid').refresh();
@@ -649,7 +649,7 @@ function changeEst(e){debugger
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_sar.eeEstados[0].Estado)=="OK")
                         {          
                             $('#grid').data('kendoGrid').refresh();
@@ -671,7 +671,7 @@ function changeEst(e){debugger
         };
         actions[1] = new Object();
         actions[1].text = "Cancelar";
-        actions[1].action = function () {debugger
+        actions[1].action = function () {
             bandAlert = 0;
         };
         createDialog("Atención", "Esta seguro de cambiar el estado de Registro ---" + seleccion.sar__cod + " ---?", "400px", "200px", true, true, actions);

@@ -173,7 +173,7 @@ $(document).ready(function () {
     //        placeholder: "Nombre...",
     //    });
     // 
-    function changImgFunc(results) {debugger
+    function changImgFunc(results) {
         var datos =  $('#grilla_usr').data('kendoGrid')._data;
         var results = fantasma; 
         var i=0;
@@ -196,7 +196,7 @@ $(document).ready(function () {
             }
         }
     }
-    function guardar (e){debugger
+    function guardar (e){
         var nit = sessionStorage.getItem("companyNIT");
         var proceso = sessionStorage.getItem("Proc_usuar");
         var tarea= sessionStorage.getItem("Task_name");
@@ -241,7 +241,7 @@ $(document).ready(function () {
         });
     }
     //----Funcion que se carga en el click de la imagen de check
-    function cambiaColor(e){debugger
+    function cambiaColor(e){
         var i=0;
         var id = e.currentTarget.firstElementChild.id;
         var temporal;
@@ -322,7 +322,7 @@ $(document).ready(function () {
         //
         //        placeholder: "Rol...",
         //        dataSource: rol,
-        //        change: function () {debugger
+        //        change: function () {
         //            var value = this.value();
         //            if (value) {
         //                grid_usr.data("kendoGrid").dataSource.filter({field: "car__nom", operator: "eq", value: value});

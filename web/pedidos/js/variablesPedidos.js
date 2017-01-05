@@ -652,17 +652,17 @@ function sirConsultaClasesDeArticulos() {
  */
 function sirConsultaArticulos() {
     var mapData = "eeinv_art";
-    var urlSir = ipServicios + baseParameters + "SIRinv_art";
+    var urlSir = ipServicios + baseInventarios + "SIRinv_art";
     
     var json = {
-            "dsinv_art": {
+            "dsSIRinv_art": {
 		"eeDatos":[
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
                     "fiid": sessionStorage.getItem("picfiid"),
                 }
                 ],
-                "eetemp": [
+                "eeSIRinv_art": [
                     {
                         "piicla_cod": "*",
                         "piilis_num": 1
@@ -732,7 +732,7 @@ function SICUDDetallePedido() {
                     "lis__num": 0,
                     "cla__cod": 0,
                     "art__cod": "*",
-                    "pre__pcod": "un",
+                    "pre__pcod": "*",
                     "ped__can": 0,
                     "lpd__pre": 0,
                     "ped__dct": 0,

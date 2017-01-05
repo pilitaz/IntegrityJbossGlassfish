@@ -18,7 +18,7 @@ $(window).resize(function () {
  *   
  *  
  *  
- */ function newrol(){debugger
+ */ function newrol(){
     var grid1 = $("#grid").data("kendoGrid");
     var dataSource = $("#grid").data("kendoGrid").dataSource;
                             
@@ -27,7 +27,7 @@ $(window).resize(function () {
     grid1.options.editable = "popup";
                             
 }
-function editar_rol(){debugger
+function editar_rol(){
                 	
                     
     var grid1 = $("#grid").data("kendoGrid");
@@ -112,7 +112,7 @@ $(document).ready(function () {
                 contentType: "application/json; charset=utf-8"
             },
             parameterMap: function (options, operation) {
-                if (operation === "read") {debugger
+                if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
                 if (operation === "update") {
@@ -124,7 +124,7 @@ $(document).ready(function () {
                                         
                                         
                 }
-                if (operation === "create") {debugger
+                if (operation === "create") {
                    actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__des=options.anu__des;
                    actjson.dsSICUDgpd_anu.eegpd_anu[0].gpd__est=options.gpd__est; 
                     return JSON.stringify(actjson);          
@@ -132,7 +132,7 @@ $(document).ready(function () {
                     $('#grid').data('kendoGrid').dataSource.read();
                     $('#grid').data('kendoGrid').refresh();                                     
                 }
-                if (operation === "destroy") {debugger
+                if (operation === "destroy") {
                          
                    actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__cod=options.anu__cod;  
                    actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__des=options.anu__des;
@@ -151,7 +151,7 @@ $(document).ready(function () {
         batch: false,
         severFiltering: true,                            
         schema: {
-            data: function (e) {debugger
+            data: function (e) {
                 var key1 = Object.keys(e)[0];
                 if(e[key1].eeEstados){
                     if (e[key1].eeEstados[0].Estado === "OK") {
@@ -233,7 +233,7 @@ $(document).ready(function () {
         filter: "startswith"                    
     });
 
-     function clickEliminar(e) {debugger
+     function clickEliminar(e) {
     try {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
@@ -264,7 +264,7 @@ $(document).ready(function () {
    
 });
  
-  function changImgFunc(results) {debugger
+  function changImgFunc(results) {
 
     for (var i = 0; i < results.length; i++) {
         if (document.getElementById("spanproceso"+results[i].anu__cod+results[i].anu__des)){

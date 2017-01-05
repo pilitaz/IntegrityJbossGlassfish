@@ -15,7 +15,7 @@ document.getElementById("task1").innerHTML = task ;
                 contentType: "application/json; charset=utf-8"
             },         
             parameterMap: function (options, operation) {
-                if (operation === "read") {debugger
+                if (operation === "read") {
                     datajson.dsSIRbpm_task_proc.SIRbpm_task_proc[0].picproc__name=task;
                     return JSON.stringify(datajson);
                 }
@@ -83,7 +83,7 @@ document.getElementById("task1").innerHTML = task ;
             $(this).contents('td').css('border', 'none');
         });             
                       
-                             function grilla1(e){debugger
+                             function grilla1(e){
                             e.preventDefault();
                             var id = this.dataItem($(e.currentTarget).closest("tr")).task__name;
                             var des =this.dataItem($(e.currentTarget).closest("tr")).type__task;
@@ -124,7 +124,7 @@ document.getElementById("task1").innerHTML = task ;
                         
 });
         
-function cerrar(){debugger
+function cerrar(){
     //onClosex();
     $("#windous").data("kendoWindow").close();
     

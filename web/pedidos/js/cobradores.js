@@ -18,7 +18,7 @@ $(window).resize(function () {
  *   
  *  
  *  
- */ function newrol(){debugger
+ */ function newrol(){
     var grid1 = $("#grid").data("kendoGrid");
     var dataSource = $("#grid").data("kendoGrid").dataSource;
                             
@@ -27,7 +27,7 @@ $(window).resize(function () {
     grid1.options.editable = "popup";
                             
 }
-function editar_rol(){debugger
+function editar_rol(){
                 	
                     
     var grid1 = $("#grid").data("kendoGrid");
@@ -112,10 +112,10 @@ $(document).ready(function () {
                 contentType: "application/json; charset=utf-8"
             },
             parameterMap: function (options, operation) {
-                if (operation === "read") {debugger
+                if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
-                if (operation === "update") {debugger
+                if (operation === "update") {
                    actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__cod=options.cbr__cod;   
                    actjson.dsSICUDgpd_cbr.eegpd_cbr[0].ter__nit=options.ter__nit;  
                    //actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__est=parseInt(options.cbr__est);
@@ -123,7 +123,7 @@ $(document).ready(function () {
                                         
                                         
                 }
-                if (operation === "create") {debugger
+                if (operation === "create") {
                      
                     actjson.dsSICUDgpd_cbr.eegpd_cbr[0].ter__nit=options.ter__nit;  
                     //actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__est=parseInt(options.cbr__est);
@@ -133,7 +133,7 @@ $(document).ready(function () {
                     $('#grid').data('kendoGrid').dataSource.read();
                     $('#grid').data('kendoGrid').refresh();                                     
                 }
-                if (operation === "destroy") {debugger
+                if (operation === "destroy") {
                    actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__cod=options.cbr__cod;       
                    actjson.dsSICUDgpd_cbr.eegpd_cbr[0].ter__nit=options.ter__nit;  
                    actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__est=parseInt(options.cbr__est); 
@@ -151,7 +151,7 @@ $(document).ready(function () {
         batch: false,
         severFiltering: true,                            
         schema: {
-            data: function (e) {debugger
+            data: function (e) {
                 var key1 = Object.keys(e)[0];
                 if(e[key1].eeEstados){
                     if (e[key1].eeEstados[0].Estado === "OK") {
@@ -213,7 +213,7 @@ $(document).ready(function () {
         columns: [ 
             {field: "cbr__cod", title: "Cod Cobrador",  hidden:false},  
             {field: "ter__nit", title: "NIT",  hidden:false,editor: filtroestado,
-                template: function (e) {debugger
+                template: function (e) {
                     return e.ter__nit;
                 }}, 
             {field: "ter__raz", title: "Nombre",  hidden:false,editor: nombre,
@@ -225,7 +225,7 @@ $(document).ready(function () {
                     {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "140px"}],
         editable: "popup",
-        edit: function(e) {debugger
+        edit: function(e) {
     if (!e.model.isNew()) {
       // Disable the editor of the "id" column when editing data items
       $("#cedula")[0].value = e.model.ter__nit;
@@ -352,7 +352,7 @@ $(document).ready(function () {
     }
 }                   
                         
- function filtroestado(container, options) {debugger
+ function filtroestado(container, options) {
 
      var obj = new sirConsultaCliente();
     var objJson = obj.getjson();
@@ -440,6 +440,7 @@ $(document).ready(function () {
 });
                     
                     
+
 
     function changImgFunc(results , e) {debugger
      

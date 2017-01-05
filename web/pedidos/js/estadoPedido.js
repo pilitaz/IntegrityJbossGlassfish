@@ -18,7 +18,7 @@ $(window).resize(function () {
  *   
  *  
  *  
- */ function newrol(){debugger
+ */ function newrol(){
     var grid1 = $("#grid").data("kendoGrid");
     var dataSource = $("#grid").data("kendoGrid").dataSource;
                             
@@ -27,7 +27,7 @@ $(window).resize(function () {
     grid1.options.editable = "popup";
                             
 }
-function editar_rol(){debugger
+function editar_rol(){
                 	
                     
     var grid1 = $("#grid").data("kendoGrid");
@@ -112,7 +112,7 @@ $(document).ready(function () {
                 contentType: "application/json; charset=utf-8"
             },
             parameterMap: function (options, operation) {
-                if (operation === "read") {debugger
+                if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
                 if (operation === "update") {debugger
@@ -136,10 +136,6 @@ $(document).ready(function () {
                     $('#grid').data('kendoGrid').refresh();      
                   // window.location.reload();                                  
                 }
-                if (operation === "destroy") {debugger
-                    actjson.dsSICUDgpd_est.eegpd_est[0].gpd__des=options.gpd__des;  
-                    actjson.dsSICUDgpd_est.eegpd_est[0].gpd__est=options.gpd__est;
-                    actjson.dsSICUDgpd_est.eegpd_est[0].ctr__est=options.ctr__est;
                     return JSON.stringify(actjson);
                                         
                     $('#grid').data('kendoGrid').refresh();
@@ -155,7 +151,7 @@ $(document).ready(function () {
         batch: false,
         severFiltering: true,                            
         schema: {
-            data: function (e) {debugger
+            data: function (e) {
                 var key1 = Object.keys(e)[0];
                 if(e[key1].eeEstados){
                     if (e[key1].eeEstados[0].Estado === "OK") {
@@ -250,7 +246,7 @@ $(document).ready(function () {
         filter: "startswith"                    
     });
 
-     function clickEliminar(e) {debugger
+     function clickEliminar(e) {
     try {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
@@ -399,3 +395,7 @@ $(document).ready(function () {
                    
                 
 
+                if (operation === "destroy") {debugger
+                    actjson.dsSICUDgpd_est.eegpd_est[0].gpd__des=options.gpd__des;  
+                    actjson.dsSICUDgpd_est.eegpd_est[0].gpd__est=options.gpd__est;
+                    actjson.dsSICUDgpd_est.eegpd_est[0].ctr__est=options.ctr__est;

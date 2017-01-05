@@ -127,15 +127,15 @@ $(document).ready(function() {
             type: "json",
             transport: {
                 read: {
-                    url: ipServicios+"rest/Parameters/SIRinv_art",
+                    url: ipServicios+baseInventarios+"SIRinv_art",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST"
                 },
                 parameterMap: function (options, operation) {
-                    authdsinv_art.dsinv_art.eetemp[0].piicla_cod = $("#idClaseArticulo").val();
-                    authdsinv_art.dsinv_art.eetemp[0].piilis_num = sessionStorage.getItem("listaPrecioCliente");//lista del cliente        
-                    authdsinv_art.dsinv_art.eetemp[0].picart_des = $("#idArticulo").val();
+                    authdsinv_art.dsSIRinv_art.eeSIRinv_art[0].piicla_cod = $("#idClaseArticulo").val();
+                    authdsinv_art.dsSIRinv_art.eeSIRinv_art[0].piilis_num = sessionStorage.getItem("listaPrecioCliente");//lista del cliente        
+                    authdsinv_art.dsSIRinv_art.eeSIRinv_art[0].picart_des = $("#idArticulo").val();
                     console.log("authdsinv_art"+JSON.stringify(authdsinv_art));
                     try {
                         if (operation === 'read') {
@@ -150,11 +150,11 @@ $(document).ready(function() {
             schema: {
                 type: "json",
                 data:function (e){                         
-                    if(e.dsinv_art.eeEstados[0].Estado==="OK"){
+                    if(e.dsSIRinv_art.eeEstados[0].Estado==="OK"){
                         //                            console.log("authdsinv_art "+JSON.stringify(authdsinv_art));
-                        return e.dsinv_art.eeinv_art;
+                        return e.dsSIRinv_art.eeinv_art;
                     }else{
-                        alertDialogs("Error: " +e.dsinv_art.eeEstados[0].Estado);
+                        alertDialogs("Error: " +e.dsSIRinv_art.eeEstados[0].Estado);
                     }
                 },
                 model: {
