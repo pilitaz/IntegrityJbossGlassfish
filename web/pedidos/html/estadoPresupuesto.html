@@ -33,6 +33,35 @@ and open the template in the editor.
 
     </head>
     <body>
+            <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
+            <tr data-uid="#: uid #"> 
+            <td>
+            <span class="title" id ="#: gpd__pre__des #">#: gpd__pre__des # </span>
+            </td>
+            <td>
+            <a  class='k-grid-check'><span title='check' id = "spanproceso#: gpd__pre__des#" class='k-sprite po_checkCreate'></span></a> 
+            <a  class='k-grid-edit'><span title='' id = "spanpedit#: gpd__pre__des#" class='k-sprite po_editoff'></span></a>
+            <a  class='k-grid-deletae'><span title='' id = "spanpedit1#: gpd__pre__des#" class='k-sprite po_cerrar'></span></a>
+                   
+            </td>
+            
+            </tr>
+        </script>
+        <script id="altRowTemplateCmp" type="text/x-kendo-tmpl">
+            <tr class="k-alt" data-uid="#: uid #">
+            
+            <td>
+            <span class="title" id ="#: gpd__pre__des #">#: gpd__pre__des # </span>
+            </td>
+            <td>
+            <a  class='k-grid-check'><span title='check' id = "spanproceso#: gpd__pre__des#" class='k-sprite po_checkCreate'></span></a> 
+            <a  class='k-grid-edit'><span title='' id = "spanpedit#: gpd__pre__des#" class='k-sprite po_editoff'></span></a>
+            <a  class='k-grid-deletae'><span title='' id = "spanedit1#: gpd__pre__des#" class='k-sprite po_cerrar'></span></a>
+                   
+            </td>
+            </tr>
+            
+        </script>
         <div id="window1"></div>
         <script type="text/x-kendo-template" id="windowTemplate">
 

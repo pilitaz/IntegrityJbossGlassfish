@@ -1,4 +1,4 @@
-                    
+                   
 /*  FUNCION RESIZE WINDOW 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -42,8 +42,7 @@ function editar_rol(){debugger
                     
                     
 $(document).ready(function() {
-                                            
-                    
+                  
     $("#toolbar").kendoToolBar({
         items: [
                                 
@@ -59,10 +58,7 @@ $(document).ready(function() {
                         
                         
 });
-                    
-                    
-                    
-                    
+
 /**
  * FUNCION CRUD
  *  VAR mapCud =  variable gestion de funcion squema 
@@ -86,7 +82,6 @@ $(document).ready(function () {
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
 
-    //var crudServiceBaseUrl = "http://190.144.16.114:8810/rest/Base/BaseIntegrity/SirUsuarios";
     var mapCud = "eegpd_est";
     var mapCud1 = "ee_user3";
     dataSource = new kendo.data.DataSource({
@@ -121,28 +116,30 @@ $(document).ready(function () {
                     return JSON.stringify(datajson);
                 }
                 if (operation === "update") {debugger
-                    actjson;
-                    actjson.dsSICUDgpd_est.eegpd_est["0"].gpd__des=options.gpd__des;
-                    actjson.dsSICUDgpd_est.eegpd_est["0"].gpd__est=options.gpd__est;
-                    //actjson.dssic_actor.eesic_actor[0].actor__cod = options.actor__cod;
-                    //actjson.dssic_actor.eesic_actor[0].actor__des = options.actor__des;
+                    actjson.dsSICUDgpd_est.eegpd_est[0].gpd__des=options.gpd__des;  
+                    actjson.dsSICUDgpd_est.eegpd_est[0].gpd__est=options.gpd__est;
+                    actjson.dsSICUDgpd_est.eegpd_est[0].ctr__est=options.ctr__est;
                     return JSON.stringify(actjson);
-                                        
+                    $('#grid').data('kendoGrid').refresh();                                             
+                    $('#grid').data('kendoGrid').dataSource.read();
+                    $('#grid').data('kendoGrid').refresh();                    
                                         
                 }
                 if (operation === "create") {debugger
-                                        
-                    actjson.dsSICUDgpd_est.eegpd_est[0].gpd__des = options.gpd__des;
-                                 
+                   
+                    actjson.dsSICUDgpd_est.eegpd_est[0].gpd__des=options.gpd__des;  
+                    actjson.dsSICUDgpd_est.eegpd_est[0].gpd__est=options.gpd__est;            
+                    actjson.dsSICUDgpd_est.eegpd_est[0].ctr__est=99;
                     return JSON.stringify(actjson);
-                                        
                     $('#grid').data('kendoGrid').refresh();
                     $('#grid').data('kendoGrid').dataSource.read();
-                    $('#grid').data('kendoGrid').refresh();                                     
+                    $('#grid').data('kendoGrid').refresh();      
+                  // window.location.reload();                                  
                 }
                 if (operation === "destroy") {debugger
-                    actjson.dsSICUDgpd_est.eegpd_est["0"].gpd__des=options.gpd__des;
-                    actjson.dsSICUDgpd_est.eegpd_est["0"].gpd__est=options.gpd__est;   
+                    actjson.dsSICUDgpd_est.eegpd_est[0].gpd__des=options.gpd__des;  
+                    actjson.dsSICUDgpd_est.eegpd_est[0].gpd__est=options.gpd__est;
+                    actjson.dsSICUDgpd_est.eegpd_est[0].ctr__est=options.ctr__est;
                     return JSON.stringify(actjson);
                                         
                     $('#grid').data('kendoGrid').refresh();
@@ -169,11 +166,11 @@ $(document).ready(function () {
                     }
                 }},
             model: {
-                id: "gpd__des",
+                id: "gpd__est",
                 fields: {
-                    gpd__des:    {editable: true, nullable: false},
                     gpd__est:    {editable: true, nullable: false},
-                                       
+                    gpd__des:    {editable: true, nullable: false},
+                    ctr__est:    {editable: true, nullable: false}                   
                                         
                 }
             }
@@ -213,10 +210,30 @@ $(document).ready(function () {
         columns: [
             {field: "gpd__des", title: "Estado De Pedido",  hidden:false},
                                  	
-            {command: [{name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
-                    {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "90px"}],
+            {command: [
+                    {name: "check", text: "estado",click: changeEst, template: "<a class='k-grid-check'><span class='k-sprite po_checkCreate' ></span></a>" },
+                    {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
+                    {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "140px"}],
         editable: "popup",
-                            
+        edit: function(e) {debugger
+            if (!e.model.isNew()) {//caso en el que el popup es editar
+                if(e.model.ctr__est!= 99 ){
+                   kendo.ui.progress($('.k-edit-form-container'), true);
+                    kendo.ui.progress($('.k-edit-buttons'), true);
+                    e.container.find(".k-loading-image").css("background-image", "url('')");
+
+            }
+            }
+            else{//caso en el que el popup es crear
+
+            }
+        } ,
+         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
+        altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
+        dataBound: function (e) {
+            var results = dataSource.data();
+            changImgFunc(results,e);
+        },                     
         cancel: function(e) {                                                                                   
             e._defaultPrevented= true;
             $('#grid').data('kendoGrid').refresh();                                             
@@ -228,7 +245,7 @@ $(document).ready(function () {
     $("#filtro").kendoAutoComplete({ 
         dataTextField: "gpd__des",  
         dataValueField: "gpd__des",
-        placeholder: "Pedido...",  
+        placeholder: "Estado...",  
         dataSource: dataSource,                        
         filter: "startswith"                    
     });
@@ -238,34 +255,147 @@ $(document).ready(function () {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
         var dataItem = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"));
-
-
+         if (dataItem.ctr__est!= 99){
+             alertDialogs("No se puede eliminar por el estado ");  
+         }else{
         var actions = new Array();
         actions[0] = new Object();
         actions[0].text = "OK";
         actions[0].action = function () {
+
+              
             var dataSource = $("#grid").data("kendoGrid").dataSource;
             dataSource.remove(dataItem);
             dataSource.sync();
-            bandAlert = 0;
+            bandAlert = 0; 
+            
+            
         };
         actions[1] = new Object();
         actions[1].text = "Cancelar";
         actions[1].action = function () {
             bandAlert = 0;
         };
-        createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.gpd__des + " ---?", "400px", "200px", true, true, actions);
-
+        createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.gpd__pre__des + " ---?", "400px", "200px", true, true, actions);
+         }
     } catch (e) {
         alert(e);
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();
     }
 }                   
-                        
+    function changImgFunc(results , e) {
+     
+        for (var i = 0; i < results.length; i++) {
+            if (document.getElementById("spanproceso"+results[i].gpd__des)){
+                if(results[i].ctr__est==0){                            
+                    document.getElementById("spanproceso"+results[i].gpd__des).setAttribute("class", "k-sprite po_checkAct");   
+                }
+                if(results[i].ctr__est==99){     
+                    document.getElementById("spanproceso"+results[i].gpd__des).setAttribute("class", "k-sprite po_checkCreate");
+                }
+                if(results[i].ctr__est==1){     
+                    document.getElementById("spanproceso"+results[i].gpd__des).setAttribute("class", "k-sprite po_checkBloq");
+
+                }
+            }
+        }
+
+    }                    
                         
                         
 });
                     
-                    
+ function changeEst(e){debugger
+    var  actualizar = new CreaEstadoPedido();
+    var  actjson = actualizar.getjson();
+    var  urlactualizar = actualizar.getUrlSir();
+    var seleccion =  $("#grid").data("kendoGrid")._data[($(e.currentTarget).closest("tr")["0"].sectionRowIndex)];  
+    try {
+           
+            
+        var actions = new Array();
+        actions[0] = new Object();
+        actions[0].text = "OK";
+        actions[0].action = function () {debugger
+            if(seleccion.ctr__est==0){  
+                
+                    actjson.dsSICUDgpd_est.eegpd_est[0].gpd__des=seleccion.gpd__des;  
+                    actjson.dsSICUDgpd_est.eegpd_est[0].gpd__est=seleccion.gpd__est;            
+                    actjson.dsSICUDgpd_est.eegpd_est[0].ctr__est=1;
+                $.ajax({
+        
+                    type: "PUT",        
+                    async: false,
+                    data: JSON.stringify(actjson),
+                    url: urlactualizar,
+                    dataType: "json",        
+                    contentType: "application/json;",
+                    success: function (resp) {debugger
+                        if((resp.dsSICUDgpd_est.eeEstados[0].Estado)=="OK")
+                        {     
+                            $('#grid').data('kendoGrid').refresh();
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh();                             
+                        }
+                        else
+                        {
+                            alertDialogs("Error"+resp.dsSICUDgpd_est.eeEstados[0].Estado); 
+                            $('#grid').data('kendoGrid').refresh();
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh();                             
+                        }
+                    } 
+        
+                });
+            }
+
+            if(seleccion.ctr__est==99){  
+                    actjson.dsSICUDgpd_est.eegpd_est[0].gpd__des=seleccion.gpd__des;  
+                    actjson.dsSICUDgpd_est.eegpd_est[0].gpd__est=seleccion.gpd__est;            
+                    actjson.dsSICUDgpd_est.eegpd_est[0].ctr__est=0;
+                $.ajax({
+        
+                    type: "PUT",        
+                    async: false,
+                    data: JSON.stringify(actjson),
+                    url: urlactualizar,
+                    dataType: "json",        
+                    contentType: "application/json;",
+                    success: function (resp) {debugger
+                        if((resp.dsSICUDgpd_est.eeEstados[0].Estado)=="OK")
+                        {          
+                            $('#grid').data('kendoGrid').refresh();
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh();    
+                        }
+                        else
+                        {
+                            alertDialogs("Error"+resp.dsSICUDgpd_est.eeEstados[0].Estado);  
+                            $('#grid').data('kendoGrid').refresh();
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh(); 
+                        }
+                    }        
+                });
+            }
+            bandAlert = 0;
+        };
+        actions[1] = new Object();
+        actions[1].text = "Cancelar";
+        actions[1].action = function () {debugger
+            bandAlert = 0;
+        };
+        createDialog("Atención", "Esta seguro de cambiar estado de Registro ---" + seleccion.gpd__des + " ---?", "400px", "200px", true, true, actions);
+
+    } catch (e) {debugger
+        createDialog(e);
+        $('#grid').data('kendoGrid').dataSource.read();
+        $('#grid').data('kendoGrid').refresh();
+    }
+    
+ 
+}             
+                   
+                
 
