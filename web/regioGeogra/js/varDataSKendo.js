@@ -112,7 +112,7 @@ function SIRgpr_ageo () {
                 {
                     "piiageo__cod": 0,
                     "picusuario": "*",
-                    "piiageo__est": -1
+                    "piiageo__est": 0
                 }
             ]
         }

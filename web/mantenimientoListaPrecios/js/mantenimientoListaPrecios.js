@@ -13,7 +13,7 @@ dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].picusrcod = sessionStorage.getItem("usuario
 dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].fiid = sessionStorage.getItem("picfiid");
 dsSIRgfc_fac.dsSIRgfc_fac.eetemp = new Array();
 dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0] = new Object();
-
+var est = "lis__est";
 
 $(window).resize(function () {
     var viewportHeight = $(window).height();
@@ -36,6 +36,7 @@ $(document).ready(function () {
 
     gridListaDePrecios();
     var data = [
+        {text: "Todos", value: "-1", clase: ""},
         {text: "Creado", value: "99", clase: "po_checkCreate"},
         {text: "Activo", value: "0", clase: "po_checkAct"},
         {text: "Bloqueado", value: "1", clase: "po_checkBloq"}
@@ -240,7 +241,7 @@ function clickEliminar(e) {
         e.preventDefault();
         var dataItem = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"));
 
-
+        if (dataItem[est] == 99) {
         var actions = new Array();
         actions[0] = new Object();
         actions[0].text = "OK";
@@ -256,7 +257,9 @@ function clickEliminar(e) {
             bandAlert = 0;
         };
         createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.lis__des + " ---?", "400px", "200px", true, true, actions);
-
+        }else{
+            alertDialogs("El registro no puede ser eliminado.")
+        }
     } catch (e) {
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();

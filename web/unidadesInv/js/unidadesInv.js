@@ -1,4 +1,8 @@
-var est = "uni__est";
+var objSir = new sir();
+    var urlSir = objSir.getUrlSir();
+    var mapSir = objSir.getmapSir();
+    var inputsir = objSir.getdataInputSir();
+    var est = "uni__est";
 $(document).ready(function () {
     fltrEst();
     /* variables para consumir el servicio Sir*/
@@ -7,10 +11,7 @@ $(document).ready(function () {
 });
 
 function grilla(obj) {
-    var objSir = new sir();
-    var urlSir = objSir.getUrlSir();
-    var mapSir = objSir.getmapSir();
-    var inputsir = objSir.getdataInputSir();
+    
 
     /* variables para consumir el servicio SiCud*/
     var objCud = new cud();
@@ -155,7 +156,9 @@ function grilla(obj) {
         edit: function (e) {
             if (!e.model.isNew()) {
                 if (e.model[est] != 99) {
-                    e.container.find("div.k-edit-buttons")[0].style.display = "none";
+                    kendo.ui.progress($('.k-edit-form-container'), true);
+                    kendo.ui.progress($('.k-edit-buttons'), true);
+                    e.container.find(".k-loading-image").css("background-image", "url('')");
                 }
                 e.container.kendoWindow("title", "Editar");
             } else {
@@ -543,7 +546,7 @@ function fltrEst() {
 }
 
 function onChangeFltr() {
-    var json = {
+    inputsir = {
         "dsSIRinv_uni": {
             "eeDatos": [
                 {
@@ -563,5 +566,5 @@ function onChangeFltr() {
             ]
         }
     }
-    grilla(json);
+    grilla(inputsir);
 }

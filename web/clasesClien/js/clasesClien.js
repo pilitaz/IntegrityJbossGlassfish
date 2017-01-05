@@ -1,34 +1,18 @@
 /* variables para consumir el servicio Sir*/
 var objSir = new sir();
-var urlSir = objSir.getUrlSir(); 
-var mapSir = objSir.getmapSir();
-var inputsir = objSir.getdataInputSir();
+    var urlSir = objSir.getUrlSir(); 
+    var mapSir = objSir.getmapSir();
+    var inputsir = objSir.getdataInputSir();
 var est= "cla__est";
 
 $(document).ready(function() {
-    var data = [
-        {text: "Todos", value: "-1", clase: ""},
-        {text: "Creado", value: "99", clase: "po_checkCreate"},
-        {text: "Activo", value: "0", clase: "po_checkAct"},
-        {text: "Bloqueado", value: "1", clase: "po_checkBloq"}
-    ];
-    
-    $("#fltrEst").kendoDropDownList({
-        dataTextField: "text",
-        dataValueField: "value",
-        change: onChangeFltr,
-        valueTemplate: "<span>#:data.text#</span>",
-        template: "<a class='k-grid-aprobar' '><span class='k-sprite #: data.clase #'></span></a>" +
-                '<span class="k-state-default"><h0>#: data.text #</h0>',
-        dataSource: data,
-        width: 400
-    });
+    fltrEst()
     	
     grilla();
     
 });
 
-function grilla(){
+function grilla(obj){
     
     /* variables para consumir el servicio SiCud*/
     var objCud = new cud();
@@ -36,15 +20,16 @@ function grilla(){
     var mapCud = objCud.getmapCud();
     var inputCud = objCud.getdataInputCud();
     
+    if(obj){
+        inputsir = obj;
+    }
     /*variable para adicionar los campos requeridos y el tipo de dato*/
     /*editable: false --- ocultar en grilla*/
     var fieldShema = {
-        cla__cli: { type: 'number', editable: false},
         cla__nom: { type: 'string'},
-        act__cod: { type: 'string'},
-        cto__cod: { type: 'string'},
-        cial__cod: { type: 'string'},
+        cla__cli: { type: 'number'},
         cla__est: { type: 'number'},
+        piindicador: { type: 'number'}
     }
     
     /*variable id es el id correspondiente a la tabla a cansultar*/
@@ -56,7 +41,7 @@ function grilla(){
     /*variables para adicionar los botones de la grilla*/        
     var btnC = true;        
     var btnUD = [
-        {name: "aprobar", click: aprobarClase, template: "<a class='k-grid-aprobar' href='' style='min-width:16px;'><span class='k-sprite po_check'></span></a>"},
+        {name: "aprobar", click: aprobarClase, template: "<a class='k-grid-aprobar' '><span class='k-sprite po_cerrar'></span></a>"},
         {name: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
         {name: "Delete", click: deleteRow, template: "<a class='k-grid-Delete'><span class='k-sprite po_cerrar'></span></a>"},
     ];
@@ -166,9 +151,10 @@ function grilla(){
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
         edit: function (e) {
             if (!e.model.isNew()) {
-                if(e.model[est] != 99 ){
-                    e.container.find("input[name=cla__nom]")[0].readOnly="true";
-                    e.container.find("div.k-edit-buttons")[0].style.display = "none";
+                if (e.model[est] != 99) {
+                    kendo.ui.progress($('.k-edit-form-container'), true);
+                    kendo.ui.progress($('.k-edit-buttons'), true);
+                    e.container.find(".k-loading-image").css("background-image", "url('')");
                 }
                 e.container.kendoWindow("title", "Editar");
             } else {
@@ -178,21 +164,7 @@ function grilla(){
     });
 }
 
-function onChangeFltr() {
-     
-    objSir = new sir();
-    urlSir = objSir.getUrlSir();
-    mapSir = objSir.getmapSir();
-    inputsir = objSir.getdataInputSir();
-    
-    
-    
-    var key1 = Object.keys(inputsir)[0];
-    var key2 = Object.keys(inputsir[key1])[1];
-    inputsir[key1][key2][0].piiclaest = $("#fltrEst").val();
-    
-    grilla();
-}
+
 
 function addRow(){
     var grid = $("#grid").data("kendoGrid");
@@ -234,157 +206,7 @@ function deleteRow(e) {
     }
 }
 
-//function cla__cliList(container, options){
-//       var obj = new listacla__cli();
-//       var dataSource = obj.getdataSource();
-//       $('<input id="idcla__cli" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-//               dataTextField: "text",
-//               dataValueField: "value",
-//               dataSource: dataSource,
-//               index: 0,
-//       });
-//}
-//
-//function listacla__cli () {
-//
-//
-//       this.setdataSource = function (newname) {
-//        if (newname) {
-//            dataSource = newname;
-//               }
-//       };
-//    this.getdataSource = function () {
-//        return dataSource;
-//       };
-//};
-//
-//
-//function cla__nomList(container, options){
-//       var obj = new listacla__nom();
-//       var dataSource = obj.getdataSource();
-//       $('<input id="idcla__nom" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-//               dataTextField: "text",
-//               dataValueField: "value",
-//               dataSource: dataSource,
-//               index: 0,
-//       });
-//}
-//
-//function listacla__nom () {
-//
-//
-//       this.setdataSource = function (newname) {
-//        if (newname) {
-//            dataSource = newname;
-//               }
-//       };
-//    this.getdataSource = function () {
-//        return dataSource;
-//       };
-//};
-//
-//
-//function act__codList(container, options){
-//       var obj = new listaact__cod();
-//       var dataSource = obj.getdataSource();
-//       $('<input id="idact__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-//               dataTextField: "text",
-//               dataValueField: "value",
-//               dataSource: dataSource,
-//               index: 0,
-//       });
-//}
-//
-//function listaact__cod () {
-//
-//
-//       this.setdataSource = function (newname) {
-//        if (newname) {
-//            dataSource = newname;
-//               }
-//       };
-//    this.getdataSource = function () {
-//        return dataSource;
-//       };
-//};
-//
-//
-//function cto__codList(container, options){
-//       var obj = new listacto__cod();
-//       var dataSource = obj.getdataSource();
-//       $('<input id="idcto__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-//               dataTextField: "text",
-//               dataValueField: "value",
-//               dataSource: dataSource,
-//               index: 0,
-//       });
-//}
-//
-//function listacto__cod () {
-//
-//
-//       this.setdataSource = function (newname) {
-//        if (newname) {
-//            dataSource = newname;
-//               }
-//       };
-//    this.getdataSource = function () {
-//        return dataSource;
-//       };
-//};
-//
-//
-//function cial__codList(container, options){
-//       var obj = new listacial__cod();
-//       var dataSource = obj.getdataSource();
-//       $('<input id="idcial__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-//               dataTextField: "text",
-//               dataValueField: "value",
-//               dataSource: dataSource,
-//               index: 0,
-//       });
-//}
-//
-//function listacial__cod () {
-//
-//
-//       this.setdataSource = function (newname) {
-//        if (newname) {
-//            dataSource = newname;
-//               }
-//       };
-//    this.getdataSource = function () {
-//        return dataSource;
-//       };
-//};
-//
-//
-//function cla__estList(container, options){
-//       var obj = new listacla__est();
-//       var dataSource = obj.getdataSource();
-//       $('<input id="idcla__est" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-//               dataTextField: "text",
-//               dataValueField: "value",
-//               dataSource: dataSource,
-//               index: 0,
-//       });
-//}
-//
-//function listacla__est () {
-//
-//
-//       this.setdataSource = function (newname) {
-//        if (newname) {
-//            dataSource = newname;
-//               }
-//       };
-//    this.getdataSource = function () {
-//        return dataSource;
-//       };
-//};
 
-
-//-------------------------------------------------
 
 function aprobarClase(e) {
     try {
@@ -456,5 +278,44 @@ function sendAjaxAClase(verHtml, obj) {
 
     });
 }
-
-
+function onChangeFltr() {
+    inputsir= {
+        "dsSIRgpr_cla":{  
+                "eeDatos":[  
+                    {  
+                        "picusrcod":sessionStorage.getItem("usuario"),
+                        "picfiid":sessionStorage.getItem("picfiid"),
+                        "local_ip":sessionStorage.getItem("ipPrivada"),
+                        "remote_ip":sessionStorage.getItem("ipPublica")
+                    }
+                ],
+                "eeSIRgpr_cla":[  
+                    {  
+                        "piicla__cli" : 0,
+                        "piccial__cod" : "*",
+                        "piiclaest": $("#fltrEst").val(),
+                    }
+                ]
+            }
+    }
+    grilla(inputsir);
+    
+}
+function fltrEst(){
+    var data = [
+        {text: "Todos", value: "-1", },
+        {text: "Creado", value: "99", clase: "po_checkCreate"},
+        {text: "Activo", value: "0", clase: "po_checkAct"},
+        {text: "Bloqueado", value: "1", clase: "po_checkBloq"}
+    ];
+    $("#fltrEst").kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "value",
+        change: onChangeFltr,
+        valueTemplate: "<span>#:data.text#</span>",
+        template: "<a class='k-grid-aprobar' '><span class='k-sprite #: data.clase #'></span></a>" +
+                '<span class="k-state-default"><h0>#: data.text #</h0>',
+        dataSource: data,
+        width: 400
+    });
+}

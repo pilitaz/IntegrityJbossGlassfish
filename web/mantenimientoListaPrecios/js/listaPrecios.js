@@ -8,7 +8,7 @@ var dataGridDetalleListaPrecios = [];
 var dataSourceAdd = [];
 var dataSourceUpdate = [];
 var dataSourceDelete = [];
-
+var est = "lis__est";
 
 
 $(document).ready(function () {
@@ -21,8 +21,10 @@ $(document).ready(function () {
     authdsinv_cla.dsinv_cla.eeDatos[0].fiid = sessionStorage.getItem("picfiid");
     authdsinv_cla.dsinv_cla.eetemp = new Array();
     authdsinv_cla.dsinv_cla.eetemp[0] = new Object();
-    
 
+    if (JSON.parse(sessionStorage.getItem("listaPrecios"))[est] !== 99) {
+        $('#btnEditar').hide();
+    }
     cambiarInput();
     cargarDatosGrilla();
     gridDetalleListaPrecios();
@@ -50,7 +52,7 @@ function gridDetalleListaPrecios() {
             },
 //            {
             {
-                field: "pre__pcod",
+                field: "pre__des",
                 title: "Presentacíón"
             },
             {command: [
@@ -75,21 +77,23 @@ function gridDetalleListaPrecios() {
             e.preventDefault();
             var dataItem = $("#gridDetalleListaPrecios").data("kendoGrid").dataItem($(e.target).closest("tr"));
 
-
-            var actions = new Array();
-            actions[0] = new Object();
-            actions[0].text = "OK";
-            actions[0].action = function () {
-                CUGrilla([dataItem], "DELETE");
-                bandAlert = 0;
-            };
-            actions[1] = new Object();
-            actions[1].text = "Cancelar";
-            actions[1].action = function () {
-                bandAlert = 0;
-            };
-            createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.lis__des + " ---?", "400px", "200px", true, true, actions);
-
+            if (JSON.parse(sessionStorage.getItem("listaPrecios"))[est] == 99) {
+                var actions = new Array();
+                actions[0] = new Object();
+                actions[0].text = "OK";
+                actions[0].action = function () {
+                    CUGrilla([dataItem], "DELETE");
+                    bandAlert = 0;
+                };
+                actions[1] = new Object();
+                actions[1].text = "Cancelar";
+                actions[1].action = function () {
+                    bandAlert = 0;
+                };
+                createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.lis__des + " ---?", "400px", "200px", true, true, actions);
+            } else {
+                alertDialogs("El registro no puede ser eliminado.")
+            }
         } catch (e) {
             $('#gridDetalleListaPrecios').data('kendoGrid').dataSource.read();
             $('#gridDetalleListaPrecios').data('kendoGrid').refresh();
@@ -115,36 +119,36 @@ function agregarItemDetalle() {
     popupCU("Agregar");
 }
 function popupCU(titulo) {
-    if(bandAlert === 0){
+    if (bandAlert === 0) {
         var widthPopUp = $("body").width();
-    widthPopUp = widthPopUp * (35 / 100);
-    var heightPopUp = $("body").height();
-    heightPopUp = heightPopUp * (30 / 100);
-bandAlert = bandAlert+1;
-    $("body").append("<div id='windowListPre'></div>");
-    var myWindow = $("#windowListPre");
-    var undo = $("#undo");
+        widthPopUp = widthPopUp * (35 / 100);
+        var heightPopUp = $("body").height();
+        heightPopUp = heightPopUp * (30 / 100);
+        bandAlert = bandAlert + 1;
+        $("body").append("<div id='windowListPre'></div>");
+        var myWindow = $("#windowListPre");
+        var undo = $("#undo");
 
-    function onCloseWindowItemFac() {
-        document.getElementById("windowListPre").remove();
-        undo.fadeIn();
-        bandAlert = 0;
+        function onCloseWindowItemFac() {
+            document.getElementById("windowListPre").remove();
+            undo.fadeIn();
+            bandAlert = 0;
+        }
+
+        myWindow.kendoWindow({
+            width: widthPopUp,
+            height: heightPopUp,
+            title: titulo,
+            content: sessionStorage.getItem("url") + "/mantenimientoListaPrecios/html/popupListaPrecios.html",
+            visible: false,
+            modal: true,
+            actions: [
+                "Close"
+            ],
+            close: onCloseWindowItemFac
+        }).data("kendoWindow").center().open();
     }
 
-    myWindow.kendoWindow({
-        width: widthPopUp,
-        height: heightPopUp,
-        title: titulo,
-        content: sessionStorage.getItem("url") + "/mantenimientoListaPrecios/html/popupListaPrecios.html",
-        visible: false,
-        modal: true,
-        actions: [
-            "Close"
-        ],
-        close: onCloseWindowItemFac
-    }).data("kendoWindow").center().open();
-    }
-    
 }
 function closePopUp() {
     bandAlert = 0;
@@ -163,7 +167,7 @@ function volver() {
 }
 
 function cargarDatosGrilla(objCab, ope) {
-    
+
     var obj = new SIRgpr_lis_det();
     var objLPreciosDeta = obj.getjson();
     var urlSir = obj.getUrlSir();
@@ -221,7 +225,11 @@ function cargarDatosGrilla(objCab, ope) {
                 gridDetalleListaPrecios();
             }
         } else {
-            alertDialogs("Error cargando la información de la lista de Precios metodo cargarDatosGrilla.\n" + permitirIngreso);
+            if (permitirIngreso === "\"Error parsing JSON: unexpected token: eof. (15360)\"") {
+                alertDialogs("Sin Información en la tabla de detalle.");
+            } else {
+                alertDialogs("Error cargando la información de la lista de Precios metodo cargarDatosGrilla.\n" + permitirIngreso);
+            }
         }
         gridDetalleListaPrecios();
     });
@@ -305,7 +313,7 @@ function editCab() {
         $("body").append("<div id='windowCab'></div>");
         var myWindow = $("#windowCab");
         var undo = $("#undo");
-        bandAlert = bandAlert+1;
+        bandAlert = bandAlert + 1;
         function onCloseCabecera() {
             document.getElementById("windowCab").remove();
             undo.fadeIn();
@@ -330,7 +338,7 @@ function editCab() {
 //    window.location.replace((sessionStorage.getItem("url") + "mantenimientoListaPrecios/html/" + servicio + ".html"));
 }
 function cabGuard(jsonResp) {
-    
+
     sessionStorage.setItem("listaPrecios", jsonResp);
     cambiarInput();
     var myWindow = $("#windowCab");

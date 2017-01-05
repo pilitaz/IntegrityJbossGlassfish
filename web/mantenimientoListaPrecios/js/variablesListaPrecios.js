@@ -31,7 +31,7 @@ function SIRgpr_lis() {
                     "piicla_cod": 0,
                     "piilis_num": 0,
                     "picmnd_cla": "*",
-                    "piilis_est": 99,
+                    "piilis_est": -1,
                     "pidfecha": sessionStorage.getItem("fechaSistema"),
                 }
             ]

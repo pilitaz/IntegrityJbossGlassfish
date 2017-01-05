@@ -1,14 +1,15 @@
+/* variables para consumir el servicio Sir*/
+    var objSir = new sir();
+    var urlSir = objSir.getUrlSir();
+    var mapSir = objSir.getmapSir();
+    var inputsir = objSir.getdataInputSir();
 var est = "ageo__est";
 $(document).ready(function () {
     fltrEst();
     grilla();
 });
 function grilla(obj) {
-    /* variables para consumir el servicio Sir*/
-    var objSir = new sir();
-    var urlSir = objSir.getUrlSir();
-    var mapSir = objSir.getmapSir();
-    var inputsir = objSir.getdataInputSir();
+    
 
     /* variables para consumir el servicio SiCud*/
     var objCud = new cud();
@@ -340,7 +341,7 @@ function fltrEst() {
 }
 
 function onChangeFltr() {
-    var json = {
+    inputsir = {
         "dsSIRgpr_ageo": {
             "eeDatos": [
                 {
@@ -360,7 +361,7 @@ function onChangeFltr() {
         }
     }
 
-    grilla(json);
+    grilla(inputsir);
 }
 
 function logical(obj, nodo) {

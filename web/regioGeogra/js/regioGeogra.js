@@ -174,8 +174,9 @@ function grilla() {
         edit: function (e) {
             if (!e.model.isNew()) {
                 if (e.model[est] != 99) {
-
-                    e.container.find("div.k-edit-buttons")[0].style.display = "none";
+                    kendo.ui.progress($('.k-edit-form-container'), true);
+                    kendo.ui.progress($('.k-edit-buttons'), true);
+                    e.container.find(".k-loading-image").css("background-image", "url('')");
                 }
                 e.container.kendoWindow("title", "Editar");
             } else {

@@ -5,10 +5,14 @@
  */
 var art_cod;
 var pre_pcod;
-
+var est = "lis__est";
 $(document).ready(function () {
     $("#btAgregar").kendoButton();
     $("#btCancelar").kendoButton();
+    if (JSON.parse(sessionStorage.getItem("listaPrecios"))[est] !== 99) {
+        kendo.ui.progress($('table'), true);
+        $('table').find(".k-loading-image").css("background-image", "url('')");
+    }
     var authdsinv_cla = new Object();
     authdsinv_cla.dsinv_cla = new Object();
     authdsinv_cla.dsinv_cla.eeDatos = new Array();
@@ -89,7 +93,7 @@ $(document).ready(function () {
                     type: "POST"
                 },
                 parameterMap: function (options, operation) {
-                    
+
                     var key1 = Object.keys(objArt)[0];
                     var key2 = Object.keys(objArt[key1])[1];
                     objArt[key1][key2][0].piicla_cod = $("#idClaseArticulo").val();

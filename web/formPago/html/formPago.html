@@ -26,7 +26,7 @@ and open the template in the editor.
         <link href="../css/librerias/HRD.css" rel="stylesheet" type="text/css"/>            
         <script src="../../js/servicios.js" type="text/javascript"></script>
         <script src="../js/varDataSKendo.js"></script>		
-        <script src="../js/presentProd.js" type="text/javascript"></script>
+        <script src="../js/formPago.js" type="text/javascript"></script>
     </head>
     <body>
         <div>
@@ -41,19 +41,16 @@ and open the template in the editor.
         <script id="rowTemplate" type="text/x-kendo-tmpl">
             <tr data-uid="#: uid #"> 
             <td>
-            <span class="title">#: pre__pcod #</span>
+            <span class="title">#: fac__num #</span>
             </td>
             <td>
-            <span class="title">#: pre__des #</span>
+            <span class="title">#: pag__des #</span>
             </td> 
             <td>
-            <span class="title">#: uni__cod #</span>
-            </td> 
-            <td>
-            <span class="title">#: pre__fac #</span>
+            <span class="title">#: cla__nom #</span>
             </td>
             <td>
-            <a  class='k-grid-aprobar'><span id = "aprobar#: idpre#" class = "k-sprite #try{if(pre__est == 0){#po_checkAct#}else if(pre__est == 1){#po_checkBloq#}else if(pre__est == 99){#po_checkCreate#}}catch(e){#po_checkCreate#}#" ></span></a>
+            <a  class='k-grid-aprobar'><span id = "aprobar#: idpre#" class = "k-sprite #try{if(fac__est == 0){#po_checkAct#}else if(fac__est == 1){#po_checkBloq#}else if(fac__est == 99){#po_checkCreate#}}catch(e){#po_checkCreate#}#" ></span></a>
             <a  class='k-grid-edit'><span id = "edit#: idpre#" class='k-sprite po_editon'></span></a>
             <a  class='k-grid-Delete'><span id = "Delete#: idpre#" class='k-sprite po_cerrar'></span></a>
             </td>                
@@ -62,19 +59,16 @@ and open the template in the editor.
         <script id="altRowTemplate" type="text/x-kendo-tmpl">
             <tr class="k-alt" data-uid="#: uid #">
             <td>
-            <span class="title">#: pre__pcod #</span>
+            <span class="title">#: fac__num #</span>
             </td>
             <td>
-            <span class="title">#: pre__des #</span>
+            <span class="title">#: pag__des #</span>
+            </td> 
+            <td>
+            <span class="title">#:cla__nom #</span>
             </td>
             <td>
-            <span class="title">#: uni__cod #</span>
-            </td>
-            <td>
-            <span class="title">#: pre__fac #</span>
-            </td>
-            <td>
-            <a  class='k-grid-aprobar'><span id = "aprobar#: idpre#" class = "k-sprite #try{if(pre__est == 0){#po_checkAct#}else if(pre__est == 1){#po_checkBloq#}else if(pre__est == 99){#po_checkCreate#}}catch(e){#po_checkCreate#}#" ></span></a>
+            <a  class='k-grid-aprobar'><span id = "aprobar#: idpre#" class = "k-sprite #try{if(fac__est == 0){#po_checkAct#}else if(fac__est == 1){#po_checkBloq#}else if(fac__est == 99){#po_checkCreate#}}catch(e){#po_checkCreate#}#" ></span></a>
             <a  class='k-grid-edit'><span id = "edit#: idpre#" class='k-sprite po_editon'></span></a>
             <a  class='k-grid-Delete'><span id = "Delete#: idpre#" class='k-sprite po_cerrar'></span></a>
             </td>

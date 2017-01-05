@@ -5,7 +5,8 @@ var mapSir = objSir.getmapSir();
 var inputsir = objSir.getdataInputSir();
 //    var objSir = new sir();
 //var urlSir = objSir.getUrlSir();
-var est = "pre__est";
+var est = "fac__est";
+var clacli= "";
 $(document).ready(function () {
     fltrEst();
     grilla();
@@ -27,11 +28,12 @@ function grilla(obj) {
     /*variable para adicionar los campos requeridos y el tipo de dato*/
     /*editable: false --- ocultar en grilla*/
     var fieldShema = {
-        pre__pcod: {type: 'string'},
-        pre__des: {type: 'string'},
-        pre__est: {type: 'number'},
-        uni__cod: {type: 'string'},
-        pre__fac: {type: 'number'},
+        fac__num: {type: 'number'},
+        fac__pag: {type: 'number'},
+        pag__des: {type: 'string'},
+        cla__cli: {type: 'number'},
+        cla__nom: {type: 'string'},
+        fac__est: {type: 'number'},
     }
 
     /*variable id es el id correspondiente a la tabla a cansultar*/
@@ -58,11 +60,11 @@ function grilla(obj) {
     /*hiden: true --- ocultar en grilla*/
     var columns = [
 //		btnDer,
-        {field: "pre__pcod", title: "Cod. Presentacion", width: "100%"},
-        {field: "pre__des", title: "Descripcion", width: "100%"},
-//            {field: "pre__est", title: "Estado",width: "100%"},
-        {field: "uni__cod", title: "Unidad de Medida", editor: uni__codList, width: "100%"},
-        {field: "pre__fac", title: "Factor Conversion", width: "100%"},
+        {field: "fac__num", title: "No. de días", width: "100%"},
+//        {field: "fac__pag", title: "Forma de pago", width: "100%"},
+        {field: "pag__des", title: "Forma de Pago", width: "100%"},
+//            {field: "fac__est", title: "Estado",width: "100%"},
+        {field: "cla__nom", title: "Clase de Cliente", editor:cla__cliList,width: "100%"},
         btnIzq
     ];
 
@@ -96,7 +98,9 @@ function grilla(obj) {
                 try {
                     if (operation === 'read') {
                         return JSON.stringify(inputsir);
-                    } else if (operation === 'create') {
+                    } else if (operation === 'create') {debugger
+                        options["cla__cli"] = clacli;
+                        clacli = 0;
                         var key1 = Object.keys(inputCud)[0]
                         options[est] = 99;
                         inputCud[key1][mapCud] = [options];
@@ -121,7 +125,7 @@ function grilla(obj) {
                         for (var i = 0; i < e[key1][mapSir].length; i++) {
                             e[key1][mapSir][i].idpre = i
                         }
-                    }
+                    }else{grilla()}
                     return e[key1][mapSir];
                 } else {
                     alertDialogs(e[key1].eeEstados[0].Estado);
@@ -151,10 +155,7 @@ function grilla(obj) {
             if (!e.model.isNew()) {//caso en el que el popup es editar
 
                 e.container.kendoWindow("title", "Editar");
-                var buscarlabel = $("label").find("for");
-                Buscarlabel = buscarlabel.prevObject[0];
-                Buscarlabel.style.display = "none";
-                e.container.find("input[name=pre__pcod]")[0].style.display = "none";
+                
                 //e.container.find("input[name=ter__raz]")[0].readOnly="true"
                 if (e.model[est] != 99) {
                     kendo.ui.progress($('.k-edit-form-container'), true);
@@ -163,10 +164,6 @@ function grilla(obj) {
                 }
             } else {
                 e.container.kendoWindow("title", "Crear");
-                ////caso en el que el popup es crear
-//                Buscarlabel = buscarlabel.prevObject[3];
-//                Buscarlabel.style.display = "none";
-                //e.container.find("label[name=sre__cod]")[0].display="none";
             }
         },
     });
@@ -212,97 +209,27 @@ function deleteRow(e) {
     }
 }
 
-function pre__pcodList(container, options) {
-    var obj = new listapre__pcod();
-    var dataSource = obj.getdataSource();
-    $('<input id="idpre__pcod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-        dataTextField: "text",
-        dataValueField: "value",
-        dataSource: dataSource,
-        index: 0,
-    });
-}
-
-function listapre__pcod() {
 
 
-    this.setdataSource = function (newname) {
-        if (newname) {
-            dataSource = newname;
-        }
-    };
-    this.getdataSource = function () {
-        return dataSource;
-    };
-}
-;
 
 
-function pre__desList(container, options) {
-    var obj = new listapre__des();
-    var dataSource = obj.getdataSource();
-    $('<input id="idpre__des" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-        dataTextField: "text",
-        dataValueField: "value",
-        dataSource: dataSource,
-        index: 0,
-    });
-}
 
-function listapre__des() {
-
-
-    this.setdataSource = function (newname) {
-        if (newname) {
-            dataSource = newname;
-        }
-    };
-    this.getdataSource = function () {
-        return dataSource;
-    };
-}
-;
-
-
-function pre__estList(container, options) {
-    var obj = new listapre__est();
-    var dataSource = obj.getdataSource();
-    $('<input id="idpre__est" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-        dataTextField: "text",
-        dataValueField: "value",
-        dataSource: dataSource,
-        index: 0,
-    });
-}
-
-function listapre__est() {
-
-
-    this.setdataSource = function (newname) {
-        if (newname) {
-            dataSource = newname;
-        }
-    };
-    this.getdataSource = function () {
-        return dataSource;
-    };
-}
-;
-
-
-function uni__codList(container, options) {
-    var obj = new listauni__cod();
+function cla__cliList(container, options) {
+    debugger
+    var obj = new listacla__cli();
     var dataSource = obj.getdataSource();
     $('<input id="iduni__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-        dataTextField: "uni__des",
-        dataValueField: "uni__des",
+        dataTextField: "cla__nom",
+        dataValueField: "cla__nom",
         dataSource: dataSource,
-        index: 0,
+        change: onSelect
     });
 }
-
-function listauni__cod() {
-    var objSirUn = new SIRinv_uni();
+function onSelect(e){
+    clacli = e.sender.dataSource._data[e.sender.selectedIndex].cla__cli
+}
+function listacla__cli() {
+    var objSirUn = new SIRgpr_cla();
     var urlSirUn = objSirUn.getUrlSir();
     var mapSirUn = objSirUn.getmapSir();
     var inputsirUn = objSirUn.getdataInputSir();
@@ -343,9 +270,9 @@ function listauni__cod() {
                 }
             },
             model: {
-                id: "uni__des",
+                id: "cla__nom",
                 fields: {
-                    uni__des: {type: 'string'},
+                    cla__nom: {type: 'string'},
 //                    uni__des: {type: 'string'},
                 }
             }
@@ -367,30 +294,7 @@ function listauni__cod() {
 ;
 
 
-function pre__facList(container, options) {
-    var obj = new listapre__fac();
-    var dataSource = obj.getdataSource();
-    $('<input id="idpre__fac" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-        dataTextField: "text",
-        dataValueField: "value",
-        dataSource: dataSource,
-        index: 0,
-    });
-}
 
-function listapre__fac() {
-
-
-    this.setdataSource = function (newname) {
-        if (newname) {
-            dataSource = newname;
-        }
-    };
-    this.getdataSource = function () {
-        return dataSource;
-    };
-}
-;
 ///-----------------------------------------------------------------------------
 
 
@@ -485,7 +389,7 @@ function fltrEst() {
 
 function onChangeFltr() {
     inputsir = {
-        "dsSIRgpr_pre": {
+        "dsfac_pag": {
             "eeDatos": [
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
@@ -494,15 +398,15 @@ function onChangeFltr() {
                     "remote_ip": sessionStorage.getItem("ipPublica")
                 }
             ],
-            "eeSIRgpr_pre": [
+            "eetemp": [
                 {
-                    "picpre__pcod": "*",
-                    "picusuario": "*",
-                    "piipre__est": $("#fltrEst").val()
+                    "piicla_cli": 0,
+                    "piifac_pag": 0,
+                    "piifac_est": $("#fltrEst").val()
                 }
             ]
         }
-    }
+    };
     grilla(inputsir);
 }
 
