@@ -1,4 +1,6 @@
 
+var itemPedido;
+
 $(document).ready(function () {
    var pedido = JSON.parse(sessionStorage.getItem("regPedidos"));
    
@@ -16,8 +18,7 @@ $(document).ready(function () {
    document.getElementById('lbDireccion').innerHTML = pedido.ter__dir;
    document.getElementById('lbTelefono').innerHTML = pedido.ter__tel;   
    document.getElementById('lbCiudad').innerHTML = pedido.ciu__nom;
-   document.getElementById('lbObservaciones').innerHTML = pedido.obs__ped;
-   
+   document.getElementById('lbObservaciones').innerHTML = pedido.obs__ped;   
    //sessionStorage.setItem("listaPrecioCliente", dataCliente.lis__num);
    
    gridDetallePedido();
@@ -75,7 +76,7 @@ function gridDetallePedido(){
     
     var grid = $("#gridDetallePedido").kendoGrid({
         dataSource: dataSourcePedido,       
-        selectable: false,
+        selectable: true,
         height: 500,        
         columns: [            
             {
@@ -115,8 +116,8 @@ function gridDetallePedido(){
                 format: "{0:n}"
             },
             { command: [
-                    {name: "editar", click: "", template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},
-                    {name: "eliminar", click: "", template: "<a class='k-grid-eliminar'><span class='k-sprite po_cerrar'></span></a>"}
+                    {name: "editar", click: editarItem, template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},
+                    {name: "eliminar", click: eliminarItem, template: "<a class='k-grid-eliminar'><span class='k-sprite po_cerrar'></span></a>"}
                 ] 
                 }],
         editable: {
@@ -127,11 +128,131 @@ function gridDetallePedido(){
                 width: "700px"
             }            
         },
-        cancel: function (e) {            
+        cancel: function (e) {              
             e._defaultPrevented = true;
-            $('#grid').data('kendoGrid').refresh();
+            $('#gridDetallePedido').data('kendoGrid').refresh();
         },        
-    }).data("kendoGrid");    
+    }).data("kendoGrid");
+    
+    function eliminarItem(e){         
+        e.preventDefault();
+        
+        var grid = $("#gridDetallePedido").data("kendoGrid");
+        itemPedido = grid.dataItem(grid.select());
+        var ItemEliminado;
+        
+        var objDetalePed = new SICUDDetallePedido();
+        var jsonDetalePed = objDetalePed.getjson();
+        var urlDetalePed = objDetalePed.getUrlSir();
+        var mapDataDetalePed = objDetalePed.getMapData();
+        
+        var key1 = Object.keys(jsonDetalePed)[0];
+        var key2 = Object.keys(jsonDetalePed[key1])[1];
+        jsonDetalePed[key1][key2][0].suc__cod = itemPedido.suc__cod;
+        jsonDetalePed[key1][key2][0].clc__cod = itemPedido.clc__cod;
+        jsonDetalePed[key1][key2][0].ped__fec = itemPedido.ped__fec;//lista del cliente        
+        jsonDetalePed[key1][key2][0].ped__num = itemPedido.ped__num;
+        jsonDetalePed[key1][key2][0].lis__num = itemPedido.lis__num;
+        jsonDetalePed[key1][key2][0].cla__cod = itemPedido.cla__cod;//lista del cliente        
+        jsonDetalePed[key1][key2][0].art__cod = itemPedido.art__cod;    
+        jsonDetalePed[key1][key2][0].pre__pcod = itemPedido.pre__pcod;
+        jsonDetalePed[key1][key2][0].ped__can = itemPedido.ped__can;
+        jsonDetalePed[key1][key2][0].lpd__pre = itemPedido.lpd__pre;
+        jsonDetalePed[key1][key2][0].ped__dct = itemPedido.ped__dct;   
+        jsonDetalePed[key1][key2][0].ped__iva = itemPedido.ped__iva;
+        
+        $.ajax({
+            type: "DELETE",
+            data: JSON.stringify(jsonDetalePed),
+            url: urlDetalePed,
+            dataType : "json",
+            contentType: "application/json;",
+            success: function (e) {
+                ItemEliminado = e[key1].eeEstados[0].Estado;;                
+            },
+            error: function (e) {                
+                alertDialogs("Error consumiendo el servicio de guardar\n"+ e.status +" - "+ e.statusText);
+            }
+        }).done(function(){
+            if(ItemEliminado==="OK"){
+                var pedido = JSON.parse(sessionStorage.getItem("regPedidos"));
+                
+                var objFiltroPedidos = new sirConsultaPedidos();
+                var jsonFiltroPedidos = objFiltroPedidos.getjson();
+                var urlFiltroPedidos = objFiltroPedidos.getUrlSir();
+                var mapDataFiltroPedidos = objFiltroPedidos.getMapData();
+                
+                var key1 = Object.keys(jsonFiltroPedidos)[0];
+                var key2 = Object.keys(jsonFiltroPedidos[key1])[1];
+                jsonFiltroPedidos[key1][key2][0].pidped_fec = pedido.ped__fec;
+                jsonFiltroPedidos[key1][key2][0].piiped_num = pedido.ped__num;
+                jsonFiltroPedidos[key1][key2][0].picsuc_cod = pedido.suc__cod;
+                
+                try{                
+                    $.ajax({
+                        type: "POST",
+                        data: JSON.stringify(jsonFiltroPedidos),
+                        url: urlFiltroPedidos,
+                        dataType : "json",
+                        contentType: "application/json;",
+                        success: function (e) {                        
+                            if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                                return e[key1][mapDataFiltroPedidos];
+                            } else {
+                                alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                            }
+                        },
+                        error: function (e) {
+                            alertDialogs(" Error al consumir el servicio 733"+ e.status +" - "+ e.statusText);                
+                        }
+                    }).done(function(e){            
+                        var pedido = e[key1][mapDataFiltroPedidos][0];
+                        sessionStorage.setItem("regPedidos", JSON.stringify(pedido));
+                        gridDetallePedido();
+                    });
+                }catch (e) {
+                    alertDialogs("Function: consumeServAjaxSIR Error: " + e.message);
+                }
+            }else{                    
+                alertDialogs("Pedido con errores  \n"+ItemEliminado);                         
+            }
+        });
+    }
+    
+    function editarItem(e){        
+        e.preventDefault();
+        
+        var grid = $("#gridDetallePedido").data("kendoGrid");
+        itemPedido = grid.dataItem(grid.select());
+        
+        var widthPopUp = $("body").width();
+        widthPopUp = widthPopUp * (60/100);
+        var heightPopUp = $("body").height();
+        heightPopUp = heightPopUp * (50/100);
+        
+        $("body").append("<div id='windowItemPed'></div>");
+        var myWindow = $("#windowItemPed");        
+        var undo = $("#undo");
+        
+        function onCloseWindowItemFacEdit() {
+            
+            document.getElementById("windowItemPed").remove();            
+            undo.fadeIn();  
+        }
+        
+        myWindow.kendoWindow({
+            width: widthPopUp,
+            height: heightPopUp,
+            title: "Editar",
+            content: sessionStorage.getItem("url") + "/pedidos/html/popupItemPedido.html",
+            visible: false,
+            modal: true,
+            actions: [            
+                "Close"
+            ],
+            close: onCloseWindowItemFacEdit
+        }).data("kendoWindow").center().open();
+    }
 }
 
 function agregarItemDetalle(e){    
@@ -166,5 +287,43 @@ function agregarItemDetalle(e){
 }
 
 function closePopUp(){    
-    $("#windowItemPedido").data("kendoWindow").close();
+    $("#windowItemPedido").data("kendoWindow").close();    
+    var pedido = JSON.parse(sessionStorage.getItem("regPedidos"));
+    
+    var objFiltroPedidos = new sirConsultaPedidos();
+    var jsonFiltroPedidos = objFiltroPedidos.getjson();
+    var urlFiltroPedidos = objFiltroPedidos.getUrlSir();
+    var mapDataFiltroPedidos = objFiltroPedidos.getMapData();
+    
+    var key1 = Object.keys(jsonFiltroPedidos)[0];
+    var key2 = Object.keys(jsonFiltroPedidos[key1])[1];
+    jsonFiltroPedidos[key1][key2][0].pidped_fec = pedido.ped__fec;
+    jsonFiltroPedidos[key1][key2][0].piiped_num = pedido.ped__num;
+    jsonFiltroPedidos[key1][key2][0].picsuc_cod = pedido.suc__cod;
+    
+    try{                
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(jsonFiltroPedidos),
+            url: urlFiltroPedidos,
+            dataType : "json",
+            contentType: "application/json;",
+            success: function (e) {                        
+                if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                    return e[key1][mapDataFiltroPedidos];
+                } else {
+                    alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                }
+            },
+            error: function (e) {
+                alertDialogs(" Error al consumir el servicio 733"+ e.status +" - "+ e.statusText);                
+            }
+        }).done(function(e){            
+            var pedido = e[key1][mapDataFiltroPedidos][0];
+            sessionStorage.setItem("regPedidos", JSON.stringify(pedido));
+            gridDetallePedido();
+        });
+    }catch (e) {
+        alertDialogs("Function: consumeServAjaxSIR Error: 740 " + e.message);
+    }
 }
