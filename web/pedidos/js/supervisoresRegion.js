@@ -163,7 +163,8 @@ $(document).ready(function () {
                     var cedula = $("#cedula")[0].value;
                      var nombre = $("#nombre")[0].value;
                     var region = $("#region").data("kendoDropDownList").value();
-                    
+                     var select = region.selectedIndex;
+                   region = region.dataSource._data[select].rgeo__cod;
                     actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod=region;  
                     actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod=options.sre__cod; 
                     actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__est=options.sre__est; 
@@ -178,12 +179,13 @@ $(document).ready(function () {
                 if (operation === "create") {debugger
                     var cedula = $("#cedula")[0].value;
                     var nombre = $("#nombre")[0].value;
-                    var region = $("#region").data("kendoDropDownList").value();
-                    var x=0;
-                    if (options.sre__est===true){x=1;}
-                    else{x=0;}
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod=region;  
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod=options.sre__cod; 
+                    var region = $("#region").data("kendoDropDownList");
+                    var select = region.selectedIndex;
+                   region = region.dataSource._data[select].rgeo__cod;
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__raz=nombre;
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__nom=options.rgeo__nom;
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod=region;
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod=0; 
                     actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__est=99; 
                     actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__nit=cedula; 
                     return JSON.stringify(actjson);          
@@ -219,6 +221,7 @@ $(document).ready(function () {
                 var key1 = Object.keys(e)[0];
                 if(e[key1].eeEstados){
                     if (e[key1].eeEstados[0].Estado === "OK") {
+                       
                         return e[key1][mapCud];
                     }else
                     {
@@ -285,11 +288,14 @@ $(document).ready(function () {
             }else{
                 $("#region").data("kendoDropDownList").enable(false);
             //e.container.find("span")[1].attr('disabled','disabled');
-//                e.container.find("span[for='rgeo__nom']");
+            //e.container.find("span[for='rgeo__nom']");
+            
             }
             }
-            else{//caso en el que el popup es crear k-edit-field
-               
+            else{//caso en el que el popup es crear 
+               var buscarlabel = $("label").find("for");
+                Buscarlabel = buscarlabel.prevObject[0];
+                Buscarlabel.style.display = "none";
             }
         } ,
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
@@ -320,7 +326,7 @@ grilla(-1);
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
         var dataItem = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"));
-         if (dataItem.ctr__est!= 99){
+         if (dataItem.sre__est!= 99){
              alertDialogs("No se puede eliminar por el estado ");  
          }else{
         var actions = new Array();

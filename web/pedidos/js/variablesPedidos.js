@@ -133,6 +133,7 @@ function consultaCabeceraPedido() {
  *  var input = sir.getdataInputSir();
  */
 function sirConsultaSucursal() {
+    
     var mapData = "eesic_suc";
     var urlSir = ipServicios + baseParameters + "SIRSucursalagencia";
     var json = 
