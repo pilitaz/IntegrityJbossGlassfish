@@ -473,27 +473,26 @@ function cudTerritorios() {
 function sirSupArea() {
     var urlSir = ipServicios + baseComercial +"SIRgpd_sar";
     var json = {  
-        "dsSIRgpd_sar":{  
-            "eeDatos":[  
-                {  
+   "dsSIRgpd_sar":{  
+      "eeDatos": [{
                     "picusrcod":sessionStorage.getItem("usuario"),
                     "picfiid":sessionStorage.getItem("picfiid"),
                     "local_ip":sessionStorage.getItem("ipPrivada"),
                     "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "SIRgpd_sar":[  
-                {  
-                    "piisar__cod":0,
-                    "picter__nit":"*",
-                    "piiageo__cod":0,
-                    "sar__est":-1,
-                    "picpai__cod":"*"
-                    
-                }
-            ]      
         }
-    };
+      ],
+      
+      "SIRgpd_sar":[  
+         {  
+          "piisar__cod":0,
+          "picter__nit":"*",
+          "piiageo__cod":0,
+          "picpai__cod":"*",
+          "piisar__est": -1
+         }
+      ]      
+   }
+};
     
     this.setUrlSir = function (newname) {
         if (newname) {
