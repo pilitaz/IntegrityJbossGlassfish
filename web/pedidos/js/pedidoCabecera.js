@@ -167,7 +167,8 @@ function iniAutocomplete(){
  * 
  * @returns {undefined}
  */
-function iniDropDownList(){    
+function iniDropDownList(){  
+    
     var obj = new sirConsultaSucursal();    
     var objJson = obj.getjson();
     var url = obj.getUrlSir();
