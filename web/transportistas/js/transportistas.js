@@ -71,8 +71,8 @@ function grilla(obj) {
         {field: "por__via", title: "Peso por viaje", width: "100%",hidden: true},
         {field: "rut__cod", title: "Nombre de Ruta",editor:rut__codList, width: "100%",hidden: true},
         {field: "rut__des", title: "Nombre de Ruta", width: "100%"},
-        {field: "ter__nit", title: "Nit del transportista", width: "100%"},
-        {field: "ter__raz", title: "Razon social", width: "100%"},
+        {field: "ter__nit", title: "Nit del transportista", editor:ter__nitList, width: "100%"},
+        {field: "ter__raz", title: "Razon social",editor:ter__razList, width: "100%"},
         {field: "tra__emp", title: "Indicativo Empleado", width: "100%",hidden: true}, 
         //{field: "tra__est", title: "Estado de transportista ", width: "100%",hidden: true}, 
         {field: "tra__tip", title: "No. de días", width: "100%",hidden: true}, //Tipo de Transportador: A=Auxiliar,   C=Conductor
@@ -326,6 +326,95 @@ function rut__codList(container, options) {
 }
 
 function listarut__cod() {
+    var objSirUn = new SIRdpc_rut();
+    var urlSirUn = objSirUn.getUrlSir();
+    var mapSirUn = objSirUn.getmapSir();
+    var inputsirUn = objSirUn.getdataInputSir();
+    var dataSource = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: urlSirUn,
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+            },
+            parameterMap: function (options, operation) {
+                try {
+                    if (operation === 'read') {
+                        return JSON.stringify(inputsirUn);
+                    }
+                } catch (e) {
+                    alertDialogs(e.message)
+                }
+            }
+        },
+        schema: {
+            type: "json",
+            data: function (e) {
+                var key1 = Object.keys(e)[0];
+                if (e[key1].eeEstados[0].Estado === "OK") {
+                    if (e[key1][mapSirUn]) {
+                        for (var i = 0; i < e[key1][mapSirUn].length; i++) {
+                            e[key1][mapSirUn][i].id = i;
+                        }
+                    } else {
+                        grilla();
+                    }
+
+                    return e[key1][mapSirUn];
+                } else {
+                    alertDialogs(e[key1].eeEstados[0].Estado);
+                }
+            },
+            model: {
+                id: "rut__cod",
+                fields: {
+                    rut__des: {type: 'string'},
+                    rut__cod: {type: 'string'}
+                }
+            }
+        },
+        error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
+    });
+
+    this.setdataSource = function (newname) {
+        if (newname) {
+            dataSource = newname;
+        }
+    };
+    this.getdataSource = function () {
+        return dataSource;
+    };
+}
+;
+
+function ter__nitList(container, options) {
+    debugger
+    var obj = new listater__nit();
+    var dataSource = obj.getdataSource();
+    $('<input id="iduni__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
+        dataTextField: "rut__des",
+        dataValueField: "rut__cod",
+        dataSource: dataSource
+//        change: onSelect
+    });
+}
+
+function ter__razList(container, options) {
+    debugger
+    var obj = new listater__nit();
+    var dataSource = obj.getdataSource();
+    $('<input id="iduni__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
+        dataTextField: "rut__des",
+        dataValueField: "rut__cod",
+        dataSource: dataSource
+//        change: onSelect
+    });
+}
+
+function listater__nit() {
     var objSirUn = new SIRdpc_rut();
     var urlSirUn = objSirUn.getUrlSir();
     var mapSirUn = objSirUn.getmapSir();
