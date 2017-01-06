@@ -6,7 +6,7 @@ var inputsir = objSir.getdataInputSir();
 var est = "rgeo__est";
 
 $(document).ready(function () {
-    debugger
+    
     var data = [
         {text: "Todos", value: "-1", clase: ""},
         {text: "Creado", value: "99", clase: "po_checkCreate"},

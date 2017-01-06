@@ -73,7 +73,22 @@ $(document).ready(function() {
  *  var urlactualizar: url de servicio para actualizar / crear 
  *  
  */ 
-$(document).ready(function () {                             
+$(document).ready(function () {
+    var data = [
+        {text: "Creado", value: "99", clase: "po_checkCreate"},
+        {text: "Activo", value: "0", clase: "po_checkAct"},
+        {text: "Bloqueado", value: "1", clase: "po_checkBloq"}
+    ];
+    $("#fltrEst").kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "value",
+        //change: onChangeFltr,
+        valueTemplate: "<span>#:data.text#</span>",
+        template: "<a class='k-grid-aprobar' '><span class='k-sprite #: data.clase #'></span></a>" +
+                '<span class="k-state-default"><h0>#: data.text #</h0>',
+        dataSource: data,
+        width: 400
+    });                        
     var windowTemplate = kendo.template($("#windowTemplate").html());
     var  consultar = new sirSupArea();
     var  datajson = consultar.getjson();
@@ -183,6 +198,7 @@ $(document).ready(function () {
                     sar__cod:    {editable: false, nullable: false},
                     ter__nit:    {editable: true, nullable: false},
                     ageo__cod:    {editable: true, nullable: false},
+                    ageo__nom:    {editable: true, nullable: false},
                     pai__cod:    {editable: true, nullable: false},
                     ter__raz:    {editable: true, nullable: false},
                     sar__est:    {editable: true, nullable: false},         
@@ -222,7 +238,7 @@ $(document).ready(function () {
         },
         //navigatable: true,
         columns: [
-            {field: "sar__cod", title: "Codigo",  hidden:false},
+            {field: "sar__cod", title: "Codigo Supervisor",  hidden:false},
             {field: "pai__cod", title: "Codigo Pais",editor: paisCod,
                 template: function (e) {
                     return e.pai__cod;
@@ -231,8 +247,12 @@ $(document).ready(function () {
                 template: function (e) {
                     return e.ter__nit;
                 }},   
-             {field: "ter__raz", title: "Nombre",  hidden:false},
-             {field: "ageo__cod", title: "Cod Area",  hidden:false, editor: areaCod,
+             {field: "ter__raz", title: "Nombre",   hidden:false, editor: nombre,
+                template: function (e) {
+                    return e.ter__raz;
+                }}, 
+           
+             {field: "ageo__nom", title: "Area ",  hidden:false, editor: areaCod,
                 template: function (e) {
                     return e.ageo__cod;
                 }}, 
@@ -245,15 +265,15 @@ $(document).ready(function () {
                 edit: function(e) {
             if (!e.model.isNew()) {//caso en el que el popup es editar
 
-                e.container.find("input[name=ter__raz]")[0].readOnly="true"
+                //e.container.find("input[name=ter__raz]")[0].readOnly="true"
             }
             else{//caso en el que el popup es crear
                 var buscarlabel = $("label").find("for");
-                  Buscarlabel = buscarlabel.prevObject[3];
-                  Buscarlabel.style.display = "none";
+//                  Buscarlabel = buscarlabel.prevObject[3];
+//                  Buscarlabel.style.display = "none";
                   Buscarlabel = buscarlabel.prevObject[0];
                   Buscarlabel.style.display = "none";
-                  e.container.find("input[name=ter__raz]")[0].style.display="none";
+                  //e.container.find("input[name=ter__raz]")[0].style.display="none";
 //                Buscarlabel = buscarlabel.prevObject[3];
 //                Buscarlabel.style.display = "none";
                 //e.container.find("label[name=sre__cod]")[0].display="none";
@@ -307,8 +327,81 @@ $(document).ready(function () {
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();
     }
-}                   
+
+}    
+    function nombre(container, options) {
+        var obj = new sirConsultaCliente();
+        var objJson = obj.getjson();
+        var url = obj.getUrlSir();
+        var mapData = obj.getMapData();
+        $('<input id="nombre" required name="' + options.field + '"/>')
+                .appendTo(container)
+                .kendoAutoComplete({
+            dataTextField: "ter__raz",
+            dataValueField: "ter__nit",        
+            placeholder: "Selecione un cliente...",
+            minLength: 4,
+            filter: "contains",
+            select: function(e) {debugger                
+            $("#cedula").val(e.dataItem.ter__nit);    
+            },
+            template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
+            //select: setInfoCliente,
+            dataSource: {
+                type: "json",
+                serverFiltering: true,
+                transport: {
+                    read:{
+                        url: url,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
+                        try {
+                                          
+                            if (operation === 'read') {
+                                var key1 = Object.keys(objJson)[0];
+                                var key2 = Object.keys(objJson[key1])[1];
+                                objJson[key1][key2][0].picter_nit = "";
+                                objJson[key1][key2][0].picter_raz = $("#nombre").val();
+                                return JSON.stringify(objJson);
+                            } 
+                        } catch (e) {
+                            alertDialogs(e.message);
+                        }                                    
+                    }
+                },
+                schema: {
+                    data: function (e){
+                        var key1 = Object.keys(e)[0];
+                        if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                            //$("#cedula").val(e.dsgfc_cli.eegfc_cli[0].ter__nit);
+                            return e[key1][mapData];
+                        }else if(e[key1].eeEstados[0].Estado==="ERROR: Patrón de Búsqueda insuficiente !"){
+                        
+                        }else{
+                            alertDialogs(e[key1].eeEstados[0].Estado);
+                        }
+                    },
+                    model:{}
+                },
+                error: function (xhr, error) {
+                    alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+                },
+                change: function (e) {
+                    //console.log("Change client");
+                },
+                requestStart: function (e) {
+                    //console.log("Request Start servicio cliente");
+                }            
+            }
+        });    
+          
+      }
+                 
     function filtroestado(container, options) {
+
 
         var obj = new sirConsultaCliente();
         var objJson = obj.getjson();
@@ -322,6 +415,9 @@ $(document).ready(function () {
             placeholder: "Selecione un cliente...",
             minLength: 6,
             filter: "contains",
+            select: function(e) {debugger                
+            $("#nombre").val(e.dataItem.ter__raz);    
+            },
             template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
             //select: setInfoCliente,
             dataSource: {
@@ -565,7 +661,7 @@ function changeEst(e){
                         }
                         else
                         {
-                            alertDialogs("Error"+resp.dsSICUDgpd_sar.eeEstados[0].Estado);  
+                            alert("Error"+resp.dsSICUDgpd_sar.eeEstados[0].Estado);  
                             $('#grid').data('kendoGrid').refresh();
                             $('#grid').data('kendoGrid').dataSource.read();
                             $('#grid').data('kendoGrid').refresh(); 
@@ -585,6 +681,7 @@ function changeEst(e){
 
     } catch (e) {
         createDialog(e);
+
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();
     }

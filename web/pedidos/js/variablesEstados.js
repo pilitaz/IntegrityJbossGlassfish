@@ -275,7 +275,8 @@ function cudCliente() {
             "eegpd_cli_est":[  
                 {  
                     "gpd__cli__est":0,
-                    "gpd__cli__des":""
+                    "gpd__cli__des":"",
+                    
                 }
             ]
         }
@@ -386,24 +387,25 @@ function cudPresupuesto() {
 function sirTerritorios() {
     var urlSir = ipServicios + baseComercial +"SIRgpd_sre";
     var json = {  
-        "dsSIRgpd_sre":{  
-            "eeDatos":[  
-                {  
-                    "picusrcod":sessionStorage.getItem("usuario"),
-                    "picfiid":sessionStorage.getItem("picfiid"),
-                    "local_ip":sessionStorage.getItem("ipPrivada"),
-                    "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "SIRgpd_sre":[  
-                {  
-                    "piirgeo__cod":0,
-                    "piisre__cod":0,
-                    "picter__nit":"*"
-                }
-            ]      
-        }
-    };
+   "dsSIRgpd_sre":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":"mcaceres",
+            "picfiid":"1341205955768780800",
+            "local_ip":"172.21.24.200",
+            "remote_ip":"190.144.16.114"
+         }
+      ],
+      "SIRgpd_sre":[  
+         {  
+          "piirgeo__cod":0,
+          "piisre__cod":0,
+          "picter__nit":"0",
+          "picsre__est": -1
+         }
+      ]      
+   }
+};
     
     this.setUrlSir = function (newname) {
         if (newname) {

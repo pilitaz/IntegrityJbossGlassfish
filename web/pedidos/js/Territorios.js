@@ -223,15 +223,11 @@ $(document).ready(function () {
                     return e.rgeo__cod;
                 }},
              {field: "rgeo__nom", title: "Region",  hidden:false},
-            {
-                field: "trr__est",
-                title: "Estado",
-                
-                template: "<a class='k-grid-check'><span class='k-sprite po_checkCreate'></span></a>",
-                width: "80px"
-            },
-            {command: [{name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
-                    {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "90px"}],
+            
+            {command: [
+                    {name: "check", text: "estado",click: changeEst, template: "<a class='k-grid-check'><span class='k-sprite po_editoff' ></span></a>" },
+                    {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
+                    {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "140px"}],
         editable: "popup",
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
         altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
@@ -334,12 +330,106 @@ function region(container, options) {
  function changImgFunc(results) {
 
     for (var i = 0; i < results.length; i++) {
-        if (document.getElementById("spanproceso"+results[i].trr__cod+results[i].trr__nom+results[i].rgeo__cod)){
-        if(results[i].trr__est==="1"){                            
-     document.getElementById("spanproceso"+results[i].trr__cod+results[i].trr__nom+results[i].rgeo__cod).setAttribute("class", "k-sprite po_check_sup");
-     document.getElementById("spanproceso"+results[i].trr__cod+results[i].trr__nom+results[i].rgeo__cod).setAttribute("estado", "on");
-        }else
-        {}}
-}
+            if (document.getElementById("spanproceso"+results[i].trr__cod+results[i].trr__nom+results[i].rgeo__cod)){
+                if(results[i].trr__est==0){                            
+                    document.getElementById("spanproceso"+results[i].trr__cod+results[i].trr__nom+results[i].rgeo__cod).setAttribute("class", "k-sprite po_checkAct");   
+                }
+                if(results[i].trr__est==99){     
+                    document.getElementById("spanproceso"+results[i].trr__cod+results[i].trr__nom+results[i].rgeo__cod).setAttribute("class", "k-sprite po_checkCreate");
+                }
+                if(results[i].trr__est==1){     
+                    document.getElementById("spanproceso"+results[i].trr__cod+results[i].trr__nom+results[i].rgeo__cod).setAttribute("class", "k-sprite po_checkBloq");
+                }
+            }
+        }
  }
 
+function changeEst(e){debugger
+//    var  actualizar = new cudCliente();
+//    var  actjson = actualizar.getjson();
+//    var  urlactualizar = actualizar.getUrlSir();
+//    var seleccion =  $("#grid").data("kendoGrid")._data[($(e.currentTarget).closest("tr")["0"].sectionRowIndex)];  
+//    try {
+//           
+//            
+//        var actions = new Array();
+//        actions[0] = new Object();
+//        actions[0].text = "OK";
+//        actions[0].action = function () {debugger
+//            if(seleccion.ctr__est==0){  
+//                actjson.dsSICUDgpd_cli_est.eegpd_cli_est[0].gpd__cli__est=seleccion.gpd__cli__est;                      
+//                actjson.dsSICUDgpd_cli_est.eegpd_cli_est[0].gpd__cli__des=seleccion.gpd__cli__des; 
+//                actjson.dsSICUDgpd_cli_est.eegpd_cli_est[0].ctr__est=1; 
+//                $.ajax({
+//        
+//                    type: "PUT",        
+//                    async: false,
+//                    data: JSON.stringify(actjson),
+//                    url: urlactualizar,
+//                    dataType: "json",        
+//                    contentType: "application/json;",
+//                    success: function (resp) {debugger
+//                        if((resp.dsSICUDgpd_cli_est.eeEstados[0].Estado)=="OK")
+//                        {     
+//                            $('#grid').data('kendoGrid').refresh();
+//                            $('#grid').data('kendoGrid').dataSource.read();
+//                            $('#grid').data('kendoGrid').refresh();                             
+//                        }
+//                        else
+//                        {
+//                            alertDialogs("Error"+resp.dsSICUDgpd_cli_est.eeEstados[0].Estado); 
+//                            $('#grid').data('kendoGrid').refresh();
+//                            $('#grid').data('kendoGrid').dataSource.read();
+//                            $('#grid').data('kendoGrid').refresh();                             
+//                        }
+//                    } 
+//        
+//                });
+//            }
+//
+//            if(seleccion.ctr__est==99){  
+//                actjson.dsSICUDgpd_cli_est.eegpd_cli_est[0].gpd__cli__est=seleccion.gpd__cli__est;                      
+//                actjson.dsSICUDgpd_cli_est.eegpd_cli_est[0].gpd__cli__des=seleccion.gpd__cli__des; 
+//                actjson.dsSICUDgpd_cli_est.eegpd_cli_est[0].ctr__est=0;  
+//                $.ajax({
+//        
+//                    type: "PUT",        
+//                    async: false,
+//                    data: JSON.stringify(actjson),
+//                    url: urlactualizar,
+//                    dataType: "json",        
+//                    contentType: "application/json;",
+//                    success: function (resp) {debugger
+//                        if((resp.dsSICUDgpd_cli_est.eeEstados[0].Estado)=="OK")
+//                        {          
+//                            $('#grid').data('kendoGrid').refresh();
+//                            $('#grid').data('kendoGrid').dataSource.read();
+//                            $('#grid').data('kendoGrid').refresh();    
+//                        }
+//                        else
+//                        {
+//                            alertDialogs("Error"+resp.dsSICUDgpd_cli_est.eeEstados[0].Estado);  
+//                            $('#grid').data('kendoGrid').refresh();
+//                            $('#grid').data('kendoGrid').dataSource.read();
+//                            $('#grid').data('kendoGrid').refresh(); 
+//                        }
+//                    }        
+//                });
+//            }
+//            bandAlert = 0;
+//        };
+//        actions[1] = new Object();
+//        actions[1].text = "Cancelar";
+//        actions[1].action = function () {debugger
+//            bandAlert = 0;
+//        };
+//        createDialog("Atención", "Esta seguro de cambiar estado de Registro ---" + seleccion.gpd__cli__des + " ---?", "400px", "200px", true, true, actions);
+//
+//    } catch (e) {debugger
+//        createDialog(e);
+//        $('#grid').data('kendoGrid').dataSource.read();
+//        $('#grid').data('kendoGrid').refresh();
+//    }
+//    
+ 
+}    
