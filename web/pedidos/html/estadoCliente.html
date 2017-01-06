@@ -23,9 +23,6 @@ and open the template in the editor.
         <link href="../../css/kendo.metro.min.css" rel="stylesheet" type="text/css"/>
         
         <link href="../../css/cssSpriteIntegrity.css" rel="stylesheet" type="text/css"/>
-        
-        
-        
         <link href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.mobile.all.min.css" rel="stylesheet" type="text/css" />
         
         <script src="../../scripts/LibreriaIntegrity.js" type="text/javascript"></script>
@@ -36,10 +33,39 @@ and open the template in the editor.
 
     </head>
     <body>
+                  <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
+            <tr data-uid="#: uid #"> 
+            <td>
+            <span class="title" id ="#: gpd__cli__des #">#: gpd__cli__des # </span>
+            </td>
+            <td>
+            <a  class='k-grid-check'><span title='check' id = "spanproceso#: gpd__cli__des#" class='k-sprite po_checkCreate'></span></a> 
+            <a  class='k-grid-edit'><span title='' id = "spanpedit#: gpd__cli__des#" class='k-sprite po_editoff'></span></a>
+            <a  class='k-grid-deletae'><span title='' id = "spanpedit1#: gpd__cli__des#" class='k-sprite po_cerrar'></span></a>
+                   
+            </td>
+            
+            </tr>
+        </script>
+        <script id="altRowTemplateCmp" type="text/x-kendo-tmpl">
+            <tr class="k-alt" data-uid="#: uid #">
+            
+            <td>
+            <span class="title" id ="#: gpd__cli__des #">#: gpd__cli__des # </span>
+            </td>
+            <td>
+            <a  class='k-grid-check'><span title='check' id = "spanproceso#: gpd__cli__des#" class='k-sprite po_checkCreate'></span></a> 
+            <a  class='k-grid-edit'><span title='' id = "spanpedit#: gpd__cli__des#" class='k-sprite po_editoff'></span></a>
+            <a  class='k-grid-deletae'><span title='' id = "spanedit1#: gpd__cli__des#" class='k-sprite po_cerrar'></span></a>
+                   
+            </td>
+            </tr>
+            
+        </script>
         <div id="window1"></div>
         <script type="text/x-kendo-template" id="windowTemplate">
 
-            Esta seguro que desea eliminar <strong>#= gpd__des # /  </strong> 
+            Esta seguro que desea eliminar <strong>#= gpd__cli__des # /  </strong> 
                     <br>
                     <button class="k-button" id="yesButton">Si</button>
                     <button class="k-button" id="noButton"> No</button>

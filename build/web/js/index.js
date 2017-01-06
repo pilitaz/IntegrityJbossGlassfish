@@ -33,7 +33,9 @@ $(document).ready(function () {
         correLinuxBackTimmer(6000);
         document.getElementById("lbNombre").innerHTML = sessionStorage.getItem("usrnom");
         document.getElementById("lbEMail").innerHTML = sessionStorage.getItem("usrmail");
-        document.getElementById("imgUsuario").src = "../images/equipo/" + sessionStorage.getItem("usuario") + ".png";
+//        document.getElementById("imgUsuario").src = "../images/equipo/" + sessionStorage.getItem("usuario") + ".png";
+    
+        document.getElementById("imgUsuario").src = "data:image/png;base64," + consultaImgUsr();
         document.getElementById("logoEmpresa").src = "data:image/png;base64," + sessionStorage.getItem("img");
         document.getElementById("idFrame").src = "fondo.html";
 //        document.getElementById("idFrame").src = "http://190.144.16.114:18800/PruebaHRD";
@@ -633,4 +635,39 @@ function cargaDocumentos() {
     //la funcion documento esta en la documentos.js
     documentos();
 }
+function consultaImgUsr(){
+    debugger
+    var objSir = new GetProfileImage();
+    var urlSir = objSir.getUrlSir(); 
+    var mapSir = objSir.getMapData();
+    var inputsir = objSir.getjson();
+    
+    var img = "";
+    var jsonResp = "";
+    var permitirIngreso = "";
+    $.ajax({
+        type: "POST",
+        data: JSON.stringify(inputsir),
+        url: urlSir,
+        async: false,
+        dataType: "json",
+        contentType: "application/json;",
+        success: function (resp) {
+            var key1 = Object.keys(resp)[0];
+            permitirIngreso = JSON.stringify(resp[key1].eeEstados[0].Estado);
+            jsonResp = resp[key1];
+            bandAlert = 0;
+        },
+        error: function (e) {
+            alertDialogs("Error al consumir el servicio GetProfileImage" + e.status + " - " + e.statusText);
+            bandAlert = 0;
+        }
+    }).done(function () {
+        if (permitirIngreso == '"OK"') {
+            img = jsonResp.eeProfileImage[0][mapSir]
+        } 
 
+    });
+    
+    return img;
+}
