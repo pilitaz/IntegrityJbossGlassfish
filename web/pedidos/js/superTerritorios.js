@@ -178,7 +178,10 @@ $(document).ready(function () {
                 id: "str__cod",
                 fields: {
                     ter__nit:    {editable: true, nullable: false},
-                    str__est:    {editable: true, nullable: false},          
+                    ter__raz:    {editable: true, nullable: false},
+                    str__est:    {editable: true, nullable: false}, 
+                    str__cod:    {editable: true, nullable: false}, 
+                    trr__nom:    {editable: true, nullable: false}, 
                     str__rec:    {editable: true, nullable: false,type: "boolean"},  
                     str__vta:    {editable: true, nullable: false,type: "boolean"},   
                     trr__cod:    {editable: true, nullable: false}, 
@@ -226,16 +229,8 @@ $(document).ready(function () {
             {field: "ter__raz", title: "Nombre",  hidden:false},
             {field: "trr__cod", title: "Cod Territorio",  hidden:false}, 
             {field: "trr__nom", title: "Territorio",  hidden:false, width: "160px"}, 
-            {command: [
-                     {name: "check", text: "edit", click: ventas, template: "<a class='k-grid-check'><span class='k-sprite po_checkCreate'></span></a>"},                  
-                     ], 
-                    title: "Ventas", 
-                    width: "70px"},
-            {command: [
-                     {name: "check", text: "edit",click: recaudo, template: "<a class='k-grid-check'><span class='k-sprite po_checkCreate'></span></a>"},                  
-                     ], 
-                    title: "Recaudo", 
-                    width: "80px"},     
+            {field: "str__vta", title: "Cod Territorio",  hidden:false}, 
+            {field: "trr__cod", title: "Cod Territorio",  hidden:false}, 
             {command: [
                      {name: "check", text: "edit",click: changeEst, template: "<a class='k-grid-check'><span class='k-sprite po_checkCreate'></span></a>"},
                     {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},

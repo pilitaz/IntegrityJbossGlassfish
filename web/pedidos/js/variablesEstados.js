@@ -8,23 +8,27 @@
  *  var input = sir.getdataInputSir();
  */
 function sirConsultaCliente() {
-    var mapData = "eegfc_cli";
-    var urlSir = ipServicios + baseParameters + "SIRgfc_cli";
+    var mapData = "eesic_ter";
+    var urlSir = ipServicios + baseParameters + "SIRsic_ter";
     var json = 
-            {
-                "dsgfc_cli" : {
-                    "eeDatos" : [{
-                            "picusrcod": sessionStorage.getItem("usuario"),
-                    "picfiid": sessionStorage.getItem("picfiid"), 
-                }
-            ],
-            "eetemp" : [{
-                    "picter_raz" : "",
-                    "picter_nit" : "",
-                }
-            ]
-        }
-    };
+           {  
+   "dsSIRsic_ter":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+  "eeSIRsic_ter": [{
+       "picter_nit": "",
+       "picter_raz": "",
+       "piiter_est": -1
+  }]
+  
+   }
+};
     
     this.setUrlSir = function (newname) {
         if (newname) {
@@ -517,27 +521,28 @@ function sirSupArea() {
 function cudSupArea() {
     var urlSir = ipServicios + baseComercial +"SICUDgpd_sar";
     var json = {  
-        "dsSICUDgpd_sar":{  
-            "eeDatos":[  
-                {  
+   "dsSICUDgpd_sar":{  
+      "eeDatos": [{
                     "picusrcod":sessionStorage.getItem("usuario"),
                     "picfiid":sessionStorage.getItem("picfiid"),
                     "local_ip":sessionStorage.getItem("ipPrivada"),
                     "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "eegpd_sar":[  
-                {  
-                    "sar__cod":0,
-                    "ter__nit":"",
-                    "ageo__cod":0,
-                    "pai__cod":"",
-                    "sar__est":0,
-                    "ter__raz":""
-                }
-            ]      
-        }
-    }
+       }
+      ],
+      "eegpd_sar":[  
+         {  
+        "sar__cod": 0,
+        "ter__nit": "",
+        "ageo__cod": 0,
+        "pai__cod": "",
+        "sar__est": 0,
+        "ter__raz": "",
+        "ageo__nom": "",
+        "piindicador": 0
+         }
+      ]      
+   }
+}
     ;
     
     this.setUrlSir = function (newname) {

@@ -563,10 +563,11 @@ function setInfoCliente(e){
             }
         },
         dataBound: function (e) {            
-            if(e.sender.dataSource._data.length===1){                
+            if(e.sender.dataSource._data.length===1){   
+                
                 var dataItemEstablicimiento = e.sender.dataSource._data["0"]; 
                 $("#ipDireccion").val(dataItemEstablicimiento.ter__dir);
-                $("#ipTelefono").val(dataItemEstablicimiento.ter__tel);
+               // $("#ipTelefono").val(dataItemEstablicimiento.ter__tel);
                 var dropdownlist = $("#ipCiudad").data("kendoDropDownList");
                 dropdownlist.value(dataItemEstablicimiento.ciu__cod);            
             }
@@ -617,6 +618,8 @@ function setInfoCabeceraPedido(){
     $("#ipSolicitante").val(pedido.ped__pqs);
     
     $("#txtAObservacionePedido").val(pedido.obs__ped);
+    
+    $("#ipTelefono").val(pedido.ter__tel)
     
     var key1 = Object.keys(objJson)[0];
     var key2 = Object.keys(objJson[key1])[1];                                
