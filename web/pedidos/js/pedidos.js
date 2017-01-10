@@ -107,8 +107,8 @@ function grid() {
             {field: "est__nom", title: "estado"},
             {command:
                         [
-                            {name: "aprobar", click: clickAprob, template: "<a class='k-grid-aprobar' href='' style='min-width:16px;'><span class='k-sprite po_check'></span></a>"},
-                            {name: "editar", text: " ", click: ClickEditar, template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},
+                            {name: "aprobar", click: popUpAprobacionPedido, template: "<a class='k-grid-aprobar' href='' style='min-width:16px;'><span class='k-sprite po_check'></span></a>"},
+                            {name: "editar",  click: clickEditar, template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},
                             {name: "destroyed", click: clickEliminar, template: "<a class='k-grid-destroyed' href='' style='min-width:16px;'><span class='k-sprite po_cerrar'></span></a>"}
                         ],
                 width: "150px"}],
@@ -152,17 +152,15 @@ function closePopUpFiltros() {
 function crearPedido() {
     popUpPedidoCU();
 }
-function clickAprob() {
-
+function clickAprob(e) {
+    e = this.dataItem($(e.currentTarget).closest("tr"));    
 }
-function ClickEditar(e) {
+function clickEditar(e) {
     e = this.dataItem($(e.currentTarget).closest("tr"));    
     var servicio="pedido"
     sessionStorage.setItem("servicio",servicio);
     sessionStorage.setItem("regPedidos", JSON.stringify(e));
     window.location.replace(( sessionStorage.getItem("url")+"pedidos/html/"+servicio+".html"));   
-    
-//    popUpPedidoCU();
 
 }
 
@@ -230,4 +228,41 @@ function popUpPedidoCU() {
 function closePopUpCabecera(){       
     $("#windowPedidoCabecera").data("kendoWindow").close();
     window.location.replace(( sessionStorage.getItem("url")+"pedidos/html/pedido"+".html"));  
+}
+
+function popUpAprobacionPedido() {
+    
+    sessionStorage.removeItem("regPedidos");
+    
+    var widthPopUp = $("body").width();
+    widthPopUp = widthPopUp * (30 / 100);
+    var heightPopUp = $("body").height();
+    heightPopUp = heightPopUp * (30 / 100);
+
+    $("body").append("<div id='windowPedidoAproba'></div>");
+    var myWindow = $("#windowPedidoAproba");
+    var undo = $("#undo");
+
+    function onClosePopUpAprobacionPedido() {
+        document.getElementById("windowPedidoAproba").remove();
+        undo.fadeIn();
+    }
+
+    myWindow.kendoWindow({
+        width: widthPopUp,
+        height: heightPopUp,
+        title: "Cartera",
+        content: sessionStorage.getItem("url") + "/pedidos/html/popUpAprobacionPedido.html",
+        visible: false,
+        modal: true,
+        actions: [
+            "Close"
+        ],
+        close: onClosePopUpAprobacionPedido
+    }).data("kendoWindow").center().open();
+}
+
+function closePopUpAprobacionPedido(){       
+    $("#windowPedidoAproba").data("kendoWindow").close();
+    location.reload();
 }

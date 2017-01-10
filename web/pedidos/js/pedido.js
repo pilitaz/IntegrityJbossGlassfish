@@ -230,13 +230,13 @@ function gridDetallePedido(){
         var heightPopUp = $("body").height();
         heightPopUp = heightPopUp * (50/100);
         
-        $("body").append("<div id='windowItemPed'></div>");
-        var myWindow = $("#windowItemPed");        
+        $("body").append("<div id='windowItemPedido'></div>");
+        var myWindow = $("#windowItemPedido");        
         var undo = $("#undo");
         
         function onCloseWindowItemFacEdit() {
             
-            document.getElementById("windowItemPed").remove();            
+            document.getElementById("windowItemPedido").remove();            
             undo.fadeIn();  
         }
         
@@ -300,7 +300,7 @@ function closePopUp(){
     jsonFiltroPedidos[key1][key2][0].pidped_fec = pedido.ped__fec;
     jsonFiltroPedidos[key1][key2][0].piiped_num = pedido.ped__num;
     jsonFiltroPedidos[key1][key2][0].picsuc_cod = pedido.suc__cod;
-    
+    debugger
     try{                
         $.ajax({
             type: "POST",
