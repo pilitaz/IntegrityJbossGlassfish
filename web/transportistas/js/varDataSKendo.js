@@ -201,3 +201,107 @@ function SIRdpc_rut() {
     };
 }
 ;
+
+function SIRdpc_rut() {
+    var url = ipServicios + baseComercial + "SIRdpc_rut";
+    var mapSir = "eedpc_rut";
+    var dataInputSir = {
+        "dsSIRdpc_rut": {
+            "eeDatos": [
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip": sessionStorage.getItem("ipPrivada"),
+                    "remote_ip": sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "eeSIRdpc_rut": [
+                {
+                    "piibar_cod1": 0,
+			"piibar_cod2": 0,
+			"picciu_cod1": "*",
+			"picciu_cod2": "*",
+			"piirut_cod": 0,
+                        "piirut_est": 0 
+                }
+            ]
+        }
+    };
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            url = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return url;
+    };
+    this.setmapSir = function (newname) {
+        if (newname) {
+            mapSir = newname;
+        }
+    };
+    this.getmapSir = function () {
+        return mapSir;
+    };
+    this.setdataInputSir = function (newname) {
+        if (newname) {
+            dataInputSir = newname;
+        }
+    };
+    this.getdataInputSir = function () {
+        return dataInputSir;
+    };
+}
+;
+
+function SIRdpc_rut() {
+    var url = ipServicios + baseComercial + "SIRdpc_rut";
+    var mapSir = "eedpc_rut";
+    var dataInputSir = {
+        "dsSIRdpc_rut": {
+            "eeDatos": [
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip": sessionStorage.getItem("ipPrivada"),
+                    "remote_ip": sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "eeSIRdpc_rut": [
+                {
+                    "piibar_cod1": 0,
+			"piibar_cod2": 0,
+			"picciu_cod1": "*",
+			"picciu_cod2": "*",
+			"piirut_cod": 0,
+                        "piirut_est": 0 
+                }
+            ]
+        }
+    };
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            url = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return url;
+    };
+    this.setmapSir = function (newname) {
+        if (newname) {
+            mapSir = newname;
+        }
+    };
+    this.getmapSir = function () {
+        return mapSir;
+    };
+    this.setdataInputSir = function (newname) {
+        if (newname) {
+            dataInputSir = newname;
+        }
+    };
+    this.getdataInputSir = function () {
+        return dataInputSir;
+    };
+}
+;
