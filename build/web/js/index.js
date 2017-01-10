@@ -30,7 +30,7 @@ $(document).ready(function () {
         menufunciones();
         cargaDocumentos();
         tamanoPagIni();
-        correLinuxBackTimmer(6000);
+        correLinuxBackTimmer(9000);
         document.getElementById("lbNombre").innerHTML = sessionStorage.getItem("usrnom");
         document.getElementById("lbEMail").innerHTML = sessionStorage.getItem("usrmail");
 //        document.getElementById("imgUsuario").src = "../images/equipo/" + sessionStorage.getItem("usuario") + ".png";
@@ -421,7 +421,7 @@ function fijarPcf() {//apenas el usuario da click en alguna funcion del arbol tr
 
 function correLinuxBack() {//corre las funciones del shell in a box
 
-    if (timerOut < 3) {
+    if (timerOut < 10) {
 
 
         var obj = new POST_SIRlogged();

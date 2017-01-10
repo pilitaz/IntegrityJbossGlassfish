@@ -226,31 +226,46 @@ $(document).ready(function () {
                 template: function (e) {
                     return e.ter__nit;
                 }},   
-            {field: "ter__raz", title: "Nombre",  hidden:false},
-            {field: "trr__cod", title: "Cod Territorio",  hidden:false}, 
+            {field: "ter__raz", title: "Nombre",  hidden:false,editor:nombre,
+                template: function (e) {debugger
+                    return e.ter__raz;
+                }},  
+            
             {field: "trr__nom", title: "Territorio",  hidden:false, width: "160px"}, 
-            {field: "str__vta", title: "Cod Territorio",  hidden:false}, 
-            {field: "trr__cod", title: "Cod Territorio",  hidden:false}, 
+            {field: "str__vta", title: "Ventas",  hidden:false, editor:estadoVentas,
+                template: function (e) {debugger
+                    return e.str__vta;
+                }},  
+            {field: "str__rec", title: "Recaudo",  hidden:false, editor:estadoRecaudo,
+                template: function (e) {debugger
+                    return e.str__rec;
+                }},  
             {command: [
                      {name: "check", text: "edit",click: changeEst, template: "<a class='k-grid-check'><span class='k-sprite po_checkCreate'></span></a>"},
                     {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "140px"}],
              editable: "popup",
-                edit: function(e) {
+                edit: function(e) {debugger
             if (!e.model.isNew()) {//caso en el que el popup es editar
+        if(e.model.str__est!= 99 ){
+                    
+                    
+                   kendo.ui.progress($('.k-edit-form-container'), true);
+                   kendo.ui.progress($('.k-edit-buttons'), true);
+                   e.container.find(".k-loading-image").css("background-image", "url('')");
 
-                e.container.find("input[name=ter__raz]")[0].readOnly="true"
+            }else{
+                //$("#region").data("kendoDropDownList").enable(false);
+            //e.container.find("span")[1].attr('disabled','disabled');
+            //e.container.find("span[for='rgeo__nom']");
+            
+            }
             }
             else{//caso en el que el popup es crear
                 var buscarlabel = $("label").find("for");
-                  Buscarlabel = buscarlabel.prevObject[3];
-                  Buscarlabel.style.display = "none";
-                  Buscarlabel = buscarlabel.prevObject[0];
-                  Buscarlabel.style.display = "none";
-                  e.container.find("input[name=ter__raz]")[0].style.display="none";
-//                Buscarlabel = buscarlabel.prevObject[3];
-//                Buscarlabel.style.display = "none";
-                //e.container.find("label[name=sre__cod]")[0].display="none";
+                Buscarlabel = buscarlabel.prevObject[0];
+                Buscarlabel.style.display = "none";
+                e.container.find("input[name=str__cod]")[0].hidden="true";
             }
         } ,
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
@@ -303,18 +318,14 @@ $(document).ready(function () {
     }
 }                   
                         
- function filtroestado(container, options) {
+ function estadoVentas(container, options) {
 
     var estados = [
-        {text: "1010161021", valor: "1"},
-        {text: "1032381122", valor: "2"},
-        {text: "79563068", valor: "3"},
-        {text: "77189658", valor: "4"},
-        {text: "444444221", valor: "5"},
-        {text: "52960858", valor: "6"},
-        {text: "52185067", valor: "7"}  
+        {text: "Si", valor: "1"},
+        {text: "No", valor: "2"},
+
     ];
-    $('<input id="cedula" required name="' + options.field + '"/>')
+    $('<input id="stventas" required name="' + options.field + '"/>')
             .appendTo(container)
             .kendoDropDownList({
                 dataTextField: "text",
@@ -322,25 +333,162 @@ $(document).ready(function () {
                 dataSource: estados
             });
 }                       
-
-                        
- function regionCod(container, options) {
+ function estadoRecaudo(container, options) {
 
     var estados = [
-        {text: "101001", valor: "1"},
-        {text: "157001", valor: "2"},
+        {text: "Si", valor: "1"},
+        {text: "No", valor: "2"},
 
     ];
-    $('<input id="region" required name="' + options.field + '"/>'+options.model.rgeo__cod)
+    $('<input id="Recaudo" required name="' + options.field + '"/>')
             .appendTo(container)
-          
             .kendoDropDownList({
                 dataTextField: "text",
-                dataValueField: "valor",               
+                dataValueField: "valor",
                 dataSource: estados
             });
-               
-}      
+}       function nombre(container, options) {
+        var obj = new sirConsultaCliente();
+        var objJson = obj.getjson();
+        var url = obj.getUrlSir();
+        var mapData = obj.getMapData();
+        $('<input id="nombre" required name="' + options.field + '"/>')
+                .appendTo(container)
+                .kendoAutoComplete({
+            dataTextField: "ter__raz",
+            dataValueField: "ter__nit",        
+            placeholder: "Selecione un cliente...",
+            minLength: 4,
+            filter: "contains",
+            select: function(e) {debugger                
+            $("#cedula").val(e.dataItem.ter__nit);    
+            },
+            template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
+            //select: setInfoCliente,
+            dataSource: {
+                type: "json",
+                serverFiltering: true,
+                transport: {
+                    read:{
+                        url: url,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
+                        try {
+                                          
+                            if (operation === 'read') {
+                                var key1 = Object.keys(objJson)[0];
+                                var key2 = Object.keys(objJson[key1])[1];
+                                objJson[key1][key2][0].picter_nit = "";
+                                objJson[key1][key2][0].picter_raz = $("#nombre").val();
+                                return JSON.stringify(objJson);
+                            } 
+                        } catch (e) {
+                            alertDialogs(e.message);
+                        }                                    
+                    }
+                },
+                schema: {
+                    data: function (e){
+                        var key1 = Object.keys(e)[0];
+                        if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                            //$("#cedula").val(e.dsgfc_cli.eegfc_cli[0].ter__nit);
+                            return e[key1][mapData];
+                        }else if(e[key1].eeEstados[0].Estado==="ERROR: Patrón de Búsqueda insuficiente !"){
+                        
+                        }else{
+                            alertDialogs(e[key1].eeEstados[0].Estado);
+                        }
+                    },
+                    model:{}
+                },
+                error: function (xhr, error) {
+                    alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+                },
+                change: function (e) {
+                    //console.log("Change client");
+                },
+                requestStart: function (e) {
+                    //console.log("Request Start servicio cliente");
+                }            
+            }
+        });    
+          
+      }
+    function filtroestado(container, options) {debugger
+
+        var obj = new sirConsultaCliente();
+        var objJson = obj.getjson();
+        var url = obj.getUrlSir();
+        var mapData = obj.getMapData();
+        $('<input id="cedula" required name="' + options.field + '"/>')
+                .appendTo(container)
+                .kendoAutoComplete({
+            dataTextField: "ter__nit",
+            dataValueField: "ter__nit",        
+            placeholder: "Selecione un cliente...",
+            minLength: 6,
+            filter: "contains",
+            select: function(e) {debugger                
+            $("#nombre").val(e.dataItem.ter__raz);    
+            },
+            template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
+            //select: setInfoCliente,
+            dataSource: {
+                type: "json",
+                serverFiltering: true,
+                transport: {
+                    read:{
+                        url: url,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
+                        try {
+                                          
+                            if (operation === 'read') {
+                                var key1 = Object.keys(objJson)[0];
+                                var key2 = Object.keys(objJson[key1])[1];
+                                objJson[key1][key2][0].picter_nit = $("#cedula").val();
+                                objJson[key1][key2][0].picter_raz = "";
+                                return JSON.stringify(objJson);
+                            } 
+                        } catch (e) {
+                            alertDialogs(e.message);
+                        }                                    
+                    }
+                },
+                schema: {
+                    data: function (e){   
+                        var key1 = Object.keys(e)[0];
+                        if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                            return e[key1][mapData];
+                        }else if(e[key1].eeEstados[0].Estado==="ERROR: Patrón de Búsqueda insuficiente !"){
+                        
+                        }else{
+                            alertDialogs(e[key1].eeEstados[0].Estado);
+                        }
+                    },
+                    model:{}
+                },
+                error: function (xhr, error) {
+                    alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+                },
+                change: function (e) {
+                    //console.log("Change client");
+                },
+                requestStart: function (e) {
+                    //console.log("Request Start servicio cliente");
+                }            
+            }
+        });
+            
+    }                        
+ 
+ 
 });
                     
                     
@@ -373,18 +521,11 @@ $(document).ready(function () {
                 }
             }
         }
-        // for para colorear chulo de recaudo
-        for (var i = 0; i < results.length; i++) {
-            if (document.getElementById("spanrec"+results[i].str__cod+results[i].ter__nit+results[i].trr__cod)){
-                if(results[i].str__rec===true){                            
-                    document.getElementById("spanrec"+results[i].str__cod+results[i].ter__nit+results[i].trr__cod).setAttribute("class", "k-sprite po_check");   
-                   
-                }else{
-                  
-                }
+  
+        
 
-            }
-        }
+            
+        
 
     } 
     function changeEst(e){
