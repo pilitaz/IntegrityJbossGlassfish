@@ -161,14 +161,15 @@ $(document).ready(function () {
                 }
                 if (operation === "update") {debugger
                     var cedula = $("#cedula")[0].value;
-                     var nombre = $("#nombre")[0].value;
-                    var region = $("#region").data("kendoDropDownList").value();
-                     var select = region.selectedIndex;
-                   region = region.dataSource._data[select].rgeo__cod;
+                    var nombre = $("#nombre")[0].value;
+                    var region = $("#region").data("kendoDropDownList");
+                    var select = region.selectedIndex;
+                    region = region.dataSource._data[select].rgeo__cod;
                     actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod=region;  
                     actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod=options.sre__cod; 
                     actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__est=options.sre__est; 
                     actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__nit=cedula; 
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__nom=options.rgeo__nom; 
                     actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__raz=nombre; 
                     return JSON.stringify(actjson);
                     $('#grid').data('kendoGrid').refresh();
@@ -181,7 +182,7 @@ $(document).ready(function () {
                     var nombre = $("#nombre")[0].value;
                     var region = $("#region").data("kendoDropDownList");
                     var select = region.selectedIndex;
-                   region = region.dataSource._data[select].rgeo__cod;
+                    region = region.dataSource._data[select].rgeo__cod;
                     actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__raz=nombre;
                     actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__nom=options.rgeo__nom;
                     actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod=region;

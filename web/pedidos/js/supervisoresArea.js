@@ -126,20 +126,27 @@ $(document).ready(function () {
                 type: "DELETE",
                 contentType: "application/json; charset=utf-8"
             },
-            parameterMap: function (options, operation) {
+            parameterMap: function (options, operation) {debugger
                 if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
                 if (operation === "update") {
-                    var pais = $("#pais").data("kendoDropDownList").value();
-                     var area = $("#area").data("kendoDropDownList").value();
-
+                    var cedula = $("#cedula")[0].value;
+                    var nombre = $("#nombre")[0].value;
+                    var pais = $("#pais").data("kendoDropDownList");
+                    var area = $("#area").data("kendoDropDownList");
+                    var select = pais.selectedIndex;
+                    pais = pais.dataSource._data[select].ciu__cod;
+                    var select = area.selectedIndex;
+                    area = area.dataSource._data[select].ageo__cod;
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].sar__cod=options.sar__cod;  
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].pai__cod=pais;  
-                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ter__nit=options.ter__nit;   
-                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ter__raz=options.ter__raz; 
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ciu__nom=options.ciu__nom;
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ter__nit=cedula;   
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ter__raz=nombre; 
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].sar__est=options.sar__est;   
-                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ageo__cod=area;  
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ageo__cod=area; 
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ageo__nom=options.ageo__nom; 
                     return JSON.stringify(actjson);          
                     $('#grid').data('kendoGrid').refresh();
                     $('#grid').data('kendoGrid').dataSource.read();
@@ -147,9 +154,12 @@ $(document).ready(function () {
                     
                 }
                 if (operation === "create") {
-                     var pais = $("#pais").data("kendoDropDownList").value();
-                     var area = $("#area").data("kendoDropDownList").value();
-
+                     var pais = $("#pais").data("kendoDropDownList");
+                     var area = $("#area").data("kendoDropDownList");
+                     var select = pais.selectedIndex;
+                    pais = pais.dataSource._data[select].ciu__cod;
+                    var select = area.selectedIndex;
+                    area = area.dataSource._data[select].ageo__cod;
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].pai__cod=pais;  
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].ter__nit=options.ter__nit;                     
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].sar__est=99;   
@@ -201,7 +211,8 @@ $(document).ready(function () {
                     ageo__nom:    {editable: true, nullable: false},
                     pai__cod:    {editable: true, nullable: false},
                     ter__raz:    {editable: true, nullable: false},
-                    sar__est:    {editable: true, nullable: false},         
+                    sar__est:    {editable: true, nullable: false}, 
+                    ciu__nom:    {editable: true, nullable: false}, 
                 }
             }
         }
@@ -239,10 +250,14 @@ $(document).ready(function () {
         //navigatable: true,
         columns: [
             {field: "sar__cod", title: "Codigo Supervisor",  hidden:false},
-            {field: "pai__cod", title: "Codigo Pais",editor: paisCod,
+            {field: "ciu__nom", title: " Pais",editor: paisCod,
                 template: function (e) {
-                    return e.pai__cod;
+                    return e.ciu__nom;
                 }},    
+             {field: "ageo__nom", title: "Area ",  hidden:false, editor: areaCod,
+                template: function (e) {
+                    return e.ageo__cod;
+                }}, 
             {field: "ter__nit", title: "NIT",  hidden:false,editor: filtroestado,
                 template: function (e) {
                     return e.ter__nit;
@@ -252,33 +267,37 @@ $(document).ready(function () {
                     return e.ter__raz;
                 }}, 
            
-             {field: "ageo__nom", title: "Area ",  hidden:false, editor: areaCod,
-                template: function (e) {
-                    return e.ageo__cod;
-                }}, 
+            
            
             {command: [
                     {name: "check", text: "edit",click:  changeEst, template: "<a class='k-grid-check'><span class='k-sprite po_checkCreate'></span></a>"},
                     {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "140px"}],
         editable: "popup",
-                edit: function(e) {
+         edit: function(e) {debugger
             if (!e.model.isNew()) {//caso en el que el popup es editar
+                if(e.model.sar__est!= 99 ){
+                    
+                    
+                   kendo.ui.progress($('.k-edit-form-container'), true);
+                   kendo.ui.progress($('.k-edit-buttons'), true);
+                   e.container.find(".k-loading-image").css("background-image", "url('')");
 
-                //e.container.find("input[name=ter__raz]")[0].readOnly="true"
+            }else{
+            $("#area").data("kendoDropDownList").enable(false);
+            $("#pais").data("kendoDropDownList").enable(false);
+            
+            //e.container.find("span")[1].attr('disabled','disabled');
+            //e.container.find("span[for='rgeo__nom']");
+            
             }
-            else{//caso en el que el popup es crear
-                var buscarlabel = $("label").find("for");
-//                  Buscarlabel = buscarlabel.prevObject[3];
-//                  Buscarlabel.style.display = "none";
-                  Buscarlabel = buscarlabel.prevObject[0];
-                  Buscarlabel.style.display = "none";
-                  //e.container.find("input[name=ter__raz]")[0].style.display="none";
-//                Buscarlabel = buscarlabel.prevObject[3];
-//                Buscarlabel.style.display = "none";
-                //e.container.find("label[name=sre__cod]")[0].display="none";
             }
-        } ,
+            else{//caso en el que el popup es crear 
+               var buscarlabel = $("label").find("for");
+                Buscarlabel = buscarlabel.prevObject[0];
+                Buscarlabel.style.display = "none";
+            }
+        } ,        
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
         altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
         dataBound: function () {
@@ -320,7 +339,7 @@ $(document).ready(function () {
         actions[1].action = function () {
             bandAlert = 0;
         };
-        createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.pai__cod + " ---?", "400px", "200px", true, true, actions);
+        createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.sar__cod + " ---?", "400px", "200px", true, true, actions);
 
     } catch (e) {
         alert(e);
@@ -481,7 +500,7 @@ $(document).ready(function () {
                 .appendTo(container)
                 .kendoDropDownList({
             dataTextField: "ageo__nom",
-            dataValueField: "ageo__cod",
+            dataValueField: "ageo__nom",
             dataSource: {
                 transport: {
                     read: {
@@ -528,7 +547,7 @@ $(document).ready(function () {
                 .appendTo(container)
                 .kendoDropDownList({
             dataTextField: "ciu__nom",
-            dataValueField: "ciu__cod",
+            dataValueField: "ciu__nom",
             dataSource: {
                 transport: {
                     read: {
