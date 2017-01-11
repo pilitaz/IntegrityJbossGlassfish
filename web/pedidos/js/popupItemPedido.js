@@ -227,20 +227,7 @@ $(document).ready(function() {
         format: "{0:yyyy/MM/dd}",
         value: new Date(parent.hoy)
     });
-    
-    function onChangeConceptoDet(e){
-        
-        
-        var codAmortizacion= e.sender.dataSource._data[e.sender.selectedIndex-1].tcon_dif;
-        var dropdownlist = $("#idCodigoAmortizacion").data("kendoDropDownList");
-        var numericTextBoxTasa= $("#ipDiasAmortizacion").data("kendoNumericTextBox");
-        var datepickerFechaTasa= $("#ipFechaAmortizacion").data("kendoDatePicker");        
-        
-        dropdownlist.enable(codAmortizacion);
-        numericTextBoxTasa.enable(codAmortizacion);            
-        datepickerFechaTasa.enable(codAmortizacion);
-        
-    }
+      
     
     function onChangeClase(e){
         $("#idArticulo").parent().removeClass(".k-input");    
@@ -297,7 +284,7 @@ $(document).ready(function() {
         numerictextbox.readonly();
     }
     
-    if(parent.itemPedido !== null){                
+    if(parent.itemPedido && parent.itemPedido !== null){                
         $("#btAgregar")["0"].attributes[2].nodeValue = "agregarItem()";
         $("#btAgregar")["0"].textContent= "Actualizar";                
         $("#btCancelar")["0"].attributes[2].nodeValue = "btnCancelarEditar()";
@@ -328,7 +315,7 @@ function agregarItem(){
     
     var verboHTML= "POST";
     
-    if(parent.itemPedido !== null){
+    if(parent.itemPedido && parent.itemPedido !== null){ //$("#btAgregar")["0"].textContent= "Actualizar"
        verboHTML="PUT" ;
     }
 
