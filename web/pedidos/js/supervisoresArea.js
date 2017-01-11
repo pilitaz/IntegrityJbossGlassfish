@@ -258,7 +258,7 @@ $(document).ready(function () {
                 template: function (e) {
                     return e.ageo__cod;
                 }}, 
-            {field: "ter__nit", title: "NIT",  hidden:false,editor: filtroestado,
+            {field: "ter__nit", title: "Razon Social",  hidden:false,editor: filtroestado,
                 template: function (e) {
                     return e.ter__nit;
                 }},   
