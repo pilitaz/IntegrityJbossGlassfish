@@ -625,6 +625,25 @@
 	background: url(../images/SpriteIntegrity.png) -8px -1058px;
 }
 
+/* ——  */
+
+.po_preview{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -1108px;
+	cursor:pointer
+}
+.po_preview:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -1108px;
+	cursor:pointer
+}
+.po_preview:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -1108px;
+}
 /**********************************************/
 /**********************************************/
 /****************   REPORTES   ****************/
