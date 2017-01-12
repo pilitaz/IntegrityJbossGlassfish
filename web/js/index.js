@@ -361,7 +361,7 @@ function abreFuncion(servicio) {
     document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
     $("#tdPerfil").fadeOut("slow");
     $('#divDerecho').width($(window).width());
-    var regex = /\/\w+\/html\/\w+.html/g;
+    var regex = /\/\w+\/html\/\w+.html/g;//ejemplo-------/pedidos/html/rutaTransportistas.html
     apagarBotones();
     cambiarFondoTD("tdVerde");
     if (servicio.slice(0, 5) === "html&") {

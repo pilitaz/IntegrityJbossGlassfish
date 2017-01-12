@@ -5,7 +5,7 @@ var mapSir = objSir.getmapSir();
 var inputsir = objSir.getdataInputSir();
 //    var objSir = new sir();
 //var urlSir = objSir.getUrlSir();
-var est = "tra__est";
+var est = "rut__est";
 var clacli= "";
 $(document).ready(function () {
     fltrEst();
@@ -28,17 +28,18 @@ function grilla(obj) {
     /*variable para adicionar los campos requeridos y el tipo de dato*/
     /*editable: false --- ocultar en grilla*/
     var fieldShema = {
-        "cam__cod": {type: 'string'},
-        "cam__des": {type: 'string'},
-        "por__ton": {type: 'number'},
-        "por__via": {type: 'number'},
-        "rut__cod": {type: 'string'},
-        "rut__des": {type: 'string'},
-        "ter__nit": {type: 'string'},
-        "ter__raz": {type: 'string'},
-        "tra__est": {type: 'number'},
-        "tra__tip": {type: 'string'}
-    }
+        "bar__cod1": {type: 'number'},
+        "bar__cod2": {type: 'number'},
+        "ciu__cod1": {type: 'number'},
+        "ciu__cod2": {type: 'number'},
+        "rut__cod":  {type: 'number'},
+        "rut__des":  {type: 'string'},
+        "bar__dsc1": {type: 'string'},
+        "bar__dsc2": {type: 'string'},
+        "ciu__nom1": {type: 'string'},
+        "ciu__nom2": {type: 'string'},
+        "rut__est": {type: 'number'}
+    };
 
     /*variable id es el id correspondiente a la tabla a cansultar*/
     var model = {
@@ -64,18 +65,16 @@ function grilla(obj) {
     /*hiden: true --- ocultar en grilla*/
     var columns = [
 //		btnDer,
-        {field: "cam__cod", title: "Tipo de Camión", editor:cam__codList,width: "100%",hidden: true},
-        {field: "cam__des", title: "Tipo de Camión",width: "100%"},
-        {field: "por__ton", title: "Peso por Tonelada", width: "100%",hidden: true},
-        {field: "por__via", title: "Peso por viaje", width: "100%",hidden: true},
-        {field: "rut__cod", title: "Nombre de Ruta",editor:rut__codList, width: "100%",hidden: true},
-        {field: "rut__des", title: "Nombre de Ruta", width: "100%"},
-        {field: "ter__nit", title: "Nit del transportista", editor:ter__nitList, width: "100%"},
-        {field: "ter__raz", title: "Razon social",editor:ter__razList, width: "100%"},
-//        {field: "tra__emp", title: "Indicativo Empleado", width: "100%",hidden: true}, 
-        //{field: "tra__est", title: "Estado de transportista ", width: "100%",hidden: true}, 
-        {field: "tra__tip", title: "Tipo de Transportador", editor:tra__tipList,width: "100%",hidden: true}, //Tipo de Transportador: A=Auxiliar,   C=Conductor
-        
+//        {field: "bar__cod1", title:"e", width:"100%"}, 
+//        {field: "bar__cod2", title:"e", width:"100%"}, 
+//        {field: "ciu__cod1", title:"e", width:"100%"}, 
+//        {field: "ciu__cod2", title:"e", width:"100%"}, 
+        {field: "rut__cod" , title:"Código Ruta", width:"100%"}, 
+        {field: "rut__des" , title:"Descripción", width:"100%"},
+        {field: "ciu__nom1", title:"Ciudad Origen", width:"100%"},
+        {field: "bar__dsc1", title:"Barrio Origen", width:"100%"}, 
+        {field: "ciu__nom2", title:"Ciudad Destino", width:"100%"}, 
+        {field: "bar__dsc2", title:"Barrio Destino", width:"100%"}, 
         
         
         //{field: "cla__nom", title: "Clase de Cliente", editor:cla__cliList,width: "100%"},
@@ -115,13 +114,11 @@ function grilla(obj) {
                     } else if (operation === 'create') {
                         var key1 = Object.keys(inputCud)[0]
                         options[est] = 99;
-                        options.tra__emp = true;
-                        options.ter__nit = $("#idter__nit").val();
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
 
                     } else {
-                        options.ter__nit = $("#idter__nit").val();
+//                        options.ter__nit = $("#idter__nit").val();
                         var key1 = Object.keys(inputCud)[0]
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
@@ -167,12 +164,10 @@ function grilla(obj) {
         rowTemplate: kendo.template($("#rowTemplate").html()),
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
         edit: function (e) {
-            debugger
+            e.container.find("label[for='rut__cod']").hide();
+            e.container.find("input[name=rut__cod]").hide();
             e.container.kendoWindow("title", "Editar");
-                e.container.find("label[for='rut__des']").hide();
-                e.container.find("input[name=rut__des]").hide();
-                e.container.find("label[for='cam__des']").hide();
-                e.container.find("input[name=cam__des]").hide();
+                
                 
             if (!e.model.isNew()) {//caso en el que el popup es editar
 
@@ -685,7 +680,7 @@ function fltrEst() {
 
 function onChangeFltr() {
     inputsir = {
-        "dsSIRdpc_tra": {
+        "dsSIRdpc_rut": {
             "eeDatos": [
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
@@ -694,14 +689,14 @@ function onChangeFltr() {
                     "remote_ip": sessionStorage.getItem("ipPublica")
                 }
             ],
-            "eeSIRdpc_tra": [
-                {
-                    "picter_nit": "*",
-                    "piirut_cod": 0,
-                    "piicam_cod": 0,
-                    "piitra_est": $("#fltrEst").val()
-                }
-            ]
+            "eeSIRdpc_rut": [{
+                    "piibar_cod1": 0,
+                    "piibar_cod2": 0,
+                    "picciu_cod1": "*",
+                    "picciu_cod2": "*",
+                    "piirut_est": $("#fltrEst").val()
+                }]
+
         }
     };
     grilla(inputsir);
