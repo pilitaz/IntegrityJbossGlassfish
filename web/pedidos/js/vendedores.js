@@ -1,4 +1,3 @@
-                   
 /*  FUNCION RESIZE WINDOW 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,7 +9,7 @@ $(window).resize(function () {
                         
 });
                     
-                    
+         
 /**
  * FUNCION crear usuario nuevo
  * grid1 variable almacena data de grid
@@ -18,7 +17,7 @@ $(window).resize(function () {
  *   
  *  
  *  
- */ function newrol(){
+ */ function newrol(){debugger
     var grid1 = $("#grid").data("kendoGrid");
     var dataSource = $("#grid").data("kendoGrid").dataSource;
                             
@@ -27,7 +26,7 @@ $(window).resize(function () {
     grid1.options.editable = "popup";
                             
 }
-function editar_rol(){
+function editar_rol(){debugger
                 	
                     
     var grid1 = $("#grid").data("kendoGrid");
@@ -42,7 +41,7 @@ function editar_rol(){
                     
                     
 $(document).ready(function() {
-                                            
+                                       
                     
     $("#toolbar").kendoToolBar({
         items: [
@@ -74,7 +73,7 @@ $(document).ready(function() {
  *  
  */ 
 $(document).ready(function () {   
-        var data = [
+    var data = [
         {text: "Todos", value: "-1", clase: "po_checkCreate"},
         {text: "Creado", value: "99", clase: "po_checkCreate"},
         {text: "Activo", value: "0", clase: "po_checkAct"},
@@ -96,22 +95,39 @@ $(document).ready(function () {
          
 
     }); 
+    
     var windowTemplate = kendo.template($("#windowTemplate").html());
-      var window = $("#window1").kendoWindow({
+   
+    var window = $("#window1").kendoWindow({
         title: "Eliminar",
         visible: false, //the window will not appear before its .open method is called
 
     }).data("kendoWindow");
-    function grilla(e){
-    var  consultar = new sirSupTerritorio();
+    /**
+     *  FUNCION CREAR GRILLA
+     * Funcion cancel se ejecuta con el evento OnClick de EDIT grid
+     *  cancel: function(e) {                                              
+                            e._defaultPrevented= true;
+                            $('#grid').data('kendoGrid').refresh();                                             
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh(); `}                                                                                       
+                       
+     *  
+     *  
+     */
+    //    var gridheigth = $("body").height();
+    //    gridheigth = gridheigth*0.008 + gridheigth;
+    
+    function grilla(e){debugger
+    var  consultar = new sirVendedores();
     var  datajson = consultar.getjson();
     var  urlService = consultar.getUrlSir();
-    datajson.dsSIRgpd_str.SIRgpd_str[0].str__est=e;                     
+    //datajson.dsSIRgpd_sre.SIRgpd_sre[0].picsre__est = e;                
     var  actualizar = new cudTerritorios();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
 
-    var mapCud = "eegpd_str";
+    var mapCud = "eegpd_vdd";
     dataSource = new kendo.data.DataSource({
         transport: {
             read: {
@@ -139,69 +155,61 @@ $(document).ready(function () {
                 type: "DELETE",
                 contentType: "application/json; charset=utf-8"
             },
-            parameterMap: function (options, operation) {debugger
-                if (operation === "read") {
+            parameterMap: function (options, operation) {
+                if (operation === "read") {debugger
                     return JSON.stringify(datajson);
                 }
-                if (operation === "update") {
-                   var cedula = $("#cedula")[0].value;
-                    var nombre = $("#nombre")[0].value;
-                    var recaudo = $("#Recaudo")[0].value;
-                    var ventas = $("#stventas")[0].value;
-                    var territorio = parseInt($("#territorio")[0].value);
-                    var recaudar=true;
-                    var vender=true;
-                    if(recaudo==="1"){recaudar=true;}else{recaudar=false;}
-                    if(ventas==="1"){vender=true;}else{vender=false;}
-                    actjson.dsSICUDgpd_str.eegpd_str[0].str__cod=options.str__cod;
-                    actjson.dsSICUDgpd_str.eegpd_str[0].ter__nit=cedula;
-                    actjson.dsSICUDgpd_str.eegpd_str[0].ter__raz=nombre; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].str__est=options.str__est; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].str__rec=recaudar; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].str__vta=vender; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].trr__cod=territorio; 
-                    
-                    return JSON.stringify(actjson);
-                                        
-                                        
-                }
-                if (operation === "create") {
+                if (operation === "update") {debugger
                     var cedula = $("#cedula")[0].value;
                     var nombre = $("#nombre")[0].value;
-                    var recaudo = $("#Recaudo")[0].value;
-                    var ventas = $("#stventas")[0].value;
-                    var territorio = parseInt($("#territorio")[0].value);
-                    var territorio_nom = $("#territorio")[0].text;
-                    var recaudar=true;
-                    var vender=true;
-                    if(recaudo==="1"){recaudar=true;}else{recaudar=false;}
-                    if(ventas==="1"){vender=true;}else{vender=false;}
-                    actjson.dsSICUDgpd_str.eegpd_str[0].ter__nit=cedula;
-                    actjson.dsSICUDgpd_str.eegpd_str[0].ter__raz=nombre; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].str__est=99; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].str__rec=recaudar; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].str__vta=vender; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].trr__cod=territorio; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].trr__nom=territorio_nom; 
+                    var region = $("#region").data("kendoDropDownList");
+                    var select = region.selectedIndex;
+                    region = region.dataSource._data[select].rgeo__cod;
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod=region;  
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod=options.sre__cod; 
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__est=options.sre__est; 
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__nit=cedula; 
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__nom=options.rgeo__nom; 
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__raz=nombre; 
+                    return JSON.stringify(actjson);
+                    $('#grid').data('kendoGrid').refresh();
+                    $('#grid').data('kendoGrid').dataSource.read();
+                    $('#grid').data('kendoGrid').refresh();
+
+                }
+                if (operation === "create") {debugger
+                    var cedula = $("#cedula")[0].value;
+                    var nombre = $("#nombre")[0].value;
+                    var region = $("#region").data("kendoDropDownList");
+                    var select = region.selectedIndex;
+                    region = region.dataSource._data[select].rgeo__cod;
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__raz=nombre;
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__nom=options.rgeo__nom;
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod=region;
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod=0; 
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__est=99; 
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__nit=cedula; 
                     return JSON.stringify(actjson);          
                     $('#grid').data('kendoGrid').refresh();
                     $('#grid').data('kendoGrid').dataSource.read();
                     $('#grid').data('kendoGrid').refresh();                                     
                 }
-                if (operation === "destroy") {
-                    actjson.dsSICUDgpd_str.eegpd_str[0].str__cod=options.str__cod;     
-                    actjson.dsSICUDgpd_str.eegpd_str[0].ter__nit=options.ter__nit;
-                    actjson.dsSICUDgpd_str.eegpd_str[0].ter__raz=options.ter__raz; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].str__est=options.str__est; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].str__rec=options.str__rec; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].str__vta=options.str__vta; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].trr__cod=options.trr__cod; 
+                if (operation === "destroy") {debugger 
+                    var x=0;
+                    if (options.sre__est===true){x=1;}
+                    else{x=0;}
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod=options.rgeo__cod;  
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod=options.sre__cod; 
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__est=x; 
+                    actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__nit=options.ter__nit; 
                     
-                   return JSON.stringify(actjson);
+                    return JSON.stringify(actjson);
                                         
                     $('#grid').data('kendoGrid').refresh();
                     $('#grid').data('kendoGrid').dataSource.read();
-                    $('#grid').data('kendoGrid').refresh();                                           
+                    $('#grid').data('kendoGrid').refresh();                                    
+                                        
+                                        
                 }
                                     
             }
@@ -210,50 +218,40 @@ $(document).ready(function () {
         batch: false,
         severFiltering: true,                            
         schema: {
-            data: function (e) {
+            data: function (e) {debugger
                 var key1 = Object.keys(e)[0];
                 if(e[key1].eeEstados){
                     if (e[key1].eeEstados[0].Estado === "OK") {
+                       
                         return e[key1][mapCud];
                     }else
                     {
-                    alertDialogs("Error"+e[key1].eeEstados[0].Estado);    
+                        alertDialogs("Error"+e[key1].eeEstados[0].Estado); 
+                        $('#grid').data('kendoGrid').refresh();                                             
+                        $('#grid').data('kendoGrid').dataSource.read();
+                        $('#grid').data('kendoGrid').refresh();
                     }
                 }},
             model: {
-                id: "str__cod",
+                id: "vdd__cod",
                 fields: {
+                    vdd__cod:    {editable: true, nullable: false},
                     ter__nit:    {editable: true, nullable: false},
+                    trr__cod:    {editable: false, nullable: false},  
+                    cla__cli:    {editable: true, nullable: false},  
+                    vdd__est:    {editable: true, nullable: false}, 
+                    vdd__ter:    {editable: true, nullable: false},
                     ter__raz:    {editable: true, nullable: false},
-                    str__est:    {editable: true, nullable: false}, 
-                    str__cod:    {editable: true, nullable: false}, 
-                    trr__nom:    {editable: true, nullable: false}, 
-                    str__rec:    {editable: true, nullable: false,type: "boolean"},  
-                    str__vta:    {editable: true, nullable: false,type: "boolean"},   
-                    trr__cod:    {editable: true, nullable: false}, 
+                    trr__nom:    {editable: true, nullable: false},
+                    cla__nom:    {editable: true, nullable: false}
                 }
             }
         }
     });
-  
-    /**
-     *  FUNCION CREAR GRILLA
-     * Funcion cancel se ejecuta con el evento OnClick de EDIT grid
-     *  cancel: function(e) {                                              
-                            e._defaultPrevented= true;
-                            $('#grid').data('kendoGrid').refresh();                                             
-                            $('#grid').data('kendoGrid').dataSource.read();
-                            $('#grid').data('kendoGrid').refresh(); `}                                                                                       
-                       
-     *  
-     *  
-     */
-    var gridheigth = $("body").height();
-    gridheigth = gridheigth*0.12 + gridheigth;
     var grid1 = $("#grid").kendoGrid({
         dataSource: dataSource,
                             
-        height: gridheigth,
+        
         sortable: true,
                            
         pageable: {
@@ -262,37 +260,28 @@ $(document).ready(function () {
             buttonCount: 5
         },
         //navigatable: true,
-        columns: [ 
-            {field: "str__cod", title: "Cod Supervisor",  hidden:false},
-            {field: "ter__nit", title: "Nit",  hidden:false,editor: filtroestado,
-                template: function (e) {
+        columns: [
+            {field: "vdd__cod", title: "Cod Supervisor ",  hidden:false},
+            {field: "ter__nit", title: "Razon Social",  hidden:false, editor: filtroestado,
+                template: function (e) {debugger
                     return e.ter__nit;
-                }},   
-            {field: "ter__raz", title: "Nombre",  hidden:false,editor:nombre,
+                }},    
+            {field: "ter__raz", title: "Nombre",  hidden:false,editor: nombre,
                 template: function (e) {debugger
                     return e.ter__raz;
-                }},  
+                }},    
+            {field: "trr__nom", title: "Cod Supervisor ",  hidden:false},
+            {field: "cla__nom", title: "Cod Supervisor ",  hidden:false},
+            {field: "vdd__ter", title: "Cod Supervisor ",  hidden:false},
             
-            {field: "trr__nom", title: "Territorio",  hidden:false,  editor:territorios,
-                template: function (e) {debugger
-                    return e.trr__nom;
-                }},   
-            {field: "str__vta", title: "Ventas",  hidden:false, editor:estadoVentas,
-                template: function (e) {debugger
-                    return e.str__vta;
-                }},  
-            {field: "str__rec", title: "Recaudo",  hidden:false, editor:estadoRecaudo,
-                template: function (e) {debugger
-                    return e.str__rec;
-                }},  
             {command: [
-                     {name: "check", text: "edit",click: changeEst, template: "<a class='k-grid-check'><span class='k-sprite po_checkCreate'></span></a>"},
-                    {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
+                    {name: "check", text: "estado",click: changeEst, template: "<a class='k-grid-check'><span class='k-sprite po_editoff' ></span></a>" },
+                    {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff' ></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "140px"}],
-             editable: "popup",
-                edit: function(e) {debugger
+        editable: "popup",
+         edit: function(e) {debugger
             if (!e.model.isNew()) {//caso en el que el popup es editar
-            if(e.model.str__est!= 99 ){
+                if(e.model.sre__est!= 99 ){
                     
                     
                    kendo.ui.progress($('.k-edit-form-container'), true);
@@ -300,25 +289,24 @@ $(document).ready(function () {
                    e.container.find(".k-loading-image").css("background-image", "url('')");
 
             }else{
-               
-                e.container.find("input[name=str__cod]")[0].readOnly="true";
+                $("#region").data("kendoDropDownList").enable(false);
+            //e.container.find("span")[1].attr('disabled','disabled');
+            //e.container.find("span[for='rgeo__nom']");
             
             }
             }
-            else{//caso en el que el popup es crear
-                var buscarlabel = $("label").find("for");
+            else{//caso en el que el popup es crear 
+               var buscarlabel = $("label").find("for");
                 Buscarlabel = buscarlabel.prevObject[0];
                 Buscarlabel.style.display = "none";
-                e.container.find("input[name=str__cod]")[0].hidden="true";
-                
             }
         } ,
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
         altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
-        dataBound: function () {
+        dataBound: function (e) {
             var results = dataSource.data();
-            changImgFunc(results);
-        },                                            
+            changImgFunc(results,e);
+        },                    
         cancel: function(e) {                                                                                   
             e._defaultPrevented= true;
             $('#grid').data('kendoGrid').refresh();                                             
@@ -329,19 +317,19 @@ $(document).ready(function () {
 }
 grilla(-1);
     $("#filtro").kendoAutoComplete({ 
-        dataTextField: "ter__nit",  
-        dataValueField: "ter__nit",
-        placeholder: "Cedula...",  
+        dataTextField: "ter__raz",  
+        dataValueField: "ter__raz",
+        placeholder: "Nombre...",  
         dataSource: dataSource,                        
         filter: "startswith"                    
     });
-
-     function clickEliminar(e) {debugger
+   
+   function clickEliminar(e) {debugger
     try {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
         var dataItem = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"));
-         if (dataItem.str__est!= 99){
+         if (dataItem.sre__est!= 99){
              alertDialogs("No se puede eliminar por el estado ");  
          }else{
         var actions = new Array();
@@ -362,7 +350,7 @@ grilla(-1);
         actions[1].action = function () {
             bandAlert = 0;
         };
-        createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.str__cod + " ---?", "400px", "200px", true, true, actions);
+        createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.sre__cod + " ---?", "400px", "200px", true, true, actions);
          }
     } catch (e) {
         alert(e);
@@ -371,43 +359,9 @@ grilla(-1);
     }
        
 }
-                        
- function estadoVentas(container, options) {debugger
-
-    var estados = [
-        {text: "Si", valor: "1"},
-        {text: "No", valor: "2"},
-
-    ];
-    var mostrar ;
-    if (options.field=true){
-    mostrar="true";    
-    }else{
-        mostrar="false";
-    }
-    $('<input id="stventas" required name="' + mostrar + '"/>')
-            .appendTo(container)
-            .kendoDropDownList({
-                dataTextField: "text",
-                dataValueField: "valor",
-                dataSource: estados
-            });
-}                       
- function estadoRecaudo(container, options) {
-
-    var estados = [
-        {text: "Si", valor: "1"},
-        {text: "No", valor: "2"},
-
-    ];
-    $('<input id="Recaudo" required name="' + options.field + '"/>')
-            .appendTo(container)
-            .kendoDropDownList({
-                dataTextField: "text",
-                dataValueField: "valor",
-                dataSource: estados
-            });
-}       function nombre(container, options) {
+         
+    
+      function nombre(container, options) {
         var obj = new sirConsultaCliente();
         var objJson = obj.getjson();
         var url = obj.getUrlSir();
@@ -477,53 +431,6 @@ grilla(-1);
         });    
           
       }
-      function territorios(container, options) {debugger
-        
-    var  consultar = new sirTerritorio();
-    var  datajson = consultar.getjson();
-    var  urlService = consultar.getUrlSir();
-        var mapCud1 = "eegpd_trr";
-        $('<input  id = "territorio" required name="' + options.field + '"/>')
-                .appendTo(container)
-                .kendoDropDownList({
-            dataTextField: "trr__nom",
-            dataValueField: "trr__nom",
-            dataSource: {
-                transport: {
-                    read: {
-                        url: urlService,
-                        dataType: "json",
-                        type: "POST",
-                        contentType: "application/json; charset=utf-8"
-                    },
-                    parameterMap: function (options, operation) {
-                        if (operation === "read") {
-                            return JSON.stringify(datajson);
-                        }
-                    }
-                },
-                schema: {
-                    data: function (e) {debugger
-                        var key1 = Object.keys(e)[0];
-                        if (e[key1].eeEstados[0].Estado === "OK") {
-                            return e[key1][mapCud1];
-                        } else {
-                            alertDialogs("Error Con Servicio Regiones"+e[key1].eeEstados[0].Estado);
-                        }
-                    },
-                    model: {
-                        id: "rgeo__nom",
-                        fields: {
-                            rgeo__cod: {editable: false, nullable: false},
-                            rgeo__nom: {editable: false, nullable: false}
-                        }
-                    }
-                }
-            }
-
-        });
-    }
-
     function filtroestado(container, options) {debugger
 
         var obj = new sirConsultaCliente();
@@ -593,68 +500,99 @@ grilla(-1);
             }
         });
             
-    }                        
- 
+    }                       
+
+                        
+   
+    function regionCod(container, options) {debugger
+        
+        var consultar = new sirRegionGeografica();
+        var datajson = consultar.getjson();
+        var urlService = consultar.getUrlSir();
+        var mapCud1 = "eegpr_rgeo";
+        $('<input  id = "region" required name="' + options.field + '"/>')
+                .appendTo(container)
+                .kendoDropDownList({
+            dataTextField: "rgeo__nom",
+            dataValueField: "rgeo__nom",
+            dataSource: {
+                transport: {
+                    read: {
+                        url: urlService,
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation === "read") {
+                            return JSON.stringify(datajson);
+                        }
+                    }
+                },
+                schema: {
+                    data: function (e) {debugger
+                        var key1 = Object.keys(e)[0];
+                        if (e[key1].eeEstados[0].Estado === "OK") {
+                            return e[key1][mapCud1];
+                        } else {
+                            alertDialogs("Error Con Servicio Regiones"+e[key1].eeEstados[0].Estado);
+                        }
+                    },
+                    model: {
+                        id: "rgeo__nom",
+                        fields: {
+                            rgeo__cod: {editable: false, nullable: false},
+                            rgeo__nom: {editable: false, nullable: false}
+                        }
+                    }
+                }
+            }
+
+        });
+    }
+
+    function changImgFunc(results , e) {debugger
+     
+        for (var i = 0; i < results.length; i++) {
+            if (document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod)){
+                if(results[i].sre__est==0){                            
+                    document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_checkAct");   
+                    //document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("onclick", "disable();");
+                }
+                if(results[i].sre__est==99){     
+                    document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_checkCreate");
+                    //document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("onclick", "active();");
+                }
+                if(results[i].sre__est==1){     
+                    document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_checkBloq");
+
+                }
+            }
+        }
+
+    } 
+
+
  
 });
                     
-                    
- function changImgFunc(results , e) {
-     //for para colorear los chek de estado
-        for (var i = 0; i < results.length; i++) {
-            if (document.getElementById("spanproceso"+results[i].str__cod+results[i].ter__nit+results[i].trr__cod)){
-                if(results[i].str__est===0){                            
-                    document.getElementById("spanproceso"+results[i].str__cod+results[i].ter__nit+results[i].trr__cod).setAttribute("class", "k-sprite po_checkAct");   
-                    //document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("onclick", "disable();");
-                }
-                if(results[i].str__est===99){     
-                    document.getElementById("spanproceso"+results[i].str__cod+results[i].ter__nit+results[i].trr__cod).setAttribute("class", "k-sprite po_checkCreate");
-                    //document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("onclick", "active();");
-                }
-                if(results[i].str__est===1){     
-                    document.getElementById("spanproceso"+results[i].sar__cod+results[i].str__cod+results[i].ter__nit+results[i].trr__cod).setAttribute("class", "k-sprite po_checkBloq");
-
-                }
-            }
-        }
-        // for para colorear chulo de ventas
-        for (var i = 0; i < results.length; i++) {
-            if (document.getElementById("spanvta"+results[i].str__cod+results[i].ter__nit+results[i].trr__cod)){
-                if(results[i].str__vta===true){                            
-                    document.getElementById("spanvta"+results[i].str__cod+results[i].ter__nit+results[i].trr__cod).setAttribute("class", "k-sprite po_check");   
-                    
-                }else{
-                    
-                }
-            }
-        }
-  
-        
-
-            
-        
-
-    } 
-    function changeEst(e){debugger
+function changeEst(e){debugger
     var  actualizar = new cudTerritorios();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
     var seleccion =  $("#grid").data("kendoGrid")._data[($(e.currentTarget).closest("tr")["0"].sectionRowIndex)];  
     try {
-   
+           
+            
         var actions = new Array();
         actions[0] = new Object();
         actions[0].text = "OK";
         actions[0].action = function () {debugger
-            if(seleccion.str__est==0){  
-                
-                    actjson.dsSICUDgpd_str.eegpd_str[0].str__cod=seleccion.str__cod;
-                    actjson.dsSICUDgpd_str.eegpd_str[0].ter__nit=seleccion.ter__nit;
-                    actjson.dsSICUDgpd_str.eegpd_str[0].ter__raz=seleccion.ter__raz; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].str__est=1; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].str__rec=seleccion.str__rec; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].str__vta=seleccion.str__rec; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].trr__cod=seleccion.trr__cod; 
+            if(seleccion.sre__est==0){  
+                actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod=seleccion.rgeo__cod;  
+                actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod=seleccion.sre__cod;                     
+                actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__nit=seleccion.ter__nit; 
+                actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__est=1; 
                 $.ajax({
         
                     type: "PUT",        
@@ -663,8 +601,8 @@ grilla(-1);
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {
-                        if((resp.dsSICUDgpd_str.eeEstados[0].Estado)=="OK")
+                    success: function (resp) {debugger
+                        if((resp.dsSICUDgpd_sre.eeEstados[0].Estado)=="OK")
                         {     
                             $('#grid').data('kendoGrid').refresh();
                             $('#grid').data('kendoGrid').dataSource.read();
@@ -672,7 +610,7 @@ grilla(-1);
                         }
                         else
                         {
-                            alertDialogs("Error"+resp.dsSICUDgpd_str.eeEstados[0].Estado); 
+                            alertDialogs("Error"+resp.dsSICUDgpd_sre.eeEstados[0].Estado); 
                             $('#grid').data('kendoGrid').refresh();
                             $('#grid').data('kendoGrid').dataSource.read();
                             $('#grid').data('kendoGrid').refresh();                             
@@ -682,14 +620,11 @@ grilla(-1);
                 });
             }
 
-            if(seleccion.str__est==99){  
-                    actjson.dsSICUDgpd_str.eegpd_str[0].str__cod=seleccion.str__cod;
-                    actjson.dsSICUDgpd_str.eegpd_str[0].ter__nit=seleccion.ter__nit;
-                    actjson.dsSICUDgpd_str.eegpd_str[0].ter__raz=seleccion.ter__raz; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].str__est=0; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].str__rec=seleccion.str__rec; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].str__vta=seleccion.str__rec; 
-                    actjson.dsSICUDgpd_str.eegpd_str[0].trr__cod=seleccion.trr__cod; 
+            if(seleccion.sre__est==99){  
+                actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod=seleccion.rgeo__cod;  
+                actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod=seleccion.sre__cod;                     
+                actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__nit=seleccion.ter__nit; 
+                actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__est=0;  
                 $.ajax({
         
                     type: "PUT",        
@@ -698,8 +633,8 @@ grilla(-1);
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {
-                        if((resp.dsSICUDgpd_str.eeEstados[0].Estado)=="OK")
+                    success: function (resp) {debugger
+                        if((resp.dsSICUDgpd_sre.eeEstados[0].Estado)=="OK")
                         {          
                             $('#grid').data('kendoGrid').refresh();
                             $('#grid').data('kendoGrid').dataSource.read();
@@ -707,7 +642,7 @@ grilla(-1);
                         }
                         else
                         {
-                            alertDialogs("Error"+resp.dsSICUDgpd_str.eeEstados[0].Estado);  
+                            alertDialogs("Error"+resp.dsSICUDgpd_sre.eeEstados[0].Estado);  
                             $('#grid').data('kendoGrid').refresh();
                             $('#grid').data('kendoGrid').dataSource.read();
                             $('#grid').data('kendoGrid').refresh(); 
@@ -720,17 +655,20 @@ grilla(-1);
         };
         actions[1] = new Object();
         actions[1].text = "Cancelar";
-        actions[1].action = function () {
+        actions[1].action = function () {debugger
             bandAlert = 0;
         };
-        createDialog("Atención", "Esta seguro de cambiar el estado de Registro ---" + seleccion.str__cod + " ---?", "400px", "200px", true, true, actions);
+        createDialog("Atención", "Esta seguro de cambiar estado de Registro ---" + seleccion.sre__cod + " ---?", "400px", "200px", true, true, actions);
 
-    } catch (e) {
+    } catch (e) {debugger
         createDialog(e);
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();
     }
     
  
-} 
-    
+}             
+                   
+                
+
+

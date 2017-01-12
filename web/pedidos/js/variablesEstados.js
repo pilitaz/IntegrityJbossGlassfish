@@ -394,10 +394,10 @@ function sirTerritorios() {
    "dsSIRgpd_sre":{  
       "eeDatos":[  
          {  
-            "picusrcod":"mcaceres",
-            "picfiid":"1341205955768780800",
-            "local_ip":"172.21.24.200",
-            "remote_ip":"190.144.16.114"
+                    "picusrcod":sessionStorage.getItem("usuario"),
+                    "picfiid":sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
       "SIRgpd_sre":[  
@@ -432,27 +432,29 @@ function sirTerritorios() {
 };
 ///////////////////////////////////////////////////////////////
 function cudTerritorios() {
-    var urlSir = ipServicios + baseComercial +"SICUDgpd_sre";
+    var urlSir = ipServicios + baseComercial +"SICUDgpd_str";
     var json = {  
-        "dsSICUDgpd_sre":{  
-            "eeDatos":[  
-                {  
+   "dsSICUDgpd_str":{  
+      "eeDatos":[  
+         {  
                     "picusrcod":sessionStorage.getItem("usuario"),
                     "picfiid":sessionStorage.getItem("picfiid"),
                     "local_ip":sessionStorage.getItem("ipPrivada"),
                     "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "eegpd_sre":[  
-                {  
-                    "sre__cod":0,
-                    "ter__nit":"",
-                    "rgeo__cod":0,
-                    "sre__est":0
-                }
-            ]
-        }
-    };
+         }
+      ],
+      "eegpd_str":[  
+         {  
+          "str__cod":0,
+          "ter__nit":"0",
+          "str__est":99,
+          "str__rec":true,
+          "str__vta":true,
+          "trr__cod":1
+         }
+      ]
+   }
+};
     
     this.setUrlSir = function (newname) {
         if (newname) {
@@ -668,7 +670,8 @@ function sirSupTerritorio() {
                 {  
                     "piistr__cod":0,
                     "picter__nit":"*",
-                    "piitrr__cod":0
+                    "piitrr__cod":0,
+                    "str__est":-1
                 }
             ]      
         }
@@ -751,7 +754,9 @@ function sirAnulaPedido() {
             "SIRgpd_anu":[  
                 {  
                     "piianu__cod":0,
-                    "picanu__des":"*"
+                    "picanu__des":"*",
+                    "gpd__est":-1,
+                    
                 }
             ]      
         }
@@ -1217,6 +1222,50 @@ function sirTransportistas() {
 			"piirut_cod": 0 
 		}]
 		
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///////////////////////////////////////////////////////////////
+function sirVendedores() {
+    var urlSir = ipServicios + baseComercial +"SIRgpd_vdd";
+    var json ={  
+   "dsSIRgpd_vdd":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "SIRgpd_vdd":[  
+         {  
+          "piivdd__cod":1,
+          "picter__nit":"*",
+          "vdd__est":-1,
+          "piicla__cli":0
+          
+         }
+      ]      
    }
 };
     
