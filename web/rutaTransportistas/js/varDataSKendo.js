@@ -7,11 +7,10 @@
 
 //////////////////////////////////////////////////////////////////////////////////////
 function sir() {
-    var url = ipServicios + baseComercial + "SIRdpc_tra";
-    ;
-    var mapSir = "eedpc_tra";
+    var url = ipServicios + baseComercial + "SIRdpc_rut";
+    var mapSir = "eedpc_rut";
     var dataInputSir = {
-        "dsSIRdpc_tra": {
+        "dsSIRdpc_rut": {
             "eeDatos": [
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
@@ -20,14 +19,14 @@ function sir() {
                     "remote_ip": sessionStorage.getItem("ipPublica")
                 }
             ],
-            "eeSIRdpc_tra": [
-                {
-                    "picter_nit": "*",
-                    "piirut_cod": 0,
-                    "piicam_cod": 0,
-                    "piitra_est": -1
-                }
-            ]
+            "eeSIRdpc_rut": [{
+                    "piibar_cod1": 0,
+                    "piibar_cod2": 0,
+                    "picciu_cod1": "*",
+                    "picciu_cod2": "*",
+                    "piirut_est": -1
+                }]
+
         }
     };
     this.setUrlSir = function (newname) {
@@ -59,10 +58,10 @@ function sir() {
 
 ///////////////////////////////////////////////////////////////////////////////////////
 function cud() {
-    var url = ipServicios + baseComercial + "SICUDdpc_tra";
-    var mapCud = "eedpc_tra";
+    var url = ipServicios + baseComercial + "SICUDdpc_rut";
+    var mapCud = "eedpc_rut";
     var dataInputCud = {
-        "dsSICUDdpc_tra": {
+        "dsSICUDdpc_rut": {
             "eeDatos": [
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),

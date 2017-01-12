@@ -5,7 +5,7 @@ var mapSir = objSir.getmapSir();
 var inputsir = objSir.getdataInputSir();
 //    var objSir = new sir();
 //var urlSir = objSir.getUrlSir();
-var est = "tra__est";
+var est = "cam__est";
 var clacli= "";
 $(document).ready(function () {
     fltrEst();
@@ -28,16 +28,18 @@ function grilla(obj) {
     /*variable para adicionar los campos requeridos y el tipo de dato*/
     /*editable: false --- ocultar en grilla*/
     var fieldShema = {
-        "cam__cod": {type: 'string'},
-        "cam__des": {type: 'string'},
-        "por__ton": {type: 'number'},
-        "por__via": {type: 'number'},
-        "rut__cod": {type: 'string'},
-        "rut__des": {type: 'string'},
-        "ter__nit": {type: 'string'},
-        "ter__raz": {type: 'string'},
-        "tra__est": {type: 'number'},
-        "tra__tip": {type: 'string'}
+        "cam__cap": 	{type: 'number'},
+        "cam__cap__kg": {type: 'number'},
+        "cam__cod":     {type: 'number'},
+        "cam__des":     {type: 'string'},
+        "cam__emb":     {type: 'string'},
+        "cam__est":     {type: 'number'},
+        "cam__hua":     {type: 'number'},
+        "cam__mod":     {type: 'string'},
+        "cam__pla":     {type: 'string'},
+        "cam__pro":     {type: 'string'},
+        "cam__vers":    {type: 'string'},
+        "cto__cod":     {type: 'string'},
     }
 
     /*variable id es el id correspondiente a la tabla a cansultar*/
@@ -64,21 +66,21 @@ function grilla(obj) {
     /*hiden: true --- ocultar en grilla*/
     var columns = [
 //		btnDer,
-        {field: "cam__cod", title: "Tipo de Camión", editor:cam__codList,width: "100%",hidden: true},
-        {field: "cam__des", title: "Tipo de Camión",width: "100%"},
-        {field: "por__ton", title: "Peso por Tonelada", width: "100%",hidden: true},
-        {field: "por__via", title: "Peso por viaje", width: "100%",hidden: true},
-        {field: "rut__cod", title: "Nombre de Ruta",editor:rut__codList, width: "100%",hidden: true},
-        {field: "rut__des", title: "Nombre de Ruta", width: "100%"},
-        {field: "ter__nit", title: "Nit del transportista", editor:ter__nitList, width: "100%"},
-        {field: "ter__raz", title: "Razon social",editor:ter__razList, width: "100%"},
-//        {field: "tra__emp", title: "Indicativo Empleado", width: "100%",hidden: true}, 
-        //{field: "tra__est", title: "Estado de transportista ", width: "100%",hidden: true}, 
-        {field: "tra__tip", title: "Tipo de Transportador", editor:tra__tipList,width: "100%",hidden: true}, //Tipo de Transportador: A=Auxiliar,   C=Conductor
+        {field: "cam__cap__kg" ,title:"Capacidad de Carga ",width: "100%"},//(en kilos) del Vehiculo
+//        {field: "cam__cod"     ,title: "Codigo del Vehiculo",width: "100%"},//no mostrara 
+        {field: "cam__des"     ,title: "Descripcion del Vehiculo ",width: "100%"},
+        {field: "cam__emb"     ,title: "Embalaje del Carro ",editor:cam__embList,width: "100%",hidden: true},//(G-Granel/L-Lonas)
+//        {field: "cam__est"     ,title: "Estado de la Tabla ",width: "100%"},
+        {field: "cam__hua"     ,title: "Capacidad de Huacales ",width: "100%",hidden: true},
+        {field: "cam__mod"     ,title: "Modelo del Vehiculo",width: "100%"},
+        {field: "cam__pla"     ,title: "Placas del Vehiculo",width: "100%"},//mostrar en editar,
+        {field: "cam__pro"     ,title: "Tipo de Propiedad ",editor:cam__proList,width: "100%",hidden: true},//(E-EMPRESA / R-RENTADO)cam__pro
+        {field: "cam__vers"    ,title: "Version del Vehiculo",width: "100%"},
+        {field: "cto__cod"     ,title: "Centro de Actividad",editor:cto__codList,width: "100%",hidden: true},//servicio
         
         
         
-        //{field: "cla__nom", title: "Clase de Cliente", editor:cla__cliList,width: "100%"},
+        //{field: "cla__nom", title: "Clase de Cliente", editor:cla__cliList,width: "100%",hidden: true},
         btnIzq
     ];
 
@@ -115,13 +117,10 @@ function grilla(obj) {
                     } else if (operation === 'create') {
                         var key1 = Object.keys(inputCud)[0]
                         options[est] = 99;
-                        options.tra__emp = true;
-                        options.ter__nit = $("#idter__nit").val();
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
 
                     } else {
-                        options.ter__nit = $("#idter__nit").val();
                         var key1 = Object.keys(inputCud)[0]
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
@@ -169,10 +168,8 @@ function grilla(obj) {
         edit: function (e) {
             debugger
             e.container.kendoWindow("title", "Editar");
-                e.container.find("label[for='rut__des']").hide();
-                e.container.find("input[name=rut__des]").hide();
-                e.container.find("label[for='cam__des']").hide();
-                e.container.find("input[name=cam__des]").hide();
+//                e.container.find("label[for='cam__des']").hide();
+//                e.container.find("input[name=cam__des]").hide();
                 
             if (!e.model.isNew()) {//caso en el que el popup es editar
 
@@ -236,14 +233,14 @@ function deleteRow(e) {
 
 
 
-function cam__codList(container, options) {
+function cto__codList(container, options) {
     debugger
-    var obj = new listacam__cod();
+    var obj = new listacto__cod();
     var dataSource = obj.getdataSource();
-    $('<input id="iduni__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-        dataTextField: "cam__des",
-        dataValueField: "cam__cod",
-        template:'<div class="divElementDropDownList">#: data.cam__des #</div>',
+    $('<input id="idcto__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
+        dataTextField: "cto__nom",
+        dataValueField: "cto__cod",
+        template:'<div class="divElementDropDownList">#: data.cto__nom #</div>',
         dataSource: dataSource,
         
 //        change: onSelect
@@ -252,8 +249,8 @@ function cam__codList(container, options) {
 //function onSelect(e){
 //    clacli = e.sender.dataSource._data[e.sender.selectedIndex].cla__cli;
 //}
-function listacam__cod() {
-    var objSirUn = new SIRdpc_cam();
+function listacto__cod() {
+    var objSirUn = new SIRsic_cto();
     var urlSirUn = objSirUn.getUrlSir();
     var mapSirUn = objSirUn.getmapSir();
     var inputsirUn = objSirUn.getdataInputSir();
@@ -294,10 +291,10 @@ function listacam__cod() {
                 }
             },
             model: {
-                id: "cam__cod",
+                id: "cto__cod",
                 fields: {
-                    cam__des: {type: 'string'},
-                    cam__cod: {type: 'string'},
+                    cto__cod: {type: 'string'},
+                    cto__nom: {type: 'string'},
                 }
             }
         },
@@ -317,253 +314,9 @@ function listacam__cod() {
 }
 ;
 
-function rut__codList(container, options) {
+function cam__embList(container, options) {
     debugger
-    var obj = new listarut__cod();
-    var dataSource = obj.getdataSource();
-    $('<input id="iduni__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-        dataTextField: "rut__des",
-        dataValueField: "rut__cod",
-        dataSource: dataSource,
-        template:'<div class="divElementDropDownList">#: data.rut__des #</div>',
-//        change: onSelect
-    });
-}
-
-function listarut__cod() {
-    var objSirUn = new SIRdpc_rut();
-    var urlSirUn = objSirUn.getUrlSir();
-    var mapSirUn = objSirUn.getmapSir();
-    var inputsirUn = objSirUn.getdataInputSir();
-    var dataSource = new kendo.data.DataSource({
-        transport: {
-            read: {
-                url: urlSirUn,
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                dataType: 'json',
-            },
-            parameterMap: function (options, operation) {
-                try {
-                    if (operation === 'read') {
-                        return JSON.stringify(inputsirUn);
-                    }
-                } catch (e) {
-                    alertDialogs(e.message)
-                }
-            }
-        },
-        schema: {
-            type: "json",
-            data: function (e) {
-                var key1 = Object.keys(e)[0];
-                if (e[key1].eeEstados[0].Estado === "OK") {
-                    if (e[key1][mapSirUn]) {
-                        for (var i = 0; i < e[key1][mapSirUn].length; i++) {
-                            e[key1][mapSirUn][i].id = i;
-                        }
-                    } else {
-                        grilla();
-                    }
-
-                    return e[key1][mapSirUn];
-                } else {
-                    alertDialogs(e[key1].eeEstados[0].Estado);
-                }
-            },
-            model: {
-                id: "rut__cod",
-                fields: {
-                    rut__des: {type: 'string'},
-                    rut__cod: {type: 'string'}
-                }
-            }
-        },
-        error: function (e) {
-            alertDialogs(e.errorThrown);
-        }
-    });
-
-    this.setdataSource = function (newname) {
-        if (newname) {
-            dataSource = newname;
-        }
-    };
-    this.getdataSource = function () {
-        return dataSource;
-    };
-}
-;
-
-function ter__nitList(container, options) {
-    debugger
-    var obj = new listater__nit();
-    var dataSource = obj.getdataSource();
-    $('<input id="idter__nit" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoAutoComplete({
-        dataTextField: "ter__nit",
-        dataValueField: "ter__nit",
-        dataSource: dataSource,
-        template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
-        minLength: 7,
-        change: onSelectNit
-    });
-}
-
-function onSelectNit(e){
-     $("#idter__raz").val(e.sender.listView._dataItems[0].ter__raz);
-}
-function listater__nit() {
-    var objSirUn = new SIRsic_ter();
-    var urlSirUn = objSirUn.getUrlSir();
-    var mapSirUn = objSirUn.getmapSir();
-    var inputsirUn = objSirUn.getdataInputSir();
-    var dataSource = new kendo.data.DataSource({
-        transport: {
-            read: {
-                url: urlSirUn,
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                dataType: 'json',
-            },
-            parameterMap: function (options, operation) {
-                try {
-                    if (operation === 'read') {
-                        var key1 = Object.keys(inputsirUn)[0];
-                        inputsirUn[key1].eeSIRsic_ter[0].picter_nit = $("#idter__nit").val();
-                        return JSON.stringify(inputsirUn);
-                    }
-                } catch (e) {
-                    alertDialogs(e.message)
-                }
-            }
-        },
-        schema: {
-            type: "json",
-            data: function (e) {
-                var key1 = Object.keys(e)[0];
-                if (e[key1].eeEstados[0].Estado === "OK") {
-                    if (e[key1][mapSirUn]) {
-                        for (var i = 0; i < e[key1][mapSirUn].length; i++) {
-                            e[key1][mapSirUn][i].id = i;
-                        }
-                    } else {
-                        grilla();
-                    }
-
-                    return e[key1][mapSirUn];
-                } else {
-                    alertDialogs(e[key1].eeEstados[0].Estado);
-                }
-            },
-            model: {
-                id: "ter__nit",
-                fields: {
-                    ter__raz: {type: 'string'},
-                    ter__nit: {type: 'string'}
-                }
-            }
-        },
-        error: function (e) {
-            alertDialogs(e.errorThrown);
-        }
-    });
-
-    this.setdataSource = function (newname) {
-        if (newname) {
-            dataSource = newname;
-        }
-    };
-    this.getdataSource = function () {
-        return dataSource;
-    };
-}
-;
-function ter__razList(container, options) {
-    debugger
-    var obj = new listater__raz();
-    var dataSource = obj.getdataSource();
-    $('<input id="idter__raz" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoAutoComplete({
-        dataTextField: "ter__raz",
-        dataValueField: "ter__raz",
-        template:'<div class="divElementDropDownList">#: data.ter__raz #</div>',
-        dataSource: dataSource,
-         minLength: 4,
-        change: onSelectRaz
-    });
-}
-function onSelectRaz(e){
-    $("#idter__nit").val(e.sender.listView._dataItems[0].ter__nit);
-}
-function listater__raz() {
-    var objSirUn = new SIRsic_ter();
-    var urlSirUn = objSirUn.getUrlSir();
-    var mapSirUn = objSirUn.getmapSir();
-    var inputsirUn = objSirUn.getdataInputSir();
-    var dataSource = new kendo.data.DataSource({
-        transport: {
-            read: {
-                url: urlSirUn,
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                dataType: 'json',
-            },
-            parameterMap: function (options, operation) {
-                try {
-                    if (operation === 'read') {
-                        var key1 = Object.keys(inputsirUn)[0];
-                        inputsirUn[key1].eeSIRsic_ter[0].picter_raz = $("#idter__raz").val();
-                        return JSON.stringify(inputsirUn);
-                    }
-                } catch (e) {
-                    alertDialogs(e.message)
-                }
-            }
-        },
-        schema: {
-            type: "json",
-            data: function (e) {
-                var key1 = Object.keys(e)[0];
-                if (e[key1].eeEstados[0].Estado === "OK") {
-                    if (e[key1][mapSirUn]) {
-                        for (var i = 0; i < e[key1][mapSirUn].length; i++) {
-                            e[key1][mapSirUn][i].id = i;
-                        }
-                    } else {
-                        grilla();
-                    }
-
-                    return e[key1][mapSirUn];
-                } else {
-                    alertDialogs(e[key1].eeEstados[0].Estado);
-                }
-            },
-            model: {
-                id: "ter__nit",
-                fields: {
-                    ter__raz: {type: 'string'},
-                    ter__nit: {type: 'string'}
-                }
-            }
-        },
-        error: function (e) {
-            alertDialogs(e.errorThrown);
-        }
-    });
-
-    this.setdataSource = function (newname) {
-        if (newname) {
-            dataSource = newname;
-        }
-    };
-    this.getdataSource = function () {
-        return dataSource;
-    };
-}
-;
-
-function tra__tipList(container, options) {
-    debugger
-    var obj = new listatra__tip();
+    var obj = new listacam__emb();
     var dataSource = obj.getdataSource();
     $('<input id="idutra__tip" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
         dataTextField: "text",
@@ -575,10 +328,71 @@ function tra__tipList(container, options) {
     });
 }
 
-function listatra__tip() {
+function listacam__emb() {//(G-Granel/L-Lonas)
     var dataSource = [
-                        { text: "Auxiliar", value: "A" },
-                        { text: "Conductor", value: "C" }
+                        { text: "Granel", value: "G" },
+                        { text: "Lonas", value: "L" }
+                    ];;
+
+    this.setdataSource = function (newname) {
+        if (newname) {
+            dataSource = newname;
+        }
+    };
+    this.getdataSource = function () {
+        return dataSource;
+    };
+}
+;
+
+function cam__embList(container, options) {
+    debugger
+    var obj = new listacam__emb();
+    var dataSource = obj.getdataSource();
+    $('<input id="idutra__tip" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "value",
+        dataSource: dataSource,
+        placeholder: "Seleccione Tipo de ",
+        template:'<div class="divElementDropDownList">#: data.value #'+' - '+' #:data.text #</div>'
+//        change: onSelect
+    });
+}
+
+function listacam__emb() {//(G-Granel/L-Lonas)
+    var dataSource = [
+                        { text: "Granel", value: "G" },
+                        { text: "Lonas", value: "L" }
+                    ];;
+
+    this.setdataSource = function (newname) {
+        if (newname) {
+            dataSource = newname;
+        }
+    };
+    this.getdataSource = function () {
+        return dataSource;
+    };
+}
+;
+function cam__proList(container, options) {
+    debugger
+    var obj = new listacam__pro();
+    var dataSource = obj.getdataSource();
+    $('<input id="idutra__tip" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "value",
+        dataSource: dataSource,
+        placeholder: "Seleccione Tipo de ",
+        template:'<div class="divElementDropDownList">#: data.value #'+' - '+' #:data.text #</div>'
+//        change: onSelect
+    });
+}
+
+function listacam__pro() {//(G-Granel/L-Lonas)
+    var dataSource = [
+                        { text: "EMPRESA", value: "E" },
+                        { text: "RENTADO", value: "R" }
                     ];;
 
     this.setdataSource = function (newname) {
@@ -659,6 +473,7 @@ function sendAjaxAClase(verHtml, obj) {
             $('#grid').data('kendoGrid').dataSource.read();
             $('#grid').data('kendoGrid').refresh();
         } else {
+            grilla();
             alertDialogs("Problemas con el creación de crear lista de precios .\n" + permitirIngreso);
         }
 
@@ -685,7 +500,7 @@ function fltrEst() {
 
 function onChangeFltr() {
     inputsir = {
-        "dsSIRdpc_tra": {
+        "dsSIRdpc_cam": {
             "eeDatos": [
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
@@ -694,12 +509,11 @@ function onChangeFltr() {
                     "remote_ip": sessionStorage.getItem("ipPublica")
                 }
             ],
-            "eeSIRdpc_tra": [
+            "eeSIRdpc_cam": [
                 {
-                    "picter_nit": "*",
-                    "piirut_cod": 0,
                     "piicam_cod": 0,
-                    "piitra_est": $("#fltrEst").val()
+                    "piccam_pla": "*",
+                    "piicam_est": $("#fltrEst").val()
                 }
             ]
         }
