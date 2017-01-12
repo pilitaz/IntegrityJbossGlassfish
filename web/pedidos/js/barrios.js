@@ -206,14 +206,12 @@ $(document).ready(function () {
             {field: "bar__cod", title: "Cod Barrio",  hidden:false},
             {field: "bar__dsc", title: "Descripcion Barrio",  hidden:false},
             {field: "bar__str", title: "Estrato de Barrio",  hidden:false},
-            {
-                field: "bar__est",
-                title: "Estado",
-                template: "<a class='k-grid-check'><span class='k-sprite po_checkCreate'></span></a>",
-                width: "80px"},
-            {command: [{name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
-                    {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "90px"}],
-        editable: "popup",
+                       {command: [
+                    {name: "check", text: "estado",click: changeEst, template: "<a class='k-grid-check'><span class='k-sprite po_editoff' ></span></a>" },
+                    {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff' ></span></a>"},
+                    {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "140px"}],
+           
+            editable: "popup",
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
         altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
         dataBound: function () {
