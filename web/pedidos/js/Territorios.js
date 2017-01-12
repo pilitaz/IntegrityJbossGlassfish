@@ -107,7 +107,7 @@ $(document).ready(function () {
     var  consultar = new sirTerritorio();
     var  datajson = consultar.getjson();
     var  urlService = consultar.getUrlSir();
-    datajson.dsSIRgpd_trr.SIRgpd_trr[0].trr__est= e;                    
+    datajson.dsSIRgpd_trr.SIRgpd_trr[0].piitrr__est= e;                    
     var  actualizar = new cudTerritorio();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
@@ -145,9 +145,12 @@ $(document).ready(function () {
                     return JSON.stringify(datajson);
                 }
                 if (operation === "update") {
-                    var cedula = $("#cedula").data("kendoDropDownList").text();  
-                     actjson.dsSICUDgpd_trr.eegpd_trr[0].trr__cod=options.trr__cod;
-                    actjson.dsSICUDgpd_trr.eegpd_trr[0].rgeo__cod=parseInt(cedula);  
+                    var region = $("#region").data("kendoDropDownList");
+                    var region_nom = region._old;
+                    var select = region.selectedIndex;
+                    region = region.dataSource._data[select].rgeo__cod;
+                    actjson.dsSICUDgpd_trr.eegpd_trr[0].trr__cod=options.trr__cod;
+                    actjson.dsSICUDgpd_trr.eegpd_trr[0].rgeo__cod=region;  
                     actjson.dsSICUDgpd_trr.eegpd_trr[0].trr__nom=options.trr__nom;
                     actjson.dsSICUDgpd_trr.eegpd_trr[0].rgeo__nom=options.rgeo__nom;
                     actjson.dsSICUDgpd_trr.eegpd_trr[0].trr__est=options.trr__est; 
@@ -170,14 +173,11 @@ $(document).ready(function () {
                                                       
                 }
                 if (operation === "destroy") {
-                    //var cedula = $("#cedula").data("kendoDropDownList").text();
+                    
                     actjson.dsSICUDgpd_trr.eegpd_trr[0].trr__cod=options.trr__cod;
                     actjson.dsSICUDgpd_trr.eegpd_trr[0].rgeo__cod=options.rgeo__cod;  
                     actjson.dsSICUDgpd_trr.eegpd_trr[0].trr__nom=options.trr__nom; 
                     actjson.dsSICUDgpd_trr.eegpd_trr[0].trr__est=options.trr__est; 
-                   
-
-                    
                     return JSON.stringify(actjson);
                                         
                     $('#grid').data('kendoGrid').refresh();
@@ -206,7 +206,7 @@ $(document).ready(function () {
             model: {
                 id: "trr__cod",
                 fields: {
-                    trr__cod:    {editable: false, nullable: false},
+                    trr__cod:    {editable: true, nullable: false},
                     trr__nom:    {editable: true, nullable: false},
                     rgeo__cod:   {editable: true, nullable: false},  
                     rgeo__nom:   {editable: true, nullable: false},  
@@ -218,17 +218,12 @@ $(document).ready(function () {
 
     var grid1 = $("#grid").kendoGrid({
         dataSource: dataSource,
-        sortable: true,             
-        pageable: {
-            refresh: true,
-            pageSizes: true,
-            buttonCount: 5
-        },       
+             
         columns: [
             {field: "trr__cod", title: "Codigo Terrotorio ",  hidden:false},  
             {field: "trr__nom", title: "Territorio ",  hidden:false},   
-            {field: "rgeo__cod", title: "Cod Region",  hidden:false},
-             {field: "rgeo__nom", title: "Region",  hidden:false,  hidden:false,editor: region,
+            {field: "rgeo__cod", title: "Cod Region",  hidden:true},
+             {field: "rgeo__nom", title: "Region",  hidden:false,editor: region,
                 template: function (e) {
                     return e.rgeo__nom;
                 }},
@@ -251,7 +246,10 @@ $(document).ready(function () {
                 var buscarlabel = $("label").find("for");
                 Buscarlabel = buscarlabel.prevObject[0];
                 Buscarlabel.style.display = "none";
-                e.container.find("edit[for='rgeo__cod']").style.hidden="true";
+                Buscarlabel = buscarlabel.prevObject[2];
+                Buscarlabel.style.display = "none";
+                e.container.find("input[name=rgeo__cod]")[0].hidden="true";
+                e.container.find("input[name='trr__cod']")[0].hidden="true";
             // $("#region").data("kendoDropDownList").enable(false);
             //e.container.find("span")[1].attr('disabled','disabled');
             //e.container.find("span[for='rgeo__nom']");
@@ -265,7 +263,7 @@ $(document).ready(function () {
                 Buscarlabel = buscarlabel.prevObject[2];
                 Buscarlabel.style.display = "none";
                 e.container.find("input[name=rgeo__cod]")[0].hidden="true"
-                
+                e.container.find("input[name='trr__cod']")[0].hidden="true";
             }
         } ,
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
@@ -406,91 +404,93 @@ $(document).ready(function () {
  }
 
 function changeEst(e){debugger
-//    var  actualizar = new cudCliente();
-//    var  actjson = actualizar.getjson();
-//    var  urlactualizar = actualizar.getUrlSir();
-//    var seleccion =  $("#grid").data("kendoGrid")._data[($(e.currentTarget).closest("tr")["0"].sectionRowIndex)];  
-//    try {
-//           
-//            
-//        var actions = new Array();
-//        actions[0] = new Object();
-//        actions[0].text = "OK";
-//        actions[0].action = function () {debugger
-//            if(seleccion.ctr__est==0){  
-//                actjson.dsSICUDgpd_cli_est.eegpd_cli_est[0].gpd__cli__est=seleccion.gpd__cli__est;                      
-//                actjson.dsSICUDgpd_cli_est.eegpd_cli_est[0].gpd__cli__des=seleccion.gpd__cli__des; 
-//                actjson.dsSICUDgpd_cli_est.eegpd_cli_est[0].ctr__est=1; 
-//                $.ajax({
-//        
-//                    type: "PUT",        
-//                    async: false,
-//                    data: JSON.stringify(actjson),
-//                    url: urlactualizar,
-//                    dataType: "json",        
-//                    contentType: "application/json;",
-//                    success: function (resp) {debugger
-//                        if((resp.dsSICUDgpd_cli_est.eeEstados[0].Estado)=="OK")
-//                        {     
-//                            $('#grid').data('kendoGrid').refresh();
-//                            $('#grid').data('kendoGrid').dataSource.read();
-//                            $('#grid').data('kendoGrid').refresh();                             
-//                        }
-//                        else
-//                        {
-//                            alertDialogs("Error"+resp.dsSICUDgpd_cli_est.eeEstados[0].Estado); 
-//                            $('#grid').data('kendoGrid').refresh();
-//                            $('#grid').data('kendoGrid').dataSource.read();
-//                            $('#grid').data('kendoGrid').refresh();                             
-//                        }
-//                    } 
-//        
-//                });
-//            }
-//
-//            if(seleccion.ctr__est==99){  
-//                actjson.dsSICUDgpd_cli_est.eegpd_cli_est[0].gpd__cli__est=seleccion.gpd__cli__est;                      
-//                actjson.dsSICUDgpd_cli_est.eegpd_cli_est[0].gpd__cli__des=seleccion.gpd__cli__des; 
-//                actjson.dsSICUDgpd_cli_est.eegpd_cli_est[0].ctr__est=0;  
-//                $.ajax({
-//        
-//                    type: "PUT",        
-//                    async: false,
-//                    data: JSON.stringify(actjson),
-//                    url: urlactualizar,
-//                    dataType: "json",        
-//                    contentType: "application/json;",
-//                    success: function (resp) {debugger
-//                        if((resp.dsSICUDgpd_cli_est.eeEstados[0].Estado)=="OK")
-//                        {          
-//                            $('#grid').data('kendoGrid').refresh();
-//                            $('#grid').data('kendoGrid').dataSource.read();
-//                            $('#grid').data('kendoGrid').refresh();    
-//                        }
-//                        else
-//                        {
-//                            alertDialogs("Error"+resp.dsSICUDgpd_cli_est.eeEstados[0].Estado);  
-//                            $('#grid').data('kendoGrid').refresh();
-//                            $('#grid').data('kendoGrid').dataSource.read();
-//                            $('#grid').data('kendoGrid').refresh(); 
-//                        }
-//                    }        
-//                });
-//            }
-//            bandAlert = 0;
-//        };
-//        actions[1] = new Object();
-//        actions[1].text = "Cancelar";
-//        actions[1].action = function () {debugger
-//            bandAlert = 0;
-//        };
-//        createDialog("Atención", "Esta seguro de cambiar estado de Registro ---" + seleccion.gpd__cli__des + " ---?", "400px", "200px", true, true, actions);
-//
-//    } catch (e) {debugger
-//        createDialog(e);
-//        $('#grid').data('kendoGrid').dataSource.read();
-//        $('#grid').data('kendoGrid').refresh();
-//    }
-//    
+    var  actualizar = new cudTerritorio();
+    var  actjson = actualizar.getjson();
+    var  urlactualizar = actualizar.getUrlSir();
+    var seleccion =  $("#grid").data("kendoGrid")._data[($(e.currentTarget).closest("tr")["0"].sectionRowIndex)];  
+    try {
+           
+            
+        var actions = new Array();
+        actions[0] = new Object();
+        actions[0].text = "OK";
+        actions[0].action = function () {debugger
+            if(seleccion.trr__est==0){  
+                actjson.dsSICUDgpd_trr.eegpd_trr[0].trr__cod=seleccion.trr__cod;                      
+                actjson.dsSICUDgpd_trr.eegpd_trr[0].trr__nom=seleccion.trr__nom; 
+                actjson.dsSICUDgpd_trr.eegpd_trr[0].rgeo__cod=seleccion.rgeo__cod; 
+                actjson.dsSICUDgpd_trr.eegpd_trr[0].trr__est=1; 
+                $.ajax({
+        
+                    type: "PUT",        
+                    async: false,
+                    data: JSON.stringify(actjson),
+                    url: urlactualizar,
+                    dataType: "json",        
+                    contentType: "application/json;",
+                    success: function (resp) {debugger
+                        if((resp.dsSICUDgpd_trr.eeEstados[0].Estado)=="OK")
+                        {     
+                            $('#grid').data('kendoGrid').refresh();
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh();                             
+                        }
+                        else
+                        {
+                            alertDialogs("Error"+resp.dsSICUDgpd_trr.eeEstados[0].Estado); 
+                            $('#grid').data('kendoGrid').refresh();
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh();                             
+                        }
+                    } 
+        
+                });
+            }
+
+            if(seleccion.trr__est==99){  
+                actjson.dsSICUDgpd_trr.eegpd_trr[0].trr__cod=seleccion.trr__cod;                      
+                actjson.dsSICUDgpd_trr.eegpd_trr[0].trr__nom=seleccion.trr__nom; 
+                actjson.dsSICUDgpd_trr.eegpd_trr[0].rgeo__cod=seleccion.rgeo__cod; 
+                actjson.dsSICUDgpd_trr.eegpd_trr[0].trr__est=0;  
+                $.ajax({
+        
+                    type: "PUT",        
+                    async: false,
+                    data: JSON.stringify(actjson),
+                    url: urlactualizar,
+                    dataType: "json",        
+                    contentType: "application/json;",
+                    success: function (resp) {debugger
+                        if((resp.dsSICUDgpd_trr.eeEstados[0].Estado)=="OK")
+                        {          
+                            $('#grid').data('kendoGrid').refresh();
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh();    
+                        }
+                        else
+                        {
+                            alertDialogs("Error"+resp.dsSICUDgpd_trr.eeEstados[0].Estado);  
+                            $('#grid').data('kendoGrid').refresh();
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh(); 
+                        }
+                    }        
+                });
+            }
+            bandAlert = 0;
+        };
+        actions[1] = new Object();
+        actions[1].text = "Cancelar";
+        actions[1].action = function () {debugger
+            bandAlert = 0;
+        };
+        createDialog("Atención", "Esta seguro de cambiar estado de Registro ---" + seleccion.trr__cod + " ---?", "400px", "200px", true, true, actions);
+
+    } catch (e) {debugger
+        createDialog(e);
+        $('#grid').data('kendoGrid').dataSource.read();
+        $('#grid').data('kendoGrid').refresh();
+    }
+    
  
 }    

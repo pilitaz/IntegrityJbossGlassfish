@@ -388,7 +388,7 @@ function cudPresupuesto() {
     
 };
 ///////////////////////////////////////////////////////////////
-function sirTerritorios() {
+function sirSuperregion() {
     var urlSir = ipServicios + baseComercial +"SIRgpd_sre";
     var json = {  
    "dsSIRgpd_sre":{  
@@ -430,6 +430,50 @@ function sirTerritorios() {
     };
     
 };
+///////////////////////////////////////////////////////////////
+function cudSuperregion() {
+    var urlSir = ipServicios + baseComercial +"SICUDgpd_sre";
+    var json = {  
+   "dsSICUDgpd_sre":{  
+      "eeDatos":[  
+         {  
+                     "picusrcod":sessionStorage.getItem("usuario"),
+                    "picfiid":sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "eegpd_sre":[  
+         {  
+          "sre__cod":0,
+          "ter__nit":"",
+          "rgeo__cod":0,
+          "sre__est":99
+         }
+      ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+
 ///////////////////////////////////////////////////////////////
 function cudTerritorios() {
     var urlSir = ipServicios + baseComercial +"SICUDgpd_str";
@@ -570,24 +614,25 @@ function cudSupArea() {
 function sirTerritorio() {
     var urlSir = ipServicios + baseComercial +"SIRgpd_trr";
     var json = {  
-        "dsSIRgpd_trr":{  
-            "eeDatos":[  
-                {  
+   "dsSIRgpd_trr":{  
+      "eeDatos":[  
+         {  
                     "picusrcod":sessionStorage.getItem("usuario"),
                     "picfiid":sessionStorage.getItem("picfiid"),
                     "local_ip":sessionStorage.getItem("ipPrivada"),
                     "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "SIRgpd_trr":[  
-                {  
-                    "piitrr__cod":0,
-                    "piirgeo__cod":0,
-                    "pictrr__nom":"*"
-                }
-            ]      
-        }
-    }
+         }
+      ],
+      "SIRgpd_trr":[  
+         {  
+          "piitrr__cod":0,
+          "piirgeo__cod":0,
+          "pictrr__nom":"*",
+          "piitrr__est": -1
+         }
+      ]      
+   }
+}
     ;
     
     this.setUrlSir = function (newname) {
@@ -613,26 +658,25 @@ function sirTerritorio() {
 function cudTerritorio() {
     var urlSir = ipServicios + baseComercial +"SICUDgpd_trr";
     var json = {  
-        "dsSICUDgpd_trr":{  
-            "eeDatos":[  
-                {  
-                    "picusrcod":sessionStorage.getItem("usuario"),
-                    "picfiid":sessionStorage.getItem("picfiid"),
-                    "local_ip":sessionStorage.getItem("ipPrivada"),
-                    "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "eegpd_trr":[  
-                {  
-                    "trr__cod":0,
-                    "trr__nom":"",
-                    "rgeo__cod":0,
-                    "rgeo__nom":"",
-                    "trr__est":0
-                }
-            ]
-        }
-    };
+   "dsSICUDgpd_trr":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "eegpd_trr":[  
+         {  
+          "trr__cod":0,
+          "trr__nom":"",
+          "rgeo__cod":0,
+          "trr__est":0
+         }
+      ]
+   }
+};
     
     this.setUrlSir = function (newname) {
         if (newname) {
@@ -671,7 +715,8 @@ function sirSupTerritorio() {
                     "piistr__cod":0,
                     "picter__nit":"*",
                     "piitrr__cod":0,
-                    "str__est":-1
+                    "piistr__est":-1,
+                    
                 }
             ]      
         }

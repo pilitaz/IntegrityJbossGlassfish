@@ -106,7 +106,7 @@ $(document).ready(function () {
     var  consultar = new sirSupTerritorio();
     var  datajson = consultar.getjson();
     var  urlService = consultar.getUrlSir();
-    datajson.dsSIRgpd_str.SIRgpd_str[0].str__est=e;                     
+    datajson.dsSIRgpd_str.SIRgpd_str[0].piistr__est=e;                     
     var  actualizar = new cudTerritorios();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();

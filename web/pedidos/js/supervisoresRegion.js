@@ -119,11 +119,11 @@ $(document).ready(function () {
     //    gridheigth = gridheigth*0.008 + gridheigth;
     
     function grilla(e){debugger
-    var  consultar = new sirTerritorios();
+    var  consultar = new sirSuperregion();
     var  datajson = consultar.getjson();
     var  urlService = consultar.getUrlSir();
     datajson.dsSIRgpd_sre.SIRgpd_sre[0].picsre__est = e;                
-    var  actualizar = new cudTerritorios();
+    var  actualizar = new cudSuperregion();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
 
@@ -575,7 +575,7 @@ grilla(-1);
 });
                     
 function changeEst(e){debugger
-    var  actualizar = new cudTerritorios();
+    var  actualizar = new cudSuperregion();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
     var seleccion =  $("#grid").data("kendoGrid")._data[($(e.currentTarget).closest("tr")["0"].sectionRowIndex)];  

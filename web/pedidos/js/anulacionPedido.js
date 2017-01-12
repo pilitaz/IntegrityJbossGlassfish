@@ -216,15 +216,10 @@ $(document).ready(function () {
    
     var grid1 = $("#grid").kendoGrid({
         dataSource: dataSource,
-        sortable: true,        
-        pageable: {
-            refresh: true,
-            pageSizes: true,
-            buttonCount: 5
-        },
+        
         //navigatable: true,
         columns: [ 
-            {field: "anu__cod", title: "Cod Anulacion",  hidden:false},  
+            {field: "anu__cod", title: "Cod Anulacion",  hidden:false, width: "140px"},  
             {field: "anu__des", title: "Descripcion Anulacion",  hidden:false},
            {command: [
                     {name: "check", text: "estado",click: changeEst, template: "<a class='k-grid-check'><span class='k-sprite po_editoff' ></span></a>" },

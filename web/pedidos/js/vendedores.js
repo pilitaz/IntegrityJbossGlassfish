@@ -262,17 +262,17 @@ $(document).ready(function () {
         //navigatable: true,
         columns: [
             {field: "vdd__cod", title: "Cod Supervisor ",  hidden:false},
-            {field: "ter__nit", title: "Razon Social",  hidden:false, editor: filtroestado,
+            {field: "ter__nit", title: "Nit",  hidden:false, editor: filtroestado,
                 template: function (e) {debugger
                     return e.ter__nit;
                 }},    
-            {field: "ter__raz", title: "Nombre",  hidden:false,editor: nombre,
+            {field: "ter__raz", title: "Razon social",  hidden:false,editor: nombre,
                 template: function (e) {debugger
                     return e.ter__raz;
                 }},    
-            {field: "trr__nom", title: "Cod Supervisor ",  hidden:false},
-            {field: "cla__nom", title: "Cod Supervisor ",  hidden:false},
-            {field: "vdd__ter", title: "Cod Supervisor ",  hidden:false},
+            {field: "trr__nom", title: "Territorio ",  hidden:false},
+            {field: "cla__nom", title: "Nombre ",  hidden:false},
+            {field: "vdd__ter", title: "territorio vendedor",  hidden:false},
             
             {command: [
                     {name: "check", text: "estado",click: changeEst, template: "<a class='k-grid-check'><span class='k-sprite po_editoff' ></span></a>" },
