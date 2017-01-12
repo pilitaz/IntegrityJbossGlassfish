@@ -5,8 +5,8 @@ var mapSir = objSir.getmapSir();
 var inputsir = objSir.getdataInputSir();
 //    var objSir = new sir();
 //var urlSir = objSir.getUrlSir();
-var est = "rut__est";
-var clacli= "";
+var est = "loc__est";
+var clacli = "";
 $(document).ready(function () {
     fltrEst();
     grilla();
@@ -28,18 +28,14 @@ function grilla(obj) {
     /*variable para adicionar los campos requeridos y el tipo de dato*/
     /*editable: false --- ocultar en grilla*/
     var fieldShema = {
-        "bar__cod1": {type: 'number'},
-        "bar__cod2": {type: 'number'},
-        "ciu__cod1": {type: 'number'},
-        "ciu__cod2": {type: 'number'},
-        "rut__cod":  {type: 'string'},
-        "rut__des":  {type: 'string'},
-        "bar__dsc1": {type: 'string'},
-        "bar__dsc2": {type: 'string'},
-        "ciu__nom1": {type: 'string'},
-        "ciu__nom2": {type: 'string'},
-        "rut__est": {type: 'number'}
-    };
+        "com__con": {type: 'string'},
+        "com__nom": {type: 'string'},
+        "loc__cod": {type: 'string'},
+        "loc__des": {type: 'string'},
+        "ter__nit": {type: 'string'},
+        "ter__raz": {type: 'string'},
+        "loc__est": {type: 'number'}
+    }
 
     /*variable id es el id correspondiente a la tabla a cansultar*/
     var model = {
@@ -65,18 +61,15 @@ function grilla(obj) {
     /*hiden: true --- ocultar en grilla*/
     var columns = [
 //		btnDer,
-//        {field: "bar__cod1", title:"e", width:"100%"}, 
-//        {field: "bar__cod2", title:"e", width:"100%"}, 
-//        {field: "ciu__cod1", title:"e", width:"100%"}, 
-//        {field: "ciu__cod2", title:"e", width:"100%"}, 
-        {field: "rut__cod" , title:"Código Ruta", width:"100%"}, 
-        {field: "rut__des" , title:"Descripción", width:"100%"},
-        {field: "ciu__nom1", title:"Ciudad Origen", editor:ciu__nom1List, width:"100%"},
-        {field: "bar__dsc1", title:"Barrio Origen", width:"100%"}, 
-        {field: "ciu__nom2", title:"Ciudad Destino", editor:ciu__nom2List, width:"100%"}, 
-        {field: "bar__dsc2", title:"Barrio Destino", width:"100%"}, 
-        
-        
+//        {field: "com__con", title: "Cod.Establ.", width: "100%"},
+        {field: "com__nom", title: "Nombre Establecimiento Comercial",editor:com__nomLista, width: "100%"},
+//        {field: "loc__cod", title: "Codigo de Localizacion", width: "100%"},
+        {field: "loc__des", title: "Descripción de la Localización", editor:loc__desList, width: "100%"},
+        {field: "ter__nit", title: "CC/NIT", editor:ter__nitList, width: "100%"},
+        {field: "ter__raz", title: "Razón Social", editor:ter__razList, width: "100%"},
+//        {field: "loc__est", title: "Estado del Registro", width: "100%"},
+
+
         //{field: "cla__nom", title: "Clase de Cliente", editor:cla__cliList,width: "100%"},
         btnIzq
     ];
@@ -114,11 +107,13 @@ function grilla(obj) {
                     } else if (operation === 'create') {
                         var key1 = Object.keys(inputCud)[0]
                         options[est] = 99;
+                        options.ter__con = options.ter__nom;
+                        options.ter__nit = $("#idter__nit").val();
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
 
                     } else {
-//                        options.ter__nit = $("#idter__nit").val();
+                        options.ter__nit = $("#idter__nit").val();
                         var key1 = Object.keys(inputCud)[0]
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
@@ -137,8 +132,9 @@ function grilla(obj) {
                         for (var i = 0; i < e[key1][mapSir].length; i++) {
                             e[key1][mapSir][i].idpre = i
                         }
+                    } else {
+                        grilla()
                     }
-                    else{grilla()}
                     return e[key1][mapSir];
                 } else {
                     alertDialogs(e[key1].eeEstados[0].Estado);
@@ -164,12 +160,17 @@ function grilla(obj) {
         rowTemplate: kendo.template($("#rowTemplate").html()),
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
         edit: function (e) {
-            e.container.find("label[for='rut__cod']").hide();
-            e.container.find("input[name=rut__cod]").hide();
+            debugger
+            e.container.kendoWindow("title", "Editar");
+//            e.container.find("label[for='rut__des']").hide();
+//            e.container.find("input[name=rut__des]").hide();
+//            e.container.find("label[for='cam__des']").hide();
+//            e.container.find("input[name=cam__des]").hide();
+
             if (!e.model.isNew()) {//caso en el que el popup es editar
 
                 e.container.kendoWindow("title", "Editar");
-                
+
                 //e.container.find("input[name=ter__raz]")[0].readOnly="true"
                 if (e.model[est] != 99) {
                     kendo.ui.progress($('.k-edit-form-container'), true);
@@ -228,37 +229,23 @@ function deleteRow(e) {
 
 
 
-function ciu__nom1List(container, options) {
-    var obj = new listaciu__nom();
+function com__nomLista(container, options) {
+    debugger
+    var obj = new listacom__nom();
     var dataSource = obj.getdataSource();
-    $('<input id="idciu__nom1" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-        dataTextField: "ciu__nom",
-        dataValueField: "ciu__cod",
-        template:'<div class="divElementDropDownList">#: data.ciu__nom #</div>',
+    $('<input id="idcom__nom" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
+        dataTextField: "com__nom",
+        dataValueField: "com__con",
+        template: '<div class="divElementDropDownList">#: data.com__nom #</div>',
         dataSource: dataSource,
-        change: onSelectciu__nom1
+//        change: onSelect
     });
 }
-function onSelectciu__nom1(e){
+//function onSelect(e){
 //    clacli = e.sender.dataSource._data[e.sender.selectedIndex].cla__cli;
-}
-
-function ciu__nom2List(container, options) {
-    var obj = new listaciu__nom();
-    var dataSource = obj.getdataSource();
-    $('<input id="idciu__nom2" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-        dataTextField: "ciu__nom",
-        dataValueField: "ciu__cod",
-        template:'<div class="divElementDropDownList">#: data.ciu__nom #</div>',
-        dataSource: dataSource,
-        change: onSelectciu__nom2
-    });
-}
-function onSelectciu__nom2(e){
-//    clacli = e.sender.dataSource._data[e.sender.selectedIndex].cla__cli;
-}
-function listaciu__nom() {
-    var objSirUn = new SIRsic_ciu();
+//}
+function listacom__nom() {
+    var objSirUn = new SIRgpd_cli_suc();
     var urlSirUn = objSirUn.getUrlSir();
     var mapSirUn = objSirUn.getmapSir();
     var inputsirUn = objSirUn.getdataInputSir();
@@ -299,10 +286,10 @@ function listaciu__nom() {
                 }
             },
             model: {
-                id: "ciu__cod",
+                id: "com__con",
                 fields: {
-                    ciu__nom: {type: 'string'},
-                    ciu__cod: {type: 'string'},
+                    com__con: {type: 'string'},
+                    com__nom: {type: 'string'},
                 }
             }
         },
@@ -322,21 +309,21 @@ function listaciu__nom() {
 }
 ;
 
-function rut__codList(container, options) {
+function loc__desList(container, options) {
     debugger
     var obj = new listarut__cod();
     var dataSource = obj.getdataSource();
-    $('<input id="iduni__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-        dataTextField: "rut__des",
-        dataValueField: "rut__cod",
+    $('<input id="idloc__des" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
+        dataTextField: "loc__des",
+        dataValueField: "loc__cod",
         dataSource: dataSource,
-        template:'<div class="divElementDropDownList">#: data.rut__des #</div>',
+        template: '<div class="divElementDropDownList">#: data.loc__des #</div>'
 //        change: onSelect
     });
 }
 
 function listarut__cod() {
-    var objSirUn = new SIRdpc_rut();
+    var objSirUn = new SIRinv_loc();
     var urlSirUn = objSirUn.getUrlSir();
     var mapSirUn = objSirUn.getmapSir();
     var inputsirUn = objSirUn.getdataInputSir();
@@ -377,10 +364,10 @@ function listarut__cod() {
                 }
             },
             model: {
-                id: "rut__cod",
+                id: "loc__cod",
                 fields: {
-                    rut__des: {type: 'string'},
-                    rut__cod: {type: 'string'}
+                    loc__des: {type: 'string'},
+                    loc__cod: {type: 'string'}
                 }
             }
         },
@@ -407,15 +394,16 @@ function ter__nitList(container, options) {
     $('<input id="idter__nit" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoAutoComplete({
         dataTextField: "ter__nit",
         dataValueField: "ter__nit",
+        placeholder: "Nit...",
         dataSource: dataSource,
-        template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
+        template: '<div class="divElementDropDownList">#: data.ter__nit #' + ' - ' + ' #:data.ter__raz #</div>',
         minLength: 7,
         change: onSelectNit
     });
 }
 
-function onSelectNit(e){
-     $("#idter__raz").val(e.sender.listView._dataItems[0].ter__raz);
+function onSelectNit(e) {
+    $("#idter__raz").val(e.sender.listView._dataItems[0].ter__raz);
 }
 function listater__nit() {
     var objSirUn = new SIRsic_ter();
@@ -490,13 +478,14 @@ function ter__razList(container, options) {
     $('<input id="idter__raz" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoAutoComplete({
         dataTextField: "ter__raz",
         dataValueField: "ter__raz",
-        template:'<div class="divElementDropDownList">#: data.ter__raz #</div>',
+        placeholder: "Razón Social...",
+        template: '<div class="divElementDropDownList">#: data.ter__raz #</div>',
         dataSource: dataSource,
-         minLength: 4,
+        minLength: 4,
         change: onSelectRaz
     });
 }
-function onSelectRaz(e){
+function onSelectRaz(e) {
     $("#idter__nit").val(e.sender.listView._dataItems[0].ter__nit);
 }
 function listater__raz() {
@@ -575,16 +564,17 @@ function tra__tipList(container, options) {
         dataValueField: "value",
         dataSource: dataSource,
         placeholder: "Seleccione Tipo de ",
-        template:'<div class="divElementDropDownList">#: data.value #'+' - '+' #:data.text #</div>'
+        template: '<div class="divElementDropDownList">#: data.value #' + ' - ' + ' #:data.text #</div>'
 //        change: onSelect
     });
 }
 
 function listatra__tip() {
     var dataSource = [
-                        { text: "Auxiliar", value: "A" },
-                        { text: "Conductor", value: "C" }
-                    ];;
+        {text: "Auxiliar", value: "A"},
+        {text: "Conductor", value: "C"}
+    ];
+    ;
 
     this.setdataSource = function (newname) {
         if (newname) {
@@ -690,7 +680,7 @@ function fltrEst() {
 
 function onChangeFltr() {
     inputsir = {
-        "dsSIRdpc_rut": {
+        "dsSIRdpc_loc": {
             "eeDatos": [
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
@@ -699,17 +689,17 @@ function onChangeFltr() {
                     "remote_ip": sessionStorage.getItem("ipPublica")
                 }
             ],
-            "eeSIRdpc_rut": [{
-                    "piibar_cod1": 0,
-                    "piibar_cod2": 0,
-                    "picciu_cod1": "*",
-                    "picciu_cod2": "*",
-                    "piirut_est": $("#fltrEst").val()
-                }]
-
+            "eeSIRdpc_loc": [
+                {
+                    "piiloc_cod": 0,
+                    "picter_nit": 0,
+                    "piicom_con": "*",
+                    "piiloc_est": $("#fltrEst").val()
+                }
+            ]
         }
     };
     grilla(inputsir);
 }
- 
+
 
