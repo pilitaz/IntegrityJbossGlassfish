@@ -34,7 +34,7 @@ $(document).ready(function () {
         document.getElementById("lbNombre").innerHTML = sessionStorage.getItem("usrnom");
         document.getElementById("lbEMail").innerHTML = sessionStorage.getItem("usrmail");
 //        document.getElementById("imgUsuario").src = "../images/equipo/" + sessionStorage.getItem("usuario") + ".png";
-    
+
         document.getElementById("imgUsuario").src = "data:image/png;base64," + consultaImgUsr();
         document.getElementById("logoEmpresa").src = "data:image/png;base64," + sessionStorage.getItem("img");
         document.getElementById("idFrame").src = "fondo.html";
@@ -50,7 +50,13 @@ $(document).ready(function () {
  * @returns {undefined}
  */
 function correLinuxBackTimmer(t) {
-    correLinuxBack();
+    var ip = (((sessionStorage.getItem("url").split("/"))[2]).split(":"))[0];
+    var portLinux = sessionStorage.getItem("portLinux");
+    document.getElementById("includeTerm").src = "http://" + ip + ":" + portLinux + "/"
+            + "?u="
+            + sessionStorage.getItem("usuario")
+            + "&p="
+            + sessionStorage.getItem("contra");
     timer = setInterval(correLinuxBack, t); //empezar el timer
 
 }
@@ -222,7 +228,7 @@ function cambiarClave() {
 }
 
 function guardarClave() {
-    
+
     try {
         if (document.getElementById("IpClave").value == document.getElementById("IpRClave").value) {
             var cambioExitoso;
@@ -351,11 +357,11 @@ function inicio() {
 }
 
 function abreFuncion(servicio) {
-    tamanoFunciones();    
+    tamanoFunciones();
     document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
     $("#tdPerfil").fadeOut("slow");
     $('#divDerecho').width($(window).width());
-    var regex = /\/\w+\/html\/\w+.html/g;
+    var regex = /\/\w+\/html\/\w+.html/g;//ejemplo-------/pedidos/html/rutaTransportistas.html
     apagarBotones();
     cambiarFondoTD("tdVerde");
     if (servicio.slice(0, 5) === "html&") {
@@ -369,11 +375,10 @@ function abreFuncion(servicio) {
         sessionStorage.setItem("sesion", sessionStorage.getItem("picfiid"));
         servLinuxSOption(servicio);
         //document.getElementById("idFrame").src = urlIFrame + "IntegrityViejo/Start.jsp";        
-    } else if(regex.test(servicio)){        
+    } else if (regex.test(servicio)) {
         sessionStorage.setItem("servicio", servicio);
         document.getElementById("idFrame").src = sessionStorage.getItem("url") + servicio;
-    }
-    else {
+    } else {
         document.getElementById("idFrame").src = urlIFrame + servicio + "/Start.jsp";
     }
 
@@ -635,13 +640,13 @@ function cargaDocumentos() {
     //la funcion documento esta en la documentos.js
     documentos();
 }
-function consultaImgUsr(){
+function consultaImgUsr() {
     debugger
     var objSir = new GetProfileImage();
-    var urlSir = objSir.getUrlSir(); 
+    var urlSir = objSir.getUrlSir();
     var mapSir = objSir.getMapData();
     var inputsir = objSir.getjson();
-    
+
     var img = "";
     var jsonResp = "";
     var permitirIngreso = "";
@@ -665,9 +670,9 @@ function consultaImgUsr(){
     }).done(function () {
         if (permitirIngreso == '"OK"') {
             img = jsonResp.eeProfileImage[0][mapSir]
-        } 
+        }
 
     });
-    
+
     return img;
 }

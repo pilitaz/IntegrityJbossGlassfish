@@ -148,7 +148,9 @@ $(document).ready(function () {
                     var nombre = $("#nombre")[0].value;
                     var recaudo = $("#Recaudo")[0].value;
                     var ventas = $("#stventas")[0].value;
-                    var territorio = parseInt($("#territorio")[0].value);
+                     var territorio = $("#territorio").data("kendoDropDownList");
+                    var select = territorio.selectedIndex;
+                    territorio = territorio.dataSource._data[select].trr__cod;
                     var recaudar=true;
                     var vender=true;
                     if(recaudo==="1"){recaudar=true;}else{recaudar=false;}
@@ -170,8 +172,10 @@ $(document).ready(function () {
                     var nombre = $("#nombre")[0].value;
                     var recaudo = $("#Recaudo")[0].value;
                     var ventas = $("#stventas")[0].value;
-                    var territorio = parseInt($("#territorio")[0].value);
-                    var territorio_nom = $("#territorio")[0].text;
+                    var territorio = $("#territorio").data("kendoDropDownList");
+                    var select = territorio.selectedIndex;
+                    territorio = territorio.dataSource._data[select].trr__cod;
+                    var territorio_nom = $("#territorio").data("kendoDropDownList")._old;
                     var recaudar=true;
                     var vender=true;
                     if(recaudo==="1"){recaudar=true;}else{recaudar=false;}
@@ -252,15 +256,8 @@ $(document).ready(function () {
     gridheigth = gridheigth*0.12 + gridheigth;
     var grid1 = $("#grid").kendoGrid({
         dataSource: dataSource,
-                            
-        height: gridheigth,
-        sortable: true,
-                           
-        pageable: {
-            refresh: true,
-            pageSizes: true,
-            buttonCount: 5
-        },
+       
+        
         //navigatable: true,
         columns: [ 
             {field: "str__cod", title: "Cod Supervisor",  hidden:false},
@@ -376,8 +373,7 @@ grilla(-1);
 
     var estados = [
         {text: "Si", valor: "1"},
-        {text: "No", valor: "2"},
-
+        {text: "No", valor: "2"}
     ];
     var mostrar ;
     if (options.field=true){
@@ -512,10 +508,10 @@ grilla(-1);
                         }
                     },
                     model: {
-                        id: "rgeo__nom",
+                        id: "trr__cod",
                         fields: {
-                            rgeo__cod: {editable: false, nullable: false},
-                            rgeo__nom: {editable: false, nullable: false}
+                            trr__cod: {editable: false, nullable: false},
+                            trr__nom: {editable: false, nullable: false}
                         }
                     }
                 }
@@ -612,27 +608,11 @@ grilla(-1);
                     //document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("onclick", "active();");
                 }
                 if(results[i].str__est===1){     
-                    document.getElementById("spanproceso"+results[i].sar__cod+results[i].str__cod+results[i].ter__nit+results[i].trr__cod).setAttribute("class", "k-sprite po_checkBloq");
+                    document.getElementById("spanproceso"+results[i].str__cod+results[i].ter__nit+results[i].trr__cod).setAttribute("class", "k-sprite po_checkBloq");
 
                 }
             }
         }
-        // for para colorear chulo de ventas
-        for (var i = 0; i < results.length; i++) {
-            if (document.getElementById("spanvta"+results[i].str__cod+results[i].ter__nit+results[i].trr__cod)){
-                if(results[i].str__vta===true){                            
-                    document.getElementById("spanvta"+results[i].str__cod+results[i].ter__nit+results[i].trr__cod).setAttribute("class", "k-sprite po_check");   
-                    
-                }else{
-                    
-                }
-            }
-        }
-  
-        
-
-            
-        
 
     } 
     function changeEst(e){debugger
