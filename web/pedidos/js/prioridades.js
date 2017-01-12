@@ -111,12 +111,12 @@ $(document).ready(function () {
                 type: "DELETE",
                 contentType: "application/json; charset=utf-8"
             },
-            parameterMap: function (options, operation) {
+            parameterMap: function (options, operation) {debugger
                 if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
                 if (operation === "update") {
-                    
+                   actjson.dsSICUDgpd_pri.eegpd_pri[0].pri__cod=options.pri__cod;
                    actjson.dsSICUDgpd_pri.eegpd_pri[0].pri__des=options.pri__des;     
                     return JSON.stringify(actjson);
                                         

@@ -111,7 +111,7 @@ $(document).ready(function () {
                 type: "DELETE",
                 contentType: "application/json; charset=utf-8"
             },
-            parameterMap: function (options, operation) {
+            parameterMap: function (options, operation) {debugger
                 if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
@@ -124,8 +124,12 @@ $(document).ready(function () {
                                         
                 }
                 if (operation === "create") {
-                     
-                    actjson.dsSICUDgpd_cbr.eegpd_cbr[0].ter__nit=options.ter__nit;  
+                    var cedula = $("#cedula")[0].value;
+                    var nombre = $("#nombre")[0].value;
+                    actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__cod=11;
+                    actjson.dsSICUDgpd_cbr.eegpd_cbr[0].ter__nit=cedula; 
+                    actjson.dsSICUDgpd_cbr.eegpd_cbr[0].ter__raz=nombre; 
+                    
                     //actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__est=parseInt(options.cbr__est);
  
                     return JSON.stringify(actjson);          

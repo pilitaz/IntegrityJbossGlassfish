@@ -20,8 +20,32 @@ $(window).resize(function () {
  *  
  */ function newrol(){
 
+     
+        var myWindow = $("#window1"),
+        undo = $("#undo");
+        function onClose() {
+            undo.fadeIn();
+            $('#gridproceso').data('kendoGrid').refresh();
+            $('#gridproceso').data('kendoGrid').dataSource.read();
+            $('#gridproceso').data('kendoGrid').refresh();
+        }
+        var UrL= sessionStorage.getItem("url");  
+        myWindow.kendoWindow({
+            draggable: true,
+            height: "70%",
+            modal: true,
+            resizable: false,
+            title: "Rutas",
+            width: "60%",
+            content: UrL+"pedidos/html/popupCrearuta.html",
+            actions: [
+                "Close"
+            ],                                
+            close: onClose
+        }).data("kendoWindow").center().open();            
+    }               
                             
-}
+
 function editar_rol(){
                 	
                     

@@ -119,11 +119,11 @@ $(document).ready(function () {
     //    gridheigth = gridheigth*0.008 + gridheigth;
     
     function grilla(e){debugger
-    var  consultar = new sirTerritorios();
+    var  consultar = new sirSuperregion();
     var  datajson = consultar.getjson();
     var  urlService = consultar.getUrlSir();
     datajson.dsSIRgpd_sre.SIRgpd_sre[0].picsre__est = e;                
-    var  actualizar = new cudTerritorios();
+    var  actualizar = new cudSuperregion();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
 
@@ -264,7 +264,7 @@ $(document).ready(function () {
                 template: function (e) {debugger
                     return e.rgeo__nom;
                 }},    
-            {field: "ter__nit", title: "NIT",  hidden:false, editor: filtroestado,
+            {field: "ter__nit", title: "Razon Social",  hidden:false, editor: filtroestado,
                 template: function (e) {debugger
                     return e.ter__nit;
                 }},    
@@ -575,7 +575,7 @@ grilla(-1);
 });
                     
 function changeEst(e){debugger
-    var  actualizar = new cudTerritorios();
+    var  actualizar = new cudSuperregion();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
     var seleccion =  $("#grid").data("kendoGrid")._data[($(e.currentTarget).closest("tr")["0"].sectionRowIndex)];  
