@@ -251,16 +251,7 @@ $(document).ready(function () {
     });
     var grid1 = $("#grid").kendoGrid({
         dataSource: dataSource,
-                            
-        
-        sortable: true,
-                           
-        pageable: {
-            refresh: true,
-            pageSizes: true,
-            buttonCount: 5
-        },
-        //navigatable: true,
+
         columns: [
             {field: "ven__cod", title: "Cod Supervisor ",  hidden:true},
             {field: "ter__nit", title: "Nit",  hidden:false, editor: filtroestado,

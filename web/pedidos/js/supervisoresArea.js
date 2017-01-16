@@ -207,9 +207,7 @@ $(document).ready(function () {
                     }else
                     {
                     alertDialogs("Error"+e[key1].eeEstados[0].Estado); 
-                    $('#grid').data('kendoGrid').refresh();
-                    $('#grid').data('kendoGrid').dataSource.read();
-                    $('#grid').data('kendoGrid').refresh();
+                    
                     }
                 }},
             model: {
