@@ -128,17 +128,19 @@ function gridFacturas(){
         },
     });
     
-    function editarFactura(e){        
+    function editarFactura(e){
+        
         e.preventDefault();        
         var factura = this.dataItem($(e.currentTarget).closest("tr"));
                 
         var servicio = "facturaQuantum";
         sessionStorage.setItem("servicio",servicio);
-        sessionStorage.setItem("actualizarFactura", "true");
-        sessionStorage.setItem("facturaNumero", factura.fac__nro);
-        sessionStorage.setItem("facturasucursal", factura.suc__cod);
-        sessionStorage.setItem("facturaClaseDoc", factura.clc__cod);
-        sessionStorage.setItem("facturaFecha", factura.fac__fec);        
+//        sessionStorage.setItem("actualizarFactura", "true");
+        sessionStorage.setItem("regFactura", JSON.stringify(factura));
+//        sessionStorage.setItem("facturaNumero", factura.fac__nro);
+//        sessionStorage.setItem("facturasucursal", factura.suc__cod);
+//        sessionStorage.setItem("facturaClaseDoc", factura.clc__cod);
+//        sessionStorage.setItem("facturaFecha", factura.fac__fec);        
         window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html"));   
     }
     
@@ -263,6 +265,8 @@ function gridFacturas(){
 function crearFactura(){
     var servicio = "facturaQuantum";
     sessionStorage.setItem("servicio",servicio);
+    sessionStorage.removeItem("regFactura");
+    sessionStorage.removeItem("facEstado");
     window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html"));   
 }
 

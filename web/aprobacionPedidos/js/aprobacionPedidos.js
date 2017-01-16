@@ -147,7 +147,7 @@ function clickVer(e) {
 
 function popUpAprobacionPedido(e) {    
    // sessionStorage.removeItem("regPedidos");
-   debugger
+   
    e = this.dataItem($(e.currentTarget).closest("tr"));
    sessionStorage.setItem("regPedidos", JSON.stringify(e));
     

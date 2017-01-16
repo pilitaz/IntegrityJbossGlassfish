@@ -68,7 +68,7 @@ $(document).ready(function() {
     var kendoDropDownListVendedor = $("#ipVendedor").data("kendoDropDownList");
     kendoDropDownListVendedor.enable(false); 
         
-    if(sessionStorage.getItem("actualizarFactura")){        
+    if(sessionStorage.getItem("regFactura")){        
         cargarFactura();        
     }else{
         gridDetalle();
@@ -280,6 +280,11 @@ function iniDropDownList(){
 
 function iniAutocomplete(){
     
+    var obj = new sirConsultaCliente();
+    var objJson = obj.getjson();
+    var url = obj.getUrlSir();
+    var mapData = obj.getMapData();
+    
     $("#ipNITCliente").kendoAutoComplete({
         dataTextField: "ter__nit",
         dataValueField: "ter__nit",        
@@ -293,31 +298,35 @@ function iniAutocomplete(){
             serverFiltering: true,
             transport: {
                 read:{
-                    url: ipServicios+baseParameters+"SIRgfc_cli",
+                    url: url,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST"
                 },
                 parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
                     try {
-                        authdsgfc_cli.dsgfc_cli.eetemp[0].picter_nit = $("#ipNITCliente").val();                        
+                                          
                         if (operation === 'read') {
-                            return JSON.stringify(authdsgfc_cli);
+                            var key1 = Object.keys(objJson)[0];
+                            var key2 = Object.keys(objJson[key1])[1];
+                            objJson[key1][key2][0].picter_nit = $("#ipNITCliente").val();
+                            objJson[key1][key2][0].picter_raz = "";
+                            return JSON.stringify(objJson);
                         } 
                     } catch (e) {
                         alertDialogs(e.message);
-                    }                
-                    
+                    }                                    
                 }
             },
             schema: {
                 data: function (e){                    
-                    if(e.dsgfc_cli.eeEstados[0].Estado==="OK"){
-                        return e.dsgfc_cli.eegfc_cli;
-                    }else if(e.dsgfc_cli.eeEstados[0].Estado==="ERROR: Patrón de Búsqueda insuficiente !!!"){
+                    var key1 = Object.keys(e)[0];
+                    if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                        return e[key1][mapData];
+                    }else if(e[key1].eeEstados[0].Estado==="ERROR: Patrón de Búsqueda insuficiente !!!"){
                         
                     }else{
-                        alertDialogs(e.dsgfc_cli.eeEstados[0].Estado);
+                        alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model:{}
@@ -347,15 +356,19 @@ function iniAutocomplete(){
             serverFiltering: true,
             transport: {
                 read:{
-                    url: ipServicios+"rest/Parameters/SIRgfc_cli",
+                    url: url,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST"
                 },
                 parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
-                    try {
-                        authdsgfc_cli.dsgfc_cli.eetemp[0].picter_raz = $("#ipCliente").val();                        
+                    try {                                             
                         if (operation === 'read') {
+                            var key1 = Object.keys(objJson)[0];
+                            var key2 = Object.keys(objJson[key1])[1];
+                            objJson[key1][key2][0].picter_nit = "";
+                            objJson[key1][key2][0].picter_raz = $("#ipCliente").val();
+                            return JSON.stringify(objJson);
                             return JSON.stringify(authdsgfc_cli);
                         } 
                     } catch (e) {
@@ -365,12 +378,13 @@ function iniAutocomplete(){
             },
             schema: {
                 data: function (e){                    
-                    if(e.dsgfc_cli.eeEstados[0].Estado==="OK"){
-                        return e.dsgfc_cli.eegfc_cli;
-                    }else if(e.dsgfc_cli.eeEstados[0].Estado==="ERROR: Patrón de Búsqueda Insuficiente !!!"){
+                    var key1 = Object.keys(e)[0];
+                    if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                        return e[key1][mapData];
+                    }else if(e[key1].eeEstados[0].Estado==="ERROR: Patrón de Búsqueda insuficiente !!!"){
                         
                     }else{
-                        alertDialogs(e.dsgfc_cli.eeEstados[0].Estado);
+                        alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model:{}
@@ -734,6 +748,11 @@ function setInfoCliente(e){
         
     });
     
+    var obj = new sirConsultaVendedor();
+    var jsonVendedor = obj.getjson();
+    var urlVendedor = obj.getUrlSir();
+    var mapDataVendedor = obj.getMapData();
+    
     $("#ipVendedor").kendoDropDownList({
         dataTextField: "ter__raz",        
         dataValueField: "ven__cod", 
@@ -744,7 +763,7 @@ function setInfoCliente(e){
             serverFiltering: true,
             transport: {
                 read:{
-                    url: ipServicios+"rest/Parameters/SIRsic_ven", //SIRsic_ven
+                    url: urlVendedor,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST"
@@ -753,12 +772,16 @@ function setInfoCliente(e){
                     try{
                         if($("#ipSucursal").val()==""){
                             alertDialogs("Debe seleccionar primero la sucursal");                       
-                        }else{
-                            authdssic_ven.dssic_ven.eetemp[0].picsuc_cod = $("#ipSucursal").val();
-                            authdssic_ven.dssic_ven.eetemp[0].piiven_cod = sessionStorage.getItem("codVendedor");                            
-                            if (operation === 'read') {
-                                authdssic_ven["eesic_ven1"] = [options];
-                                return JSON.stringify(authdssic_ven);
+                        }else{                             
+                            if (operation === 'read') {                            
+                                
+                                var key1 = Object.keys(jsonVendedor)[0];
+                                var key2 = Object.keys(jsonVendedor[key1])[1];
+                                jsonVendedor[key1][key2][0].piccod_suc = $("#ipSucursal").val();
+                                jsonVendedor[key1][key2][0].picven_cod = sessionStorage.getItem("codVendedor");
+                                jsonVendedor[key1][key2][0].piiven_est = 0;
+                                
+                                return JSON.stringify(jsonVendedor);
                             } 
                         }                        
                     } catch (e) {
@@ -768,14 +791,21 @@ function setInfoCliente(e){
                 }
             },
             schema: {
-                data: function (e){                    
-                    if(e.dssic_ven.eeEstados[0].Estado==="OK"){
-                        return e.dssic_ven.eesic_ven1;
-                    }else{
-                        alertDialogs(e.dssic_ven.eeEstados[0].Estado);
-                    }
+                data: function (e) {                
+                    var key1 = Object.keys(e)[0];
+                    if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                        return e[key1][mapDataVendedor];
+                    } else {
+                        alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                    }                
                 },
-                model:{}
+                model: {
+                    id: "ven__cod",
+                    fields: {
+                        ven__cod: {validation: {required: true}, type: 'string'},
+                        ter__raz: {validation: {required: true}, type: 'string'}
+                    }
+                }
             },
             error: function (xhr, error) {
                 alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
@@ -880,6 +910,7 @@ function guardarFactura(){
         }
     }).done(function(){
         if(facturaGuardada=='"OK"'){
+            
             var letf = ($("body").width()/2)-100;
             document.getElementById('idNumerofactura').innerHTML = 'Nº '+numFactura;
             var centered = $("#centeredNotification").kendoNotification({
@@ -890,15 +921,13 @@ function guardarFactura(){
             }).data("kendoNotification");
             centered.show("El número de la factura es: "+numFactura, "success");
             
-            //            $("#btnAgregarItem").onclick ="agregarItemDetalle()";
-            //            document.getElementById('btnAgregarItem').onclick ="agregarItemDetalle()";
             $("#btnAgregarItem")["0"].firstChild.className = "k-sprite po_mas";
             
-            sessionStorage.setItem("actualizarFactura", "true");
-            sessionStorage.setItem("facturaNumero", numFactura);
-            sessionStorage.setItem("facturasucursal", $("#ipSucursal").val());
-            sessionStorage.setItem("facturaClaseDoc", $("#ipCDocumento").val());
-            sessionStorage.setItem("facturaFecha", $("#ipFecha").val());
+//            sessionStorage.setItem("actualizarFactura", "true");
+//            sessionStorage.setItem("facturaNumero", numFactura);
+//            sessionStorage.setItem("facturasucursal", $("#ipSucursal").val());
+//            sessionStorage.setItem("facturaClaseDoc", $("#ipCDocumento").val());
+//            sessionStorage.setItem("facturaFecha", $("#ipFecha").val());
             
             cargarDatosGrilla();
                              
@@ -979,9 +1008,10 @@ function imprimirFac(){
 }
 
 function cargarFactura(){
-        
+    
+    var factura   = JSON.parse(sessionStorage.getItem("regFactura"))
     var estado;
-    document.getElementById('idNumerofactura').innerHTML = 'Nº '+sessionStorage.getItem("facturaNumero");
+    document.getElementById('idNumerofactura').innerHTML = 'Nº '+factura.fac__nro;
     
     
     try{
@@ -993,15 +1023,16 @@ function cargarFactura(){
         dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].fiid = sessionStorage.getItem("picfiid");        
         dsSIRgfc_fac.dsSIRgfc_fac.eetemp = new Array();
         dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0] = new Object();
-        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picsuc_cod = sessionStorage.getItem("facturasucursal");
-        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picclc_cod = sessionStorage.getItem("facturaClaseDoc");
-        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].pidfac_fec = sessionStorage.getItem("facturaFecha");
-        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro = sessionStorage.getItem("facturaNumero");
+        
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picsuc_cod = factura.suc__cod;
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picclc_cod = factura.clc__cod;
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].pidfac_fec = factura.fac__fec;
+        dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro = factura.fac__nro;
                 
         $.ajax({
             type: "POST",
             data: JSON.stringify(dsSIRgfc_fac),
-            url: ipServicios+baseComercial+"SIRgfc_fac_act",            
+            url: ipServicios + baseComercial + "SIRgfc_fac_act",            
             dataType : "json",
             contentType: "application/json;",
             success: function (resp) {                  
@@ -1056,15 +1087,24 @@ function cargarFactura(){
                     value: fechaVencimiento
                 });
                 
-                authdsgfc_cli.dsgfc_cli.eetemp[0].picter_nit = factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].ter__nit;                
+                var objCli = new sirConsultaCliente();
+                var objJsonCli = objCli.getjson();
+                var urlCli = objCli.getUrlSir();
+                var mapDataCli = objCli.getMapData();
+
+                var key1 = Object.keys(objJsonCli)[0];
+                var key2 = Object.keys(objJsonCli[key1])[1];
+                objJsonCli[key1][key2][0].picter_nit = factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].ter__nit;
+                objJsonCli[key1][key2][0].picter_raz = "";
+                
                 
                 $.ajax({
                     type: "POST",
-                    data: JSON.stringify(authdsgfc_cli),
-                    url: ipServicios+baseParameters+"SIRgfc_cli",                                        
+                    data: JSON.stringify(objJsonCli),
+                    url: urlCli,
                     dataType : "json",
                     contentType: "application/json;",
-                    success: function (resp) { 
+                    success: function (resp) {                         
                         if(resp.dsgfc_cli.eeEstados[0].Estado==="OK"){                            
                             dataCliente = resp.dsgfc_cli.eegfc_cli[0];
                             $("#ipCliente").val(dataCliente.ter__raz);
@@ -1091,8 +1131,8 @@ function cargarFactura(){
 function cargarDatosGrilla(){
     dataGridDetalle=[];
     try{        
-        if(sessionStorage.getItem("actualizarFactura")){
-            var factura;
+        if(sessionStorage.getItem("regFactura")){
+            var factura = JSON.parse(sessionStorage.getItem("regFactura"));
             var estado;
             
             var dsSIRgfc_fac = new Object();
@@ -1102,16 +1142,16 @@ function cargarDatosGrilla(){
             dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
             dsSIRgfc_fac.dsSIRgfc_fac.eeDatos[0].fiid = sessionStorage.getItem("picfiid");        
             dsSIRgfc_fac.dsSIRgfc_fac.eetemp = new Array();
-            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0] = new Object();
-            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picsuc_cod = sessionStorage.getItem("facturasucursal");
-            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picclc_cod = sessionStorage.getItem("facturaClaseDoc");
-            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].pidfac_fec = sessionStorage.getItem("facturaFecha");
-            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro = sessionStorage.getItem("facturaNumero");        
+            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0] = new Object();            
+            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picsuc_cod = factura.suc__cod;
+            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].picclc_cod = factura.clc__cod;
+            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].pidfac_fec = factura.fac__fec;
+            dsSIRgfc_fac.dsSIRgfc_fac.eetemp[0].piifac_nro = factura.fac__nro;
             
             $.ajax({
                 type: "POST",
                 data: JSON.stringify(dsSIRgfc_fac),
-                url: ipServicios+baseComercial+"SIRgfc_fac_act",            
+                url: ipServicios + baseComercial + "SIRgfc_fac_act",            
                 dataType : "json",
                 contentType: "application/json;",
                 success: function (resp) { 
@@ -1156,7 +1196,7 @@ function cargarDatosGrilla(){
                         gridDetalle();
                     }                   
                 }else{
-                    alertDialogs("Error cargando la información de la factura.\n"+estado)
+                    alertDialogs("Error cargando la información del detalle de la  factura.\n"+estado)
                 }
                 gridDetalle();
             });                        
@@ -1245,11 +1285,13 @@ function crearNuevaFactura (){
 
 function limpiarDatosFacturación(){
     
-    sessionStorage.removeItem("actualizarFactura");
-    sessionStorage.removeItem("facturaNumero");
-    sessionStorage.removeItem("facturasucursal");
-    sessionStorage.removeItem("facturaClaseDoc");
-    sessionStorage.removeItem("facturaFecha");   
+    sessionStorage.removeItem("regFactura");
+    sessionStorage.removeItem("facturaEstado");
+    sessionStorage.removeItem("listaPrecioCliente");
+    sessionStorage.removeItem("cabeceraValida");
+    sessionStorage.removeItem("codVendedor");   
+    sessionStorage.removeItem("opciondepago");
+    sessionStorage.removeItem("nitCliente");
     
 }
 

@@ -471,15 +471,13 @@ function setInfoCliente(e){
                     type: "POST"
                 },
                 parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
-                    try{
-//                        if($("#ipSucursal").val()==""){
-//                            alertDialogs("Debe seleccionar primero la sucursal");                       
-//                        }else{                       
+                    try{                      
                             if (operation === 'read') {
                                 var key1 = Object.keys(objJsonVendedor)[0];
-                                var key2 = Object.keys(objJsonVendedor[key1])[1];                                
-                                objJsonVendedor[key1][key2][0].picsuc_cod = $("#ipSucursal").val();
-                                objJsonVendedor[key1][key2][0].piiven_cod = sessionStorage.getItem("codVendedor");
+                                var key2 = Object.keys(objJsonVendedor[key1])[1];                                                               
+                                objJsonVendedor[key1][key2][0].piccod_suc = $("#ipSucursal").val();
+                                objJsonVendedor[key1][key2][0].picven_cod = sessionStorage.getItem("codVendedor");
+                                objJsonVendedor[key1][key2][0].piiven_est = 0;
                                 return JSON.stringify(objJsonVendedor);
                             } 
                        // }                        
@@ -498,7 +496,13 @@ function setInfoCliente(e){
                         alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
                     }
                 },
-                model:{}
+                model: {
+                    id: "ven__cod",
+                    fields: {
+                        ven__cod: {validation: {required: true}, type: 'string'},
+                        ter__raz: {validation: {required: true}, type: 'string'}
+                    }
+                }
             },
             error: function (xhr, error) {
                 alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);

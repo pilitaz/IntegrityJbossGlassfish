@@ -27,18 +27,19 @@ and open the template in the editor.
         
         <link href="../../css/integrity.css" rel="stylesheet" type="text/css"/>
         <script src="../../js/servicios.js" type="text/javascript"></script>
-        <link href="../../css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        
         <script src="../../scripts/bootstrap.js" type="text/javascript"></script>
         <script src="../js/varDataSKendo.js"></script>
         
         <link href="../css/localizaXCliente.css" rel="stylesheet" type="text/css"/>
+        <link href="../../css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <script src="../js/localizaXCliente.js" type="text/javascript"></script>
     </head>
     <body >
         <div>
             <table style="height: 50px; width: 100%">
                 <td style="width: 50px;height: 50px"><a class="k-grid"  aling="center"><span class="k-sprite po_bullet1"></span></a></td>
-                <td style="width: 40%;height: 50px"><h1 id = "subtitulo" class="subTitulo">Localidades</h1></td>
+                <td style="width: 40%;height: 50px;  vertical-align: middle" ><span style="vertical-align:middle;"><h1 id = "subtitulo" class="subTitulo">Localidades</h1></span></td>
                 <td style="width: 60%; height: 50px;" class="navbar" > 
                     <div class="container-fluid">                                                
                         <button type="button" class="navbar-toggle" class="btn btn-default btn-circle btn-lg" data-toggle="collapse" data-target="#myNavbar">
@@ -58,16 +59,16 @@ and open the template in the editor.
         <script id="rowTemplate" type="text/x-kendo-tmpl">
             <tr data-uid="#: uid #"> 
             <td>
+            <span class="title">#:  ter__nit#</span>
+            </td>
+            <td>
+            <span class="title">#:  ter__raz#</span>
+            </td> 
+            <td>
             <span class="title">#: com__nom #</span>
             </td>
             <td>
             <span class="title">#: loc__des #</span>
-            </td> 
-            <td>
-            <span class="title">#: ter__nit #</span>
-            </td>
-            <td>
-            <span class="title">#: ter__raz #</span>
             </td>
             <td>
             <a  class='k-grid-aprobar'><span id = "aprobar#: id#" class = "k-sprite #try{if(loc__est == 0){#po_checkAct#}else if(loc__est == 1){#po_checkBloq#}else if(loc__est == 99){#po_checkCreate#}}catch(e){#po_checkCreate#}#" ></span></a>
@@ -79,16 +80,16 @@ and open the template in the editor.
         <script id="altRowTemplate" type="text/x-kendo-tmpl">
             <tr class="k-alt" data-uid="#: uid #">
             <td>
+            <span class="title">#:  ter__nit#</span>
+            </td>
+            <td>
+            <span class="title">#:  ter__raz#</span>
+            </td> 
+            <td>
             <span class="title">#: com__nom #</span>
             </td>
             <td>
             <span class="title">#: loc__des #</span>
-            </td> 
-            <td>
-            <span class="title">#: ter__nit #</span>
-            </td>
-            <td>
-            <span class="title">#: ter__raz #</span>
             </td>
             <td>
             <a  class='k-grid-aprobar'><span id = "aprobar#: id#" class = "k-sprite #try{if(loc__est == 0){#po_checkAct#}else if(loc__est == 1){#po_checkBloq#}else if(loc__est == 99){#po_checkCreate#}}catch(e){#po_checkCreate#}#" ></span></a>
