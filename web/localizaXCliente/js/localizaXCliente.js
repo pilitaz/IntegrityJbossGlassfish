@@ -3,6 +3,7 @@ var objSir = new sir();
 var urlSir = objSir.getUrlSir();
 var mapSir = objSir.getmapSir();
 var inputsir = objSir.getdataInputSir();
+
 //    var objSir = new sir();
 //var urlSir = objSir.getUrlSir();
 var est = "loc__est";
@@ -62,11 +63,12 @@ function grilla(obj) {
     var columns = [
 //		btnDer,
 //        {field: "com__con", title: "Cod.Establ.", width: "100%"},
-        {field: "com__nom", title: "Nombre Establecimiento Comercial",editor:com__nomLista, width: "100%"},
-//        {field: "loc__cod", title: "Codigo de Localizacion", width: "100%"},
-        {field: "loc__des", title: "Descripción de la Localización", editor:loc__desList, width: "100%"},
         {field: "ter__nit", title: "CC/NIT", editor:ter__nitList, width: "100%"},
         {field: "ter__raz", title: "Razón Social", editor:ter__razList, width: "100%"},
+        {field: "com__nom", title: "Establecimiento Comercial",editor:com__nomLista, width: "100%"},
+//        {field: "loc__cod", title: "Codigo de Localizacion", width: "100%"},
+        {field: "loc__des", title: "Localidad de Inventario", editor:loc__desList, width: "100%"},
+        
 //        {field: "loc__est", title: "Estado del Registro", width: "100%"},
 
 
@@ -107,12 +109,20 @@ function grilla(obj) {
                     } else if (operation === 'create') {
                         var key1 = Object.keys(inputCud)[0]
                         options[est] = 99;
-                        options.ter__con = options.ter__nom;
+                        options.com__con = $("#idcom__nom").data("kendoDropDownList").dataSource._data[0].com__con;
+                        options.loc__cod = options.loc__des;
                         options.ter__nit = $("#idter__nit").val();
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
 
-                    } else {
+                    } else if (operation === 'destroy') {
+                        
+                        var key1 = Object.keys(inputCud)[0]
+                        inputCud[key1][mapCud] = [options];
+                        return JSON.stringify(inputCud);
+                    }else {
+//                        options.com__con = options.com__nom;
+                        options.loc__cod = options.loc__des;
                         options.ter__nit = $("#idter__nit").val();
                         var key1 = Object.keys(inputCud)[0]
                         inputCud[key1][mapCud] = [options];
@@ -126,7 +136,9 @@ function grilla(obj) {
         schema: {
             type: "json",
             data: function (e) {
+                
                 var key1 = Object.keys(e)[0];
+                var regex = /(s|S)(i|I)(c|C)(u|U)(d|D)/g;
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     if (e[key1][mapSir]) {
                         for (var i = 0; i < e[key1][mapSir].length; i++) {
@@ -137,6 +149,9 @@ function grilla(obj) {
                     }
                     return e[key1][mapSir];
                 } else {
+                    if(regex.test(key1)){
+                        grilla();
+                    }
                     alertDialogs(e[key1].eeEstados[0].Estado);
                 }
             },
@@ -160,18 +175,19 @@ function grilla(obj) {
         rowTemplate: kendo.template($("#rowTemplate").html()),
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
         edit: function (e) {
-            debugger
-            e.container.kendoWindow("title", "Editar");
-//            e.container.find("label[for='rut__des']").hide();
-//            e.container.find("input[name=rut__des]").hide();
-//            e.container.find("label[for='cam__des']").hide();
-//            e.container.find("input[name=cam__des]").hide();
+            
+            
 
             if (!e.model.isNew()) {//caso en el que el popup es editar
 
                 e.container.kendoWindow("title", "Editar");
-
-                //e.container.find("input[name=ter__raz]")[0].readOnly="true"
+                $("#idcom__nom").data("kendoDropDownList").value(e.model["com__nom"]);
+                $("#idloc__des").data("kendoDropDownList").value(e.model["loc__cod"]);
+//                $("#idter__raz").data("kendoAutoComplete").enable(true);
+                $("#idter__nit").data("kendoAutoComplete").destroy();
+                $("#idter__nit").prop('disabled', true);
+                $("#idter__raz").data("kendoAutoComplete").destroy();
+                $("#idter__raz").prop('disabled', true);
                 if (e.model[est] != 99) {
                     kendo.ui.progress($('.k-edit-form-container'), true);
                     kendo.ui.progress($('.k-edit-buttons'), true);
@@ -228,27 +244,32 @@ function deleteRow(e) {
 
 
 
-
+    
 function com__nomLista(container, options) {
-    debugger
+    
     var obj = new listacom__nom();
     var dataSource = obj.getdataSource();
     $('<input id="idcom__nom" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
         dataTextField: "com__nom",
-        dataValueField: "com__con",
+        dataValueField: "com__nom",
+        cascadeFrom:"idter__nit",
         template: '<div class="divElementDropDownList">#: data.com__nom #</div>',
         dataSource: dataSource,
 //        change: onSelect
     });
+    $("#idcom__nom").data("kendoDropDownList").enable(false);
 }
 //function onSelect(e){
 //    clacli = e.sender.dataSource._data[e.sender.selectedIndex].cla__cli;
 //}
-function listacom__nom() {
-    var objSirUn = new SIRgpd_cli_suc();
-    var urlSirUn = objSirUn.getUrlSir();
-    var mapSirUn = objSirUn.getmapSir();
-    var inputsirUn = objSirUn.getdataInputSir();
+function listacom__nom(obj) {
+    var objSircom__nom = new SIRgpd_cli_suc();
+    var urlSirUn = objSircom__nom.getUrlSir();
+    var mapSirUn = objSircom__nom.getmapSir();
+    var inputsirUn = objSircom__nom.getdataInputSir();
+    if(obj){
+        inputsirUn = obj; 
+    }
     var dataSource = new kendo.data.DataSource({
         transport: {
             read: {
@@ -310,8 +331,8 @@ function listacom__nom() {
 ;
 
 function loc__desList(container, options) {
-    debugger
-    var obj = new listarut__cod();
+    
+    var obj = new listaloc__des();
     var dataSource = obj.getdataSource();
     $('<input id="idloc__des" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
         dataTextField: "loc__des",
@@ -322,7 +343,7 @@ function loc__desList(container, options) {
     });
 }
 
-function listarut__cod() {
+function listaloc__des() {
     var objSirUn = new SIRinv_loc();
     var urlSirUn = objSirUn.getUrlSir();
     var mapSirUn = objSirUn.getmapSir();
@@ -388,7 +409,7 @@ function listarut__cod() {
 ;
 
 function ter__nitList(container, options) {
-    debugger
+    
     var obj = new listater__nit();
     var dataSource = obj.getdataSource();
     $('<input id="idter__nit" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoAutoComplete({
@@ -403,8 +424,15 @@ function ter__nitList(container, options) {
 }
 
 function onSelectNit(e) {
+    
+    var json = changeInputSir_com__nom(e.sender.listView._dataItems[0].ter__nit);
+    var obj = new listacom__nom(json);
+    var dataSource = obj.getdataSource();
+    $("#idcom__nom").data("kendoDropDownList").setDataSource(dataSource);
+    $("#idcom__nom").data("kendoDropDownList").enable(true);
     $("#idter__raz").val(e.sender.listView._dataItems[0].ter__raz);
 }
+
 function listater__nit() {
     var objSirUn = new SIRsic_ter();
     var urlSirUn = objSirUn.getUrlSir();
@@ -472,7 +500,7 @@ function listater__nit() {
 }
 ;
 function ter__razList(container, options) {
-    debugger
+    
     var obj = new listater__raz();
     var dataSource = obj.getdataSource();
     $('<input id="idter__raz" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoAutoComplete({
@@ -486,6 +514,11 @@ function ter__razList(container, options) {
     });
 }
 function onSelectRaz(e) {
+    var json = changeInputSir_com__nom(e.sender.listView._dataItems[0].ter__nit);
+    var obj = new listacom__nom(json);
+    var dataSource = obj.getdataSource();
+    $("#idcom__nom").data("kendoDropDownList").setDataSource(dataSource);
+    $("#idcom__nom").data("kendoDropDownList").enable(true);
     $("#idter__nit").val(e.sender.listView._dataItems[0].ter__nit);
 }
 function listater__raz() {
@@ -554,38 +587,30 @@ function listater__raz() {
     };
 }
 ;
-
-function tra__tipList(container, options) {
-    debugger
-    var obj = new listatra__tip();
-    var dataSource = obj.getdataSource();
-    $('<input id="idutra__tip" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-        dataTextField: "text",
-        dataValueField: "value",
-        dataSource: dataSource,
-        placeholder: "Seleccione Tipo de ",
-        template: '<div class="divElementDropDownList">#: data.value #' + ' - ' + ' #:data.text #</div>'
-//        change: onSelect
-    });
-}
-
-function listatra__tip() {
-    var dataSource = [
-        {text: "Auxiliar", value: "A"},
-        {text: "Conductor", value: "C"}
-    ];
-    ;
-
-    this.setdataSource = function (newname) {
-        if (newname) {
-            dataSource = newname;
+function changeInputSir_com__nom(nit){
+    var objSircom__nom = new SIRgpd_cli_suc();
+    var json = objSircom__nom.getdataInputSir();
+    json = {
+        "dsSIRgpd_cli_suc": {
+            "eeDatos": [
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip": sessionStorage.getItem("ipPrivada"),
+                    "remote_ip": sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "SIRgpd_cli_suc": [
+                {
+                    "picter__nit": nit,
+                    "piccom__con": "*"
+                }
+            ]
         }
     };
-    this.getdataSource = function () {
-        return dataSource;
-    };
+    return json;
 }
-;
+
 ///-----------------------------------------------------------------------------
 
 

@@ -57,7 +57,7 @@ table{
     line-height: normal;
     font-family: Verdana;
 }
-.subTitulo{
+h1.subTitulo{
     font-style: normal; 
     font-variant: normal;
     font-weight: normal;
@@ -66,6 +66,7 @@ table{
     line-height: normal;
     font-family: Verdana;
     font-weight: bold;
+    margin-top: 10px;
 }
 
 
