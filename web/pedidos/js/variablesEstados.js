@@ -95,6 +95,46 @@ function sirPaises() {
     
 };
 /////////////////////////////////////////////////////////////////////
+function sirCiudades() {
+    var urlSir = ipServicios + baseContabilidad +"SIRsic_ciu";
+    var json = {  
+   "dsSIRsic_ciu":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+		"eeSIRsic_ciu": [{
+			"picciu_cod": "*"
+			
+		}]
+		
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+/////////////////////////////////////////////////////////////////////
 function sirAreaGeo() {
     var urlSir = ipServicios + baseComercial +"SIRgpr_ageo";
     var json = { 
@@ -884,7 +924,9 @@ function sirCobradores() {
             "SIRgpd_cbr":[  
                 {  
                     "piicbr__cod":0,
+                      "piicbr__est": -1,
                     "picter__nit":"*"
+                    
                 }
             ]      
         }
@@ -1124,66 +1166,25 @@ function cudRegionGeografica() {
 function sirBarrios() {
     var urlSir = ipServicios + baseComercial +"SIRgpd_bar";
     var json ={  
-        "dsSIRgpd_bar":{  
-            "eeDatos":[  
-                {  
-                    "picusrcod":sessionStorage.getItem("usuario"),
-                    "picfiid":sessionStorage.getItem("picfiid"),
-                    "local_ip":sessionStorage.getItem("ipPrivada"),
-                    "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "SIRgpd_bar":[  
-                {  
-                    "picciu__cod":"*",
-                    "piibar__cod":0,
-                    "picbar__dsc":"*"
-                }
-            ]      
-        }
-    };
-    
-    this.setUrlSir = function (newname) {
-        if (newname) {
-            urlSir = newname;
-        }
-    };
-    this.getUrlSir = function () {
-        return urlSir;
-    };
-    
-    this.setjson = function (newname) {
-        if (newname) {
-            json = newname;
-        }
-    };
-    this.getjson = function () {
-        return json;
-    };
-    
+   "dsSIRgpd_bar":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "SIRgpd_bar":[  
+         {  
+          "picciu__cod":"*",
+          "piibar__cod":0,
+          "picbar__dsc":"*",
+          "picbar__est": -1
+         }
+      ]      
+   }
 };
-///////////////////////////////////////////////////////////////
-function sirBarrios() {
-    var urlSir = ipServicios + baseComercial +"SIRgpd_bar";
-    var json ={  
-        "dsSIRgpd_bar":{  
-            "eeDatos":[  
-                {  
-                    "picusrcod":sessionStorage.getItem("usuario"),
-                    "picfiid":sessionStorage.getItem("picfiid"),
-                    "local_ip":sessionStorage.getItem("ipPrivada"),
-                    "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "SIRgpd_bar":[  
-                {  
-                    "picciu__cod":"*",
-                    "piibar__cod":0,
-                    "picbar__dsc":"*"
-                }
-            ]      
-        }
-    };
     
     this.setUrlSir = function (newname) {
         if (newname) {
@@ -1206,26 +1207,28 @@ function sirBarrios() {
 };
 ///////////////////////////////////////////////////////////////
 function cudBarrios() {
-    var urlSir = ipServicios + baseComercial +"SIRgpd_bar";
+    var urlSir = ipServicios + baseComercial +"SICUDgpd_bar";
     var json ={  
-        "dsSIRgpd_bar":{  
-            "eeDatos":[  
-                {  
-                    "picusrcod":sessionStorage.getItem("usuario"),
-                    "picfiid":sessionStorage.getItem("picfiid"),
-                    "local_ip":sessionStorage.getItem("ipPrivada"),
-                    "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "SIRgpd_bar":[  
-                {  
-                    "picciu__cod":"*",
-                    "piibar__cod":0,
-                    "picbar__dsc":"*"
-                }
-            ]      
-        }
-    };
+   "dsSICUgpd_bar":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "eegpd_bar":[  
+         {  
+          "ciu__cod":"",
+          "bar__cod":0,
+          "bar__dsc":"",
+          "bar__str":0,
+          "bar__est":0
+         }
+      ]
+   }
+};
     
     this.setUrlSir = function (newname) {
         if (newname) {

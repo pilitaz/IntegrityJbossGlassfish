@@ -73,13 +73,42 @@ $(document).ready(function() {
  *  var urlactualizar: url de servicio para actualizar / crear 
  *  
  */ 
-$(document).ready(function () {                             
+$(document).ready(function () { 
+     var data = [
+        {text: "Todos", value: "-1", clase: "po_checkCreate"},
+        {text: "Creado", value: "99", clase: "po_checkCreate"},
+        {text: "Activo", value: "0", clase: "po_checkAct"},
+        {text: "Bloqueado", value: "1", clase: "po_checkBloq"}
+        
+    ];
+    $("#fltrEst").kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "value",
+        //change: onChangeFltr,
+        valueTemplate: "<span>#:data.text#</span>",
+        template: "<a class='k-grid-aprobar' '><span class='k-sprite #: data.clase #'></span></a>" +
+                  '<span class="k-state-default"><h0>#: data.text #</h0>',
+        dataSource: data,
+         change: function (e) {debugger
+         var send = parseInt ($("#fltrEst").data("kendoDropDownList").value() ); 
+         grilla(send);
+         }
+         
+
+    }); 
+    
     var windowTemplate = kendo.template($("#windowTemplate").html());
+    var window = $("#window1").kendoWindow({
+        title: "Eliminar",
+        visible: false, //the window will not appear before its .open method is called
+
+    }).data("kendoWindow");
+    function grilla(e){
     var  consultar = new sirBarrios();
     var  datajson = consultar.getjson();
     var  urlService = consultar.getUrlSir();
-                        
-    var  actualizar = new cudAnulaPedido();
+    datajson.dsSIRgpd_bar.SIRgpd_bar[0].picbar__est=e;               
+    var  actualizar = new  cudBarrios();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
 
@@ -111,32 +140,46 @@ $(document).ready(function () {
                 type: "DELETE",
                 contentType: "application/json; charset=utf-8"
             },
-            parameterMap: function (options, operation) {
+            parameterMap: function (options, operation) {debugger
                 if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
                 if (operation === "update") {
-                    
-                   //actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__cod=options.anu__cod;  
-                   //actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__des=options.anu__des;
-                   //actjson.dsSICUDgpd_anu.eegpd_anu[0].gpd__est=options.gpd__est;     
+                    var ciudad_cod = $("#ciudades").data("kendoComboBox")._old;
+                   var ciudad_nom = $("#ciudades").data("kendoComboBox")._prev;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].ciu__cod=ciudad_cod;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].ciu__nom=ciudad_nom;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__cod=options.bar__cod;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__dsc=options.bar__dsc;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__str=options.bar__str;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__est=options.bar__est;   
                     return JSON.stringify(actjson);
                                         
                                         
                 }
                 if (operation === "create") {
-                   actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__des=options.anu__des;
-                   actjson.dsSICUDgpd_anu.eegpd_anu[0].gpd__est=options.gpd__est; 
-                    return JSON.stringify(actjson);          
+                   var ciudad_cod = $("#ciudades").data("kendoComboBox")._old;
+                   var ciudad_nom = $("#ciudades").data("kendoComboBox")._prev;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].ciu__cod=ciudad_cod;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].ciu__nom=ciudad_nom;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__cod=options.bar__cod;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__dsc=options.bar__dsc;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__str=options.bar__str;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__est=99;
+                   return JSON.stringify(actjson);          
                     $('#grid').data('kendoGrid').refresh();
                     $('#grid').data('kendoGrid').dataSource.read();
                     $('#grid').data('kendoGrid').refresh();                                     
                 }
                 if (operation === "destroy") {
                          
-                   actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__cod=options.anu__cod;  
-                   actjson.dsSICUDgpd_anu.eegpd_anu[0].anu__des=options.anu__des;
-                   actjson.dsSICUDgpd_anu.eegpd_anu[0].gpd__est=options.gpd__est;  
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].ciu__cod=options.ciu__cod;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].ciu__nom=options.ciu__nom;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__cod=options.bar__cod;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__dsc=options.bar__dsc;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__str=options.bar__str;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__est=options.bar__est;
+                   
                     
                     return JSON.stringify(actjson);
                                         
@@ -168,16 +211,13 @@ $(document).ready(function () {
                     bar__cod:    {editable: true, nullable: false},  
                      bar__dsc:    {editable: true, nullable: false},   
                       bar__str:    {editable: true, nullable: false},   
-                       bar__est:    {editable: true, nullable: false},   
+                       bar__est:    {editable: true, nullable: false},
+                       ciu__nom:    {editable: true, nullable: false},
                 }
             }
         }
     });
-    var window = $("#window1").kendoWindow({
-        title: "Eliminar",
-        visible: false, //the window will not appear before its .open method is called
-
-    }).data("kendoWindow");
+    
     /**
      *  FUNCION CREAR GRILLA
      * Funcion cancel se ejecuta con el evento OnClick de EDIT grid
@@ -192,26 +232,37 @@ $(document).ready(function () {
      */
     var grid1 = $("#grid").kendoGrid({
         dataSource: dataSource,
-                            
-        sortable: true,
-                           
-        pageable: {
-            refresh: true,
-            pageSizes: true,
-            buttonCount: 5
-        },
-        //navigatable: true,
         columns: [ 
-            {field: "ciu__cod", title: "Cod Ciudad",  hidden:false},  
-            {field: "bar__cod", title: "Cod Barrio",  hidden:false},
+            {field: "ciu__nom", title: "Ciudad",  hidden:false,editor:ciudades,
+                template: function (e) {debugger
+                    return e.ciu__nom;
+                }},     
+            {field: "bar__cod", title: "Codigo",  hidden:true}, 
             {field: "bar__dsc", title: "Descripcion Barrio",  hidden:false},
             {field: "bar__str", title: "Estrato de Barrio",  hidden:false},
                        {command: [
-                    {name: "check", text: "estado",click: changeEst, template: "<a class='k-grid-check'><span class='k-sprite po_editoff' ></span></a>" },
+                    {name: "check", text: "estado", click: changeEst,template: "<a class='k-grid-check'><span class='k-sprite po_editoff' ></span></a>" },
                     {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff' ></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "140px"}],
            
-            editable: "popup",
+        editable: "popup",
+        edit: function(e) {debugger
+            if (!e.model.isNew()) {//caso en el que el popup es editar
+                if(e.model.bar__est!= 99 ){
+                    
+                    
+                   kendo.ui.progress($('.k-edit-form-container'), true);
+                   kendo.ui.progress($('.k-edit-buttons'), true);
+                   e.container.find(".k-loading-image").css("background-image", "url('')");
+
+            }else{
+
+            }
+            }
+            else{//caso en el que el popup es crear 
+              
+            }
+        } ,
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
         altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
         dataBound: function () {
@@ -225,7 +276,8 @@ $(document).ready(function () {
             $('#grid').data('kendoGrid').refresh();                                                                                        
         } 
     });
-               
+}
+grilla(-1);
     $("#filtro").kendoAutoComplete({ 
         dataTextField: "bar__dsc",  
         dataValueField: "bar__dsc",
@@ -264,17 +316,169 @@ $(document).ready(function () {
                         
    
 });
- 
+ function ciudades(container, options) {debugger
+        
+        var consultar = new sirCiudades();
+        var datajson = consultar.getjson();
+        var urlService = consultar.getUrlSir();
+        var mapCud1 = "eesic_ciu";
+        $('<input  id = "ciudades" required name="' + options.field + '"/>')
+                .appendTo(container)
+                .kendoComboBox({
+            dataTextField: "ciu__nom",
+            dataValueField: "ciu__cod",
+            dataSource: {
+                transport: {
+                    read: {
+                        url: urlService,
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation === "read") {
+                            return JSON.stringify(datajson);
+                        }
+                    }
+                },
+                schema: {
+                    data: function (e) {debugger
+                        var key1 = Object.keys(e)[0];
+                        if (e[key1].eeEstados[0].Estado === "OK") {
+                            return e[key1][mapCud1];
+                        } else {
+                            alertDialogs("Error Con Servicio Cuidades"+e[key1].eeEstados[0].Estado);
+                        }
+                    },
+                    model: {
+                        id: "ciu__cod",
+                        fields: {
+                            ciu__nom: {editable: false, nullable: false},
+                            ciu__cod: {editable: false, nullable: false}
+                        }
+                    }
+                }
+            }
+
+        });
+    }
+
   function changImgFunc(results) {
 
-    for (var i = 0; i < results.length; i++) {
-        if (document.getElementById("spanproceso"+results[i].bar__cod+results[i].bar__dsc)){
-        if(results[i].gpd__est===0){                            
-     document.getElementById("spanproceso"+results[i].bar__cod+results[i].bar__dsc).setAttribute("class", "k-sprite po_check_sup");
-    
-        }else
-        {}}
-}
+        for (var i = 0; i < results.length; i++) {
+            if (document.getElementById("spanproceso"+results[i].bar__cod+results[i].bar__dsc)){
+                if(results[i].bar__est==0){                            
+                    document.getElementById("spanproceso"+results[i].bar__cod+results[i].bar__dsc).setAttribute("class", "k-sprite po_checkAct");   
+                    //document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("onclick", "disable();");
+                }
+                if(results[i].bar__est==99){     
+                    document.getElementById("spanproceso"+results[i].bar__cod+results[i].bar__dsc).setAttribute("class", "k-sprite po_checkCreate");
+                    //document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("onclick", "active();");
+                }
+                if(results[i].bar__est==1){     
+                    document.getElementById("spanproceso"+results[i].bar__cod+results[i].bar__dsc).setAttribute("class", "k-sprite po_checkBloq");
+
+                }
+            }
+        }
+ 
  }
                     
 
+function changeEst(e){debugger
+    var  actualizar = new cudBarrios();
+    var  actjson = actualizar.getjson();
+    var  urlactualizar = actualizar.getUrlSir();
+    var seleccion =  $("#grid").data("kendoGrid")._data[($(e.currentTarget).closest("tr")["0"].sectionRowIndex)];  
+    try {
+           
+            
+        var actions = new Array();
+        actions[0] = new Object();
+        actions[0].text = "OK";
+        actions[0].action = function () {debugger
+            if(seleccion.bar__est==0){  
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].ciu__cod=seleccion.ciu__cod;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].ciu__nom=seleccion.ciu__nom;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__cod=seleccion.bar__cod;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__dsc=seleccion.bar__dsc;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__str=seleccion.bar__str;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__est=1;
+                $.ajax({
+        
+                    type: "PUT",        
+                    async: false,
+                    data: JSON.stringify(actjson),
+                    url: urlactualizar,
+                    dataType: "json",        
+                    contentType: "application/json;",
+                    success: function (resp) {debugger
+                        if((resp.dsSICUgpd_bar.eeEstados[0].Estado)=="OK")
+                        {     
+                            $('#grid').data('kendoGrid').refresh();
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh();                             
+                        }
+                        else
+                        {
+                            alertDialogs("Error"+resp.dsSICUgpd_bar.eeEstados[0].Estado); 
+                            $('#grid').data('kendoGrid').refresh();
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh();                             
+                        }
+                    } 
+        
+                });
+            }
+
+            if(seleccion.bar__est==99){  
+                actjson.dsSICUgpd_bar.eegpd_bar[0].ciu__cod=seleccion.ciu__cod;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].ciu__nom=seleccion.ciu__nom;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__cod=seleccion.bar__cod;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__dsc=seleccion.bar__dsc;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__str=seleccion.bar__str;
+                   actjson.dsSICUgpd_bar.eegpd_bar[0].bar__est=0;  
+                $.ajax({
+        
+                    type: "PUT",        
+                    async: false,
+                    data: JSON.stringify(actjson),
+                    url: urlactualizar,
+                    dataType: "json",        
+                    contentType: "application/json;",
+                    success: function (resp) {debugger
+                        if((resp.dsSICUgpd_bar.eeEstados[0].Estado)=="OK")
+                        {          
+                            $('#grid').data('kendoGrid').refresh();
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh();    
+                        }
+                        else
+                        {
+                            alertDialogs("Error"+resp.dsSICUgpd_bar.eeEstados[0].Estado);  
+                            $('#grid').data('kendoGrid').refresh();
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh(); 
+                        }
+                    } 
+        
+                });
+            }
+            bandAlert = 0;
+        };
+        actions[1] = new Object();
+        actions[1].text = "Cancelar";
+        actions[1].action = function () {debugger
+            bandAlert = 0;
+        };
+        createDialog("Atención", "Esta seguro de cambiar estado de Registro ---" + seleccion.bar__dsc + " ---?", "400px", "200px", true, true, actions);
+
+    } catch (e) {debugger
+        createDialog(e);
+        $('#grid').data('kendoGrid').dataSource.read();
+        $('#grid').data('kendoGrid').refresh();
+    }
+    
+ 
+}             
+                   

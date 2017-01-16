@@ -247,16 +247,6 @@ $(document).ready(function () {
     });
     var grid1 = $("#grid").kendoGrid({
         dataSource: dataSource,
-                            
-        
-        sortable: true,
-                           
-        pageable: {
-            refresh: true,
-            pageSizes: true,
-            buttonCount: 5
-        },
-        //navigatable: true,
         columns: [
             {field: "sre__cod", title: "Cod Supervisor ",  hidden:false},
             

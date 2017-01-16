@@ -107,7 +107,7 @@ $(document).ready(function () {
     var  consultar = new sirAnulaPedido();
     var  datajson = consultar.getjson();
     var  urlService = consultar.getUrlSir();
-    datajson.dsSIRgpd_anu.SIRgpd_anu[0].gpd__est=e;                  
+    datajson.dsSIRgpd_anu.SIRgpd_anu[0].piigpd__est=e;                  
     var  actualizar = new cudAnulaPedido();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();

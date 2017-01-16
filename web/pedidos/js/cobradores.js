@@ -73,12 +73,42 @@ $(document).ready(function() {
  *  var urlactualizar: url de servicio para actualizar / crear 
  *  
  */ 
-$(document).ready(function () {                             
+$(document).ready(function () {                            
+      var data = [
+        {text: "Todos", value: "-1"},
+        {text: "Creado", value: "99", clase: "po_checkCreate"},
+        {text: "Activo", value: "0", clase: "po_checkAct"},
+        {text: "Bloqueado", value: "1", clase: "po_checkBloq"}
+        
+    ];
+    $("#fltrEst").kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "value",
+        //change: onChangeFltr,
+        valueTemplate: "<span>#:data.text#</span>",
+        template: "<a class='k-grid-aprobar' '><span class='k-sprite #: data.clase #'></span></a>" +
+                  '<span class="k-state-default"><h0>#: data.text #</h0>',
+        dataSource: data,
+         change: function (e) {debugger
+         var send = parseInt ($("#fltrEst").data("kendoDropDownList").value() ); 
+         grilla(send);
+         }
+         
+
+    }); 
     var windowTemplate = kendo.template($("#windowTemplate").html());
+        var window = $("#window1").kendoWindow({
+        title: "Eliminar",
+        visible: false, //the window will not appear before its .open method is called
+
+    }).data("kendoWindow");
+    function grilla(e){
+    
+    
     var  consultar = new sirCobradores();
     var  datajson = consultar.getjson();
     var  urlService = consultar.getUrlSir();
-                        
+    //datajson.dsSIRgpd_cbr.SIRgpd_cbr[0].=e;              
     var  actualizar = new cudCobradores();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
@@ -117,7 +147,8 @@ $(document).ready(function () {
                 }
                 if (operation === "update") {
                    actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__cod=options.cbr__cod;   
-                   actjson.dsSICUDgpd_cbr.eegpd_cbr[0].ter__nit=options.ter__nit;  
+                   actjson.dsSICUDgpd_cbr.eegpd_cbr[0].ter__nit=options.ter__nit; 
+                   
                    //actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__est=parseInt(options.cbr__est);
                     return JSON.stringify(actjson);
                                         
@@ -183,11 +214,7 @@ $(document).ready(function () {
             }
         }
     });
-    var window = $("#window1").kendoWindow({
-        title: "Eliminar",
-        visible: false, //the window will not appear before its .open method is called
 
-    }).data("kendoWindow");
     /**
      *  FUNCION CREAR GRILLA
      * Funcion cancel se ejecuta con el evento OnClick de EDIT grid
@@ -204,16 +231,6 @@ $(document).ready(function () {
     gridheigth = gridheigth*0.12 + gridheigth;
     var grid1 = $("#grid").kendoGrid({
         dataSource: dataSource,
-                            
-        height: gridheigth,
-        sortable: true,
-                           
-        pageable: {
-            refresh: true,
-            pageSizes: true,
-            buttonCount: 5
-        },
-        //navigatable: true,
         columns: [ 
             {field: "cbr__cod", title: "Cod Cobrador",  hidden:false},  
             {field: "ter__nit", title: "NIT",  hidden:false,editor: filtroestado,
@@ -250,7 +267,8 @@ $(document).ready(function () {
             $('#grid').data('kendoGrid').refresh();                                                                                        
         } 
     });
-               
+}
+grilla(-1);
     $("#filtro").kendoAutoComplete({ 
         dataTextField: "ter__nit",  
         dataValueField: "ter__nit",
