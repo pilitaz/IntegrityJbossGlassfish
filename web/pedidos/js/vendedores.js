@@ -275,7 +275,7 @@ $(document).ready(function () {
         editable: "popup",
          edit: function(e) {debugger
             if (!e.model.isNew()) {//caso en el que el popup es editar
-                if(e.model.sre__est!= 99 ){
+                if(e.model.ven__est!= 99 ){
                     
                     
                    kendo.ui.progress($('.k-edit-form-container'), true);
@@ -283,7 +283,7 @@ $(document).ready(function () {
                    e.container.find(".k-loading-image").css("background-image", "url('')");
 
             }else{
-                $("#region").data("kendoDropDownList").enable(false);
+                //$("#region").data("kendoDropDownList").enable(false);
             //e.container.find("span")[1].attr('disabled','disabled');
             //e.container.find("span[for='rgeo__nom']");
             
@@ -548,17 +548,17 @@ grilla(-1);
     function changImgFunc(results , e) {debugger
      
         for (var i = 0; i < results.length; i++) {
-            if (document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod)){
-                if(results[i].sre__est==0){                            
-                    document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_checkAct");   
+            if (document.getElementById("spanproceso"+results[i].ter__nit+results[i].suc__cod)){
+                if(results[i].ven__est==0){                            
+                    document.getElementById("spanproceso"+results[i].ter__nit+results[i].suc__cod).setAttribute("class", "k-sprite po_checkAct");   
                     //document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("onclick", "disable();");
                 }
-                if(results[i].sre__est==99){     
-                    document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_checkCreate");
+                if(results[i].ven__est==99){     
+                    document.getElementById("spanproceso"+results[i].ter__nit+results[i].suc__cod).setAttribute("class", "k-sprite po_checkCreate");
                     //document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("onclick", "active();");
                 }
-                if(results[i].sre__est==1){     
-                    document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("class", "k-sprite po_checkBloq");
+                if(results[i].ven__est==1){     
+                    document.getElementById("spanproceso"+results[i].ter__nit+results[i].suc__cod).setAttribute("class", "k-sprite po_checkBloq");
 
                 }
             }

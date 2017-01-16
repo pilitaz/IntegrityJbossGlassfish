@@ -252,7 +252,7 @@ $(document).ready(function () {
                 template: function (e) {debugger
                     return e.rgeo__nom;
                 }},    
-            {field: "ter__nit", title: "Razon Social",  hidden:false, editor: filtroestado,
+            {field: "ter__nit", title: "Cedula",  hidden:false, editor: filtroestado,
                 template: function (e) {debugger
                     return e.ter__nit;
                 }},    

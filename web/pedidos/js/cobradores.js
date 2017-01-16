@@ -231,7 +231,7 @@ $(document).ready(function () {
         dataSource: dataSource,
         columns: [ 
             {field: "cbr__cod", title: "Cod Cobrador",  hidden:false},  
-            {field: "ter__nit", title: "NIT",  hidden:false,editor: filtroestado,
+            {field: "ter__nit", title: "Cedula",  hidden:false,editor: filtroestado,
                 template: function (e) {
                     return e.ter__nit;
                 }}, 

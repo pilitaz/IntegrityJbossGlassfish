@@ -261,7 +261,7 @@ $(document).ready(function () {
         //navigatable: true,
         columns: [ 
             {field: "str__cod", title: "Cod Supervisor",  hidden:false},
-            {field: "ter__nit", title: "Nit",  hidden:false,editor: filtroestado,
+            {field: "ter__nit", title: "Cedula",  hidden:false,editor: filtroestado,
                 template: function (e) {
                     return e.ter__nit;
                 }},   
