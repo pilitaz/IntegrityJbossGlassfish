@@ -271,13 +271,12 @@ $(document).ready(function () {
                 template: function (e) {debugger
                     return e.ter__raz;
                 }},    
-            {field: "suc__cod", title: "Sucursal ",  hidden:false},
-            {field: "gve__cod", title: "Nombre ",  hidden:true},
-            {field: "tip__ven__cod", title: "territorio vendedor",  hidden:true},
-            {field: "ven__est", title: "territorio vendedor",  hidden:true},
-            {field: "zon__cod", title: "territorio vendedor",  hidden:true},
-            {field: "ven__jef", title: "territorio vendedor",  hidden:true},
-            {field: "ven__com", title: "territorio vendedor",  hidden:true},
+            {field: "suc__cod", title: "Sucursal",  hidden:false},
+            {field: "gve__cod", title: "Gerente Ventas",  hidden:true},
+            {field: "tip__ven__cod", title: "Tipo de vendedor",  hidden:true},
+            {field: "zon__cod", title: "Codigo Zona",  hidden:true},
+            {field: "ven__jef", title: "Jefe Vendedor",  hidden:true},
+            {field: "ven__com", title: "Comision Fija",  hidden:true},
             {command: [
                     {name: "check", text: "estado",click: changeEst, template: "<a class='k-grid-check'><span class='k-sprite po_editoff' ></span></a>" },
                     {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff' ></span></a>"},

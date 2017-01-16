@@ -1294,7 +1294,7 @@ function sirTransportistas() {
 };
 ///////////////////////////////////////////////////////////////
 function sirVendedores() {
-    var urlSir = ipServicios + baseComercial +"SIRsic_ven";
+    var urlSir = ipServicios + baseParameters +"SIRsic_ven";
     var json ={  
    "dsSIRsic_ven":{  
       "eeDatos":[  
@@ -1306,7 +1306,7 @@ function sirVendedores() {
          }
       ],
   "eeSIRsic_ven": [{
-       "piccod_suc": "",
+       "piccod_suc": "0",
        "picven_cod": "*",
        "piiven_est": -1
        
