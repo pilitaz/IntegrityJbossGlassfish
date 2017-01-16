@@ -249,7 +249,8 @@ $(document).ready(function () {
      *  consulta sobre campo : usr__est
      *  
      *  
-     */                      var consultar1 = new serviRoles();
+     */
+    var consultar1 = new serviRoles();
     var datajson1 = consultar1.getjson();
     var urlService1 = consultar1.getUrlSir();
 
@@ -480,7 +481,7 @@ $(document).ready(function () {
             return arrayOriginal.indexOf(elem) == pos;
         });
 
-        $('<input required name="' + options.field + '"/>')
+        $('<input/>')
                 .appendTo(container)
                 .kendoDropDownList({
                     dataSource: arraySinDuplicados
