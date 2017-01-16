@@ -45,56 +45,238 @@ authdssic_mnd.dssic_mnd.eeDatos[0].picusrcod = sessionStorage.getItem("usuario")
 authdssic_mnd.dssic_mnd.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
 //console.log(JSON.stringify(authdssic_mnd));
 
-var authdsgfc_cli = new Object();
-authdsgfc_cli.dsgfc_cli = new Object();
-authdsgfc_cli.dsgfc_cli.eeDatos = new Array();
-authdsgfc_cli.dsgfc_cli.eeDatos[0] = new Object();
-authdsgfc_cli.dsgfc_cli.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
-authdsgfc_cli.dsgfc_cli.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
-authdsgfc_cli.dsgfc_cli.eetemp = new Array();
-authdsgfc_cli.dsgfc_cli.eetemp[0] = new Object();
-//console.log(JSON.stringify(authdsgfc_cli));
 
-var authdssic_ven = new Object();
-authdssic_ven.dssic_ven = new Object();
-authdssic_ven.dssic_ven.eeDatos = new Array();
-authdssic_ven.dssic_ven.eeDatos[0] = new Object();
-authdssic_ven.dssic_ven.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
-authdssic_ven.dssic_ven.eeDatos[0].fiid = sessionStorage.getItem("picfiid");
-authdssic_ven.dssic_ven.eetemp = new Array();
-authdssic_ven.dssic_ven.eetemp[0] = new Object();
-//console.log(JSON.stringify(authdssic_ven));
+/**
+ * Funcion para obtener la url y el json de entrada para el Cliente de pedidos
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function sirConsultaCliente() {
+    var mapData = "eegfc_cli";
+    var urlSir = ipServicios + baseParameters + "SIRgfc_cli";
+    var json = 
+            {
+                    "dsgfc_cli" : {
+                            "eeDatos" : [{
+                                            "picusrcod": sessionStorage.getItem("usuario"),
+                                            "picfiid": sessionStorage.getItem("picfiid"), 
+                                    }
+                            ],
+                            "eetemp" : [{
+                                            "picter_raz" : "",
+                                            "picter_nit" : "",
+                                    }
+                            ]
+                    }
+            };
 
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
 
-var authdsinv_cla = new Object();
-authdsinv_cla.dsinv_cla = new Object();
-authdsinv_cla.dsinv_cla.eeDatos = new Array();
-authdsinv_cla.dsinv_cla.eeDatos[0] = new Object();
-authdsinv_cla.dsinv_cla.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
-authdsinv_cla.dsinv_cla.eeDatos[0].fiid = sessionStorage.getItem("picfiid");
-authdsinv_cla.dsinv_cla.eetemp = new Array();
-authdsinv_cla.dsinv_cla.eetemp[0] = new Object();
-//console.log(JSON.stringify(authdsinv_cla));
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
 
-var authdsinv_art = new Object();
-authdsinv_art.dsSIRinv_art = new Object();
-authdsinv_art.dsSIRinv_art.eeDatos = new Array();
-authdsinv_art.dsSIRinv_art.eeDatos[0] = new Object();
-authdsinv_art.dsSIRinv_art.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
-authdsinv_art.dsSIRinv_art.eeDatos[0].fiid = sessionStorage.getItem("picfiid");
-authdsinv_art.dsSIRinv_art.eeSIRinv_art = new Array();
-authdsinv_art.dsSIRinv_art.eeSIRinv_art[0] = new Object();
-//console.log(JSON.stringify(authdsinv_art));
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
 
-var authdsgpr_lis = new Object();
-authdsgpr_lis.dsgpr_lpd = new Object();
-authdsgpr_lis.dsgpr_lpd.eeDatos = new Array();
-authdsgpr_lis.dsgpr_lpd.eeDatos[0] = new Object();
-authdsgpr_lis.dsgpr_lpd.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
-authdsgpr_lis.dsgpr_lpd.eeDatos[0].fiid = sessionStorage.getItem("picfiid");
-authdsgpr_lis.dsgpr_lpd.eetemp = new Array();
-authdsgpr_lis.dsgpr_lpd.eetemp[0] = new Object();
-//console.log(JSON.stringify(authdsinv_art));
+};
+
+//////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Funcion para obtener la url y el json de entrada para la lista de Pedidos
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function sirConsultaVendedor() {
+    var mapData = "eesic_ven";
+    var urlSir = ipServicios + baseParameters + "SIRsic_ven";
+    var json = {
+            "dsSIRsic_ven": {
+		"eeDatos":[
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "eeSIRsic_ven": [
+                {
+                    "piccod_suc": "*",                    
+                    "picven_cod": "*",
+                    "piiven_est": -1,
+                }
+            ]
+        }
+    };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
+};
+
+/**
+ * Funcion para obtener la url y el json de entrada para la lista de Pedidos
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function sirConsultaClasesDeArticulos() {
+    var mapData = "eeinv_cla";
+    var urlSir = ipServicios + baseParameters + "SIRinv_cla";
+ 
+    var json = {
+            "dsinv_cla": {
+		"eeDatos":[
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "fiid": sessionStorage.getItem("picfiid"),
+                }
+                ],
+                "eetemp": [
+                    {
+                        "picsuc_cod": "*"
+                    }
+                ]
+            }
+        };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
+};
+
+/**
+ * Funcion para obtener la url y el json de entrada para el autocomplete de articulo
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function sirConsultaArticulos() {
+    var mapData = "eeinv_art";
+    var urlSir = ipServicios + baseInventarios + "SIRinv_art";
+    
+    var json = {
+            "dsSIRinv_art": {
+		"eeDatos":[
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "fiid": sessionStorage.getItem("picfiid"),
+                }
+                ],
+                "eeSIRinv_art": [
+                    {
+                        "piicla_cod": "*",
+                        "piilis_num": 1
+                    }
+                ]
+            }
+        };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
+};
 
 var authdssic_pdif = new Object();
 authdssic_pdif.dssic_pdif = new Object();

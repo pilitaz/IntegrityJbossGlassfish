@@ -65,6 +65,11 @@ $(document).ready(function() {
         }        
     });
     
+    var objClasesDeArticulos = new sirConsultaClasesDeArticulos();
+    var jsonClasesDeArticulos = objClasesDeArticulos.getjson();
+    var urlClasesDeArticulos = objClasesDeArticulos.getUrlSir();
+    var mapDataClasesDeArticulos = objClasesDeArticulos.getMapData();
+    
     $("#idClaseArticulo").kendoDropDownList({
         dataTextField: 'cla__des',
         dataValueField: 'cla__cod',
@@ -75,17 +80,20 @@ $(document).ready(function() {
             type: "json",
             transport: {
                 read: {
-                    url: ipServicios+"rest/Parameters/SIRinv_cla",
+                    url: urlClasesDeArticulos,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST"
                 },
                 parameterMap: function (options, operation) {
-                    try {
-                        authdsinv_cla.dsinv_cla.eetemp[0].picsuc_cod = parent.$("#ipSucursal").val();                        
+                    try {    
+                        
                         if (operation === 'read') {
-                            authdsinv_cla["eeinv_cla"] = [options];
-                            return JSON.stringify(authdsinv_cla);
+                            
+                            var key1 = Object.keys(jsonClasesDeArticulos)[0];
+                            var key2 = Object.keys(jsonClasesDeArticulos[key1])[1];
+                            jsonClasesDeArticulos[key1][key2][0].picsuc_cod = parent.$("#ipSucursal").val();;
+                            return JSON.stringify(jsonClasesDeArticulos);
                         }	
                     } catch (e) {
                         alertDialogs(e.message);
@@ -95,10 +103,11 @@ $(document).ready(function() {
             schema: {
                 type: "json",
                 data:function (e){
-                    if(e.dsinv_cla.eeEstados[0].Estado==="OK"){                            
-                        return e.dsinv_cla.eeinv_cla;
-                    }else{
-                        alertDialogs(e.dsinv_cla.eeEstados[0].Estado);
+                    var key1 = Object.keys(e)[0];
+                    if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                        return e[key1][mapDataClasesDeArticulos];
+                    } else {
+                        alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -115,6 +124,12 @@ $(document).ready(function() {
         }			
     });
     
+    var objArticulos = new sirConsultaArticulos();
+    var jsonArticulos = objArticulos.getjson();
+    var urlArticulos = objArticulos.getUrlSir();
+    var mapDataArticulos = objArticulos.getMapData();
+     
+    
     $("#idArticulo").kendoAutoComplete({
         dataTextField: 'art__des',
         optionLabel: "Seleccionar articulo...",
@@ -127,20 +142,21 @@ $(document).ready(function() {
             type: "json",
             transport: {
                 read: {
-                    url: ipServicios+baseInventarios+"SIRinv_art",
+                    url: urlArticulos,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST"
                 },
-                parameterMap: function (options, operation) {
-                    authdsinv_art.dsSIRinv_art.eeSIRinv_art[0].piicla_cod = $("#idClaseArticulo").val();
-                    authdsinv_art.dsSIRinv_art.eeSIRinv_art[0].piilis_num = sessionStorage.getItem("listaPrecioCliente");//lista del cliente        
-                    authdsinv_art.dsSIRinv_art.eeSIRinv_art[0].picart_des = $("#idArticulo").val();
-                    console.log("authdsinv_art"+JSON.stringify(authdsinv_art));
+                parameterMap: function (options, operation) {                  
                     try {
                         if (operation === 'read') {
-                            authdsinv_art["eeinv_art"] = [options];                                  
-                            return JSON.stringify(authdsinv_art);                                
+                            
+                            var key1 = Object.keys(jsonArticulos)[0];
+                            var key2 = Object.keys(jsonArticulos[key1])[1];
+                            jsonArticulos[key1][key2][0].piicla_cod = $("#idClaseArticulo").val();
+                            jsonArticulos[key1][key2][0].piilis_num = sessionStorage.getItem("listaPrecioCliente");//lista del cliente        
+                            jsonArticulos[key1][key2][0].picart_des = $("#idArticulo").val();
+                            return JSON.stringify(jsonArticulos);                                                           
                         }	
                     } catch (e) {
                         alertDialogs("Error" +e.message);
@@ -150,11 +166,11 @@ $(document).ready(function() {
             schema: {
                 type: "json",
                 data:function (e){                         
-                    if(e.dsSIRinv_art.eeEstados[0].Estado==="OK"){
-                        //                            console.log("authdsinv_art "+JSON.stringify(authdsinv_art));
-                        return e.dsSIRinv_art.eeinv_art;
-                    }else{
-                        alertDialogs("Error: " +e.dsSIRinv_art.eeEstados[0].Estado);
+                    var key1 = Object.keys(e)[0];
+                    if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                        return e[key1][mapDataArticulos];
+                    } else {
+                        alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -266,7 +282,7 @@ $(document).ready(function() {
     });
     
     function onChangeConceptoDet(e){
-        debugger
+        
         
         var codAmortizacion= e.sender.dataSource._data[e.sender.selectedIndex-1].tcon_dif;
         var dropdownlist = $("#idCodigoAmortizacion").data("kendoDropDownList");
@@ -343,6 +359,7 @@ $(document).ready(function() {
 
 function agregarItem(){
     
+    var factura = JSON.parse(sessionStorage.getItem("regFactura"))
     var dropdownlist = $("#ipConceptoDet").data("kendoDropDownList");
     var codConceptoDet = dropdownlist.dataSource._data[dropdownlist.selectedIndex-1].tcont__cod;
     var conceptoDet = dropdownlist.dataSource._data[dropdownlist.selectedIndex-1].tcont__des;
@@ -382,7 +399,7 @@ function agregarItem(){
     authdsSIRgfc_fac.dsSIRgfc_fac.eegfc_itms[0] = new Object();
     authdsSIRgfc_fac.dsSIRgfc_fac.eegfc_itms[0].tcon__cod = codConceptoDet;
     authdsSIRgfc_fac.dsSIRgfc_fac.eegfc_itms[0].clc__cod = parent.$("#ipCDocumento").val();
-    authdsSIRgfc_fac.dsSIRgfc_fac.eegfc_itms[0].fac__nro = sessionStorage.getItem("facturaNumero");
+    authdsSIRgfc_fac.dsSIRgfc_fac.eegfc_itms[0].fac__nro = factura.fac__nro;
     authdsSIRgfc_fac.dsSIRgfc_fac.eegfc_itms[0].fac__fec = parent.$("#ipFecha").val();
     authdsSIRgfc_fac.dsSIRgfc_fac.eegfc_itms[0].suc__cod = parent.$("#ipSucursal").val();
     authdsSIRgfc_fac.dsSIRgfc_fac.eegfc_itms[0].art__cod = codArticulo;
