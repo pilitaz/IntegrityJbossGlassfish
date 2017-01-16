@@ -411,7 +411,8 @@ function SIRgpr_pre() {
             "eeSIRgpr_pre": [
                 {
                     "picpre__pcod": "*",
-                    "picusuario": "*"
+                    "picusuario": "*",
+                    "piipre__est":-1
                 }
             ]
         }
