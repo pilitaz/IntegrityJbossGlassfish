@@ -818,9 +818,10 @@ function setInfoCliente(e){
             }            
         }
     });
-        
+    debugger    
     var comboboxDivisa= $("#ipDivisa").data("kendoDropDownList");
-    comboboxDivisa.enable(!clienteNacional);
+    comboboxDivisa.value("CO");
+    comboboxDivisa.readonly(true);
     
     var numericTextBoxTasa= $("#ipTasa").data("kendoNumericTextBox");
     numericTextBoxTasa.enable(!clienteNacional);
@@ -860,9 +861,9 @@ function guardarFactura(){
     var listaPrecios = sessionStorage.getItem("listaPrecioCliente");
     var actualizarTasa = $("#ipActualizarTasa")["0"].checked;
     var numFactura = "";
-    var msn = "";
-    var actualizacion=true;
+    var msn = "";    
     var verboHTML="POST";
+    
     
     var jSonData = new Object();
     jSonData.dsSIRgfc_fac = new Object();
@@ -886,9 +887,10 @@ function guardarFactura(){
     jSonData.dsSIRgfc_fac.eegfc_fac[0].ter__nit = sessionStorage.getItem("nitCliente");
     jSonData.dsSIRgfc_fac.eegfc_fac[0].ven__cod = sessionStorage.getItem("codVendedor"); 
     
-    if(sessionStorage.getItem("actualizarFactura")==="true"){        
+    if(sessionStorage.getItem("regFactura")){    
+        var factura = JSON.parse(sessionStorage.getItem("regFactura"));
         verboHTML="PUT";
-        jSonData.dsSIRgfc_fac.eegfc_fac[0].fac__nro = sessionStorage.getItem("facturaNumero");
+        jSonData.dsSIRgfc_fac.eegfc_fac[0].fac__nro = factura.fac__nro;
     }
     
     $.ajax({
@@ -1070,6 +1072,7 @@ function cargarFactura(){
                 var fechaVencimiento = new Date((factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__fec__venc).replace(/-/g, "/"));
                 //fechaVencimiento.setHours(0,0,0,0);                    
                 
+                 $("#txtAObservaciones").val(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].obs__fac);
                 
 //                $("#ipFecha").kendoDatePicker({        
 //                    format: "yyyy/MM/dd",
