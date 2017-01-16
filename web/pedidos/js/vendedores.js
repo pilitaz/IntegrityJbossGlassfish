@@ -127,7 +127,7 @@ $(document).ready(function () {
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
 
-    var mapCud = "eegpd_vdd";
+    var mapCud = "eesic_ven";
     dataSource = new kendo.data.DataSource({
         transport: {
             read: {
@@ -233,17 +233,18 @@ $(document).ready(function () {
                     }
                 }},
             model: {
-                id: "vdd__cod",
+                id: "ven__cod",
                 fields: {
-                    vdd__cod:    {editable: true, nullable: false},
+                    ven__cod:    {editable: true, nullable: false},
                     ter__nit:    {editable: true, nullable: false},
-                    trr__cod:    {editable: false, nullable: false},  
-                    cla__cli:    {editable: true, nullable: false},  
-                    vdd__est:    {editable: true, nullable: false}, 
-                    vdd__ter:    {editable: true, nullable: false},
-                    ter__raz:    {editable: true, nullable: false},
-                    trr__nom:    {editable: true, nullable: false},
-                    cla__nom:    {editable: true, nullable: false}
+                    ter__raz:    {editable: false, nullable: false},  
+                    suc__cod:    {editable: true, nullable: false},  
+                    gve__cod:    {editable: true, nullable: false}, 
+                    tip__ven__cod:    {editable: true, nullable: false},
+                    ven__est:    {editable: true, nullable: false},
+                    zon__cod:    {editable: true, nullable: false},
+                    ven__jef:    {editable: true, nullable: false,type: "boolean"},
+                    ven__com:    {editable: true, nullable: false}
                 }
             }
         }
@@ -261,7 +262,7 @@ $(document).ready(function () {
         },
         //navigatable: true,
         columns: [
-            {field: "vdd__cod", title: "Cod Supervisor ",  hidden:false},
+            {field: "ven__cod", title: "Cod Supervisor ",  hidden:true},
             {field: "ter__nit", title: "Nit",  hidden:false, editor: filtroestado,
                 template: function (e) {debugger
                     return e.ter__nit;
@@ -270,10 +271,13 @@ $(document).ready(function () {
                 template: function (e) {debugger
                     return e.ter__raz;
                 }},    
-            {field: "trr__nom", title: "Territorio ",  hidden:false},
-            {field: "cla__nom", title: "Nombre ",  hidden:false},
-            {field: "vdd__ter", title: "territorio vendedor",  hidden:false},
-            
+            {field: "suc__cod", title: "Sucursal ",  hidden:false},
+            {field: "gve__cod", title: "Nombre ",  hidden:true},
+            {field: "tip__ven__cod", title: "territorio vendedor",  hidden:true},
+            {field: "ven__est", title: "territorio vendedor",  hidden:true},
+            {field: "zon__cod", title: "territorio vendedor",  hidden:true},
+            {field: "ven__jef", title: "territorio vendedor",  hidden:true},
+            {field: "ven__com", title: "territorio vendedor",  hidden:true},
             {command: [
                     {name: "check", text: "estado",click: changeEst, template: "<a class='k-grid-check'><span class='k-sprite po_editoff' ></span></a>" },
                     {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff' ></span></a>"},
