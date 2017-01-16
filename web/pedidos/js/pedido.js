@@ -18,8 +18,8 @@ $(document).ready(function () {
    document.getElementById('lbDireccion').innerHTML = pedido.ter__dir;
    document.getElementById('lbTelefono').innerHTML = pedido.ter__tel;   
    document.getElementById('lbCiudad').innerHTML = pedido.ciu__nom;
-   document.getElementById('lbObservaciones').innerHTML = pedido.obs__ped;   
-   //sessionStorage.setItem("listaPrecioCliente", dataCliente.lis__num);
+   document.getElementById('lbObservaciones').innerHTML = pedido.obs__ped;      
+   sessionStorage.setItem("listaPrecioCliente", pedido.lis__num);
    
    gridDetallePedido();
    

@@ -352,24 +352,27 @@ function sirConsultaCliente() {
  *  var input = sir.getdataInputSir();
  */
 function sirConsultaVendedor() {
-    var mapData = "eesic_ven1";
+    var mapData = "eesic_ven";
     var urlSir = ipServicios + baseParameters + "SIRsic_ven";
-    var json = 
-            {
-                    "dssic_ven" : {
-                            "eeDatos" : [{
-                                            "picusrcod" : sessionStorage.getItem("usuario"),
-                                            "fiid" : sessionStorage.getItem("picfiid")
-                                    }
-                            ],
-                            "eetemp" : [{
-                                            "picsuc_cod" : "",
-                                            "piiven_cod" : ""
-                                    }
-                            ]
-                    },
-                    "eesic_ven1" : [{}]
-            };
+    var json = {
+            "dsSIRsic_ven": {
+		"eeDatos":[
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "eeSIRsic_ven": [
+                {
+                    "piccod_suc": "*",                    
+                    "picven_cod": "*",
+                    "piiven_est": -1,
+                }
+            ]
+        }
+    };
 
     this.setUrlSir = function (newname) {
         if (newname) {
