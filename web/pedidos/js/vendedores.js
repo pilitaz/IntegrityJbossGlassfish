@@ -127,7 +127,7 @@ $(document).ready(function () {
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
 
-    var mapCud = "eesic_ven";
+    var mapCud = "eegpd_vdd";
     dataSource = new kendo.data.DataSource({
         transport: {
             read: {
@@ -226,25 +226,22 @@ $(document).ready(function () {
                         return e[key1][mapCud];
                     }else
                     {
-                        alertDialogs("Error"+e[key1].eeEstados[0].Estado); 
-                        $('#grid').data('kendoGrid').refresh();                                             
-                        $('#grid').data('kendoGrid').dataSource.read();
-                        $('#grid').data('kendoGrid').refresh();
+                        alertDialogs("Error"+e[key1].eeEstados[0].Estado);   
                     }
                 }},
             model: {
-                id: "ven__cod",
+                id: "vdd__cod",
                 fields: {
-                    ven__cod:    {editable: true, nullable: false},
+                    vdd__cod:    {editable: true, nullable: false},
                     ter__nit:    {editable: true, nullable: false},
-                    ter__raz:    {editable: false, nullable: false},  
-                    suc__cod:    {editable: true, nullable: false},  
-                    gve__cod:    {editable: true, nullable: false}, 
-                    tip__ven__cod:    {editable: true, nullable: false},
-                    ven__est:    {editable: true, nullable: false},
-                    zon__cod:    {editable: true, nullable: false},
-                    ven__jef:    {editable: true, nullable: false,type: "boolean"},
-                    ven__com:    {editable: true, nullable: false}
+                    ter__raz:    {editable: true, nullable: false},  
+                    trr__nom:    {editable: true, nullable: false},  
+                    cla__nom:    {editable: true, nullable: false}, 
+                    vdd__ter:    {editable: true, nullable: false},
+                    vdd__est:    {editable: true, nullable: false},
+                    cla__cli:    {editable: true, nullable: false},
+                    trr__cod:    {editable: true, nullable: false},
+
                 }
             }
         }
@@ -253,21 +250,21 @@ $(document).ready(function () {
         dataSource: dataSource,
 
         columns: [
-            {field: "ven__cod", title: "Cod Supervisor ",  hidden:true},
+            {field: "vdd__cod", title: "Cod Vendedor ",  hidden:false},
             {field: "ter__nit", title: "Nit",  hidden:false, editor: filtroestado,
                 template: function (e) {debugger
                     return e.ter__nit;
                 }},    
-            {field: "ter__raz", title: "Razon social",  hidden:false,editor: nombre,
+            {field: "ter__raz", title: "Nombre",  hidden:false,editor: nombre,
                 template: function (e) {debugger
                     return e.ter__raz;
                 }},    
-            {field: "suc__cod", title: "Sucursal",  hidden:false},
-            {field: "gve__cod", title: "Gerente Ventas",  hidden:true},
-            {field: "tip__ven__cod", title: "Tipo de vendedor",  hidden:true},
-            {field: "zon__cod", title: "Codigo Zona",  hidden:true},
-            {field: "ven__jef", title: "Jefe Vendedor",  hidden:true},
-            {field: "ven__com", title: "Comision Fija",  hidden:true},
+            {field: "trr__nom", title: "Territorio", editor: territorio,
+                template: function (e) {debugger
+                    return e.suc__cod;
+                }},
+            {field: "cla__cli", title: "Clase Cliente",  hidden:false},
+            
             {command: [
                     {name: "check", text: "estado",click: changeEst, template: "<a class='k-grid-check'><span class='k-sprite po_editoff' ></span></a>" },
                     {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff' ></span></a>"},
@@ -275,12 +272,12 @@ $(document).ready(function () {
         editable: "popup",
          edit: function(e) {debugger
             if (!e.model.isNew()) {//caso en el que el popup es editar
-                if(e.model.ven__est!= 99 ){
+                if(e.model.vdd__est!= 99 ){
                     
-                    
-                   kendo.ui.progress($('.k-edit-form-container'), true);
-                   kendo.ui.progress($('.k-edit-buttons'), true);
-                   e.container.find(".k-loading-image").css("background-image", "url('')");
+                  
+//                   kendo.ui.progress($('.k-edit-form-container'), true);
+//                   kendo.ui.progress($('.k-edit-buttons'), true);
+//                   e.container.find(".k-loading-image").css("background-image", "url('')");
 
             }else{
                 //$("#region").data("kendoDropDownList").enable(false);
@@ -293,6 +290,7 @@ $(document).ready(function () {
                var buscarlabel = $("label").find("for");
                 Buscarlabel = buscarlabel.prevObject[0];
                 Buscarlabel.style.display = "none";
+                e.container.find("input[name='ven__cod']")[0].hidden="true";
             }
         } ,
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
@@ -356,7 +354,7 @@ grilla(-1);
          
     
       function nombre(container, options) {
-        var obj = new sirConsultaCliente();
+ var obj = new sirConsultaCliente();
         var objJson = obj.getjson();
         var url = obj.getUrlSir();
         var mapData = obj.getMapData();
@@ -423,7 +421,6 @@ grilla(-1);
                 }            
             }
         });    
-          
       }
     function filtroestado(container, options) {debugger
 
@@ -496,19 +493,17 @@ grilla(-1);
             
     }                       
 
-                        
-   
-    function regionCod(container, options) {debugger
-        
-        var consultar = new sirRegionGeografica();
+        function territorio(container, options) {debugger
+        var consultar = new sirTerritorio();
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();
-        var mapCud1 = "eegpr_rgeo";
-        $('<input  id = "region" required name="' + options.field + '"/>')
+        var mapCud1 = "eegpd_trr";
+        $('<input  id = "territorios" />')
                 .appendTo(container)
-                .kendoDropDownList({
-            dataTextField: "rgeo__nom",
-            dataValueField: "rgeo__nom",
+                .kendoMultiSelect({
+            dataTextField: "trr__nom",
+            dataValueField: "trr__cod",
+            template:'<div class="divElementDropDownList">#: data.trr__nom #</div>',  
             dataSource: {
                 transport: {
                     read: {
@@ -529,22 +524,22 @@ grilla(-1);
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
                         } else {
-                            alertDialogs("Error Con Servicio Regiones"+e[key1].eeEstados[0].Estado);
+                            alertDialogs("Error Con Servicio sucursales"+e[key1].eeEstados[0].Estado);
                         }
                     },
                     model: {
-                        id: "rgeo__nom",
+                        id: "trr__cod",
                         fields: {
-                            rgeo__cod: {editable: false, nullable: false},
-                            rgeo__nom: {editable: false, nullable: false}
+                            trr__cod: {editable: false, nullable: false},
+                            trr__nom: {editable: false, nullable: false}
                         }
                     }
                 }
             }
 
         });
-    }
-
+    }        
+   
     function changImgFunc(results , e) {debugger
      
         for (var i = 0; i < results.length; i++) {

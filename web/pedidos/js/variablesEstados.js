@@ -1294,9 +1294,9 @@ function sirTransportistas() {
 };
 ///////////////////////////////////////////////////////////////
 function sirVendedores() {
-    var urlSir = ipServicios + baseParameters +"SIRsic_ven";
+    var urlSir = ipServicios + baseComercial +"SIRgpd_vdd";
     var json ={  
-   "dsSIRsic_ven":{  
+   "dsSIRgpd_vdd":{  
       "eeDatos":[  
          {  
             "picusrcod":sessionStorage.getItem("usuario"),
@@ -1305,13 +1305,16 @@ function sirVendedores() {
             "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ],
-  "eeSIRsic_ven": [{
-       "piccod_suc": "0",
-       "picven_cod": "*",
-       "piiven_est": -1
-       
-  }]
-  
+      "eeSIRgpd_vdd":[  
+         { 
+         
+          "piitrr__cod":0,
+          "piivdd__cod":0,
+          "picter__nit":"*",
+          "piicla__cli":0,
+          "piivdd__est":-1
+         }
+      ]      
    }
 };
     
