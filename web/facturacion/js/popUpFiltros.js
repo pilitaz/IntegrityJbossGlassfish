@@ -8,14 +8,14 @@ var hoy = new Date(sessionStorage.getItem("fechaSistema"));
 hoy.setHours(0,0,0,0);
 var objCliente = null;
 
-var authdsgfc_cli = new Object();
-authdsgfc_cli.dsgfc_cli = new Object();
-authdsgfc_cli.dsgfc_cli.eeDatos = new Array();
-authdsgfc_cli.dsgfc_cli.eeDatos[0] = new Object();
-authdsgfc_cli.dsgfc_cli.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
-authdsgfc_cli.dsgfc_cli.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
-authdsgfc_cli.dsgfc_cli.eetemp = new Array();
-authdsgfc_cli.dsgfc_cli.eetemp[0] = new Object();
+//var authdsgfc_cli = new Object();
+//authdsgfc_cli.dsgfc_cli = new Object();
+//authdsgfc_cli.dsgfc_cli.eeDatos = new Array();
+//authdsgfc_cli.dsgfc_cli.eeDatos[0] = new Object();
+//authdsgfc_cli.dsgfc_cli.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
+//authdsgfc_cli.dsgfc_cli.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
+//authdsgfc_cli.dsgfc_cli.eetemp = new Array();
+//authdsgfc_cli.dsgfc_cli.eetemp[0] = new Object();
 
 $(document).ready(function(){
     $("#ipfechaInicio").kendoDatePicker({
@@ -42,45 +42,52 @@ $(document).ready(function(){
         footer: false
     }); 
     
+    var obj = new sirConsultaCliente();
+    var objJson = obj.getjson();
+    var url = obj.getUrlSir();
+    var mapData = obj.getMapData();
+    
     $("#ipCliente").kendoAutoComplete({
         dataTextField: "ter__raz",
         dataValueField: "ter__nit",        
         placeholder: "Selecione un cliente...",
-        minLength: 3,
+        minLength: 4,
         filter: "contains",
-        template:'<div class="divElementDropDownList">#: data.ter__raz #</div>',
-        select: client,
+        template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',       
         dataSource: {
             type: "json",
             serverFiltering: true,
             transport: {
                 read:{
-                    url: ipServicios+"rest/Parameters/SIRgfc_cli",
+                    url: url,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST"
                 },
                 parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
-                    try {
-                        authdsgfc_cli.dsgfc_cli.eetemp[0].picter_raz = $("#ipCliente").val();                        
+                    try {                                             
                         if (operation === 'read') {
-                            authdsgfc_cli["eegfc_cli"] = [options];
-                            return JSON.stringify(authdsgfc_cli);
+                            var key1 = Object.keys(objJson)[0];
+                            var key2 = Object.keys(objJson[key1])[1];
+                            objJson[key1][key2][0].picter_nit = "";
+                            objJson[key1][key2][0].picter_raz = $("#ipCliente").val();
+                            return JSON.stringify(objJson);
+                            
                         } 
                     } catch (e) {
                         alertDialogs(e.message);
-                    }                
-                    
+                    } 
                 }
             },
             schema: {
                 data: function (e){                    
-                    if(e.dsgfc_cli.eeEstados[0].Estado==="OK"){
-                        return e.dsgfc_cli.eegfc_cli;
-                    }else if(e.dsgfc_cli.eeEstados[0].Estado==="ERROR: Patrón de Búsqueda Insuficiente !!!"){
+                    var key1 = Object.keys(e)[0];
+                    if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                        return e[key1][mapData];
+                    }else if(e[key1].eeEstados[0].Estado==="ERROR: Patrón de Búsqueda insuficiente !!!"){
                         
                     }else{
-                        alertDialogs(e.dsgfc_cli.eeEstados[0].Estado);
+                        alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model:{}
@@ -98,7 +105,7 @@ $(document).ready(function(){
     });
     
     var estados = [
-        { text: "Todos", value: "*" },
+        { text: "Todos", value: "99" },
         { text: "No contabilizado", value: "0" },
         { text: "Contabilizado", value: "1" },
         { text: "Anulado", value: "9" }
