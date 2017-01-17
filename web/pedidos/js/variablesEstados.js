@@ -1381,3 +1381,172 @@ function sirVendedores() {
     };
     
 };
+///////////////////////////////////////////////////////////////
+function sirVendedoresDetalle() {
+    var urlSir = ipServicios + baseComercial +"SIRgpd_vtr";
+    var json ={  
+   "dsSIRgpd_vtr":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "SIRgpd_vtr":[  
+         {  
+          "piivdd__cod":0,
+          "piitrr__cod":0
+         }
+      ]      
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///////////////////////////////////////////////////////////////
+function CudDetalleVendedor() {
+    var urlSir = ipServicios + baseComercial +"SICUDgpd_vtr";
+    var json ={  
+   "dsSICUDgpd_vtr":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "eegpd_vtr":[  
+         {  
+          "trr__cod":0,
+          "vdd__cod":0
+         	
+         }
+      ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///////////////////////////////////////////////////////////////
+function SirSicVen() {
+    var urlSir = ipServicios + baseParameters +"SIRsic_ven";
+    var json ={  
+   "dsSIRsic_ven":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+  "eeSIRsic_ven": [{
+       "piccod_suc": "0",
+       "picven_cod": "*",
+       "piiven_est": -1
+       
+  }]
+  
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///////////////////////////////////////////////////////////////
+function CudVendedores() {
+    var urlSir = ipServicios + baseComercial +"SICUDgpd_vdd";
+    var json ={  
+   "dsSICUDgpd_vdd":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "eegpd_vdd":[  
+         {  
+          "vdd__cod":0,
+          "ter__nit":"0",
+          "trr__cod":0,
+          "cla__cli":0,
+          "vdd__est":0
+         }
+      ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
