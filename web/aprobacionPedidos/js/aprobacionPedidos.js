@@ -96,12 +96,17 @@ function grid() {
                         [
                             {name: "aprobar", click: popUpAprobacionPedido, template: "<a class='k-grid-aprobar' href='' style='min-width:16px;'><span class='k-sprite po_checkCreate'></span></a>"},
                             {name: "ver",  click: clickVer, template: "<a class='k-grid-ver'><span class='k-sprite po_preview'></span></a>"},
+                            {name: "anular", click: anularFactura, template: "<a class='k-grid-anular'><span class='k-sprite po_cerrar'></span></a>"}
                         ],
                 width: "150px"}],
         editable: "popup",
         rowTemplate: kendo.template($("#rowTemplate").html()),
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
     });
+    
+    function anularFactura(e){        
+        e.preventDefault();   
+    }S
 }
 function ondataBound() {
     sessionStorage.removeItem("jsonFiltroPedidos");

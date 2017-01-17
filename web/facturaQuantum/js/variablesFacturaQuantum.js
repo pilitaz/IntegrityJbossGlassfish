@@ -55,19 +55,21 @@ authdssic_mnd.dssic_mnd.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
  *  var input = sir.getdataInputSir();
  */
 function sirConsultaCliente() {
-    var mapData = "eegfc_cli";
-    var urlSir = ipServicios + baseParameters + "SIRgfc_cli";
+    var mapData = "eegpd_cli";
+    var urlSir = ipServicios + baseComercial + "SIRgpd_cli";
     var json = 
             {
-                    "dsgfc_cli" : {
+                    "dsSIRgpd_cli" : {
                             "eeDatos" : [{
                                             "picusrcod": sessionStorage.getItem("usuario"),
                                             "picfiid": sessionStorage.getItem("picfiid"), 
+                                            "local_ip":sessionStorage.getItem("ipPrivada"),
+                                            "remote_ip":sessionStorage.getItem("ipPublica")
                                     }
                             ],
-                            "eetemp" : [{
-                                            "picter_raz" : "",
-                                            "picter_nit" : "",
+                            "SIRgpd_cli" : [{
+                                            "piicla__cli" : "",
+                                            "picter__nit" : "",
                                     }
                             ]
                     }

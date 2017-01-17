@@ -278,6 +278,11 @@ function iniDropDownList(){
     });
 }
 
+/**
+ * Metodo que inicia los el autocomplete del cliente (NIT - razón social)
+ * 
+ * @returns {undefined}
+ */
 function iniAutocomplete(){
     
     var obj = new sirConsultaCliente();
@@ -306,11 +311,11 @@ function iniAutocomplete(){
                 parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
                     try {
                                           
-                        if (operation === 'read') {
+                        if (operation === 'read') {                            
                             var key1 = Object.keys(objJson)[0];
                             var key2 = Object.keys(objJson[key1])[1];
-                            objJson[key1][key2][0].picter_nit = $("#ipNITCliente").val();
-                            objJson[key1][key2][0].picter_raz = "";
+                            objJson[key1][key2][0].picter__nit = $("#ipNITCliente").val();
+                           // objJson[key1][key2][0].picter_raz = "";
                             return JSON.stringify(objJson);
                         } 
                     } catch (e) {
@@ -368,8 +373,7 @@ function iniAutocomplete(){
                             var key2 = Object.keys(objJson[key1])[1];
                             objJson[key1][key2][0].picter_nit = "";
                             objJson[key1][key2][0].picter_raz = $("#ipCliente").val();
-                            return JSON.stringify(objJson);
-                            return JSON.stringify(authdsgfc_cli);
+                            return JSON.stringify(objJson);                            
                         } 
                     } catch (e) {
                         alertDialogs(e.message);
@@ -401,6 +405,7 @@ function iniAutocomplete(){
         }
     });
 }
+
 function gridDetalle(){    
     var grid = $("#grid").kendoGrid({
         dataSource: dataGridDetalle,       
@@ -692,7 +697,7 @@ function setInfoCliente(e){
     sessionStorage.setItem("nitCliente", dataCliente.ter__nit); // sessionStorage.setItem("
     sessionStorage.setItem("listaPrecioCliente", dataCliente.lis__num);
     sessionStorage.setItem("codVendedor", dataCliente.ven__cod);    
-    sessionStorage.setItem("opciondepago", dataCliente.fac__pag);
+    sessionStorage.setItem("opciondepago", dataCliente.pago__cod);
     
     var kendoDropDownListVendedor = $("#ipVendedor").data("kendoDropDownList");
     kendoDropDownListVendedor.enable(true); 
@@ -818,7 +823,7 @@ function setInfoCliente(e){
             }            
         }
     });
-    debugger    
+        
     var comboboxDivisa= $("#ipDivisa").data("kendoDropDownList");
     comboboxDivisa.value("CO");
     comboboxDivisa.readonly(true);
