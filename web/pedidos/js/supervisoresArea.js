@@ -164,14 +164,16 @@ $(document).ready(function () {
                     
                 }
                 if (operation === "create") {
+                    var cedula = $("#cedula")[0].value;
+                    var nombre = $("#nombre")[0].value;
                      var pais = $("#pais").data("kendoDropDownList");
                      var area = $("#area").data("kendoDropDownList");
                      var select = pais.selectedIndex;
                     pais = pais.dataSource._data[select].ciu__cod;
                     var select = area.selectedIndex;
                     area = area.dataSource._data[select].ageo__cod;
-                    actjson.dsSICUDgpd_sar.eegpd_sar[0].pai__cod=pais;  
-                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ter__nit=options.ter__nit;                     
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].pai__cod=parseInt(pais);;  
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ter__nit=cedula;                     
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].sar__est=99;   
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].ageo__cod=area; 
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].ter__raz=options.ter__raz;

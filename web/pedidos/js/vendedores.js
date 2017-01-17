@@ -263,34 +263,38 @@ $(document).ready(function () {
                 template: function (e) {debugger
                     return e.suc__cod;
                 }},
-            {field: "cla__cli", title: "Clase Cliente",  hidden:false},
+            {field: "cla__nom", title: "Clase Cliente",  hidden:false, editor: claseCliente,
+                template: function (e) {debugger
+                    return e.cla__nom;
+                }},
             
             {command: [
                     {name: "check", text: "estado",click: changeEst, template: "<a class='k-grid-check'><span class='k-sprite po_editoff' ></span></a>" },
-                    {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff' ></span></a>"},
+                    {name: "editar", text: "editar", click: detalle,template: "<a class='k-grid-editar'><span class='k-sprite po_editoff' ></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "140px"}],
         editable: "popup",
          edit: function(e) {debugger
             if (!e.model.isNew()) {//caso en el que el popup es editar
                 if(e.model.vdd__est!= 99 ){
-                    
-                  
-//                   kendo.ui.progress($('.k-edit-form-container'), true);
-//                   kendo.ui.progress($('.k-edit-buttons'), true);
-//                   e.container.find(".k-loading-image").css("background-image", "url('')");
+                    var multiselect = $("#territorios").data("kendoMultiSelect");
+                     var value = multiselect.value();
+                     multiselect.value(e.model.trr__cod );
+                     kendo.ui.progress($('.k-edit-form-container'), true);
+                     kendo.ui.progress($('.k-edit-buttons'), true);
+                     e.container.find(".k-loading-image").css("background-image", "url('')");
 
             }else{
-                //$("#region").data("kendoDropDownList").enable(false);
-            //e.container.find("span")[1].attr('disabled','disabled');
-            //e.container.find("span[for='rgeo__nom']");
-            
+                var multiselect = $("#territorios").data("kendoMultiSelect");
+                var value = multiselect.value();
+                multiselect.value(e.model.trr__cod );
+           
             }
             }
             else{//caso en el que el popup es crear 
                var buscarlabel = $("label").find("for");
                 Buscarlabel = buscarlabel.prevObject[0];
                 Buscarlabel.style.display = "none";
-                e.container.find("input[name='ven__cod']")[0].hidden="true";
+                e.container.find("input[name='vdd__cod']")[0].hidden="true";
             }
         } ,
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
@@ -492,7 +496,53 @@ grilla(-1);
         });
             
     }                       
+function claseCliente(container, options) {debugger
+        
+        var consultar = new sirClaseCliente();
+        var datajson = consultar.getjson();
+        var urlService = consultar.getUrlSir();
+        var mapCud1 = "eegpr_cla";
+        $('<input  id = "claseCliente" required name="' + options.field + '" />')
+                .appendTo(container)
+                .kendoDropDownList({
+            dataTextField: "cla__nom",
+            dataValueField: "cla__nom",
+            //template:'<div class="divElementDropDownList">#: data.cla__nom #</div>',  
+            dataSource: {
+                transport: {
+                    read: {
+                        url: urlService,
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation === "read") {
+                            return JSON.stringify(datajson);
+                        }
+                    }
+                },
+                schema: {
+                    data: function (e) {debugger
+                        var key1 = Object.keys(e)[0];
+                        if (e[key1].eeEstados[0].Estado === "OK") {
+                            return e[key1][mapCud1];
+                        } else {
+                            alertDialogs("Error Con Servicio Clase Cliente"+e[key1].eeEstados[0].Estado);
+                        }
+                    },
+                    model: {
+                        id: "cla__nom",
+                        fields: {
+                            cla__cli: {editable: false, nullable: false},
+                            cla__nom: {editable: false, nullable: false}
+                        }
+                    }
+                }
+            }
 
+        });
+    }        
         function territorio(container, options) {debugger
         var consultar = new sirTerritorio();
         var datajson = consultar.getjson();
@@ -503,6 +553,8 @@ grilla(-1);
                 .kendoMultiSelect({
             dataTextField: "trr__nom",
             dataValueField: "trr__cod",
+            autoClose: true,
+            placeholder: "Territorios..",
             template:'<div class="divElementDropDownList">#: data.trr__nom #</div>',  
             dataSource: {
                 transport: {
@@ -539,21 +591,21 @@ grilla(-1);
 
         });
     }        
-   
+    
     function changImgFunc(results , e) {debugger
      
         for (var i = 0; i < results.length; i++) {
-            if (document.getElementById("spanproceso"+results[i].ter__nit+results[i].suc__cod)){
-                if(results[i].ven__est==0){                            
-                    document.getElementById("spanproceso"+results[i].ter__nit+results[i].suc__cod).setAttribute("class", "k-sprite po_checkAct");   
+            if (document.getElementById("spanproceso"+results[i].vdd__cod+results[i].ter__nit+results[i].cla__nom)){
+                if(results[i].vdd__est==0){                            
+                    document.getElementById("spanproceso"+results[i].vdd__cod+results[i].ter__nit+results[i].cla__nom).setAttribute("class", "k-sprite po_checkAct");   
                     //document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("onclick", "disable();");
                 }
-                if(results[i].ven__est==99){     
-                    document.getElementById("spanproceso"+results[i].ter__nit+results[i].suc__cod).setAttribute("class", "k-sprite po_checkCreate");
+                if(results[i].vdd__est==99){     
+                    document.getElementById("spanproceso"+results[i].vdd__cod+results[i].ter__nit+results[i].cla__nom).setAttribute("class", "k-sprite po_checkCreate");
                     //document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("onclick", "active();");
                 }
-                if(results[i].ven__est==1){     
-                    document.getElementById("spanproceso"+results[i].ter__nit+results[i].suc__cod).setAttribute("class", "k-sprite po_checkBloq");
+                if(results[i].vdd__est==1){     
+                    document.getElementById("spanproceso"+results[i].vdd__cod+results[i].ter__nit+results[i].cla__nom).setAttribute("class", "k-sprite po_checkBloq");
 
                 }
             }

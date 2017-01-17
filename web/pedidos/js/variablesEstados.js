@@ -7,6 +7,50 @@
  *  var url = sir.getUrlSir();
  *  var input = sir.getdataInputSir();
  */
+/////////////////////////////////////////////////////////////////////
+function sirClaseCliente() {
+    var urlSir = ipServicios + baseComercial +"SIRgpr_cla";
+    var json = { 
+        "dsSIRgpr_cla":{ 
+            "eeDatos":[ 
+                { 
+                    "picusrcod":sessionStorage.getItem("usuario"),
+                    "picfiid":sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
+                    
+                }
+            ], 
+            "eeSIRgpr_cla": [
+                {
+                    "picclacli": 0,
+                    "picusuario":"*",
+                    "piiclaest": -1
+                }
+            ]
+        }
+    };
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///////////////////////////////////////////////////////////////
 function sirConsultaCliente() {
     var mapData = "eesic_ter";
     var urlSir = ipServicios + baseParameters + "SIRsic_ter";
