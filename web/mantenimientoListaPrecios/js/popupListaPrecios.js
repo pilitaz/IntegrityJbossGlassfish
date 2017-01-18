@@ -26,6 +26,7 @@ $(document).ready(function () {
         dataTextField: 'cla__des',
         dataValueField: 'cla__cod',
         optionLabel: "Seleccionar clase de articulo...",
+        
         change: onChangeClase,
         dataSource: {
             type: "json",
@@ -183,6 +184,65 @@ $(document).ready(function () {
             }
         }
     });
+    
+    
+    
+    var objP = new SIRsic_mnd();
+    var objArtP = objP.getjson();
+    var urlSirP = objP.getUrlSir();
+    var mapDataP = objP.getMapData();
+    $("#idDivisa").kendoDropDownList({
+        dataTextField: 'mnd__des',
+        dataValueField: "mnd__cla",
+        optionLabel: "Seleccionar Moneda...",
+        select: onSelectPres,
+        dataSource: {
+            type: "json",
+            transport: {
+                read: {
+                    url: urlSirP,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) {
+                    try {
+                        if (operation === 'read') {
+                            var key1 = Object.keys(objArtP)[0];
+                            var key2 = Object.keys(objArtP[key1])[1];
+//                            objArtP[key1][key2][0].piipre__est = 99
+                            return JSON.stringify(objArtP);
+                        }
+                    } catch (e) {
+                        alertDialogs(e.message);
+                    }
+                }
+            },
+            schema: {
+                type: "json",
+                data: function (e) {
+                    var key1 = Object.keys(e)[0];
+                    if (e[key1].eeEstados[0].Estado === "OK") {
+                        return e[key1][mapDataP];
+                    } else {
+                        alertDialogs(e[key1].eeEstados[0].Estado);
+                    }
+                },
+                model: {
+                    id: "mnd__cla",
+                    fields: {
+                        mnd__des: {validation: {required: true}, type: 'string'},
+                        mnd__cla: {validation: {required: true}, type: 'string'}
+                    }
+                }
+            },
+            error: function (xhr, error) {
+                alertDialogs("Error de conexion del servidor " + xhr.xhr.status + " " + xhr.errorThrown);
+            }
+        }
+    });
+    
+    
 
     if (sessionStorage.getItem("objEditDet")) {
         obj = JSON.parse(sessionStorage.getItem("objEditDet"));
@@ -193,7 +253,12 @@ $(document).ready(function () {
         $("#idPrecio").val(parseInt(obj.lpd__pre));
         pre_pcod = obj.pre__pcod;
         $("#idPresentacion").data("kendoDropDownList").value(obj.pre__pcod);
+        $("#idDivisa").data("kendoDropDownList").value(obj.mnd__cla);
+        $("#idDescuentoMax").val(parseInt((obj.top__dct)*100));
     }
+    $("#idDescuentoMax").kendoNumericTextBox({
+        format: "# \\%"
+    });
     $("#idPrecio").kendoNumericTextBox({
         format: "c0"
     });
@@ -220,7 +285,6 @@ function btnCancelar() {
 }
 
 function agregarPrecio() {
-
     var obj = [
         {
             "lis__num": JSON.parse(sessionStorage.getItem("listaPrecios")).lis__num,
@@ -230,8 +294,9 @@ function agregarPrecio() {
             "art__des": $("#idArticulo").data("kendoAutoComplete").value(), //des
             "lpd__pre": $("#idPrecio").val(), //precio
             "lpd__esd": "1",
-            "top__dct": 90,
+            "top__dct": $("#idDescuentoMax").val()/100,
             "lpd__esh": "9999999",
+            "mnd__cla": $("#idDivisa").data("kendoDropDownList").value(),
             "pre__pcod": pre_pcod,
             "pre__des": $("#idPresentacion").data("kendoDropDownList").text(), //servicio presentacion
         }
