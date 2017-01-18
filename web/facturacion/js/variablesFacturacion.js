@@ -14,7 +14,7 @@
  *  var input = sir.getdataInputSir();
  */
 function sirConsultaCliente() {
-    debugger
+    
     var mapData = "eegpd_cli";
     var urlSir = ipServicios + baseComercial + "SIRgpd_cli";
     var json = 
@@ -28,8 +28,10 @@ function sirConsultaCliente() {
                                     }
                             ],
                             "SIRgpd_cli" : [{
-                                            "piicla__cli" : "",
+                                            "piicla__cli" : 0,
                                             "picter__nit" : "",
+                                            "picter__raz": "",
+                                            "piicli__est": 0
                                     }
                             ]
                     }
