@@ -7,9 +7,8 @@ $(document).ready(function () {debugger
    document.getElementById('Nombre_vendedor').innerHTML = datos_vendedor.ter__raz;
    document.getElementById('Cod_vendedor').innerHTML = datos_vendedor.vdd__cod;
    document.getElementById('Clase_cliente').innerHTML = datos_vendedor.cla__nom;
-    if (datos_vendedor.vdd__est!=99){
-        $("#btnAgregarItem")[0].hidden="true";
-        
+    if (datos_vendedor.vdd__est==1){
+        $("#btnAgregarItem")[0].hidden="true";       
         $("#btnGuardar1")[0].hidden="true";
    }
    else
@@ -123,7 +122,7 @@ function gridDetalleVendedor(){
             editable: "popup",              
          dataBound: function (e) {debugger
             var datos_vendedor = JSON.parse(sessionStorage.getItem("Detalle_Vendedor"));
-            if (datos_vendedor.vdd__est!=99){
+            if (datos_vendedor.vdd__est==1){
                 var tamaño=document.getElementsByClassName("k-sprite po_cerrar").length;
                  for (var i = 0; i < tamaño; i++) {
                 document.getElementsByClassName("k-sprite po_cerrar")[i].hidden="true";
