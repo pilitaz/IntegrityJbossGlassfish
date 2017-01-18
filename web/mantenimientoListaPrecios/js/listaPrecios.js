@@ -35,6 +35,7 @@ function gridDetalleListaPrecios() {
     var grid = $("#gridDetalleListaPrecios").kendoGrid({
         dataSource: dataGridDetalleListaPrecios,
         batch: false,
+        filterable: true,
         pageable: false,
         columns: [
             {
@@ -61,13 +62,22 @@ function gridDetalleListaPrecios() {
                 ],
                 width: "100px"
             }],
-        editable: {
-            mode: "popup",
-            window: {
-                title: "Editar",
-                animation: false,
-            }
-        },
+        editable:"popup",
+//        edit: function (e) {
+//            inputsPopUp(e);
+//            debugger
+//            
+//            if (e.sender._data[0].ID) {//caso en el que el popup es editar
+//                    e.container.kendoWindow("title", "Editar");
+//                if (e.model[est] != 99) {
+//                    kendo.ui.progress($('.k-edit-form-container'), true);
+//                    kendo.ui.progress($('.k-edit-buttons'), true);
+//                    e.container.find(".k-loading-image").css("background-image", "url('')");
+//                }
+//            } else {
+//                e.container.kendoWindow("title", "Crear");
+//            }
+//        },
     }).data("kendoGrid");
 
     function eliminarLPrecio(e) {
@@ -117,6 +127,8 @@ function agregarItemDetalle() {
     sessionStorage.removeItem("objEditDet");
     sessionStorage.setItem("operaDEtalle", "POST");
     popupCU("Agregar");
+//    var grid = $("#gridDetalleListaPrecios").data("kendoGrid");
+//    grid.addRow();
 }
 function popupCU(titulo) {
     if (bandAlert === 0) {
@@ -215,6 +227,7 @@ function cargarDatosGrilla(objCab, ope) {
                         top__dct: longArr[i]["top__dct"],
                         lpd__esh: longArr[i]["lpd__esh"],
                         pre__pcod: longArr[i]["pre__pcod"],
+                        mnd__cla: longArr[i]["mnd__cla"],
                         pre__des: longArr[i]["pre__des"]
 
                     };
@@ -344,3 +357,112 @@ function cabGuard(jsonResp) {
     var myWindow = $("#windowCab");
     myWindow.data("kendoWindow").close();
 }
+
+function inputsPopUp(e){
+//    e.container.find("input[name=cla__des]").removeClass();
+//    e.container.find("input[name=cla__des]").kendoDropDownList({
+//        dataTextField: 'cla__des',
+//        dataValueField: 'cla__cod',
+//        optionLabel: "Seleccionar clase de articulo...",
+//        
+//        change: onChangeClase,
+//        dataSource: {
+//            type: "json",
+//            transport: {
+//                read: {
+//                    url: ipServicios + baseParameters + "SIRinv_cla",
+//                    contentType: "application/json; charset=utf-8",
+//                    dataType: "json",
+//                    type: "POST"
+//                },
+//                parameterMap: function (options, operation) {
+//                    try {
+//                        authdsinv_cla.dsinv_cla.eetemp[0].picsuc_cod = "00101";
+//                        if (operation === 'read') {
+//                            authdsinv_cla["eeinv_cla"] = [options];
+//                            return JSON.stringify(authdsinv_cla);
+//                        }
+//                    } catch (e) {
+//                        alertDialogs(e.message);
+//                    }
+//                }
+//            },
+//            schema: {
+//                type: "json",
+//                data: function (e) {
+//                    if (e.dsinv_cla.eeEstados[0].Estado === "OK") {
+//                        return e.dsinv_cla.eeinv_cla;
+//                    } else {
+//                        alertDialogs(e.dsinv_cla.eeEstados[0].Estado);
+//                    }
+//                },
+//                model: {
+//                    id: "cla__cod",
+//                    fields: {
+//                        cla__cod: {validation: {required: true}, type: 'number'},
+//                        cla__des: {validation: {required: true}, type: 'string'}
+//                    }
+//                }
+//            },
+//            error: function (xhr, error) {
+//                alertDialogs("Error de conexion del servidor " + xhr.xhr.status + " " + xhr.errorThrown);
+//            }
+//        }
+//    });
+////    ----------------------------------------------
+    var objP = new SIRgpr_pre();
+    var objArtP = objP.getjson();
+    var urlSirP = objP.getUrlSir();
+    var mapDataP = objP.getMapData();
+            e.container.find("input[name=pre__des]").removeClass();
+            e.container.find("input[name=pre__des]").kendoDropDownList({
+        dataTextField: 'pre__des',
+        dataValueField: "pre__pcod",
+        optionLabel: "Seleccionar Presentación...",
+//        select: onSelectPres,
+        dataSource: {
+            type: "json",
+            transport: {
+                read: {
+                    url: urlSirP,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) {
+                    try {
+                        if (operation === 'read') {
+                            var key1 = Object.keys(objArtP)[0];
+                            var key2 = Object.keys(objArtP[key1])[1];
+                            objArtP[key1][key2][0].piipre__est = 99
+                            return JSON.stringify(objArtP);
+                        }
+                    } catch (e) {
+                        alertDialogs(e.message);
+                    }
+                }
+            },
+            schema: {
+                type: "json",
+                data: function (e) {
+                    var key1 = Object.keys(e)[0];
+                    if (e[key1].eeEstados[0].Estado === "OK") {
+                        return e[key1][mapDataP];
+                    } else {
+                        alertDialogs(e[key1].eeEstados[0].Estado);
+                    }
+                },
+                model: {
+                    id: "pre__des",
+                    fields: {
+                        pre__des: {validation: {required: true}, type: 'string'}
+                    }
+                }
+            },
+            error: function (xhr, error) {
+                alertDialogs("Error de conexion del servidor " + xhr.xhr.status + " " + xhr.errorThrown);
+            }
+        }
+    });
+}
+

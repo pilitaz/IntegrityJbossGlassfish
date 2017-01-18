@@ -7,10 +7,11 @@
 
 //////////////////////////////////////////////////////////////////////////////////////
 function sir() {
-    var url = ipServicios + baseComercial + "SIRdpc_rut";
-    var mapSir = "eedpc_rut";
+    var url = ipServicios + baseComercial + "SIRdpc_loc";
+    ;
+    var mapSir = "eedpc_loc";
     var dataInputSir = {
-        "dsSIRdpc_rut": {
+        "dsSIRdpc_loc": {
             "eeDatos": [
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
@@ -19,14 +20,14 @@ function sir() {
                     "remote_ip": sessionStorage.getItem("ipPublica")
                 }
             ],
-            "eeSIRdpc_rut": [{
-                    "piibar_cod1": 0,
-                    "piibar_cod2": 0,
-                    "picciu_cod1": "*",
-                    "picciu_cod2": "*",
-                    "piirut_est": -1
-                }]
-
+            "eeSIRdpc_loc": [
+                {
+                    "piiloc_cod": 0,
+                    "picter_nit": 0,
+                    "piicom_con": "*",
+                    "piiloc_est": -1
+                }
+            ]
         }
     };
     this.setUrlSir = function (newname) {
@@ -58,10 +59,10 @@ function sir() {
 
 ///////////////////////////////////////////////////////////////////////////////////////
 function cud() {
-    var url = ipServicios + baseComercial + "SICUDdpc_rut";
-    var mapCud = "eedpc_rut";
+    var url = ipServicios + baseComercial + "SICUDdpc_loc";
+    var mapCud = "eedpc_loc";
     var dataInputCud = {
-        "dsSICUDdpc_rut": {
+        "dsSICUDdpc_loc": {
             "eeDatos": [
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
@@ -98,22 +99,25 @@ function cud() {
 }
 ;
 
-function SIRsic_ciu() {
-    var mapSir = "eesic_ciu";
-    var url = ipServicios + baseContabilidad + "SIRsic_ciu";
+function SIRgpd_cli_suc() {
+    var url = ipServicios + baseComercial + "SIRgpd_cli_suc";
+    var mapSir = "eegpd_cli_suc";
     var dataInputSir = {
-        "dsSIRsic_ciu": {
-            "eeDatos": [{
+        "dsSIRgpd_cli_suc": {
+            "eeDatos": [
+                {
                     "picusrcod": sessionStorage.getItem("usuario"),
                     "picfiid": sessionStorage.getItem("picfiid"),
                     "local_ip": sessionStorage.getItem("ipPrivada"),
                     "remote_ip": sessionStorage.getItem("ipPublica")
-                }],
-            "eeSIRsic_ciu": [{
-                    "picciu_cod": "*"
-
-                }]
-
+                }
+            ],
+            "SIRgpd_cli_suc": [
+                {
+                    "picter__nit": "*",
+                    "piccom__con": "*"
+                }
+            ]
         }
     };
     this.setUrlSir = function (newname) {
@@ -143,23 +147,26 @@ function SIRsic_ciu() {
 }
 ;
 
-function SIRgpd_bar() {
-    var mapSir = "eegpd_bar";
-    var url = ipServicios + baseComercial + "SIRgpd_bar";
+
+function SIRinv_loc() {
+    var url = ipServicios + baseInventarios + "SIRinv_loc";
+    var mapSir = "eeinv_loc";
     var dataInputSir = {
-        "dsSIRgpd_bar": {
-            "eeDatos": [{
+        "dsSIRinv_loc": {
+            "eeDatos": [
+                {
                     "picusrcod": sessionStorage.getItem("usuario"),
                     "picfiid": sessionStorage.getItem("picfiid"),
                     "local_ip": sessionStorage.getItem("ipPrivada"),
                     "remote_ip": sessionStorage.getItem("ipPublica")
-                }],
-            "SIRgpd_bar": [{
-                    "picciu__cod": "*",
-                    "piibar__cod": 0,
-                    "picbar__dsc": "*",
-                    "picbar__est": 99
-                }]
+                }
+            ],
+            "eeSIRinv_loc": [
+                {
+                    "piiloc_cod": 0,
+                    "piiloc_est": -1
+                }
+            ]
         }
     };
     this.setUrlSir = function (newname) {
@@ -189,3 +196,103 @@ function SIRgpd_bar() {
 }
 ;
 
+function SIRdpc_rut() {
+    var url = ipServicios + baseComercial + "SIRdpc_rut";
+    var mapSir = "eedpc_rut";
+    var dataInputSir = {
+        "dsSIRdpc_rut": {
+            "eeDatos": [
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip": sessionStorage.getItem("ipPrivada"),
+                    "remote_ip": sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "eeSIRdpc_rut": [
+                {
+                    "piibar_cod1": 0,
+                    "piibar_cod2": 0,
+                    "picciu_cod1": "*",
+                    "picciu_cod2": "*",
+                    "piirut_cod": 0,
+                    "piirut_est": 0
+                }
+            ]
+        }
+    };
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            url = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return url;
+    };
+    this.setmapSir = function (newname) {
+        if (newname) {
+            mapSir = newname;
+        }
+    };
+    this.getmapSir = function () {
+        return mapSir;
+    };
+    this.setdataInputSir = function (newname) {
+        if (newname) {
+            dataInputSir = newname;
+        }
+    };
+    this.getdataInputSir = function () {
+        return dataInputSir;
+    };
+}
+;
+
+function SIRsic_ter() {
+    var url = ipServicios + baseParameters + "SIRsic_ter";
+    var mapSir = "eesic_ter";
+    var dataInputSir = {
+        "dsSIRsic_ter": {
+            "eeDatos": [
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip": sessionStorage.getItem("ipPrivada"),
+                    "remote_ip": sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "eeSIRsic_ter": [
+                {
+                    "picter_nit": "",
+                    "picter_raz": "",
+                    "piiter_est": -1
+                }
+            ]
+        }
+    };
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            url = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return url;
+    };
+    this.setmapSir = function (newname) {
+        if (newname) {
+            mapSir = newname;
+        }
+    };
+    this.getmapSir = function () {
+        return mapSir;
+    };
+    this.setdataInputSir = function (newname) {
+        if (newname) {
+            dataInputSir = newname;
+        }
+    };
+    this.getdataInputSir = function () {
+        return dataInputSir;
+    };
+}
+;

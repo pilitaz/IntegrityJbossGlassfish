@@ -51,8 +51,8 @@ $(document).ready(function () {
  */
 function correLinuxBackTimmer(t) {
     var ip = (((sessionStorage.getItem("url").split("/"))[2]).split(":"))[0];
-    var portLinux = sessionStorage.getItem("portLinux");
-    document.getElementById("includeTerm").src = "http://" + ip + ":" + portLinux + "/"
+    var linux = sessionStorage.getItem("linux");
+    document.getElementById("includeTerm").src = linux
             + "?u="
             + sessionStorage.getItem("usuario")
             + "&p="
@@ -428,7 +428,6 @@ function correLinuxBack() {//corre las funciones del shell in a box
 
     if (timerOut < 10) {
 
-
         var obj = new POST_SIRlogged();
         var objLogged = obj.getjson();
         var urlServ = obj.getUrlSir();
@@ -462,8 +461,8 @@ function correLinuxBack() {//corre las funciones del shell in a box
                         try {
 
                             var ip = (((sessionStorage.getItem("url").split("/"))[2]).split(":"))[0];
-                            var portLinux = sessionStorage.getItem("portLinux");
-                            document.getElementById("includeTerm").src = "http://" + ip + ":" + portLinux + "/"
+                            var linux = sessionStorage.getItem("linux");
+                            document.getElementById("includeTerm").src = linux
                                     + "?u="
                                     + sessionStorage.getItem("usuario")
                                     + "&p="
@@ -483,7 +482,7 @@ function correLinuxBack() {//corre las funciones del shell in a box
         });
         timerOut++;
     } else {
-        alertDialogs("No fue posdible conectarse a la terminal de Integrity.");
+        alertDialogs("No fue posible conectarse a la terminal de Integrity.");
         clearInterval(timer)//limpiar el timer
 
     }
