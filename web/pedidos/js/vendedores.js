@@ -31,11 +31,11 @@ $(window).resize(function () {
         var UrL= sessionStorage.getItem("url");  
         myWindow1.kendoWindow({
             draggable: true,
-            height: "35%",
+            height: "300px",
             modal: true,
-            resizable: false,
+            resizable: true,
             title: "Crear",
-            width: "40%",
+            width: "400px",
             content: UrL+"pedidos/html/popupTerritorio.html",
             actions: [
                 "Close"

@@ -278,7 +278,7 @@ function popupNuevoVendedor(){debugger
         var UrL= sessionStorage.getItem("url");  
         myWindow1.kendoWindow({
             draggable: true,
-            height: "35%",
+            height: "55%",
             modal: true,
             resizable: false,
             title: "Editar",

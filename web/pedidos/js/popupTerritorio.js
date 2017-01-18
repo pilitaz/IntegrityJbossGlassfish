@@ -173,7 +173,7 @@ function claseCliente(container, options) {debugger
         var urlService = consultar.getUrlSir();
         var mapCud1 = "eegpr_cla";
         $("#claseCliente")
-                .kendoDropDownList({
+                .kendoComboBox({
             dataTextField: "cla__nom",
             dataValueField: "cla__nom",
             //template:'<div class="divElementDropDownList">#: data.cla__nom #</div>',  
