@@ -73,7 +73,7 @@
             dataValueField: "ter__raz",
             autoClose: true,
             minLength: 4,
-            placeholder: "Nit..",
+            placeholder: "Nombre..",
              filter: "contains",
             select: function(e) {debugger                
             $("#nit").val(e.dataItem.ter__nit);    

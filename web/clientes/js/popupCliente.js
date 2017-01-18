@@ -6,6 +6,43 @@
     $("#btCancelar").kendoButton({
         click: cancelar
     });
+    
+        var data = [
+        {text: "Si", value: "1"},
+        {text: "No", value: "0"},
+    ];
+    $("#Certificado_Analisis").kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "value",
+        dataSource: data
+        
+    });
+        $("#Despachos_Parciales").kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "value",
+        dataSource: data
+        
+    });
+        $("#Transporte_por").kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "value",
+        dataSource: data
+        
+    });
+        $("#Precio_Establecimiento").kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "value",
+        dataSource: data
+        
+    });
+    
+      $("#Identificacion").kendoNumericTextBox();
+      $("#Cupo_De_Credito").kendoNumericTextBox();
+      $("#Cupo_De_Ventas").kendoNumericTextBox();
+      $("#Copias_Factura").kendoNumericTextBox();
+      $("#Precio_Establecimiento").kendoNumericTextBox();
+      //$("#Email").kendoTextBox();
+      
        
        function guardar(){debugger
            var  actualizar = new CudVendedores();
@@ -73,7 +110,7 @@
             dataValueField: "ter__raz",
             autoClose: true,
             minLength: 4,
-            placeholder: "Nit..",
+            placeholder: "Nombre..",
              filter: "contains",
             select: function(e) {debugger                
             $("#nit").val(e.dataItem.ter__nit);    

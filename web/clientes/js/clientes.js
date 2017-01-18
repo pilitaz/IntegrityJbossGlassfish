@@ -31,12 +31,12 @@ $(window).resize(function () {
         var UrL= sessionStorage.getItem("url");  
         myWindow1.kendoWindow({
             draggable: true,
-            height: "35%",
+            height: "70%",
             modal: true,
             resizable: false,
             title: "Crear",
-            width: "40%",
-            content: UrL+"pedidos/html/popupTerritorio.html",
+            width: "50%",
+            content: UrL+"clientes/html/popupCliente.html",
             actions: [
                 "Close"
             ],                               
@@ -149,15 +149,15 @@ $(document).ready(function () {
     //    gridheigth = gridheigth*0.008 + gridheigth;
     
     function grilla(e){debugger
-    var  consultar = new sirVendedores();
+    var  consultar = new sirClientes();
     var  datajson = consultar.getjson();
     var  urlService = consultar.getUrlSir();
-    datajson.dsSIRgpd_vdd.eeSIRgpd_vdd[0].piivdd__est = e;                
+   // datajson.dsSIRgpd_vdd.eeSIRgpd_vdd[0].piivdd__est = e;                
     var  actualizar = new CudVendedores();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
 
-    var mapCud = "eegpd_vdd";
+    var mapCud = "eegpd_cli";
     dataSource = new kendo.data.DataSource({
         transport: {
             read: {
@@ -242,17 +242,34 @@ $(document).ready(function () {
                     }
                 }},
             model: {
-                id: "vdd__cod",
+                id: "ter__nit",
                 fields: {
-                    vdd__cod:    {editable: true, nullable: false},
                     ter__nit:    {editable: true, nullable: false},
-                    ter__raz:    {editable: true, nullable: false},  
-                    trr__nom:    {editable: true, nullable: false},  
-                    cla__nom:    {editable: true, nullable: false}, 
-                    vdd__ter:    {editable: true, nullable: false},
-                    vdd__est:    {editable: true, nullable: false},
                     cla__cli:    {editable: true, nullable: false},
-                    trr__cod:    {editable: true, nullable: false},
+                    cal__ide:    {editable: true, nullable: false},  
+                    cli__cre:    {editable: true, nullable: false},  
+                    cli__ven:    {editable: true, nullable: false}, 
+                    con__tes:    {editable: true, nullable: false},
+                    con__ven:    {editable: true, nullable: false},
+                    cer__ana:    {editable: true, nullable: false},
+                    dpc__par:    {editable: true, nullable: false},
+                    cli__tra:    {editable: true, nullable: false},
+                    num__cop__fac:    {editable: true, nullable: false},
+                    pago__cod:    {editable: true, nullable: false},
+                    ter__lis:    {editable: true, nullable: false},
+                    dia__pag:    {editable: true, nullable: false},  
+                    hor__pag:    {editable: true, nullable: false},  
+                    ter__email:    {editable: true, nullable: false}, 
+                    cli__est:    {editable: true, nullable: false},                   
+                    loc__cod:    {editable: true, nullable: false},
+                    ter__cret:    {editable: true, nullable: false},
+                    cli__gal:    {editable: true, nullable: false},
+                    cla__nom:    {editable: true, nullable: false},
+                    ter__raz:    {editable: true, nullable: false},
+                    gfc__nal:    {editable: true, nullable: false},
+                    lis__num:    {editable: true, nullable: false},
+                    ven__cod:    {editable: true, nullable: false},
+
 
                 }
             }
@@ -262,23 +279,45 @@ $(document).ready(function () {
         dataSource: dataSource,
 
         columns: [
-            {field: "vdd__cod", title: "Cod Vendedor ",  hidden:false},
             {field: "ter__nit", title: "Nit",  hidden:false, editor: filtroestado,
                 template: function (e) {debugger
                     return e.ter__nit;
-                }},    
-            {field: "ter__raz", title: "Nombre",  hidden:false,editor: nombre,
+                }},  
+             {field: "ter__raz", title: "Nombre",  hidden:false,editor: nombre,
                 template: function (e) {debugger
                     return e.ter__raz;
-                }},    
-            
-            {field: "cla__nom", title: "Clase Cliente",  hidden:false, editor: claseCliente,
+                }},
+             {field: "cla__nom", title: "Clase Cliente",  hidden:false, editor: claseCliente,
                 template: function (e) {debugger
                     return e.cla__nom;
                 }},
+            {field: "ven__cod", title: "Codigo Vendedor",  hidden:true},
+            
+            {field: "ter__email", title: "Email",  hidden:false},
+            {field: "pago__cod", title: "Forma de Pago",  hidden:true}, 
+            {field: "cal__ide", title: "Clase Cliente",  hidden:true},
+            {field: "cli__cre", title: "Clase Cliente",  hidden:true},
+            {field: "cli__ven", title: "Clase Cliente",  hidden:true},
+            {field: "con__tes", title: "Clase Cliente",  hidden:true},
+            {field: "con__ven", title: "Clase Cliente",  hidden:true},
+            {field: "cer__ana", title: "Clase Cliente",  hidden:true},
+            {field: "dpc__par", title: "Clase Cliente",  hidden:true},
+            {field: "cli__tra", title: "Clase Cliente",  hidden:true},
+            {field: "num__cop__fac", title: "Clase Cliente",  hidden:true},
+            {field: "ter__lis", title: "Clase Cliente",  hidden:true},
+            {field: "dia__pag", title: "Clase Cliente",  hidden:true},
+            {field: "hor__pag", title: "Clase Cliente",  hidden:true},
+            {field: "loc__cod", title: "Clase Cliente",  hidden:true},
+            {field: "ter__cret", title: "Clase Cliente",  hidden:true},
+            {field: "cli__gal", title: "Clase Cliente",  hidden:true},
+            {field: "cla__nom", title: "Clase Cliente",  hidden:true},
+            {field: "gfc__nal", title: "Clase Cliente",  hidden:true},
+            {field: "lis__num", title: "Clase Cliente",  hidden:true},
+            
+          
             
             {command: [
-                    {name: "check", text: "estado",click: changeEst, template: "<a class='k-grid-check'><span class='k-sprite po_editoff' ></span></a>" },
+                    {name: "check", text: "estado",click: changeEst, template: "<a class='k-grid-check'><span class='k-sprite po_editoff' ></span></a>" },                  
                     {name: "editar", text: "editar", click: detalle,template: "<a class='k-grid-editar'><span class='k-sprite po_editoff' ></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "140px"}],
         editable: "popup",
@@ -571,17 +610,17 @@ function claseCliente(container, options) {debugger
     function changImgFunc(results , e) {debugger
      
         for (var i = 0; i < results.length; i++) {
-            if (document.getElementById("spanproceso"+results[i].vdd__cod+results[i].ter__nit+results[i].cla__nom)){
-                if(results[i].vdd__est==0){                            
-                    document.getElementById("spanproceso"+results[i].vdd__cod+results[i].ter__nit+results[i].cla__nom).setAttribute("class", "k-sprite po_checkAct");   
+            if (document.getElementById("spanproceso"+results[i].ter__raz+results[i].cla__nom+results[i].ter__email)){
+                if(results[i].cli__est==0){                            
+                    document.getElementById("spanproceso"+results[i].ter__raz+results[i].cla__nom+results[i].ter__email).setAttribute("class", "k-sprite po_checkAct");   
                     //document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("onclick", "disable();");
                 }
                 if(results[i].vdd__est==99){     
-                    document.getElementById("spanproceso"+results[i].vdd__cod+results[i].ter__nit+results[i].cla__nom).setAttribute("class", "k-sprite po_checkCreate");
+                    document.getElementById("spanproceso"+results[i].ter__raz+results[i].cla__nom+results[i].ter__email).setAttribute("class", "k-sprite po_checkCreate");
                     //document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("onclick", "active();");
                 }
                 if(results[i].vdd__est==1){     
-                    document.getElementById("spanproceso"+results[i].vdd__cod+results[i].ter__nit+results[i].cla__nom).setAttribute("class", "k-sprite po_checkBloq");
+                    document.getElementById("spanproceso"+results[i].ter__raz+results[i].cla__nom+results[i].ter__email).setAttribute("class", "k-sprite po_checkBloq");
 
                 }
             }
