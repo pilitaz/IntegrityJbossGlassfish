@@ -6,28 +6,37 @@
     $("#btCancelar").kendoButton({
         click: cancelar
     });
-       
+       function cargarDatos(){debugger
+        var datos_vendedor = JSON.parse(sessionStorage.getItem("Detalle_Vendedor"));         
+        document.getElementById('codigo_vendedor').innerHTML = datos_vendedor.vdd__cod;
+           
+           $("#nit").val(datos_vendedor.ter__nit); 
+           $("#nombre").val(datos_vendedor.ter__raz); 
+           //$("#claseCliente").index(parseInt(datos_vendedor.cla__cli)); 
+           
+       }
        function guardar(){debugger
            var  actualizar = new CudVendedores();
            var  actjson = actualizar.getjson();
            var  urlactualizar = actualizar.getUrlSir();    
+           
            var cedula = $("#nit")[0].value;
            var nombre = $("#nombre")[0].value;
            var cliente = $("#claseCliente").data("kendoDropDownList");
            var select = cliente.selectedIndex;
            cliente = cliente.dataSource._data[select].cla__cli;
            var cliente_nom = $("#claseCliente").data("kendoDropDownList").dataSource._data[select].cla__nom;
+           actjson.dsSICUDgpd_vdd.eegpd_vdd[0].vdd__cod=parseInt(document.getElementById('codigo_vendedor').innerHTML);
            actjson.dsSICUDgpd_vdd.eegpd_vdd[0].ter__nit=cedula;
-           actjson.dsSICUDgpd_vdd.eegpd_vdd[0].ter__raz=nombre;
-           actjson.dsSICUDgpd_vdd.eegpd_vdd[0].trr__cod=0;
+           actjson.dsSICUDgpd_vdd.eegpd_vdd[0].ter__raz=nombre; 
            actjson.dsSICUDgpd_vdd.eegpd_vdd[0].cla__cli=cliente;
            actjson.dsSICUDgpd_vdd.eegpd_vdd[0].cla__nom=cliente_nom;
            actjson.dsSICUDgpd_vdd.eegpd_vdd[0].vdd__est=99; 
            
            
-                           $.ajax({
+                   $.ajax({
         
-                    type: "POST",        
+                    type: "PUT",        
                     async: false,
                     data: JSON.stringify(actjson),
                     url: urlactualizar,
@@ -36,17 +45,12 @@
                     success: function (resp) {debugger
                         if((resp.dsSICUDgpd_vdd.eeEstados[0].Estado)=="OK")
                         {    
-                           sessionStorage.setItem("Detalle_Vendedor",JSON.stringify(resp.dsSICUDgpd_vdd.eegpd_vdd[0]));
-                           
-                            
-                            parent.cerrar1();
+                          parent.cerrar();
                         }
                         else
                         {
                             alertDialogs("Error"+resp.dsSICUDgpd_vdd.eeEstados[0].Estado);  
-                            $('#grid').data('kendoGrid').refresh();
-                            $('#grid').data('kendoGrid').dataSource.read();
-                            $('#grid').data('kendoGrid').refresh(); 
+                             
                         }
                     } 
         
@@ -172,10 +176,15 @@ function claseCliente(container, options) {debugger
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();
         var mapCud1 = "eegpr_cla";
+        var datos_vendedor = JSON.parse(sessionStorage.getItem("Detalle_Vendedor"));   
         $("#claseCliente")
                 .kendoDropDownList({
             dataTextField: "cla__nom",
-            dataValueField: "cla__nom",
+            dataValueField: "cla__cli",
+            index:parseInt(datos_vendedor.cla__cli),
+            open: function(){
+            $("#claseCliente").data("kendoDropDownList").focus();;
+            },
             //template:'<div class="divElementDropDownList">#: data.cla__nom #</div>',  
             dataSource: {
                 transport: {
@@ -211,10 +220,13 @@ function claseCliente(container, options) {debugger
             }
 
         });
+        
+
+          
     }        
     
     nombre();
     claseCliente();
     filtroestado();
-    
+    cargarDatos();
 });
