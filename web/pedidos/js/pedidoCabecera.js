@@ -21,6 +21,13 @@ $(document).ready(function() {
         disableDates: ["sa", "su"]
     });
     
+    $("#ipFechaTasa").kendoDatePicker({
+        culture: "es-CO",
+        format: "yyyy/MM/dd",
+        value: new Date(sessionStorage.getItem("fechaSistema")),
+        disableDates: ["sa", "su"]
+    });
+    
     $("#buttonCab").kendoButton();
     
     iniDropDownList();
@@ -71,7 +78,7 @@ function iniAutocomplete(){
                             var key1 = Object.keys(objJson)[0];
                             var key2 = Object.keys(objJson[key1])[1];
                             objJson[key1][key2][0].picter__nit = $("#ipNITCliente").val();
-                           // objJson[key1][key2][0].picter_raz = "";
+                            objJson[key1][key2][0].picter__raz = "";
                             return JSON.stringify(objJson);
                         } 
                     } catch (e) {
@@ -127,8 +134,8 @@ function iniAutocomplete(){
                         if (operation === 'read') {
                             var key1 = Object.keys(objJson)[0];
                             var key2 = Object.keys(objJson[key1])[1];
-                            objJson[key1][key2][0].picter_nit = "";
-                            objJson[key1][key2][0].picter_raz = $("#ipCliente").val();
+                            objJson[key1][key2][0].picter__nit = $("#ipNITCliente").val();
+                            objJson[key1][key2][0].picter__raz = $("#ipCliente").val();
                             return JSON.stringify(objJson);                            
                         } 
                     } catch (e) {
@@ -288,6 +295,23 @@ function iniDropDownList(){
                 alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
             }
         }
+        
+    });
+    
+    var tipoTasa = [
+        { text: "Día del pedido", value: "1" },
+        { text: "Fecha acordada", value: "2" },
+        { text: "Día despacho", value: "2" },
+        { text: "Día factura", value: "4" }
+    ];
+    
+    
+    $("#ipTipTasa").kendoDropDownList({
+        placeholder : "Seleccione el tipo de tasa",
+        dataTextField: "text",
+        dataValueField: "value",
+        dataSource: tipoTasa,
+        index: 0,
         
     });
     

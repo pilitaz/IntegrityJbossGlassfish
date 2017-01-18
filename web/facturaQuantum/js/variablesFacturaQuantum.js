@@ -68,8 +68,10 @@ function sirConsultaCliente() {
                                     }
                             ],
                             "SIRgpd_cli" : [{
-                                            "piicla__cli" : "",
+                                            "piicla__cli" : 0,
                                             "picter__nit" : "",
+                                            "picter__raz": "",
+                                            "piicli__est": 0
                                     }
                             ]
                     }

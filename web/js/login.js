@@ -59,6 +59,7 @@ function login() {
             }
         }).done(function(){            
             if(permitirIngreso==='"OK"'){  
+                
                 var fechaSistema=jsonResp.dslogin.eesiccia[0].fecsis;
                 fechaSistema = fechaSistema.replace(/-/g, "/");    
                 sessionStorage.setItem("usrnom",jsonResp.dslogin.eesicusuarios[0].usrnom);
@@ -68,6 +69,7 @@ function login() {
                 sessionStorage.setItem("poccargo",jsonResp.dslogin.ttdatauser[0].poccargo);
                 sessionStorage.setItem("img",jsonResp.dslogin.eesiccia[0].cialog);
                 sessionStorage.setItem("companyNIT",jsonResp.dslogin.eesiccia[0].cianit);
+                sessionStorage.setItem("monedaCompañia",jsonResp.dslogin.eesiccia[0].moneda);
                 sessionStorage.setItem("razonSocial",jsonResp.dslogin.eesiccia[0].ciaraz);
                 sessionStorage.setItem("fechaSistema",fechaSistema);
                 sessionStorage.setItem("contra",jsonResp.dslogin.eesicusuarios[0].clavprov);                    

@@ -69,8 +69,8 @@ $(document).ready(function(){
                         if (operation === 'read') {
                             var key1 = Object.keys(objJson)[0];
                             var key2 = Object.keys(objJson[key1])[1];
-                            objJson[key1][key2][0].picter_nit = "";
-                            objJson[key1][key2][0].picter_raz = $("#ipCliente").val();
+                            objJson[key1][key2][0].picter__nit = "";
+                            objJson[key1][key2][0].picter__raz = $("#ipCliente").val();
                             return JSON.stringify(objJson);
                             
                         } 
