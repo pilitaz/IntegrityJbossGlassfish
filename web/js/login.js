@@ -57,20 +57,22 @@ function login() {
                 var buttonObject = $("#btnLogin").kendoButton().data("kendoButton");
                 buttonObject.enable(true);
             }
-        }).done(function () {
-            if (permitirIngreso === '"OK"') {
-                var fechaSistema = jsonResp.dslogin.eesiccia[0].fecsis;
-                fechaSistema = fechaSistema.replace(/-/g, "/");
-                sessionStorage.setItem("usrnom", jsonResp.dslogin.eesicusuarios[0].usrnom);
-                sessionStorage.setItem("usuario", usuario.split("@")[0] + "_" + jsonResp.dslogin.eesiccia[0].cianit);
-                sessionStorage.setItem("usrmail", jsonResp.dslogin.eesicusuarios[0].usrmail);
-                sessionStorage.setItem("picfiid", jsonResp.dslogin.ttdatauser[0].picfiid);
-                sessionStorage.setItem("poccargo", jsonResp.dslogin.ttdatauser[0].poccargo);
-                sessionStorage.setItem("img", jsonResp.dslogin.eesiccia[0].cialog);
-                sessionStorage.setItem("companyNIT", jsonResp.dslogin.eesiccia[0].cianit);
-                sessionStorage.setItem("razonSocial", jsonResp.dslogin.eesiccia[0].ciaraz);
-                sessionStorage.setItem("fechaSistema", fechaSistema);
-                sessionStorage.setItem("contra", jsonResp.dslogin.eesicusuarios[0].clavprov);
+        }).done(function(){            
+            if(permitirIngreso==='"OK"'){  
+                
+                var fechaSistema=jsonResp.dslogin.eesiccia[0].fecsis;
+                fechaSistema = fechaSistema.replace(/-/g, "/");    
+                sessionStorage.setItem("usrnom",jsonResp.dslogin.eesicusuarios[0].usrnom);
+                sessionStorage.setItem("usuario",usuario.split("@")[0]+ "_"+jsonResp.dslogin.eesiccia[0].cianit);
+                sessionStorage.setItem("usrmail",jsonResp.dslogin.eesicusuarios[0].usrmail);
+                sessionStorage.setItem("picfiid",jsonResp.dslogin.ttdatauser[0].picfiid);                    
+                sessionStorage.setItem("poccargo",jsonResp.dslogin.ttdatauser[0].poccargo);
+                sessionStorage.setItem("img",jsonResp.dslogin.eesiccia[0].cialog);
+                sessionStorage.setItem("companyNIT",jsonResp.dslogin.eesiccia[0].cianit);
+                sessionStorage.setItem("monedaCompañia",jsonResp.dslogin.eesiccia[0].moneda);
+                sessionStorage.setItem("razonSocial",jsonResp.dslogin.eesiccia[0].ciaraz);
+                sessionStorage.setItem("fechaSistema",fechaSistema);
+                sessionStorage.setItem("contra",jsonResp.dslogin.eesicusuarios[0].clavprov);                    
                 sessionStorage.setItem('sesion', sessionStorage.getItem("picfiid"));
                 sessionStorage.setItem("loginintegrity", "valido");
                 sessionStorage.setItem("hibrido", jsonResp.dslogin.eesiccia[0].ciaserv);

@@ -30,4 +30,8 @@ table {
     padding-right: 10px;        
 }
 
+.k-input{
+    resize: none;
+}
+
 

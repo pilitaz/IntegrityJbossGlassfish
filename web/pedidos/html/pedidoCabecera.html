@@ -19,7 +19,8 @@ and open the template in the editor.
         <script src="../js/variablesPedidos.js" type="text/javascript"></script>
         <script src="../../scripts/kendo.all.min.js" type="text/javascript"></script>
         <script src="../../scripts/LibreriaIntegrity.js" type="text/javascript"></script>
-        <script src="../../js/servicios.js" type="text/javascript"></script>        
+        <script src="../../js/servicios.js" type="text/javascript"></script>
+        
         <script src="../js/pedidoCabecera.js" type="text/javascript"></script>
         <link href="../../css/kendo.metro.min.css" rel="stylesheet" type="text/css"/>
         <link href="../../css/kendo.metro.mobile.min.css" rel="stylesheet" type="text/css"/>
@@ -88,6 +89,42 @@ and open the template in the editor.
                             </tr>
                             <tr>
                                 <td style="width: 25%">
+                                    <label class="letraParrafo">Tipo de tasa:</label>
+                                </td>
+                                <td style="width: 75%">
+                                    <input id="ipTipTasa" style="width: 100%"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 25%">
+                                    <label class="letraParrafo">Fecha tasa</label>
+                                </td>
+                                <td style="width: 75%">
+                                    <input id="ipFechaTasa" value="" style="width: 100%"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 25%">
+                                    <label class="letraParrafo">Numero de orden</label>
+                                </td>
+                                <td style="width: 75%">
+                                    <input id="ipNumOrden" value="" style="width: 100%"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 25%">
+                                    <label class="letraParrafo">Prioridad:</label>
+                                </td>
+                                <td style="width: 75%">
+                                    <input id="ipPrioridad" style="width: 100%"/>
+                                </td>
+                            </tr>
+                        </table>                        
+                    </div>
+                    <div class="col-md-6">                        
+                        <table style="width: 100%">
+                            <tr>
+                                <td style="width: 25%">
                                     <label class="letraParrafo">Vendedor:</label>
                                 </td>
                                 <td style="width: 75%">
@@ -102,10 +139,6 @@ and open the template in the editor.
                                     <input id="ipSolicitante" class="k-textbox" value="" style="width: 100%"/>
                                 </td>
                             </tr>
-                        </table>                        
-                    </div>
-                    <div class="col-md-6">                        
-                        <table style="width: 100%">
                             <tr>
                                 <td style="width: 25%">
                                     <label class="letraParrafo">Fecha:</label>

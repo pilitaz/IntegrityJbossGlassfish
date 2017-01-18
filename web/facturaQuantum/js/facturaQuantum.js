@@ -278,6 +278,11 @@ function iniDropDownList(){
     });
 }
 
+/**
+ * Metodo que inicia los el autocomplete del cliente (NIT - razón social)
+ * 
+ * @returns {undefined}
+ */
 function iniAutocomplete(){
     
     var obj = new sirConsultaCliente();
@@ -306,11 +311,11 @@ function iniAutocomplete(){
                 parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
                     try {
                                           
-                        if (operation === 'read') {
+                        if (operation === 'read') {                            
                             var key1 = Object.keys(objJson)[0];
                             var key2 = Object.keys(objJson[key1])[1];
-                            objJson[key1][key2][0].picter_nit = $("#ipNITCliente").val();
-                            objJson[key1][key2][0].picter_raz = "";
+                            objJson[key1][key2][0].picter__nit = $("#ipNITCliente").val();
+                            objJson[key1][key2][0].picter__raz = "";
                             return JSON.stringify(objJson);
                         } 
                     } catch (e) {
@@ -366,10 +371,9 @@ function iniAutocomplete(){
                         if (operation === 'read') {
                             var key1 = Object.keys(objJson)[0];
                             var key2 = Object.keys(objJson[key1])[1];
-                            objJson[key1][key2][0].picter_nit = "";
-                            objJson[key1][key2][0].picter_raz = $("#ipCliente").val();
-                            return JSON.stringify(objJson);
-                            return JSON.stringify(authdsgfc_cli);
+                            objJson[key1][key2][0].picter__nit = "";
+                            objJson[key1][key2][0].picter__raz = $("#ipCliente").val();
+                            return JSON.stringify(objJson);                            
                         } 
                     } catch (e) {
                         alertDialogs(e.message);
@@ -401,6 +405,7 @@ function iniAutocomplete(){
         }
     });
 }
+
 function gridDetalle(){    
     var grid = $("#grid").kendoGrid({
         dataSource: dataGridDetalle,       
@@ -692,7 +697,7 @@ function setInfoCliente(e){
     sessionStorage.setItem("nitCliente", dataCliente.ter__nit); // sessionStorage.setItem("
     sessionStorage.setItem("listaPrecioCliente", dataCliente.lis__num);
     sessionStorage.setItem("codVendedor", dataCliente.ven__cod);    
-    sessionStorage.setItem("opciondepago", dataCliente.fac__pag);
+    sessionStorage.setItem("opciondepago", dataCliente.pago__cod);
     
     var kendoDropDownListVendedor = $("#ipVendedor").data("kendoDropDownList");
     kendoDropDownListVendedor.enable(true); 
@@ -706,7 +711,7 @@ function setInfoCliente(e){
         dataSource: {
             transport: {
                 read: {
-                    url: ipServicios+"rest/Parameters/SIRfac_pag",
+                    url: ipServicios+ baseParameters+ "SIRfac_pag",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST"
@@ -714,7 +719,7 @@ function setInfoCliente(e){
                 parameterMap: function (options, operation) {
                     try {                        
                         authfacpag.dsfac_pag.eetemp[0].piifac_pag = sessionStorage.getItem("opciondepago");
-                        //                        console.log("authfacpag \n"+JSON.stringify(authfacpag));
+                        
                         if (operation === 'read') {                            
                             authfacpag["eefac_pag"] = [options];
                             return JSON.stringify(authfacpag);
@@ -818,10 +823,8 @@ function setInfoCliente(e){
             }            
         }
     });
-    debugger    
-    var comboboxDivisa= $("#ipDivisa").data("kendoDropDownList");
-    comboboxDivisa.value("CO");
-    comboboxDivisa.readonly(true);
+        
+    var comboboxDivisa= $("#ipDivisa").data("kendoDropDownList");    
     
     var numericTextBoxTasa= $("#ipTasa").data("kendoNumericTextBox");
     numericTextBoxTasa.enable(!clienteNacional);
@@ -831,10 +834,19 @@ function setInfoCliente(e){
     
     $("#ipActualizarTasa")[0].disabled = clienteNacional;
     
-    if(!clienteNacional){
+    if(sessionStorage.getItem("regFactura")){
+        var factura = JSON.parse(sessionStorage.getItem("regFactura"))
+        comboboxDivisa.value(factura.mnd__cla);
+        comboboxDivisa.readonly(true);
+        numericTextBoxTasa.value(factura.mnd__val);
+        datepickerFechaTasa.value(factura.mnd__fec);
+    }else if(!clienteNacional){
         comboboxDivisa.value(dataCliente.mnd__cla);
         numericTextBoxTasa.value(dataCliente.mnd__val);
         datepickerFechaTasa.value(dataCliente.mnd__fec);
+    }else{
+        comboboxDivisa.value(sessionStorage.getItem("monedaCompañia"));
+        comboboxDivisa.readonly(true);
     }
 }
 
@@ -891,12 +903,17 @@ function guardarFactura(){
         var factura = JSON.parse(sessionStorage.getItem("regFactura"));
         verboHTML="PUT";
         jSonData.dsSIRgfc_fac.eegfc_fac[0].fac__nro = factura.fac__nro;
+    }else{
+        var factura  = new Object();
+        factura.clc__cod = claDocumento;
+        factura.suc__cod = sucursal;
+        factura.fac__fec = fecha;
     }
     
     $.ajax({
         type: verboHTML,
         data: JSON.stringify(jSonData),
-        url: ipServicios+baseComercial+"SICUDgfc_fac",
+        url: ipServicios + baseComercial + "SICUDgfc_fac",
         dataType : "json",
         contentType: "application/json;",
         success: function (resp) {
@@ -911,8 +928,10 @@ function guardarFactura(){
             alertDialogs("Error consumiendo el servicio de guardar\n"+ e.status +" - "+ e.statusText);
         }
     }).done(function(){
-        if(facturaGuardada=='"OK"'){
-            
+        if(facturaGuardada=='"OK"'){            
+            factura.fac__nro = numFactura;
+            sessionStorage.setItem("regFactura", JSON.stringify(factura));
+              
             var letf = ($("body").width()/2)-100;
             document.getElementById('idNumerofactura').innerHTML = 'Nº '+numFactura;
             var centered = $("#centeredNotification").kendoNotification({
@@ -923,13 +942,7 @@ function guardarFactura(){
             }).data("kendoNotification");
             centered.show("El número de la factura es: "+numFactura, "success");
             
-            $("#btnAgregarItem")["0"].firstChild.className = "k-sprite po_mas";
-            
-//            sessionStorage.setItem("actualizarFactura", "true");
-//            sessionStorage.setItem("facturaNumero", numFactura);
-//            sessionStorage.setItem("facturasucursal", $("#ipSucursal").val());
-//            sessionStorage.setItem("facturaClaseDoc", $("#ipCDocumento").val());
-//            sessionStorage.setItem("facturaFecha", $("#ipFecha").val());
+            $("#btnAgregarItem")["0"].firstChild.className = "k-sprite po_mas";          
             
             cargarDatosGrilla();
                              
@@ -941,6 +954,11 @@ function guardarFactura(){
 }
 
 function agregarItemDetalle(e){
+    
+    if(!sessionStorage.getItem("regFactura")){
+        alert("no puede agregar otems porque no existe la factura");
+        return;
+    }
     itemID=null;
     
     var widthPopUp = $("body").width();
@@ -1038,7 +1056,7 @@ function cargarFactura(){
             dataType : "json",
             contentType: "application/json;",
             success: function (resp) {                  
-                estado = JSON.stringify(resp.dsSIRgfc_fac.eeEstados[0].Estado);                
+                estado = JSON.stringify(resp.dsSIRgfc_fac.eeEstados[0].Estado);                                
                 factura = resp; 
             },
             error: function (e) {
@@ -1052,6 +1070,7 @@ function cargarFactura(){
                     deshabilitarCampos();                    
                 }                
                 sessionStorage.setItem("facturaEstado", factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].fac__est);
+                sessionStorage.setItem("regFactura", JSON.stringify(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"]));
                 
                 var kendoDropDownListSucursal = $("#ipSucursal").data("kendoDropDownList");
                 kendoDropDownListSucursal.value(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].suc__cod);
@@ -1074,12 +1093,6 @@ function cargarFactura(){
                 
                  $("#txtAObservaciones").val(factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].obs__fac);
                 
-//                $("#ipFecha").kendoDatePicker({        
-//                    format: "yyyy/MM/dd",
-//                    disableDates: ["sa", "su"],
-//                    value: fecha
-//                });
-                
                  var datepicker = $("#ipFecha").data("kendoDatePicker");
                  datepicker.value(fecha);
                  datepicker.readonly(true);
@@ -1097,8 +1110,8 @@ function cargarFactura(){
 
                 var key1 = Object.keys(objJsonCli)[0];
                 var key2 = Object.keys(objJsonCli[key1])[1];
-                objJsonCli[key1][key2][0].picter_nit = factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].ter__nit;
-                objJsonCli[key1][key2][0].picter_raz = "";
+                objJsonCli[key1][key2][0].picter__nit = factura.dsSIRgfc_fac.eeSIRgfc_fac["0"].ter__nit;
+                objJsonCli[key1][key2][0].picter__raz = "";
                 
                 
                 $.ajax({
@@ -1107,9 +1120,10 @@ function cargarFactura(){
                     url: urlCli,
                     dataType : "json",
                     contentType: "application/json;",
-                    success: function (resp) {                         
-                        if(resp.dsgfc_cli.eeEstados[0].Estado==="OK"){                            
-                            dataCliente = resp.dsgfc_cli.eegfc_cli[0];
+                    success: function (e) {  
+                        var key1 = Object.keys(e)[0];                                            
+                        if(e[key1].eeEstados[0].Estado==="OK"){                            
+                            dataCliente = e[key1][mapDataCli]["0"];
                             $("#ipCliente").val(dataCliente.ter__raz);
                         }                        
                     },

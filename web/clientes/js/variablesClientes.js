@@ -603,97 +603,7 @@ function cudTerritorios() {
     };
     
 };
-///////////////////////////////////////////////////////////////
-function sirSupArea() {
-    var urlSir = ipServicios + baseComercial +"SIRgpd_sar";
-    var json = {  
-   "dsSIRgpd_sar":{  
-      "eeDatos": [{
-                    "picusrcod":sessionStorage.getItem("usuario"),
-                    "picfiid":sessionStorage.getItem("picfiid"),
-                    "local_ip":sessionStorage.getItem("ipPrivada"),
-                    "remote_ip":sessionStorage.getItem("ipPublica")
-        }
-      ],
-      
-      "SIRgpd_sar":[  
-         {  
-          "piisar__cod":0,
-          "picter__nit":"*",
-          "piiageo__cod":0,
-          "picpai__cod":"*",
-          "piisar__est": -1
-         }
-      ]      
-   }
-};
-    
-    this.setUrlSir = function (newname) {
-        if (newname) {
-            urlSir = newname;
-        }
-    };
-    this.getUrlSir = function () {
-        return urlSir;
-    };
-    
-    this.setjson = function (newname) {
-        if (newname) {
-            json = newname;
-        }
-    };
-    this.getjson = function () {
-        return json;
-    };
-    
-};
-///////////////////////////////////////////////////////////////
-function cudSupArea() {
-    var urlSir = ipServicios + baseComercial +"SICUDgpd_sar";
-    var json = {  
-   "dsSICUDgpd_sar":{  
-      "eeDatos": [{
-                    "picusrcod":sessionStorage.getItem("usuario"),
-                    "picfiid":sessionStorage.getItem("picfiid"),
-                    "local_ip":sessionStorage.getItem("ipPrivada"),
-                    "remote_ip":sessionStorage.getItem("ipPublica")
-       }
-      ],
-      "eegpd_sar":[  
-         {  
-        "sar__cod": 0,
-        "ter__nit": "",
-        "ageo__cod": 0,
-        "pai__cod": "",
-        "sar__est": 0,
-        "ter__raz": "",
-        "ageo__nom": "",
-        "piindicador": 0
-         }
-      ]      
-   }
-}
-    ;
-    
-    this.setUrlSir = function (newname) {
-        if (newname) {
-            urlSir = newname;
-        }
-    };
-    this.getUrlSir = function () {
-        return urlSir;
-    };
-    
-    this.setjson = function (newname) {
-        if (newname) {
-            json = newname;
-        }
-    };
-    this.getjson = function () {
-        return json;
-    };
-    
-};
+
 ///////////////////////////////////////////////////////////////
 function sirTerritorio() {
     var urlSir = ipServicios + baseComercial +"SIRgpd_trr";
@@ -781,346 +691,7 @@ function cudTerritorio() {
     };
     
 };
-///////////////////////////////////////////////////////////////
-function sirSupTerritorio() {
-    var urlSir = ipServicios + baseComercial +"SIRgpd_str";
-    var json = {  
-        "dsSIRgpd_str":{  
-            "eeDatos":[  
-                {  
-                    "picusrcod":sessionStorage.getItem("usuario"),
-                    "picfiid":sessionStorage.getItem("picfiid"),
-                    "local_ip":sessionStorage.getItem("ipPrivada"),
-                    "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "SIRgpd_str":[  
-                {  
-                    "piistr__cod":0,
-                    "picter__nit":"*",
-                    "piitrr__cod":0,
-                    "piistr__est":-1,
-                    
-                }
-            ]      
-        }
-    };
-    
-    this.setUrlSir = function (newname) {
-        if (newname) {
-            urlSir = newname;
-        }
-    };
-    this.getUrlSir = function () {
-        return urlSir;
-    };
-    
-    this.setjson = function (newname) {
-        if (newname) {
-            json = newname;
-        }
-    };
-    this.getjson = function () {
-        return json;
-    };
-    
-};
-///////////////////////////////////////////////////////////////
-function cudSupTerritorio() {
-    var urlSir = ipServicios + baseComercial +"SIRgpd_str";
-    var json = {  
-        "dsSIRgpd_str":{  
-            "eeDatos":[  
-                {  
-                    "picusrcod":sessionStorage.getItem("usuario"),
-                    "picfiid":sessionStorage.getItem("picfiid"),
-                    "local_ip":sessionStorage.getItem("ipPrivada"),
-                    "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "SIRgpd_str":[  
-                {  
-                    "piistr__cod":0,
-                    "picter__nit":"*",
-                    "piitrr__cod":0
-                }
-            ]      
-        }
-    };
-    
-    this.setUrlSir = function (newname) {
-        if (newname) {
-            urlSir = newname;
-        }
-    };
-    this.getUrlSir = function () {
-        return urlSir;
-    };
-    
-    this.setjson = function (newname) {
-        if (newname) {
-            json = newname;
-        }
-    };
-    this.getjson = function () {
-        return json;
-    };
-    
-};
-///////////////////////////////////////////////////////////////
-function sirAnulaPedido() {
-    var urlSir = ipServicios + baseComercial +"SIRgpd_anu";
-    var json = {  
-        "dsSIRgpd_anu":{  
-            "eeDatos":[  
-                {  
-                    "picusrcod":sessionStorage.getItem("usuario"),
-                    "picfiid":sessionStorage.getItem("picfiid"),
-                    "local_ip":sessionStorage.getItem("ipPrivada"),
-                    "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "SIRgpd_anu":[  
-                {  
-                    "piianu__cod":0,
-                    "picanu__des":"*",
-                    "gpd__est":-1,
-                    
-                }
-            ]      
-        }
-    };
-    
-    this.setUrlSir = function (newname) {
-        if (newname) {
-            urlSir = newname;
-        }
-    };
-    this.getUrlSir = function () {
-        return urlSir;
-    };
-    
-    this.setjson = function (newname) {
-        if (newname) {
-            json = newname;
-        }
-    };
-    this.getjson = function () {
-        return json;
-    };
-    
-};
-///////////////////////////////////////////////////////////////
-function cudAnulaPedido() {
-    var urlSir = ipServicios + baseComercial +"SICUDgpd_anu";
-    var json = {  
-        "dsSICUDgpd_anu":{  
-            "eeDatos":[  
-                {  
-                    "picusrcod":sessionStorage.getItem("usuario"),
-                    "picfiid":sessionStorage.getItem("picfiid"),
-                    "local_ip":sessionStorage.getItem("ipPrivada"),
-                    "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "eegpd_anu":[  
-                {  
-                    "anu__cod":0,
-                    "anu__des":"",
-                    "gpd__est":0
-                }
-            ]
-        }
-    };
-    
-    this.setUrlSir = function (newname) {
-        if (newname) {
-            urlSir = newname;
-        }
-    };
-    this.getUrlSir = function () {
-        return urlSir;
-    };
-    
-    this.setjson = function (newname) {
-        if (newname) {
-            json = newname;
-        }
-    };
-    this.getjson = function () {
-        return json;
-    };
-    
-};
-///////////////////////////////////////////////////////////////
-function sirCobradores() {
-    var urlSir = ipServicios + baseComercial +"SIRgpd_cbr";
-    var json = {  
-        "dsSIRgpd_cbr":{  
-            "eeDatos":[  
-                {  
-                    "picusrcod":sessionStorage.getItem("usuario"),
-                    "picfiid":sessionStorage.getItem("picfiid"),
-                    "local_ip":sessionStorage.getItem("ipPrivada"),
-                    "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "SIRgpd_cbr":[  
-                {  
-                    "piicbr__cod":0,
-                      "piicbr__est": -1,
-                    "picter__nit":"*"
-                    
-                }
-            ]      
-        }
-    };
-    
-    this.setUrlSir = function (newname) {
-        if (newname) {
-            urlSir = newname;
-        }
-    };
-    this.getUrlSir = function () {
-        return urlSir;
-    };
-    
-    this.setjson = function (newname) {
-        if (newname) {
-            json = newname;
-        }
-    };
-    this.getjson = function () {
-        return json;
-    };
-    
-};
-///////////////////////////////////////////////////////////////
-function cudCobradores() {
-    var urlSir = ipServicios + baseComercial +"SICUDgpd_cbr";
-    var json = {  
-        "dsSICUDgpd_cbr":{  
-            "eeDatos":[  
-                {  
-                    "picusrcod":sessionStorage.getItem("usuario"),
-                    "picfiid":sessionStorage.getItem("picfiid"),
-                    "local_ip":sessionStorage.getItem("ipPrivada"),
-                    "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "eegpd_cbr":[  
-                {  
-                    "cbr__cod":0,
-                    "ter__nit":"",
-                    "cbr__est":0
-                }
-            ]
-        }
-    };
-    
-    this.setUrlSir = function (newname) {
-        if (newname) {
-            urlSir = newname;
-        }
-    };
-    this.getUrlSir = function () {
-        return urlSir;
-    };
-    
-    this.setjson = function (newname) {
-        if (newname) {
-            json = newname;
-        }
-    };
-    this.getjson = function () {
-        return json;
-    };
-    
-};
-///////////////////////////////////////////////////////////////
-function sirPrioridades() {
-    var urlSir = ipServicios + baseComercial +"SIRgpd_pri";
-    var json = {  
-        "dsSIRgpd_pri":{  
-            "eeDatos":[  
-                {  
-                    "picusrcod":sessionStorage.getItem("usuario"),
-                    "picfiid":sessionStorage.getItem("picfiid"),
-                    "local_ip":sessionStorage.getItem("ipPrivada"),
-                    "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "SIRgpd_pri":[  
-                {  
-                    "piipri__cod":0,
-                    "picpri__des":"*"
-                }
-            ]      
-        }
-    };
-    
-    this.setUrlSir = function (newname) {
-        if (newname) {
-            urlSir = newname;
-        }
-    };
-    this.getUrlSir = function () {
-        return urlSir;
-    };
-    
-    this.setjson = function (newname) {
-        if (newname) {
-            json = newname;
-        }
-    };
-    this.getjson = function () {
-        return json;
-    };
-    
-};
-///////////////////////////////////////////////////////////////
-function cudPrioridades() {
-    var urlSir = ipServicios + baseComercial +"SICUDgpd_pri";
-    var json = {  
-        "dsSICUDgpd_pri":{  
-            "eeDatos":[  
-                {  
-                    "picusrcod":sessionStorage.getItem("usuario"),
-                    "picfiid":sessionStorage.getItem("picfiid"),
-                    "local_ip":sessionStorage.getItem("ipPrivada"),
-                    "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "eegpd_pri":[  
-                {  
-                    "pri__cod":0,
-                    "pri__des":""
-                }
-            ]
-        }
-    };
-    
-    this.setUrlSir = function (newname) {
-        if (newname) {
-            urlSir = newname;
-        }
-    };
-    this.getUrlSir = function () {
-        return urlSir;
-    };
-    
-    this.setjson = function (newname) {
-        if (newname) {
-            json = newname;
-        }
-    };
-    this.getjson = function () {
-        return json;
-    };
-    
-};
-
-///////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
 function sirRegionGeografica() {
     var urlSir = ipServicios + baseComercial +"SIRgpr_rgeo";
     var json =
@@ -1550,3 +1121,46 @@ function CudVendedores() {
     };
     
 };
+///////////////////////////////////////////////////////////////
+function sirClientes() {
+    var urlSir = ipServicios + baseComercial +"SIRgpd_cli";
+    var json ={  
+   "dsSIRgpd_cli":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "SIRgpd_cli":[  
+         {  
+          "piicla__cli":0,
+          "picter__nit":"800170065"
+         }
+      ]      
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+
+

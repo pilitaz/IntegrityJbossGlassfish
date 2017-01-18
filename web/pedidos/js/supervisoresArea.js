@@ -172,11 +172,14 @@ $(document).ready(function () {
                     pais = pais.dataSource._data[select].ciu__cod;
                     var select = area.selectedIndex;
                     area = area.dataSource._data[select].ageo__cod;
-                    actjson.dsSICUDgpd_sar.eegpd_sar[0].pai__cod=parseInt(pais);;  
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].pai__cod=parseInt(pais);  
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].ter__nit=cedula;                     
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].sar__est=99;   
                     actjson.dsSICUDgpd_sar.eegpd_sar[0].ageo__cod=area; 
-                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ter__raz=options.ter__raz;
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ageo__nom=options.ageo__nom;
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ciu__nom=options.ciu__nom; 
+                    actjson.dsSICUDgpd_sar.eegpd_sar[0].ter__raz=nombre;  
+                    
                     return JSON.stringify(actjson);          
                     $('#grid').data('kendoGrid').refresh();
                     $('#grid').data('kendoGrid').dataSource.read();

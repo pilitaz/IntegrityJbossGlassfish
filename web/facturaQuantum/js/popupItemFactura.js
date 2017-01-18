@@ -358,7 +358,7 @@ $(document).ready(function() {
 
 
 function agregarItem(){
-    
+    debugger
     var factura = JSON.parse(sessionStorage.getItem("regFactura"))
     var dropdownlist = $("#ipConceptoDet").data("kendoDropDownList");
     var codConceptoDet = dropdownlist.dataSource._data[dropdownlist.selectedIndex-1].tcont__cod;

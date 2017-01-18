@@ -154,7 +154,7 @@ $(document).ready(function () {
                         if (operation === 'read') {
                             var key1 = Object.keys(objArtP)[0];
                             var key2 = Object.keys(objArtP[key1])[1];
-                            objArtP[key1][key2][0].piipre__est = 99
+                            objArtP[key1][key2][0].piipre__est = 0
                             return JSON.stringify(objArtP);
                         }
                     } catch (e) {
