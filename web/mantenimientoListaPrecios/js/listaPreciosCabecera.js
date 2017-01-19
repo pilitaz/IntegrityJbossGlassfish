@@ -44,53 +44,7 @@ $(document).ready(function () {
     authdssic_mnd.dssic_mnd.eeDatos[0].picusrcod = sessionStorage.getItem("usuario");
     authdssic_mnd.dssic_mnd.eeDatos[0].picfiid = sessionStorage.getItem("picfiid");
 
-    $("#ipDivisa").kendoDropDownList({
-        optionLabel: "Seleccione la moneda",
-        dataTextField: "mnd__des ",
-        dataValueField: "mnd__cla",
-        template: '<div class="divElementDropDownList">#: data.mnd__des #</div>',
-        dataSource: {
-            transport: {
-                read: {
-                    url: ipServicios + baseParameters + "SIRsic_mnd",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    type: "POST"
-                },
-                parameterMap: function (options, operation) {
-                    try {
-                        if (operation === 'read') {
-                            authdssic_mnd["eesic_mnd"] = [options];
-                            return JSON.stringify(authdssic_mnd);
-                        }
-                    } catch (e) {
-                        alertDialogs(e.message);
-                    }
-                }
-            },
-            schema: {
-                type: "json",
-                data: function (e) {
-                    if (e.dssic_mnd.eeEstados[0].Estado === "OK") {
-                        return e.dssic_mnd.eesic_mnd;
-                    } else {
-                        alertDialogs("Problemas con el servicio: " + e.dssic_mnd.eeEstados[0].Estado);
-                    }
-                },
-                model: {
-                    id: "mnd__cla",
-                    fields: {
-                        mnd__cla: {validation: {required: true}, type: 'string'},
-                        mnd__des: {validation: {required: true}, type: 'string'}
-                    }
-                }
-            },
-            error: function (xhr, error) {
-                alertDialogs("Error de conexion del servidor " + xhr.xhr.status + " " + xhr.errorThrown);
-            }
-        }
-
-    });
+    
     var ope = sessionStorage.getItem("opeListPre");
     if (ope === "edit") {
         var obj = JSON.parse(sessionStorage.getItem("listaPrecios"));
@@ -99,7 +53,7 @@ $(document).ready(function () {
         $("#ipFechaInicio").val(obj.lis__fin);
         $("#ipFechaFin").val(obj.lis__ffi);
         $("#ipDescripcion").val(obj.lis__des);
-        $("#ipDivisa").data("kendoDropDownList").value(obj.mnd__cla);
+        
     }
     $("#buttonCab").kendoButton();
 });
@@ -124,8 +78,7 @@ function sendAjaxAddCmpCon(verHtml) {
                 "lis__est": lis__est,
                 "lis__ffi": $("#ipFechaFin").val(),
                 "lis__fin": $("#ipFechaInicio").val(),
-                "lis__num": lis__num,
-                "mnd__cla": $("#ipDivisa").data("kendoDropDownList").value(),
+                "lis__num": lis__num,                
             };
 
     var jsonResp = "";

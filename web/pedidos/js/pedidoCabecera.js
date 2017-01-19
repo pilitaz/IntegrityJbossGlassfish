@@ -37,9 +37,6 @@ $(document).ready(function() {
     if(sessionStorage.getItem("regPedidos")){
         setInfoCabeceraPedido();
     }
-    
-    
-    
 });
 /**
  * Metodo que inicia los el autocomplete del cliente (NIT - razón social)
@@ -382,6 +379,66 @@ function iniDropDownList(){
         }
         
     });
+    
+    var objPrio = new sirPrioridades();    
+    var objJsonPrio = objPrio.getjson();
+    var urlPrio = objPrio.getUrlSir();
+    var mapDataPrio = objPrio.getMapData();
+    
+    //carga el combo de sucursales
+    $("#ipPrioridad").kendoDropDownList({
+        optionLabel: "Seleccione la prioridad",
+        dataTextField: "pri__des",
+        dataValueField: "pri__cod",
+        template:'<div class="divElementDropDownList">#: data.pri__des #</div>',        
+        dataSource: {
+            transport: {
+                read: {
+                    url: urlPrio,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) {
+                    try {
+                        if (operation === 'read') {
+                            var key1 = Object.keys(objJsonPrio)[0];
+                            var key2 = Object.keys(objJsonPrio[key1])[1];                                                       
+                            
+                            return JSON.stringify(objJsonPrio);
+                        }	
+                    } catch (e) {
+                        alertDialogs("Error en el servicio"+ e.message);
+                    }
+                },
+            },
+            schema: {
+                type: "json",
+                data:function (e){
+                    var key1 = Object.keys(e)[0];
+                    if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                        return e[key1][mapDataPrio];
+                    } else {
+                        alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                    }
+                },
+                model: {
+                    id: "pri__cod",
+                    fields: {
+                        pri__cod:    {editable: false, nullable: false},
+                        pri__des:    {editable: true, nullable: false},          
+                    }
+                }
+            },
+            error: function (xhr, error) {
+                alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+            }
+        },
+        change: function (e) {
+
+        }        
+    });
+
 }
 /**
  * Metodo que coloca la información del cliente en los campos que de algua forma dependen de el.
@@ -404,11 +461,22 @@ function setInfoCliente(e){
         
     var clienteNacional = dataCliente.gfc__nal;  
     
-    if(clienteNacional){
-        var kendoDropDownListDivisa = $("#ipDivisa").data("kendoDropDownList");
-        kendoDropDownListDivisa.value("CO");
-        kendoDropDownListDivisa.readonly(true);  
+    var comboboxDivisa= $("#ipDivisa").data("kendoDropDownList"); 
+    if(sessionStorage.getItem("regPedidos")){
+        var pedido = JSON.parse(sessionStorage.getItem("regPedidos"))
+        comboboxDivisa.value(pedido.mnd__cla);
+        comboboxDivisa.readonly(true);        
+    }else if(!clienteNacional){
+        comboboxDivisa.value(dataCliente.mnd__cla);        
+    }else{
+        comboboxDivisa.value(sessionStorage.getItem("monedaCompañia"));
+        comboboxDivisa.readonly(true);
     }
+//    }else if(clienteNacional){
+//        var kendoDropDownListDivisa = $("#ipDivisa").data("kendoDropDownList");
+//        kendoDropDownListDivisa.value("CO");
+//        kendoDropDownListDivisa.readonly(true);  
+//    }
         
     sessionStorage.setItem("nitCliente", dataCliente.ter__nit); // sessionStorage.setItem("
     sessionStorage.setItem("listaPrecioCliente", dataCliente.lis__num);
@@ -594,7 +662,8 @@ function setInfoCliente(e){
                 
                 var dataItemEstablicimiento = e.sender.dataSource._data["0"]; 
                 $("#ipDireccion").val(dataItemEstablicimiento.ter__dir);
-               // $("#ipTelefono").val(dataItemEstablicimiento.ter__tel);
+                $("#ipTelefono").val(dataItemEstablicimiento.ter__tel);
+                
                 var dropdownlist = $("#ipCiudad").data("kendoDropDownList");
                 dropdownlist.value(dataItemEstablicimiento.ciu__cod);            
             }
@@ -623,6 +692,14 @@ function setInfoCabeceraPedido(){
     kendoDropDownListSucursal.value(pedido.suc__cod);
     kendoDropDownListSucursal.readonly(true);
     
+    var kendoDropDownListPrioridad = $("#ipPrioridad").data("kendoDropDownList"); 
+    kendoDropDownListPrioridad.value(pedido.pri__cod);
+    kendoDropDownListPrioridad.readonly(true);
+    
+    var kendoDropDownListTipTasa = $("#ipTipTasa").data("kendoDropDownList"); 
+    kendoDropDownListTipTasa.value(pedido.tip__tasa);
+    kendoDropDownListTipTasa.readonly(true);
+    
     document.getElementById('idNumeroPedido').innerHTML = 'Nº '+pedido.ped__num;
     $("#buttonCab")["0"].childNodes["0"].data="Actualizar";//
     
@@ -642,6 +719,23 @@ function setInfoCabeceraPedido(){
     datepicker.value(fecha);
     datepicker.readonly(true);
     
+    debugger
+    var fechaEnt = new Date(pedido.ped__fec__ent.replace(/-/g, "/"));
+    fechaEnt.setHours(0,0,0,0);
+    
+    var datepicker = $("#ipFechaEntrega").data("kendoDatePicker");
+    datepicker.value(fechaEnt);
+    datepicker.readonly(true);
+    
+    var fechaTasa = new Date(pedido.fec__tasa.replace(/-/g, "/"));
+    fechaTasa.setHours(0,0,0,0);
+    
+    var datepicker = $("#ipFechaTasa").data("kendoDatePicker");
+    datepicker.value(fechaTasa);
+    datepicker.readonly(true);
+    
+    $("#ipNumOrden").val(pedido.ord__nump);
+    
     $("#ipSolicitante").val(pedido.ped__pqs);
     
     $("#txtAObservacionePedido").val(pedido.obs__ped);
@@ -650,7 +744,7 @@ function setInfoCabeceraPedido(){
     
     var key1 = Object.keys(objJson)[0];
     var key2 = Object.keys(objJson[key1])[1];                                
-    objJson[key1][key2][0].picter_nit = pedido.ter__nit;   
+    objJson[key1][key2][0].picter__nit = pedido.ter__nit;   
     
     try{
         $.ajax({
@@ -714,6 +808,10 @@ function guardarCabecera(){
     objJson[key1][key2][0].obs__ped = $("#txtAObservacionePedido").val();
     objJson[key1][key2][0].ped__num = numPedido;
     objJson[key1][key2][0].clc__cod = clcCod;
+    objJson[key1][key2][0].tip__tasa = $("#ipTipTasa").val();
+    objJson[key1][key2][0].fec__tasa = $("#ipFechaTasa").val();
+    objJson[key1][key2][0].pri__cod = $("#ipPrioridad").val();    
+    objJson[key1][key2][0].ord__nump = $("#ipNumOrden").val();
     
     try{
         $.ajax({

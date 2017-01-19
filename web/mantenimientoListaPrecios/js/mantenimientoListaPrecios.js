@@ -152,8 +152,7 @@ function gridListaDePrecios(jsonSir) {
                 fields: {
                     lis__des: {validation: {required: true}, type: 'string'},
                     lis__fin: {validation: {required: true}, type: 'string'},
-                    lis__ffi: {validation: {required: true}, type: 'string'},
-                    mnd__cla: {validation: {required: true}, type: 'string'},
+                    lis__ffi: {validation: {required: true}, type: 'string'},                    
                 }
             }
         }
@@ -169,14 +168,12 @@ function gridListaDePrecios(jsonSir) {
         columns: [
             {field: "lis__des", title: "Descripción Lista"},
             {field: "lis__fin", title: "Fecha Inicial"},
-            {field: "lis__ffi", title: "Fecha Vencimiento"},
-            {field: "mnd__cla", title: "Moneda"},
-//            {field: "ter__nit", title: "&nbsp;"},
+            {field: "lis__ffi", title: "Fecha Vencimiento"},            
             {command:
                         [
                             {name: "aprobar", text: " ", click: aprobarListaPrecios, template: "<a class='k-grid-aprobar' '><span class='k-sprite po_cerrar'></span></a>"},
                             {name: "editar", text: " ", click: editarListaPrecios, template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},
-                            {name: "copy", template: "<a class='k-grid-copy' href='' style='min-width:16px;'><span class='k-sprite po_copy'></span></a>"},
+                            {name: "copy", click: clickCopiar, template: "<a class='k-grid-copy' href='' style='min-width:16px;'><span class='k-sprite po_copy'></span></a>"},
                             {name: "destroyed", click: clickEliminar, template: "<a class='k-grid-destroyed' href='' style='min-width:16px;'><span class='k-sprite po_cerrar'></span></a>"}
                         ],
                 width: "170px"}],
@@ -266,6 +263,13 @@ function clickEliminar(e) {
     }
 }
 
+function clickCopiar(e){
+    var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
+    e.preventDefault();
+    var dataItem = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"));
+    sendAjaxAddCmpCon("POST",dataItem);
+}
+
 function crearListaPrecios() {
 
     sessionStorage.removeItem("opeListPre");
@@ -284,7 +288,7 @@ function crearListaPrecios() {
     }
 
     myWindow.kendoWindow({
-        width: "60%",
+        width: "40%",
         height: "40%",
         title: "Agregar",
         content: sessionStorage.getItem("url") + "/mantenimientoListaPrecios/html/" + servicio + ".html",
@@ -368,6 +372,42 @@ function sendAjaxLpre(verHtml, obj) {
         if (permitirIngreso == '"OK"') {
             $('#grid').data('kendoGrid').dataSource.read();
             $('#grid').data('kendoGrid').refresh();
+        } else {
+            alertDialogs("Problemas con el creación de crear lista de precios .\n" + permitirIngreso);
+        }
+
+    });
+}
+
+function sendAjaxAddCmpCon(verHtml,obj) {
+    var objCU = new SICUDgpr_lis();
+    var objD = objCU.getjson();
+    var urlD = objCU.getUrlSir();
+    var mapDataD = objCU.getMapData();
+    var key1 = Object.keys(objD)[0];
+    objD[key1][mapDataD][0] = obj;
+
+    var jsonResp = "";
+    var permitirIngreso = "";
+    $.ajax({
+        type: verHtml,
+        data: JSON.stringify(objD),
+        url: urlD,
+        async: false,
+        dataType: "json",
+        contentType: "application/json;",
+        success: function (resp) {
+            var key1 = Object.keys(resp)[0];
+            permitirIngreso = JSON.stringify(resp[key1].eeEstados[0].Estado);
+            jsonResp = resp;
+        },
+        error: function (e) {
+            alertDialogs("Error al consumir el servicio de crear lista de precios" + e.status + " - " + e.statusText);
+        }
+    }).done(function () {
+        if (permitirIngreso == '"OK"') {
+            var key1 = Object.keys(jsonResp)[0];
+            cabGuard(JSON.stringify(jsonResp[key1][mapDataD][0]));
         } else {
             alertDialogs("Problemas con el creación de crear lista de precios .\n" + permitirIngreso);
         }

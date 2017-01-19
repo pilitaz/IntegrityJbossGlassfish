@@ -84,8 +84,8 @@ function SIRgpr_lis_det() {
         "dsSIRgpr_lis_det": {
             "eeDatos": [
                 {
-                    "picusrcod": "amonserrate",
-                    "picfiid": "982606324590544896",
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
                     "local_ip": sessionStorage.getItem("ipPrivada"),
                     "remote_ip": sessionStorage.getItem("ipPublica")
                 }
@@ -152,8 +152,8 @@ function SICUDgpr_lis() {
         "dsSICUDgpr_lis": {
             "eeDatos": [
                 {
-                    "picusrcod": "amonserrate",
-                    "picfiid": "982606324590544896",
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
                     "local_ip": sessionStorage.getItem("ipPrivada"),
                     "remote_ip": sessionStorage.getItem("ipPublica")
                 }
@@ -210,8 +210,8 @@ function SICUDgpr_lisDet() {
         "dsSICUDgpr_lis": {
             "eeDatos": [
                 {
-                    "picusrcod": "amonserrate",
-                    "picfiid": "982606324590544896",
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
                     "local_ip": sessionStorage.getItem("ipPrivada"),
                     "remote_ip": sessionStorage.getItem("ipPublica")
                 }
@@ -338,8 +338,8 @@ function SIRgpr_lis_det() {
         "dsSIRgpr_lis_det": {
             "eeDatos": [
                 {
-                    "picusrcod": "amonserrate",
-                    "picfiid": "982606324590544896",
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
                     "local_ip": sessionStorage.getItem("ipPrivada"),
                     "remote_ip": sessionStorage.getItem("ipPublica")
                 }
@@ -402,8 +402,8 @@ function SIRgpr_pre() {
         "dsSIRgpr_pre": {
             "eeDatos": [
                 {
-                    "picusrcod": "amonserrate",
-                    "picfiid": "982606324590544896",
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
                     "local_ip": sessionStorage.getItem("ipPrivada"),
                     "remote_ip": sessionStorage.getItem("ipPublica")
                 }
@@ -412,7 +412,121 @@ function SIRgpr_pre() {
                 {
                     "picpre__pcod": "*",
                     "picusuario": "*",
-                    "piipre__est":-1
+                    "piipre__est":0
+                }
+            ]
+        }
+    };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
+}
+;
+//////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Funcion para obtener la url y el json de entrada para el detalle de lista de clase de Articulo
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function Sirinv_cla() {
+    var mapData = "eeinv_cla";
+    var urlSir = ipServicios + baseParameters + "Sirinv_cla";
+    var json = {
+        "dsinv_cla": {
+            "eeDatos": [
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip": sessionStorage.getItem("ipPrivada"),
+                    "remote_ip": sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "eetemp": [
+                {
+                    "picsuc_cod": "*",
+                }
+            ]
+        }
+    };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
+}
+;
+
+//////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Funcion para obtener la url y el json de entrada para el detalle de lista de clase de Articulo
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function SIRsic_mnd() {
+    var mapData = "eesic_mnd";
+    var urlSir = ipServicios + baseParameters + "SIRsic_mnd";
+    var json = {
+        "dssic_mnd": {
+            "eeDatos": [
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+//                    "local_ip": sessionStorage.getItem("ipPrivada"),
+//                    "remote_ip": sessionStorage.getItem("ipPublica")
                 }
             ]
         }

@@ -3,9 +3,11 @@ var objSir = new sir();
 var urlSir = objSir.getUrlSir();
 var mapSir = objSir.getmapSir();
 var inputsir = objSir.getdataInputSir();
+
 //    var objSir = new sir();
 //var urlSir = objSir.getUrlSir();
-var est = "pre__est";
+var est = "loc__est";
+var clacli = "";
 $(document).ready(function () {
     fltrEst();
     grilla();
@@ -27,11 +29,13 @@ function grilla(obj) {
     /*variable para adicionar los campos requeridos y el tipo de dato*/
     /*editable: false --- ocultar en grilla*/
     var fieldShema = {
-        pre__pcod: {type: 'string'},
-        pre__des: {type: 'string'},
-        pre__est: {type: 'number'},
-        uni__cod: {type: 'string'},
-        pre__fac: {type: 'number'},
+        "com__con": {type: 'string'},
+        "com__nom": {type: 'string'},
+        "loc__cod": {type: 'string'},
+        "loc__des": {type: 'string'},
+        "ter__nit": {type: 'string'},
+        "ter__raz": {type: 'string'},
+        "loc__est": {type: 'number'}
     }
 
     /*variable id es el id correspondiente a la tabla a cansultar*/
@@ -43,7 +47,7 @@ function grilla(obj) {
     /*variables para adicionar los botones de la grilla*/
     var btnC = true;
     var btnUD = [
-        {name: "aprobar", text: " ", click: aprobarPresen, template: "<a class='k-grid-aprobar' '><span class='k-sprite po_cerrar'></span></a>"},
+        {name: "aprobar", text: " ", click: aprobar, template: "<a class='k-grid-aprobar' '><span class='k-sprite po_cerrar'></span></a>"},
         {name: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
         {name: "Delete", click: deleteRow, template: "<a class='k-grid-Delete'><span class='k-sprite po_cerrar'></span></a>"},
     ];
@@ -58,11 +62,17 @@ function grilla(obj) {
     /*hiden: true --- ocultar en grilla*/
     var columns = [
 //		btnDer,
-        {field: "pre__pcod", title: "Cod. Presentacion", width: "100%"},
-        {field: "pre__des", title: "Descripcion", width: "100%"},
-//            {field: "pre__est", title: "Estado",width: "100%"},
-        {field: "uni__cod", title: "Unidad de Medida", editor: uni__codList, width: "100%"},
-        {field: "pre__fac", title: "Factor Conversion", width: "100%"},
+//        {field: "com__con", title: "Cod.Establ.", width: "100%"},
+        {field: "ter__nit", title: "Producto", editor:ter__nitList, width: "100%"},
+        {field: "ter__raz", title: "Cantidad", editor:ter__razList, width: "100%"},
+        {field: "com__nom", title: "Peso",editor:com__nomLista, width: "100%"},
+//        {field: "loc__cod", title: "Codigo de Localizacion", width: "100%"},
+        {field: "loc__des", title: "___", editor:loc__desList, width: "100%"},
+        
+//        {field: "loc__est", title: "Estado del Registro", width: "100%"},
+
+
+        //{field: "cla__nom", title: "Clase de Cliente", editor:cla__cliList,width: "100%"},
         btnIzq
     ];
 
@@ -99,10 +109,21 @@ function grilla(obj) {
                     } else if (operation === 'create') {
                         var key1 = Object.keys(inputCud)[0]
                         options[est] = 99;
+                        options.com__con = $("#idcom__nom").data("kendoDropDownList").dataSource._data[0].com__con;
+                        options.loc__cod = options.loc__des;
+                        options.ter__nit = $("#idter__nit").val();
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
 
-                    } else {
+                    } else if (operation === 'destroy') {
+                        
+                        var key1 = Object.keys(inputCud)[0]
+                        inputCud[key1][mapCud] = [options];
+                        return JSON.stringify(inputCud);
+                    }else {
+//                        options.com__con = options.com__nom;
+                        options.loc__cod = options.loc__des;
+                        options.ter__nit = $("#idter__nit").val();
                         var key1 = Object.keys(inputCud)[0]
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
@@ -115,15 +136,22 @@ function grilla(obj) {
         schema: {
             type: "json",
             data: function (e) {
+                
                 var key1 = Object.keys(e)[0];
+                var regex = /(s|S)(i|I)(c|C)(u|U)(d|D)/g;
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     if (e[key1][mapSir]) {
                         for (var i = 0; i < e[key1][mapSir].length; i++) {
                             e[key1][mapSir][i].idpre = i
                         }
+                    } else {
+                        grilla()
                     }
                     return e[key1][mapSir];
                 } else {
+                    if(regex.test(key1)){
+                        grilla();
+                    }
                     alertDialogs(e[key1].eeEstados[0].Estado);
                 }
             },
@@ -148,14 +176,18 @@ function grilla(obj) {
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
         edit: function (e) {
             
+            
+
             if (!e.model.isNew()) {//caso en el que el popup es editar
 
                 e.container.kendoWindow("title", "Editar");
-                var buscarlabel = $("label").find("for");
-                Buscarlabel = buscarlabel.prevObject[0];
-                Buscarlabel.style.display = "none";
-                e.container.find("input[name=pre__pcod]")[0].style.display = "none";
-                //e.container.find("input[name=ter__raz]")[0].readOnly="true"
+                $("#idcom__nom").data("kendoDropDownList").value(e.model["com__nom"]);
+                $("#idloc__des").data("kendoDropDownList").value(e.model["loc__cod"]);
+//                $("#idter__raz").data("kendoAutoComplete").enable(true);
+                $("#idter__nit").data("kendoAutoComplete").destroy();
+                $("#idter__nit").prop('disabled', true);
+                $("#idter__raz").data("kendoAutoComplete").destroy();
+                $("#idter__raz").prop('disabled', true);
                 if (e.model[est] != 99) {
                     kendo.ui.progress($('.k-edit-form-container'), true);
                     kendo.ui.progress($('.k-edit-buttons'), true);
@@ -163,10 +195,6 @@ function grilla(obj) {
                 }
             } else {
                 e.container.kendoWindow("title", "Crear");
-                ////caso en el que el popup es crear
-//                Buscarlabel = buscarlabel.prevObject[3];
-//                Buscarlabel.style.display = "none";
-                //e.container.find("label[name=sre__cod]")[0].display="none";
             }
         },
     });
@@ -178,7 +206,7 @@ function addRow() {
 }
 $(window).resize(function () {
     var viewportHeight = $(window).height();
-    $('#outerWrapper').height(viewportHeight - 61);
+    $('#outerWrapper').height(viewportHeight - 211);
 });
 
 function deleteRow(e) {
@@ -212,19 +240,84 @@ function deleteRow(e) {
     }
 }
 
-function pre__pcodList(container, options) {
-    var obj = new listapre__pcod();
+
+
+
+
+    
+function com__nomLista(container, options) {
+    
+    var obj = new listacom__nom();
     var dataSource = obj.getdataSource();
-    $('<input id="idpre__pcod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-        dataTextField: "text",
-        dataValueField: "value",
+    $('<input id="idcom__nom" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
+        dataTextField: "com__nom",
+        dataValueField: "com__nom",
+        cascadeFrom:"idter__nit",
+        template: '<div class="divElementDropDownList">#: data.com__nom #</div>',
         dataSource: dataSource,
-        index: 0,
+//        change: onSelect
     });
+    $("#idcom__nom").data("kendoDropDownList").enable(false);
 }
+//function onSelect(e){
+//    clacli = e.sender.dataSource._data[e.sender.selectedIndex].cla__cli;
+//}
+function listacom__nom(obj) {
+    var objSircom__nom = new SIRgpd_cli_suc();
+    var urlSirUn = objSircom__nom.getUrlSir();
+    var mapSirUn = objSircom__nom.getmapSir();
+    var inputsirUn = objSircom__nom.getdataInputSir();
+    if(obj){
+        inputsirUn = obj; 
+    }
+    var dataSource = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: urlSirUn,
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+            },
+            parameterMap: function (options, operation) {
+                try {
+                    if (operation === 'read') {
+                        return JSON.stringify(inputsirUn);
+                    }
+                } catch (e) {
+                    alertDialogs(e.message)
+                }
+            }
+        },
+        schema: {
+            type: "json",
+            data: function (e) {
+                var key1 = Object.keys(e)[0];
+                if (e[key1].eeEstados[0].Estado === "OK") {
+                    if (e[key1][mapSirUn]) {
+                        for (var i = 0; i < e[key1][mapSirUn].length; i++) {
+                            e[key1][mapSirUn][i].id = i;
+                        }
+                    } else {
+                        grilla();
+                    }
 
-function listapre__pcod() {
-
+                    return e[key1][mapSirUn];
+                } else {
+                    alertDialogs(e[key1].eeEstados[0].Estado);
+                }
+            },
+            model: {
+                id: "com__con",
+                fields: {
+                    com__con: {type: 'string'},
+                    com__nom: {type: 'string'},
+                }
+            }
+        },
+        error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
+    });
 
     this.setdataSource = function (newname) {
         if (newname) {
@@ -237,72 +330,21 @@ function listapre__pcod() {
 }
 ;
 
-
-function pre__desList(container, options) {
-    var obj = new listapre__des();
+function loc__desList(container, options) {
+    
+    var obj = new listaloc__des();
     var dataSource = obj.getdataSource();
-    $('<input id="idpre__des" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-        dataTextField: "text",
-        dataValueField: "value",
+    $('<input id="idloc__des" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
+        dataTextField: "loc__des",
+        dataValueField: "loc__cod",
         dataSource: dataSource,
-        index: 0,
+        template: '<div class="divElementDropDownList">#: data.loc__des #</div>'
+//        change: onSelect
     });
 }
 
-function listapre__des() {
-
-
-    this.setdataSource = function (newname) {
-        if (newname) {
-            dataSource = newname;
-        }
-    };
-    this.getdataSource = function () {
-        return dataSource;
-    };
-}
-;
-
-
-function pre__estList(container, options) {
-    var obj = new listapre__est();
-    var dataSource = obj.getdataSource();
-    $('<input id="idpre__est" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-        dataTextField: "text",
-        dataValueField: "value",
-        dataSource: dataSource,
-        index: 0,
-    });
-}
-
-function listapre__est() {
-
-
-    this.setdataSource = function (newname) {
-        if (newname) {
-            dataSource = newname;
-        }
-    };
-    this.getdataSource = function () {
-        return dataSource;
-    };
-}
-;
-
-
-function uni__codList(container, options) {
-    var obj = new listauni__cod();
-    var dataSource = obj.getdataSource();
-    $('<input id="iduni__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-        dataTextField: "uni__des",
-        dataValueField: "uni__cod",
-        dataSource: dataSource,
-        index: 0,
-    });
-}
-
-function listauni__cod() {
-    var objSirUn = new SIRinv_uni();
+function listaloc__des() {
+    var objSirUn = new SIRinv_loc();
     var urlSirUn = objSirUn.getUrlSir();
     var mapSirUn = objSirUn.getmapSir();
     var inputsirUn = objSirUn.getdataInputSir();
@@ -343,10 +385,10 @@ function listauni__cod() {
                 }
             },
             model: {
-                id: "uni__des",
+                id: "loc__cod",
                 fields: {
-                    uni__des: {type: 'string'},
-//                    uni__des: {type: 'string'},
+                    loc__des: {type: 'string'},
+                    loc__cod: {type: 'string'}
                 }
             }
         },
@@ -366,20 +408,86 @@ function listauni__cod() {
 }
 ;
 
-
-function pre__facList(container, options) {
-    var obj = new listapre__fac();
+function ter__nitList(container, options) {
+    
+    var obj = new listater__nit();
     var dataSource = obj.getdataSource();
-    $('<input id="idpre__fac" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-        dataTextField: "text",
-        dataValueField: "value",
+    $('<input id="idter__nit" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoAutoComplete({
+        dataTextField: "ter__nit",
+        dataValueField: "ter__nit",
+        placeholder: "Nit...",
         dataSource: dataSource,
-        index: 0,
+        template: '<div class="divElementDropDownList">#: data.ter__nit #' + ' - ' + ' #:data.ter__raz #</div>',
+        minLength: 7,
+        change: onSelectNit
     });
 }
 
-function listapre__fac() {
+function onSelectNit(e) {
+    
+    var json = changeInputSir_com__nom(e.sender.listView._dataItems[0].ter__nit);
+    var obj = new listacom__nom(json);
+    var dataSource = obj.getdataSource();
+    $("#idcom__nom").data("kendoDropDownList").setDataSource(dataSource);
+    $("#idcom__nom").data("kendoDropDownList").enable(true);
+    $("#idter__raz").val(e.sender.listView._dataItems[0].ter__raz);
+}
 
+function listater__nit() {
+    var objSirUn = new SIRsic_ter();
+    var urlSirUn = objSirUn.getUrlSir();
+    var mapSirUn = objSirUn.getmapSir();
+    var inputsirUn = objSirUn.getdataInputSir();
+    var dataSource = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: urlSirUn,
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+            },
+            parameterMap: function (options, operation) {
+                try {
+                    if (operation === 'read') {
+                        var key1 = Object.keys(inputsirUn)[0];
+                        inputsirUn[key1].eeSIRsic_ter[0].picter_nit = $("#idter__nit").val();
+                        return JSON.stringify(inputsirUn);
+                    }
+                } catch (e) {
+                    alertDialogs(e.message)
+                }
+            }
+        },
+        schema: {
+            type: "json",
+            data: function (e) {
+                var key1 = Object.keys(e)[0];
+                if (e[key1].eeEstados[0].Estado === "OK") {
+                    if (e[key1][mapSirUn]) {
+                        for (var i = 0; i < e[key1][mapSirUn].length; i++) {
+                            e[key1][mapSirUn][i].id = i;
+                        }
+                    } else {
+                        grilla();
+                    }
+
+                    return e[key1][mapSirUn];
+                } else {
+                    alertDialogs(e[key1].eeEstados[0].Estado);
+                }
+            },
+            model: {
+                id: "ter__nit",
+                fields: {
+                    ter__raz: {type: 'string'},
+                    ter__nit: {type: 'string'}
+                }
+            }
+        },
+        error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
+    });
 
     this.setdataSource = function (newname) {
         if (newname) {
@@ -391,10 +499,122 @@ function listapre__fac() {
     };
 }
 ;
+function ter__razList(container, options) {
+    
+    var obj = new listater__raz();
+    var dataSource = obj.getdataSource();
+    $('<input id="idter__raz" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoAutoComplete({
+        dataTextField: "ter__raz",
+        dataValueField: "ter__raz",
+        placeholder: "Razón Social...",
+        template: '<div class="divElementDropDownList">#: data.ter__raz #</div>',
+        dataSource: dataSource,
+        minLength: 4,
+        change: onSelectRaz
+    });
+}
+function onSelectRaz(e) {
+    var json = changeInputSir_com__nom(e.sender.listView._dataItems[0].ter__nit);
+    var obj = new listacom__nom(json);
+    var dataSource = obj.getdataSource();
+    $("#idcom__nom").data("kendoDropDownList").setDataSource(dataSource);
+    $("#idcom__nom").data("kendoDropDownList").enable(true);
+    $("#idter__nit").val(e.sender.listView._dataItems[0].ter__nit);
+}
+function listater__raz() {
+    var objSirUn = new SIRsic_ter();
+    var urlSirUn = objSirUn.getUrlSir();
+    var mapSirUn = objSirUn.getmapSir();
+    var inputsirUn = objSirUn.getdataInputSir();
+    var dataSource = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: urlSirUn,
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+            },
+            parameterMap: function (options, operation) {
+                try {
+                    if (operation === 'read') {
+                        var key1 = Object.keys(inputsirUn)[0];
+                        inputsirUn[key1].eeSIRsic_ter[0].picter_raz = $("#idter__raz").val();
+                        return JSON.stringify(inputsirUn);
+                    }
+                } catch (e) {
+                    alertDialogs(e.message)
+                }
+            }
+        },
+        schema: {
+            type: "json",
+            data: function (e) {
+                var key1 = Object.keys(e)[0];
+                if (e[key1].eeEstados[0].Estado === "OK") {
+                    if (e[key1][mapSirUn]) {
+                        for (var i = 0; i < e[key1][mapSirUn].length; i++) {
+                            e[key1][mapSirUn][i].id = i;
+                        }
+                    } else {
+                        grilla();
+                    }
+
+                    return e[key1][mapSirUn];
+                } else {
+                    alertDialogs(e[key1].eeEstados[0].Estado);
+                }
+            },
+            model: {
+                id: "ter__nit",
+                fields: {
+                    ter__raz: {type: 'string'},
+                    ter__nit: {type: 'string'}
+                }
+            }
+        },
+        error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
+    });
+
+    this.setdataSource = function (newname) {
+        if (newname) {
+            dataSource = newname;
+        }
+    };
+    this.getdataSource = function () {
+        return dataSource;
+    };
+}
+;
+function changeInputSir_com__nom(nit){
+    var objSircom__nom = new SIRgpd_cli_suc();
+    var json = objSircom__nom.getdataInputSir();
+    json = {
+        "dsSIRgpd_cli_suc": {
+            "eeDatos": [
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip": sessionStorage.getItem("ipPrivada"),
+                    "remote_ip": sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "SIRgpd_cli_suc": [
+                {
+                    "picter__nit": nit,
+                    "piccom__con": "*"
+                }
+            ]
+        }
+    };
+    return json;
+}
+
 ///-----------------------------------------------------------------------------
 
 
-function aprobarPresen(e) {
+function aprobar(e) {
     try {
         var fila = $("#grid").data("kendoGrid")._data[($(e.currentTarget).closest("tr")["0"].sectionRowIndex)];
         e.preventDefault();
@@ -451,7 +671,7 @@ function sendAjaxAClase(verHtml, obj) {
             bandAlert = 0;
         },
         error: function (e) {
-            alertDialogs("Error al consumir el servicio de  presentación del producto" + e.status + " - " + e.statusText);
+            alertDialogs("Error al consumir el servicio de crear lista de precios" + e.status + " - " + e.statusText);
             bandAlert = 0;
         }
     }).done(function () {
@@ -459,7 +679,7 @@ function sendAjaxAClase(verHtml, obj) {
             $('#grid').data('kendoGrid').dataSource.read();
             $('#grid').data('kendoGrid').refresh();
         } else {
-            alertDialogs("Problemas con elel servicio de presentación del producto.\n" + permitirIngreso);
+            alertDialogs("Problemas con el creación de crear lista de precios .\n" + permitirIngreso);
         }
 
     });
@@ -485,7 +705,7 @@ function fltrEst() {
 
 function onChangeFltr() {
     inputsir = {
-        "dsSIRgpr_pre": {
+        "dsSIRdpc_loc": {
             "eeDatos": [
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
@@ -494,15 +714,17 @@ function onChangeFltr() {
                     "remote_ip": sessionStorage.getItem("ipPublica")
                 }
             ],
-            "eeSIRgpr_pre": [
+            "eeSIRdpc_loc": [
                 {
-                    "picpre__pcod": "*",
-                    "picusuario": "*",
-                    "piipre__est": $("#fltrEst").val()
+                    "piiloc_cod": 0,
+                    "picter_nit": 0,
+                    "piicom_con": "*",
+                    "piiloc_est": $("#fltrEst").val()
                 }
             ]
         }
-    }
+    };
     grilla(inputsir);
 }
+
 

@@ -499,7 +499,9 @@ function sirConsultaEstablecimiento() {
                             ],
                             "SIRgpd_cli_suc" : [{                                            
                                             "piccom__con" : "*",
-                                            "picter__nit" : "*"
+                                            "picter__nit" : "*",
+                                            "piicli__com__est": 0,
+                                            "picciu__cod": "*"
                                     }
                             ]
 
@@ -775,4 +777,56 @@ function SICUDDetallePedido() {
         return mapData;
     };
 
+};
+
+function sirPrioridades() {
+    var mapData = "eegpd_pri";
+    var urlSir = ipServicios + baseComercial +"SIRgpd_pri";
+    var json = {  
+        "dsSIRgpd_pri":{  
+            "eeDatos":[  
+                {  
+                    "picusrcod":sessionStorage.getItem("usuario"),
+                    "picfiid":sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "SIRgpd_pri":[  
+                {  
+                    "piipri__cod":0,
+                    "picpri__des":"*",
+                    "piictr__est" : 0
+                }
+            ]      
+        }
+    };
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+    
 };

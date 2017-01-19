@@ -465,7 +465,7 @@ function sendAjaxAClase(verHtml, obj) {
             bandAlert = 0;
         },
         error: function (e) {
-            alertDialogs("Error al consumir el servicio de crear lista de precios" + e.status + " - " + e.statusText);
+            alertDialogs("Error al consumir el servicio de tipos de camión" + e.status + " - " + e.statusText);
             bandAlert = 0;
         }
     }).done(function () {
@@ -474,7 +474,7 @@ function sendAjaxAClase(verHtml, obj) {
             $('#grid').data('kendoGrid').refresh();
         } else {
             grilla();
-            alertDialogs("Problemas con el creación de crear lista de precios .\n" + permitirIngreso);
+            alertDialogs("Problemas con el servicio de tipos de camión.\n" + permitirIngreso);
         }
 
     });

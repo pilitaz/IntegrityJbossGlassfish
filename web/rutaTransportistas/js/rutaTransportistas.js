@@ -6,7 +6,7 @@ var inputsir = objSir.getdataInputSir();
 //    var objSir = new sir();
 //var urlSir = objSir.getUrlSir();
 var est = "rut__est";
-var clacli= "";
+var clacli = "";
 $(document).ready(function () {
     fltrEst();
     grilla();
@@ -32,8 +32,8 @@ function grilla(obj) {
         "bar__cod2": {type: 'number'},
         "ciu__cod1": {type: 'number'},
         "ciu__cod2": {type: 'number'},
-        "rut__cod":  {type: 'string'},
-        "rut__des":  {type: 'string'},
+        "rut__cod": {type: 'string'},
+        "rut__des": {type: 'string'},
         "bar__dsc1": {type: 'string'},
         "bar__dsc2": {type: 'string'},
         "ciu__nom1": {type: 'string'},
@@ -69,14 +69,12 @@ function grilla(obj) {
 //        {field: "bar__cod2", title:"e", width:"100%"}, 
 //        {field: "ciu__cod1", title:"e", width:"100%"}, 
 //        {field: "ciu__cod2", title:"e", width:"100%"}, 
-        {field: "rut__cod" , title:"Código Ruta", width:"100%"}, 
-        {field: "rut__des" , title:"Descripción", width:"100%"},
-        {field: "ciu__nom1", title:"Ciudad Origen", editor:ciu__nom1List, width:"100%"},
-        {field: "bar__dsc1", title:"Barrio Origen", width:"100%"}, 
-        {field: "ciu__nom2", title:"Ciudad Destino", editor:ciu__nom2List, width:"100%"}, 
-        {field: "bar__dsc2", title:"Barrio Destino", width:"100%"}, 
-        
-        
+        {field: "rut__cod", title: "Código Ruta", width: "100%"},
+        {field: "rut__des", title: "Descripción", width: "100%"},
+        {field: "ciu__cod1", title: "Ciudad Origen", editor: ciu__nom1List, width: "100%"},
+        {field: "bar__cod1", title: "Barrio Origen", editor: bar__dsc1List, width: "100%"},
+        {field: "ciu__cod2", title: "Ciudad Destino", editor: ciu__nom2List, width: "100%"},
+        {field: "bar__cod2", title: "Barrio Destino", editor: bar__dsc2List, width: "100%"},
         //{field: "cla__nom", title: "Clase de Cliente", editor:cla__cliList,width: "100%"},
         btnIzq
     ];
@@ -137,8 +135,9 @@ function grilla(obj) {
                         for (var i = 0; i < e[key1][mapSir].length; i++) {
                             e[key1][mapSir][i].idpre = i
                         }
+                    } else {
+                        grilla()
                     }
-                    else{grilla()}
                     return e[key1][mapSir];
                 } else {
                     alertDialogs(e[key1].eeEstados[0].Estado);
@@ -167,11 +166,15 @@ function grilla(obj) {
             e.container.find("label[for='rut__cod']").hide();
             e.container.find("input[name=rut__cod]").hide();
             if (!e.model.isNew()) {//caso en el que el popup es editar
-
+                debugger
                 e.container.kendoWindow("title", "Editar");
-                
+                e.model.bar__dsc1 = e.model.bar__cod1
+                e.model.ciu__nom1 = e.model.ciu__cod1
+                e.model.bar__dsc2 = e.model.bar__cod2
+                e.model.ciu__nom2 = e.model.ciu__cod2
                 //e.container.find("input[name=ter__raz]")[0].readOnly="true"
                 if (e.model[est] != 99) {
+                    
                     kendo.ui.progress($('.k-edit-form-container'), true);
                     kendo.ui.progress($('.k-edit-buttons'), true);
                     e.container.find(".k-loading-image").css("background-image", "url('')");
@@ -234,13 +237,17 @@ function ciu__nom1List(container, options) {
     $('<input id="idciu__nom1" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
         dataTextField: "ciu__nom",
         dataValueField: "ciu__cod",
-        template:'<div class="divElementDropDownList">#: data.ciu__nom #</div>',
+        template: '<div class="divElementDropDownList">#: data.ciu__nom #</div>',
         dataSource: dataSource,
         change: onSelectciu__nom1
     });
 }
-function onSelectciu__nom1(e){
-//    clacli = e.sender.dataSource._data[e.sender.selectedIndex].cla__cli;
+function onSelectciu__nom1(e) {
+    var json = changeInputSIRgpd_bar(e.sender.listView._dataItems[0].ciu__cod);
+    var obj = new listabar__dsc(json);
+    var dataSource = obj.getdataSource();
+    $("#idbar__dsc1").data("kendoDropDownList").setDataSource(dataSource);
+    $("#idbar__dsc1").data("kendoDropDownList").enable(true);
 }
 
 function ciu__nom2List(container, options) {
@@ -249,13 +256,17 @@ function ciu__nom2List(container, options) {
     $('<input id="idciu__nom2" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
         dataTextField: "ciu__nom",
         dataValueField: "ciu__cod",
-        template:'<div class="divElementDropDownList">#: data.ciu__nom #</div>',
+        template: '<div class="divElementDropDownList">#: data.ciu__nom #</div>',
         dataSource: dataSource,
-        change: onSelectciu__nom2
+        change: onSelectciu__nom6666
     });
 }
-function onSelectciu__nom2(e){
-//    clacli = e.sender.dataSource._data[e.sender.selectedIndex].cla__cli;
+function onSelectciu__nom6666(e) {
+    var json = changeInputSIRgpd_bar(e.sender.listView._dataItems[0].ciu__cod);
+    var obj = new listabar__dsc(json);
+    var dataSource = obj.getdataSource();
+    $("#idbar__dsc2").data("kendoDropDownList").setDataSource(dataSource);
+    $("#idbar__dsc2").data("kendoDropDownList").enable(true);
 }
 function listaciu__nom() {
     var objSirUn = new SIRsic_ciu();
@@ -322,6 +333,107 @@ function listaciu__nom() {
 }
 ;
 
+function bar__dsc1List(container, options) {
+    var obj = new listabar__dsc();
+    var dataSource = obj.getdataSource();
+    $('<input id="idbar__dsc1" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
+//        cascadeFrom: "idciu__nom1",
+        dataTextField: "bar__dsc",
+        dataValueField: "bar__cod",
+        template: '<div class="divElementDropDownList">#: data.bar__dsc #</div>',
+        dataSource: {},
+        change: onSelectciu__nom1
+    });
+
+}
+function onSelectbar__dsc1(e) {
+//    clacli = e.sender.dataSource._data[e.sender.selectedIndex].cla__cli;
+}
+
+function bar__dsc2List(container, options) {
+    var obj = new listabar__dsc();
+    var dataSource = obj.getdataSource();
+    $('<input id="idbar__dsc2" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
+        dataTextField: "bar__dsc",
+        dataValueField: "bar__cod",
+        template: '<div class="divElementDropDownList">#: data.bar__dsc #</div>',
+        dataSource: {},
+//        change: onSelectciu__nom2
+    });
+}
+function onSelectciu__nom2(e) {
+//    clacli = e.sender.dataSource._data[e.sender.selectedIndex].cla__cli;
+}
+function listabar__dsc(obj) {
+    var objSirUn = new SIRgpd_bar();
+    var urlSirUn = objSirUn.getUrlSir();
+    var mapSirUn = objSirUn.getmapSir();
+    var inputsirUn = objSirUn.getdataInputSir();
+    if (obj) {
+        inputsirUn = obj;
+    }
+    var dataSource = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: urlSirUn,
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+            },
+            parameterMap: function (options, operation) {
+                try {
+                    if (operation === 'read') {
+                        debugger
+                        return JSON.stringify(inputsirUn);
+                    }
+                } catch (e) {
+                    alertDialogs(e.message)
+                }
+            }
+        },
+        schema: {
+            type: "json",
+            data: function (e) {
+                var key1 = Object.keys(e)[0];
+                if (e[key1].eeEstados[0].Estado === "OK") {
+                    if (e[key1][mapSirUn]) {
+                        for (var i = 0; i < e[key1][mapSirUn].length; i++) {
+                            e[key1][mapSirUn][i].id = i;
+                        }
+                    } else {
+                        grilla();
+                    }
+
+                    return e[key1][mapSirUn];
+                } else {
+                    alertDialogs(e[key1].eeEstados[0].Estado);
+                }
+            },
+            model: {
+                id: "bar__cod",
+                fields: {
+                    bar__dsc: {type: 'string'},
+                    bar__cod: {type: 'string'},
+                }
+            }
+        },
+        error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
+    });
+
+    this.setdataSource = function (newname) {
+        if (newname) {
+            dataSource = newname;
+        }
+    };
+    this.getdataSource = function () {
+        return dataSource;
+    };
+}
+;
+
+
 function rut__codList(container, options) {
     debugger
     var obj = new listarut__cod();
@@ -330,7 +442,7 @@ function rut__codList(container, options) {
         dataTextField: "rut__des",
         dataValueField: "rut__cod",
         dataSource: dataSource,
-        template:'<div class="divElementDropDownList">#: data.rut__des #</div>',
+        template: '<div class="divElementDropDownList">#: data.rut__des #</div>',
 //        change: onSelect
     });
 }
@@ -408,14 +520,14 @@ function ter__nitList(container, options) {
         dataTextField: "ter__nit",
         dataValueField: "ter__nit",
         dataSource: dataSource,
-        template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
+        template: '<div class="divElementDropDownList">#: data.ter__nit #' + ' - ' + ' #:data.ter__raz #</div>',
         minLength: 7,
         change: onSelectNit
     });
 }
 
-function onSelectNit(e){
-     $("#idter__raz").val(e.sender.listView._dataItems[0].ter__raz);
+function onSelectNit(e) {
+    $("#idter__raz").val(e.sender.listView._dataItems[0].ter__raz);
 }
 function listater__nit() {
     var objSirUn = new SIRsic_ter();
@@ -490,13 +602,13 @@ function ter__razList(container, options) {
     $('<input id="idter__raz" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoAutoComplete({
         dataTextField: "ter__raz",
         dataValueField: "ter__raz",
-        template:'<div class="divElementDropDownList">#: data.ter__raz #</div>',
+        template: '<div class="divElementDropDownList">#: data.ter__raz #</div>',
         dataSource: dataSource,
-         minLength: 4,
+        minLength: 4,
         change: onSelectRaz
     });
 }
-function onSelectRaz(e){
+function onSelectRaz(e) {
     $("#idter__nit").val(e.sender.listView._dataItems[0].ter__nit);
 }
 function listater__raz() {
@@ -575,16 +687,17 @@ function tra__tipList(container, options) {
         dataValueField: "value",
         dataSource: dataSource,
         placeholder: "Seleccione Tipo de ",
-        template:'<div class="divElementDropDownList">#: data.value #'+' - '+' #:data.text #</div>'
+        template: '<div class="divElementDropDownList">#: data.value #' + ' - ' + ' #:data.text #</div>'
 //        change: onSelect
     });
 }
 
 function listatra__tip() {
     var dataSource = [
-                        { text: "Auxiliar", value: "A" },
-                        { text: "Conductor", value: "C" }
-                    ];;
+        {text: "Auxiliar", value: "A"},
+        {text: "Conductor", value: "C"}
+    ];
+    ;
 
     this.setdataSource = function (newname) {
         if (newname) {
@@ -596,6 +709,28 @@ function listatra__tip() {
     };
 }
 ;
+
+function changeInputSIRgpd_bar(city) {
+    var objSircom__nom = new SIRgpd_bar();
+    var json = objSircom__nom.getdataInputSir();
+    json = {
+        "dsSIRgpd_bar": {
+            "eeDatos": [{
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip": sessionStorage.getItem("ipPrivada"),
+                    "remote_ip": sessionStorage.getItem("ipPublica")
+                }],
+            "SIRgpd_bar": [{
+                    "picciu__cod": city,
+                    "piibar__cod": 0,
+                    "picbar__dsc": "*",
+                    "picbar__est": 99
+                }]
+        }
+    };
+    return json;
+}
 ///-----------------------------------------------------------------------------
 
 
@@ -656,7 +791,7 @@ function sendAjaxAClase(verHtml, obj) {
             bandAlert = 0;
         },
         error: function (e) {
-            alertDialogs("Error al consumir el servicio de crear lista de precios" + e.status + " - " + e.statusText);
+            alertDialogs("Error al consumir el servicio de regiones geograficas" + e.status + " - " + e.statusText);
             bandAlert = 0;
         }
     }).done(function () {
@@ -664,7 +799,7 @@ function sendAjaxAClase(verHtml, obj) {
             $('#grid').data('kendoGrid').dataSource.read();
             $('#grid').data('kendoGrid').refresh();
         } else {
-            alertDialogs("Problemas con el creación de crear lista de precios .\n" + permitirIngreso);
+            alertDialogs("Problemas con  el servicio de regiones geograficas .\n" + permitirIngreso);
         }
 
     });
@@ -711,5 +846,5 @@ function onChangeFltr() {
     };
     grilla(inputsir);
 }
- 
+
 

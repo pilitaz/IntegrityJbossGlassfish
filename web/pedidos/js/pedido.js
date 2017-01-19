@@ -18,7 +18,11 @@ $(document).ready(function () {
    document.getElementById('lbDireccion').innerHTML = pedido.ter__dir;
    document.getElementById('lbTelefono').innerHTML = pedido.ter__tel;   
    document.getElementById('lbCiudad').innerHTML = pedido.ciu__nom;
-   document.getElementById('lbObservaciones').innerHTML = pedido.obs__ped;      
+   document.getElementById('lbTipTasa').innerHTML = pedido.tip__tasa;      
+   document.getElementById('lbFechaTasa').innerHTML = pedido.fec__tasa;
+   document.getElementById('lbNumOrden').innerHTML = pedido.ord__nump;
+   document.getElementById('lbPrioridad').innerHTML = pedido.pri__cod;
+   document.getElementById('lbObservaciones').innerHTML = pedido.obs__ped;
    sessionStorage.setItem("listaPrecioCliente", pedido.lis__num);
    
    gridDetallePedido();
@@ -300,7 +304,7 @@ function closePopUp(){
     jsonFiltroPedidos[key1][key2][0].pidped_fec = pedido.ped__fec;
     jsonFiltroPedidos[key1][key2][0].piiped_num = pedido.ped__num;
     jsonFiltroPedidos[key1][key2][0].picsuc_cod = pedido.suc__cod;
-    debugger
+    
     try{                
         $.ajax({
             type: "POST",

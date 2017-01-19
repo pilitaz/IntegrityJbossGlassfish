@@ -4,15 +4,15 @@ var password;
 
 function onLoad() {
     //sessionStorage.clear();
-    errorHtml();    
-    var url =   document.URL;
+    errorHtml();
+    var url = document.URL;
     sessionStorage.setItem("url", url);
-    var y =   document.URL.split("/");
+    var y = document.URL.split("/");
     var ipPuerto = document.URL.split("/")[2];
-    var puerto =   y[2].split(":");
+    var puerto = y[2].split(":");
     sessionStorage.setItem("ip", puerto[0]);
     sessionStorage.setItem("puerto", puerto[1]);
-    
+
     $("#btnLogin").kendoButton({
     });
 
@@ -24,14 +24,14 @@ function onLoad() {
  * 
  */
 function login() {
-    
+
     usuario = $("#usuario").val();
     password = $("#password").val();
     
     var buttonObject = $("#btnLogin").kendoButton().data("kendoButton")
     buttonObject.enable(false);
-    
-    try {        
+    dominio($("#usuario").val());
+    try {
         var jSonData = new Object();
         jSonData.dslogin = new Object();
         jSonData.dslogin.ttdatauser = new Array();
@@ -45,15 +45,15 @@ function login() {
         $.ajax({
             type: "POST",
             data: JSON.stringify(jSonData),
-            url: ipServicios + baseServicio +"Login",
-            dataType : "json",
+            url: ipServicios + baseServicio + "Login",
+            dataType: "json",
             contentType: "application/json;",
-            success: function (resp) {                
+            success: function (resp) {
                 permitirIngreso = JSON.stringify(resp.dslogin.eeEstados[0].Estado);
-                jsonResp = resp; 
+                jsonResp = resp;
             },
             error: function (e) {
-                kendo.alert("Error al consumir el servicio de login.\n"+ e.status +" - "+ e.statusText);
+                kendo.alert("Error al consumir el servicio de login.\n" + e.status + " - " + e.statusText);
                 var buttonObject = $("#btnLogin").kendoButton().data("kendoButton");
                 buttonObject.enable(true);
             }
@@ -74,42 +74,42 @@ function login() {
                 sessionStorage.setItem("fechaSistema",fechaSistema);
                 sessionStorage.setItem("contra",jsonResp.dslogin.eesicusuarios[0].clavprov);                    
                 sessionStorage.setItem('sesion', sessionStorage.getItem("picfiid"));
-                sessionStorage.setItem("loginintegrity","valido");
-                sessionStorage.setItem("hibrido",jsonResp.dslogin.eesiccia[0].ciaserv);
-                sessionStorage.setItem("portLinux",jsonResp.dslogin.eesiccia[0].ciapuerto);
-                
+                sessionStorage.setItem("loginintegrity", "valido");
+                sessionStorage.setItem("hibrido", jsonResp.dslogin.eesiccia[0].ciaserv);
+                sessionStorage.setItem("linux", jsonResp.dslogin.eesiccia[0].ciapuerto);
+
                 window.location.assign("html/index.html");
-            }else{                
+            } else {
                 var actions = new Array();
                 actions[0] = new Object();
                 actions[0].text = "Intentar de nuevo";
                 actions[0].primary = "true";
-                actions[0].action = "IntentarNuevamente";                
-                
+                actions[0].action = "IntentarNuevamente";
+
                 createDialog("Problemas con el inicio sesión", permitirIngreso, "400px", "auto", true, false, actions);
-                
+
                 var buttonObject = $("#btnLogin").kendoButton().data("kendoButton");
-                buttonObject.enable(true);             
+                buttonObject.enable(true);
             }
         });
-        
+
     } catch (e) {
         kendo.alert("Function: consumeServAjaxSIR Error: " + e.message);
         window.location.assign(sessionStorage.getItem("url"));
-    }    
+    }
 }
 
 /**
  * función que se encarga de cerrar el dialog
  * @returns {undefined}
  */
-function IntentarNuevamente(){    
+function IntentarNuevamente() {
     var dialog = $('#dialog');
     dialog.fadeOut();
-    $( "#book" ).fadeIn( "slow", function() {
-    // Animation complete
-  });
-    $( ".dialog" ).remove();
+    $("#book").fadeIn("slow", function () {
+        // Animation complete
+    });
+    $(".dialog").remove();
 }
 
 /*
@@ -129,23 +129,25 @@ function presionaEnter() {
  * funcion que coloca una notificacion en caso de error 
  * @returns {undefined}
  */
-function errorHtml(){
-    if((sessionStorage.getItem("errorHtml"))&&((sessionStorage.getItem("errorHtml")!==""))){
+function errorHtml() {
+    if ((sessionStorage.getItem("errorHtml")) && ((sessionStorage.getItem("errorHtml") !== ""))) {
         var centered = $("#centeredNotification").kendoNotification({
-                        position: {
-                            pinned: true,
-                            top: 30,
-                            right: 30
-                        },
-                        autoHideAfter: 3000,
-                        stacking: "down",
-                        templates: [{
-                            type: "error",
-                            template: $("#errorTemplate").html()
-                        }]
+            position: {
+                pinned: true,
+                top: 30,
+                right: 30
+            },
+            autoHideAfter: 3000,
+            stacking: "down",
+            templates: [{
+                    type: "error",
+                    template: $("#errorTemplate").html()
+                }]
 
-                    }).data("kendoNotification");
-        centered.show({title:"",message:"Ocurrió un error en el servidor tipo: "+sessionStorage.getItem("errorHtml")}, "error");
+        }).data("kendoNotification");
+        centered.show({title: "", message: "Ocurrió un error en el servidor tipo: " + sessionStorage.getItem("errorHtml")}, "error");
         sessionStorage.removeItem("errorHtml");
     }
 }
+
+

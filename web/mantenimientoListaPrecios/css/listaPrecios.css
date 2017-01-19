@@ -8,13 +8,8 @@ and open the template in the editor.
     Author     : jenny
 */
 
-div{
-    padding: 2px;
-}
 
-table{
-    padding: 2px;
-}
+
 
 td{
     padding: 5px
@@ -33,3 +28,9 @@ td{
 .k-grid tr.k-alt:not(.k-state-selected):hover {
     background: #f1f1f1;
 }
+#outerWrapper{
+  background-color: #FFFFFF;
+  position:relative;
+  min-height:470px;
+}
+
