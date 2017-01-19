@@ -298,7 +298,7 @@ function iniDropDownList(){
     var tipoTasa = [
         { text: "Día del pedido", value: "1" },
         { text: "Fecha acordada", value: "2" },
-        { text: "Día despacho", value: "2" },
+        { text: "Día despacho", value: "3" },
         { text: "Día factura", value: "4" }
     ];
     

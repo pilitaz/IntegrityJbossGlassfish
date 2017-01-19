@@ -311,6 +311,9 @@ function sirConsultaCliente() {
                             "SIRgpd_cli" : [{
                                             "piicla__cli" : "",
                                             "picter__nit" : "",
+                                            "picter__raz":"",
+                                            "piipago__cod":0,
+                                            "piicli__est":0,
                                     }
                             ]
                     }
@@ -500,7 +503,7 @@ function sirConsultaEstablecimiento() {
                             "SIRgpd_cli_suc" : [{                                            
                                             "piccom__con" : "*",
                                             "picter__nit" : "*",
-                                            "piicli__com__est": 0,
+                                            "piicli__com__est": 99,
                                             "picciu__cod": "*"
                                     }
                             ]

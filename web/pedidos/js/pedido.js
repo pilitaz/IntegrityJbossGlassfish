@@ -18,10 +18,10 @@ $(document).ready(function () {
    document.getElementById('lbDireccion').innerHTML = pedido.ter__dir;
    document.getElementById('lbTelefono').innerHTML = pedido.ter__tel;   
    document.getElementById('lbCiudad').innerHTML = pedido.ciu__nom;
-   document.getElementById('lbTipTasa').innerHTML = pedido.tip__tasa;      
+   document.getElementById('lbTipTasa').innerHTML = pedido.tip__tdes;      
    document.getElementById('lbFechaTasa').innerHTML = pedido.fec__tasa;
    document.getElementById('lbNumOrden').innerHTML = pedido.ord__nump;
-   document.getElementById('lbPrioridad').innerHTML = pedido.pri__cod;
+   document.getElementById('lbPrioridad').innerHTML = pedido.pri__des;
    document.getElementById('lbObservaciones').innerHTML = pedido.obs__ped;
    sessionStorage.setItem("listaPrecioCliente", pedido.lis__num);
    
