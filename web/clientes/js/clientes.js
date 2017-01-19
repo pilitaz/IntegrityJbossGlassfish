@@ -152,7 +152,7 @@ $(document).ready(function () {
     var  consultar = new sirClientes();
     var  datajson = consultar.getjson();
     var  urlService = consultar.getUrlSir();
-   // datajson.dsSIRgpd_vdd.eeSIRgpd_vdd[0].piivdd__est = e;                
+    datajson.dsSIRgpd_cli.SIRgpd_cli[0].piicli__est = e;                
     var  actualizar = new CudVendedores();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
@@ -269,6 +269,7 @@ $(document).ready(function () {
                     gfc__nal:    {editable: true, nullable: false},
                     lis__num:    {editable: true, nullable: false},
                     ven__cod:    {editable: true, nullable: false},
+                    loc__des:    {editable: true, nullable: false},
 
 
                 }
@@ -291,9 +292,10 @@ $(document).ready(function () {
                 template: function (e) {debugger
                     return e.cla__nom;
                 }},
+             {field: "ter__email", title: "Email",  hidden:false},
             {field: "ven__cod", title: "Codigo Vendedor",  hidden:true},
             
-            {field: "ter__email", title: "Email",  hidden:false},
+           
             {field: "pago__cod", title: "Forma de Pago",  hidden:true}, 
             {field: "cal__ide", title: "Clase Cliente",  hidden:true},
             {field: "cli__cre", title: "Clase Cliente",  hidden:true},

@@ -14,6 +14,7 @@ $(document).ready(function () {debugger
    document.getElementById('Persona_Contacto_Ventas').innerHTML = datos_cliente.con__ven;
    document.getElementById('Certificado_Analisis').innerHTML = datos_cliente.cer__ana;
    document.getElementById('Despachos_Parciales').innerHTML = datos_cliente.dpc__par;
+   document.getElementById('Transporte').innerHTML = datos_cliente.cli__tra;
    document.getElementById('Numero_de_Copias_Factura').innerHTML = datos_cliente.num__cop__fac;
    document.getElementById('Forma_de_Pago').innerHTML = datos_cliente.pago__cod;
    document.getElementById('Numero_de_Lista').innerHTML = datos_cliente.lis__num;
@@ -40,7 +41,7 @@ function gridDetalleVendedor(){
     var  consultar = new sirVendedoresDetalle();
     var  datajson = consultar.getjson();
     var  urlService = consultar.getUrlSir();
-    datajson.dsSIRgpd_vtr.SIRgpd_vtr[0].piivdd__cod = datos_vendedor.vdd__cod;                
+    //datajson.dsSIRgpd_vtr.SIRgpd_vtr[0].piivdd__cod = datos_vendedor.vdd__cod;                
     var  actualizar = new CudDetalleVendedor();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
@@ -139,8 +140,8 @@ function gridDetalleVendedor(){
       
             editable: "popup",              
          dataBound: function (e) {debugger
-            var datos_vendedor = JSON.parse(sessionStorage.getItem("Detalle_Vendedor"));
-            if (datos_vendedor.vdd__est!=99){
+            var datos_vendedor = JSON.parse(sessionStorage.getItem("Detalle_Cliente"));
+            if (datos_vendedor.cli__est!=99){
                 var tamaño=document.getElementsByClassName("k-sprite po_cerrar").length;
                  for (var i = 0; i < tamaño; i++) {
                 document.getElementsByClassName("k-sprite po_cerrar")[i].hidden="true";
@@ -280,8 +281,12 @@ function territorio(container, options) {debugger
       function cerrar(){debugger
     //onClosex();
     $("#windowform").data("kendoWindow").close();
-  
-    
+
+}  
+      function cerrar1(){debugger
+    //onClosex();
+    $("#windowform").data("kendoWindow").close();
+    window.location.reload();  
 }  
 function popupNuevoVendedor(){debugger
       $("#textarea").append("<div id='windowform'></div>");
@@ -295,12 +300,12 @@ function popupNuevoVendedor(){debugger
         var UrL= sessionStorage.getItem("url");  
         myWindow1.kendoWindow({
             draggable: true,
-            height: "35%",
+            height: "70%",
             modal: true,
             resizable: false,
             title: "Editar",
-            width: "40%",
-            content: UrL+"pedidos/html/popupCabeceravendedor.html",
+            width: "55%",
+            content: UrL+"clientes/html/popupCabeceracliente.html",
             actions: [
                 "Close"
             ],                               

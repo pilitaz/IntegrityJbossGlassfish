@@ -1193,7 +1193,10 @@ function sirClientes() {
       "SIRgpd_cli":[  
          {  
           "piicla__cli":0,
-          "picter__nit":"*"
+          "picter__nit":"*",
+          "picter__raz":"",
+          "piipago__cod":0,
+          "piicli__est":-1
          }
       ]      
    }
@@ -1336,6 +1339,47 @@ function cudClientes() {
                         "cli__gal":10    
                         }
       ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///////////////////////////////////////////////////////////////
+function SirSucursales() {
+    var urlSir = ipServicios + baseComercial +"SIRgpd_cli_suc";
+    var json ={  
+   "dsSIRgpd_cli_suc":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "SIRgpd_cli_suc":[  
+         {  
+          "picter__nit":"*",
+          "piccom__con":"*"
+         }
+      ]      
    }
 };
     

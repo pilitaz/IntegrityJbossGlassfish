@@ -138,10 +138,8 @@
                     success: function (resp) {debugger
                         if((resp.dsSICUDgpd_cli.eeEstados[0].Estado)=="OK")
                         {    
-                           //sessionStorage.setItem("Detalle_Vendedor",JSON.stringify(resp.dsSICUDgpd_vdd.eegpd_vdd[0]));
-                           
-                            
-                            //parent.cerrar1();
+                           sessionStorage.setItem("Detalle_Cliente",JSON.stringify(resp.dsSICUDgpd_cli.eegpd_cli[0]));
+                            parent.cerrar1();
                         }
                         else
                         {
