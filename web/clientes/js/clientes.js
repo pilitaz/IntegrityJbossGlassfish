@@ -86,8 +86,8 @@ $(document).ready(function() {
        e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
                         var id = this.dataItem($(e.currentTarget).closest("tr"));
                         
-                        sessionStorage.setItem("Detalle_Vendedor",JSON.stringify(id));
-                        window.location = ("vendedorDetalle.html");
+                        sessionStorage.setItem("Detalle_Cliente",JSON.stringify(id));
+                        window.location = ("clienteDetalle.html");
    }
 /**
  * FUNCION CRUD
@@ -739,6 +739,6 @@ function changeEst(e){debugger
     //onClosex();
     
     $("#windowform").data("kendoWindow").close();
-  window.location = ("vendedorDetalle.html"); 
+  window.location = ("clienteDetalle.html"); 
     
 }  

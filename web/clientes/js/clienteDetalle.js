@@ -1,15 +1,32 @@
 
 
 $(document).ready(function () {debugger
-   var datos_vendedor = JSON.parse(sessionStorage.getItem("Detalle_Vendedor"));
+   var datos_cliente = JSON.parse(sessionStorage.getItem("Detalle_Cliente"));
    
-  document.getElementById('Nit_vendedor').innerHTML = datos_vendedor.ter__nit;
-   document.getElementById('Nombre_vendedor').innerHTML = datos_vendedor.ter__raz;
-   document.getElementById('Cod_vendedor').innerHTML = datos_vendedor.vdd__cod;
-   document.getElementById('Clase_cliente').innerHTML = datos_vendedor.cla__nom;
-    if (datos_vendedor.vdd__est!=99){
-        $("#btnAgregarItem")[0].hidden="true";
-        
+   document.getElementById('Nit_cliente').innerHTML = datos_cliente.ter__nit;
+   document.getElementById('Nombre_cliente').innerHTML = datos_cliente.ter__raz;
+   document.getElementById('Clase_Cliente').innerHTML = datos_cliente.cla__nom;
+   document.getElementById('Email').innerHTML = datos_cliente.ter__email;
+   document.getElementById('Identificacion_Calificacion').innerHTML = datos_cliente.cal__ide;
+   document.getElementById('Cupo_Credito').innerHTML = datos_cliente.cli__cre;
+   document.getElementById('Cupo_De_Ventas').innerHTML = datos_cliente.cli__ven;
+   document.getElementById('Persona_Contacto_Tesoreria').innerHTML = datos_cliente.con__tes;
+   document.getElementById('Persona_Contacto_Ventas').innerHTML = datos_cliente.con__ven;
+   document.getElementById('Certificado_Analisis').innerHTML = datos_cliente.cer__ana;
+   document.getElementById('Despachos_Parciales').innerHTML = datos_cliente.dpc__par;
+   document.getElementById('Numero_de_Copias_Factura').innerHTML = datos_cliente.num__cop__fac;
+   document.getElementById('Forma_de_Pago').innerHTML = datos_cliente.pago__cod;
+   document.getElementById('Numero_de_Lista').innerHTML = datos_cliente.lis__num;
+   document.getElementById('Dia_de_Pago').innerHTML = datos_cliente.dia__pag;
+   document.getElementById('Hora_de_Pago').innerHTML = datos_cliente.hor__pag;
+   document.getElementById('Bodega_en_Consignacion').innerHTML = datos_cliente.loc__des;
+   document.getElementById('Precio_por_Establecimiento').innerHTML = datos_cliente.ter__cret;
+   document.getElementById('Tope_Maximo_Galones').innerHTML = datos_cliente.cli__gal;
+   
+  //document.getElementById('Nit_cliente').innerHTML = datos_cliente.ter__nit;
+   
+    if (datos_cliente.cli__est==1){
+        $("#btnAgregarItem")[0].hidden="true";        
         $("#btnGuardar1")[0].hidden="true";
    }
    else
@@ -169,7 +186,7 @@ function clickEliminar(e) {debugger
        
 }
 function volverPedidos(){
- window.location = ("vendedores.html");
+ window.location = ("clientes.html");
 }
 
 
