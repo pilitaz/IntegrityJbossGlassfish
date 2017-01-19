@@ -412,7 +412,7 @@ function SIRgpr_pre() {
                 {
                     "picpre__pcod": "*",
                     "picusuario": "*",
-                    "piipre__est":-1
+                    "piipre__est":0
                 }
             ]
         }
@@ -525,8 +525,8 @@ function SIRsic_mnd() {
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
                     "picfiid": sessionStorage.getItem("picfiid"),
-                    "local_ip": sessionStorage.getItem("ipPrivada"),
-                    "remote_ip": sessionStorage.getItem("ipPublica")
+//                    "local_ip": sessionStorage.getItem("ipPrivada"),
+//                    "remote_ip": sessionStorage.getItem("ipPublica")
                 }
             ]
         }

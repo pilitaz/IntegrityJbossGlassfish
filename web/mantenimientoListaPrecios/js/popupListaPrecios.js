@@ -135,6 +135,7 @@ $(document).ready(function () {
     var objArtP = objP.getjson();
     var urlSirP = objP.getUrlSir();
     var mapDataP = objP.getMapData();
+    
     $("#idPresentacion").kendoDropDownList({
         dataTextField: 'pre__des',
         dataValueField: "pre__pcod",
@@ -173,8 +174,9 @@ $(document).ready(function () {
                     }
                 },
                 model: {
-                    id: "pre__des",
+                    id: "pre__pcod",
                     fields: {
+                        pre__pcod: {validation: {required: true}, type: 'string'},
                         pre__des: {validation: {required: true}, type: 'string'}
                     }
                 }
@@ -185,12 +187,11 @@ $(document).ready(function () {
         }
     });
     
+    var objDivisa = new SIRsic_mnd();
+    var jsonDivisa = objDivisa.getjson();
+    var urlSirDivisa = objDivisa.getUrlSir();
+    var mapDataDivisa = objDivisa.getMapData();
     
-    
-    var objP = new SIRsic_mnd();
-    var objArtP = objP.getjson();
-    var urlSirP = objP.getUrlSir();
-    var mapDataP = objP.getMapData();
     $("#idDivisa").kendoDropDownList({
         dataTextField: 'mnd__des',
         dataValueField: "mnd__cla",
@@ -200,7 +201,7 @@ $(document).ready(function () {
             type: "json",
             transport: {
                 read: {
-                    url: urlSirP,
+                    url: urlSirDivisa,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST"
@@ -208,10 +209,7 @@ $(document).ready(function () {
                 parameterMap: function (options, operation) {
                     try {
                         if (operation === 'read') {
-                            var key1 = Object.keys(objArtP)[0];
-                            var key2 = Object.keys(objArtP[key1])[1];
-//                            objArtP[key1][key2][0].piipre__est = 99
-                            return JSON.stringify(objArtP);
+                            return JSON.stringify(jsonDivisa);
                         }
                     } catch (e) {
                         alertDialogs(e.message);
@@ -223,7 +221,7 @@ $(document).ready(function () {
                 data: function (e) {
                     var key1 = Object.keys(e)[0];
                     if (e[key1].eeEstados[0].Estado === "OK") {
-                        return e[key1][mapDataP];
+                        return e[key1][mapDataDivisa];
                     } else {
                         alertDialogs(e[key1].eeEstados[0].Estado);
                     }
@@ -277,7 +275,7 @@ function onSelectArt(e) {
 
 }
 
-function onSelectPres(e) {
+function onSelectPres(e) {    
     pre_pcod = e.dataItem.pre__pcod;
 }
 function btnCancelar() {
@@ -300,7 +298,7 @@ function agregarPrecio() {
             "pre__pcod": pre_pcod,
             "pre__des": $("#idPresentacion").data("kendoDropDownList").text(), //servicio presentacion
         }
-    ];
+    ];    
     parent.CUGrilla(obj, sessionStorage.getItem("operaDEtalle"));
 
     parent.closePopUp();

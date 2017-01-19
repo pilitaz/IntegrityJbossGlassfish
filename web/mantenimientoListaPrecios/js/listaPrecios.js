@@ -47,14 +47,21 @@ function gridDetalleListaPrecios() {
                 title: "Articulo"
             },
             {
+                field: "pre__des",
+                title: "Presentacíón"
+            },
+            {
                 field: "lpd__pre",
                 title: "Precio",
                 format: "{0:c}"
-            },
-//            {
+            },            
             {
-                field: "pre__des",
-                title: "Presentacíón"
+                field: "mnd__cla",
+                title: "Moneda"
+            },  
+            {
+                field: "top__dct",
+                title: "Descuento"
             },
             {command: [
                     {name: "editar", click: editarLPrecio, template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},
@@ -296,13 +303,11 @@ function cambiarInput() {
         var obj = JSON.parse(sessionStorage.getItem("listaPrecios"));
         document.getElementById('ipFechaInicio').innerHTML = obj.lis__fin;
         document.getElementById('ipFechaFin').innerHTML = obj.lis__ffi;
-        document.getElementById('ipDescripcion').innerHTML = obj.lis__des;
-        document.getElementById('ipDivisa').innerHTML = obj.mnd__cla;
+        document.getElementById('ipDescripcion').innerHTML = obj.lis__des;        
     } else {
         document.getElementById('ipFechaInicio').innerHTML = "";
         document.getElementById('ipFechaFin').innerHTML = "";
-        document.getElementById('ipDescripcion').innerHTML = "";
-        document.getElementById('ipDivisa').innerHTML = "";
+        document.getElementById('ipDescripcion').innerHTML = "";        
     }
 }
 function guardarListaPrecios() {

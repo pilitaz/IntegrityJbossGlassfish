@@ -152,8 +152,7 @@ function gridListaDePrecios(jsonSir) {
                 fields: {
                     lis__des: {validation: {required: true}, type: 'string'},
                     lis__fin: {validation: {required: true}, type: 'string'},
-                    lis__ffi: {validation: {required: true}, type: 'string'},
-                    mnd__cla: {validation: {required: true}, type: 'string'},
+                    lis__ffi: {validation: {required: true}, type: 'string'},                    
                 }
             }
         }
@@ -169,9 +168,7 @@ function gridListaDePrecios(jsonSir) {
         columns: [
             {field: "lis__des", title: "Descripción Lista"},
             {field: "lis__fin", title: "Fecha Inicial"},
-            {field: "lis__ffi", title: "Fecha Vencimiento"},
-            {field: "mnd__cla", title: "Moneda"},
-//            {field: "ter__nit", title: "&nbsp;"},
+            {field: "lis__ffi", title: "Fecha Vencimiento"},            
             {command:
                         [
                             {name: "aprobar", text: " ", click: aprobarListaPrecios, template: "<a class='k-grid-aprobar' '><span class='k-sprite po_cerrar'></span></a>"},
@@ -291,7 +288,7 @@ function crearListaPrecios() {
     }
 
     myWindow.kendoWindow({
-        width: "60%",
+        width: "40%",
         height: "40%",
         title: "Agregar",
         content: sessionStorage.getItem("url") + "/mantenimientoListaPrecios/html/" + servicio + ".html",
