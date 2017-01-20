@@ -102,6 +102,62 @@ function sirConsultaCliente() {
     };
     
 };
+///////////////////////////////////////////////////////////////
+function sirLista() {
+    var mapData = "eegpr_lis";
+    var urlSir = ipServicios + baseComercial + "SIRgpr_lis";
+    var json = 
+           {  
+   "dsSIRgpr_lis":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "eeSIRgpr_lis":[  
+         {  
+            "picart_cod":"*",
+            "piicla_cod":0,
+            "piilis_num":0,
+            "picmnd_cla":"*",
+            "piilis_est":0,
+            "pidfecha":sessionStorage.getItem("fechaSistema")
+         }
+      ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+    
+};
 /////////////////////////////////////////////////////////////////////
 function sirPaises() {
     var urlSir = ipServicios + baseParameters +"SIRsic_ciu_pais";
@@ -1137,7 +1193,10 @@ function sirClientes() {
       "SIRgpd_cli":[  
          {  
           "piicla__cli":0,
-          "picter__nit":"800170065"
+          "picter__nit":"*",
+          "picter__raz":"",
+          "piipago__cod":0,
+          "piicli__est":-1
          }
       ]      
    }
@@ -1162,5 +1221,249 @@ function sirClientes() {
     };
     
 };
-
+///////////////////////////////////////////////////////////////
+function sirFormadepago() {
+    var urlSir = ipServicios + baseParameters +"SIRfac_pag";
+    var json ={  
+   "dsfac_pag":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+   "eetemp": [
+      {
+        "piicla_cli": 0,
+        "piifac_pag": 0,
+        "piifac_est": -1
+        
+      }
+    ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///////////////////////////////////////////////////////////////
+function sirBodega() {
+    var urlSir = ipServicios + baseComercial +"SIRdpc_loc";
+    var json ={
+        "dsSIRdpc_loc": {
+            "eeDatos": [{
+                    "picusrcod":sessionStorage.getItem("usuario"),
+                    "picfiid":sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
+                }],
+            "eeSIRdpc_loc": [{
+                    "piiloc_cod": 0,
+                    "picter_nit": 0,
+                    "piicom_con": "*",
+                    "piiloc_est": -1
+                }]
+        }
+    };
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///////////////////////////////////////////////////////////////
+function cudClientes() {
+    var urlSir = ipServicios + baseComercial +"SICUDgpd_cli";
+    var json ={  
+   "dsSICUDgpd_cli":{  
+      "eeDatos":[  
+         {  
+                    "picusrcod":sessionStorage.getItem("usuario"),
+                    "picfiid":sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "eegpd_cli":[  
+        	 {      "ter__nit":"",
+                        "cla__cli":0,
+                        "cal__ide":1,
+                        "cli__cre":0,
+                        "cli__ven":0,
+                        "con__tes":"",
+                        "con__ven":"",
+                        "cer__ana":true,
+                        "dpc__par":false,
+                        "cli__tra":false,
+                        "num__cop__fac":0,
+                        "pago__cod":0,
+                        "ter__lis":0,
+                        "dia__pag":"",
+                        "hor__pag":"",
+                        "ter__email":"",
+                        "cli__est":0,
+                        "loc__cod":0,
+                        "ter__cret":true,
+                        "cli__gal":10    
+                        }
+      ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///////////////////////////////////////////////////////////////
+function SirSucursales() {
+    var urlSir = ipServicios + baseComercial +"SIRgpd_cli_suc";
+    var json ={  
+   "dsSIRgpd_cli_suc":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "SIRgpd_cli_suc":[  
+         {  
+          "picter__nit":"*",
+          "piccom__con":"*",
+          "piicli__com__est":-1,
+          "piirgeo__cod":0,
+          "picciu__cod":"*"
+         }
+      ]      
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///////////////////////////////////////////////////////////////
+function CudSucursales() {
+    var urlSir = ipServicios + baseComercial +"SICUDgpd_cli_suc";
+    var json ={  
+   "dsSICUDgpd_cli_suc":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "eegpd_cli_suc":[  
+         {
+         	"ter__nit":"", 
+                "com__con":"",
+                "com__nom":"",
+                "ter__dir":"",
+                "ter__tel":"",
+                "ter__fax":"",
+                "ter__email":"",
+                "vdd__cod":"",
+                "trr__cod":"",
+                "rgeo__cod":1,
+                "ciu__cod":"",
+                "bar__cod":1,
+                "ter__lis":1,
+                "cupo__cre":0,
+                "cupo__ven":0,
+                "con__stes":"",
+                "con__sven":"",
+                "loc__cod":1,
+                "cli__con__sloc":"",
+                "cli__crg__con__sloc":"",
+                "est__des":"",
+                "cli__suc__pie__fac":0
+                }
+      ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
 

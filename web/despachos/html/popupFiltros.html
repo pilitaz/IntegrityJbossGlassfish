@@ -4,9 +4,9 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html class="k-edit-form-container" style=" width: 90%">
+<html>
     <head>
-        <title>Item Lista</title>
+        <title>Item Pedido</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">       
         <script src="../../scripts/jquery-2.2.0.min.js" type="text/javascript"></script>
@@ -17,75 +17,51 @@ and open the template in the editor.
         <script src="../../scripts/kendo.culture.es-CO.min.js" type="text/javascript"></script>
         <script src="../../scripts/LibreriaIntegrity.js" type="text/javascript"></script>
         <script src="../../js/servicios.js" type="text/javascript"></script>
-        <script src="../js/popupListaPrecios.js" type="text/javascript"></script>
+        <script src="../js/popupFiltros.js" type="text/javascript"></script>
+        <script src="../js/varDataSKendo.js" type="text/javascript"></script>
         <link href="../../css/kendo.common.min.css" rel="stylesheet" type="text/css"/>                        
         <link href="../../css/kendo.metro.min.css" rel="stylesheet" type="text/css"/>
         <link href="../../css/kendo.metro.mobile.min.css" rel="stylesheet" type="text/css"/>        
         <link href="../../css/cssSpriteIntegrity.css" rel="stylesheet" type="text/css"/>
         <link href="../../css/integrity.css" rel="stylesheet" type="text/css"/>        
-        <link href="../css/popupListaPrecios.css" rel="stylesheet" type="text/css"/>
-        <script src="../js/variablesListaPrecios.js" type="text/javascript"></script>
+        <link href="../css/popUpFiltros.css" rel="stylesheet" type="text/css"/>
     </head>
-    <body style=" width: 100%">
+    <body>
         <br>
-        <table style="width: 100%;">
+        <table style="width: 100%;">            
             <tr>
                 <td class="tdIzquierdo">
-                    <label class="letraParrafo">Clase Artículo:</label>
+                    <label class="letraParrafo">Region:</label>
                 </td>
-                <td class="tdDerecho" style=" width: 100%">
-                    <input id="idClaseArticulo"  style=" width: 100%" required/>
+                <td class="tdDerecho">
+                    <input id="Region" style="width: 100%" required/>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdIzquierdo">
+                    <label class="letraParrafo">Ciudad:</label>
+                </td>
+                <td class="tdDerecho">
+                    <input id="Ciudad" style="width: 100%" required/>
                 </td>
             </tr>            
             <tr>
                 <td class="tdIzquierdo">
-                    <label class="letraParrafo">Artículo</label>
+                    <label class="letraParrafo">Establecimiento Comercial:</label>
                 </td>
                 <td class="tdDerecho">
-                    <input id="idArticulo"  style="width: 100%"/>
+                    <input id="Establecimiento"  required/>
                 </td>
             </tr>
-            <tr>
-                <td class="tdIzquierdo">
-                    <label class="letraParrafo">Precio</label>
-                </td>
-                <td class="tdDerecho">
-                    <input id="idPrecio"   style="width: 100%"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="tdIzquierdo">
-                    <label class="letraParrafo">Presentación</label>
-                </td>
-                <td class="tdDerecho">
-                    <input id="idPresentacion"   style="width: 100%" required/>
-                </td>
-            </tr>
-            <tr>
-                <td class="tdIzquierdo">
-                    <label class="letraParrafo">Moneda</label>
-                </td>
-                <td class="tdDerecho">
-                    <input id="idDivisa"   style="width: 100%" required/>
-                </td>
-            </tr>
-            <tr>
-                <td class="tdIzquierdo">
-                    <label class="letraParrafo">Descuento Max</label>
-                </td>
-                <td class="tdDerecho">
-                    <input id="idDescuentoMax"   style="width: 100%" required/>
-                </td>
-            </tr>
+                       
             <tr>
                 <td class="tdBotones" colspan="2" >
-                    <div style="float:right; margin-right:10px;">
-                        <button id="btAgregar" class="k-primary" onclick="agregarPrecio()" >Agregar</button>
-                        <button id="btCancelar" class="k-primary" onclick="btnCancelar()" >Cancelar</button>
-                    </div>
-                    
+                    <button id="btAgregar" class="k-primary"  >Agregar</button>
+                    <button id="btCancelar" class="k-primary"  >Cancelar</button>
                 </td>                
             </tr>
         </table>                    
+ 
     </body>
+    
 </html>
