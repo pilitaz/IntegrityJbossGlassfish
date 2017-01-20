@@ -296,3 +296,169 @@ function SIRsic_ter() {
     };
 }
 ;
+///////////////////////////////////////////////////////////////
+function sirRegionGeografica() {
+    var urlSir = ipServicios + baseComercial +"SIRgpr_rgeo";
+    var json =
+            { 
+                "dsSIRgpr_rgeo":{ 
+                    "eeDatos":[ 
+                { 
+                    "picusrcod":sessionStorage.getItem("usuario"),
+                    "picfiid":sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
+                    
+                }
+            ], 
+            "eeSIRgpr_rgeo": [
+                {
+                    "piirgeo__cod": 0,
+                    "picusuario": "*"
+                }
+            ]
+        }
+    };
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+/////////////////////////////////////////////////////////////////////
+function sirCiudades() {
+    var urlSir = ipServicios + baseContabilidad +"SIRsic_ciu";
+    var json = {  
+   "dsSIRsic_ciu":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+		"eeSIRsic_ciu": [{
+			"picciu_cod": "*"
+			
+		}]
+		
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+/////////////////////////////////////////////////////////////////////
+function sirSucursales() {
+    var urlSir = ipServicios + baseComercial +"SIRgpd_cli_suc";
+    var json = {  
+   "dsSIRgpd_cli_suc":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "SIRgpd_cli_suc":[  
+         {  
+          "picter__nit":"*",
+          "piccom__con":"*",
+          "piicli__com__est":-1,
+          "piirgeo__cod":0,
+          "picciu__cod":"*"
+          
+         }
+      ]      
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+/////////////////////////////////////////////////////////////////////
+function Sirdespacho() {
+    var urlSir = ipServicios + baseComercial +"SIRgpd_pdet_dpc";
+    var json = {
+        "dsSIRgpd_pdet_dpc": {
+            "eeDatos": [{
+                    "picusrcod":sessionStorage.getItem("usuario"),
+                    "picfiid":sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
+                }],
+            "eeSIRgpd_pdet_dpc": [{
+                    "rgeo_cod":0 ,
+                    "ciu_cod": "*",
+                    "com_con": "*"
+                }]
+        }
+    };
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};

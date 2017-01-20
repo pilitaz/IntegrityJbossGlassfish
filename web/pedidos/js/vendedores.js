@@ -19,7 +19,7 @@ $(window).resize(function () {
  *  
  */ function newrol(e){debugger
  
-    //var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
+        //var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
         $("#textarea").append("<div id='windowform'></div>");
         var myWindow1 = $("#windowform"),undo = $("#undo");
                 

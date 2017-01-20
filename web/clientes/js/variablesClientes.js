@@ -1377,9 +1377,73 @@ function SirSucursales() {
       "SIRgpd_cli_suc":[  
          {  
           "picter__nit":"*",
-          "piccom__con":"*"
+          "piccom__con":"*",
+          "piicli__com__est":-1,
+          "piirgeo__cod":0,
+          "picciu__cod":"*"
          }
       ]      
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///////////////////////////////////////////////////////////////
+function CudSucursales() {
+    var urlSir = ipServicios + baseComercial +"SICUDgpd_cli_suc";
+    var json ={  
+   "dsSICUDgpd_cli_suc":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "eegpd_cli_suc":[  
+         {
+         	"ter__nit":"", 
+                "com__con":"",
+                "com__nom":"",
+                "ter__dir":"",
+                "ter__tel":"",
+                "ter__fax":"",
+                "ter__email":"",
+                "vdd__cod":"",
+                "trr__cod":"",
+                "rgeo__cod":1,
+                "ciu__cod":"",
+                "bar__cod":1,
+                "ter__lis":1,
+                "cupo__cre":0,
+                "cupo__ven":0,
+                "con__stes":"",
+                "con__sven":"",
+                "loc__cod":1,
+                "cli__con__sloc":"",
+                "cli__crg__con__sloc":"",
+                "est__des":"",
+                "cli__suc__pie__fac":0
+                }
+      ]
    }
 };
     
