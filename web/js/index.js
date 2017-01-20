@@ -37,6 +37,7 @@ $(document).ready(function () {
 
         document.getElementById("imgUsuario").src = "data:image/png;base64," + consultaImgUsr();
         document.getElementById("logoEmpresa").src = "data:image/png;base64," + sessionStorage.getItem("img");
+        mostrarFondo();
         document.getElementById("idFrame").src = "fondo.html";
 //        document.getElementById("idFrame").src = "http://190.144.16.114:18800/PruebaHRD";
     } else {
@@ -640,7 +641,6 @@ function cargaDocumentos() {
     documentos();
 }
 function consultaImgUsr() {
-    debugger
     var objSir = new GetProfileImage();
     var urlSir = objSir.getUrlSir();
     var mapSir = objSir.getMapData();
@@ -675,3 +675,125 @@ function consultaImgUsr() {
 
     return img;
 }
+
+
+
+function mostrarFondo() {
+    try {
+        var objSir = new Getbirthdays();
+        var urlSir = objSir.getUrlSir();
+        var mapSir = objSir.getMapData();
+        var inputsir = objSir.getjson();
+
+        var img = "";
+        var jsonResp = "";
+        var permitirIngreso = "";
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(inputsir),
+            url: urlSir,
+            dataType: "json",
+            contentType: "application/json;",
+            success: function (resp) {
+                var key1 = Object.keys(resp)[0];
+                permitirIngreso = JSON.stringify(resp[key1].eeEstados[0].Estado);
+                jsonResp = resp[key1];
+                bandAlert = 0;
+            },
+            error: function (e) {
+                document.getElementById("idFrame").src = "fondo.html";
+                alertDialogs("Error al consumir el servicio Getbirthdays" + e.status + " - " + e.statusText);
+                bandAlert = 0;
+            }
+        }).done(function () {
+            if (permitirIngreso == '"OK"') {
+                var key1 = Object.keys(jsonResp)[0];
+                if (jsonResp[key1][0].mybirthday) {
+                    mostrarCumple();
+                } else {
+                    mostrarNotiCumple(jsonResp[key1][mapSir]);
+                    document.getElementById("idFrame").src = "fondo.html";
+                }
+            } else {
+
+                alertDialogs("Error al consumir el servicio Getbirthdays .\n" + permitirIngreso);
+            }
+
+        });
+    } catch (e) {
+        document.getElementById("idFrame").src = "fondo.html";
+        alertDialogs(e.message);
+    }
+}
+function mostrarCumple() {
+    document.getElementById("idFrame").src = "birthdays.html";
+}
+function mostrarNotiCumple(obj) {
+    $("#regalo").fadeIn("slow");
+    var centered = $("#centeredNotification").kendoNotification({
+        position: {
+            pinned: true,
+            top: 58,
+            right: 0
+        },
+        autoHideAfter: 5000,
+        stacking: "down",
+        templates: [{
+                type: "upload-success",
+                template: $("#msnTemplate").html()
+            }]
+
+    }).data("kendoNotification");
+    centered.show({title: "", message: "Alguien en tu equipo está cumpliendo años."}, "upload-success");
+}
+
+function mostrarListaCumple() {
+    $("#divDocumentosd").fadeIn("slow");
+
+}
+function cerrarListaCumple() {
+    $("#divDocumentosd").fadeOut("slow");
+    $("#regalo").fadeOut("slow");
+}
+var objSir1 = new Getbirthdays();
+var urlSir = objSir1.getUrlSir();
+var mapSir = objSir1.getMapData();
+var inputsir = objSir1.getjson();
+var app = angular.module("firstApp", []);
+app.controller("firstControler", ["$scope", "$http", function ($scope, $http) {
+        $scope.nombre = "Alex";
+        $scope.ipServicios = "http://190.144.16.114:8810/";
+        $scope.baseServicio = "rest/Base/BaseIntegrity/";
+        $scope.input = "aaa";
+        $scope.items = [];
+        $scope.obj = inputsir;
+        $scope.nuevocomentario = [];
+        $scope.comentario = [
+            {
+                usrName: 'alex1',
+                comentarios: 'basura1'
+            },
+            {
+                usrName: 'alex2',
+                comentarios: 'basura2'
+            },
+            {
+                usrName: 'alex3',
+                comentarios: 'basura3'
+            }
+        ];
+        $scope.agregarComentario = function () {
+            $scope.comentario.push($scope.nuevocomentario);
+            $scope.nuevocomentario = [];
+        }
+
+        $http.post(ipServicios + baseServicio + "Getbirthdays", $scope.obj
+                ).success(function (data, status, headers, config) {
+//                console.log($scope.comentario);
+            //console.log(data.dsSIRgpd_bar.eeEstados[0].Estado);
+            $scope.items = data.dsbirthdays.othersbirthdays;
+        }).error(function (error, status, headers, config) {
+            console.log(error);
+        });
+
+    }]);

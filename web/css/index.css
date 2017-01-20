@@ -110,6 +110,24 @@ img{
     background-image: url("../images/fondo-arbol.png");
     overflow: auto
 }
+#divDocumentosd {
+    height:60%;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width:40%;
+    z-index: 9;
+    background: #ffffff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    color: #000000;
+    /*background: url("../images/fondo-arbol.png");*/
+    overflow: auto
+}
+.imgcumple{
+    width:100%;
+    background-image: url("../images/Feliz Cumpleaños.png");
+}
 .k-alt{
     background-color: #656565;
 }
@@ -137,4 +155,9 @@ img{
 
 .k-grid td {
     padding-left: 20px;
+}
+#close {
+    float:right;
+    display:inline-block;
+    padding:6px 5px;
 }
