@@ -184,7 +184,9 @@ function sirConsultaClasesDeArticulos() {
 		"eeDatos":[
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
-                    "fiid": sessionStorage.getItem("picfiid"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
                 }
                 ],
                 "eetemp": [
@@ -241,7 +243,9 @@ function sirConsultaArticulos() {
 		"eeDatos":[
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
-                    "fiid": sessionStorage.getItem("picfiid"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
                 }
                 ],
                 "eeSIRinv_art": [
