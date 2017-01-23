@@ -11,6 +11,15 @@
         {text: "Si", value: "1"},
         {text: "No", value: "0"},
     ];
+      var dias = [
+        {text: "Lunes", value: "1"},
+        {text: "Martes", value: "2"},
+        {text: "Miercoles", value: "3"},
+        {text: "Jueves", value: "4"},
+        {text: "Viernes", value: "5"},
+        {text: "Sabado", value: "6"},
+        {text: "Domingo", value: "7"},
+    ];
     $("#Certificado_Analisis").kendoDropDownList({
         dataTextField: "text",
         dataValueField: "value",
@@ -42,7 +51,12 @@
       $("#Copias_Factura").kendoNumericTextBox();
       $("#Tope_Galones").kendoNumericTextBox();
       
-      $("#Dia_Pago").kendoDatePicker();
+      $("#Dia_Pago").kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "value",
+        dataSource: dias
+        
+    });
       $("#Hora_Pago").kendoTimePicker();
       
        
@@ -88,7 +102,11 @@
            var select = lista.selectedIndex;
            var listaPrecio = lista.dataSource._data[select].lis__num;
            
-           var dia_Pago = $("#Dia_Pago")[0].value;
+            //var dia_Pago = $("#Dia_Pago").data("kendoDropDownList").text;
+           var dia_Pago1 = $("#Dia_Pago").data("kendoDropDownList");
+           var select = dia_Pago1.selectedIndex;
+           var dia_Pago = dia_Pago1.dataSource._data[select].text;
+           
            var hora_Pago =$("#Hora_Pago")[0].value;
            var email =$("#Email")[0].value;
            var cli_estado = 99;

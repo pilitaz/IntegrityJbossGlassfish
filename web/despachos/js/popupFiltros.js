@@ -7,65 +7,45 @@
         click: cancelar
     });
        
-       function guardar(){debugger
-           var  actualizar = new CudVendedores();
-           var  actjson = actualizar.getjson();
-           var  urlactualizar = actualizar.getUrlSir();    
-           var cedula = $("#nit")[0].value;
-           var nombre = $("#nombre")[0].value;
-           var cliente = $("#claseCliente").data("kendoDropDownList");
-           var select = cliente.selectedIndex;
-           cliente = cliente.dataSource._data[select].cla__cli;
-           var cliente_nom = $("#claseCliente").data("kendoDropDownList").dataSource._data[select].cla__nom;
-           actjson.dsSICUDgpd_vdd.eegpd_vdd[0].ter__nit=cedula;
-           actjson.dsSICUDgpd_vdd.eegpd_vdd[0].ter__raz=nombre;
-           actjson.dsSICUDgpd_vdd.eegpd_vdd[0].trr__cod=0;
-           actjson.dsSICUDgpd_vdd.eegpd_vdd[0].cla__cli=cliente;
-           actjson.dsSICUDgpd_vdd.eegpd_vdd[0].cla__nom=cliente_nom;
-           actjson.dsSICUDgpd_vdd.eegpd_vdd[0].vdd__est=99; 
+       function guardar(e){debugger
+           var region = $("#Region").data("kendoDropDownList");
+           var select = region.selectedIndex;
+           region = region.dataSource._data[select].rgeo__cod;
            
-           
-                           $.ajax({
-        
-                    type: "POST",        
-                    async: false,
-                    data: JSON.stringify(actjson),
-                    url: urlactualizar,
-                    dataType: "json",        
-                    contentType: "application/json;",
-                    success: function (resp) {debugger
-                        if((resp.dsSICUDgpd_vdd.eeEstados[0].Estado)=="OK")
-                        {    
-                           sessionStorage.setItem("Detalle_Vendedor",JSON.stringify(resp.dsSICUDgpd_vdd.eegpd_vdd[0]));
-                           
-                            
-                            parent.cerrar1();
-                        }
-                        else
-                        {
-                            alertDialogs("Error"+resp.dsSICUDgpd_vdd.eeEstados[0].Estado);  
-                            $('#grid').data('kendoGrid').refresh();
-                            $('#grid').data('kendoGrid').dataSource.read();
-                            $('#grid').data('kendoGrid').refresh(); 
-                        }
-                    } 
-        
-                });
+           var ciudad = $("#Ciudad").data("kendoComboBox");
+           var select1 = ciudad.selectedIndex;    
+           var establecimiento = $("#Establecimiento").data("kendoComboBox");
            
            
            
+           if (select1===-1 || establecimiento===undefined){
+               alertDialogs("Debe Ingresar una ciudad y un establecimiento");   
+           
+           }else
+           {
+           ciudad = ciudad.dataSource._data[select1].ciu__cod;           
+           var select2 = establecimiento.selectedIndex;
+           if (select2===-1){
+           alertDialogs("Debe Ingresar una ciudad y un establecimiento");                  
+           }
+           else
+           {          
+            establecimiento = establecimiento.dataSource._data[select2].com__con;           
+           parent.filtrar(establecimiento,ciudad,region);
+           }
        }
+   }
        function cancelar(){
            
            parent.cerrar();
        }
        
-function sucursal(container, options) {debugger
+function sucursal(e) {debugger
         
         var consultar = new sirSucursales();
         var datajson = consultar.getjson();
        datajson.dsSIRgpd_cli_suc.SIRgpd_cli_suc[0].piirgeo__cod = parseInt($("#Region").data("kendoDropDownList")._old);
-       datajson.dsSIRgpd_cli_suc.SIRgpd_cli_suc[0].picciu__cod= $("#Ciudad").data("kendoComboBox")._old;
+       datajson.dsSIRgpd_cli_suc.SIRgpd_cli_suc[0].picciu__cod= e.dataItem.ciu__cod;
         var urlService = consultar.getUrlSir();
         var mapCud1 = "eegpd_cli_suc";
         $("#Establecimiento")
@@ -170,7 +150,7 @@ function sucursal(container, options) {debugger
             dataTextField: "ciu__nom",
             dataValueField: "ciu__cod",
             select: function(e) {                
-              sucursal();
+              sucursal(e);
             },
             dataSource: {
                 transport: {

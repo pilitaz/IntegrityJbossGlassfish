@@ -428,20 +428,223 @@ function sirSucursales() {
 function Sirdespacho() {
     var urlSir = ipServicios + baseComercial +"SIRgpd_pdet_dpc";
     var json = {
+            "dsSIRgpd_pdet_dpc": {
+            "eeDatos": [{
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+                }],
+                "eeSIRgpd_pdet_dpc": [{
+                    "rgeo_cod": 0,
+                    "ciu_cod": "5711001",
+                    "com_con": "Rionegro"
+                }]
+        }
+    };
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+/////////////////////////////////////////////////////////////////////
+function sirCamiones() {
+    var urlSir = ipServicios + baseComercial +"SIRdpc_cam";
+    var json = {
+ "dsSIRdpc_cam": {
+  "eeDatos": [{
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+  }],
+  "eeSIRdpc_cam": [{
+   "piicam_cod": 0,
+   "piccam_pla": "*",
+   "piicam_est": -1,
+   "pidcam-cap": 0
+  }]
+ }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+/////////////////////////////////////////////////////////////////////
+function sirRuta() {
+    var urlSir = ipServicios + baseComercial +"SIRdpc_rut";
+    var json = {  
+   "dsSIRdpc_rut":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+  "eeSIRdpc_rut": [{
+   "piibar_cod1": 0,
+   "piibar_cod2": 0,
+   "picciu_cod1": "*",
+   "picciu_cod2": "*",
+   "piirut_cod": 0 
+  }]
+  
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+/////////////////////////////////////////////////////////////////////
+function sirTransportista() {
+    var urlSir = ipServicios + baseComercial +"SIRdpc_tra";
+    var json = {
+ "dsSIRdpc_tra": {
+  "eeDatos": [{
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+  }],
+  "eeSIRdpc_tra": [{
+   "picter_nit": "*",
+   "piirut_cod": 0,
+   "piicam_cod": 0,
+   "piitra_est": 0
+  }]
+
+ }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+/////////////////////////////////////////////////////////////////////
+function sirDespacho() {
+    var urlSir = ipServicios + baseComercial +"SIRgpd_pdet_dpc";
+    var json = {
         "dsSIRgpd_pdet_dpc": {
             "eeDatos": [{
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+                }],
+            "eeSIRgpd_pdet_dpc": [{
+                    "rgeo_cod": 0,
+                    "ciu_cod": "",
+                    "com_con": ""
+                }]
+        }
+    };
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+///////////////////////////////////////////////////////////////
+function sirSuperregion() {
+    var urlSir = ipServicios + baseComercial +"SIRgpd_sre";
+    var json = {  
+   "dsSIRgpd_sre":{  
+      "eeDatos":[  
+         {  
                     "picusrcod":sessionStorage.getItem("usuario"),
                     "picfiid":sessionStorage.getItem("picfiid"),
                     "local_ip":sessionStorage.getItem("ipPrivada"),
                     "remote_ip":sessionStorage.getItem("ipPublica")
-                }],
-            "eeSIRgpd_pdet_dpc": [{
-                    "rgeo_cod":0 ,
-                    "ciu_cod": "*",
-                    "com_con": "*"
-                }]
-        }
-    };
+         }
+      ],
+      "SIRgpd_sre":[  
+         {  
+          "piirgeo__cod":0,
+          "piisre__cod":0,
+          "picter__nit":"0",
+          "picsre__est": -1
+         }
+      ]      
+   }
+};
     
     this.setUrlSir = function (newname) {
         if (newname) {

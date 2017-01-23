@@ -62,25 +62,14 @@ function editar_rol(){debugger
 
                     
                     
-$(document).ready(function() {
-                                       
-                    
-    $("#toolbar").kendoToolBar({
-        items: [
-                                
-                                
-            { template: "<label>Buscar:</label>" },
-            {
-                template: "<input id='filtro' style='width: auto;'/>",
-                overflow: "always"
-            }
-                                
-        ]
-    });
-                        
-                        
-});
 
+
+function filtrar(establecimiento,ciudad,region){debugger
+        var e=-1;
+        grilla(e,establecimiento,ciudad,region);
+        cerrar();
+
+    }
 /**
  * FUNCION CRUD
  *  VAR mapCud =  variable gestion de funcion squema 
@@ -94,7 +83,11 @@ $(document).ready(function() {
  *  var urlactualizar: url de servicio para actualizar / crear 
  *  
  */ 
-$(document).ready(function () {   
+$(document).ready(function () {  
+    
+    $("#botton").kendoButton({
+        //click: Filtrar
+    });
     var data = [
         {text: "Todos", value: "-1", clase: "po_checkCreate"},
         {text: "Creado", value: "99", clase: "po_checkCreate"},
@@ -140,16 +133,190 @@ $(document).ready(function () {
     //    var gridheigth = $("body").height();
     //    gridheigth = gridheigth*0.008 + gridheigth;
     
-    function grilla(e){debugger
-    var  consultar = new sirSuperregion();
+    addRow();
+    //camion();
+	//ruta();
+	//transportista();
+    //grilla();
+    
+   
+
+ 
+ ruta();
+
+});
+
+
+    function camion(){
+       var consultar = new sirCamiones();
+       var datajson = consultar.getjson();
+       datajson.dsSIRdpc_cam.eeSIRdpc_cam[0].pidcam_cap = parseInt(document.getElementById('pesoTotal').innerHTML);
+       //datajson.dsSIRgpd_cli_suc.SIRgpd_cli_suc[0].picciu__cod= $("#Ciudad").data("kendoComboBox")._old;
+        var urlService = consultar.getUrlSir();
+        var mapCud1 = "eedpc_cam";
+        $("#Camion")
+                .kendoComboBox({
+            dataTextField: "cam__des",
+            dataValueField: "cam__cod",
+            template:'<div class="divElementDropDownList">#: data.cam__des #'+' - '+' #:data.cam__vers #</div>',
+            select: function(e) {                
+               transportista(e);
+            },
+            dataSource: {
+                transport: {
+                    read: {
+                        url: urlService,
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation === "read") {
+                            return JSON.stringify(datajson);
+                        }
+                    }
+                },
+                schema: {
+                    data: function (e) {debugger
+                        var key1 = Object.keys(e)[0];
+                        if (e[key1].eeEstados[0].Estado === "OK") {
+                            return e[key1][mapCud1];
+                        } else {
+                            alertDialogs("Error Con Servicio Camiones"+e[key1].eeEstados[0].Estado);
+                        }
+                    },
+                    model: {
+                        id: "cam__cod",
+                        fields: {
+                            cam__cod: {editable: false, nullable: false},
+                            cam__des: {editable: false, nullable: false},
+                            cam__vers: {editable: false, nullable: false},
+                            cam__pla: {editable: false, nullable: false},
+                        }
+                    }
+                }
+            }
+
+        });
+       }
+       function ruta(){debugger
+       var consultar = new sirRuta();
+        var datajson = consultar.getjson();
+       //datajson.dsSIRgpd_cli_suc.SIRgpd_cli_suc[0].piirgeo__cod = parseInt($("#Region").data("kendoDropDownList")._old);
+       //datajson.dsSIRgpd_cli_suc.SIRgpd_cli_suc[0].picciu__cod= $("#Ciudad").data("kendoComboBox")._old;
+        var urlService = consultar.getUrlSir();
+        var mapCud1 = "eedpc_rut";
+        $("#Ruta")
+                .kendoComboBox({
+            dataTextField: "rut__des",
+            dataValueField: "rut__cod",
+            template:'<div class="divElementDropDownList">Desde:#: data.bar__dsc1 #'+' Hasta: '+' #:data.bar__dsc2 #</div>',
+            select: function(e) {                
+              
+            },
+            dataSource: {
+                transport: {
+                    read: {
+                        url: urlService,
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation === "read") {
+                            return JSON.stringify(datajson);
+                        }
+                    }
+                },
+                schema: {
+                    data: function (e) {debugger
+                        var key1 = Object.keys(e)[0];
+                        if (e[key1].eeEstados[0].Estado === "OK") {
+                            return e[key1][mapCud1];
+                        } else {
+                            alertDialogs("Error Con Servicio Rutas"+e[key1].eeEstados[0].Estado);
+                        }
+                    },
+                    model: {
+                        id: "rut__cod",
+                        fields: {
+                            rut__cod: {editable: false, nullable: false},
+                            rut__des: {editable: false, nullable: false},
+                            bar__dsc1: {editable: false, nullable: false},
+                            bar__dsc2: {editable: false, nullable: false},
+                        }
+                    }
+                }
+            }
+
+        });
+       }
+        function transportista(e){debugger
+
+       var consultar = new sirTransportista();
+        var datajson = consultar.getjson();
+       datajson.dsSIRdpc_tra.eeSIRdpc_tra[0].piicam_cod = parseInt(e.dataItem.cam__cod);
+       //datajson.dsSIRgpd_cli_suc.SIRgpd_cli_suc[0].picciu__cod= $("#Ciudad").data("kendoComboBox")._old;
+        var urlService = consultar.getUrlSir();
+        var mapCud1 = "eedpc_tra";
+        $("#Transportista")
+                .kendoComboBox({
+            dataTextField: "ter__raz",
+            dataValueField: "ter__nit",
+            template:'<div class="divElementDropDownList">#: data.ter__raz #'+' - '+' #:data.cam__des #</div>',
+            select: function(e) {                
+              
+            },
+            dataSource: {
+                transport: {
+                    read: {
+                        url: urlService,
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation === "read") {
+                            return JSON.stringify(datajson);
+                        }
+                    }
+                },
+                schema: {
+                    data: function (e) {debugger
+                        var key1 = Object.keys(e)[0];
+                        if (e[key1].eeEstados[0].Estado === "OK") {
+                            return e[key1][mapCud1];
+                        } else {
+                            alertDialogs("Error Con Servicio Transportista"+e[key1].eeEstados[0].Estado);
+                        }
+                    },
+                    model: {
+                        id: "ter__nit",
+                        fields: {
+                            ter__nit: {editable: false, nullable: false},
+                            ter__raz: {editable: false, nullable: false},
+                            rut__des: {editable: false, nullable: false},
+                            cam__des: {editable: false, nullable: false},
+                        }
+                    }
+                }
+            }
+
+        });
+       }
+    
+
+
+function grilla(e,establecimiento,ciudad,region){debugger
+    var  consultar = new Sirdespacho();
     var  datajson = consultar.getjson();
     var  urlService = consultar.getUrlSir();
-    datajson.dsSIRgpd_sre.SIRgpd_sre[0].picsre__est = e;                
-    var  actualizar = new cudSuperregion();
+    //datajson.dsSIRgpd_sre.SIRgpd_sre[0].picsre__est = e;                
+    var  actualizar = new sirDespacho();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
 
-    var mapCud = "eegpd_sre";
+    var mapCud = "eegpd_ped_det";
     dataSource = new kendo.data.DataSource({
         transport: {
             read: {
@@ -253,14 +420,17 @@ $(document).ready(function () {
                     }
                 }},
             model: {
-                id: "rgeo__cod",
+                id: "ped__num",
                 fields: {
-                    rgeo__cod:    {editable: true, nullable: false},
-                    ter__nit:    {editable: true, nullable: false},
-                    sre__cod:    {editable: false, nullable: false},  
-                    ter__raz:    {editable: true, nullable: false},  
-                    sre__est:    {editable: true, nullable: false}, 
-                    rgeo__nom:    {editable: true, nullable: false}
+                    ped__fec:    {editable: true, nullable: false},
+                    suc__cod:    {editable: true, nullable: false},
+                    clc__cod:    {editable: false, nullable: false},  
+                    cla__cod:    {editable: true, nullable: false},  
+                    art__cod:    {editable: true, nullable: false}, 
+                    ped__can__k:    {editable: false, nullable: false},  
+                    art__des:    {editable: true, nullable: false},  
+                    ped__pend:    {editable: true, nullable: false},
+                    ped__num:    {editable: true, nullable: false},
                 }
             }
         }
@@ -268,52 +438,44 @@ $(document).ready(function () {
     var grid1 = $("#grid").kendoGrid({
         dataSource: dataSource,
         columns: [
-            {field: "sre__cod", title: "Cod Supervisor ",  hidden:false},
             
-            {field: "rgeo__nom", title: "Region",  hidden:false,editor:regionCod,
-                template: function (e) {debugger
-                    return e.rgeo__nom;
-                }},    
-            {field: "ter__nit", title: "Cedula",  hidden:false, editor: filtroestado,
-                template: function (e) {debugger
-                    return e.ter__nit;
-                }},    
-            {field: "ter__raz", title: "Nombre",  hidden:false,editor: nombre,
-                template: function (e) {debugger
-                    return e.ter__raz;
-                }},    
+            {field: "ped__num", title: "# Pedido",  hidden:false},
+            {field: "art__des", title: "Producto",  hidden:false},
+             {field: "ped__pend", title: "Cantidad",  hidden:false},
+              {field: "ped__can__k", title: "Peso",  hidden:false, footerTemplate: conditionalSum},
             {command: [
                     {name: "check", text: "estado",click: changeEst, template: "<a class='k-grid-check'><span class='k-sprite po_editoff' ></span></a>" },
                     {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff' ></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "140px"}],
         editable: "popup",
-         edit: function(e) {debugger
-            if (!e.model.isNew()) {//caso en el que el popup es editar
-                if(e.model.sre__est!= 99 ){
-                    
-                    
-                   kendo.ui.progress($('.k-edit-form-container'), true);
-                   kendo.ui.progress($('.k-edit-buttons'), true);
-                   e.container.find(".k-loading-image").css("background-image", "url('')");
-
-            }else{
-                $("#region").data("kendoDropDownList").enable(false);
-            //e.container.find("span")[1].attr('disabled','disabled');
-            //e.container.find("span[for='rgeo__nom']");
-            
-            }
-            }
-            else{//caso en el que el popup es crear 
-               var buscarlabel = $("label").find("for");
-                Buscarlabel = buscarlabel.prevObject[0];
-                Buscarlabel.style.display = "none";
-            }
-        } ,
+//         edit: function(e) {debugger
+//            if (!e.model.isNew()) {//caso en el que el popup es editar
+//                if(e.model.sre__est!= 99 ){
+//                    
+//                    
+//                   kendo.ui.progress($('.k-edit-form-container'), true);
+//                   kendo.ui.progress($('.k-edit-buttons'), true);
+//                   e.container.find(".k-loading-image").css("background-image", "url('')");
+//
+//            }else{
+//                $("#region").data("kendoDropDownList").enable(false);
+//            //e.container.find("span")[1].attr('disabled','disabled');
+//            //e.container.find("span[for='rgeo__nom']");
+//            
+//            }
+//            }
+//            else{//caso en el que el popup es crear 
+//               var buscarlabel = $("label").find("for");
+//                Buscarlabel = buscarlabel.prevObject[0];
+//                Buscarlabel.style.display = "none";
+//            }
+//        } ,
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
         altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
         dataBound: function (e) {
-            var results = dataSource.data();
-            changImgFunc(results,e);
+            camion();
+            //var results = dataSource.data();
+            //changImgFunc(results,e);
         },                    
         cancel: function(e) {                                                                                   
             e._defaultPrevented= true;
@@ -323,16 +485,8 @@ $(document).ready(function () {
         } 
     });
 }
-grilla(-1);
-    $("#filtro").kendoAutoComplete({ 
-        dataTextField: "ter__raz",  
-        dataValueField: "ter__raz",
-        placeholder: "Nombre...",  
-        dataSource: dataSource,                        
-        filter: "startswith"                    
-    });
-   
-   function clickEliminar(e) {debugger
+
+function clickEliminar(e) {debugger
     try {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
@@ -369,195 +523,7 @@ grilla(-1);
 }
          
     
-      function nombre(container, options) {
-        var obj = new sirConsultaCliente();
-        var objJson = obj.getjson();
-        var url = obj.getUrlSir();
-        var mapData = obj.getMapData();
-        $('<input id="nombre" required name="' + options.field + '"/>')
-                .appendTo(container)
-                .kendoAutoComplete({
-            dataTextField: "ter__raz",
-            dataValueField: "ter__nit",        
-            placeholder: "Selecione un cliente...",
-            minLength: 4,
-            filter: "contains",
-            select: function(e) {debugger                
-            $("#cedula").val(e.dataItem.ter__nit);    
-            },
-            template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
-            //select: setInfoCliente,
-            dataSource: {
-                type: "json",
-                serverFiltering: true,
-                transport: {
-                    read:{
-                        url: url,
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        type: "POST"
-                    },
-                    parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
-                        try {
-                                          
-                            if (operation === 'read') {
-                                var key1 = Object.keys(objJson)[0];
-                                var key2 = Object.keys(objJson[key1])[1];
-                                objJson[key1][key2][0].picter_nit = "";
-                                objJson[key1][key2][0].picter_raz = $("#nombre").val();
-                                return JSON.stringify(objJson);
-                            } 
-                        } catch (e) {
-                            alertDialogs(e.message);
-                        }                                    
-                    }
-                },
-                schema: {
-                    data: function (e){
-                        var key1 = Object.keys(e)[0];
-                        if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
-                            //$("#cedula").val(e.dsgfc_cli.eegfc_cli[0].ter__nit);
-                            return e[key1][mapData];
-                        }else if(e[key1].eeEstados[0].Estado==="ERROR: Patrón de Búsqueda insuficiente !"){
-                        
-                        }else{
-                            alertDialogs(e[key1].eeEstados[0].Estado);
-                        }
-                    },
-                    model:{}
-                },
-                error: function (xhr, error) {
-                    alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
-                },
-                change: function (e) {
-                    //console.log("Change client");
-                },
-                requestStart: function (e) {
-                    //console.log("Request Start servicio cliente");
-                }            
-            }
-        });    
-          
-      }
-    function filtroestado(container, options) {debugger
-
-        var obj = new sirConsultaCliente();
-        var objJson = obj.getjson();
-        var url = obj.getUrlSir();
-        var mapData = obj.getMapData();
-        $('<input id="cedula" required name="' + options.field + '"/>')
-                .appendTo(container)
-                .kendoAutoComplete({
-            dataTextField: "ter__nit",
-            dataValueField: "ter__nit",        
-            placeholder: "Selecione un cliente...",
-            minLength: 6,
-            filter: "contains",
-            select: function(e) {debugger                
-            $("#nombre").val(e.dataItem.ter__raz);    
-            },
-            template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
-            //select: setInfoCliente,
-            dataSource: {
-                type: "json",
-                serverFiltering: true,
-                transport: {
-                    read:{
-                        url: url,
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        type: "POST"
-                    },
-                    parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
-                        try {
-                                          
-                            if (operation === 'read') {
-                                var key1 = Object.keys(objJson)[0];
-                                var key2 = Object.keys(objJson[key1])[1];
-                                objJson[key1][key2][0].picter_nit = $("#cedula").val();
-                                objJson[key1][key2][0].picter_raz = "";
-                                return JSON.stringify(objJson);
-                            } 
-                        } catch (e) {
-                            alertDialogs(e.message);
-                        }                                    
-                    }
-                },
-                schema: {
-                    data: function (e){   
-                        var key1 = Object.keys(e)[0];
-                        if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
-                            return e[key1][mapData];
-                        }else if(e[key1].eeEstados[0].Estado==="ERROR: Patrón de Búsqueda insuficiente !"){
-                        
-                        }else{
-                            alertDialogs(e[key1].eeEstados[0].Estado);
-                        }
-                    },
-                    model:{}
-                },
-                error: function (xhr, error) {
-                    alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
-                },
-                change: function (e) {
-                    //console.log("Change client");
-                },
-                requestStart: function (e) {
-                    //console.log("Request Start servicio cliente");
-                }            
-            }
-        });
-            
-    }                       
-
-                        
-   
-    function regionCod(container, options) {debugger
-        
-        var consultar = new sirRegionGeografica();
-        var datajson = consultar.getjson();
-        var urlService = consultar.getUrlSir();
-        var mapCud1 = "eegpr_rgeo";
-        $('<input  id = "region" required name="' + options.field + '"/>')
-                .appendTo(container)
-                .kendoDropDownList({
-            dataTextField: "rgeo__nom",
-            dataValueField: "rgeo__nom",
-            dataSource: {
-                transport: {
-                    read: {
-                        url: urlService,
-                        dataType: "json",
-                        type: "POST",
-                        contentType: "application/json; charset=utf-8"
-                    },
-                    parameterMap: function (options, operation) {
-                        if (operation === "read") {
-                            return JSON.stringify(datajson);
-                        }
-                    }
-                },
-                schema: {
-                    data: function (e) {debugger
-                        var key1 = Object.keys(e)[0];
-                        if (e[key1].eeEstados[0].Estado === "OK") {
-                            return e[key1][mapCud1];
-                        } else {
-                            alertDialogs("Error Con Servicio Regiones"+e[key1].eeEstados[0].Estado);
-                        }
-                    },
-                    model: {
-                        id: "rgeo__nom",
-                        fields: {
-                            rgeo__cod: {editable: false, nullable: false},
-                            rgeo__nom: {editable: false, nullable: false}
-                        }
-                    }
-                }
-            }
-
-        });
-    }
+ 
 
     function changImgFunc(results , e) {debugger
      
@@ -580,10 +546,6 @@ grilla(-1);
 
     } 
 
-
- 
-});
-                    
 function changeEst(e){debugger
     var  actualizar = new cudSuperregion();
     var  actjson = actualizar.getjson();
@@ -681,5 +643,17 @@ function changeEst(e){debugger
     $("#windowform").data("kendoWindow").close();
   
     
-}                    
-                
+}     
+
+function conditionalSum() {
+            var data = dataSource.data();
+            var item, sum = 0;
+            for (var idx = 0; idx < data.length; idx++) {debugger
+              item = data[idx];
+              if (item.art__des ) {
+                sum += item.ped__can__k;
+              } 
+            }
+           document.getElementById('pesoTotal').innerHTML = sum;
+           return "";
+          }                

@@ -84,3 +84,18 @@ h1.subTitulo{
 }
 
 
+tr.k-footer-template td
+{
+   background-color: transparent;
+    border-color: transparent;
+       display: none;
+    overflow: hidden;
+}
+ 
+tr.k-group-footer td
+{
+      background-color: transparent ;
+       border-color: transparent;
+          display: none;
+    overflow: hidden;
+}

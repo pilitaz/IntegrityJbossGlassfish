@@ -12,16 +12,20 @@ $(document).ready(function () {debugger
    document.getElementById('Cupo_De_Ventas').innerHTML = datos_cliente.cli__ven;
    document.getElementById('Persona_Contacto_Tesoreria').innerHTML = datos_cliente.con__tes;
    document.getElementById('Persona_Contacto_Ventas').innerHTML = datos_cliente.con__ven;
-   document.getElementById('Certificado_Analisis').innerHTML = datos_cliente.cer__ana;
-   document.getElementById('Despachos_Parciales').innerHTML = datos_cliente.dpc__par;
-   document.getElementById('Transporte').innerHTML = datos_cliente.cli__tra;
+   if(datos_cliente.cer__ana==true){var ana = "Si"}else{var ana = "No"}
+   document.getElementById('Certificado_Analisis').innerHTML = ana;
+   if(datos_cliente.dpc__par==true){var despachos = "Si"}else{var despachos = "No"}
+   document.getElementById('Despachos_Parciales').innerHTML = despachos;
+   if(datos_cliente.cli__tra==true){var transporte = "Si"}else{var transporte = "No"}
+   document.getElementById('Transporte').innerHTML =transporte;
    document.getElementById('Numero_de_Copias_Factura').innerHTML = datos_cliente.num__cop__fac;
    document.getElementById('Forma_de_Pago').innerHTML = datos_cliente.pago__cod;
    document.getElementById('Numero_de_Lista').innerHTML = datos_cliente.lis__num;
    document.getElementById('Dia_de_Pago').innerHTML = datos_cliente.dia__pag;
    document.getElementById('Hora_de_Pago').innerHTML = datos_cliente.hor__pag;
    document.getElementById('Bodega_en_Consignacion').innerHTML = datos_cliente.loc__des;
-   document.getElementById('Precio_por_Establecimiento').innerHTML = datos_cliente.ter__cret;
+   if(datos_cliente.ter__cret==true){var Establecimiento = "Si"}else{var Establecimiento = "No"}
+   document.getElementById('Precio_por_Establecimiento').innerHTML = Establecimiento;
    document.getElementById('Tope_Maximo_Galones').innerHTML = datos_cliente.cli__gal;
    
   //document.getElementById('Nit_cliente').innerHTML = datos_cliente.ter__nit;
@@ -85,11 +89,7 @@ function gridDetalleVendedor(){
            var ciudades = $("#ciudades").data("kendoComboBox")._old;
            var barrios = $("#barrios").data("kendoComboBox")._old;
            var lista_precio = $("#lista_precio").data("kendoDropDownList")._old;
-           
-           
-                    
-                    
-                    
+
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].ter__nit=datos_vendedor.ter__nit;
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].com__con=options.com__con;
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].com__nom=options.com__nom;
@@ -115,7 +115,7 @@ function gridDetalleVendedor(){
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].est__des=options.est__des;
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].cli__suc__pie__fac=options.cli__suc__pie__fac;
                     
-                    //return JSON.stringify(actjson);          
+                    return JSON.stringify(actjson);          
                                                         
                 }
                 if (operation === "destroy") {debugger 
@@ -189,7 +189,11 @@ function gridDetalleVendedor(){
             {field: "ter__tel", title: "Telefono",  hidden:false},
             
             {field: "ter__fax", title: "Fax",  hidden:true},
-            {field: "vdd__cod", title: "Vendedor",  hidden:true, editor: nombre,
+            {field: "vdd__cod", title: "Nit Vendedor",  hidden:true, editor: cedula,
+                template: function (e) {debugger
+                    return e.vdd__cod;
+                }}, 
+            {field: "vdd__cod", title: "Nombre Vendedor",  hidden:true, editor: nombre,
                 template: function (e) {debugger
                     return e.vdd__cod;
                 }},          
@@ -428,13 +432,13 @@ function nombre(container, options) {
                 .appendTo(container)
                 .kendoAutoComplete({
             dataTextField: "ter__raz",
-            dataValueField: "ter__raz",
+            dataValueField: "ter__nit",
             autoClose: true,
             minLength: 4,
-            placeholder: "Nit..",
+            placeholder: "Nombre..",
              filter: "contains",
             select: function(e) {debugger                
-            $("#nit").val(e.dataItem.ter__nit);    
+            $("#cedula").val(e.dataItem.ter__nit);    
             },
             template:'<div class="divElementDropDownList">#: data.ter__raz #</div>',  
             dataSource: {
@@ -457,7 +461,60 @@ function nombre(container, options) {
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
                         } else {
-                            alertDialogs("Error Con Servicio sucursales"+e[key1].eeEstados[0].Estado);
+                            alertDialogs("Error Con Servicio Clientes"+e[key1].eeEstados[0].Estado);
+                        }
+                    },
+                    model: {
+                        id: "ter__nit",
+                        fields: {
+                            ter__raz: {editable: false, nullable: false},
+                            ter__nit: {editable: false, nullable: false}
+                        }
+                    }
+                }
+            }
+
+        });
+      }
+      function cedula(container, options) {
+        var consultar = new SirSicVen();
+        var datajson = consultar.getjson();
+        var urlService = consultar.getUrlSir();
+        var mapCud1 = "eesic_ven";
+        $('<input  id = "cedula" />')
+                .appendTo(container)
+                .kendoAutoComplete({
+            dataTextField: "ter__nit",
+            dataValueField: "ter__nit",
+            autoClose: true,
+            minLength: 4,
+            placeholder: "Nit..",
+             filter: "contains",
+            select: function(e) {debugger                
+            $("#nombre").val(e.dataItem.ter__raz);    
+            },
+            template:'<div class="divElementDropDownList">#: data.ter__raz #</div>',  
+            dataSource: {
+                transport: {
+                    read: {
+                        url: urlService,
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation === "read") {
+                            return JSON.stringify(datajson);
+                        }
+                    }
+                },
+                schema: {
+                    data: function (e) {debugger
+                        var key1 = Object.keys(e)[0];
+                        if (e[key1].eeEstados[0].Estado === "OK") {
+                            return e[key1][mapCud1];
+                        } else {
+                            alertDialogs("Error Con Servicio Clientes"+e[key1].eeEstados[0].Estado);
                         }
                     },
                     model: {
