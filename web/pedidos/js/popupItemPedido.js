@@ -333,7 +333,7 @@ function agregarItem(){
     jsonDetalePed[key1][key2][0].lis__num = sessionStorage.getItem("listaPrecioCliente");
     jsonDetalePed[key1][key2][0].cla__cod = codClaseArticulo;//lista del cliente        
     jsonDetalePed[key1][key2][0].art__cod = codArticulo;    
-    jsonDetalePed[key1][key2][0].pre__pcod = objArticulo.uni__cod;
+    jsonDetalePed[key1][key2][0].pre__pcod = objArticulo.pre__pcod;
     jsonDetalePed[key1][key2][0].ped__can = cantidad;
     jsonDetalePed[key1][key2][0].lpd__pre = valorUnitario;
     jsonDetalePed[key1][key2][0].ped__dct = descuento;   
@@ -369,7 +369,7 @@ function agregarItem(){
 
 function setInformacionItem(){
     
-   
+   debugger
     var kendoDropDownListClaseArticulo = $("#idClaseArticulo").data("kendoDropDownList");    
     kendoDropDownListClaseArticulo.value(parent.itemPedido.cla__cod);
     
@@ -378,7 +378,7 @@ function setInformacionItem(){
     
     objArticulo.art__des = parent.itemPedido.art__des;
     objArticulo.art__cod = parent.itemPedido.art__cod;
-    objArticulo.uni__cod = parent.itemPedido.pre__pcod;
+    objArticulo.pre__pcod = parent.itemPedido.pre__pcod;
     
     var numerictextboxCantidad = $("#ipCantidad").data("kendoNumericTextBox");    
     numerictextboxCantidad.value(parent.itemPedido.ped__can);
