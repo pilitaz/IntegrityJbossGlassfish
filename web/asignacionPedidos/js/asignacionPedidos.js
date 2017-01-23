@@ -108,7 +108,7 @@ function gridAsignacionPedidos(){
             {command:[
                     {id: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},                    
                 ],
-                width: "150px"}
+                width: "50px"}
         ],
         editable:  {
             mode: "popup",

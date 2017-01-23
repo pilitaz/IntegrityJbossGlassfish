@@ -283,7 +283,7 @@ $(document).ready(function() {
     
     function onChangeConceptoDet(e){
         
-        
+        debugger
         var codAmortizacion= e.sender.dataSource._data[e.sender.selectedIndex-1].tcon_dif;
         var dropdownlist = $("#idCodigoAmortizacion").data("kendoDropDownList");
         var numericTextBoxTasa= $("#ipDiasAmortizacion").data("kendoNumericTextBox");

@@ -47,6 +47,8 @@ function grid() {
                          }else{
                             var key1 = Object.keys(jsonFiltroPedidos)[0];
                             var key2 = Object.keys(jsonFiltroPedidos[key1])[1];
+                            debugger
+//                            jsonFiltroPedidos[key1][key2][0].pidped_fec = sessionStorage.getItem("fechaSistema");
                             jsonFiltroPedidos[key1][key2][0].piiped_est = 1;
                             sessionStorage.setItem("jsonFiltroPedidos",JSON.stringify(jsonFiltroPedidos));
                         }                        
@@ -106,7 +108,7 @@ function grid() {
     
     function anularFactura(e){        
         e.preventDefault();   
-    }S
+    }
 }
 function ondataBound() {
     sessionStorage.removeItem("jsonFiltroPedidos");
@@ -124,7 +126,7 @@ function btnFltrPedido() {
 
     myWindow.kendoWindow({
         width: "600px",
-        height: "300px",
+        height: "200px",
         title: "Busqueda",
         content: sessionStorage.getItem("url") + "/aprobacionPedidos/html/popUpFiltros.html",
         visible: false,

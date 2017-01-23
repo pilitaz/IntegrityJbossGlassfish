@@ -30,7 +30,8 @@ function volverPedidos(){
     window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html"));  
 }
 
-function gridDetallePedido(){    
+function gridDetallePedido(){  
+    debugger
     var dataSourcePedido = new kendo.data.DataSource({
         data : JSON.parse(sessionStorage.getItem("regPedidos")).eegpd_ped_det,
     });
@@ -39,13 +40,9 @@ function gridDetallePedido(){
         dataSource: dataSourcePedido,       
         //selectable: false,
         height: 500,        
-        columns: [            
+        columns: [                        
             {
-                field: "lis__num",
-                title: "Lista de precios"
-            },
-            {
-                field: "cla__cod",
+                field: "cla__des",
                 title: "Clase de articulo"
             },
             {
