@@ -66,7 +66,7 @@ function editar_rol(){debugger
 
 function filtrar(establecimiento,ciudad,region){debugger
         var e=-1;
-        grilla(e,establecimiento,ciudad,region);
+        grilla(e);
         cerrar();
 
     }

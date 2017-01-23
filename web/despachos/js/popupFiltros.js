@@ -8,32 +8,33 @@
     });
        
        function guardar(e){debugger
-           var region = $("#Region").data("kendoDropDownList");
-           var select = region.selectedIndex;
-           region = region.dataSource._data[select].rgeo__cod;
            
-           var ciudad = $("#Ciudad").data("kendoComboBox");
-           var select1 = ciudad.selectedIndex;    
-           var establecimiento = $("#Establecimiento").data("kendoComboBox");
-           
-           
-           
-           if (select1===-1 || establecimiento===undefined){
-               alertDialogs("Debe Ingresar una ciudad y un establecimiento");   
-           
-           }else
-           {
-           ciudad = ciudad.dataSource._data[select1].ciu__cod;           
-           var select2 = establecimiento.selectedIndex;
-           if (select2===-1){
-           alertDialogs("Debe Ingresar una ciudad y un establecimiento");                  
-           }
-           else
-           {          
-            establecimiento = establecimiento.dataSource._data[select2].com__con;           
-           parent.filtrar(establecimiento,ciudad,region);
-           }
-       }
+//           
+//           var ciudad = $("#Ciudad").data("kendoComboBox");
+//           var select1 = ciudad.selectedIndex;    
+//           var establecimiento = $("#Establecimiento").data("kendoComboBox");
+//           
+//           
+//           
+//           if (select1===-1 || establecimiento===undefined){
+//               alertDialogs("Debe Ingresar una ciudad y un establecimiento");   
+//           
+//           }else
+//           {
+//           ciudad = ciudad.dataSource._data[select1].ciu__cod;           
+//           var select2 = establecimiento.selectedIndex;
+//           if (select2===-1){
+//           alertDialogs("Debe Ingresar una ciudad y un establecimiento");                  
+//           }
+//           else
+//           {
+//            var region = $("#Region").data("kendoDropDownList");
+//            var select = region.selectedIndex;
+//            region = region.dataSource._data[select].rgeo__cod;   
+//            establecimiento = establecimiento.dataSource._data[select2].com__con;           
+           parent.filtrar();
+//           }
+//       }
    }
        function cancelar(){
            
