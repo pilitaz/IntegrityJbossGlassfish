@@ -108,3 +108,57 @@ function GetProfileImage() {
 
 }
 ;
+
+function Getbirthdays() {
+    var fecha = new Date();
+    var mapData = "othersbirthdays";
+    var urlSir = ipServicios + baseServicio + "Getbirthdays";
+    var json = {
+        "dsbirthdays": {
+            "eeDatos": [
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip": sessionStorage.getItem("ipPrivada"),
+                    "remote_ip": sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "sirbirthday": [
+                {
+                    "piiday": JSON.stringify(fecha.getDate()),
+                    "piimonth": JSON.stringify(fecha.getMonth()+1)
+
+                }
+            ]
+        }
+    };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
+}
+;

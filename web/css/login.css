@@ -41,6 +41,25 @@
     transform: translate(-50%, -50%);
 }
 
+.bombas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.sombraBombas {
+    position: absolute;
+    top: 98%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.cerpentinas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 #logoIntegrity{
     width: 450px;
     height: 163px;

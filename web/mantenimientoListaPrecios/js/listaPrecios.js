@@ -142,7 +142,7 @@ function popupCU(titulo) {
         var widthPopUp = $("body").width();
         widthPopUp = widthPopUp * (35 / 100);
         var heightPopUp = $("body").height();
-        heightPopUp = heightPopUp * (30 / 100);
+        heightPopUp = heightPopUp * (40 / 100);
         bandAlert = bandAlert + 1;
         $("body").append("<div id='windowListPre'></div>");
         var myWindow = $("#windowListPre");
