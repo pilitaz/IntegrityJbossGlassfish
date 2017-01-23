@@ -428,8 +428,8 @@ function SICUDPedido() {
                                     "local_ip":sessionStorage.getItem("ipPrivada"),
                                     "remote_ip":sessionStorage.getItem("ipPublica")
                             }],
-                            "eegpd_ped": [{
-                                    "gpd__est": "0",
+                            "eegpd_ped": [{ 
+                                    "gpd__est":0,
                                     "ciu__cod": "",
                                     "com__con": "",
                                     "dpc__par": "false",
@@ -445,8 +445,10 @@ function SICUDPedido() {
                                     "ter__dir": "",
                                     "ter__nit": "",
                                     "ter__tel": "",
-                                    "ven__cod": "",
-                                    "gpd__est": 0,
+                                    "ven__cod": "",                                    
+                            }],
+                            "eeSICUDgpd_ped": [{
+                                    "pltermina":false,
                             }]
                     }
             };
@@ -670,7 +672,9 @@ function sirConsultaArticulos() {
 		"eeDatos":[
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
-                    "fiid": sessionStorage.getItem("picfiid"),
+                    "picfiid": sessionStorage.getItem("picfiid"),                    
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
                 }
                 ],
                 "eeSIRinv_art": [

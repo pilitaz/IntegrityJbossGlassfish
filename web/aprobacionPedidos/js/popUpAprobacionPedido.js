@@ -31,8 +31,8 @@ $(document).ready(function() {
     var key2 = Object.keys(objJson[key1])[1];                                
     
     objJson[key1][key2][0].piicor__ano = 2017;
-    objJson[key1][key2][0].picter__nit = pedido.ter_nit;
-    
+    objJson[key1][key2][0].picter__nit = pedido.ter__nit;
+  debugger  
     try{
         $.ajax({
             type: verbo,

@@ -63,6 +63,8 @@ function login() {
                 var fechaSistema=jsonResp.dslogin.eesiccia[0].fecsis;
                 fechaSistema = fechaSistema.replace(/-/g, "/");    
                 sessionStorage.setItem("usrnom",jsonResp.dslogin.eesicusuarios[0].usrnom);
+                sessionStorage.setItem("actor",jsonResp.dslogin.eesicusuarios[0].actrcod);
+                sessionStorage.setItem("clienteNIT",jsonResp.dslogin.eesicusuarios[0].usrcarp);
                 sessionStorage.setItem("usuario",usuario.split("@")[0]+ "_"+jsonResp.dslogin.eesiccia[0].cianit);
                 sessionStorage.setItem("usrmail",jsonResp.dslogin.eesicusuarios[0].usrmail);
                 sessionStorage.setItem("picfiid",jsonResp.dslogin.ttdatauser[0].picfiid);                    

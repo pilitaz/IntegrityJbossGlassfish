@@ -33,7 +33,7 @@ $(document).ready(function() {
     iniDropDownList();
     
     iniAutocomplete();
-    
+            
     if(sessionStorage.getItem("regPedidos")){
         setInfoCabeceraPedido();
     }
@@ -228,7 +228,39 @@ function iniDropDownList(){
             }
         },
         change: function (e) {
-
+            if(sessionStorage.getItem("actor")==="cliente" && !sessionStorage.getItem("regPedidos")){
+                $("#ipNITCliente").val(sessionStorage.getItem("companyNIT"));
+                
+                var objCli = new sirConsultaCliente();
+                var objJsonCli = objCli.getjson();
+                var urlCli = objCli.getUrlSir();
+                var mapDataCli = objCli.getMapData();
+                
+                var key1 = Object.keys(objJsonCli)[0];
+                var key2 = Object.keys(objJsonCli[key1])[1];
+                objJsonCli[key1][key2][0].picter__nit = sessionStorage.getItem("clienteNIT");
+                objJsonCli[key1][key2][0].picter__raz = "";
+                
+                $.ajax({
+                    type: "POST",
+                    data: JSON.stringify(objJsonCli),
+                    url: urlCli,
+                    dataType : "json",
+                    contentType: "application/json;",
+                    success: function (e) {  
+                        var key1 = Object.keys(e)[0];                                            
+                        if(e[key1].eeEstados[0].Estado==="OK"){                            
+                            dataCliente = e[key1][mapDataCli]["0"];
+                            $("#ipCliente").val(dataCliente.ter__raz);
+                        }                        
+                    },
+                    error: function (e) {
+                        alertDialogs(" Error al consumir el servicio: cargarFactura/SIRgfc_cli \n"+ e.status +" - "+ e.statusText);                        
+                    }
+                }).done(function(){
+                    setInfoCliente();
+                });
+            }
         }        
     });
     
@@ -296,10 +328,10 @@ function iniDropDownList(){
     });
     
     var tipoTasa = [
-        { text: "Día del pedido", value: "1" },
-        { text: "Fecha acordada", value: "2" },
-        { text: "Día despacho", value: "3" },
-        { text: "Día factura", value: "4" }
+        { text: "Día del pedido", value: 1 },
+        { text: "Fecha acordada", value: 2 },
+        { text: "Día despacho", value: 3 },
+        { text: "Día factura", value: 4 }
     ];
     
     
@@ -307,9 +339,31 @@ function iniDropDownList(){
         placeholder : "Seleccione el tipo de tasa",
         dataTextField: "text",
         dataValueField: "value",
-        dataSource: tipoTasa,
-        index: 0,
-        
+        dataSource: tipoTasa,        
+        change: function (e){            
+            if(e.sender.dataSource._data[e.sender.selectedIndex]){
+                var datepicker = $("#ipFechaTasa").data("kendoDatePicker");
+                if(e.sender.dataSource._data[e.sender.selectedIndex].value===2){                                     
+                    datepicker.enable(true);
+                    datepicker.value(sessionStorage.getItem("fechaSistema"));                    
+                }else{
+                    datepicker.value("");
+                    datepicker.enable(false);
+                }        
+            }
+        },
+        dataBound: function (e){            
+            if(e.sender.dataSource._data[e.sender.selectedIndex]){
+                var datepicker = $("#ipFechaTasa").data("kendoDatePicker");
+                if(e.sender.dataSource._data[e.sender.selectedIndex].value===2){                                     
+                    datepicker.enable(true);
+                    datepicker.value(sessionStorage.getItem("fechaSistema"));                    
+                }else{
+                    datepicker.value("");
+                    datepicker.enable(false);
+                }        
+            }
+        }
     });
     
     $("#ipVendedor").kendoDropDownList({

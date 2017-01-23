@@ -1005,7 +1005,8 @@ function onDataBoundOpcPago(e){
 }
 function onDataBoundVendedor(e){
     var dropdownlist = $("#ipVendedor").data("kendoDropDownList");
-    dropdownlist.value(sessionStorage.getItem("codVendedor"));         
+    dropdownlist.value(sessionStorage.getItem("codVendedor")); 
+    dropdownlist.readonly(true)
 }
 
 function onChangetfacpag(e){    

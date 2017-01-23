@@ -30,7 +30,7 @@ function sirConsultaPedidos() {
                     "picsuc_cod": "*",                    
                     "pidped_fec": "?",
                     "piiped_num": 0,
-                    "piiped_est": -1
+                    "piiped_est": 1
                 }
             ]
         }
@@ -144,6 +144,7 @@ function SICUDgpd_ped_apro() {
  *  var input = sir.getdataInputSir();
  */
 function SIRcon_anf_cli() {
+    debugger
     var mapData = "eecon_anf_cli";
     var urlSir = ipServicios + baseContabilidad + "SIRcon_anf_cli";
     var json = {
@@ -157,7 +158,8 @@ function SIRcon_anf_cli() {
                                 ],
                                 "eSIRcon_anf_cli" : [{
                                                 "piicor__ano" : 0,
-                                                "picter__nit" : ""
+                                                "picter__nit" : "",                                                
+                                                "picsuc__cod": ""
                                         }
                                 ]
                         }

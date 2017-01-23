@@ -82,13 +82,9 @@ function gridDetallePedido(){
         dataSource: dataSourcePedido,       
         selectable: true,
         height: 500,        
-        columns: [            
+        columns: [   
             {
-                field: "lis__num",
-                title: "Lista de precios"
-            },
-            {
-                field: "cla__cod",
+                field: "cla__des",
                 title: "Clase de articulo"
             },
             {
@@ -329,5 +325,104 @@ function closePopUp(){
         });
     }catch (e) {
         alertDialogs("Function: consumeServAjaxSIR Error: 740 " + e.message);
+    }
+}
+
+function finalizarPedido(){
+    
+    var verbo="PUT";
+    var pedido = JSON.parse(sessionStorage.getItem("regPedidos"));
+    var obj = new SICUDPedido();
+    var objJson = obj.getjson();
+    var url = obj.getUrlSir();
+    var mapData = obj.getMapData();
+    var key1 = Object.keys(objJson)[0];
+    var key2 = Object.keys(objJson[key1])[1];      
+    var key3 = Object.keys(objJson[key1])[2];   
+    
+    objJson[key1][key2][0].gpd__est = pedido.gpd__est;
+    objJson[key1][key2][0].suc__cod = pedido.suc__cod;
+    objJson[key1][key2][0].ter__nit = pedido.ter__nit;
+    objJson[key1][key2][0].pago__cod = pedido.pago__cod;
+    objJson[key1][key2][0].mnd__cla = pedido.mnd__cla;
+    objJson[key1][key2][0].ven__cod = pedido.ven__cod;
+    objJson[key1][key2][0].ped__fec = pedido.ped__fec;
+    objJson[key1][key2][0].ped__fec__ent = pedido.ped__fec__ent;
+    objJson[key1][key2][0].com__con = pedido.com__con;
+    objJson[key1][key2][0].ter__dir = pedido.ter__dir;
+    objJson[key1][key2][0].ter__tel = pedido.ter__tel;
+    objJson[key1][key2][0].ciu__cod = pedido.ciu__cod;
+    objJson[key1][key2][0].ped__pqs = pedido.ped__pqs;
+    objJson[key1][key2][0].obs__ped = pedido.obs__ped;
+    objJson[key1][key2][0].ped__num = pedido.ped__num;
+    objJson[key1][key2][0].clc__cod = pedido.clc__cod;
+    objJson[key1][key2][0].tip__tasa = pedido.tip__tasa;
+    objJson[key1][key2][0].fec__tasa = pedido.fec__tasa;
+    objJson[key1][key2][0].pri__cod = pedido.pri__cod;
+    objJson[key1][key2][0].ord__nump = pedido.ord__nump;
+    objJson[key1][key3][0].pltermina =true;
+    
+    try{
+        $.ajax({
+            type: verbo,
+            data: JSON.stringify(objJson),
+            url: url,
+            dataType : "json",
+            contentType: "application/json;",
+            success: function (e) {                 
+                var key1 = Object.keys(e)[0];
+                if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                    return e[key1][mapData];
+                } else {
+                    alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                }
+            },
+            error: function (e) {
+                alertDialogs(" Error al consumir el servicio "+ e.status +" - "+ e.statusText);                
+            }
+        }).done(function(e){            
+            var key1 = Object.keys(objJson)[0];
+            var key2 = Object.keys(objJson[key1])[1]; 
+            var pedido = e[key1][key2][0]; 
+            
+            var objFiltroPedidos = new sirConsultaPedidos();
+            var jsonFiltroPedidos = objFiltroPedidos.getjson();
+            var urlFiltroPedidos = objFiltroPedidos.getUrlSir();
+            var mapDataFiltroPedidos = objFiltroPedidos.getMapData();
+            
+            var key1 = Object.keys(jsonFiltroPedidos)[0];
+            var key2 = Object.keys(jsonFiltroPedidos[key1])[1];
+            jsonFiltroPedidos[key1][key2][0].pidped_fec = pedido.ped__fec;
+            jsonFiltroPedidos[key1][key2][0].piiped_num = pedido.ped__num;
+            jsonFiltroPedidos[key1][key2][0].picsuc_cod = pedido.suc__cod;
+            console.log(JSON.stringify(jsonFiltroPedidos));
+            try{                
+                $.ajax({
+                    type: "POST",
+                    data: JSON.stringify(jsonFiltroPedidos),
+                    url: urlFiltroPedidos,
+                    dataType : "json",
+                    contentType: "application/json;",
+                    success: function (e) {                        
+                        if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                            return e[key1][mapDataFiltroPedidos];
+                        } else {
+                            alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                        }
+                    },
+                    error: function (e) {
+                        alertDialogs(" Error al consumir el servicio 733"+ e.status +" - "+ e.statusText);                
+                    }
+                }).done(function(e){
+                    var pedido = e[key1][mapDataFiltroPedidos][0];
+                    sessionStorage.setItem("regPedidos", JSON.stringify(pedido));                                         
+                    parent.closePopUpCabecera();
+                });
+            }catch (e) {
+                alertDialogs("Function: consumeServAjaxSIR Error: 740 " + e.message);
+            }
+        });
+    } catch (e) {
+        alertDialogs("Function: consumeServAjaxSIR Error: " + e.message);
     }
 }
