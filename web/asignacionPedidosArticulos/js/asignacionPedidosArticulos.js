@@ -231,7 +231,7 @@ function gridAsignacionPedidos(){
             {field: "cla__apl__inv", title: "Maneja inventario"},
             {field: "art__cant", title: "Cantidad en inventario"},
             {command:[
-                    {id: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},                    
+                    {name: "editar", click: editarItem, template: "<a class='k-grid-editar'><span class='k-sprite po_checkCreate'></span></a>"},
                 ],
                 width: "50px"
             }
@@ -243,22 +243,41 @@ function gridAsignacionPedidos(){
                 animation: false,
                 width: 600
             }
-        },
-        //        rowTemplate: kendo.template($("#rowTemplateCmp").html()),
-        //        altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
+        }
     });
+    
+    
+    function editarItem(e){
+        debugger
+        e.preventDefault();
+        
+        var grid = $("#gridAsignacionPedidos").data("kendoGrid");
+        itemID = grid.dataItem(grid.select());
+        
+        var widthPopUp = $("body").width();
+        widthPopUp = widthPopUp * (60/100);
+        var heightPopUp = $("body").height();
+        heightPopUp = heightPopUp * (80/100);
+        
+        $("body").append("<div id='windowItemFac'></div>");
+        var myWindow = $("#windowItemFac");        
+        var undo = $("#undo");
+        
+        function onCloseWindowItemFacEdit() {
+            
+            document.getElementById("windowItemFac").remove();            
+            undo.fadeIn();  
+        }
+        
+    }
+    
+    
     
     function detailInit(e) {
         var dataSource = e.data.eegpd_ped_det    
         $("<div/>").appendTo(e.detailCell).kendoGrid({
             dataSource: dataSource,
             scrollable: false,
-            //            group: {
-            //                field: "ped__pend", aggregates: [                    
-            //                    { field: "pendientes", aggregate: "sum"},                    
-            //                ]
-            //            },
-            //            aggregate: [ { field: "pendientes", aggregate: "sum" }],
             columns: [
                 {field: "ped__num", title: "Número de Pedido", hidden: true },
                 {field: "cla__des", title: "Clase articulo"},
@@ -267,12 +286,9 @@ function gridAsignacionPedidos(){
                 {field: "ped__pend", title: "Pendiente", footerTemplate:  conditionalSum },
                 {field: "ped__aasi", title: "Asignados", hidden: true},
                 {field: "ped__fec", title: "fecha"},
-                //            {command:[
-                //                    {id: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},                    
-                //                ],
-                //                width: "50px"}
             ]
         });
+        
         function conditionalSum() { 
             var item, sum = 0;
             for (var idx = 0; idx < dataSource.length; idx++) {
