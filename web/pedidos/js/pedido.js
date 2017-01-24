@@ -236,7 +236,8 @@ function gridDetallePedido(){
         
         function onCloseWindowItemFacEdit() {
             
-            document.getElementById("windowItemPedido").remove();            
+            document.getElementById("windowItemPedido").remove(); 
+            itemPedido = null
             undo.fadeIn();  
         }
         
