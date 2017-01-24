@@ -59,7 +59,7 @@ and open the template in the editor.
             <span class="title" id ="#: ped__can__k #">#: ped__can__k # </span>
             </td>
             <td>
-            <a  class='k-grid-check'><span title='check' id = "spanproceso#: ped__num##: art__des##: ped__can__k#" class='k-sprite po_checkCreate'></span></a> 
+            <a  class='k-grid-check'><span id ="#=ID#" onclick = "changeEst(#=ID#)"title='check'  class = "k-sprite #try{if(checkIn){#po_checkAct#}else{#po_checkCreate#}}catch(e){#po_checkCreate#}#" ></span></a>
             <a  class='k-grid-edit'><span title='' id = "spanproceso#: ped__num#" class='k-sprite po_editoff'></span></a>
             <a  class='k-grid-deletae'><span title='' id = "spantarea#: ped__num#" class='k-sprite po_cerrar'></span></a>
                    
@@ -83,7 +83,7 @@ and open the template in the editor.
             <span class="title" id ="#: ped__can__k #">#: ped__can__k # </span>
             </td>
             <td>
-            <a  class='k-grid-check'><span title='check' id = "spanproceso#: ped__num##: art__des##: ped__can__k#" class='k-sprite po_checkCreate'></span></a> 
+            <a  class='k-grid-check'><span id ="#=ID#" onclick = "changeEst(#=ID#)" title='check'  class = "k-sprite #try{if(checkIn){#po_checkAct#}else{#po_checkCreate#}}catch(e){#po_checkCreate#}#" ></span></a>
             <a  class='k-grid-edit'><span title='' id = "spanproceso#: ped__num#" class='k-sprite po_editoff'></span></a>
             <a  class='k-grid-deletae'><span title='' id = "spantarea#: ped__num#" class='k-sprite po_cerrar'></span></a>
                    
@@ -105,7 +105,7 @@ and open the template in the editor.
                     </div>
                     <div class="collapse navbar-collapse" id="myNavbar" style="text-align: left">
                         <ul class="nav navbar-nav">    
-                            <input id="fltrEst" style="width: 250px" required/>
+                            
                         </ul>
                     </div>
                 </td>
@@ -134,13 +134,13 @@ and open the template in the editor.
                             <td style="text-align: left"><label>Camion:</label></td>
                         </tr>
                         <tr>
-                            <td>  <input id = "Camion"/></td>
+                            <td>  <input id = "Camion" class = "k-textbox"/></td>
                         </tr>
                         <tr>
                             <td style="text-align: left"><label>Transportista</label></td>
                         </tr>
                         <tr>
-                            <td><input id = "Transportista"/> </td>
+                            <td><input id = "Transportista" class = "k-textbox"/> </td>
                         </tr>
                         <tr>
                             <td style="text-align: left"><label>Ruta</label></td>

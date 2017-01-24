@@ -172,9 +172,24 @@ function grilla(obj) {
                 e.model.ciu__nom1 = e.model.ciu__cod1
                 e.model.bar__dsc2 = e.model.bar__cod2
                 e.model.ciu__nom2 = e.model.ciu__cod2
+
+                var json = changeInputSIRgpd_bar(e.model.ciu__nom1);
+                var obj = new listabar__dsc(json);
+                var dataSource = obj.getdataSource();
+                $("#idbar__dsc1").data("kendoDropDownList").setDataSource(dataSource);
+                $("#idbar__dsc1").data("kendoDropDownList").enable(true);
+                $("#idbar__dsc1").data("kendoDropDownList").value(e.model.bar__dsc1);
+                
+                var json = changeInputSIRgpd_bar(e.model.ciu__nom2);
+                var obj = new listabar__dsc(json);
+                var dataSource = obj.getdataSource();
+                $("#idbar__dsc2").data("kendoDropDownList").setDataSource(dataSource);
+                $("#idbar__dsc2").data("kendoDropDownList").enable(true);
+                $("#idbar__dsc2").data("kendoDropDownList").value(e.model.bar__dsc2);
+
                 //e.container.find("input[name=ter__raz]")[0].readOnly="true"
                 if (e.model[est] != 99) {
-                    
+
                     kendo.ui.progress($('.k-edit-form-container'), true);
                     kendo.ui.progress($('.k-edit-buttons'), true);
                     e.container.find(".k-loading-image").css("background-image", "url('')");
@@ -725,7 +740,7 @@ function changeInputSIRgpd_bar(city) {
                     "picciu__cod": city,
                     "piibar__cod": 0,
                     "picbar__dsc": "*",
-                    "picbar__est": 99
+                    "picbar__est": 0
                 }]
         }
     };
