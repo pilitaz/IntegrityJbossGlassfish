@@ -158,7 +158,7 @@ function SIRgpd_bar() {
                     "picciu__cod": "*",
                     "piibar__cod": 0,
                     "picbar__dsc": "*",
-                    "picbar__est": 99
+                    "picbar__est": 0
                 }]
         }
     };

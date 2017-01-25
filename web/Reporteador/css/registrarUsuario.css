@@ -1,0 +1,101 @@
+#fieldlist {
+    margin: 0 0 -2em;
+    padding: 0;
+}
+
+#fieldlist li {
+    list-style: none;
+    padding-bottom: 2em;
+}
+
+#fieldlist label {
+    display: block;
+    padding-bottom: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #444;
+}
+
+#fieldlist input {
+
+    width: 201px;
+
+}
+
+
+.k-primary {
+    min-width: 150px;
+}
+li.k-button {
+    line-height: 65px;
+    text-align: center;
+    min-height: 56px;
+}
+#grid {
+  height:100%;
+}
+
+#outerWrapper{
+  background-color: #FFFFFF;
+  position:relative;
+  min-height:470px;
+}
+.k-grid td {
+    white-space: nowrap;
+    overflow: hidden;
+}
+ 
+.k-grid table {
+    table-layout: fixed;
+}
+.k-pager-wrap {
+  position:absolute;    
+  bottom:0;
+  width:100%;
+}
+.GridNoHeader thead.k-grid-header
+{
+    height: 0;
+    border-bottom-width: 0;
+    visibility: hidden;
+    overflow: hidden;
+}
+.GridNoHeader th.k-header
+{
+	padding: 0;
+	border-width: 0;
+}
+
+/*#grid tbody tr:hover {
+    background: transparent;
+}
+.k-grid table tr.k-state-selected{
+    ackground: #EF9F27 
+}*/
+.k-grid tr:hover {
+  background: transparent;
+}
+.k-grid tr:not(.k-state-selected):hover {
+      color: #EF9F27;
+  }
+
+  .k-grid tr.k-alt:not(.k-state-selected):hover {
+      background: #f1f1f1;
+  }
+  .sidenavSup {
+    border-style: solid;
+    border-color: #EF9F27 #fff  #fff  #fff;
+}
+body{
+    margin-top: 0px; 
+    margin-bottom: 0px; 
+    margin-left: 0px; 
+    margin-right: 0px;
+    padding: 0;
+    font-size: 14px; 
+    font-family: "Verdana"; 
+    color:"#E6E6FA";
+    overflow-y:hidden;
+    width:100%;
+}

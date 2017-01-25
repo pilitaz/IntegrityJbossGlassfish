@@ -477,7 +477,7 @@ function sirCamiones() {
    "piicam_cod": 0,
    "piccam_pla": "*",
    "piicam_est": -1,
-   "pidcam-cap": 0
+   "pidcam_cap": 0
   }]
  }
 };

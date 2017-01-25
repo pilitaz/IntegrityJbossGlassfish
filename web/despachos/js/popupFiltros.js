@@ -1,5 +1,5 @@
    $(document).ready(function () {debugger
-       
+    document.getElementById("Establecimiento").readOnly = true;   
     $("#btAgregar").kendoButton({
         click: guardar
     });
@@ -49,8 +49,9 @@ function sucursal(e) {debugger
        datajson.dsSIRgpd_cli_suc.SIRgpd_cli_suc[0].picciu__cod= e.dataItem.ciu__cod;
         var urlService = consultar.getUrlSir();
         var mapCud1 = "eegpd_cli_suc";
-        $("#Establecimiento")
-                .kendoComboBox({
+        document.getElementById("Establecimiento").readOnly = false;   
+        $("#Establecimiento").removeClass();
+        $("#Establecimiento").kendoComboBox({
             dataTextField: "com__con",
             dataValueField: "com__con",
             select: function(e) {                
@@ -153,6 +154,7 @@ function sucursal(e) {debugger
             select: function(e) {                
               sucursal(e);
             },
+            height: 100,
             dataSource: {
                 transport: {
                     read: {

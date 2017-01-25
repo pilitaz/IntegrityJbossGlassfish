@@ -88,8 +88,8 @@ function login() {
                 actions[0].primary = "true";
                 actions[0].action = "IntentarNuevamente";
 
-                createDialog("Problemas con el inicio sesión", permitirIngreso, "400px", "auto", true, false, actions);
-
+//                createDialog("Problemas con el inicio sesión", permitirIngreso, "400px", "auto", true, false, actions);
+alertDialogs("Problemas con el inicio sesión", permitirIngreso);
                 var buttonObject = $("#btnLogin").kendoButton().data("kendoButton");
                 buttonObject.enable(true);
             }
@@ -122,8 +122,9 @@ function presionaEnter() {
         e = e || window.event;
         var target = e.keyCode;
         if (target == 13) {
-            login();
-            document.getElementById("btnLogin").click();
+            if(bandAlert<1){
+               document.getElementById("btnLogin").click(); 
+            }
         }
     }, false);
 }

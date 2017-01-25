@@ -101,7 +101,8 @@ function SICUDgpd_ped_apro() {
                                     "ter__dir": "",
                                     "ter__nit": "",
                                     "ter__tel": "",
-                                    "ven__cod": 0
+                                    "ven__cod": 0,
+                                    "obs__apr": ""
                             }]
                     }
             };
@@ -165,6 +166,144 @@ function SIRcon_anf_cli() {
                         }
                 };
 
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
+};
+
+/**
+ * Funcion para obtener la url y el json de entrada para llos conceptos de anulación de pedido
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function sirgpd_anu() {
+    var mapData = "eegpd_anu";
+    var urlSir = ipServicios + baseComercial + "SIRgpd_anu";
+    var json = 
+            {  
+                "dsSIRgpd_anu":{  
+                   "eeDatos":[  
+                      {  
+                        "picusrcod": sessionStorage.getItem("usuario"),
+                        "picfiid": sessionStorage.getItem("picfiid"),
+                        "local_ip":sessionStorage.getItem("ipPrivada"),
+                        "remote_ip":sessionStorage.getItem("ipPublica")
+                      }
+                   ],
+                   "SIRgpd_anu":[  
+                        {  
+                            "picusuario": sessionStorage.getItem("usuario"),
+                            "piianu__cod": 0,
+                            "piigpd__est" : 0,
+                            "picanu__des":"*",
+                        }
+                    ]  
+                }
+            };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
+};
+
+/**
+ * Funcion para obtener la url y el json de entrada para el guardar la cabecera del pedido de pedidos
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function SICUDPedido() {
+    var mapData = "eegpd_ped";
+    var urlSir = ipServicios + baseComercial + "SICUDgpd_ped";
+    var json = 
+            {
+                    "dsSICUDgpd_ped": {
+                            "eeDatos": [{
+                                    "picusrcod": sessionStorage.getItem("usuario"),
+                                    "picfiid": sessionStorage.getItem("picfiid"),
+                                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                                    "remote_ip":sessionStorage.getItem("ipPublica")
+                            }],
+                            "eegpd_ped": [{ 
+                                    "gpd__est":0,
+                                    "ciu__cod": "",
+                                    "com__con": "",
+                                    "dpc__par": "false",
+                                    "clc__cod": "",
+                                    "mnd__cla": "",
+                                    "pago__cod": "",
+                                    "ped__fec": "",
+                                    "ped__fec__ent": "",
+                                    "ped__num": "",
+                                    "obs__ped": "",
+                                    "ped__pqs": "",
+                                    "suc__cod": "",
+                                    "ter__dir": "",
+                                    "ter__nit": "",
+                                    "ter__tel": "",
+                                    "ven__cod": "",  
+                                    "anu__cod": 0,
+                                    "obs__anu": "",
+                                    "obs__apr": "",
+                            }],
+                            "eeSICUDgpd_ped": [{
+                                    "pltermina":false,
+                            }]
+                    }
+            };
     this.setUrlSir = function (newname) {
         if (newname) {
             urlSir = newname;

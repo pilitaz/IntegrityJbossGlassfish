@@ -30,7 +30,8 @@ function sirConsultaPedidos() {
                     "picsuc_cod": "*",                    
                     "pidped_fec": "?",
                     "piiped_num": 0,
-                    "piiped_est": -1
+                    "piiped_est": -1,
+                    "pilhastapr": false
                 }
             ]
         }
@@ -445,7 +446,10 @@ function SICUDPedido() {
                                     "ter__dir": "",
                                     "ter__nit": "",
                                     "ter__tel": "",
-                                    "ven__cod": "",                                    
+                                    "ven__cod": "",  
+                                    "anu__cod": 0,
+                                    "obs__anu": "",
+                                    "obs__apr": "",
                             }],
                             "eeSICUDgpd_ped": [{
                                     "pltermina":false,
@@ -836,4 +840,66 @@ function sirPrioridades() {
         return mapData;
     };
     
+};
+
+/**
+ * Funcion para obtener la url y el json de entrada para llos conceptos de anulación de pedido
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function sirgpd_anu() {
+    var mapData = "eegpd_anu";
+    var urlSir = ipServicios + baseComercial + "SIRgpd_anu";
+    var json = 
+            {  
+                "dsSIRgpd_anu":{  
+                   "eeDatos":[  
+                      {  
+                        "picusrcod": sessionStorage.getItem("usuario"),
+                        "picfiid": sessionStorage.getItem("picfiid"),
+                        "local_ip":sessionStorage.getItem("ipPrivada"),
+                        "remote_ip":sessionStorage.getItem("ipPublica")
+                      }
+                   ],
+                   "SIRgpd_anu":[  
+                        {  
+                            "picusuario": sessionStorage.getItem("usuario"),
+                            "piianu__cod": 0,
+                            "piigpd__est" : 0,
+                            "picanu__des":"*",
+                        }
+                    ]  
+                }
+            };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+
 };

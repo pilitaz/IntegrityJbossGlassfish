@@ -96,6 +96,7 @@ function aprobarPedido(){
     objJson[key1][key2][0].ter__nit = pedido.ter__nit;
     objJson[key1][key2][0].ter__tel = pedido.ter__tel;
     objJson[key1][key2][0].ven__cod = pedido.ven__cod;    
+    objJson[key1][key2][0].obs_apr = $("#idObservaciones"); 
     
     try{
         $.ajax({
@@ -123,6 +124,44 @@ function aprobarPedido(){
     }  
 }
 
+function clickEliminar(e) {
+    try {
+        var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
+        e.preventDefault();
+        var dataItem = $("#gridPedidos").data("kendoGrid").dataItem($(e.target).closest("tr"));
+        
+        var widthPopUp = $("body").width();
+        widthPopUp = widthPopUp * (30 / 100);
+        var heightPopUp = $("body").height();
+        heightPopUp = heightPopUp * (30 / 100);
+        
+        $("body").append("<div id='windowPedidoCabecera'></div>");
+        var myWindow = $("#windowPedidoCabecera");
+        var undo = $("#undo");
+        
+        function onCloseWindowCabPedido() {
+            document.getElementById("windowPedidoCabecera").remove();
+            undo.fadeIn();
+        }
+        
+        myWindow.kendoWindow({
+            width: widthPopUp,
+            height: heightPopUp,
+            title: "Crear",
+            content: sessionStorage.getItem("url") + "/pedidos/html/popupAnular.html",
+            visible: false,
+            modal: true,
+            actions: [
+                "Close"
+            ],
+            close: onCloseWindowCabPedido
+        }).data("kendoWindow").center().open();
+
+
+    } catch (e) {
+       
+    }
+}
 
 function btnCancelar(){
    parent.closePopUpAprobacionPedido();
