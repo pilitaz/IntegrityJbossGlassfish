@@ -3,31 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-$(window).resize(function () {
-    var viewportHeight = $(window).height();
-    $('#outerWrapper').height(viewportHeight - 100);
-
-});
-
-
-/**
- * FUNCION crear usuario nuevo
- * grid1 variable almacena data de grid
- *  
- *   
- *  
- *  
- */ function addRow() {
-    
-
-    //var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
+$(window).resize(
+        function () {
+            var viewportHeight = $(window).height();
+            $('#outerWrapper').height(viewportHeight - 100);
+        });
+$(document).ready(
+        function () {
+            localStorage["grid_data"] = "";
+            $("#botton").kendoButton({
+                //click: Filtrar
+            });
+            var windowTemplate = kendo.template($("#windowTemplate").html());
+            var window = $("#window1").kendoWindow({
+                title: "Eliminar",
+                visible: false, //the window will not appear before its .open method is called
+            }).data("kendoWindow");
+            addRow();
+            ruta();
+        });
+        
+        
+function addRow() {
     $("#textarea").append("<div id='windowform'></div>");
     var myWindow1 = $("#windowform"), undo = $("#undo");
 
     function onClose() {
         undo.fadeIn();
         $("#windowform").empty();
-
     }
     var UrL = sessionStorage.getItem("url");
     myWindow1.kendoWindow({
@@ -41,93 +44,24 @@ $(window).resize(function () {
         actions: [
             "Close"
         ],
-        close: function () {
-
-            $("#textarea").empty();
-            this.destroy();
-        }
+        close:
+                function () {
+                    $("#textarea").empty();
+                    this.destroy();
+                }
     }).data("kendoWindow").center().open();
-
-
 }
+
 function editar_rol() {
-    
-
-
     var grid1 = $("#grid").data("kendoGrid");
-
-    //                        var row = grid1.dataItem(grid1.select());
-    //                        sessionStorage.setItem("Idrol",row.car__cod);
-    //                         sessionStorage.setItem("Rolname",row.car__nom);
     window.location = ("tareas.html");
 }
 
-
-
-
-
-
 function filtrar(establecimiento, ciudad, region) {
-    
     var e = -1;
     grilla(e);
     cerrar();
-
 }
-/**
- * FUNCION CRUD
- *  VAR mapCud =  variable gestion de funcion squema 
- *  VAR key1 = variable gestion de estado de respuesta de servicio 
- *  var cclave1 y  var cclave1 almacenan valor de campos contraseña y validacion de contgraseña
- *  var  consultar obtiene funcion Sir para consultar
- *  var datajson contiene el json para enviar al servicio de consulta
- *  var urlService contiene url del servicio read 
- *  var  actualizar obtiene funcion create / update
- *  var  actjson : json para enviar al servicio de actualizar / crear
- *  var urlactualizar: url de servicio para actualizar / crear 
- *  
- */
-$(document).ready(function () {
-    localStorage["grid_data"] =""; 
-    $("#botton").kendoButton({
-        //click: Filtrar
-    });
-    
-
-    var windowTemplate = kendo.template($("#windowTemplate").html());
-
-    var window = $("#window1").kendoWindow({
-        title: "Eliminar",
-        visible: false, //the window will not appear before its .open method is called
-
-    }).data("kendoWindow");
-    /**
-     *  FUNCION CREAR GRILLA
-     * Funcion cancel se ejecuta con el evento OnClick de EDIT grid
-     *  cancel: function(e) {                                              
-     e._defaultPrevented= true;
-     $('#grid').data('kendoGrid').refresh();                                             
-     $('#grid').data('kendoGrid').dataSource.read();
-     $('#grid').data('kendoGrid').refresh(); `}                                                                                       
-     
-     *  
-     *  
-     */
-    //    var gridheigth = $("body").height();
-    //    gridheigth = gridheigth*0.008 + gridheigth;
-
-    addRow();
-    //camion();
-    //ruta();
-    //transportista();
-    //grilla();
-
-
-
-
-    ruta();
-
-});
 
 
 function camion() {
@@ -138,58 +72,53 @@ function camion() {
     var urlService = consultar.getUrlSir();
     var mapCud1 = "eedpc_cam";
     $("#Camion").removeClass();
-    $("#Camion")
-            .kendoComboBox({
-                dataTextField: "cam__des",
-                dataValueField: "cam__cod",
-                template: '<div class="divElementDropDownList">#: data.cam__des #' + ' - ' + ' #:data.cam__vers #</div>',
-                select: function (e) {
-                    transportista(e);
+    $("#Camion").kendoComboBox({
+        dataTextField: "cam__des",
+        dataValueField: "cam__cod",
+        template: '<div class="divElementDropDownList">#: data.cam__des #' + ' - ' + ' #:data.cam__vers #</div>',
+        select: function (e) {
+            transportista(e);
+        },
+        dataSource: {
+            transport: {
+                read: {
+                    url: urlService,
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8"
                 },
-                dataSource: {
-                    transport: {
-                        read: {
-                            url: urlService,
-                            dataType: "json",
-                            type: "POST",
-                            contentType: "application/json; charset=utf-8"
-                        },
-                        parameterMap: function (options, operation) {
-                            if (operation === "read") {
-                                return JSON.stringify(datajson);
-                            }
-                        }
-                    },
-                    schema: {
-                        data: function (e) {
-                            
-                            var key1 = Object.keys(e)[0];
-                            if (e[key1].eeEstados[0].Estado === "OK") {
-                                return e[key1][mapCud1];
-                            } else {
-                                alertDialogs("Error Con Servicio Camiones" + e[key1].eeEstados[0].Estado);
-                            }
-                        },
-                        model: {
-                            id: "cam__cod",
-                            fields: {
-                                cam__cod: {editable: false, nullable: false},
-                                cam__des: {editable: false, nullable: false},
-                                cam__vers: {editable: false, nullable: false},
-                                cam__pla: {editable: false, nullable: false},
-                            }
-                        }
+                parameterMap: function (options, operation) {
+                    if (operation === "read") {
+                        return JSON.stringify(datajson);
                     }
                 }
-
-            });
+            },
+            schema: {
+                data: function (e) {
+                    var key1 = Object.keys(e)[0];
+                    if (e[key1].eeEstados[0].Estado === "OK") {
+                        return e[key1][mapCud1];
+                    } else {
+                        alertDialogs("Error Con Servicio Camiones" + e[key1].eeEstados[0].Estado);
+                    }
+                },
+                model: {
+                    id: "cam__cod",
+                    fields: {
+                        cam__cod: {editable: false, nullable: false},
+                        cam__des: {editable: false, nullable: false},
+                        cam__vers: {editable: false, nullable: false},
+                        cam__pla: {editable: false, nullable: false},
+                    }
+                }
+            }
+        }
+    });
 }
+
 function ruta() {
-    
     var consultar = new sirRuta();
     var datajson = consultar.getjson();
-    //datajson.dsSIRgpd_cli_suc.SIRgpd_cli_suc[0].piirgeo__cod = parseInt($("#Region").data("kendoDropDownList")._old);
-    //datajson.dsSIRgpd_cli_suc.SIRgpd_cli_suc[0].picciu__cod= $("#Ciudad").data("kendoComboBox")._old;
     var urlService = consultar.getUrlSir();
     var mapCud1 = "eedpc_rut";
     $("#Ruta")
@@ -198,7 +127,6 @@ function ruta() {
                 dataValueField: "rut__cod",
                 template: '<div class="divElementDropDownList">Desde:#: data.bar__dsc1 #' + ' Hasta: ' + ' #:data.bar__dsc2 #</div>',
                 select: function (e) {
-
                 },
                 dataSource: {
                     transport: {
@@ -216,7 +144,6 @@ function ruta() {
                     },
                     schema: {
                         data: function (e) {
-                            
                             var key1 = Object.keys(e)[0];
                             if (e[key1].eeEstados[0].Estado === "OK") {
                                 return e[key1][mapCud1];
@@ -235,12 +162,11 @@ function ruta() {
                         }
                     }
                 }
-
             });
 }
-function transportista(e) {
-    
 
+function transportista(e) {
+    $("#Transportista").removeClass();
     var consultar = new sirTransportista();
     var datajson = consultar.getjson();
     datajson.dsSIRdpc_tra.eeSIRdpc_tra[0].piicam_cod = parseInt(e.dataItem.cam__cod);
@@ -252,9 +178,9 @@ function transportista(e) {
                 dataTextField: "ter__raz",
                 dataValueField: "ter__nit",
                 template: '<div class="divElementDropDownList">#: data.ter__raz #' + ' - ' + ' #:data.cam__des #</div>',
-                select: function (e) {
-
-                },
+                select:
+                        function (e) {
+                        },
                 dataSource: {
                     transport: {
                         read: {
@@ -263,22 +189,23 @@ function transportista(e) {
                             type: "POST",
                             contentType: "application/json; charset=utf-8"
                         },
-                        parameterMap: function (options, operation) {
-                            if (operation === "read") {
-                                return JSON.stringify(datajson);
-                            }
-                        }
+                        parameterMap:
+                                function (options, operation) {
+                                    if (operation === "read") {
+                                        return JSON.stringify(datajson);
+                                    }
+                                }
                     },
                     schema: {
-                        data: function (e) {
-                            
-                            var key1 = Object.keys(e)[0];
-                            if (e[key1].eeEstados[0].Estado === "OK") {
-                                return e[key1][mapCud1];
-                            } else {
-                                alertDialogs("Error Con Servicio Transportista" + e[key1].eeEstados[0].Estado);
-                            }
-                        },
+                        data:
+                                function (e) {
+                                    var key1 = Object.keys(e)[0];
+                                    if (e[key1].eeEstados[0].Estado === "OK") {
+                                        return e[key1][mapCud1];
+                                    } else {
+                                        alertDialogs("Error Con Servicio Transportista" + e[key1].eeEstados[0].Estado);
+                                    }
+                                },
                         model: {
                             id: "ter__nit",
                             fields: {
@@ -290,14 +217,10 @@ function transportista(e) {
                         }
                     }
                 }
-
             });
 }
 
-
-
 function grilla(obj, dataSource1) {
-    
     var consultar = new Sirdespacho();
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();
@@ -305,7 +228,6 @@ function grilla(obj, dataSource1) {
     var actualizar = new sirDespacho();
     var actjson = actualizar.getjson();
     var urlactualizar = actualizar.getUrlSir();
-
     var mapCud = "eegpd_ped_det";
     dataSource = new kendo.data.DataSource({
         transport: {
@@ -315,88 +237,81 @@ function grilla(obj, dataSource1) {
                 type: "POST",
                 contentType: "application/json; charset=utf-8"
             },
-            update: function (options) {
-                var localData = JSON.parse(localStorage["grid_data"]);
-                for (var i = 0; i < localData.length; i++) {
-                    if (localData[i].ID == options.data.ID) {
-                        localData[i].Value = options.data.Value;
+            update:
+                    function (options) {
+                        var localData = JSON.parse(localStorage["grid_data"]);
+                        for (var i = 0; i < localData.length; i++) {
+                            if (localData[i].ID == options.data.ID) {
+                                localData[i].Value = options.data.Value;
+                            }
+                        }
+                        localStorage["grid_data"] = JSON.stringify(localData);
+                        options.success(options.data);
+                    },
+            destroy:
+                    function (options) {
+                        var localData = JSON.parse(localStorage["grid_data"]);
+                        for (var i = 0; i < localData.length; i++) {
+                            if (localData[i].ID === options.data.ID) {
+                                localData.splice(i, 1);
+                                break;
+                            }
+                        }
+                        localStorage["grid_data"] = JSON.stringify(localData);
+                        options.success(localData);
+                    },
+            parameterMap:
+                    function (options, operation) {
+                        if (operation === "read") {
+                            return JSON.stringify(datajson);
+                        }
+                        if (operation === "update") {
+                            var cedula = $("#cedula")[0].value;
+                            var nombre = $("#nombre")[0].value;
+                            var region = $("#region").data("kendoDropDownList");
+                            var select = region.selectedIndex;
+                            region = region.dataSource._data[select].rgeo__cod;
+                            actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod = region;
+                            actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod = options.sre__cod;
+                            actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__est = options.sre__est;
+                            actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__nit = cedula;
+                            actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__nom = options.rgeo__nom;
+                            actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__raz = nombre;
+                            return JSON.stringify(actjson);
+                            $('#grid').data('kendoGrid').refresh();
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh();
+                        }
                     }
-                }
-                localStorage["grid_data"] = JSON.stringify(localData);
-                options.success(options.data);
-            },
-            destroy: function (options) {
-                var localData = JSON.parse(localStorage["grid_data"]);
-                for (var i = 0; i < localData.length; i++) {
-                    if (localData[i].ID === options.data.ID) {
-                        localData.splice(i, 1);
-                        break;
-                    }
-                }
-                localStorage["grid_data"] = JSON.stringify(localData);
-                options.success(localData);
-            },
-            parameterMap: function (options, operation) {
-                if (operation === "read") {
-                    return JSON.stringify(datajson);
-                }
-                if (operation === "update") {
-                    
-                    var cedula = $("#cedula")[0].value;
-                    var nombre = $("#nombre")[0].value;
-                    var region = $("#region").data("kendoDropDownList");
-                    var select = region.selectedIndex;
-                    region = region.dataSource._data[select].rgeo__cod;
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__cod = region;
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__cod = options.sre__cod;
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].sre__est = options.sre__est;
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__nit = cedula;
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].rgeo__nom = options.rgeo__nom;
-                    actjson.dsSICUDgpd_sre.eegpd_sre[0].ter__raz = nombre;
-                    return JSON.stringify(actjson);
-                    $('#grid').data('kendoGrid').refresh();
-                    $('#grid').data('kendoGrid').dataSource.read();
-                    $('#grid').data('kendoGrid').refresh();
-
-                }
-
-
-            }
-
         },
         batch: false,
         severFiltering: true,
         schema: {
-            data: function (e) {
-                if ((localStorage["grid_data"] === "") || (!localStorage["grid_data"])) {
-
-                    var key1 = Object.keys(e)[0];
-                    
-                    if (e[key1].eeEstados) {
-                        if (e[key1].eeEstados[0].Estado === "OK") {
-                            if ((localStorage["grid_data"] === "") || (!localStorage["grid_data"])) {
-//                                var testData = e[key1][mapCud];
-//                                localStorage["grid_data"] = JSON.stringify(testData);
-                                for (var i = 0; i < e[key1]["eegpd_ped_det"].length; i++) {
-                                    e[key1]["eegpd_ped_det"][i].ID = i;
-                                    e[key1]["eegpd_ped_det"][i].checkIn = false;
+            data:
+                    function (e) {
+                        if ((localStorage["grid_data"] === "") || (!localStorage["grid_data"])) {
+                            var key1 = Object.keys(e)[0];
+                            if (e[key1].eeEstados) {
+                                if (e[key1].eeEstados[0].Estado === "OK") {
+                                    if ((localStorage["grid_data"] === "") || (!localStorage["grid_data"])) {
+                                        for (var i = 0; i < e[key1]["eegpd_ped_det"].length; i++) {
+                                            e[key1]["eegpd_ped_det"][i].ID = i;
+                                            e[key1]["eegpd_ped_det"][i].checkIn = false;
+                                        }
+                                        localStorage["grid_data"] = JSON.stringify(e[key1][mapCud]);
+                                        return e[key1][mapCud];
+                                    } else {
+                                        return JSON.parse(localStorage["grid_data"]);
+                                    }
+                                } else
+                                {
+                                    alertDialogs("Error" + e[key1].eeEstados[0].Estado);
                                 }
-                                localStorage["grid_data"] = JSON.stringify(e[key1][mapCud]);
-                                return e[key1][mapCud];
-                            } else {
-                                return JSON.parse(localStorage["grid_data"]);
                             }
-
-                        } else
-                        {
-                            alertDialogs("Error" + e[key1].eeEstados[0].Estado);
-
+                        } else {
+                            return JSON.parse(localStorage["grid_data"]);
                         }
-                    }
-                } else {
-                    return JSON.parse(localStorage["grid_data"]);
-                }
-            },
+                    },
             model: {
                 id: "ped__num",
                 fields: {
@@ -424,38 +339,14 @@ function grilla(obj, dataSource1) {
             {field: "ped__pend", title: "Cantidad", hidden: false},
             {field: "ped__can__k", title: "Peso", hidden: false, footerTemplate: conditionalSum},
             {command: [
-                    {name: "check", text: "estado",  template: "<a class='k-grid-check'><span class='k-sprite po_editoff' ></span></a>"},
-                    {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff' ></span></a>"},
-                    {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar}], width: "140px"}],
+                    {name: "check", text: "estado", template: "<a class='k-grid-check'><span class='k-sprite po_editoff' ></span></a>"},
+                ], width: "60px"}],
         editable: "popup",
-//         edit: function(e) {
-//            if (!e.model.isNew()) {//caso en el que el popup es editar
-//                if(e.model.sre__est!= 99 ){
-//                    
-//                    
-//                   kendo.ui.progress($('.k-edit-form-container'), true);
-//                   kendo.ui.progress($('.k-edit-buttons'), true);
-//                   e.container.find(".k-loading-image").css("background-image", "url('')");
-//
-//            }else{
-//                $("#region").data("kendoDropDownList").enable(false);
-//            //e.container.find("span")[1].attr('disabled','disabled');
-//            //e.container.find("span[for='rgeo__nom']");
-//            
-//            }
-//            }
-//            else{//caso en el que el popup es crear 
-//               var buscarlabel = $("label").find("for");
-//                Buscarlabel = buscarlabel.prevObject[0];
-//                Buscarlabel.style.display = "none";
-//            }
-//        } ,
+//         
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
         altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
         dataBound: function (e) {
             camion();
-            //var results = dataSource.data();
-            //changImgFunc(results,e);
         },
         cancel: function (e) {
             e._defaultPrevented = true;
@@ -467,7 +358,6 @@ function grilla(obj, dataSource1) {
 }
 
 function clickEliminar(e) {
-    
     try {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
@@ -478,21 +368,19 @@ function clickEliminar(e) {
             var actions = new Array();
             actions[0] = new Object();
             actions[0].text = "OK";
-            actions[0].action = function () {
-
-
-                var dataSource = $("#grid").data("kendoGrid").dataSource;
-                dataSource.remove(dataItem);
-                dataSource.sync();
-                bandAlert = 0;
-
-
-            };
+            actions[0].action =
+                    function () {
+                        var dataSource = $("#grid").data("kendoGrid").dataSource;
+                        dataSource.remove(dataItem);
+                        dataSource.sync();
+                        bandAlert = 0;
+                    };
             actions[1] = new Object();
             actions[1].text = "Cancelar";
-            actions[1].action = function () {
-                bandAlert = 0;
-            };
+            actions[1].action =
+                    function () {
+                        bandAlert = 0;
+                    };
             createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.sre__cod + " ---?", "400px", "200px", true, true, actions);
         }
     } catch (e) {
@@ -500,15 +388,9 @@ function clickEliminar(e) {
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();
     }
-
 }
 
-
-
-
 function changImgFunc(results, e) {
-    
-
     for (var i = 0; i < results.length; i++) {
         if (document.getElementById("spanproceso" + results[i].rgeo__cod + results[i].ter__nit + results[i].sre__cod)) {
             if (results[i].sre__est == 0) {
@@ -521,54 +403,43 @@ function changImgFunc(results, e) {
             }
             if (results[i].sre__est == 1) {
                 document.getElementById("spanproceso" + results[i].rgeo__cod + results[i].ter__nit + results[i].sre__cod).setAttribute("class", "k-sprite po_checkBloq");
-
             }
         }
     }
-
 }
 
 function changeEst(e) {
     var idGrid = e;
     var localData = JSON.parse(localStorage["grid_data"]);
-    
-
-        for (var i = 0; i < localData.length; i++) {
-            if (localData[i].ID == e) {
-                if(localData[i].checkIn){
-                    localData[i].checkIn = false;
-                }else{
-                    localData[i].checkIn = true;
-                }
-                
+    for (var i = 0; i < localData.length; i++) {
+        if (localData[i].ID == e) {
+            if (localData[i].checkIn) {
+                localData[i].checkIn = false;
+            } else {
+                localData[i].checkIn = true;
             }
         }
-    
+    }
 //    $('#grid').data('kendoGrid')
-    var newDataSource =  new kendo.data.DataSource({
-      data:localData
-        });
+    var newDataSource = new kendo.data.DataSource({
+        data: localData
+    });
     $("#grid").data("kendoGrid").setDataSource(newDataSource);
     localStorage["grid_data"] = JSON.stringify(localData);
-    grilla("",newDataSource);
-
-
+    grilla("", newDataSource);
 }
+
 function cerrar() {
-    
     //onClosex();
     $("#windowform").data("kendoWindow").close();
-
-
 }
 
 function conditionalSum() {
     var data = dataSource.data();
     var item, sum = 0;
     for (var idx = 0; idx < data.length; idx++) {
-        
         item = data[idx];
-        if (item.checkIn ) {
+        if (item.checkIn) {
             sum += item.ped__can__k;
         }
     }
