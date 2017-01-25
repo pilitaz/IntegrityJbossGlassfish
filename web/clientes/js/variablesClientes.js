@@ -1332,7 +1332,7 @@ function cudClientes() {
                         "ter__lis":0,
                         "dia__pag":"",
                         "hor__pag":"",
-                        "ter__email":"",
+                        "email__ter":"",
                         "cli__est":0,
                         "loc__cod":0,
                         "ter__cret":true,

@@ -153,7 +153,7 @@ $(document).ready(function () {
     var  datajson = consultar.getjson();
     var  urlService = consultar.getUrlSir();
     datajson.dsSIRgpd_cli.SIRgpd_cli[0].piicli__est = e;                
-    var  actualizar = new CudVendedores();
+    var  actualizar = new cudClientes();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
 
@@ -190,38 +190,13 @@ $(document).ready(function () {
                     return JSON.stringify(datajson);
                 }
                 if (operation === "update") {debugger
-                    
-
-
                 }
-                if (operation === "create") {debugger
-                    var cedula = $("#nit")[0].value;
-                    var nombre = $("#nombre")[0].value;
-                    var cliente = $("#claseCliente").data("kendoDropDownList");
-                    var select = cliente.selectedIndex;
-                    cliente = cliente.dataSource._data[select].cla__cli;
-                    var cliente_nom = $("#claseCliente").data("kendoDropDownList").dataSource._data[select].cla__nom;
-                    actjson.dsSICUDgpd_vdd.eegpd_vdd[0].ter__nit=cedula;
-                    actjson.dsSICUDgpd_vdd.eegpd_vdd[0].ter__raz=nombre;
-                    actjson.dsSICUDgpd_vdd.eegpd_vdd[0].trr__cod=0;
-                    actjson.dsSICUDgpd_vdd.eegpd_vdd[0].cla__cli=cliente;
-                    actjson.dsSICUDgpd_vdd.eegpd_vdd[0].cla__nom=cliente_nom;
-                    actjson.dsSICUDgpd_vdd.eegpd_vdd[0].vdd__est=99;
-                    return JSON.stringify(actjson);          
-                                                        
+                if (operation === "create") {debugger  
                 }
                 if (operation === "destroy") {debugger 
-                    actjson.dsSICUDgpd_vdd.eegpd_vdd[0].vdd__cod=options.vdd__cod;
-                    actjson.dsSICUDgpd_vdd.eegpd_vdd[0].ter__nit=options.ter__nit;
-                    actjson.dsSICUDgpd_vdd.eegpd_vdd[0].ter__raz=options.ter__raz;
-                    actjson.dsSICUDgpd_vdd.eegpd_vdd[0].trr__cod=options.trr__cod;
-                    actjson.dsSICUDgpd_vdd.eegpd_vdd[0].cla__cli=options.cla__cli;
-                    actjson.dsSICUDgpd_vdd.eegpd_vdd[0].cla__nom=options.cla__nom;
-                    actjson.dsSICUDgpd_vdd.eegpd_vdd[0].vdd__est=options.vdd__est;
-                    return JSON.stringify(actjson);
-                                        
-                    
-                                        
+                    var key1 = Object.keys(actjson)[0];
+                    actjson[key1][mapCud] = [options];
+                    return JSON.stringify(actjson);               
                 }
                                     
             }
@@ -375,7 +350,7 @@ grilla(-1);
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
         var dataItem = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"));
-         if (dataItem.vdd__est!= 99){
+         if (dataItem.cli__est!= 99){
              alertDialogs("No se puede eliminar por el estado ");  
          }else{
         var actions = new Array();
@@ -383,7 +358,7 @@ grilla(-1);
         actions[0].text = "OK";
         actions[0].action = function () {
             
-              
+               
             var dataSource = $("#grid").data("kendoGrid").dataSource;
             dataSource.remove(dataItem);
             dataSource.sync();
@@ -396,7 +371,7 @@ grilla(-1);
         actions[1].action = function () {
             bandAlert = 0;
         };
-        createDialog("Atención", "Esta seguro de eliminar el Vendedor ---" + dataItem.vdd__cod + " ---?", "400px", "200px", true, true, actions);
+        createDialog("Atención", "Esta seguro de eliminar el Cliente ---" + dataItem.ter__raz + " ---?", "400px", "200px", true, true, actions);
          }
     } catch (e) {
         alert(e);

@@ -76,54 +76,49 @@ function gridDetalleVendedor(){
                 if (operation === "read") {debugger
                     return JSON.stringify(datajson);
                 }
-                if (operation === "update") {debugger
-                    
-                
-                }
                 if (operation === "create") {debugger
                     var datos_vendedor = JSON.parse(sessionStorage.getItem("Detalle_Cliente"));
-           var vendedor = $("#nombre")[0].value; 
-           
-           var territorio = $("#territorios").data("kendoDropDownList")._old;
-           var region = $("#region").data("kendoDropDownList")._old;
-           var ciudades = $("#ciudades").data("kendoComboBox")._old;
-           var barrios = $("#barrios").data("kendoComboBox")._old;
-           var lista_precio = $("#lista_precio").data("kendoDropDownList")._old;
-
+                    var vendedor = $("#cedula")[0].value;           
+                    var territorio = $("#territorios").data("kendoDropDownList")._old;                   
+                    var region = $("#region").data("kendoDropDownList");
+                    var select = region.selectedIndex;
+                    region = region.dataSource._data[select].rgeo__cod;
+                    var ciudades = $("#ciudades").data("kendoComboBox")._old;
+                    var barrios = $("#barrios").data("kendoComboBox")._old;
+                    var lista_precio = $("#lista_precio").data("kendoDropDownList")._old;
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].ter__nit=datos_vendedor.ter__nit;
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].com__con=options.com__con;
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].com__nom=options.com__nom;
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].ter__dir=options.ter__dir;
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].ter__tel=options.ter__tel;
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].ter__fax=options.ter__tel;
-                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].ter__email=datos_vendedor.ter__email;
-                    
-                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].vdd__cod=vendedor;//
+                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].ter__email=datos_vendedor.ter__email;                   
+                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].vdd__cod=parseInt(vendedor);//
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].trr__cod=territorio;//
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].rgeo__cod=region;//
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].ciu__cod=ciudades;//
-                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].bar__cod=barrios;//
-                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].ter__lis=lista_precio;//
-                    
-                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].cupo__cre=datos_vendedor.cli__cre;
-                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].cupo__ven=datos_vendedor.cli__ven;
+                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].bar__cod=parseInt(barrios);//
+                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].ter__lis=parseInt(lista_precio);//                   
+                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].cupo__cre=(datos_vendedor.cli__cre).toString();
+                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].cupo__ven=(datos_vendedor.cli__ven).toString();
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].con__stes=datos_vendedor.con__tes;
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].con__sven=datos_vendedor.con__ven;
-                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].loc__cod=datos_vendedor.loc__des;
+                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].loc__cod=parseInt(datos_vendedor.loc__des);
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].cli__con__sloc=options.cli__con__sloc;
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].cli__crg__con__sloc=options.cli__crg__con__sloc;                    
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].est__des=options.est__des;
-                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].cli__suc__pie__fac=options.cli__suc__pie__fac;
+                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].cli__suc__pie__fac=parseInt(options.cli__suc__pie__fac);
                     
                     return JSON.stringify(actjson);          
-                                                        
+                   
+                    
                 }
                 if (operation === "destroy") {debugger 
-                    actjson.dsSICUDgpd_vtr.eegpd_vtr[0].ter__raz=options.ter__raz;  
-                    actjson.dsSICUDgpd_vtr.eegpd_vtr[0].trr__cod=options.trr__cod;                    
-                    actjson.dsSICUDgpd_vtr.eegpd_vtr[0].trr__nom=options.trr__nom;
-                    actjson.dsSICUDgpd_vtr.eegpd_vtr[0].vdd__cod=options.vdd__cod;                   
-                    return JSON.stringify(actjson);               
+                   
+                    var key1 = Object.keys(actjson)[0];
+                    actjson[key1][mapCud] = [options];
+                    return JSON.stringify(actjson);
+                    //return JSON.stringify(actjson);               
                 }
                                     
             }
@@ -189,11 +184,11 @@ function gridDetalleVendedor(){
             {field: "ter__tel", title: "Telefono",  hidden:false},
             
             {field: "ter__fax", title: "Fax",  hidden:true},
-            {field: "vdd__cod", title: "Nit Vendedor",  hidden:true, editor: cedula,
+            {field: "vdd__cod", title: "Cod Vendedor",  hidden:true, editor: cedula,
                 template: function (e) {debugger
                     return e.vdd__cod;
                 }}, 
-            {field: "vdd__cod", title: "Nombre Vendedor",  hidden:true, editor: nombre,
+            {field: "vdd__cod1", title: "Nombre Vendedor",  hidden:true, editor: nombre,
                 template: function (e) {debugger
                     return e.vdd__cod;
                 }},          
@@ -224,7 +219,16 @@ function gridDetalleVendedor(){
             {command: [
                     {name: "deletae", text: "destoy", template: "<a id='borrar' class='k-grid-deletae'><span id='borrar' class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "70px"}],
       
-            editable: "popup",              
+            editable: "popup", 
+             edit: function(e) {debugger
+            if (!e.model.isNew()) {//caso en el que el popup es editar
+                editarCampos();
+                
+            }
+            else{//caso en el que el popup es crear 
+
+            }
+        } ,
          dataBound: function (e) {debugger
             var datos_vendedor = JSON.parse(sessionStorage.getItem("Detalle_Cliente"));
             if (datos_vendedor.cli__est===1){
@@ -239,6 +243,9 @@ function gridDetalleVendedor(){
     });
     
 }
+function editarCampos(campo,tipodecampo){
+    
+}
 function listaPrecio(container, options){
         //-------------LISTA DE PRECIO
         var consultar = new sirLista();
@@ -250,6 +257,7 @@ function listaPrecio(container, options){
                 .kendoDropDownList({
             dataTextField: "lis__des",
             dataValueField: "lis__num",
+              template:'<div class="divElementDropDownList">#: data.lis__des # Cod:#: data.lis__num # </div>', 
             dataSource: {
                 transport: {
                     read: {
@@ -424,10 +432,11 @@ function regionCod(container, options) {debugger
         });
     }
 function nombre(container, options) {
-        var consultar = new SirSicVen();
+        var consultar = new sirVendedores();
         var datajson = consultar.getjson();
+        datajson.dsSIRgpd_vdd.eeSIRgpd_vdd[0].piivdd__est=0;
         var urlService = consultar.getUrlSir();
-        var mapCud1 = "eesic_ven";
+        var mapCud1 = "eegpd_vdd";
         $('<input  id = "nombre" />')
                 .appendTo(container)
                 .kendoAutoComplete({
@@ -438,7 +447,7 @@ function nombre(container, options) {
             placeholder: "Nombre..",
              filter: "contains",
             select: function(e) {debugger                
-            $("#cedula").val(e.dataItem.ter__nit);    
+            $("#cedula").val(e.dataItem.vdd__cod);    
             },
             template:'<div class="divElementDropDownList">#: data.ter__raz #</div>',  
             dataSource: {
@@ -468,6 +477,7 @@ function nombre(container, options) {
                         id: "ter__nit",
                         fields: {
                             ter__raz: {editable: false, nullable: false},
+                            vdd__cod: {editable: false, nullable: false},
                             ter__nit: {editable: false, nullable: false}
                         }
                     }
@@ -477,18 +487,20 @@ function nombre(container, options) {
         });
       }
       function cedula(container, options) {
-        var consultar = new SirSicVen();
+        var consultar = new sirVendedores();
+        
         var datajson = consultar.getjson();
+        datajson.dsSIRgpd_vdd.eeSIRgpd_vdd[0].piivdd__est=0;
         var urlService = consultar.getUrlSir();
-        var mapCud1 = "eesic_ven";
+        var mapCud1 = "eegpd_vdd";
         $('<input  id = "cedula" />')
                 .appendTo(container)
                 .kendoAutoComplete({
             dataTextField: "ter__nit",
-            dataValueField: "ter__nit",
+            dataValueField: "vdd__cod",
             autoClose: true,
             minLength: 4,
-            placeholder: "Nit..",
+            placeholder: "Cod..",
              filter: "contains",
             select: function(e) {debugger                
             $("#nombre").val(e.dataItem.ter__raz);    
@@ -514,13 +526,14 @@ function nombre(container, options) {
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
                         } else {
-                            alertDialogs("Error Con Servicio Clientes"+e[key1].eeEstados[0].Estado);
+                            alertDialogs("Error Con Servicio Vendedores"+e[key1].eeEstados[0].Estado);
                         }
                     },
                     model: {
                         id: "ter__nit",
                         fields: {
                             ter__raz: {editable: false, nullable: false},
+                            vdd__cod: {editable: false, nullable: false},
                             ter__nit: {editable: false, nullable: false}
                         }
                     }
@@ -529,39 +542,7 @@ function nombre(container, options) {
 
         });
       }
-function clickEliminar(e) {debugger
-    try {
-        var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
-        e.preventDefault();
-        var dataItem = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"));
-        
-        var actions = new Array();
-        actions[0] = new Object();
-        actions[0].text = "OK";
-        actions[0].action = function () {
 
-              
-            var dataSource = $("#grid").data("kendoGrid").dataSource;
-            dataSource.remove(dataItem);
-            dataSource.sync();
-            bandAlert = 0; 
-            
-            
-        };
-        actions[1] = new Object();
-        actions[1].text = "Cancelar";
-        actions[1].action = function () {
-            bandAlert = 0;
-        };
-        createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.sre__cod + " ---?", "400px", "200px", true, true, actions);
-         
-    } catch (e) {
-        alert(e);
-        $('#grid').data('kendoGrid').dataSource.read();
-        $('#grid').data('kendoGrid').refresh();
-    }
-       
-}
 function volverPedidos(){
  window.location = ("clientes.html");
 }
@@ -645,7 +626,7 @@ function territorio(container, options) {debugger
         actions[1].action = function () {
             bandAlert = 0;
         };
-        createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.trr__nom + " ---?", "400px", "200px", true, true, actions);
+        createDialog("Atención", "Esta seguro de eliminar el Establecimiento ---" + dataItem.com__con + " ---?", "400px", "200px", true, true, actions);
          
     } catch (e) {
         alert(e);

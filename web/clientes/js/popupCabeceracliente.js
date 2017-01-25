@@ -170,7 +170,7 @@
            actjson.dsSICUDgpd_cli.eegpd_cli[0].ter__lis=listaPrecio;
            actjson.dsSICUDgpd_cli.eegpd_cli[0].dia__pag=dia_Pago;
            actjson.dsSICUDgpd_cli.eegpd_cli[0].hor__pag=hora_Pago;
-           actjson.dsSICUDgpd_cli.eegpd_cli[0].ter__email=email;
+           actjson.dsSICUDgpd_cli.eegpd_cli[0].email__ter=email;
            actjson.dsSICUDgpd_cli.eegpd_cli[0].cli__est=cli_estado;
            actjson.dsSICUDgpd_cli.eegpd_cli[0].loc__cod=bodegas;
            actjson.dsSICUDgpd_cli.eegpd_cli[0].ter__cret=precio_est;
