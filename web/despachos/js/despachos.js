@@ -11,8 +11,8 @@ $(window).resize(
 $(document).ready(
         function () {
             localStorage["grid_data"] = "";
-            $("#botton").kendoButton({
-                //click: Filtrar
+            $("#btnDespachar").kendoButton({
+                click: despachar
             });
             var windowTemplate = kendo.template($("#windowTemplate").html());
             var window = $("#window1").kendoWindow({
@@ -94,6 +94,7 @@ function camion() {
             },
             schema: {
                 data: function (e) {
+                    bandAlert = 0;
                     var key1 = Object.keys(e)[0];
                     if (e[key1].eeEstados[0].Estado === "OK") {
                         return e[key1][mapCud1];
@@ -330,13 +331,14 @@ function grilla(obj, dataSource1) {
     if (dataSource1) {
         dataSource = dataSource1;
     }
+    $(window).trigger("resize");
     var grid1 = $("#grid").kendoGrid({
         dataSource: dataSource,
         columns: [
             {field: "ped__num", title: "# Pedido", hidden: false},
             {field: "art__des", title: "Producto", hidden: false},
             {field: "ped__pend", title: "Cantidad", hidden: false},
-            {field: "ped__can__k", title: "Peso", hidden: false, footerTemplate: conditionalSum},
+            {field: "ped__can__k", title: "Peso", hidden: false},
             {command: [
                     {name: "check", text: "estado", template: "<a class='k-grid-check'><span class='k-sprite po_editoff' ></span></a>"},
                 ], width: "60px"}],
@@ -344,9 +346,6 @@ function grilla(obj, dataSource1) {
 //         
         rowTemplate: kendo.template($("#rowTemplateCmp").html()),
         altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
-        dataBound: function (e) {
-            camion();
-        },
         cancel: function (e) {
             e._defaultPrevented = true;
             $('#grid').data('kendoGrid').refresh();
@@ -425,6 +424,7 @@ function changeEst(e) {
     });
     $("#grid").data("kendoGrid").setDataSource(newDataSource);
     localStorage["grid_data"] = JSON.stringify(localData);
+    conditionalSum();
     grilla("", newDataSource);
 }
 
@@ -434,14 +434,90 @@ function cerrar() {
 }
 
 function conditionalSum() {
-    var data = dataSource.data();
-    var item, sum = 0;
-    for (var idx = 0; idx < data.length; idx++) {
-        item = data[idx];
-        if (item.checkIn) {
-            sum += item.ped__can__k;
+    if (bandAlert === 0) {
+        bandAlert = bandAlert+1;
+        var data = JSON.parse(localStorage["grid_data"]);
+        var item, sum = 0;
+        for (var idx = 0; idx < data.length; idx++) {
+            item = data[idx];
+            if (item.checkIn) {
+                sum += item.ped__can__k;
+            }
         }
+        document.getElementById('pesoTotal').innerHTML = sum;
+        camion();
+        return "";
     }
-    document.getElementById('pesoTotal').innerHTML = sum;
-    return "";
-}                
+}
+
+function despachar(){
+    var peso = $("#pesoTotal").val();
+    var camion = $("#Camion").data("kendoDropDownList").value();
+    var transportista = $("#Transportista").val();
+    var ruta = $("#Ruta").data("kendoDropDownList").value();
+    var orden = $("#Orden").val();
+    var flete = $("#Flete").val();
+    
+    var grilla = JSON.parse(localStorage["grid_data"]);
+    
+    var objJson = inputsir = {
+        "tabla": {
+            "eeDatos": [
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip": sessionStorage.getItem("ipPrivada"),
+                    "remote_ip": sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "cabecera": [{
+                    "cam_cap": peso,
+                    "campo2": camion,
+                    "campo3": transportista,
+                    "rut_cod": ruta,
+                    "campo4": orden,
+                    "campo5": flete,
+                    
+                }],
+            "detalle": [grilla]
+        }
+    };
+    cudDespachos(objJson);
+}
+
+function cudDespachos(obj) {
+    var objCud = new GetProfileImage();
+    var urlCud = objCud.getUrlSir();
+    var mapCud = objCud.getMapData();
+    var inputCud = obj;
+    
+    var jsonResp = "";
+    var permitirIngreso = "";
+    $.ajax({
+        type: "POST",
+        data: JSON.stringify(inputCud),
+        url: urlCud,
+        async: false,
+        dataType: "json",
+        contentType: "application/json;",
+        success: function (resp) {
+            var key1 = Object.keys(resp)[0];
+            permitirIngreso = JSON.stringify(resp[key1].eeEstados[0].Estado);
+            jsonResp = resp[key1];
+            bandAlert = 0;
+        },
+        error: function (e) {
+            alertDialogs("Error al consumir el servicio cud Despachos" + e.status + " - " + e.statusText);
+            bandAlert = 0;
+        }
+    }).done(function () {
+        if (permitirIngreso == '"OK"') {
+            localStorage["grid_data"] = "";
+            $(document).ready();
+        }else{
+            alertDialogs("Error al consumir el servicio cud Despachos " + permitirIngreso);
+        }
+
+    });
+
+}
