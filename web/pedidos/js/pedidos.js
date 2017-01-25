@@ -58,6 +58,7 @@ function grid() {
                             var key1 = Object.keys(jsonFiltroPedidos)[0];
                             var key2 = Object.keys(jsonFiltroPedidos[key1])[1];
                             jsonFiltroPedidos[key1][key2][0].pidped_fec = sessionStorage.getItem("fechaSistema");
+                            jsonFiltroPedidos[key1][key2][0].pilhastapr = true
                         }                        
                         return JSON.stringify(jsonFiltroPedidos);
                     } else if (operation === 'destroy') {
@@ -110,11 +111,51 @@ function grid() {
                             {name: "editar",  click: clickEditar, template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},
                             {name: "destroyed", click: clickEliminar, template: "<a class='k-grid-destroyed' href='' style='min-width:16px;'><span class='k-sprite po_cerrar'></span></a>"}
                         ],
-                width: "150px"}],
+                width: "100px"}],
         editable: "popup",
         rowTemplate: kendo.template($("#rowTemplate").html()),
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
     });
+    
+    function clickEliminar(e) {
+    try {
+        debugger
+        e.preventDefault();
+        var dataItem = $("#gridPedidos").data("kendoGrid").dataItem($(e.target).closest("tr"));
+        sessionStorage.setItem("regPedidos", JSON.stringify(dataItem));
+        
+        var widthPopUp = $("body").width();
+        widthPopUp = widthPopUp * (30 / 100);
+        var heightPopUp = $("body").height();
+        heightPopUp = heightPopUp * (30 / 100);
+        
+        $("body").append("<div id='windowAnularPedido'></div>");
+        var myWindow = $("#windowAnularPedido");
+        var undo = $("#undo");
+        
+        function onCloseWindowCabPedido() {
+            document.getElementById("windowAnularPedido").remove();
+            undo.fadeIn();
+        }
+        
+        myWindow.kendoWindow({
+            width: widthPopUp,
+            height: heightPopUp,
+            title: "Crear",
+            content: sessionStorage.getItem("url") + "/pedidos/html/popupAnular.html",
+            visible: false,
+            modal: true,
+            actions: [
+                "Close"
+            ],
+            close: onCloseWindowCabPedido
+        }).data("kendoWindow").center().open();
+
+
+    } catch (e) {
+       
+    }
+}
 }
 function ondataBound() {
     sessionStorage.removeItem("jsonFiltroPedidos");
@@ -161,35 +202,6 @@ function clickEditar(e) {
     sessionStorage.setItem("regPedidos", JSON.stringify(e));
     window.location.replace(( sessionStorage.getItem("url")+"pedidos/html/"+servicio+".html"));   
 
-}
-
-function clickEliminar(e) {
-    try {
-        var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
-        e.preventDefault();
-        var dataItem = $("#gridPedidos").data("kendoGrid").dataItem($(e.target).closest("tr"));
-
-
-        var actions = new Array();
-        actions[0] = new Object();
-        actions[0].text = "OK";
-        actions[0].action = function () {
-            var dataSource = $("#gridPedidos").data("kendoGrid").dataSource;
-            dataSource.remove(dataItem);
-            dataSource.sync();
-            bandAlert = 0;
-        };
-        actions[1] = new Object();
-        actions[1].text = "Cancelar";
-        actions[1].action = function () {
-            bandAlert = 0;
-        };
-        createDialog("Atención", "Esta seguro de eliminar el Reporte ---" + dataItem.rpt_nom + " ---?", "400px", "200px", true, true, actions);
-
-    } catch (e) {
-        $('#gridPedidos').data('kendoGrid').dataSource.read();
-        $('#gridPedidos').data('kendoGrid').refresh();
-    }
 }
 
 function popUpPedidoCU() {
@@ -263,5 +275,10 @@ function popUpAprobacionPedido() {
 
 function closePopUpAprobacionPedido(){       
     $("#windowPedidoAproba").data("kendoWindow").close();
+    location.reload();
+}
+
+function closePopUpAnularPedido(){       
+    $("#windowAnularPedido").data("kendoWindow").close();
     location.reload();
 }

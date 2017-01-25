@@ -1,5 +1,6 @@
 
 var itemPedido;
+var btnGrid;
 
 $(document).ready(function () {
    var pedido = JSON.parse(sessionStorage.getItem("regPedidos"));
@@ -25,6 +26,17 @@ $(document).ready(function () {
    document.getElementById('lbObservaciones').innerHTML = pedido.obs__ped;
    sessionStorage.setItem("listaPrecioCliente", pedido.lis__num);
    
+    if(pedido.gpd__est !==99){
+        document.getElementById("btnGuardar").remove();
+        document.getElementById("tdFinalizar").remove();
+        document.getElementById("tdAgregarItem").remove();
+   } 
+//   else{
+//        actions[0] = new Object();
+//        actions[0].name = "Ver online";            
+//        actions[0].click = gridDetallePedido.editarItem;
+//        actions[0].template = "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>";
+//   }  
    gridDetallePedido();
    
 });
@@ -69,11 +81,27 @@ function nuevoPedido(){
 }
 
 function volverPedidos(){
+    sessionStorage.removeItem("regPedidos");    
     var servicio="pedidos"    
     window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html"));  
 }
 
 function gridDetallePedido(){    
+    if(JSON.parse(sessionStorage.getItem("regPedidos")).gpd__est ===99){
+        
+        var actions = new Array();
+        actions[0] = new Object();
+        actions[0].name = "editar";            
+        actions[0].click = editarItem;
+        actions[0].template = "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>";
+        actions[1] = new Object();
+        actions[1].name = "eliminar";            
+        actions[1].click = eliminarItem;
+        actions[1].template = "<a class='k-grid-eliminar'><span class='k-sprite po_cerrar'></span></a>";
+        
+        var btnGrid = {command: actions, title: "&nbsp;", width: "100px"};
+    } 
+    
     var dataSourcePedido = new kendo.data.DataSource({
         data : JSON.parse(sessionStorage.getItem("regPedidos")).eegpd_ped_det,
     });
@@ -115,11 +143,8 @@ function gridDetallePedido(){
                 title: "IVA",
                 format: "{0:n}"
             },
-            { command: [
-                    {name: "editar", click: editarItem, template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},
-                    {name: "eliminar", click: eliminarItem, template: "<a class='k-grid-eliminar'><span class='k-sprite po_cerrar'></span></a>"}
-                ] 
-                }],
+            btnGrid
+            ],
         editable: {
             mode: "popup",
             window: {
@@ -415,9 +440,7 @@ function finalizarPedido(){
                         alertDialogs(" Error al consumir el servicio 733"+ e.status +" - "+ e.statusText);                
                     }
                 }).done(function(e){
-                    var pedido = e[key1][mapDataFiltroPedidos][0];
-                    sessionStorage.setItem("regPedidos", JSON.stringify(pedido));                                         
-                    parent.closePopUpCabecera();
+                    volverPedidos();
                 });
             }catch (e) {
                 alertDialogs("Function: consumeServAjaxSIR Error: 740 " + e.message);

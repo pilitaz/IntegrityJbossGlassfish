@@ -98,7 +98,7 @@ function grid() {
                         [
                             {name: "aprobar", click: popUpAprobacionPedido, template: "<a class='k-grid-aprobar' href='' style='min-width:16px;'><span class='k-sprite po_checkCreate'></span></a>"},
                             {name: "ver",  click: clickVer, template: "<a class='k-grid-ver'><span class='k-sprite po_preview'></span></a>"},
-                            {name: "anular", click: anularFactura, template: "<a class='k-grid-anular'><span class='k-sprite po_cerrar'></span></a>"}
+                            {name: "anular", click: clickEliminar, template: "<a class='k-grid-anular'><span class='k-sprite po_cerrar'></span></a>"}
                         ],
                 width: "150px"}],
         editable: "popup",
@@ -106,8 +106,44 @@ function grid() {
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
     });
     
-    function anularFactura(e){        
-        e.preventDefault();   
+    function clickEliminar(e) {
+        try {
+            
+            e.preventDefault();
+            var dataItem = $("#gridPedidos").data("kendoGrid").dataItem($(e.target).closest("tr"));            
+            sessionStorage.setItem("regPedidos", JSON.stringify(dataItem));
+
+            var widthPopUp = $("body").width();
+            widthPopUp = widthPopUp * (30 / 100);
+            var heightPopUp = $("body").height();
+            heightPopUp = heightPopUp * (30 / 100);
+
+            $("body").append("<div id='windowAnularPedido'></div>");
+            var myWindow = $("#windowAnularPedido");
+            var undo = $("#undo");
+
+            function onCloseWindowCabPedido() {
+                document.getElementById("windowAnularPedido").remove();
+                undo.fadeIn();
+            }
+
+            myWindow.kendoWindow({
+                width: widthPopUp,
+                height: heightPopUp,
+                title: "Crear",
+                content: sessionStorage.getItem("url") + "/aprobacionPedidos/html/popupAnularAp.html",
+                visible: false,
+                modal: true,
+                actions: [
+                    "Close"
+                ],
+                close: onCloseWindowCabPedido
+            }).data("kendoWindow").center().open();
+
+
+        } catch (e) {
+
+        }
     }
 }
 function ondataBound() {
@@ -188,5 +224,10 @@ function popUpAprobacionPedido(e) {
 
 function closePopUpAprobacionPedido(){       
     $("#windowPedidoAproba").data("kendoWindow").close();
+    location.reload();
+}
+
+function closePopUpAnularPedido(){       
+    $("#windowAnularPedido").data("kendoWindow").close();
     location.reload();
 }

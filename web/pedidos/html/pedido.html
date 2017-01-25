@@ -41,8 +41,8 @@ and open the template in the editor.
                             <td style="width: 50px; text-align: right; padding-right: 20">
                                 <a id ="btnGuardar" class="k-grid" onclick ="popUpPedidoCU()" aling="center"><span class="k-sprite po_edit_sup"></span></a>
                             </td>
-                            <td style="width: 50px; text-align: right; padding-right: 20">
-                                <a id ="btnVolver" class="k-grid" onclick ="finalizarPedido()" aling="center"><span class="k-sprite po_check_sup"></span></a>
+                            <td id ="tdFinalizar" style="width: 50px; text-align: right; padding-right: 20">
+                                <a id ="btnFinalizar" class="k-grid" onclick ="finalizarPedido()" aling="center"><span class="k-sprite po_check_sup"></span></a>
                             </td>
                             <td style="width: 50px; text-align: right; padding-right: 20">
                                 <a id ="btnVolver" class="k-grid" onclick ="volverPedidos()" aling="center"><span class="k-sprite po_back"></span></a>
@@ -221,7 +221,7 @@ and open the template in the editor.
                             <td>
                                 <h1 id = "subtitulo" class="subTitulo">Detalle</h1>
                             </td>
-                            <td style="text-align: right; padding-right: 20">
+                            <td id ="tdAgregarItem" style="text-align: right; padding-right: 20">
                                 <a id ="btnAgregarItem" onclick="agregarItemDetalle()" class="k-grid" aling="center"><span class="k-sprite po_mas"></span></a>
                             </td>
                         </tr>
