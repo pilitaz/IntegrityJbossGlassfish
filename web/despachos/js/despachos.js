@@ -22,8 +22,8 @@ $(document).ready(
             addRow();
             ruta();
         });
-        
-        
+
+
 function addRow() {
     $("#textarea").append("<div id='windowform'></div>");
     var myWindow1 = $("#windowform"), undo = $("#undo");
@@ -44,11 +44,10 @@ function addRow() {
         actions: [
             "Close"
         ],
-        close:
-                function () {
-                    $("#textarea").empty();
-                    this.destroy();
-                }
+        close: function () {
+            $("#textarea").empty();
+            this.destroy();
+        }
     }).data("kendoWindow").center().open();
 }
 
