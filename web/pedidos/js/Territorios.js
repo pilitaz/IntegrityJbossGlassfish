@@ -212,7 +212,10 @@ $(document).ready(function () {
                     rgeo__nom:   {editable: true, nullable: false},  
                     trr__est:    {editable: true, nullable: false},         
                 }
-            }
+            },
+             error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
         }
     });
 

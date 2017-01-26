@@ -255,7 +255,10 @@ $(document).ready(function () {
                     trr__cod:    {editable: true, nullable: false},
 
                 }
-            }
+            },
+             error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
         }
     });
     var grid1 = $("#grid").kendoGrid({

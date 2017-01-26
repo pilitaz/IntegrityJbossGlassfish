@@ -195,7 +195,10 @@ $(document).ready(function () {
                     pri__cod:    {editable: false, nullable: false},
                     pri__des:    {editable: true, nullable: false},          
                 }
-            }
+            },
+             error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
         }
     });
 

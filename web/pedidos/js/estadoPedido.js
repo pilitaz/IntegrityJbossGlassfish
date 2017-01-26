@@ -179,7 +179,10 @@ $(document).ready(function () {
                     gpd__des:    {editable: true, nullable: false},
                     ctr__est:    {editable: true, nullable: false}                   
                                         
-                }
+                },
+             error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
             }
         }
     });

@@ -227,7 +227,10 @@ $(document).ready(function () {
                     sar__est:    {editable: true, nullable: false}, 
                     ciu__nom:    {editable: true, nullable: false}, 
                 }
-            }
+            },
+             error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
         }
     });
     

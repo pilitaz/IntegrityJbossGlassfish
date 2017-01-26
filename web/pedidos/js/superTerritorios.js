@@ -236,7 +236,10 @@ $(document).ready(function () {
                     str__vta:    {editable: true, nullable: false,type: "boolean"},   
                     trr__cod:    {editable: true, nullable: false}, 
                 }
-            }
+            },
+             error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
         }
     });
   

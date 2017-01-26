@@ -172,6 +172,10 @@ function gridDetalleVendedor(){
 
                 }
             }
+            ,
+             error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
         }
     });
     var grid1 = $("#gridDetalleVendedor").kendoGrid({
