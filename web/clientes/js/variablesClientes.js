@@ -1426,7 +1426,7 @@ function CudSucursales() {
                 "ter__dir":"",
                 "ter__tel":"",
                 "ter__fax":"",
-                "ter__email":"",
+                "email__ter":"",
                 "vdd__cod":"",
                 "trr__cod":"",
                 "rgeo__cod":1,

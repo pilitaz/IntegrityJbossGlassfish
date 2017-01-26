@@ -92,7 +92,7 @@ function gridDetalleVendedor(){
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].ter__dir=options.ter__dir;
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].ter__tel=options.ter__tel;
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].ter__fax=options.ter__tel;
-                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].ter__email=datos_vendedor.ter__email;                   
+                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].email__ter=datos_vendedor.ter__email;                   
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].vdd__cod=parseInt(vendedor);//
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].trr__cod=territorio;//
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].rgeo__cod=region;//
@@ -103,11 +103,12 @@ function gridDetalleVendedor(){
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].cupo__ven=(datos_vendedor.cli__ven).toString();
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].con__stes=datos_vendedor.con__tes;
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].con__sven=datos_vendedor.con__ven;
-                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].loc__cod=parseInt(datos_vendedor.loc__des);
+                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].loc__cod=parseInt(datos_vendedor.loc__cod);
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].cli__con__sloc=options.cli__con__sloc;
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].cli__crg__con__sloc=options.cli__crg__con__sloc;                    
                     actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].est__des=options.est__des;
-                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].cli__suc__pie__fac=parseInt(options.cli__suc__pie__fac);
+                    actjson.dsSICUDgpd_cli_suc.eegpd_cli_suc[0].cli__suc__pie__fac=(parseInt(options.cli__suc__pie__fac))/100;
+                    
                     
                     return JSON.stringify(actjson);          
                    
@@ -228,11 +229,8 @@ function gridDetalleVendedor(){
             }
             else{//caso en el que el popup es crear 
                 e.container.find("input[name=cli__suc__pie__fac]").removeClass();
-                e.container.find("input[name=cli__suc__pie__fac]").kendoNumericTextBox();
-                e.container.find("input[name=ter__tel]").removeClass();
-                e.container.find("input[name=ter__tel]").kendoNumericTextBox();
-                e.container.find("input[name=ter__fax]").removeClass();
-                e.container.find("input[name=ter__fax]").kendoNumericTextBox();
+                e.container.find("input[name=cli__suc__pie__fac]").kendoNumericTextBox({format: "# \\%"});
+   
                 
             }
         } ,
