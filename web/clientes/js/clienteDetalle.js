@@ -1,6 +1,6 @@
 
 
-$(document).ready(function () {debugger
+$(document).ready(function () {
    var datos_cliente = JSON.parse(sessionStorage.getItem("Detalle_Cliente"));
    
    document.getElementById('Nit_cliente').innerHTML = datos_cliente.ter__nit;
@@ -73,10 +73,10 @@ function gridDetalleVendedor(){
                 contentType: "application/json; charset=utf-8"
             },
             parameterMap: function (options, operation) {
-                if (operation === "read") {debugger
+                if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
-                if (operation === "create") {debugger
+                if (operation === "create") {
                     var datos_vendedor = JSON.parse(sessionStorage.getItem("Detalle_Cliente"));
                     var vendedor = $("#cedula")[0].value;           
                     var territorio = $("#territorios").data("kendoDropDownList")._old;                   
@@ -113,7 +113,7 @@ function gridDetalleVendedor(){
                    
                     
                 }
-                if (operation === "destroy") {debugger 
+                if (operation === "destroy") { 
                    
                     var key1 = Object.keys(actjson)[0];
                     actjson[key1][mapCud] = [options];
@@ -127,7 +127,7 @@ function gridDetalleVendedor(){
         batch: false,
         severFiltering: true,                            
         schema: {
-            data: function (e) {debugger
+            data: function (e) {
                 var key1 = Object.keys(e)[0];
                 if(e[key1].eeEstados){
                     if (e[key1].eeEstados[0].Estado === "OK") {
@@ -185,31 +185,31 @@ function gridDetalleVendedor(){
             
             {field: "ter__fax", title: "Fax",  hidden:true},
             {field: "vdd__cod", title: "Cod Vendedor",  hidden:true, editor: cedula,
-                template: function (e) {debugger
+                template: function (e) {
                     return e.vdd__cod;
                 }}, 
             {field: "vdd__cod1", title: "Nombre Vendedor",  hidden:true, editor: nombre,
-                template: function (e) {debugger
+                template: function (e) {
                     return e.vdd__cod;
                 }},          
             {field: "rgeo__cod", title: "Region",  hidden:true,editor:regionCod,
-                template: function (e) {debugger
+                template: function (e) {
                     return e.rgeo__cod;
                 }},    
             {field: "trr__cod", title: "Territorio",  hidden:true,editor:territorio,
-                template: function (e) {debugger
+                template: function (e) {
                     return e.trr__cod;
                 }}, 
             {field: "ciu__cod", title: "Ciudad",  hidden:true,editor:ciudades,
-                template: function (e) {debugger
+                template: function (e) {
                     return e.ciu__cod;
                 }}, 
             {field: "bar__cod", title: "Barrio",  hidden:true,editor:barrios,
-                template: function (e) {debugger
+                template: function (e) {
                     return e.bar__cod;
                 }}, 
             {field: "ter__lis", title: "Lista de precios",  hidden:true,editor:listaPrecio,
-                template: function (e) {debugger
+                template: function (e) {
                     return e.ter__lis;
                 }}, 
             {field: "cli__con__sloc", title: "Responsable Bodega",  hidden:true},
@@ -220,16 +220,23 @@ function gridDetalleVendedor(){
                     {name: "deletae", text: "destoy", template: "<a id='borrar' class='k-grid-deletae'><span id='borrar' class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "70px"}],
       
             editable: "popup", 
-             edit: function(e) {debugger
+             edit: function(e) {
             if (!e.model.isNew()) {//caso en el que el popup es editar
-                editarCampos();
+               
+                //editarCampos();
                 
             }
             else{//caso en el que el popup es crear 
-
+                e.container.find("input[name=cli__suc__pie__fac]").removeClass();
+                e.container.find("input[name=cli__suc__pie__fac]").kendoNumericTextBox();
+                e.container.find("input[name=ter__tel]").removeClass();
+                e.container.find("input[name=ter__tel]").kendoNumericTextBox();
+                e.container.find("input[name=ter__fax]").removeClass();
+                e.container.find("input[name=ter__fax]").kendoNumericTextBox();
+                
             }
         } ,
-         dataBound: function (e) {debugger
+         dataBound: function (e) {
             var datos_vendedor = JSON.parse(sessionStorage.getItem("Detalle_Cliente"));
             if (datos_vendedor.cli__est===1){
                 var tamaño=document.getElementsByClassName("k-sprite po_cerrar").length;
@@ -273,7 +280,7 @@ function listaPrecio(container, options){
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -293,7 +300,7 @@ function listaPrecio(container, options){
 
         });
     }
-function barrios(container, options) {debugger
+function barrios(container, options) {
         
         var consultar = new sirBarrios();
         var datajson = consultar.getjson();
@@ -319,7 +326,7 @@ function barrios(container, options) {debugger
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -339,7 +346,7 @@ function barrios(container, options) {debugger
 
         });
     }
- function ciudades(container, options) {debugger
+ function ciudades(container, options) {
         
         var consultar = new sirCiudades();
         var datajson = consultar.getjson();
@@ -365,7 +372,7 @@ function barrios(container, options) {debugger
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -385,7 +392,7 @@ function barrios(container, options) {debugger
 
         });
     }
-function regionCod(container, options) {debugger
+function regionCod(container, options) {
         
         var consultar = new sirRegionGeografica();
         var datajson = consultar.getjson();
@@ -411,7 +418,7 @@ function regionCod(container, options) {debugger
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -446,7 +453,7 @@ function nombre(container, options) {
             minLength: 4,
             placeholder: "Nombre..",
              filter: "contains",
-            select: function(e) {debugger                
+            select: function(e) {                
             $("#cedula").val(e.dataItem.vdd__cod);    
             },
             template:'<div class="divElementDropDownList">#: data.ter__raz #</div>',  
@@ -465,7 +472,7 @@ function nombre(container, options) {
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -502,7 +509,7 @@ function nombre(container, options) {
             minLength: 4,
             placeholder: "Cod..",
              filter: "contains",
-            select: function(e) {debugger                
+            select: function(e) {                
             $("#nombre").val(e.dataItem.ter__raz);    
             },
             template:'<div class="divElementDropDownList">#: data.ter__raz #</div>',  
@@ -521,7 +528,7 @@ function nombre(container, options) {
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -552,7 +559,7 @@ function agregarItemDetalle(){
  var grid1 = $("#gridDetalleVendedor").data("kendoGrid");
     grid1.addRow();
 }
-function territorio(container, options) {debugger
+function territorio(container, options) {
         var consultar = new sirTerritorio();
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();
@@ -580,7 +587,7 @@ function territorio(container, options) {debugger
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -602,7 +609,7 @@ function territorio(container, options) {debugger
     }        
     
     
-    function clickEliminar(e) {debugger
+    function clickEliminar(e) {
     try {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
@@ -635,17 +642,17 @@ function territorio(container, options) {debugger
     }
        
 }
-      function cerrar(){debugger
+      function cerrar(){
     //onClosex();
     $("#windowform").data("kendoWindow").close();
 
 }  
-      function cerrar1(){debugger
+      function cerrar1(){
     //onClosex();
     $("#windowform").data("kendoWindow").close();
     window.location.reload();  
 }  
-function popupNuevoVendedor(){debugger
+function popupNuevoVendedor(){
       $("#textarea").append("<div id='windowform'></div>");
         var myWindow1 = $("#windowform"),undo = $("#undo");
                 
