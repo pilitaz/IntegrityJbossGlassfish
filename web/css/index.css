@@ -161,3 +161,14 @@ img{
     display:inline-block;
     padding:6px 5px;
 }
+.icon-small{
+    zoom:0.29;
+    -moz-transform:scale(0.29);
+    -moz-transform-origin: 0 0;
+}
+footer {
+            bottom: 0;
+            position: fixed;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+.jstree-default a.jstree-search { color:#8CC451; }

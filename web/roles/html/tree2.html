@@ -5,13 +5,12 @@
         <script src="../../scripts/jstree.min.js" type="text/javascript"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-
     </head>
     <body>
         <table>
             <tr>               
                 <td style="padding: 10px">
-
+                    
                 </td>                                                
             </tr>
         </table>
@@ -29,31 +28,44 @@
                         var txtjson = sessionStorage.getItem("txtJson2");
                         txtjson = txtjson.replace(/(..\/css\/images\/leaf\.gif)/g, "../../css/images/leaf.gif");
                         var treeJson = JSON.parse(txtjson);
-                        treeJson.plugins = ["dnd", "crrm", "themes", "json_data", "massload", "contextmenu"];
+                        treeJson.plugins = ["dnd", "crrm", "themes", "json_data", "massload", "contextmenu","search"];
+                        treeJson.search = {"case_insensitive": true,"show_only_matches" : true};
                         treeJson.contextmenu = {
                             "items": function ($node) {
                                 return {
                                     "Create": {
                                         "label": "Create a new employee",
-                                        "action": function (obj) {
-                                            this.create(obj);
+                                        "action": function (obj) {debugger
+                                            alert("hola");
                                         }
                                     },
                                     "Rename": {
                                         "label": "Rename an employee",
                                         "action": function (obj) {
-                                            this.rename(obj);
+                                             alert("item mod");
+                                            //this.rename(obj);
                                         }
                                     },
                                     "Delete": {
                                         "label": "Delete an employee",
                                         "action": function (obj) {
-                                            this.remove(obj);
+                                             alert("item elimina");
+                                            //this.remove(obj);
                                         }
                                     }
                                 };
                             }
                         }
+                        var to = false;
+                            $('#inpSearchTree2').keyup(function (e) {
+                                debugger
+                              if(to) { clearTimeout(to); }
+                              to = setTimeout(function () {
+                                var v = $('#inpSearchTree2').val();
+                                //$('#jstree2').jstree(true).search(v);
+                                $('#jstree2').jstree('search', v);
+                              }, 250);
+                            });
                         treeJson.core = {"check_callback": false, "data": treeJson.core.data};
 
                         $('#jstree2').jstree(treeJson)
@@ -91,5 +103,8 @@
             }
 
         </script>
+        <style type="text/css">
+            .jstree-default a.jstree-search { color:#8CC451; }
+        </style>
     </body>
 </html>

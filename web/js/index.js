@@ -335,7 +335,7 @@ function menufunciones() {
                     dataarbol = dataarbol.replace(/CON IMAGEN/g, "../css/images/leaf.gif");
                     dataarbol = dataarbol.replace(/SIN IMAGEN/g, "");
                     dataarbol = dataarbol.replace(/Servicio/g, "columna5");
-                    txtJson = "{ \"plugins\" : [\"search\"],\"core\" : { \"data\" : " + dataarbol + "}}";
+                    txtJson = "{ \"plugins\" : [\"search\"],\"core\" : { \"data\" : " + dataarbol + "},\"search\": {\"case_insensitive\": true,\"show_only_matches\" : true}}";
                     sessionStorage.setItem("txtJson2", txtJson);
                     cargarArbol();
 

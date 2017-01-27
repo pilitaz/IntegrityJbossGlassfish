@@ -525,6 +525,7 @@ function despachar() {
                 var lis__num = local[i].lis__num;    
                 var ped__fec = local[i].ped__fec;
                 var cla__cod = local[i].cla__cod;
+//                var com__con = local[i].com__con;
                 var objjson = {
                     "dpc__can": dpc__can,
                     "clc__cod__ped": clc__cod__ped,
@@ -535,6 +536,7 @@ function despachar() {
                     "lis__num": lis__num,
                     "ped__fec": ped__fec,
                     "cla__cod": cla__cod,
+//                    "com_con": com_con
                 };
                 local[i] = objjson;
                 grilla.push(local[i]);

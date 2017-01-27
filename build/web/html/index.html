@@ -171,7 +171,10 @@ and open the template in the editor.
                                             </td>                                                
                                         </tr>
                                     </table>
-                                    <input type="text" id="buscarDoc" name="buscarDoc" class="k-textbox" placeholder="Documento" title="Buscar Documento" style="width: 100%" />
+                                    <span class="k-textbox k-space-left "style="width: 300px;background-color:#3B3B3B; border-color: #3B3B3B">
+                                                <input type="text" id="buscarDoc" name="buscarDoc"  placeholder="Buscar" title="Buscar Documento" style="width:100%;background-color:#2b2b2b; border-color: transparent" />
+                                                <a class="k-icon k-i-search">&nbsp;</a>
+                                                </span>
                                     <div id="grid"></div>
                                 </div>
 
@@ -180,11 +183,20 @@ and open the template in the editor.
                                         <tr>               
                                             <td style="padding: 10px">
                                                 <font color="#ffffff" size="4">Portafolios</font>
-                                                <span style = "background-size : 150% 150%; width: 34px; height: 34px; display: inline-block;" class="po_look"></span>
-                                            </td>                                                
+                                            </td>
+                                              
                                         </tr>
+                                        <tr>
+                                        <td>
+                                                <span class="k-textbox k-space-left "style="width: 300px;background-color:#3B3B3B; border-color: #3B3B3B">
+                                                    <input type="text" id="inpSearch" placeholder="Buscar" style="width:100%;background-color:#2b2b2b; border-color: transparent" />
+                                                    <a class="k-icon k-i-search">&nbsp;</a>
+                                                </span>
+                                            </td>
+                                            
                                     </table>
                                     <div id="jstree2" style="font-family:Arial;font-size:9pt;color:white;"></div>
+                                    
                                 </div>
                                 <div id="divDocumentosd" hidden="hidden" style = "overflow-y: hidden;">
                                     <span style ="float:right; cursor: pointer;"  id = "close" onclick='cerrarListaCumple()'>x</span>

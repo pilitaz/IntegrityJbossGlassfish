@@ -58,7 +58,7 @@
                                 dataarbol = dataarbol.replace(/SIN IMAGEN/g, "");
                                 dataarbol = dataarbol.replace(/Servicio/g, "columna5");
 
-                                txtJson = "{ \"plugins\" : [\"dnd\",\"massload\",\"crrm\",\"themes\", \"json_data\"],\"core\" : {\"check_callback\" : true, \"data\" : " + dataarbol + "}}";
+                                txtJson = "{ \"plugins\" : [\"dnd\",\"massload\",\"crrm\",\"themes\", \"json_data\", \"search\"],\"core\" : {\"check_callback\" : true, \"data\" : " + dataarbol + "},\"search\": {\"case_insensitive\": true,\"show_only_matches\" : true}}";
                                 var treeJson = JSON.parse(txtJson);
 
 
@@ -87,6 +87,17 @@
                     } catch (e) {
                         alert(e.message);
                     }
+                     var to = false;
+                            $('#inpSearchTree3').keyup(function (e) {
+                                debugger
+                              if(to) { clearTimeout(to); }
+                              to = setTimeout(function () {
+                                var v = $('#inpSearchTree3').val();
+                                //$('#jstree2').jstree(true).search(v);
+                                $('#jstree3').jstree('search', v);
+                              }, 250);
+                            });
+                        treeJson.core = {"check_callback": false, "data": treeJson.core.data};
                     $('#jstree3').on('dblclick', function () {
                         if (sessionStorage.getItem("cabeceraLast") || (sessionStorage.getItem("cabeceraNew")) || (sessionStorage.getItem("cabeceraTitu")) || (sessionStorage.getItem("cabeceraLlaves"))) {
                             sessionStorage.removeItem('cabeceraTitu');

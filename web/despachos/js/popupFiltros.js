@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    
+
     document.getElementById("Establecimiento").readOnly = true;
     $("#btAgregar").kendoButton({
         click: guardar
@@ -9,43 +9,47 @@ $(document).ready(function () {
     });
 
     function guardar(e) {
-        var obj = []; 
+
         var ciudad = $("#Ciudad").data("kendoComboBox");
         var select1 = ciudad.selectedIndex;
         var establecimiento = $("#Establecimiento").data("kendoComboBox");
-        if (select1 === -1 || establecimiento === undefined) {
-            alertDialogs("Debe Ingresar una ciudad y un establecimiento");
-
-        } else
-        {
+        var select2 = establecimiento.selectedIndex;
+        var region = $("#Region").data("kendoDropDownList");
+        var select = region.selectedIndex;
+        if (select1 !== -1 && ciudad !== undefined) {
             ciudad = ciudad.dataSource._data[select1].ciu__cod;
-            var select2 = establecimiento.selectedIndex;
-            if (select2 === -1) {
-                alertDialogs("Debe Ingresar una ciudad y un establecimiento");
-            } else
-            {
-                var region = $("#Region").data("kendoDropDownList");
-                var select = region.selectedIndex;
-                region = region.dataSource._data[select].rgeo__cod;
-                establecimiento = establecimiento.dataSource._data[select2].com__con;
-                obj = {
-                        "ciudad": ciudad,
-                        "region": region,
-                        "establecimiento": establecimiento
+        } else {
+            ciudad = "";
+        }
 
-                }
-            }
+        if (select2 !== -1 && establecimiento !== undefined) {
+            establecimiento = establecimiento.dataSource._data[select2].com__con;
+        } else {
+            establecimiento = "";
+        }
+
+        if (select !== -1 && region !== undefined) {
+            region = region.dataSource._data[select].rgeo__cod;
+        } else {
+            region = "";
+        }
+
+        obj = {
+            "ciudad": ciudad,
+            "region": region,
+            "establecimiento": establecimiento
+
         }
         parent.filtrar(obj);
     }
-    
+
     function cancelar() {
 
         parent.cerrar();
     }
 
     function sucursal(e) {
-        
+
 
         var consultar = new sirSucursales();
         var datajson = consultar.getjson();
@@ -77,7 +81,7 @@ $(document).ready(function () {
                 },
                 schema: {
                     data: function (e) {
-                        
+
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -98,7 +102,7 @@ $(document).ready(function () {
     }
 
     function regionCod(container, options) {
-        
+
 
         var consultar = new sirRegionGeografica();
         var datajson = consultar.getjson();
@@ -126,7 +130,7 @@ $(document).ready(function () {
                         },
                         schema: {
                             data: function (e) {
-                                
+
                                 var key1 = Object.keys(e)[0];
                                 if (e[key1].eeEstados[0].Estado === "OK") {
                                     return e[key1][mapCud1];
@@ -147,7 +151,7 @@ $(document).ready(function () {
                 });
     }
     function ciudades(container, options) {
-        
+
 
         var consultar = new sirCiudades();
         var datajson = consultar.getjson();
@@ -178,7 +182,7 @@ $(document).ready(function () {
                         },
                         schema: {
                             data: function (e) {
-                                
+
                                 var key1 = Object.keys(e)[0];
                                 if (e[key1].eeEstados[0].Estado === "OK") {
                                     return e[key1][mapCud1];
