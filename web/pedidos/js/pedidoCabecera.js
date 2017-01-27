@@ -14,6 +14,9 @@ $(document).ready(function() {
         disableDates: ["sa", "su"]
     });
     
+    var datepicker = $("#ipFecha").data("kendoDatePicker");
+    datepicker.enable(false);
+    
     $("#ipFechaEntrega").kendoDatePicker({
         culture: "es-CO",
         format: "yyyy/MM/dd",
@@ -33,10 +36,45 @@ $(document).ready(function() {
     iniDropDownList();
     
     iniAutocomplete();
-            
+    
     if(sessionStorage.getItem("regPedidos")){
         setInfoCabeceraPedido();
+    }else if(sessionStorage.getItem("actor")==="cliente" ){
+        $("#ipNITCliente").val(sessionStorage.getItem("companyNIT"));
+        
+        var objCli = new sirConsultaCliente();
+        var objJsonCli = objCli.getjson();
+        var urlCli = objCli.getUrlSir();
+        var mapDataCli = objCli.getMapData();
+        
+        var key1 = Object.keys(objJsonCli)[0];
+        var key2 = Object.keys(objJsonCli[key1])[1];
+        objJsonCli[key1][key2][0].picter__nit = sessionStorage.getItem("clienteNIT");
+        objJsonCli[key1][key2][0].picter__raz = "";
+        
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(objJsonCli),
+            url: urlCli,
+            dataType : "json",
+            contentType: "application/json;",
+            success: function (e) {  
+                var key1 = Object.keys(e)[0];                                            
+                if(e[key1].eeEstados[0].Estado==="OK"){                            
+                    dataCliente = e[key1][mapDataCli]["0"];
+                    $("#ipCliente").val(dataCliente.ter__raz);
+                }                        
+            },
+            error: function (e) {
+                alertDialogs(" Error al consumir el servicio: cargarFactura/SIRgfc_cli \n"+ e.status +" - "+ e.statusText);                        
+            }
+        }).done(function(){
+            setInfoCliente();
+        });
     }
+    
+    
+    
 });
 /**
  * Metodo que inicia los el autocomplete del cliente (NIT - razón social)
@@ -182,7 +220,12 @@ function iniDropDownList(){
         optionLabel: "Seleccione la sucursal",
         dataTextField: "suc__nom",
         dataValueField: "suc__cod",
-        template:'<div class="divElementDropDownList">#: data.suc__nom #</div>',        
+        template:'<div class="divElementDropDownList">#: data.suc__nom #</div>',
+        dataBound: function (e){
+          var dropdownlist = $("#ipSucursal").data("kendoDropDownList");
+          dropdownlist.readonly();  
+          dropdownlist.enable(false);  
+        },
         dataSource: {
             transport: {
                 read: {
@@ -225,41 +268,6 @@ function iniDropDownList(){
             },
             error: function (xhr, error) {
                 alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
-            }
-        },
-        change: function (e) {
-            if(sessionStorage.getItem("actor")==="cliente" && !sessionStorage.getItem("regPedidos")){
-                $("#ipNITCliente").val(sessionStorage.getItem("companyNIT"));
-                
-                var objCli = new sirConsultaCliente();
-                var objJsonCli = objCli.getjson();
-                var urlCli = objCli.getUrlSir();
-                var mapDataCli = objCli.getMapData();
-                
-                var key1 = Object.keys(objJsonCli)[0];
-                var key2 = Object.keys(objJsonCli[key1])[1];
-                objJsonCli[key1][key2][0].picter__nit = sessionStorage.getItem("clienteNIT");
-                objJsonCli[key1][key2][0].picter__raz = "";
-                
-                $.ajax({
-                    type: "POST",
-                    data: JSON.stringify(objJsonCli),
-                    url: urlCli,
-                    dataType : "json",
-                    contentType: "application/json;",
-                    success: function (e) {  
-                        var key1 = Object.keys(e)[0];                                            
-                        if(e[key1].eeEstados[0].Estado==="OK"){                            
-                            dataCliente = e[key1][mapDataCli]["0"];
-                            $("#ipCliente").val(dataCliente.ter__raz);
-                        }                        
-                    },
-                    error: function (e) {
-                        alertDialogs(" Error al consumir el servicio: cargarFactura/SIRgfc_cli \n"+ e.status +" - "+ e.statusText);                        
-                    }
-                }).done(function(){
-                    setInfoCliente();
-                });
             }
         }        
     });
@@ -594,72 +602,7 @@ function setInfoCliente(e){
     
     var dropdownlist = $("#ipCdePago").data("kendoDropDownList");
     dropdownlist.value(sessionStorage.getItem("opciondepago")); 
-    
-    
-    var objVendedor = new sirConsultaVendedor();
-    var objJsonVendedor = objVendedor.getjson();
-    var urlVendedor = objVendedor.getUrlSir();
-    var mapDataVendedor = objVendedor.getMapData();
-    
-    $("#ipVendedor").kendoDropDownList({
-        dataTextField: "ter__raz",        
-        dataValueField: "ven__cod", 
-        placeholder: "Selecione un vendedor...",
-        dataSource: {
-            type: "json",
-            serverFiltering: true,
-            transport: {
-                read:{
-                    url: urlVendedor,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    type: "POST"
-                },
-                parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
-                    try{                      
-                            if (operation === 'read') {
-                                var key1 = Object.keys(objJsonVendedor)[0];
-                                var key2 = Object.keys(objJsonVendedor[key1])[1];                                                               
-                                objJsonVendedor[key1][key2][0].piccod_suc = $("#ipSucursal").val();
-                                objJsonVendedor[key1][key2][0].picven_cod = sessionStorage.getItem("codVendedor");
-                                objJsonVendedor[key1][key2][0].piiven_est = 0;
-                                return JSON.stringify(objJsonVendedor);
-                            } 
-                       // }                        
-                    } catch (e) {
-                        alertDialogs(e.message)
-                    }                
-                    
-                }
-            },
-            schema: {
-                data: function (e){                    
-                    var key1 = Object.keys(e)[0];
-                    if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
-                        return e[key1][mapDataVendedor];
-                    } else {
-                        alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
-                    }
-                },
-                model: {
-                    id: "ven__cod",
-                    fields: {
-                        ven__cod: {validation: {required: true}, type: 'string'},
-                        ter__raz: {validation: {required: true}, type: 'string'}
-                    }
-                }
-            },
-            error: function (xhr, error) {
-                alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
-            },
-            change: function (e) {
-                //console.log("Change vandedor");
-            },
-            requestStart: function (e) {
-                //                console.log("Request Start servicio vendedor");
-            }            
-        }
-    });
+    dropdownlist.enable(false);
     
     var objEstablecimiento = new sirConsultaEstablecimiento();
     var objJsonEstablecimiento = objEstablecimiento.getjson();
@@ -719,20 +662,104 @@ function setInfoCliente(e){
                 $("#ipTelefono").val(dataItemEstablicimiento.ter__tel);
                 
                 var dropdownlist = $("#ipCiudad").data("kendoDropDownList");
-                dropdownlist.value(dataItemEstablicimiento.ciu__cod);            
+                dropdownlist.value(dataItemEstablicimiento.ciu__cod); 
+                
+                var dropdownlist = $("#ipSucursal").data("kendoDropDownList");
+                dropdownlist.value(dataItemEstablicimiento.suc__cod); 
+                
+                dropDownListVendedor(dataItemEstablicimiento.suc__cod);
             }
         },
         change: function (e) {            
             if(e.sender.selectedIndex){
-                var dataItemEstablicimiento = e.sender._data[e.sender.selectedIndex-1];
+                var dataItemEstablicimiento = e.sender.dataSource._data[e.sender.selectedIndex-1];
                 $("#ipDireccion").val(dataItemEstablicimiento.ter__dir);
                 $("#ipTelefono").val(dataItemEstablicimiento.ter__tel);
+                
                 var dropdownlist = $("#ipCiudad").data("kendoDropDownList");
                 dropdownlist.value(dataItemEstablicimiento.ciu__cod);            
+                
+                var dropdownlist = $("#ipSucursal").data("kendoDropDownList");
+                dropdownlist.value(dataItemEstablicimiento.suc__cod); 
+                
+                dropDownListVendedor(dataItemEstablicimiento.suc__cod);
             }
         }
     });
 }
+
+function dropDownListVendedor(susursal){
+    
+    var objVendedor = new sirConsultaVendedor();
+    var objJsonVendedor = objVendedor.getjson();
+    var urlVendedor = objVendedor.getUrlSir();
+    var mapDataVendedor = objVendedor.getMapData();
+    
+    $("#ipVendedor").kendoDropDownList({
+        dataTextField: "ter__raz",        
+        dataValueField: "ven__cod", 
+        placeholder: "Selecione un vendedor...",
+        dataSource: {
+            type: "json",
+            serverFiltering: true,
+            transport: {
+                read:{
+                    url: urlVendedor,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
+                    try{                      
+                            if (operation === 'read') {
+                                var key1 = Object.keys(objJsonVendedor)[0];
+                                var key2 = Object.keys(objJsonVendedor[key1])[1];                                                               
+                                objJsonVendedor[key1][key2][0].piccod_suc = susursal;
+                                objJsonVendedor[key1][key2][0].picven_cod = sessionStorage.getItem("codVendedor");
+                                objJsonVendedor[key1][key2][0].piiven_est = 0;
+                                return JSON.stringify(objJsonVendedor);
+                            } 
+                       // }                        
+                    } catch (e) {
+                        alertDialogs(e.message)
+                    }                
+                    
+                }
+            },
+            schema: {
+                data: function (e){                    
+                    var key1 = Object.keys(e)[0];
+                    if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                        return e[key1][mapDataVendedor];
+                    } else {
+                        alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                    }
+                },
+                model: {
+                    id: "ven__cod",
+                    fields: {
+                        ven__cod: {validation: {required: true}, type: 'string'},
+                        ter__raz: {validation: {required: true}, type: 'string'}
+                    }
+                }
+            },
+            error: function (xhr, error) {
+                alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+            },
+            change: function (e) {
+                //console.log("Change vandedor");
+            },
+            requestStart: function (e) {
+                //                console.log("Request Start servicio vendedor");
+            }            
+        },
+        dataBound: function(e){
+            var dropdownlist = $("#ipVendedor").data("kendoDropDownList");
+            dropdownlist.value(sessionStorage.getItem("codVendedor"));
+            dropdownlist.enable(false);
+        }
+    });
+} 
 
 /**
  * 
@@ -773,7 +800,7 @@ function setInfoCabeceraPedido(){
     datepicker.value(fecha);
     datepicker.readonly(true);
     
-    debugger
+    
     var fechaEnt = new Date(pedido.ped__fec__ent.replace(/-/g, "/"));
     fechaEnt.setHours(0,0,0,0);
     

@@ -509,7 +509,7 @@ function sirConsultaEstablecimiento() {
                             "SIRgpd_cli_suc" : [{                                            
                                             "piccom__con" : "*",
                                             "picter__nit" : "*",
-                                            "piicli__com__est": 99,
+                                            "piicli__com__est": 0,
                                             "picciu__cod": "*"
                                     }
                             ]

@@ -137,7 +137,7 @@ function gridFacturas(){
         sessionStorage.setItem("servicio",servicio);
 //        sessionStorage.setItem("actualizarFactura", "true");
         sessionStorage.setItem("regFactura", JSON.stringify(factura));
-        debugger
+        
 //        sessionStorage.setItem("facturaNumero", factura.fac__nro);
 //        sessionStorage.setItem("facturasucursal", factura.suc__cod);
 //        sessionStorage.setItem("facturaClaseDoc", factura.clc__cod);
