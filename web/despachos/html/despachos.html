@@ -119,6 +119,12 @@ and open the template in the editor.
                     <br>
                     <table class="k-edit-form-container" >
                         <tr>
+                            <td style="text-align: left"><label>Seleccionar Todos:</label></td>
+                        </tr>
+                        <tr>
+                            <td>  <a><span id ="imgChekAll" onclick = 'selectAll()' title='seleccionar Todos'  class = "k-sprite po_checkAct" ></span></a></td>
+                        </tr>
+                        <tr>
                             <td style="text-align: left"><label>Peso Total:</label></td>
                         </tr>
                         <tr>
@@ -152,10 +158,10 @@ and open the template in the editor.
                             <td style="text-align: left"><label>Flete:</label></td>
                         </tr>
                         <tr>
-                            <td style="padding-bottom: 3em ;"><input id = "Flete" class = "k-textbox"/> </td>
+                            <td style="padding-bottom: 3em ;"><input id = "flete" /> </td>
                         </tr>
                         <tr style="">
-                            <td style="text-align: center;">   <input  id ="btnDespachar" class="k-primary"  value="Despachar"> </td>
+                            <td style="text-align: center;">   <button  type="button" id ="btnDespachar" class="k-primary" style="width: 50%;height: 40px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">Despachar </button></td>
                         </tr>
                        
                     </table>

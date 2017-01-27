@@ -166,6 +166,7 @@ function gridListaDePrecios(jsonSir) {
         },
         selectable: false,
         columns: [
+            {field: "lis__cod", title: "Código Lista",width: "170px"},
             {field: "lis__des", title: "Descripción Lista"},
             {field: "lis__fin", title: "Fecha Inicial"},
             {field: "lis__ffi", title: "Fecha Vencimiento"},            
@@ -286,20 +287,9 @@ function crearListaPrecios() {
         document.getElementById("windowCab").remove();
         undo.fadeIn();
     }
-
-    myWindow.kendoWindow({
-        width: "40%",
-        height: "40%",
-        title: "Agregar",
-        content: sessionStorage.getItem("url") + "/mantenimientoListaPrecios/html/" + servicio + ".html",
-        visible: false,
-        modal: true,
-        resizable: false,
-        actions: [
-            "Close"
-        ],
-        close: onCloseCabecera
-    }).data("kendoWindow").center().open();
+   $("body").append("<div id='disable'></div>");
+    
+    mostrarCustomPopUp();
 //    window.location.replace((sessionStorage.getItem("url") + "mantenimientoListaPrecios/html/" + servicio + ".html"));
 }
 
@@ -413,4 +403,16 @@ function sendAjaxAddCmpCon(verHtml,obj) {
         }
 
     });
+}
+
+function mostrarCustomPopUp() {
+    $("#customPopUp").fadeIn("slow");
+    onloadPopUpCabecera();
+
+}
+function cerrarCustomPopUp() {
+    $("#disable").fadeOut("slow");
+    $("#customPopUp").fadeOut("slow");
+    $( "#disable" ).remove();
+//    $("#regalo").fadeOut("slow");
 }

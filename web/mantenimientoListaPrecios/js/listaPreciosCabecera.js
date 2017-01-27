@@ -5,7 +5,10 @@
  */
 var lis__est = 99;
 var lis__num = 0;
-$(document).ready(function () {
+function onloadPopUpCabecera(){
+    $("#ipFechaInicio").val("");
+        $("#ipFechaFin").val("");
+        $("#ipDescripcion").val("");
     var authdsinv_cla = new Object();
     authdsinv_cla.dsinv_cla = new Object();
     authdsinv_cla.dsinv_cla.eeDatos = new Array();
@@ -56,7 +59,7 @@ $(document).ready(function () {
         
     }
     $("#buttonCab").kendoButton();
-});
+}
 function clickBtnCabecera() {
     var ope = sessionStorage.getItem("opeListPre");
     if (ope === "edit") {
@@ -101,7 +104,7 @@ function sendAjaxAddCmpCon(verHtml) {
     }).done(function () {
         if (permitirIngreso == '"OK"') {
             var key1 = Object.keys(jsonResp)[0];
-            parent.cabGuard(JSON.stringify(jsonResp[key1][mapDataD][0]));
+            cabGuard(JSON.stringify(jsonResp[key1][mapDataD][0]));
         } else {
             alertDialogs("Problemas con el creación de crear lista de precios .\n" + permitirIngreso);
         }
