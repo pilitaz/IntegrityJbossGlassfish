@@ -78,7 +78,8 @@ function login() {
                 sessionStorage.setItem('sesion', sessionStorage.getItem("picfiid"));
                 sessionStorage.setItem("loginintegrity", "valido");
                 sessionStorage.setItem("hibrido", jsonResp.dslogin.eesiccia[0].ciaserv);
-                sessionStorage.setItem("linux", jsonResp.dslogin.eesiccia[0].ciapuerto);
+                sessionStorage.setItem("linux", jsonResp.dslogin.eesiccia[0].ciapuerto);                
+                sessionStorage.setItem("opcionesCompañia",JSON.stringify(jsonResp.dslogin.eeciaoptions));
 
                 window.location.assign("html/index.html");
             } else {
