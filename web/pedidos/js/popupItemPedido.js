@@ -369,7 +369,7 @@ function agregarItem(){
 
 function setInformacionItem(){
     
-   debugger
+   
     var kendoDropDownListClaseArticulo = $("#idClaseArticulo").data("kendoDropDownList");    
     kendoDropDownListClaseArticulo.value(parent.itemPedido.cla__cod);
     

@@ -244,7 +244,7 @@ function gridAsignacionPedidos(){
     
     
     function asignarTodoPedidos(e){
-        debugger
+        
         e.preventDefault();
         
         var grid = $("#gridAsignacionPedidos").data("kendoGrid");
@@ -259,7 +259,7 @@ function gridAsignacionPedidos(){
         var key2 = Object.keys(jsonUpdateReg[key1])[1];  
         
         for(var i= 0; i<itemID.eegpd_ped_det.length; i++){    
-            debugger
+            
             if(!itemID.cla__apl__inv || itemID.eegpd_ped_det[i].ped__pend<=itemID.art__cant){
                 jsonUpdateReg[key1][key2][i] = new Object();
                 jsonUpdateReg[key1][key2][i].ped__fec = itemID.eegpd_ped_det[i].ped__fec;
@@ -283,7 +283,7 @@ function gridAsignacionPedidos(){
             dataType : "json",
             contentType: "application/json;",
             success: function () {                
-                debugger
+                
             },
             error: function (e) {
                 console.log(JSON.stringify(e));
