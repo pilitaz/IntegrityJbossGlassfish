@@ -47,8 +47,7 @@ function gridAsignacionPedidos(){
                         jsonAsignarPedidos[key1][key2][0].pidfecha = fechaIni;//sessionStorage.getItem("fechaSistema");
                         return JSON.stringify(jsonAsignarPedidos);                        
                     }
-                    if (operation === "update") {                       
-                        
+                    if (operation === "update") {
                         var key1 = Object.keys(jsonUpdateReg)[0];
                         var key2 = Object.keys(jsonUpdateReg[key1])[1];                        
                         jsonUpdateReg[key1][key2][0].ped__fec = options.ped__fec;
@@ -66,11 +65,29 @@ function gridAsignacionPedidos(){
                 }
             }
         },
+        requestEnd: function(e) {
+            
+            var response = e.response;
+            var type = e.type;
+            if(type==="update"){
+                location.reload();
+            }
+        },
         schema: {           
-            data: function (e) {                
+            data: function (e) {
+                
                 var key1 = Object.keys(e)[0];
-                if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {                    
-                    return e[key1][mapData];
+                if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+//                    if(e[key1][mapData].length === 1 && e[key1][mapData][0].ped__pend ===0){
+//                        var g = $("#gridAsignacionPedidos").data('kendoGrid');
+//                        g.tbody.find("input:checked").closest("tr").each(function (index) {
+//                            g.removeRow($(this));
+//                        });
+//                        //g.removeRow($('#confirmWindow').data('row')[0]);
+//                    }else{
+                        return e[key1][mapData];                    
+//                    }
+                    
                 } else {
                     alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
                 }                
@@ -84,7 +101,7 @@ function gridAsignacionPedidos(){
                     art__cod: {type: 'string', editable: false},
                     art__des: {type: 'string', editable: false},
                     ped__can: {type: 'string', editable: false},
-                    ped__pend: {type: 'string', editable: false},
+                    ped__pend: {type: 'number', editable: false},
                     ped__aasi: {type: 'number', editable: true},
                     ped__fec: {type: 'string', editable: false}
                 }
@@ -96,14 +113,14 @@ function gridAsignacionPedidos(){
     $("#gridAsignacionPedidos").kendoGrid({
         dataSource: dataSourceAsignarPedidos,
         selectable: true,  
-         batch: false,
+        batch: false,
         columns: [            
             {field: "ped__num", title: "Número de Pedido", hidden: true },
             {field: "cla__des", title: "Clase articulo"},
             {field: "art__des", title: "Articulo"},
             {field: "ped__can", title: "Cantidad solicitada"},
             {field: "ped__pend", title: "Pendiente"},
-            {field: "ped__aasi", title: "Asignados", hidden: true},
+            {field: "ped__aasi", title: "Asignados", hidden: true, },
             {field: "ped__fec", title: "fecha"},
             {command:[
                     {id: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},                    
@@ -117,7 +134,15 @@ function gridAsignacionPedidos(){
                 animation: false,
                 width: 600
             }
-        }        
+        } ,
+        edit: function(e) {
+            if (!e.model.isNew()) {
+               
+                e.container.find("input[name=ped__aasi]").removeClass();
+                e.container.find("input[name=ped__aasi]").kendoNumericTextBox({format: "n0", decimals: 0, max: e.model.ped__pend, min:0});//editarCampos();
+                
+            }           
+        } ,
     });
 }
 

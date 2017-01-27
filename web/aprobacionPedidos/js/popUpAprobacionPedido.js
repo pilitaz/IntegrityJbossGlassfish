@@ -32,7 +32,7 @@ $(document).ready(function() {
     
     objJson[key1][key2][0].piicor__ano = 2017;
     objJson[key1][key2][0].picter__nit = pedido.ter__nit;
-  debugger  
+    
     try{
         $.ajax({
             type: verbo,
@@ -96,7 +96,7 @@ function aprobarPedido(){
     objJson[key1][key2][0].ter__nit = pedido.ter__nit;
     objJson[key1][key2][0].ter__tel = pedido.ter__tel;
     objJson[key1][key2][0].ven__cod = pedido.ven__cod;    
-    objJson[key1][key2][0].obs_apr = $("#idObservaciones"); 
+    objJson[key1][key2][0].obs_apr = $("#idObservaciones").val(); 
     
     try{
         $.ajax({

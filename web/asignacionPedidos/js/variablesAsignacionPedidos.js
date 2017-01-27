@@ -12,7 +12,7 @@ function sirConsultaAsignarPedidos() {
     var json = {
                         "dsSIRgpd_pdet_prov": {
                                 "eeDatos": [{
-                                        "picusrcod": "proveedor_800001541",//sessionStorage.getItem("usuario"),
+                                        "picusrcod": sessionStorage.getItem("usuario"),
                                         "picfiid": sessionStorage.getItem("picfiid"),
                                         "local_ip": sessionStorage.getItem("ipPrivada"),
                                         "remote_ip": sessionStorage.getItem("ipPublica")
