@@ -1761,7 +1761,44 @@
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -408px -1008px;
 }
+/* ——  */
 
+.pro_asignar{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -408px -1208px;
+	cursor:pointer
+}
+.pro_asignar:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -1208px;
+	cursor:pointer
+}
+.pro_asignar:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -408px -1208px;
+}
+/* ——  */
+
+.pro_asignaroff{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -1208px;
+	cursor:pointer
+}
+.pro_asignaroff:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -408px -1208px;
+	cursor:pointer
+}
+.pro_asignaroff:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -1208px;
+}
 /**********************************************/
 /**********************************************/
 /**************   INDICADORES   ***************/
