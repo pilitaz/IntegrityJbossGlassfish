@@ -78,15 +78,8 @@ function gridAsignacionPedidos(){
                 
                 var key1 = Object.keys(e)[0];
                 if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
-//                    if(e[key1][mapData].length === 1 && e[key1][mapData][0].ped__pend ===0){
-//                        var g = $("#gridAsignacionPedidos").data('kendoGrid');
-//                        g.tbody.find("input:checked").closest("tr").each(function (index) {
-//                            g.removeRow($(this));
-//                        });
-//                        //g.removeRow($('#confirmWindow').data('row')[0]);
-//                    }else{
+
                         return e[key1][mapData];                    
-//                    }
                     
                 } else {
                     alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);

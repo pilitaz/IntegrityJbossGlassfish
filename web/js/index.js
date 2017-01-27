@@ -27,6 +27,7 @@ $(document).ready(function () {
         });
         $("#btnGuardarClave").kendoButton({
         });
+        habilitarOpciones();
         menufunciones();
         cargaDocumentos();
         tamanoPagIni();
@@ -45,6 +46,15 @@ $(document).ready(function () {
     $("#k-icon.k-i-arrow-s").className = "k-icon   k-i-hbars";
 
 });
+
+function habilitarOpciones(){
+    var opciones = JSON.parse(sessionStorage.getItem("opcionesCompañia"));    
+    for(var i=0; i<opciones.length; i++){
+        if(!opciones[i].opt_activa){
+            document.getElementById("tr"+opciones[i].cia_det_opcion).remove();        
+        }
+    }    
+}
 /**
  * funciona para ejecutar la funcion correlinux cada t milisegundos
  * @returns {undefined}
