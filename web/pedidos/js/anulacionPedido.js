@@ -197,7 +197,10 @@ $(document).ready(function () {
                     anu__des:    {editable: true, nullable: false},
                     gpd__est:    {editable: false, nullable: false},
                 }
-            }
+            },
+             error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
         }
     });
   

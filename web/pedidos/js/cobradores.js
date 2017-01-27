@@ -208,7 +208,10 @@ $(document).ready(function () {
                     ter__raz:    {editable: true, nullable: false},
                     cbr__est:    {editable: true, nullable: false}
                     
-                }
+                },
+             error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
             }
         }
     });

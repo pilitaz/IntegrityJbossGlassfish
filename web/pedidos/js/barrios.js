@@ -213,7 +213,10 @@ $(document).ready(function () {
                       bar__str:    {editable: true, nullable: false},   
                        bar__est:    {editable: true, nullable: false},
                        ciu__nom:    {editable: true, nullable: false},
-                }
+                },
+             error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
             }
         }
     });

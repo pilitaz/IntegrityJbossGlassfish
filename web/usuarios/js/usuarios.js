@@ -141,14 +141,11 @@ $(document).ready(function () {
                 var key1 = Object.keys(e)[0];
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     return e[key1][mapCud];
-                                $('#grid').data('kendoGrid').refresh();
+            $('#grid').data('kendoGrid').refresh();
             $('#grid').data('kendoGrid').dataSource.read();
             $('#grid').data('kendoGrid').refresh();
                 } else {
-                    alertDialogs("Error"+e[key1].eeEstados[0].Estado);
-                                $('#grid').data('kendoGrid').refresh();
-            $('#grid').data('kendoGrid').dataSource.read();
-            $('#grid').data('kendoGrid').refresh();
+                    alertDialogs("Error"+e[key1].eeEstados[0].Estado);                              
                 }
             },
             model: {
@@ -166,7 +163,10 @@ $(document).ready(function () {
                     usr__jef: {editable: true, nullable: false, type: "boolean"},
                     usr__codjef: {editable: true, nullable: false}
                 }
-            }
+            },
+             error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
         }
     })
 ;

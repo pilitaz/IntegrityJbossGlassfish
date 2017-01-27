@@ -169,7 +169,10 @@ $(document).ready(function () {
                     gpd__pre__est:    {editable: true, nullable: false},
                     ctr__est:    {editable: true, nullable: false}                   
                                         
-                }
+                },
+             error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
             }
         }
     });

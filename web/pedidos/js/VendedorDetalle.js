@@ -103,7 +103,10 @@ function gridDetalleVendedor(){
                     ter__raz:    {editable: true, nullable: false}
 
 
-                }
+                },
+             error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
             }
         }
     });

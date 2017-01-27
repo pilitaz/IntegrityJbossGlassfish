@@ -170,7 +170,10 @@ $(document).ready(function () {
                                        
                                         
                 }
-            }
+            },
+             error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
         }
     });
     var window = $("#window1").kendoWindow({
