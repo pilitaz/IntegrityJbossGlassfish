@@ -119,7 +119,7 @@ function grid() {
     
     function clickEliminar(e) {
     try {
-        debugger
+        
         e.preventDefault();
         var dataItem = $("#gridPedidos").data("kendoGrid").dataItem($(e.target).closest("tr"));
         sessionStorage.setItem("regPedidos", JSON.stringify(dataItem));

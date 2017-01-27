@@ -31,7 +31,7 @@ function volverPedidos(){
 }
 
 function gridDetallePedido(){  
-    debugger
+    
     var dataSourcePedido = new kendo.data.DataSource({
         data : JSON.parse(sessionStorage.getItem("regPedidos")).eegpd_ped_det,
     });

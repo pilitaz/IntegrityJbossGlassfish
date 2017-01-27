@@ -145,7 +145,7 @@ function SICUDgpd_ped_apro() {
  *  var input = sir.getdataInputSir();
  */
 function SIRcon_anf_cli() {
-    debugger
+    
     var mapData = "eecon_anf_cli";
     var urlSir = ipServicios + baseContabilidad + "SIRcon_anf_cli";
     var json = {
