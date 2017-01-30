@@ -216,50 +216,7 @@ $(document).ready(function () {
             $('#grid1').data('kendoGrid').refresh();                                                                                        
         } 
     });
-//    $("#filtro_p").kendoComboBox({
-//        dataTextField: "inst__name",
-//        dataValueField: "inst__name",
-//        placeholder: "Proceso ...",
-//        dataSource: datasourcex,
-//        change: function () {
-//            var value = this.value();
-//            if (value) {
-//                grid1.data("kendoGrid").dataSource.filter({field: "inst__name", operator: "eq", value: value});
-//            } else {
-//                grid1.data("kendoGrid").dataSource.filter({});
-//            }
-//        },
-//    });
-//    //--------------------------------
-//    $("#filtro_f").kendoComboBox({
-//        dataTextField: "task__ddt",
-//        dataValueField: "task__ddt",
-//        placeholder: "Fecha...",
-//        dataSource: datasourcex,
-//        change: function () {
-//            var value = this.value();
-//            if (value) {
-//                grid1.data("kendoGrid").dataSource.filter({field: "task__ddt", operator: "eq", value: value});
-//            } else {
-//                grid1.data("kendoGrid").dataSource.filter({});
-//            }
-//        },
-//    });
-//    //--------------------------------------
-//    $("#filtro_t").kendoComboBox({
-//        dataTextField: "task__dpr",
-//        dataValueField: "task__dpr",
-//        placeholder: "Creador...",
-//        dataSource: datasourcex,
-//        change: function () {
-//            var value = this.value();
-//            if (value) {
-//                grid1.data("kendoGrid").dataSource.filter({field: "task__dpr", operator: "eq", value: value});
-//            } else {
-//                grid1.data("kendoGrid").dataSource.filter({});
-//            }
-//        },
-//    });
+
                       
                     
                         
@@ -512,8 +469,7 @@ function changImgFunc1(results) {
                     }
     }
     
- }
-
+ }  
 }
 
 function changImgFunc(results) {
