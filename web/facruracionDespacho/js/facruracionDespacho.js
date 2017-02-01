@@ -100,7 +100,7 @@ function grisFacDespachos(){
             {field: "dpc__car", title: "Orden"},
 //            {field: "art__cant", title: "Cantidad en inventario"},
             {command:[
-                    {name: "editar", click: facturarDespacho, template: "<a class='k-grid-editar'><span class='k-sprite po_checkCreate'></span></a>"},
+                    {name: "editar", click: mostrarCustomPopUp, template: "<a class='k-grid-editar'><span class='k-sprite po_checkCreate'></span></a>"},
                     {name: "ver",  click: clickVer, template: "<a class='k-grid-ver'><span class='k-sprite po_preview'></span></a>"},
                 ],
                 width: "100px"
@@ -216,4 +216,15 @@ function clickVer(e) {
     window.location.replace(( sessionStorage.getItem("url")+"facruracionDespacho/html/"+servicio+".html"));   
 }
 
+function mostrarCustomPopUp() {
+    $("body").append("<div id='disable'></div>");
+    $("#customPopUp").fadeIn("slow");
+
+}
+function cerrarCustomPopUp() {
+    $("#disable").fadeOut("slow");
+    $("#customPopUp").fadeOut("slow");
+    $( "#disable" ).remove();
+//    $("#regalo").fadeOut("slow");
+}
 

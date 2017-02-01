@@ -98,7 +98,7 @@ function iniDropDownList(){
                 parameterMap: function (options, operation) {
                     try {
                         if (operation === 'read') {
-                            auth.dssic_suc.eetemp[0].piccia_nit = sessionStorage.getItem("companyNIT");
+                            auth.dssic_suc.eetemp[0].piccia_nit = sessionStorage.getItem("companyNIT");                            
                             //console.log(JSON.stringify(auth));
                             auth["eesic_suc"] = [options];
                             return JSON.stringify(auth);
@@ -158,9 +158,10 @@ function iniDropDownList(){
                 parameterMap: function (options, operation) {                    
                     try {                         
                         if (operation === 'read') {
-//                            authdssic_clc.dssic_clc.eetemp = new Array();
-//                            authdssic_clc.dssic_clc.eetemp[0] = new Object();
-//                            authdssic_clc.dssic_clc.eetemp[0].piccod__por = sessionStorage.getItem("portafolio");
+                            authdssic_clc.dssic_clc.eeSIRsic_clc = new Array();
+                            authdssic_clc.dssic_clc.eeSIRsic_clc[0] = new Object();
+                            authdssic_clc.dssic_clc.eeSIRsic_clc[0].piiclc_cod = "";
+                            authdssic_clc.dssic_clc.eeSIRsic_clc[0].piipor_cod_aso = sessionStorage.getItem("portafolio");
 //                            authdssic_clc["eesic_tcont"] = [options];                            
                             return JSON.stringify(authdssic_clc);
                         }	
