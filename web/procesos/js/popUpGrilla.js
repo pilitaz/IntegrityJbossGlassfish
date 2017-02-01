@@ -38,7 +38,7 @@ document.getElementById("task1").innerHTML = task ;
                     proc__name:    {editable: false, nullable: false},
                     task__name:     {editable: false, nullable: false},
                     type__task:       {editable: false, nullable: false},
-
+                    users__assigned:       {editable: false, nullable: false},
                 }
             }
         }
@@ -62,17 +62,21 @@ document.getElementById("task1").innerHTML = task ;
             {field: "type__task", title: "Tipo de tarea",  hidden:true},
             {command:
                         [
-                    {name: "usuarios", click: grilla1, template: "<a class='k-grid-usuarios' href='' style='min-width:16px;'><span class='k-sprite pro_groupoff'></span></a>"}
+                   {name: "proceso", text: "", click: grilla1, template: "<a title='procesos' class='k-grid-proceso'><span  title='comenzar' class='k-sprite pro_groupoff'></span></a>"},
                 ],
                 width: "50px"}]    ,                            
-        //editable: "popup",
-                            
+        rowTemplate: kendo.template($("#rowTemplateCmp").html()),
+        altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),                    
+        dataBound: function () {
+            var results1 = datasourcex.data();
+            changImgFunc(results1);
+        },
         cancel: function(e) {                                                                                   
             e._defaultPrevented= true;
                                                                                    
         } 
     });
-                    $('#grilla').hover(function() {
+            $('#grilla').hover(function() {
             $(this).css('background-color', 'Transparent');
             $(this).contents('td').css({'border': '1px solid blue', 'border-left': 'none', 'border-right': 'none'});
             $(this).contents('td:first').css('border-left', '1px solid blue');
@@ -120,8 +124,15 @@ document.getElementById("task1").innerHTML = task ;
                       
                     }                   
                     
-                        
-                        
+   
+function changImgFunc(results) {
+
+    for (var i = 0; i < results.length; i++) {
+        if(results[i].users__assigned===true){                            
+        document.getElementById("spanproceso"+results[i].task__name).setAttribute("class", "k-sprite pro_group");
+        }else
+        {}}                     
+    }             
 });
         
 function cerrar(){

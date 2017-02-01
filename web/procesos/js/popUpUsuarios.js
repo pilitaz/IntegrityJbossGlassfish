@@ -196,7 +196,7 @@ $(document).ready(function () {
             }
         }
     }
-    function guardar (e){
+    function guardar (e){debugger
         var nit = sessionStorage.getItem("companyNIT");
         var proceso = sessionStorage.getItem("Proc_usuar");
         var tarea= sessionStorage.getItem("Task_name");
@@ -218,6 +218,16 @@ $(document).ready(function () {
         }   
         data.dsbpm_own_task.TTparam[0].picproc_name= proceso;
         data.dsbpm_own_task.eebpm_own_task=array;
+        if (data.dsbpm_own_task.eebpm_own_task.length===0){
+            var nodo=[{pictasknamealtern: ""}];
+            data.dsbpm_own_task.TTparamAltern=[];   
+            data.dsbpm_own_task.TTparamAltern=nodo;
+             data.dsbpm_own_task.TTparamAltern[0].pictasknamealtern=tarea;
+        }
+        else
+        {
+            
+        }
         $.ajax({
             
             type: "POST",        

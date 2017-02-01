@@ -96,7 +96,8 @@ function sirtask_proces() {
       ],    
         "SIRbpm_task_proc": [
           {
-        "picproc__name": "*"
+        "picproc__name": "*",
+        "picusuario": sessionStorage.getItem("usuario"),
        }
      ]
    } 
@@ -257,11 +258,13 @@ function cudTareasXusr() {
             "picproc_name":"*"
          }
       ],
+      
       "eebpm_own_task":[  
          {  
 
          
          },
+         
                   {  
             "cia__nit":"*",
             "proc__name":"*",
@@ -425,6 +428,41 @@ function serviTime() {
             "remote_ip":sessionStorage.getItem("ipPublica")
          }
       ]    
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+//---------------------------------------------------------------------------
+function IniciaVacaciones() {
+    var urlSir = ipServicios + baseUsrBpm +"SIRSolicitaVacaciones";
+    var json = {  
+   "dsparam_proc_vac":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ]
    }
 };
     
