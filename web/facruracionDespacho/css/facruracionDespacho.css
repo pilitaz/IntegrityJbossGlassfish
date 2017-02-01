@@ -4,18 +4,21 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : 10/01/2017, 02:32:34 PM
+    Created on : 1/02/2017, 03:46:44 PM
     Author     : jenny
 */
-.k-edit-form-container {
-    width: 100%;
+
+td{
+    padding: 5px
 }
 
-.k-edit-field {
-    padding-top: 4px;
-    padding-right: 0px;
-    padding-bottom: 18px;
-    padding-left: 0px;
+div{
+    padding-left: 5px;
+    padding-right: 5px;    
+}
+
+table{
+    padding: 2px;
 }
 
 .k-grid tr:hover {
@@ -29,6 +32,7 @@ and open the template in the editor.
     background: #f1f1f1;
 }
 
-tr.k-master-row {    
-    font-weight: bold;    
+.k-window-titlebar .k-header {
+    display: none;
 }
+
