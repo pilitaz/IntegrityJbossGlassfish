@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var objPopup = [];
 $(window).resize(
         function () {
             var viewportHeight = $(window).height();
@@ -21,6 +22,7 @@ $(document).ready(
             }).data("kendoWindow");
             addRow();
             ruta();
+            fleteList();
         });
 
 
@@ -56,9 +58,8 @@ function editar_rol() {
     window.location = ("tareas.html");
 }
 
-function filtrar(establecimiento, ciudad, region) {
-    var e = -1;
-    grilla(e);
+function filtrar(obj) {
+    grilla(obj);
     cerrar();
 }
 
@@ -219,6 +220,36 @@ function transportista(e) {
                 }
             });
 }
+function fleteList() {
+    var obj = new listaflete();
+    var dataSource = obj.getdataSource();
+    $("#flete").kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "value",
+        dataSource: dataSource,
+        placeholder: "Seleccione Tipo de ",
+        template: '<div class="divElementDropDownList">#: data.text #</div>'
+//        change: onSelect
+    });
+}
+
+function listaflete() {//(G-Granel/L-Lonas)
+    var dataSource = [
+        {text: "Tonelada", value: true},
+        {text: "Viaje", value: false}
+    ];
+    ;
+
+    this.setdataSource = function (newname) {
+        if (newname) {
+            dataSource = newname;
+        }
+    };
+    this.getdataSource = function () {
+        return dataSource;
+    };
+}
+;
 
 function grilla(obj, dataSource1) {
     var consultar = new Sirdespacho();
@@ -229,6 +260,15 @@ function grilla(obj, dataSource1) {
     var actjson = actualizar.getjson();
     var urlactualizar = actualizar.getUrlSir();
     var mapCud = "eegpd_ped_det";
+    if (obj) {
+        var key1 = Object.keys(datajson)[0];
+        datajson[key1].eeSIRgpd_pdet_dpc = [{
+                "ciu_cod": obj.ciudad,
+                "com_con": obj.establecimiento,
+                "rgeo_cod": obj.region,
+            }];
+        objPopup = datajson[key1].eeSIRgpd_pdet_dpc[0];
+    }
     dataSource = new kendo.data.DataSource({
         transport: {
             read: {
@@ -326,6 +366,9 @@ function grilla(obj, dataSource1) {
                     ped__num: {editable: true, nullable: false},
                 }
             }
+        },
+        error: function (e) {
+            alertDialogs(e.errorThrown);
         }
     });
     if (dataSource1) {
@@ -435,7 +478,7 @@ function cerrar() {
 
 function conditionalSum() {
     if (bandAlert === 0) {
-        bandAlert = bandAlert+1;
+        bandAlert = bandAlert + 1;
         var data = JSON.parse(localStorage["grid_data"]);
         var item, sum = 0;
         for (var idx = 0; idx < data.length; idx++) {
@@ -450,47 +493,94 @@ function conditionalSum() {
     }
 }
 
-function despachar(){
-    var peso = $("#pesoTotal").val();
-    var camion = $("#Camion").data("kendoDropDownList").value();
-    var transportista = $("#Transportista").val();
-    var ruta = $("#Ruta").data("kendoDropDownList").value();
-    var orden = $("#Orden").val();
-    var flete = $("#Flete").val();
-    
-    var grilla = JSON.parse(localStorage["grid_data"]);
-    
-    var objJson = inputsir = {
-        "tabla": {
-            "eeDatos": [
-                {
-                    "picusrcod": sessionStorage.getItem("usuario"),
-                    "picfiid": sessionStorage.getItem("picfiid"),
-                    "local_ip": sessionStorage.getItem("ipPrivada"),
-                    "remote_ip": sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "cabecera": [{
-                    "cam_cap": peso,
-                    "campo2": camion,
-                    "campo3": transportista,
-                    "rut_cod": ruta,
-                    "campo4": orden,
-                    "campo5": flete,
-                    
-                }],
-            "detalle": [grilla]
+function despachar() {
+    var sucursal = "";
+    var ciudad = "";
+    var establecimiento = "";
+    var peso = document.getElementById('pesoTotal').textContent;
+    if (peso > 0) {
+        var camion = $("#Camion").data("kendoComboBox").value();
+        var transportista = $("#Transportista").val();
+        var ruta = $("#Ruta").data("kendoComboBox").value();
+        var orden = $("#Orden").val();
+        var flete = $("#flete").val();
+
+
+
+        if (objPopup) {
+            ciudad = objPopup.ciu_cod;
+            establecimiento = objPopup.com_con;
         }
-    };
-    cudDespachos(objJson);
+        var local = JSON.parse(localStorage["grid_data"]);
+        var grilla = [];
+        for (var i = 0; i < local.length; i++) {
+            sucursal = local[i].suc__cod;
+            if (local[i].checkIn) {
+                var dpc__can  = local[i].ped__pend;
+                var clc__cod__ped = local[i].clc__cod;
+                var dpc__kgs = local[i].ped__can__k;
+                var suc__cod = local[i].suc__cod;    
+                var art__cod = local[i].art__cod;    
+                var ped__num = local[i].ped__num;    
+                var lis__num = local[i].lis__num;    
+                var ped__fec = local[i].ped__fec;
+                var cla__cod = local[i].cla__cod;
+//                var com__con = local[i].com__con;
+                var objjson = {
+                    "dpc__can": dpc__can,
+                    "clc__cod__ped": clc__cod__ped,
+                    "dpc__kgs":dpc__kgs,
+                    "suc__cod": suc__cod,
+                    "art__cod": art__cod,
+                    "ped__num": ped__num,
+                    "lis__num": lis__num,
+                    "ped__fec": ped__fec,
+                    "cla__cod": cla__cod,
+//                    "com_con": com_con
+                };
+                local[i] = objjson;
+                grilla.push(local[i]);
+            }
+        }
+
+        var objJson = {
+            "dsSICUDdpc_cab": {
+                "eeDatos": [
+                    {
+                        "picusrcod": sessionStorage.getItem("usuario"),
+                        "picfiid": sessionStorage.getItem("picfiid"),
+                        "local_ip": sessionStorage.getItem("ipPrivada"),
+                        "remote_ip": sessionStorage.getItem("ipPublica")
+                    }
+                ],
+                "eedpc_cab": [{
+                        "cam__cod": camion,
+                        "ciu__cod": ciudad,
+                        "com__con": establecimiento,
+                        "ter__nit": transportista,
+                        "suc__cod": sucursal,
+                        "car__kgs": peso,
+                        "rut__cod": ruta,
+                        "dpc__car": orden,
+                        "dpc__fle": flete
+
+                    }],
+                "eedpc_det": grilla
+            }
+        };
+        cudDespachos(objJson);
+    }else{
+        alertDialogs("No se ha seleccionado ningun item para depachar.");
+    }
+
 }
 
 function cudDespachos(obj) {
-    var objCud = new GetProfileImage();
-    var urlCud = objCud.getUrlSir();
-    var mapCud = objCud.getMapData();
+    var objCud = new cud();
+    var urlCud = objCud.getUrlCud();
+    var mapCud = objCud.getmapCud();
     var inputCud = obj;
-    
+
     var jsonResp = "";
     var permitirIngreso = "";
     $.ajax({
@@ -513,11 +603,38 @@ function cudDespachos(obj) {
     }).done(function () {
         if (permitirIngreso == '"OK"') {
             localStorage["grid_data"] = "";
-            $(document).ready();
-        }else{
+            location.reload();
+        } else {
             alertDialogs("Error al consumir el servicio cud Despachos " + permitirIngreso);
         }
-
     });
 
+}
+
+function selectAll() {
+    $("#imgChekAll").removeClass();
+    $("#imgChekAll").addClass("k-sprite po_checkCreate");
+    $("#imgChekAll").attr("onClick", "unSelectAll()");
+    $("#imgChekAll").attr("title", "Quitar Selección");
+    allCheck(true);
+}
+function unSelectAll() {
+    $("#imgChekAll").removeClass();
+    $("#imgChekAll").addClass("k-sprite po_checkAct");
+    $("#imgChekAll").attr("onClick", "selectAll()");
+    $("#imgChekAll").attr("title", "Seleccionar Todos");
+    allCheck(false);
+}
+function allCheck(bool) {
+    var localData = JSON.parse(localStorage["grid_data"]);
+    for (var i = 0; i < localData.length; i++) {
+        localData[i].checkIn = bool;
+    }
+    var newDataSource = new kendo.data.DataSource({
+        data: localData
+    });
+    $("#grid").data("kendoGrid").setDataSource(newDataSource);
+    localStorage["grid_data"] = JSON.stringify(localData);
+    conditionalSum();
+    grilla("", newDataSource);
 }
