@@ -216,50 +216,7 @@ $(document).ready(function () {
             $('#grid1').data('kendoGrid').refresh();                                                                                        
         } 
     });
-//    $("#filtro_p").kendoComboBox({
-//        dataTextField: "inst__name",
-//        dataValueField: "inst__name",
-//        placeholder: "Proceso ...",
-//        dataSource: datasourcex,
-//        change: function () {
-//            var value = this.value();
-//            if (value) {
-//                grid1.data("kendoGrid").dataSource.filter({field: "inst__name", operator: "eq", value: value});
-//            } else {
-//                grid1.data("kendoGrid").dataSource.filter({});
-//            }
-//        },
-//    });
-//    //--------------------------------
-//    $("#filtro_f").kendoComboBox({
-//        dataTextField: "task__ddt",
-//        dataValueField: "task__ddt",
-//        placeholder: "Fecha...",
-//        dataSource: datasourcex,
-//        change: function () {
-//            var value = this.value();
-//            if (value) {
-//                grid1.data("kendoGrid").dataSource.filter({field: "task__ddt", operator: "eq", value: value});
-//            } else {
-//                grid1.data("kendoGrid").dataSource.filter({});
-//            }
-//        },
-//    });
-//    //--------------------------------------
-//    $("#filtro_t").kendoComboBox({
-//        dataTextField: "task__dpr",
-//        dataValueField: "task__dpr",
-//        placeholder: "Creador...",
-//        dataSource: datasourcex,
-//        change: function () {
-//            var value = this.value();
-//            if (value) {
-//                grid1.data("kendoGrid").dataSource.filter({field: "task__dpr", operator: "eq", value: value});
-//            } else {
-//                grid1.data("kendoGrid").dataSource.filter({});
-//            }
-//        },
-//    });
+
                       
                     
                         
@@ -397,29 +354,34 @@ function disable(){
     
 }
 function reasignar(){debugger
-          $("#formvacations").append("<div id='windowform'></div>");
-        var myWindow1 = $("#windowform"),undo = $("#undo");
-                
-        function onClose() {
-            undo.fadeIn();
-            $("#windowform").empty();
-        }
-        
-        var UrL= sessionStorage.getItem("url");  
-        myWindow1.kendoWindow({
-            draggable: true,
-            height: "45%",
-            modal: true,
-            resizable: false,
-            title: "Reasignar Tareas",
-            width: "50%",
-            content: UrL+"procesos/html/ReasignacionMasiva.html",
-            actions: [
-                "Close"
-            ],                               
-            close: onClose
-        }).data("kendoWindow").center().open();    
-    
+    function mostrarCustomPopUp() {
+    $("body").append("<div id='disable'></div>");
+    $("#customPopUp").fadeIn("slow");
+
+}    
+//        $("#formvacations").append("<div id='windowform'></div>");
+//        var myWindow1 = $("#windowform"),undo = $("#undo");
+//                
+//        function onClose() {
+//            undo.fadeIn();
+//            $("#windowform").empty();
+//        }
+//        
+//        var UrL= sessionStorage.getItem("url");  
+//        myWindow1.kendoWindow({
+//            draggable: true,
+//            height: "40%",
+//            modal: true,
+//            resizable: false,
+//            title: "Reasignar Tareas",
+//            width: "50%",
+//            content: UrL+"procesos/html/ReasignacionMasiva.html",
+//            actions: [
+//                "Close"
+//            ],                               
+//            close: onClose
+//        }).data("kendoWindow").center().open();    
+//    
 }
 function changImgFunc1(results) {
    var results =  $('#grid1').data('kendoGrid')._data;
@@ -512,8 +474,7 @@ function changImgFunc1(results) {
                     }
     }
     
- }
-
+ }  
 }
 
 function changImgFunc(results) {

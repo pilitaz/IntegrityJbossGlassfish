@@ -30,7 +30,33 @@
         <link href="../css/procesos.css" rel="stylesheet" type="text/css"/>
     </head>
     <body> 
-        
+        <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
+                    <tr data-uid="#: uid #"> 
+                    
+            
+                    <td>
+                    <span class="title" id ="#: task__name #">#: task__name # </span>
+                    </td>
+                    <td>
+                    <a  class='k-grid-proceso'><span title='Proceso' id = "spanproceso#: task__name#" class='k-sprite pro_groupoff'></span></a>
+                    </td>
+            
+                    </tr>
+        </script>
+        <script id="altRowTemplateCmp" type="text/x-kendo-tmpl">
+                    <tr class="k-alt" data-uid="#: uid #">
+                    
+                    
+                    <td>
+                    <span class="title" id ="#: task__name #">#: task__name # </span>
+                    </td>
+                    <td>
+                    <a  class='k-grid-proceso'><span title='Asignar Usuarios' id = "spanproceso#: task__name#" class='k-sprite pro_groupoff'></span></a>
+                  
+                    </td>
+                    </tr>
+    
+        </script>
             <div>
                 <table style="height: 50px; vertical-align: top">
                     <td style="width: 50px;height: 50px"><a class="k-grid"  aling="center"><span class="k-sprite pro_group"></span></a></td>
