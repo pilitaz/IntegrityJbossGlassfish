@@ -741,10 +741,10 @@ app.controller("firstControler", ["$scope", "$http", function ($scope, $http) {
                     if($scope.permitirIngreso == '"OK"'){
                         if($scope.jsonResp.ownbirthday[0].mybirthday){
                             mostrarCumple();
-                        }else{
+                        }else if($scope.jsonResp[$scope.mapSir]){
                             mostrarNotiCumple();
                             $scope.items = $scope.jsonResp[$scope.mapSir];
-                            document.getElementById("idFrame").src = "fondo.html";
+                            document.getElementById("idFrame").src = "fondo.html";    
                         }
                     }else{
                         document.getElementById("idFrame").src = "fondo.html";
