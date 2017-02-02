@@ -136,8 +136,7 @@ function changImgFunc(results) {
 });
         
 function cerrar(){
-    //onClosex();
     $("#windous").data("kendoWindow").close();
-    
+    location.reload(true);
 }
                               

@@ -354,34 +354,34 @@ function disable(){
     
 }
 function reasignar(){debugger
-    function mostrarCustomPopUp() {
-    $("body").append("<div id='disable'></div>");
-    $("#customPopUp").fadeIn("slow");
-
-}    
-//        $("#formvacations").append("<div id='windowform'></div>");
-//        var myWindow1 = $("#windowform"),undo = $("#undo");
-//                
-//        function onClose() {
-//            undo.fadeIn();
-//            $("#windowform").empty();
-//        }
-//        
-//        var UrL= sessionStorage.getItem("url");  
-//        myWindow1.kendoWindow({
-//            draggable: true,
-//            height: "40%",
-//            modal: true,
-//            resizable: false,
-//            title: "Reasignar Tareas",
-//            width: "50%",
-//            content: UrL+"procesos/html/ReasignacionMasiva.html",
-//            actions: [
-//                "Close"
-//            ],                               
-//            close: onClose
-//        }).data("kendoWindow").center().open();    
-//    
+//    function mostrarCustomPopUp() {
+//    $("body").append("<div id='disable'></div>");
+//    $("#customPopUp").fadeIn("slow");
+//
+//}    
+        $("#formvacations").append("<div id='windowform'></div>");
+        var myWindow1 = $("#windowform"),undo = $("#undo");
+                
+        function onClose() {
+            undo.fadeIn();
+            $("#windowform").empty();
+        }
+        
+        var UrL= sessionStorage.getItem("url");  
+        myWindow1.kendoWindow({
+            draggable: true,
+            height: "40%",
+            modal: true,
+            resizable: false,
+            title: "Reasignar Tareas",
+            width: "50%",
+            content: UrL+"procesos/html/ReasignacionMasiva.html",
+            actions: [
+                "Close"
+            ],                               
+            close: onClose
+        }).data("kendoWindow").center().open();    
+    
 }
 function changImgFunc1(results) {
    var results =  $('#grid1').data('kendoGrid')._data;
