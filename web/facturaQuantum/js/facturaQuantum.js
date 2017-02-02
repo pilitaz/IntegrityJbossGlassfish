@@ -98,7 +98,7 @@ function iniDropDownList(){
                 parameterMap: function (options, operation) {
                     try {
                         if (operation === 'read') {
-                            auth.dssic_suc.eetemp[0].piccia_nit = sessionStorage.getItem("companyNIT");
+                            auth.dssic_suc.eetemp[0].piccia_nit = sessionStorage.getItem("companyNIT");                            
                             //console.log(JSON.stringify(auth));
                             auth["eesic_suc"] = [options];
                             return JSON.stringify(auth);
@@ -158,9 +158,10 @@ function iniDropDownList(){
                 parameterMap: function (options, operation) {                    
                     try {                         
                         if (operation === 'read') {
-//                            authdssic_clc.dssic_clc.eetemp = new Array();
-//                            authdssic_clc.dssic_clc.eetemp[0] = new Object();
-//                            authdssic_clc.dssic_clc.eetemp[0].piccod__por = sessionStorage.getItem("portafolio");
+                            authdssic_clc.dssic_clc.eeSIRsic_clc = new Array();
+                            authdssic_clc.dssic_clc.eeSIRsic_clc[0] = new Object();
+                            authdssic_clc.dssic_clc.eeSIRsic_clc[0].piiclc_cod = "";
+                            authdssic_clc.dssic_clc.eeSIRsic_clc[0].piipor_cod_aso = sessionStorage.getItem("portafolio");
 //                            authdssic_clc["eesic_tcont"] = [options];                            
                             return JSON.stringify(authdssic_clc);
                         }	
@@ -774,21 +775,15 @@ function setInfoCliente(e){
                     type: "POST"
                 },
                 parameterMap: function (options, operation) { // authdsgfc_cli JSon que se envia al cliente
-                    try{
-                        if($("#ipSucursal").val()==""){
-                            alertDialogs("Debe seleccionar primero la sucursal");                       
-                        }else{                             
-                            if (operation === 'read') {                            
-                                
-                                var key1 = Object.keys(jsonVendedor)[0];
-                                var key2 = Object.keys(jsonVendedor[key1])[1];
-                                jsonVendedor[key1][key2][0].piccod_suc = $("#ipSucursal").val();
-                                jsonVendedor[key1][key2][0].picven_cod = sessionStorage.getItem("codVendedor");
-                                jsonVendedor[key1][key2][0].piiven_est = 0;
-                                
-                                return JSON.stringify(jsonVendedor);
-                            } 
-                        }                        
+                    try{                        
+                        if (operation === 'read') {                            
+                            var key1 = Object.keys(jsonVendedor)[0];
+                            var key2 = Object.keys(jsonVendedor[key1])[1];                            
+                            jsonVendedor[key1][key2][0].picven_cod = sessionStorage.getItem("codVendedor");
+                            jsonVendedor[key1][key2][0].piiven_est = 0;
+                            
+                            return JSON.stringify(jsonVendedor);
+                        }                         
                     } catch (e) {
                         alertDialogs(e.message)
                     }                
@@ -798,7 +793,7 @@ function setInfoCliente(e){
             schema: {
                 data: function (e) {                
                     var key1 = Object.keys(e)[0];
-                    if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                    if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {                        
                         return e[key1][mapDataVendedor];
                     } else {
                         alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
@@ -1006,7 +1001,10 @@ function onDataBoundOpcPago(e){
 function onDataBoundVendedor(e){
     var dropdownlist = $("#ipVendedor").data("kendoDropDownList");
     dropdownlist.value(sessionStorage.getItem("codVendedor")); 
-    dropdownlist.readonly(true)
+    dropdownlist.readonly(true);
+    var dropdownlistSuc = $("#ipSucursal").data("kendoDropDownList");
+    dropdownlistSuc.value(dropdownlist.dataSource._data[dropdownlist.selectedIndex].suc__cod);
+    dropdownlistSuc.readonly(true);
 }
 
 function onChangetfacpag(e){    

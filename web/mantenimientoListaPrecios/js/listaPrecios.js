@@ -169,14 +169,7 @@ function popupCU(titulo) {
     }
 
 }
-function closePopUp() {
-    bandAlert = 0;
-    dataGridDetalleListaPrecios = [];
-    cargarDatosGrilla();
-    $('#gridDetalleListaPrecios').data('kendoGrid').dataSource.read();
-    $('#gridDetalleListaPrecios').data('kendoGrid').refresh();
-    $("#windowListPre").data("kendoWindow").close();
-}
+
 
 function volver() {
     var servicio = "mantenimientoListaPrecios";
@@ -301,120 +294,35 @@ function cambiarInput() {
     var ope = sessionStorage.getItem("opeListPre");
     if (ope === "edit") {
         var obj = JSON.parse(sessionStorage.getItem("listaPrecios"));
-        document.getElementById('ipFechaInicio').innerHTML = obj.lis__fin;
-        document.getElementById('ipFechaFin').innerHTML = obj.lis__ffi;
-        document.getElementById('ipDescripcion').innerHTML = obj.lis__des;        
+        document.getElementById('idFechaInicio').innerHTML = obj.lis__fin;
+        document.getElementById('idFechaFin').innerHTML = obj.lis__ffi;
+        document.getElementById('idDescripcion').innerHTML = obj.lis__des;        
     } else {
-        document.getElementById('ipFechaInicio').innerHTML = "";
-        document.getElementById('ipFechaFin').innerHTML = "";
-        document.getElementById('ipDescripcion').innerHTML = "";        
+        document.getElementById('idFechaInicio').innerHTML = "";
+        document.getElementById('idFechaFin').innerHTML = "";
+        document.getElementById('idDescripcion').innerHTML = "";        
     }
-}
-function guardarListaPrecios() {
-    alert("guardarListaPrecios");
-}
-
-function validarListaPrecios() {
-    alert("validarListaPrecios");
-}
-
-function cargarListaPrecios(listaPrecios) {
-    alert("cargarListaPrecios");
 }
 
 function editCab() {
-    if (bandAlert === 0) {
         cambiarInput();
         var servicio = "listaPreciosCabecera";
         sessionStorage.setItem("servicio", servicio);
 
-        $("body").append("<div id='windowCab'></div>");
-        var myWindow = $("#windowCab");
-        var undo = $("#undo");
-        bandAlert = bandAlert + 1;
-        function onCloseCabecera() {
-            document.getElementById("windowCab").remove();
-            undo.fadeIn();
-            bandAlert = 0;
-        }
-
-        myWindow.kendoWindow({
-            width: "60%",
-            height: "40%",
-            title: "Busqueda",
-            content: sessionStorage.getItem("url") + "/mantenimientoListaPrecios/html/" + servicio + ".html",
-            visible: false,
-            modal: true,
-            resizable: false,
-            actions: [
-                "Close"
-            ],
-            close: onCloseCabecera
-        }).data("kendoWindow").center().open();
-    }
-
+        
+    $("body").append("<div id='disable'></div>") ;
+    mostrarCustomPopUp();
 //    window.location.replace((sessionStorage.getItem("url") + "mantenimientoListaPrecios/html/" + servicio + ".html"));
 }
 function cabGuard(jsonResp) {
 
     sessionStorage.setItem("listaPrecios", jsonResp);
     cambiarInput();
-    var myWindow = $("#windowCab");
-    myWindow.data("kendoWindow").close();
+    cerrarCustomPopUp();
 }
 
 function inputsPopUp(e){
-//    e.container.find("input[name=cla__des]").removeClass();
-//    e.container.find("input[name=cla__des]").kendoDropDownList({
-//        dataTextField: 'cla__des',
-//        dataValueField: 'cla__cod',
-//        optionLabel: "Seleccionar clase de articulo...",
-//        
-//        change: onChangeClase,
-//        dataSource: {
-//            type: "json",
-//            transport: {
-//                read: {
-//                    url: ipServicios + baseParameters + "SIRinv_cla",
-//                    contentType: "application/json; charset=utf-8",
-//                    dataType: "json",
-//                    type: "POST"
-//                },
-//                parameterMap: function (options, operation) {
-//                    try {
-//                        authdsinv_cla.dsinv_cla.eetemp[0].picsuc_cod = "00101";
-//                        if (operation === 'read') {
-//                            authdsinv_cla["eeinv_cla"] = [options];
-//                            return JSON.stringify(authdsinv_cla);
-//                        }
-//                    } catch (e) {
-//                        alertDialogs(e.message);
-//                    }
-//                }
-//            },
-//            schema: {
-//                type: "json",
-//                data: function (e) {
-//                    if (e.dsinv_cla.eeEstados[0].Estado === "OK") {
-//                        return e.dsinv_cla.eeinv_cla;
-//                    } else {
-//                        alertDialogs(e.dsinv_cla.eeEstados[0].Estado);
-//                    }
-//                },
-//                model: {
-//                    id: "cla__cod",
-//                    fields: {
-//                        cla__cod: {validation: {required: true}, type: 'number'},
-//                        cla__des: {validation: {required: true}, type: 'string'}
-//                    }
-//                }
-//            },
-//            error: function (xhr, error) {
-//                alertDialogs("Error de conexion del servidor " + xhr.xhr.status + " " + xhr.errorThrown);
-//            }
-//        }
-//    });
-////    ----------------------------------------------
+
     var objP = new SIRgpr_pre();
     var objArtP = objP.getjson();
     var urlSirP = objP.getUrlSir();
@@ -470,4 +378,14 @@ function inputsPopUp(e){
         }
     });
 }
+function mostrarCustomPopUp() {
+    $("#customPopUp").fadeIn();
+    onloadPopUpCabecera();
 
+}
+function cerrarCustomPopUp() {
+    $("#disable").fadeOut("slow");
+    $("#customPopUp").fadeOut("slow");
+    $( "#disable" ).remove();
+//    $("#regalo").fadeOut("slow");
+}

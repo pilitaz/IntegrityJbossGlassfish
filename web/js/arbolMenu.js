@@ -14,6 +14,16 @@ function cargarArbol() {
             } catch (e) {
                 alert("funcion Arbol: el json que recibe no es correcto ----" + e.message);
             }
+            var to = false;
+            $('#inpSearch').keyup(function (e) {
+                debugger
+              if(to) { clearTimeout(to); }
+              to = setTimeout(function () {
+                var v = $('#inpSearch').val();
+                //$('#jstree2').jstree(true).search(v);
+                $('#jstree2').jstree('search', v);
+              }, 250);
+            });
             $('#jstree2').on('dblclick', function () {
                 if (sessionStorage.getItem("cabeceraLast") || (sessionStorage.getItem("cabeceraNew")) || (sessionStorage.getItem("cabeceraTitu")) || (sessionStorage.getItem("cabeceraLlaves"))) {
                     sessionStorage.removeItem('cabeceraTitu');

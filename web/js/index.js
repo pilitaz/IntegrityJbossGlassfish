@@ -345,7 +345,7 @@ function menufunciones() {
                     dataarbol = dataarbol.replace(/CON IMAGEN/g, "../css/images/leaf.gif");
                     dataarbol = dataarbol.replace(/SIN IMAGEN/g, "");
                     dataarbol = dataarbol.replace(/Servicio/g, "columna5");
-                    txtJson = "{ \"plugins\" : [],\"core\" : { \"data\" : " + dataarbol + "}}";
+                    txtJson = "{ \"plugins\" : [\"search\"],\"core\" : { \"data\" : " + dataarbol + "},\"search\": {\"case_insensitive\": true,\"show_only_matches\" : true}}";
                     sessionStorage.setItem("txtJson2", txtJson);
                     cargarArbol();
 
@@ -741,10 +741,10 @@ app.controller("firstControler", ["$scope", "$http", function ($scope, $http) {
                     if($scope.permitirIngreso == '"OK"'){
                         if($scope.jsonResp.ownbirthday[0].mybirthday){
                             mostrarCumple();
-                        }else{
+                        }else if($scope.jsonResp[$scope.mapSir]){
                             mostrarNotiCumple();
                             $scope.items = $scope.jsonResp[$scope.mapSir];
-                            document.getElementById("idFrame").src = "fondo.html";
+                            document.getElementById("idFrame").src = "fondo.html";    
                         }
                     }else{
                         document.getElementById("idFrame").src = "fondo.html";

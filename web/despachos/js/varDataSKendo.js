@@ -59,10 +59,10 @@ function sir() {
 
 ///////////////////////////////////////////////////////////////////////////////////////
 function cud() {
-    var url = ipServicios + baseComercial + "SICUDdpc_loc";
-    var mapCud = "eedpc_loc";
+    var url = ipServicios + baseComercial + "SICUDdpc_cab";
+    var mapCud = "eedpc_cab";
     var dataInputCud = {
-        "dsSICUDdpc_loc": {
+        "dsSICUDdpc_cab": {
             "eeDatos": [
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
@@ -437,8 +437,8 @@ function Sirdespacho() {
                 }],
                 "eeSIRgpd_pdet_dpc": [{
                     "rgeo_cod": 0,
-                    "ciu_cod": "5711001",
-                    "com_con": "Rionegro"
+                    "ciu_cod": "*",
+                    "com_con": "*"
                 }]
         }
     };
