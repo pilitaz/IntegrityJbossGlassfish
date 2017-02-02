@@ -6,6 +6,12 @@
 
 var asigGuardada;
 
+$(window).resize(function () {
+    var viewportHeight = $(window).height();
+    $('#outerWrapper').height(viewportHeight - 30);
+    $('.k-grid-content').height(viewportHeight - 100);
+});
+
 $(document).ready(function() {   
     grisFacDespachos();
 });
@@ -100,7 +106,7 @@ function grisFacDespachos(){
             {field: "dpc__car", title: "Orden"},
 //            {field: "art__cant", title: "Cantidad en inventario"},
             {command:[
-                    {name: "editar", click: mostrarCustomPopUp, template: "<a class='k-grid-editar'><span class='k-sprite po_checkCreate'></span></a>"},
+                    {name: "editar", click: crearListaPrecios, template: "<a class='k-grid-editar'><span class='k-sprite po_checkCreate'></span></a>"},
                     {name: "ver",  click: clickVer, template: "<a class='k-grid-ver'><span class='k-sprite po_preview'></span></a>"},
                 ],
                 width: "100px"
@@ -115,6 +121,26 @@ function grisFacDespachos(){
             }
         }
     });
+}
+
+function crearListaPrecios() {
+
+    
+    var servicio = "listaPreciosCabecera";
+    sessionStorage.setItem("servicio", servicio);
+
+    $("body").append("<div id='windowCab'></div>");
+    var myWindow = $("#windowCab");
+    var undo = $("#undo");
+
+    function onCloseCabecera() {
+        document.getElementById("windowCab").remove();
+        undo.fadeIn();
+    }
+   $("body").append("<div id='disable'></div>");
+    
+    mostrarCustomPopUp();
+//    window.location.replace((sessionStorage.getItem("url") + "mantenimientoListaPrecios/html/" + servicio + ".html"));
 }
 
 function facturarDespacho(e){
@@ -217,7 +243,7 @@ function clickVer(e) {
 }
 
 function mostrarCustomPopUp() {
-    $("body").append("<div id='disable'></div>");
+   // $("body").append("<div id='disable'></div>");
     $("#customPopUp").fadeIn("slow");
 
 }
