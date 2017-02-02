@@ -240,3 +240,67 @@ function dsSIRdpc_det() {
     };
     
 };
+
+/**
+ * Funcion para obtener la url y el json de entrada para facturar el despacho
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ *  
+ *    "eeSIRsic_clc": [{
+   "piiclc_cod": "*",
+   "Piipor_cod_aso": "03"
+ */
+function dssic_clc() {
+    var mapData = "eesic_clc";
+    var urlSir = ipServicios + baseParameters + "SIRsic_clc";
+    var json = 
+            {  
+            "dssic_clc":{  
+                "eeDatos":[  
+                {  
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "eeSIRsic_clc":[  
+                {  
+                    "piiclc_cod": "*",
+                    "piipor_cod_aso": "?"                    
+                }
+            ]  
+        }
+    };
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+    this.setMapData = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getMapData = function () {
+        return mapData;
+    };
+    
+};

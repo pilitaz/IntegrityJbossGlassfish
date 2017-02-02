@@ -13,6 +13,69 @@ $(window).resize(function () {
 });
 
 $(document).ready(function() {   
+    
+    var obj = new dssic_clc();    
+    var objJson = obj.getjson();
+    var url = obj.getUrlSir();
+    var mapData = obj.getMapData();
+    
+    //carga el combo de sucursales
+    $("#ipClaseDoc").kendoDropDownList({
+        optionLabel: "Seleccione.....",
+        dataTextField: "clc__nom",
+        dataValueField: "clc__cod",
+        template:'<div class="divElementDropDownList">#: data.clc__nom #</div>',
+        dataBound: function (e){
+          var dropdownlist = $("#ipSucursal").data("kendoDropDownList");
+          dropdownlist.readonly();  
+          dropdownlist.enable(false);  
+        },
+        dataSource: {
+            transport: {
+                read: {
+                    url: url,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) {
+                    try {
+                        if (operation === 'read') {
+                            var key1 = Object.keys(objJson)[0];
+                            var key2 = Object.keys(objJson[key1])[1];
+                            objJson[key1][key2][0].piipor_cod_aso = sessionStorage.getItem("portafolio");                            
+                            
+                            return JSON.stringify(objJson);
+                        }	
+                    } catch (e) {
+                        alertDialogs("Error en el servicio"+ e.message);
+                    }
+                },
+            },
+            schema: {
+                type: "json",
+                data:function (e){
+                    var key1 = Object.keys(e)[0];
+                    if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                        return e[key1][mapData];
+                    } else {
+                        alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                    }
+                },
+                model: {
+                    id: "clc__cod",
+                    fields: {
+                        clc__cod: {validation: {required: true}, type: 'string'},
+                        clc__nom: {validation: {required: true}, type: 'string'}
+                    }
+                }
+            },
+            error: function (xhr, error) {
+                alertDialogs("Error de conexion del servidor " +xhr.xhr.status+" "+ xhr.errorThrown);
+            }
+        }        
+    });
+    
     grisFacDespachos();
 });
 
@@ -31,12 +94,6 @@ function grisFacDespachos(){
                     dataType: 'json',
                     type: "POST"                
                 },
-    //            update: {
-    //                url: urlFacDespacho,
-    //                dataType: "json",
-    //                type: "PUT",
-    //                contentType: "application/json"
-    //            },
                 parameterMap: function (options, operation) {
                     
                     var fecha= new Date(sessionStorage.getItem("fechaSistema"));
@@ -46,25 +103,8 @@ function grisFacDespachos(){
     
                     try {
                         if (operation === 'read') {
-//                            var key1 = Object.keys(json)[0];
-//                            var key2 = Object.keys(json[key1])[1];
-//                            json[key1][key2][0].pidfecha = sessionStorage.getItem("fechaSistema");
                             return JSON.stringify(json);                        
                         }
-    //                    if (operation === "update") {                       
-    //                        
-    //                        var key1 = Object.keys(jsonjFacDespacho)[0];
-    //                        var key2 = Object.keys(jsonjFacDespacho[key1])[1];                        
-    //                        jsonjFacDespacho[key1][key2][0].ped__fec = options.ped__fec;
-    //                        jsonjFacDespacho[key1][key2][0].suc__cod = options.suc__cod;
-    //                        jsonjFacDespacho[key1][key2][0].clc__cod = options.clc__cod;
-    //                        jsonjFacDespacho[key1][key2][0].cla__cod = options.cla__cod;
-    //                        jsonjFacDespacho[key1][key2][0].art__cod = options.art__cod;
-    //                        jsonjFacDespacho[key1][key2][0].ped__num = options.ped__num;
-    //                        jsonjFacDespacho[key1][key2][0].lis__num = options.lis__num;
-    //                        jsonjFacDespacho[key1][key2][0].ped__aasi = options.ped__aasi;
-    //                        return JSON.stringify(jsonjFacDespacho);
-    //                    }
                     } catch (e) {
                         alertDialogs("Error en el servicio" + e.message);
                     }
@@ -106,7 +146,7 @@ function grisFacDespachos(){
             {field: "dpc__car", title: "Orden"},
 //            {field: "art__cant", title: "Cantidad en inventario"},
             {command:[
-                    {name: "editar", click: crearListaPrecios, template: "<a class='k-grid-editar'><span class='k-sprite po_checkCreate'></span></a>"},
+                    {name: "editar", click: mostrarCustomPopUp, template: "<a class='k-grid-editar'><span class='k-sprite po_checkCreate'></span></a>"},
                     {name: "ver",  click: clickVer, template: "<a class='k-grid-ver'><span class='k-sprite po_preview'></span></a>"},
                 ],
                 width: "100px"
@@ -123,27 +163,10 @@ function grisFacDespachos(){
     });
 }
 
-function crearListaPrecios() {
-
-    
-    var servicio = "listaPreciosCabecera";
-    sessionStorage.setItem("servicio", servicio);
-
-    $("body").append("<div id='windowCab'></div>");
-    var myWindow = $("#windowCab");
-    var undo = $("#undo");
-
-    function onCloseCabecera() {
-        document.getElementById("windowCab").remove();
-        undo.fadeIn();
-    }
-   $("body").append("<div id='disable'></div>");
-    
-    mostrarCustomPopUp();
-//    window.location.replace((sessionStorage.getItem("url") + "mantenimientoListaPrecios/html/" + servicio + ".html"));
-}
-
 function facturarDespacho(e){
+    var cla_cod = $("#ipClaseDoc").val();
+    
+    cerrarCustomPopUp()
     
     var objFacDespacho = new SICUDgfc_fac_dpc();
     var jsonjFacDespacho = objFacDespacho.getjson();
@@ -155,7 +178,8 @@ function facturarDespacho(e){
     
     var grid = $("#gridFacturacionDespachos").data("kendoGrid");
     var despachos; 
-    debugger
+    var facturas;
+    
     if(e){
         despachos = 1;
         e.preventDefault();
@@ -171,6 +195,7 @@ function facturarDespacho(e){
         
         jsonjFacDespacho[key1][key2][i] = new Object();
         jsonjFacDespacho[key1][key2][i].piindicador = itemID.piindicador;
+        jsonjFacDespacho[key1][key2][i].clc__cod__fac = cla_cod;
         jsonjFacDespacho[key1][key2][i].act__cod = itemID.act__cod;
         jsonjFacDespacho[key1][key2][i].cab__obs = itemID.cab__obs;
         jsonjFacDespacho[key1][key2][i].cam__cod = itemID.cam__cod;
@@ -222,7 +247,7 @@ function facturarDespacho(e){
         success: function (e) {
             var key1 = Object.keys(e)[0];
             if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
-               debugger
+               facturas = e.dsSICUDfac_fac_dpc.eeSICUDfac_fac_dpc;                
             }
             
         },
@@ -230,8 +255,31 @@ function facturarDespacho(e){
             alertDialogs("Error consumiendo el servicio \n"+ e.status +" - "+ e.statusText);
         }
     }).done(function(){
+        var mensaje = "Se generarón las facturas Nº: ";
+        
+        if (facturas.length===1){
+            mensaje = "Se genero la factura Nº: ";
+        }
+        
+        for (var i=0; i<facturas.length; i++){            
+            if(i===facturas.length-1){
+                mensaje = mensaje + facturas[i].fac__nro + ". Para imprimir vaya a 'Facturacion'.";
+            }else{
+                mensaje = mensaje + facturas[i].fac__nro + ", ";
+            }
+        }
+        
+        var actions = new Array();
+        actions[0] = new Object();
+        actions[0].text = "Salir";            
+        actions[0].action = salirDialog;     
+        createDialog("Atención", mensaje, "400px", "auto", true, true, actions);
         
     });
+}
+
+function salirDialog(){
+    location.reload()
 }
 
 function clickVer(e) {
@@ -243,7 +291,7 @@ function clickVer(e) {
 }
 
 function mostrarCustomPopUp() {
-   // $("body").append("<div id='disable'></div>");
+    $("body").append("<div id='disable'></div>");
     $("#customPopUp").fadeIn("slow");
 
 }
@@ -253,4 +301,3 @@ function cerrarCustomPopUp() {
     $( "#disable" ).remove();
 //    $("#regalo").fadeOut("slow");
 }
-
