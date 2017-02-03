@@ -40,7 +40,7 @@ $(document).ready(function() {
     if(sessionStorage.getItem("regPedidos")){
         setInfoCabeceraPedido();
     }else if(sessionStorage.getItem("actor")==="cliente" ){
-        $("#ipNITCliente").val(sessionStorage.getItem("companyNIT"));
+        $("#ipNITCliente").val(sessionStorage.getItem("clienteNIT"));
         
         var objCli = new sirConsultaCliente();
         var objJsonCli = objCli.getjson();
@@ -808,12 +808,17 @@ function setInfoCabeceraPedido(){
     datepicker.value(fechaEnt);
     datepicker.readonly(true);
     
-    var fechaTasa = new Date(pedido.fec__tasa.replace(/-/g, "/"));
-    fechaTasa.setHours(0,0,0,0);
+    if(pedido.fec__tasa!==null){
+        
+        var fechaTasa = new Date(pedido.fec__tasa.replace(/-/g, "/"));
+        fechaTasa.setHours(0,0,0,0);
+        var datepicker = $("#ipFechaTasa").data("kendoDatePicker");
+        datepicker.value(fechaTasa);
+        datepicker.readonly(true);
+    }
     
-    var datepicker = $("#ipFechaTasa").data("kendoDatePicker");
-    datepicker.value(fechaTasa);
-    datepicker.readonly(true);
+    
+    
     
     $("#ipNumOrden").val(pedido.ord__nump);
     
