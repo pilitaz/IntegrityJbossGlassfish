@@ -40,7 +40,7 @@ $(document).ready(function() {
     if(sessionStorage.getItem("regPedidos")){
         setInfoCabeceraPedido();
     }else if(sessionStorage.getItem("actor")==="cliente" ){
-        $("#ipNITCliente").val(sessionStorage.getItem("companyNIT"));
+        $("#ipNITCliente").val(sessionStorage.getItem("clienteNIT"));
         
         var objCli = new sirConsultaCliente();
         var objJsonCli = objCli.getjson();
