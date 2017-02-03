@@ -6,7 +6,7 @@
 
 
 $(document).ready(function () {
-    debugger
+    
     
    var despacho = JSON.parse(sessionStorage.getItem("regDespacho"));
    
