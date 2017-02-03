@@ -808,12 +808,17 @@ function setInfoCabeceraPedido(){
     datepicker.value(fechaEnt);
     datepicker.readonly(true);
     
-    var fechaTasa = new Date(pedido.fec__tasa.replace(/-/g, "/"));
-    fechaTasa.setHours(0,0,0,0);
+    if(pedido.fec__tasa!==null){
+        
+        var fechaTasa = new Date(pedido.fec__tasa.replace(/-/g, "/"));
+        fechaTasa.setHours(0,0,0,0);
+        var datepicker = $("#ipFechaTasa").data("kendoDatePicker");
+        datepicker.value(fechaTasa);
+        datepicker.readonly(true);
+    }
     
-    var datepicker = $("#ipFechaTasa").data("kendoDatePicker");
-    datepicker.value(fechaTasa);
-    datepicker.readonly(true);
+    
+    
     
     $("#ipNumOrden").val(pedido.ord__nump);
     
