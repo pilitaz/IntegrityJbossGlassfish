@@ -17,6 +17,11 @@ $(document).ready(function () {
    if(datos_cliente.dpc__par==true){var despachos = "Si"}else{var despachos = "No"}
    document.getElementById('Despachos_Parciales').innerHTML = despachos;
    if(datos_cliente.cli__tra==true){var transporte = "Si"}else{var transporte = "No"}
+   document.getElementById('Despachos_Parciales').innerHTML = despachos;
+   if(datos_cliente.cli__tra==true){var transporte = "Si"}else{var transporte = "No"}
+   if(datos_cliente.gfc__nal==true){var ClienteNacional = "Si"}else{var ClienteNacional = "No"}
+   document.getElementById('Cliente_Nacional').innerHTML = ClienteNacional;
+   
    document.getElementById('Transporte').innerHTML =transporte;
    document.getElementById('Numero_de_Copias_Factura').innerHTML = datos_cliente.num__cop__fac;
    document.getElementById('Forma_de_Pago').innerHTML = datos_cliente.pago__cod;

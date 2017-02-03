@@ -99,7 +99,7 @@ $(document).ready(function () {
                     {name: "tareas", text: "", click: grilla, template: "<a title='comenzar' class='k-grid-tareas'><span  title='comenzar' class='k-sprite pro_groupoff'></span></a>"},
                     {name: "editar", text: " ",  click: grafica, template: "<a class='k-grid-editar'><span class='k-sprite pro_graphoff '></span></a>"},
                     {name: "info", text: " ",  template: "<a class='k-grid-info'><span class='k-sprite pro_infooff'></span></a>"},
-                    {name: "play", text: " ",  click: iniciarProceso, template: "<a class='k-grid-play'><span class='k-sprite pro_playoff '></span></a>"},
+                    {name: "play", text: " ",  template: "<a class='k-grid-play'><span class='k-sprite pro_playoff '></span></a>"},
                            
                 ],
                 width: "220px"}],                            
@@ -391,7 +391,7 @@ function changImgFunc1(results) {
     
      $.ajax({
             type: "POST",
-            async: false,
+            async: false, 
             data: JSON.stringify(datajson),
             url: urlService,
             dataType : "json",  
@@ -485,7 +485,7 @@ function changImgFunc(results) {
      document.getElementById("spanplay"+results[i].proc__name).setAttribute("estado", "on");
         }else
         {}}
- 
+  
     for (var i = 0; i < results.length; i++) {        
         if(results[i].adm===true){
         }else

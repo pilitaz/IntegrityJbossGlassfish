@@ -32,6 +32,12 @@
         dataSource: data
         
     });
+    $("#Cliente_Nacional").kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "value",       
+        dataSource: data
+        
+    });
         $("#Transporte_por").kendoDropDownList({
         dataTextField: "text",
         dataValueField: "value",
@@ -93,6 +99,11 @@
             }else{
                 var transporte = false; 
             }
+              if (($("#Cliente_Nacional").data("kendoDropDownList")._old)==="1") {
+                 var clienteNacional = true; 
+            }else{
+                var clienteNacional = false; 
+            }
            var copias_factura = $("#Copias_Factura")[0].value;  
            var forma = $("#Forma_Pago").data("kendoDropDownList");
            var select = forma.selectedIndex;
@@ -143,6 +154,7 @@
            actjson.dsSICUDgpd_cli.eegpd_cli[0].loc__cod=bodegas;
            actjson.dsSICUDgpd_cli.eegpd_cli[0].ter__cret=precio_est;
            actjson.dsSICUDgpd_cli.eegpd_cli[0].cli__gal=galones;
+           actjson.dsSICUDgpd_cli.eegpd_cli[0].gfc__nal=clienteNacional;
            
            
                            $.ajax({
