@@ -3,6 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var dpcamion;
+var dptransportista
+var dpruta;
+
 var objPopup = [];
 $(window).resize(
         function () {
@@ -21,7 +25,7 @@ $(document).ready(
                 visible: false, //the window will not appear before its .open method is called
             }).data("kendoWindow");
             addRow();
-            ruta();
+            //ruta();
             fleteList();
         });
 
@@ -72,12 +76,15 @@ function camion() {
     var urlService = consultar.getUrlSir();
     var mapCud1 = "eedpc_cam";
     $("#Camion").removeClass();
-    $("#Camion").kendoComboBox({
+    dpcamion = $("#Camion").kendoComboBox({
         dataTextField: "cam__des",
         dataValueField: "cam__cod",
-        template: '<div class="divElementDropDownList">#: data.cam__des #' + ' - ' + ' #:data.cam__vers #</div>',
+        template: '<div class="divElementDropDownList">#: data.cam__des #' + ' - ' + ' #:data.cam__vers #</div>',        
         select: function (e) {
-            transportista(e);
+            debugger
+            if($("#Ruta").val()!==""){
+                transportista(e);
+            }            
         },
         dataSource: {
             transport: {
@@ -109,12 +116,12 @@ function camion() {
                         cam__cod: {editable: false, nullable: false},
                         cam__des: {editable: false, nullable: false},
                         cam__vers: {editable: false, nullable: false},
-                        cam__pla: {editable: false, nullable: false},
+                        cam__pla: {editable: false, nullable: false}
                     }
                 }
             }
         }
-    });
+    }).data("kendoDropDownList");
 }
 
 function ruta() {
@@ -122,12 +129,17 @@ function ruta() {
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();
     var mapCud1 = "eedpc_rut";
-    $("#Ruta")
+    $("#Ruta").removeClass();
+    dpruta = $("#Ruta")
             .kendoComboBox({
                 dataTextField: "rut__des",
                 dataValueField: "rut__cod",
-                template: '<div class="divElementDropDownList">Desde:#: data.bar__dsc1 #' + ' Hasta: ' + ' #:data.bar__dsc2 #</div>',
+                template: '<div class="divElementDropDownList">Desde:#: data.bar__dsc1 #' + ' Hasta: ' + ' #:data.bar__dsc2 #</div>',                
                 select: function (e) {
+                    debugger
+                    if($("#Camion").val()!==""){
+                        transportista(e);
+                    }            
                 },
                 dataSource: {
                     transport: {
@@ -163,7 +175,7 @@ function ruta() {
                         }
                     }
                 }
-            });
+            }).data("kendoDropDownList");
 }
 
 function transportista(e) {
@@ -171,14 +183,15 @@ function transportista(e) {
     var consultar = new sirTransportista();
     var datajson = consultar.getjson();
     datajson.dsSIRdpc_tra.eeSIRdpc_tra[0].piicam_cod = parseInt(e.dataItem.cam__cod);
+    datajson.dsSIRdpc_tra.eeSIRdpc_tra[0].piirut_cod = $("#Ruta").val();
     //datajson.dsSIRgpd_cli_suc.SIRgpd_cli_suc[0].picciu__cod= $("#Ciudad").data("kendoComboBox")._old;
     var urlService = consultar.getUrlSir();
     var mapCud1 = "eedpc_tra";
-    $("#Transportista")
+    dptransportista = $("#Transportista")
             .kendoComboBox({
                 dataTextField: "ter__raz",
                 dataValueField: "ter__nit",
-                template: '<div class="divElementDropDownList">#: data.ter__raz #' + ' - ' + ' #:data.cam__des #</div>',
+                template: '<div class="divElementDropDownList">#: data.ter__raz #' + ' - ' + ' #:data.cam__des #</div>',                
                 select:
                         function (e) {
                         },
@@ -218,7 +231,7 @@ function transportista(e) {
                         }
                     }
                 }
-            });
+            }).data("kendoDropDownList");
 }
 function fleteList() {
     var obj = new listaflete();
@@ -489,6 +502,7 @@ function conditionalSum() {
         }
         document.getElementById('pesoTotal').innerHTML = sum;
         camion();
+        ruta();
         return "";
     }
 }

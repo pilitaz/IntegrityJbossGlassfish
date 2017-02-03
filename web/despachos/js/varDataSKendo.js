@@ -476,7 +476,7 @@ function sirCamiones() {
   "eeSIRdpc_cam": [{
    "piicam_cod": 0,
    "piccam_pla": "*",
-   "piicam_est": -1,
+   "piicam_est": 0,
    "pidcam_cap": 0
   }]
  }
