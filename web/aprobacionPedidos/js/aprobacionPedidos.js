@@ -130,7 +130,7 @@ function grid() {
             myWindow.kendoWindow({
                 width: widthPopUp,
                 height: heightPopUp,
-                title: "Crear",
+                title: "Anular",
                 content: sessionStorage.getItem("url") + "/aprobacionPedidos/html/popupAnularAp.html",
                 visible: false,
                 modal: true,
@@ -196,8 +196,8 @@ function popUpAprobacionPedido(e) {
     
     var widthPopUp = $("body").width();
     widthPopUp = widthPopUp * (30 / 100);
-    var heightPopUp = $("body").height();
-    heightPopUp = heightPopUp * (50 / 100);
+    var heightPopUp = 527;
+    
 
     $("body").append("<div id='windowPedidoAproba'></div>");
     var myWindow = $("#windowPedidoAproba");
@@ -227,7 +227,6 @@ function closePopUpAprobacionPedido(){
     location.reload();
 }
 
-function closePopUpAnularPedido(){       
-    $("#windowAnularPedido").data("kendoWindow").close();
-    location.reload();
+function closePopUpAnularPedido(){     
+    $("#windowAnularPedido").data("kendoWindow").close();    
 }

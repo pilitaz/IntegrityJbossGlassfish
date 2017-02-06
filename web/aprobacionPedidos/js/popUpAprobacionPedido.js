@@ -147,7 +147,7 @@ function clickEliminar(e) {
         myWindow.kendoWindow({
             width: widthPopUp,
             height: heightPopUp,
-            title: "Crear",
+            title: "Anular",
             content: sessionStorage.getItem("url") + "/pedidos/html/popupAnular.html",
             visible: false,
             modal: true,

@@ -52,13 +52,14 @@ function grid() {
             parameterMap: function (options, operation) {
                 try {
                     if (operation === 'read') {                        
-                         if(sessionStorage.getItem("jsonFiltroPedidos")){
+                         if(sessionStorage.getItem("jsonFiltroPedidos")){                             
                              jsonFiltroPedidos = JSON.parse(sessionStorage.getItem("jsonFiltroPedidos"));                             
                          }else{
                             var key1 = Object.keys(jsonFiltroPedidos)[0];
                             var key2 = Object.keys(jsonFiltroPedidos[key1])[1];
                             jsonFiltroPedidos[key1][key2][0].pidped_fec = sessionStorage.getItem("fechaSistema");
                             jsonFiltroPedidos[key1][key2][0].pilhastapr = true
+                            sessionStorage.setItem("jsonFiltroPedidos", JSON.stringify(jsonFiltroPedidos))
                         }                        
                         return JSON.stringify(jsonFiltroPedidos);
                     } else if (operation === 'destroy') {
@@ -96,8 +97,7 @@ function grid() {
     });
     $(window).trigger("resize");    
     $("#gridPedidos").kendoGrid({
-        dataSource: dataSourcePedidos,
-        dataBound: ondataBound,
+        dataSource: dataSourcePedidos,        
         selectable: false,
         columns: [
             {field: "ped__fec", title: "Fecha de Pedido"},
@@ -105,7 +105,7 @@ function grid() {
 //            {field: "ter__nit", title: "NIT"},
             {field: "ter__raz", title: "Razón social"},
             {field: "ped__fec__ent", title: "Fecha entrega"},
-            {field: "est__nom", title: "estado"},
+            {field: "est__nom", title: "Estado"},
             {command:
                         [                            
                             {name: "editar",  click: clickEditar, template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},
@@ -117,6 +117,7 @@ function grid() {
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
     });
     
+       
     function clickEliminar(e) {
     try {
         
@@ -126,8 +127,9 @@ function grid() {
         
         var widthPopUp = $("body").width();
         widthPopUp = widthPopUp * (30 / 100);
-        var heightPopUp = $("body").height();
-        heightPopUp = heightPopUp * (30 / 100);
+        var heightPopUp = 300;
+//        var heightPopUp = $("body").height();
+//        heightPopUp = heightPopUp * (30 / 100);
         
         $("body").append("<div id='windowAnularPedido'></div>");
         var myWindow = $("#windowAnularPedido");
@@ -141,7 +143,7 @@ function grid() {
         myWindow.kendoWindow({
             width: widthPopUp,
             height: heightPopUp,
-            title: "Crear",
+            title: "Anular",
             content: sessionStorage.getItem("url") + "/pedidos/html/popupAnular.html",
             visible: false,
             modal: true,
@@ -156,9 +158,6 @@ function grid() {
        
     }
 }
-}
-function ondataBound() {
-    sessionStorage.removeItem("jsonFiltroPedidos");
 }
 
 function btnFltrPedido() {

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-var dataCliente;
+var dataCliente = null;
 $(document).ready(function() {   
     
     $("#ipFecha").kendoDatePicker({
@@ -41,6 +41,10 @@ $(document).ready(function() {
         setInfoCabeceraPedido();
     }else if(sessionStorage.getItem("actor")==="cliente" ){
         $("#ipNITCliente").val(sessionStorage.getItem("clienteNIT"));
+        var autocompleteNIT = $("#ipNITCliente").data("kendoAutoComplete");
+        autocompleteNIT.enable(false);
+        var autocompleteCliente = $("#ipCliente").data("kendoAutoComplete");
+        autocompleteCliente.enable(false);
         
         var objCli = new sirConsultaCliente();
         var objJsonCli = objCli.getjson();
@@ -63,13 +67,19 @@ $(document).ready(function() {
                 if(e[key1].eeEstados[0].Estado==="OK"){                            
                     dataCliente = e[key1][mapDataCli]["0"];
                     $("#ipCliente").val(dataCliente.ter__raz);
+                }else{
+                    alertDialogs(" Error al consumir el servicio: " + e[key1].eeEstados[0].Estado);                    
                 }                        
             },
             error: function (e) {
                 alertDialogs(" Error al consumir el servicio: cargarFactura/SIRgfc_cli \n"+ e.status +" - "+ e.statusText);                        
             }
         }).done(function(){
-            setInfoCliente();
+            if(dataCliente!==null){
+                setInfoCliente();
+            }else{
+                
+            }
         });
     }
     
@@ -528,21 +538,18 @@ function setInfoCliente(e){
         var pedido = JSON.parse(sessionStorage.getItem("regPedidos"))
         comboboxDivisa.value(pedido.mnd__cla);
         comboboxDivisa.readonly(true);        
+        comboboxDivisa.enable(false); 
     }else if(!clienteNacional){
         comboboxDivisa.value(dataCliente.mnd__cla);        
     }else{
         comboboxDivisa.value(sessionStorage.getItem("monedaCompañia"));
         comboboxDivisa.readonly(true);
+        comboboxDivisa.enable(false); 
     }
-//    }else if(clienteNacional){
-//        var kendoDropDownListDivisa = $("#ipDivisa").data("kendoDropDownList");
-//        kendoDropDownListDivisa.value("CO");
-//        kendoDropDownListDivisa.readonly(true);  
-//    }
         
     sessionStorage.setItem("nitCliente", dataCliente.ter__nit); // sessionStorage.setItem("
     sessionStorage.setItem("listaPrecioCliente", dataCliente.lis__num);
-    sessionStorage.setItem("codVendedor", dataCliente.ven__cod);    
+//    sessionStorage.setItem("codVendedor", dataCliente.ven__cod);    
     sessionStorage.setItem("opciondepago", dataCliente.pago__cod);
     
     var obj = new sirConsultaCondicionesDePago();
@@ -655,14 +662,18 @@ function setInfoCliente(e){
             }
         },
         dataBound: function (e) {            
-            if(e.sender.dataSource._data.length===1){   
-                
+            if(e.sender.dataSource._data.length===1){                   
+               var dropdownlistEstablecimiento = $("#ipEstablecimiento").data("kendoDropDownList");
+                dropdownlistEstablecimiento.enable(false)
                 var dataItemEstablicimiento = e.sender.dataSource._data["0"]; 
                 $("#ipDireccion").val(dataItemEstablicimiento.ter__dir);
+                $("#ipDireccion").prop('disabled', true).addClass("k-state-disabled");
                 $("#ipTelefono").val(dataItemEstablicimiento.ter__tel);
-                
+                $("#ipTelefono").prop('disabled', true).addClass("k-state-disabled");
+                sessionStorage.setItem("codVendedor", dataItemEstablicimiento.ven__cod);
                 var dropdownlist = $("#ipCiudad").data("kendoDropDownList");
                 dropdownlist.value(dataItemEstablicimiento.ciu__cod); 
+                dropdownlist.enable(false)
                 
                 var dropdownlist = $("#ipSucursal").data("kendoDropDownList");
                 dropdownlist.value(dataItemEstablicimiento.suc__cod); 
@@ -674,15 +685,19 @@ function setInfoCliente(e){
             if(e.sender.selectedIndex){
                 var dataItemEstablicimiento = e.sender.dataSource._data[e.sender.selectedIndex-1];
                 $("#ipDireccion").val(dataItemEstablicimiento.ter__dir);
+                $("#ipDireccion").prop('disabled', true);
                 $("#ipTelefono").val(dataItemEstablicimiento.ter__tel);
+                $("#ipTelefono").prop('disabled', true);
+                sessionStorage.setItem("codVendedor", dataItemEstablicimiento.ven__cod);
                 
                 var dropdownlist = $("#ipCiudad").data("kendoDropDownList");
-                dropdownlist.value(dataItemEstablicimiento.ciu__cod);            
+                dropdownlist.value(dataItemEstablicimiento.ciu__cod);
+                dropdownlist.enable(false)
                 
                 var dropdownlist = $("#ipSucursal").data("kendoDropDownList");
                 dropdownlist.value(dataItemEstablicimiento.suc__cod); 
                 
-                dropDownListVendedor(dataItemEstablicimiento.suc__cod);
+                s(dataItemEstablicimiento.suc__cod);
             }
         }
     });
@@ -897,7 +912,7 @@ function guardarCabecera(){
     objJson[key1][key2][0].tip__tasa = $("#ipTipTasa").val();
     objJson[key1][key2][0].fec__tasa = $("#ipFechaTasa").val();
     objJson[key1][key2][0].pri__cod = $("#ipPrioridad").val();    
-    objJson[key1][key2][0].ord__nump = $("#ipNumOrden").val();
+    objJson[key1][key2][0].ord__num = $("#ipNumOrden").val();
     
     try{
         $.ajax({

@@ -80,8 +80,7 @@ function camion() {
         dataTextField: "cam__des",
         dataValueField: "cam__cod",
         template: '<div class="divElementDropDownList">#: data.cam__des #' + ' - ' + ' #:data.cam__vers #</div>',        
-        select: function (e) {
-            debugger
+        select: function (e) {            
             if($("#Ruta").val()!==""){
                 transportista(e);
             }            
@@ -135,8 +134,7 @@ function ruta() {
                 dataTextField: "rut__des",
                 dataValueField: "rut__cod",
                 template: '<div class="divElementDropDownList">Desde:#: data.bar__dsc1 #' + ' Hasta: ' + ' #:data.bar__dsc2 #</div>',                
-                select: function (e) {
-                    debugger
+                select: function (e) {                    
                     if($("#Camion").val()!==""){
                         transportista(e);
                     }            
@@ -344,7 +342,7 @@ function grilla(obj, dataSource1) {
                     function (e) {
                         if ((localStorage["grid_data"] === "") || (!localStorage["grid_data"])) {
                             var key1 = Object.keys(e)[0];
-                            if (e[key1].eeEstados) {
+                            if (e[key1].eeEstados && e[key1][mapCud]) {
                                 if (e[key1].eeEstados[0].Estado === "OK") {
                                     if ((localStorage["grid_data"] === "") || (!localStorage["grid_data"])) {
                                         for (var i = 0; i < e[key1]["eegpd_ped_det"].length; i++) {
