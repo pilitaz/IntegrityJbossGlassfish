@@ -89,7 +89,7 @@ $(document).ready(function () {
         template: "<a class='k-grid-aprobar' '><span class='k-sprite #: data.clase #'></span></a>" +
                   '<span class="k-state-default"><h0>#: data.text #</h0>',
         dataSource: data,
-         change: function (e) {debugger
+         change: function (e) {
          var send = parseInt ($("#fltrEst").data("kendoDropDownList").value() ); 
          grilla(send);
          }
@@ -141,7 +141,7 @@ $(document).ready(function () {
                 type: "DELETE",
                 contentType: "application/json; charset=utf-8"
             },
-            parameterMap: function (options, operation) {debugger
+            parameterMap: function (options, operation) {
                 if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
@@ -214,14 +214,14 @@ $(document).ready(function () {
      *  
      *  
      */
-    var gridheigth = $("body").height();
-    gridheigth = gridheigth*0.12 + gridheigth;
+//    var gridheigth = $("body").height();
+//    gridheigth = gridheigth*0.12 + gridheigth;
     var grid1 = $("#grid").kendoGrid({
         dataSource: dataSource,
  
         columns: [ 
-            {field: "pri__cod", title: "Cod Prioridad",  hidden:false},  
-            {field: "pri__des", title: "Descripcion Prioridad",  hidden:false},
+            {field: "pri__cod", title: "Código",  hidden:false,  width: "100px"},  
+            {field: "pri__des", title: "Descripción",  hidden:false},
            
           {command: [
                     {name: "check", text: "estado",click: changeEst, template: "<a class='k-grid-check'><span class='k-sprite po_editoff' ></span></a>" },
@@ -229,7 +229,7 @@ $(document).ready(function () {
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "140px"}],
        
         editable: "popup",
-         edit: function(e) {debugger
+         edit: function(e) {
             if (!e.model.isNew()) {//caso en el que el popup es editar
                 if(e.model.ctr__est!= 99 ){
                     
@@ -276,6 +276,7 @@ grilla(-1);
     try {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
+        debugger
         var dataItem = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"));
         var actions = new Array();
         actions[0] = new Object();
@@ -303,7 +304,7 @@ grilla(-1);
    
 });
  
-  function changImgFunc(results) {debugger
+  function changImgFunc(results) {
 
         for (var i = 0; i < results.length; i++) {
             if (document.getElementById("spanproceso"+results[i].pri__cod+results[i].pri__des)){
@@ -324,7 +325,7 @@ grilla(-1);
  }
                     
 
-function changeEst(e){debugger
+function changeEst(e){
     var  actualizar = new cudPrioridades();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
@@ -335,7 +336,7 @@ function changeEst(e){debugger
         var actions = new Array();
         actions[0] = new Object();
         actions[0].text = "OK";
-        actions[0].action = function () {debugger
+        actions[0].action = function () {
             if(seleccion.ctr__est==0){  
                 actjson.dsSICUDgpd_pri.eegpd_pri[0].pri__cod=seleccion.pri__cod;  
                 actjson.dsSICUDgpd_pri.eegpd_pri[0].pri__des=seleccion.pri__des;                     
@@ -349,7 +350,7 @@ function changeEst(e){debugger
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_pri.eeEstados[0].Estado)=="OK")
                         {     
                             $('#grid').data('kendoGrid').refresh();
@@ -380,7 +381,7 @@ function changeEst(e){debugger
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_pri.eeEstados[0].Estado)=="OK")
                         {          
                             $('#grid').data('kendoGrid').refresh();
@@ -402,12 +403,12 @@ function changeEst(e){debugger
         };
         actions[1] = new Object();
         actions[1].text = "Cancelar";
-        actions[1].action = function () {debugger
+        actions[1].action = function () {
             bandAlert = 0;
         };
         createDialog("Atención", "Esta seguro de cambiar estado de Registro ---" + seleccion.pri__cod + " ---?", "400px", "200px", true, true, actions);
 
-    } catch (e) {debugger
+    } catch (e) {
         createDialog(e);
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();

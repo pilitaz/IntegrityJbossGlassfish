@@ -16,11 +16,14 @@ $(document).ready(function() {
     
     var datepicker = $("#ipFecha").data("kendoDatePicker");
     datepicker.enable(false);
+    var fechaEntrega = new Date(sessionStorage.getItem("fechaSistema"));
+    fechaEntrega.setHours(0,0,0,0);
+    fechaEntrega.setDate(fechaEntrega.getDate() + 1);
     
     $("#ipFechaEntrega").kendoDatePicker({
         culture: "es-CO",
         format: "yyyy/MM/dd",
-        value: new Date(sessionStorage.getItem("fechaSistema")),
+        value: new Date(fechaEntrega),
         disableDates: ["sa", "su"]
     });
     
@@ -883,9 +886,12 @@ function guardarCabecera(){
     var verbo="POST";
     var numPedido="";
     var clcCod="";
+    var estado = "99"
     if($("#buttonCab")["0"].childNodes["0"].data==="Actualizar"){
         verbo="PUT";
         numPedido = JSON.parse(sessionStorage.getItem("regPedidos")).ped__num;        
+        debugger
+        estado =  JSON.parse(sessionStorage.getItem("regPedidos")).gpd__est;
         clcCod  = JSON.parse(sessionStorage.getItem("regPedidos")).clc__cod;
     }    
     var obj = new SICUDPedido();
@@ -894,6 +900,7 @@ function guardarCabecera(){
     var mapData = obj.getMapData();
     var key1 = Object.keys(objJson)[0];
     var key2 = Object.keys(objJson[key1])[1];                                
+    objJson[key1][key2][0].gpd__est = estado;
     objJson[key1][key2][0].suc__cod = $("#ipSucursal").val();
     objJson[key1][key2][0].ter__nit = $("#ipNITCliente").val();
     objJson[key1][key2][0].pago__cod = $("#ipCdePago").val();
