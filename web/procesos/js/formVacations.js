@@ -1,9 +1,14 @@
 
 $(document).ready(function () {
+    
 iniciar();
 jefe();
 pagoAnticipado();
 });
+function guardar(){debugger
+    
+    
+}
 function pagoAnticipado(){
     
      var estados = [
@@ -72,8 +77,8 @@ function jefe(){
 }
 function iniciar(){
     $("#inicioVacaciones").kendoDatePicker();
-    $("#diasPedir").kendoNumericTextBox({});
-    $("#totaldiasvalor").kendoNumericTextBox({});
+    $("#diasPedir").kendoNumericTextBox({format: "0"});
+    $("#totaldiasvalor").kendoNumericTextBox({format: "0"});
     
    var consultarUsr = new IniciaVacaciones();
    var data = consultarUsr.getjson();
@@ -86,7 +91,7 @@ function iniciar(){
             url: urlservicio,
             dataType: "json",        
             contentType: "application/json;",
-            success: function (resp) { debugger
+            success: function (resp) { 
                 if((resp.dsparam_proc_vac.eeEstados[0].Estado)=="OK")
                 {
                   document.getElementById("fecha").innerHTML=resp.dsparam_proc_vac.eeparam_proc_vac[0].fec_sol; 
