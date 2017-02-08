@@ -127,4 +127,6 @@ function anularPedido(){
     }
 }
 
-function btnCancelar(){}
+function btnCancelar(){
+    parent.closePopUpAnularPedido();
+}

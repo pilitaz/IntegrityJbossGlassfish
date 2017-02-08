@@ -3,6 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var dpcamion;
+var dptransportista
+var dpruta;
+
 var objPopup = [];
 $(window).resize(
         function () {
@@ -21,7 +25,7 @@ $(document).ready(
                 visible: false, //the window will not appear before its .open method is called
             }).data("kendoWindow");
             addRow();
-            ruta();
+            //ruta();
             fleteList();
         });
 
@@ -72,12 +76,15 @@ function camion() {
     var urlService = consultar.getUrlSir();
     var mapCud1 = "eedpc_cam";
     $("#Camion").removeClass();
-    $("#Camion").kendoComboBox({
+    dpcamion = $("#Camion").kendoDropDownList({
+        optionLabel: "Seleccione el camión",
         dataTextField: "cam__des",
         dataValueField: "cam__cod",
-        template: '<div class="divElementDropDownList">#: data.cam__des #' + ' - ' + ' #:data.cam__vers #</div>',
-        select: function (e) {
-            transportista(e);
+        template: '<div class="divElementDropDownList">#: data.cam__des #' + ' - ' + ' #:data.cam__vers #</div>',        
+        select: function (e) {            
+            if($("#Ruta").val()!==""){
+                transportista(e);
+            }            
         },
         dataSource: {
             transport: {
@@ -109,12 +116,12 @@ function camion() {
                         cam__cod: {editable: false, nullable: false},
                         cam__des: {editable: false, nullable: false},
                         cam__vers: {editable: false, nullable: false},
-                        cam__pla: {editable: false, nullable: false},
+                        cam__pla: {editable: false, nullable: false}
                     }
                 }
             }
         }
-    });
+    }).data("kendoDropDownList");
 }
 
 function ruta() {
@@ -122,12 +129,16 @@ function ruta() {
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();
     var mapCud1 = "eedpc_rut";
-    $("#Ruta")
-            .kendoComboBox({
+    $("#Ruta").removeClass();
+    dpruta = $("#Ruta").kendoDropDownList({
+                optionLabel: "Seleccione la ruta",
                 dataTextField: "rut__des",
                 dataValueField: "rut__cod",
-                template: '<div class="divElementDropDownList">Desde:#: data.bar__dsc1 #' + ' Hasta: ' + ' #:data.bar__dsc2 #</div>',
-                select: function (e) {
+                template: '<div class="divElementDropDownList">Desde:#: data.bar__dsc1 #' + ' Hasta: ' + ' #:data.bar__dsc2 #</div>',                
+                select: function (e) {                    
+                    if($("#Camion").val()!==""){
+                        transportista(e);
+                    }            
                 },
                 dataSource: {
                     transport: {
@@ -163,22 +174,23 @@ function ruta() {
                         }
                     }
                 }
-            });
+            }).data("kendoDropDownList");
 }
 
 function transportista(e) {
     $("#Transportista").removeClass();
     var consultar = new sirTransportista();
     var datajson = consultar.getjson();
-    datajson.dsSIRdpc_tra.eeSIRdpc_tra[0].piicam_cod = parseInt(e.dataItem.cam__cod);
+    datajson.dsSIRdpc_tra.eeSIRdpc_tra[0].piicam_cod = $("#Camion").val();
+    datajson.dsSIRdpc_tra.eeSIRdpc_tra[0].piirut_cod = $("#Ruta").val();
     //datajson.dsSIRgpd_cli_suc.SIRgpd_cli_suc[0].picciu__cod= $("#Ciudad").data("kendoComboBox")._old;
     var urlService = consultar.getUrlSir();
     var mapCud1 = "eedpc_tra";
-    $("#Transportista")
-            .kendoComboBox({
+    dptransportista = $("#Transportista").kendoDropDownList({
+                optionLabel: "Seleccione el transportista",
                 dataTextField: "ter__raz",
                 dataValueField: "ter__nit",
-                template: '<div class="divElementDropDownList">#: data.ter__raz #' + ' - ' + ' #:data.cam__des #</div>',
+                template: '<div class="divElementDropDownList">#: data.ter__raz #' + ' - ' + ' #:data.cam__des #</div>',                
                 select:
                         function (e) {
                         },
@@ -218,7 +230,7 @@ function transportista(e) {
                         }
                     }
                 }
-            });
+            }).data("kendoDropDownList");
 }
 function fleteList() {
     var obj = new listaflete();
@@ -262,10 +274,12 @@ function grilla(obj, dataSource1) {
     var mapCud = "eegpd_ped_det";
     if (obj) {
         var key1 = Object.keys(datajson)[0];
+        
         datajson[key1].eeSIRgpd_pdet_dpc = [{
                 "ciu_cod": obj.ciudad,
                 "com_con": obj.establecimiento,
                 "rgeo_cod": obj.region,
+                "ter_nit": obj.cliente,
             }];
         objPopup = datajson[key1].eeSIRgpd_pdet_dpc[0];
     }
@@ -331,7 +345,7 @@ function grilla(obj, dataSource1) {
                     function (e) {
                         if ((localStorage["grid_data"] === "") || (!localStorage["grid_data"])) {
                             var key1 = Object.keys(e)[0];
-                            if (e[key1].eeEstados) {
+                            if (e[key1].eeEstados && e[key1][mapCud]) {
                                 if (e[key1].eeEstados[0].Estado === "OK") {
                                     if ((localStorage["grid_data"] === "") || (!localStorage["grid_data"])) {
                                         for (var i = 0; i < e[key1]["eegpd_ped_det"].length; i++) {
@@ -489,6 +503,7 @@ function conditionalSum() {
         }
         document.getElementById('pesoTotal').innerHTML = sum;
         camion();
+        ruta();
         return "";
     }
 }
@@ -499,9 +514,9 @@ function despachar() {
     var establecimiento = "";
     var peso = document.getElementById('pesoTotal').textContent;
     if (peso > 0) {
-        var camion = $("#Camion").data("kendoComboBox").value();
+        var camion = $("#Camion").val();
         var transportista = $("#Transportista").val();
-        var ruta = $("#Ruta").data("kendoComboBox").value();
+        var ruta = $("#Ruta").val();
         var orden = $("#Orden").val();
         var flete = $("#flete").val();
 

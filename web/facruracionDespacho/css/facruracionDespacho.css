@@ -8,6 +8,17 @@ and open the template in the editor.
     Author     : jenny
 */
 
+.k-grid tr:hover {
+    background: transparent;
+}
+.k-grid tr:not(.k-state-selected):hover {
+    color: #80BD28;
+}
+
+.k-grid tr.k-alt:not(.k-state-selected):hover {
+    background: #f1f1f1;
+}
+
 td{
     padding: 5px
 }
@@ -20,24 +31,8 @@ div{
 table{
     padding: 2px;
 }
-
-.k-grid tr:hover {
-    background: transparent;
-}
-.k-grid tr:not(.k-state-selected):hover {
-    color: #80BD28;
-}
-
-.k-grid tr.k-alt:not(.k-state-selected):hover {
-    background: #f1f1f1;
-}
-
-.k-window-titlebar .k-header {
-    display: none;
-}
-
 #customPopUp {
-    height:30%;
+    height:200px;
     position: absolute;
     top: 20%;
     left: 50%;

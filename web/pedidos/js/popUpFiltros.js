@@ -56,7 +56,7 @@ function buscarPedidos() {
     jsonFiltroPedidos[key1][key2][0].pidped_fec = $("#ipfechaFin").val();
     jsonFiltroPedidos[key1][key2][0].piiped_num = $("#ipNumeroPedido").val();
     jsonFiltroPedidos[key1][key2][0].piiped_est = $("#ipEstadoPedido").val();
-    jsonFiltroPedidos[key1][key2][0].pilhastapr = true
+    jsonFiltroPedidos[key1][key2][0].pilhastapr = true;
     sessionStorage.setItem("jsonFiltroPedidos", JSON.stringify(jsonFiltroPedidos));    
     parent.grid();
     parent.closePopUpFiltros();

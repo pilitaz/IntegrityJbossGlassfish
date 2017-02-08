@@ -166,7 +166,7 @@ function grilla(obj) {
         rowTemplate: kendo.template($("#rowTemplate").html()),
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
         edit: function (e) {
-            debugger
+            
             e.container.kendoWindow("title", "Editar");
 //                e.container.find("label[for='cam__des']").hide();
 //                e.container.find("input[name=cam__des]").hide();
@@ -218,7 +218,7 @@ function deleteRow(e) {
             actions[1].action = function () {
                 bandAlert = 0;
             };
-            createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.lis__des + " ---?", "400px", "200px", true, true, actions);
+            createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.cam__des + " ---?", "400px", "200px", true, true, actions);
         } else {
             alertDialogs("El registro no puede ser eliminado.")
         }
@@ -234,7 +234,7 @@ function deleteRow(e) {
 
 
 function cto__codList(container, options) {
-    debugger
+    
     var obj = new listacto__cod();
     var dataSource = obj.getdataSource();
     $('<input id="idcto__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
@@ -315,7 +315,7 @@ function listacto__cod() {
 ;
 
 function cam__embList(container, options) {
-    debugger
+    
     var obj = new listacam__emb();
     var dataSource = obj.getdataSource();
     $('<input id="idutra__tip" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
@@ -346,7 +346,7 @@ function listacam__emb() {//(G-Granel/L-Lonas)
 ;
 
 function cam__embList(container, options) {
-    debugger
+    
     var obj = new listacam__emb();
     var dataSource = obj.getdataSource();
     $('<input id="idutra__tip" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
@@ -376,7 +376,7 @@ function listacam__emb() {//(G-Granel/L-Lonas)
 }
 ;
 function cam__proList(container, options) {
-    debugger
+    
     var obj = new listacam__pro();
     var dataSource = obj.getdataSource();
     $('<input id="idutra__tip" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({

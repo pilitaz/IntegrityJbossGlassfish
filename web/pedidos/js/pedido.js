@@ -354,6 +354,19 @@ function closePopUp(){
     }
 }
 
+function confirmarFinalizarPedido(){
+    var actions = new Array();
+        actions[0] = new Object();
+        actions[0].text = "OK";
+        actions[0].action = finalizarPedido;
+        actions[1] = new Object();
+        actions[1].text = "Cancelar";
+        actions[1].action = function () {
+            
+        };
+        createDialog("Atención", "Esta seguro que desea finalizar el pedido", "400px", "200px", true, true, actions);
+}
+
 function finalizarPedido(){
     
     var verbo="PUT";
