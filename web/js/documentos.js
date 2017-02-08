@@ -15,6 +15,14 @@ dsfiles.dsfiles.eeDatos[0].remote_ip = sessionStorage.getItem("ipPublica");
 var grid = "";
 
 function documentos() {
+    $('#buscarDoc').keyup(function (e) {
+        var value = this.value;
+        if (value) {
+            grid.data("kendoGrid").dataSource.filter({field: "nomfile", operator: "contains", value: value});
+        } else {
+            grid.data("kendoGrid").dataSource.filter({});
+        }
+    });
     var dataSource = new kendo.data.DataSource({
         transport: {
             read: {
@@ -88,7 +96,7 @@ function onChange(arg) {
         actions[2].action = getFileAsPDF;
     }
     createDialog("Documentos", "El archivo seleccinado es " + selected + " que desea hacer ", "400px", "auto", true, true, actions);
-    
+
 }
 /**
  * Descarga el archivo en su formato original
@@ -117,9 +125,10 @@ function getFile(e) {
                 alert("Error" + JSON.stringify(e));
             }
         }).done(function () {
+//            window.location = sessionStorage.getItem("documentobase64");
             var dataURI = "data:text/plain;base64," + sessionStorage.getItem("documentobase64");
             kendo.saveAs({
-                dataURI: dataURI,
+                dataURI: sessionStorage.getItem("documentobase64"),
                 fileName: sessionStorage.getItem("documento")
             });
 
@@ -154,7 +163,7 @@ function getFileAsPDF(e) {
             var dataURI = "data:text/plain;base64," + sessionStorage.getItem("documentobase64");
             archivo = archivo.replace(/\.[a-z]+/g, ".pdf");
             kendo.saveAs({
-                dataURI: dataURI,
+                dataURI: sessionStorage.getItem("documentobase64"),
                 fileName: archivo
             });
         });
@@ -186,15 +195,15 @@ function showFile(e) {
         }).done(function () {
             var tipoArchivo = sessionStorage.getItem("documento").split(".")[sessionStorage.getItem("documento").split(".").length - 1];
             if (tipoArchivo === "pdf") {
-                var dataURI = "data:application/pdf;base64," + sessionStorage.getItem("documentobase64");
+                var dataURI = sessionStorage.getItem("documentobase64");
             } else if (tipoArchivo === "gif" || tipoArchivo === "jpeg" || tipoArchivo === "png" || tipoArchivo === "pjpeg" || tipoArchivo === "tiff") {
-                var dataURI = "data:image/" + tipoArchivo + ";base64," + sessionStorage.getItem("documentobase64");
+                var dataURI = sessionStorage.getItem("documentobase64");
             } else {
-                var dataURI = "data:text/plain;base64," + sessionStorage.getItem("documentobase64");
+                var dataURI = sessionStorage.getItem("documentobase64");
             }
             var a = document.createElement("a");
             a.target = "_blank";
-            a.href = dataURI;
+            a.href = "./docOnline.html";
             a.click();
         });
     } catch (e) {
@@ -205,14 +214,6 @@ function showFile(e) {
  * funcion para filtrar los elementos de la grilla al oprimir una tecla dentro del input buscarDoc
  * @param {type} param
  */
-$("#buscarDoc").keyup(function () {
 
-    var value = this.value;
-    if (value) {
-        grid.data("kendoGrid").dataSource.filter({field: "nomfile", operator: "contains", value: value});
-    } else {
-        grid.data("kendoGrid").dataSource.filter({});
-    }
-});
 
 

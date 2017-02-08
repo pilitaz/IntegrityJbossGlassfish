@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>docOnline</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="../scripts/jquery.min.js"></script> 
+    </head>
+    
+    <body>
+        <iframe id ="iframePdf" width="100%" height="100%" ></iframe>
+        <script>
+            $(document).ready(function () {
+                document.getElementById('iframePdf').src = sessionStorage.getItem('documentobase64');
+            });
+        </script>
+        <style type="text/css">
+            body, html
+            {
+                margin: 0; padding: 0; height: 100%; overflow: hidden;
+            }
+        </style>
+    </body>
+</html>
