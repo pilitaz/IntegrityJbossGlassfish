@@ -104,7 +104,7 @@ function grilla(obj) {
                         return JSON.stringify(inputCud);
 
                     } else {
-                        debugger
+                        
                         var key1 = Object.keys(inputCud)[0];
                         options = logicalrev(options, "uni__pes");
                         options = logicalrev(options, "uni__can");
@@ -198,7 +198,7 @@ function deleteRow(e) {
             actions[1].action = function () {
                 bandAlert = 0;
             };
-            createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.lis__des + " ---?", "400px", "200px", true, true, actions);
+            createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.uni__des + " ---?", "400px", "200px", true, true, actions);
         } else {
             alertDialogs("El registro no puede ser eliminado.")
         }

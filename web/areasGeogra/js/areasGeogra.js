@@ -144,7 +144,7 @@ function grilla(obj) {
         edit: function (e) {
             if (!e.model.isNew()) {
                 if (e.model[est] != 99) {
-                    debugger
+                    
                     e.container.find("input[name=ageo__nom]")[0].readOnly = "true";
                     e.container.find("div.k-edit-buttons")[0].style.display = "none";
                 }
@@ -165,7 +165,7 @@ $(window).resize(function () {
 });
 
 function deleteRow(e) {
-    try {
+    try {        
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
         var dataItem = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"));
@@ -185,7 +185,7 @@ function deleteRow(e) {
             actions[1].action = function () {
                 bandAlert = 0;
             };
-            createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.lis__des + " ---?", "400px", "200px", true, true, actions);
+            createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.ageo__nom + " ---?", "400px", "200px", true, true, actions);
         } else {
             alertDialogs("El registro no puede ser eliminado.")
         }
@@ -365,7 +365,7 @@ function onChangeFltr() {
 }
 
 function logical(obj, nodo) {
-    debugger
+    
     if (obj[nodo]) {
         delete  obj[nodo];
         obj[nodo] = {

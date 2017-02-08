@@ -166,7 +166,7 @@ function grilla(obj) {
             e.container.find("label[for='rut__cod']").hide();
             e.container.find("input[name=rut__cod]").hide();
             if (!e.model.isNew()) {//caso en el que el popup es editar
-                debugger
+                
                 e.container.kendoWindow("title", "Editar");
                 e.model.bar__dsc1 = e.model.bar__cod1
                 e.model.ciu__nom1 = e.model.ciu__cod1
@@ -231,7 +231,7 @@ function deleteRow(e) {
             actions[1].action = function () {
                 bandAlert = 0;
             };
-            createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.lis__des + " ---?", "400px", "200px", true, true, actions);
+            createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.rut__des + " ---?", "400px", "200px", true, true, actions);
         } else {
             alertDialogs("El registro no puede ser eliminado.")
         }
@@ -398,7 +398,7 @@ function listabar__dsc(obj) {
             parameterMap: function (options, operation) {
                 try {
                     if (operation === 'read') {
-                        debugger
+                        
                         return JSON.stringify(inputsirUn);
                     }
                 } catch (e) {
@@ -450,7 +450,7 @@ function listabar__dsc(obj) {
 
 
 function rut__codList(container, options) {
-    debugger
+    
     var obj = new listarut__cod();
     var dataSource = obj.getdataSource();
     $('<input id="iduni__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
@@ -528,7 +528,7 @@ function listarut__cod() {
 ;
 
 function ter__nitList(container, options) {
-    debugger
+    
     var obj = new listater__nit();
     var dataSource = obj.getdataSource();
     $('<input id="idter__nit" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoAutoComplete({
@@ -611,7 +611,7 @@ function listater__nit() {
 }
 ;
 function ter__razList(container, options) {
-    debugger
+    
     var obj = new listater__raz();
     var dataSource = obj.getdataSource();
     $('<input id="idter__raz" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoAutoComplete({
@@ -694,7 +694,7 @@ function listater__raz() {
 ;
 
 function tra__tipList(container, options) {
-    debugger
+    
     var obj = new listatra__tip();
     var dataSource = obj.getdataSource();
     $('<input id="idutra__tip" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
