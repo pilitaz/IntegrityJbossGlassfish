@@ -89,7 +89,7 @@ $(document).ready(function () {
         template: "<a class='k-grid-aprobar' '><span class='k-sprite #: data.clase #'></span></a>" +
                   '<span class="k-state-default"><h0>#: data.text #</h0>',
         dataSource: data,
-         change: function (e) {debugger
+         change: function (e) {
          var send = parseInt ($("#fltrEst").data("kendoDropDownList").value() ); 
          grilla(send);
          }
@@ -140,7 +140,7 @@ $(document).ready(function () {
                 type: "DELETE",
                 contentType: "application/json; charset=utf-8"
             },
-            parameterMap: function (options, operation) {debugger
+            parameterMap: function (options, operation) {
                 if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
@@ -236,7 +236,7 @@ $(document).ready(function () {
                     {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "140px"}],
         editable: "popup",
-        edit: function(e) {debugger
+        edit: function(e) {
             if (!e.model.isNew()) {//caso en el que el popup es editar
                 if(e.model.trr__est!= 99 ){
                     
@@ -347,7 +347,7 @@ $(document).ready(function () {
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -406,7 +406,7 @@ $(document).ready(function () {
         }
  }
 
-function changeEst(e){debugger
+function changeEst(e){
     var  actualizar = new cudTerritorio();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
@@ -417,7 +417,7 @@ function changeEst(e){debugger
         var actions = new Array();
         actions[0] = new Object();
         actions[0].text = "OK";
-        actions[0].action = function () {debugger
+        actions[0].action = function () {
             if(seleccion.trr__est==0){  
                 actjson.dsSICUDgpd_trr.eegpd_trr[0].trr__cod=seleccion.trr__cod;                      
                 actjson.dsSICUDgpd_trr.eegpd_trr[0].trr__nom=seleccion.trr__nom; 
@@ -431,7 +431,7 @@ function changeEst(e){debugger
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_trr.eeEstados[0].Estado)=="OK")
                         {     
                             $('#grid').data('kendoGrid').refresh();
@@ -463,7 +463,7 @@ function changeEst(e){debugger
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_trr.eeEstados[0].Estado)=="OK")
                         {          
                             $('#grid').data('kendoGrid').refresh();
@@ -484,12 +484,12 @@ function changeEst(e){debugger
         };
         actions[1] = new Object();
         actions[1].text = "Cancelar";
-        actions[1].action = function () {debugger
+        actions[1].action = function () {
             bandAlert = 0;
         };
         createDialog("Atención", "Esta seguro de cambiar estado de Registro ---" + seleccion.trr__cod + " ---?", "400px", "200px", true, true, actions);
 
-    } catch (e) {debugger
+    } catch (e) {
         createDialog(e);
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();

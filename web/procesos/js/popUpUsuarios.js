@@ -196,7 +196,7 @@ $(document).ready(function () {
             }
         }
     }
-    function guardar (e){debugger
+    function guardar (e){
         var nit = sessionStorage.getItem("companyNIT");
         var proceso = sessionStorage.getItem("Proc_usuar");
         var tarea= sessionStorage.getItem("Task_name");

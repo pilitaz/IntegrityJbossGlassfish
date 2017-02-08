@@ -151,7 +151,7 @@ $(document).ready(function () {
         batch: false,
         severFiltering: true,                            
         schema: {
-            data: function (e) {debugger
+            data: function (e) {
                 var key1 = Object.keys(e)[0];
                 if(e[key1].eeEstados){
                     if (e[key1].eeEstados[0].Estado === "OK") {
@@ -216,7 +216,7 @@ $(document).ready(function () {
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "140px"}],
         
         editable: "popup",
-        edit: function(e) {debugger
+        edit: function(e) {
             if (!e.model.isNew()) {//caso en el que el popup es editar
                 if(e.model.ctr__est!= 99 ){
                    kendo.ui.progress($('.k-edit-form-container'), true);
@@ -289,7 +289,7 @@ $(document).ready(function () {
             
                   
                         
-      function changImgFunc(results , e) {debugger
+      function changImgFunc(results , e) {
      
         for (var i = 0; i < results.length; i++) {
             if (document.getElementById("spanproceso"+results[i].gpd__cli__des)){
@@ -310,7 +310,7 @@ $(document).ready(function () {
                         
 });
                     
-function changeEst(e){debugger
+function changeEst(e){
     var  actualizar = new cudCliente();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
@@ -321,7 +321,7 @@ function changeEst(e){debugger
         var actions = new Array();
         actions[0] = new Object();
         actions[0].text = "OK";
-        actions[0].action = function () {debugger
+        actions[0].action = function () {
             if(seleccion.ctr__est==0){  
                 actjson.dsSICUDgpd_cli_est.eegpd_cli_est[0].gpd__cli__est=seleccion.gpd__cli__est;                      
                 actjson.dsSICUDgpd_cli_est.eegpd_cli_est[0].gpd__cli__des=seleccion.gpd__cli__des; 
@@ -334,7 +334,7 @@ function changeEst(e){debugger
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_cli_est.eeEstados[0].Estado)=="OK")
                         {     
                             $('#grid').data('kendoGrid').refresh();
@@ -365,7 +365,7 @@ function changeEst(e){debugger
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_cli_est.eeEstados[0].Estado)=="OK")
                         {          
                             $('#grid').data('kendoGrid').refresh();
@@ -386,12 +386,12 @@ function changeEst(e){debugger
         };
         actions[1] = new Object();
         actions[1].text = "Cancelar";
-        actions[1].action = function () {debugger
+        actions[1].action = function () {
             bandAlert = 0;
         };
         createDialog("Atención", "Esta seguro de cambiar estado de Registro ---" + seleccion.gpd__cli__des + " ---?", "400px", "200px", true, true, actions);
 
-    } catch (e) {debugger
+    } catch (e) {
         createDialog(e);
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();

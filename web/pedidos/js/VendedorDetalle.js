@@ -1,6 +1,6 @@
 
 
-$(document).ready(function () {debugger
+$(document).ready(function () {
    var datos_vendedor = JSON.parse(sessionStorage.getItem("Detalle_Vendedor"));
    
   document.getElementById('Nit_vendedor').innerHTML = datos_vendedor.ter__nit;
@@ -50,14 +50,14 @@ function gridDetalleVendedor(){
                 contentType: "application/json; charset=utf-8"
             },
             parameterMap: function (options, operation) {
-                if (operation === "read") {debugger
+                if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
-                if (operation === "update") {debugger
+                if (operation === "update") {
                 
 
                 }
-                if (operation === "create") {debugger
+                if (operation === "create") {
                     
                     var region = $("#territorios").data("kendoDropDownList");
                     var select = region.selectedIndex;
@@ -69,7 +69,7 @@ function gridDetalleVendedor(){
                     return JSON.stringify(actjson);          
                                                         
                 }
-                if (operation === "destroy") {debugger 
+                if (operation === "destroy") { 
                     actjson.dsSICUDgpd_vtr.eegpd_vtr[0].ter__raz=options.ter__raz;  
                     actjson.dsSICUDgpd_vtr.eegpd_vtr[0].trr__cod=options.trr__cod;                    
                     actjson.dsSICUDgpd_vtr.eegpd_vtr[0].trr__nom=options.trr__nom;
@@ -83,7 +83,7 @@ function gridDetalleVendedor(){
         batch: false,
         severFiltering: true,                            
         schema: {
-            data: function (e) {debugger
+            data: function (e) {
                 var key1 = Object.keys(e)[0];
                 if(e[key1].eeEstados){
                     if (e[key1].eeEstados[0].Estado === "OK") {
@@ -115,7 +115,7 @@ function gridDetalleVendedor(){
 
         columns: [
             {field: "trr__nom", title: "Territorios",  hidden:false, editor: territorio,
-                template: function (e) {debugger
+                template: function (e) {
                     return e.trr__nom;
                 }},
 
@@ -123,7 +123,7 @@ function gridDetalleVendedor(){
                     {name: "deletae", text: "destoy", template: "<a id='borrar' class='k-grid-deletae'><span id='borrar' class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "70px"}],
       
             editable: "popup",              
-         dataBound: function (e) {debugger
+         dataBound: function (e) {
             var datos_vendedor = JSON.parse(sessionStorage.getItem("Detalle_Vendedor"));
             if (datos_vendedor.vdd__est==1){
                 var tamaño=document.getElementsByClassName("k-sprite po_cerrar").length;
@@ -137,7 +137,7 @@ function gridDetalleVendedor(){
     });
     
 }
-function clickEliminar(e) {debugger
+function clickEliminar(e) {
     try {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
@@ -179,7 +179,7 @@ function agregarItemDetalle(){
  var grid1 = $("#gridDetalleVendedor").data("kendoGrid");
     grid1.addRow();
 }
-function territorio(container, options) {debugger
+function territorio(container, options) {
         var consultar = new sirTerritorio();
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();
@@ -207,7 +207,7 @@ function territorio(container, options) {debugger
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -229,7 +229,7 @@ function territorio(container, options) {debugger
     }        
     
     
-    function clickEliminar(e) {debugger
+    function clickEliminar(e) {
     try {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
@@ -262,13 +262,13 @@ function territorio(container, options) {debugger
     }
        
 }
-      function cerrar(){debugger
+      function cerrar(){
     //onClosex();
     $("#windowform").data("kendoWindow").close();
   
     
 }  
-function popupNuevoVendedor(){debugger
+function popupNuevoVendedor(){
       $("#textarea").append("<div id='windowform'></div>");
         var myWindow1 = $("#windowform"),undo = $("#undo");
                 

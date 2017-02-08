@@ -3,7 +3,7 @@ $(document).ready(function () {
 reasignar();
 });
    
-   function reasignar() {debugger
+   function reasignar() {
         
         var consultar = new sirconsulta();
         var datajson = consultar.getjson();
@@ -29,7 +29,7 @@ reasignar();
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];

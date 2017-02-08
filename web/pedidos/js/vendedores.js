@@ -17,7 +17,7 @@ $(window).resize(function () {
  *   
  *  
  *  
- */ function newrol(e){debugger
+ */ function newrol(e){
  
         //var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
         $("#textarea").append("<div id='windowform'></div>");
@@ -50,7 +50,7 @@ $(window).resize(function () {
 }
                             
 
-function editar_rol(){debugger
+function editar_rol(){
                 	
                     
     var grid1 = $("#grid").data("kendoGrid");
@@ -82,7 +82,7 @@ $(document).ready(function() {
                         
                         
 });
- function detalle(e){debugger
+ function detalle(e){
        e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
                         var id = this.dataItem($(e.currentTarget).closest("tr"));
                         
@@ -118,7 +118,7 @@ $(document).ready(function () {
         template: "<a class='k-grid-aprobar' '><span class='k-sprite #: data.clase #'></span></a>" +
                   '<span class="k-state-default"><h0>#: data.text #</h0>',
         dataSource: data,
-         change: function (e) {debugger
+         change: function (e) {
          var send = parseInt ($("#fltrEst").data("kendoDropDownList").value() ); 
          grilla(send);
          }
@@ -148,7 +148,7 @@ $(document).ready(function () {
     //    var gridheigth = $("body").height();
     //    gridheigth = gridheigth*0.008 + gridheigth;
     
-    function grilla(e){debugger
+    function grilla(e){
     var  consultar = new sirVendedores();
     var  datajson = consultar.getjson();
     var  urlService = consultar.getUrlSir();
@@ -186,15 +186,15 @@ $(document).ready(function () {
                 contentType: "application/json; charset=utf-8"
             },
             parameterMap: function (options, operation) {
-                if (operation === "read") {debugger
+                if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
-                if (operation === "update") {debugger
+                if (operation === "update") {
                     
 
 
                 }
-                if (operation === "create") {debugger
+                if (operation === "create") {
                     var cedula = $("#nit")[0].value;
                     var nombre = $("#nombre")[0].value;
                     var cliente = $("#claseCliente").data("kendoDropDownList");
@@ -210,7 +210,7 @@ $(document).ready(function () {
                     return JSON.stringify(actjson);          
                                                         
                 }
-                if (operation === "destroy") {debugger 
+                if (operation === "destroy") { 
                     actjson.dsSICUDgpd_vdd.eegpd_vdd[0].vdd__cod=options.vdd__cod;
                     actjson.dsSICUDgpd_vdd.eegpd_vdd[0].ter__nit=options.ter__nit;
                     actjson.dsSICUDgpd_vdd.eegpd_vdd[0].ter__raz=options.ter__raz;
@@ -230,7 +230,7 @@ $(document).ready(function () {
         batch: false,
         severFiltering: true,                            
         schema: {
-            data: function (e) {debugger
+            data: function (e) {
                 var key1 = Object.keys(e)[0];
                 if(e[key1].eeEstados){
                     if (e[key1].eeEstados[0].Estado === "OK") {
@@ -267,16 +267,16 @@ $(document).ready(function () {
         columns: [
             {field: "vdd__cod", title: "Cod Vendedor ",  hidden:false},
             {field: "ter__nit", title: "Nit",  hidden:false, editor: filtroestado,
-                template: function (e) {debugger
+                template: function (e) {
                     return e.ter__nit;
                 }},    
             {field: "ter__raz", title: "Nombre",  hidden:false,editor: nombre,
-                template: function (e) {debugger
+                template: function (e) {
                     return e.ter__raz;
                 }},    
             
             {field: "cla__nom", title: "Clase Cliente",  hidden:false, editor: claseCliente,
-                template: function (e) {debugger
+                template: function (e) {
                     return e.cla__nom;
                 }},
             
@@ -285,7 +285,7 @@ $(document).ready(function () {
                     {name: "editar", text: "editar", click: detalle,template: "<a class='k-grid-editar'><span class='k-sprite po_editoff' ></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "140px"}],
         editable: "popup",
-         edit: function(e) {debugger
+         edit: function(e) {
             if (!e.model.isNew()) {//caso en el que el popup es editar
                 if(e.model.vdd__est!= 99 ){
                     var multiselect = $("#territorios").data("kendoMultiSelect");
@@ -332,7 +332,7 @@ grilla(-1);
         filter: "startswith"                    
     });
   
-   function clickEliminar(e) {debugger
+   function clickEliminar(e) {
     try {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
@@ -383,7 +383,7 @@ grilla(-1);
             minLength: 4,
             placeholder: "Nit..",
              filter: "contains",
-            select: function(e) {debugger                
+            select: function(e) {                
             $("#nit").val(e.dataItem.ter__nit);    
             },
             template:'<div class="divElementDropDownList">#: data.ter__raz #</div>',  
@@ -402,7 +402,7 @@ grilla(-1);
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -422,7 +422,7 @@ grilla(-1);
 
         });
       }
-    function filtroestado(container, options) {debugger
+    function filtroestado(container, options) {
     var consultar = new SirSicVen();
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();
@@ -435,7 +435,7 @@ grilla(-1);
             minLength: 6,
             placeholder: "Nit..",
             filter: "contains",
-            select: function(e) {debugger                
+            select: function(e) {                
             $("#nombre").val(e.dataItem.ter__nit);    
             },
             template:'<div class="divElementDropDownList">#: data.ter__nit #</div>',  
@@ -454,7 +454,7 @@ grilla(-1);
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -475,7 +475,7 @@ grilla(-1);
         });
 
     }                       
-function claseCliente(container, options) {debugger
+function claseCliente(container, options) {
         
         var consultar = new sirClaseCliente();
         var datajson = consultar.getjson();
@@ -502,7 +502,7 @@ function claseCliente(container, options) {debugger
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -522,7 +522,7 @@ function claseCliente(container, options) {debugger
 
         });
     }        
-    function territorio(container, options) {debugger
+    function territorio(container, options) {
         var consultar = new sirTerritorio();
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();
@@ -550,7 +550,7 @@ function claseCliente(container, options) {debugger
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -571,7 +571,7 @@ function claseCliente(container, options) {debugger
         });
     }        
     
-    function changImgFunc(results , e) {debugger
+    function changImgFunc(results , e) {
      
         for (var i = 0; i < results.length; i++) {
             if (document.getElementById("spanproceso"+results[i].vdd__cod+results[i].ter__nit+results[i].cla__nom)){
@@ -596,7 +596,7 @@ function claseCliente(container, options) {debugger
  
 });
                     
-function changeEst(e){debugger
+function changeEst(e){
     var  actualizar = new CudVendedores();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
@@ -607,7 +607,7 @@ function changeEst(e){debugger
         var actions = new Array();
         actions[0] = new Object();
         actions[0].text = "OK";
-        actions[0].action = function () {debugger
+        actions[0].action = function () {
             if(seleccion.vdd__est==0){  
                 actjson.dsSICUDgpd_vdd.eegpd_vdd[0].vdd__cod=seleccion.vdd__cod;  
                 actjson.dsSICUDgpd_vdd.eegpd_vdd[0].ter__nit=seleccion.ter__nit;  
@@ -622,7 +622,7 @@ function changeEst(e){debugger
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_vdd.eeEstados[0].Estado)=="OK")
                         {     
                             $('#grid').data('kendoGrid').refresh();
@@ -655,7 +655,7 @@ function changeEst(e){debugger
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_vdd.eeEstados[0].Estado)=="OK")
                         {          
                             $('#grid').data('kendoGrid').refresh();
@@ -677,12 +677,12 @@ function changeEst(e){debugger
         };
         actions[1] = new Object();
         actions[1].text = "Cancelar";
-        actions[1].action = function () {debugger
+        actions[1].action = function () {
             bandAlert = 0;
         };
         createDialog("Atención", "Esta seguro de cambiar estado de Registro ---" + seleccion.vdd__cod + " ---?", "400px", "200px", true, true, actions);
 
-    } catch (e) {debugger
+    } catch (e) {
         createDialog(e);
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();
@@ -692,14 +692,14 @@ function changeEst(e){debugger
 }             
                    
                 
-      function cerrar(){debugger
+      function cerrar(){
     //onClosex();
     $("#windowform").data("kendoWindow").close();
   
     
 }  
                 
-      function cerrar1(){debugger
+      function cerrar1(){
     //onClosex();
     
     $("#windowform").data("kendoWindow").close();

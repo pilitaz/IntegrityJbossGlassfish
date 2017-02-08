@@ -89,7 +89,7 @@ $(document).ready(function () {
         template: "<a class='k-grid-aprobar' '><span class='k-sprite #: data.clase #'></span></a>" +
                   '<span class="k-state-default"><h0>#: data.text #</h0>',
         dataSource: data,
-         change: function (e) {debugger
+         change: function (e) {
          var send = parseInt ($("#fltrEst").data("kendoDropDownList").value() ); 
          grilla(send);
          }
@@ -141,7 +141,7 @@ $(document).ready(function () {
                 type: "DELETE",
                 contentType: "application/json; charset=utf-8"
             },
-            parameterMap: function (options, operation) {debugger
+            parameterMap: function (options, operation) {
                 if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
@@ -239,7 +239,7 @@ $(document).ready(function () {
                     return e.ter__nit;
                 }}, 
             {field: "ter__raz", title: "Nombre",  hidden:false,editor: nombre,
-                template: function (e) {debugger
+                template: function (e) {
                     return e.ter__raz;
                 }},
             {command: [
@@ -291,7 +291,7 @@ grilla(-1);
             placeholder: "Selecione un cliente...",
             minLength: 4,
             filter: "contains",
-            select: function(e) {debugger                
+            select: function(e) {                
             $("#cedula").val(e.dataItem.ter__nit);    
             },
             template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
@@ -471,7 +471,7 @@ grilla(-1);
 
 
 
-    function changImgFunc(results , e) {debugger
+    function changImgFunc(results , e) {
      
         for (var i = 0; i < results.length; i++) {
             if (document.getElementById("spanproceso"+results[i].cbr__cod)){
@@ -490,7 +490,7 @@ grilla(-1);
 
     } 
 
-function changeEst(e){debugger
+function changeEst(e){
     var  actualizar = new cudCobradores();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
@@ -501,7 +501,7 @@ function changeEst(e){debugger
         var actions = new Array();
         actions[0] = new Object();
         actions[0].text = "OK";
-        actions[0].action = function () {debugger
+        actions[0].action = function () {
             if(seleccion.cbr__est==0){  
                 actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__cod=seleccion.cbr__cod;  
                 actjson.dsSICUDgpd_cbr.eegpd_cbr[0].ter__nit=seleccion.ter__nit;                     
@@ -514,7 +514,7 @@ function changeEst(e){debugger
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_cbr.eeEstados[0].Estado)=="OK")
                         {     
                             $('#grid').data('kendoGrid').refresh();
@@ -545,7 +545,7 @@ function changeEst(e){debugger
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_cbr.eeEstados[0].Estado)=="OK")
                         {          
                             $('#grid').data('kendoGrid').refresh();
@@ -567,12 +567,12 @@ function changeEst(e){debugger
         };
         actions[1] = new Object();
         actions[1].text = "Cancelar";
-        actions[1].action = function () {debugger
+        actions[1].action = function () {
             bandAlert = 0;
         };
         createDialog("Atención", "Esta seguro de cambiar estado de Registro ---" + seleccion.sre__cod + " ---?", "400px", "200px", true, true, actions);
 
-    } catch (e) {debugger
+    } catch (e) {
         createDialog(e);
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();

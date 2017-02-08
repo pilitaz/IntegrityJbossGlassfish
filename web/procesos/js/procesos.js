@@ -178,6 +178,7 @@ $(document).ready(function () {
      */     
     var grid1 = $("#grid1").kendoGrid({
         dataSource: datasourcex,
+         selectable:"multiple, row",
         sortable: true,
         filterable: {
             mode: "row",
@@ -353,7 +354,7 @@ function grilla(e){
 function disable(){
     
 }
-function reasignar(){debugger
+function reasignar(){
 //    function mostrarCustomPopUp() {
 //    $("body").append("<div id='disable'></div>");
 //    $("#customPopUp").fadeIn("slow");
