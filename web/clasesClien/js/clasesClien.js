@@ -181,7 +181,7 @@ function deleteRow(e) {
         e.preventDefault();
         var dataItem = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"));
         if (dataItem[est] == 99) {
-            debugger
+            
             var actions = new Array();
             actions[0] = new Object();
             actions[0].text = "OK";

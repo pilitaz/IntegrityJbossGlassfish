@@ -30,7 +30,7 @@
     document.getElementById("Container2").append(cln);
     
     }
-    function llenar(e){debugger
+    function llenar(e){
     var i,j=0;
     var nombre =e.dscertret.certret[0].ter_raz;
     var nit =e.dscertret.certret[0].tnit;
@@ -96,7 +96,7 @@
 
    
 }
-   function evaluar(e){debugger
+   function evaluar(e){
    var pos=0;
    if (e.dscertret.certret.length>1){
    
@@ -174,7 +174,7 @@ else{
 }
     
 
-function servicio(){debugger
+function servicio(){
     var parametros = sessionStorage.getItem("Parametros_Pdf");
     
     var consultarUsr = new sirImpresion();
@@ -209,7 +209,7 @@ function servicio(){debugger
  
     
 }
-    function buscar(){debugger
+    function buscar(){
    
    
    var consultarUsr = new sirImpresion();

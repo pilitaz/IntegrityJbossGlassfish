@@ -1,4 +1,4 @@
-   $(document).ready(function () {debugger
+   $(document).ready(function () {
        
     $("#btAgregar").kendoButton({
         click: guardar
@@ -68,7 +68,7 @@
        
       
        
-       function guardar(){debugger
+       function guardar(){
            var  actualizar = new cudClientes();
            var  actjson = actualizar.getjson();
            var  urlactualizar = actualizar.getUrlSir();    
@@ -165,7 +165,7 @@
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_cli.eeEstados[0].Estado)=="OK")
                         {    
                            sessionStorage.setItem("Detalle_Cliente",JSON.stringify(resp.dsSICUDgpd_cli.eegpd_cli[0]));
@@ -205,7 +205,7 @@
             placeholder: "Selecione un cliente...",
             minLength: 4,
             filter: "contains",
-            select: function(e) {debugger                
+            select: function(e) {                
             $("#nit").val(e.dataItem.ter__nit);    
             },
             template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
@@ -262,7 +262,7 @@
         });    
           
       }
-    function filtroestado(container, options) {debugger
+    function filtroestado(container, options) {
         var obj = new sirConsultaCliente();
         var objJson = obj.getjson();
         var url = obj.getUrlSir();
@@ -275,7 +275,7 @@
             placeholder: "Selecione un cliente...",
             minLength: 6,
             filter: "contains",
-            select: function(e) {debugger                
+            select: function(e) {                
             $("#nombre").val(e.dataItem.ter__raz);    
             },
             template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
@@ -331,7 +331,7 @@
         });
 
     }                       
-function claseCliente(container, options) {debugger
+function claseCliente(container, options) {
         
         var consultar = new sirClaseCliente();
         var datajson = consultar.getjson();
@@ -357,7 +357,7 @@ function claseCliente(container, options) {debugger
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -403,7 +403,7 @@ function claseCliente(container, options) {debugger
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -449,7 +449,7 @@ function claseCliente(container, options) {debugger
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -494,7 +494,7 @@ function claseCliente(container, options) {debugger
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];

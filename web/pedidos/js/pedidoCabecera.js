@@ -890,7 +890,7 @@ function guardarCabecera(){
     if($("#buttonCab")["0"].childNodes["0"].data==="Actualizar"){
         verbo="PUT";
         numPedido = JSON.parse(sessionStorage.getItem("regPedidos")).ped__num;        
-        debugger
+        
         estado =  JSON.parse(sessionStorage.getItem("regPedidos")).gpd__est;
         clcCod  = JSON.parse(sessionStorage.getItem("regPedidos")).clc__cod;
     }    

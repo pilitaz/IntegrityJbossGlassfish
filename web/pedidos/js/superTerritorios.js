@@ -89,7 +89,7 @@ $(document).ready(function () {
         template: "<a class='k-grid-aprobar' '><span class='k-sprite #: data.clase #'></span></a>" +
                   '<span class="k-state-default"><h0>#: data.text #</h0>',
         dataSource: data,
-         change: function (e) {debugger
+         change: function (e) {
          var send = parseInt ($("#fltrEst").data("kendoDropDownList").value() ); 
          grilla(send);
          }
@@ -139,7 +139,7 @@ $(document).ready(function () {
                 type: "DELETE",
                 contentType: "application/json; charset=utf-8"
             },
-            parameterMap: function (options, operation) {debugger
+            parameterMap: function (options, operation) {
                 if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
@@ -269,20 +269,20 @@ $(document).ready(function () {
                     return e.ter__nit;
                 }},   
             {field: "ter__raz", title: "Nombre",  hidden:false,editor:nombre,
-                template: function (e) {debugger
+                template: function (e) {
                     return e.ter__raz;
                 }},  
             
             {field: "trr__nom", title: "Territorio",  hidden:false,  editor:territorios,
-                template: function (e) {debugger
+                template: function (e) {
                     return e.trr__nom;
                 }},   
             {field: "str__vta", title: "Ventas",  hidden:false, editor:estadoVentas,
-                template: function (e) {debugger
+                template: function (e) {
                     return e.str__vta;
                 }},  
             {field: "str__rec", title: "Recaudo",  hidden:false, editor:estadoRecaudo,
-                template: function (e) {debugger
+                template: function (e) {
                     return e.str__rec;
                 }},  
             {command: [
@@ -290,7 +290,7 @@ $(document).ready(function () {
                     {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "140px"}],
              editable: "popup",
-                edit: function(e) {debugger
+                edit: function(e) {
             if (!e.model.isNew()) {//caso en el que el popup es editar
             if(e.model.str__est!= 99 ){
                     
@@ -336,7 +336,7 @@ grilla(-1);
         filter: "startswith"                    
     });
 
-     function clickEliminar(e) {debugger
+     function clickEliminar(e) {
     try {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
@@ -372,7 +372,7 @@ grilla(-1);
        
 }
                         
- function estadoVentas(container, options) {debugger
+ function estadoVentas(container, options) {
 
     var estados = [
         {text: "Si", valor: "1"},
@@ -419,7 +419,7 @@ grilla(-1);
             placeholder: "Selecione un cliente...",
             minLength: 4,
             filter: "contains",
-            select: function(e) {debugger                
+            select: function(e) {                
             $("#cedula").val(e.dataItem.ter__nit);    
             },
             template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
@@ -476,7 +476,7 @@ grilla(-1);
         });    
           
       }
-      function territorios(container, options) {debugger
+      function territorios(container, options) {
         
     var  consultar = new sirTerritorio();
     var  datajson = consultar.getjson();
@@ -502,7 +502,7 @@ grilla(-1);
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -523,7 +523,7 @@ grilla(-1);
         });
     }
 
-    function filtroestado(container, options) {debugger
+    function filtroestado(container, options) {
 
         var obj = new sirConsultaCliente();
         var objJson = obj.getjson();
@@ -537,7 +537,7 @@ grilla(-1);
             placeholder: "Selecione un cliente...",
             minLength: 6,
             filter: "contains",
-            select: function(e) {debugger                
+            select: function(e) {                
             $("#nombre").val(e.dataItem.ter__raz);    
             },
             template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
@@ -618,7 +618,7 @@ grilla(-1);
         }
 
     } 
-    function changeEst(e){debugger
+    function changeEst(e){
     var  actualizar = new cudTerritorios();
     var  actjson = actualizar.getjson();
     var  urlactualizar = actualizar.getUrlSir();
@@ -628,7 +628,7 @@ grilla(-1);
         var actions = new Array();
         actions[0] = new Object();
         actions[0].text = "OK";
-        actions[0].action = function () {debugger
+        actions[0].action = function () {
             if(seleccion.str__est==0){  
                 
                     actjson.dsSICUDgpd_str.eegpd_str[0].str__cod=seleccion.str__cod;

@@ -88,7 +88,7 @@ $(document).ready(function () {
         template: "<a class='k-grid-aprobar' '><span class='k-sprite #: data.clase #'></span></a>" +
                   '<span class="k-state-default"><h0>#: data.text #</h0>',
         dataSource: data,
-         change: function (e) {debugger
+         change: function (e) {
          var send = parseInt ($("#fltrEst").data("kendoDropDownList").value() ); 
          grilla(send);
          }
@@ -136,7 +136,7 @@ $(document).ready(function () {
                 type: "DELETE",
                 contentType: "application/json; charset=utf-8"
             },
-            parameterMap: function (options, operation) {debugger
+            parameterMap: function (options, operation) {
                 if (operation === "read") {
                     return JSON.stringify(datajson);
                 }
@@ -204,7 +204,7 @@ $(document).ready(function () {
         batch: false,
         severFiltering: true,                            
         schema: {
-            data: function (e) {debugger
+            data: function (e) {
                 var key1 = Object.keys(e)[0];
                 if(e[key1].eeEstados){
                     if (e[key1].eeEstados[0].Estado === "OK") {
@@ -276,7 +276,7 @@ $(document).ready(function () {
                     {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
                     {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: clickEliminar } ], width: "140px"}],
         editable: "popup",
-         edit: function(e) {debugger
+         edit: function(e) {
             if (!e.model.isNew()) {//caso en el que el popup es editar
                 if(e.model.sar__est!= 99 ){
                     
@@ -364,7 +364,7 @@ grilla(-1);
             placeholder: "Selecione un cliente...",
             minLength: 4,
             filter: "contains",
-            select: function(e) {debugger                
+            select: function(e) {                
             $("#cedula").val(e.dataItem.ter__nit);    
             },
             template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
@@ -437,7 +437,7 @@ grilla(-1);
             placeholder: "Selecione un cliente...",
             minLength: 6,
             filter: "contains",
-            select: function(e) {debugger                
+            select: function(e) {                
             $("#nombre").val(e.dataItem.ter__raz);    
             },
             template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',

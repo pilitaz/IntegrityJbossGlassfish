@@ -272,7 +272,7 @@ function clickCopiar(e){
 }
 
 function crearListaPrecios() {
-debugger
+
     sessionStorage.removeItem("opeListPre");
     sessionStorage.setItem("listaPrecios", "{'lis__num':'0'}");
     sessionStorage.setItem("opeListPre", "create");
