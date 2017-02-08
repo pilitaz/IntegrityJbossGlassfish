@@ -4,24 +4,24 @@
         });
       }
      function clonar(e){
-     switch (e.dscertret.certret[0].certretdet.length) {
-    case 0:
-        $("#pdfContainer").append('<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
-        break;
-    case 1:
-        $("#pdfContainer").append('<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
-        break;
-    case 2:
-        $("#pdfContainer").append('<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
-        break;
-    case 3:
-      $("#pdfContainer").append('<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
-        break;
-    case 4:
-      $("#pdfContainer").append('<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
-        break;
-   
-}    
+//     switch (e.dscertret.certret[0].certretdet.length) {
+//    case 0:
+//        $("#pdfContainer").append('<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
+//        break;
+//    case 1:
+//        $("#pdfContainer").append('<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
+//        break;
+//    case 2:
+//        $("#pdfContainer").append('<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
+//        break;
+//    case 3:
+//      $("#pdfContainer").append('<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
+//        break;
+//    case 4:
+//      $("#pdfContainer").append('<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
+//        break;
+//   
+//}    
    
     $("#pdfContainer").append("<div id='Container2'></div>");
     
@@ -30,7 +30,7 @@
     document.getElementById("Container2").append(cln);
     
     }
-    function llenar(e){
+    function llenar(e){debugger
     var i,j=0;
     var nombre =e.dscertret.certret[0].ter_raz;
     var nit =e.dscertret.certret[0].tnit;
@@ -67,25 +67,25 @@
    
             switch (e.dscertret.certret[0].certretdet.length) {
     case 0:
-        document.getElementById("total").innerHTML="<br>"+"<br>"+"<br>"+"<br>"+"<br>"+total;
+        document.getElementById("total").innerHTML="<br>"+"<br>"+"<br>"+"<br>"+"<br>"+"<br>"+total;
         break;
     case 1:
-         document.getElementById("total").innerHTML="<br>"+"<br>"+"<br>"+"<br>"+"<br>"+total;
+         document.getElementById("total").innerHTML="<br>"+"<br>"+"<br>"+"<br>"+"<br>"+"<br>"+total;
         break;
     case 2:
-      document.getElementById("total").innerHTML="<br>"+"<br>"+"<br>"+"<br>"+"<br>"+total;
+      document.getElementById("total").innerHTML="<br>"+"<br>"+"<br>"+"<br>"+"<br>"+"<br>"+total;
         break;
     case 3:
-        document.getElementById("total").innerHTML="<br>"+"<br>"+"<br>"+"<br>"+total;
+        document.getElementById("total").innerHTML="<br>"+"<br>"+"<br>"+"<br>"+"<br>"+total;
         break;
     case 4:
-        document.getElementById("total").innerHTML="<br>"+"<br>"+"<br>"+total;
+        document.getElementById("total").innerHTML="<br>"+"<br>"+"<br>"+"<br>"+total;
         break;
     case 5:
-        document.getElementById("total").innerHTML="<br>"+"<br>"+total;
+        document.getElementById("total").innerHTML="<br>"+"<br>"+"<br>"+total;
         break;
     case 6:
-        document.getElementById("total").innerHTML="<br>"+total;
+        document.getElementById("total").innerHTML="<br>"+"<br>"+total;
         break;
         
    
@@ -96,20 +96,22 @@
 
    
 }
-   function evaluar(e){
+   function evaluar(e){debugger
    var pos=0;
    if (e.dscertret.certret.length>1){
    
    llenar(e);
    var i=0,j=0;
-    for (i = 0; i <= e.dscertret.certret.length-2; i++){
+    for (i = 0; i < e.dscertret.certret.length-1; i++){
         j=i+1;
-   $("#principal").append("<div class='responsive-message page-break'><p></p></div>"); 
+   $("#principal").append("<div class='responsive-message page-break'></div><p></p>"); 
    $("#principal").append("<div id ="+"Pag" +j+ " class='pdf-page size-a4'></div>");
-            }
-   var $clone = $('#pdfContainer').clone();
+            
+           }
    
-            for (i = 0; i<= e.dscertret.certret.length-2; i++){
+   
+    for (i = 0; i< e.dscertret.certret.length-1; i++){
+        var clone = $('#pdfContainer').clone();
                 var nombre =e.dscertret.certret[i+1].ter_raz;
                 var nit =e.dscertret.certret[i+1].tnit;
                 var direccion =e.dscertret.certret[i+1].ter_dir;
@@ -119,24 +121,55 @@
                 var Num_comprobante =e.dscertret.certret[i+1].tserie;
                 var ejericio_fisical =e.dscertret.certret[i+1].v_fecha;
                 var total = e.dscertret.certret[i+1].certretdet[e.dscertret.certret[i+1].certretdet.length-1].t_suma1;
-                $clone.find('[id=parrafo1]')[0].innerHTML=nombre+"<br>"+"<br>"+nit+"<br>"+"<br>"+"<br>"+direccion+"<br>"+"<br>"+telefono; ;
-                $clone.find('[id=parrafo2]')[0].innerHTML="<br>"+"<br>"+fecha_emision+"<br>"+"<br>"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+tipo_comprobante+"<br>"+"<br>"+"<br>"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+Num_comprobante+"<br>"+"<br>"+"<br>"+ejericio_fisical;
-                $clone.find('[id=parrafo1]')[1].innerHTML=nombre+"<br>"+"<br>"+nit+"<br>"+"<br>"+"<br>"+direccion+"<br>"+"<br>"+telefono; ;
-                $clone.find('[id=parrafo2]')[1].innerHTML="<br>"+"<br>"+fecha_emision+"<br>"+"<br>"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+tipo_comprobante+"<br>"+"<br>"+"<br>"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+Num_comprobante+"<br>"+"<br>"+"<br>"+ejericio_fisical;
-                $clone.find('[id=total]')[0].innerHTML=total;
-                $clone.find('[id=total]')[1].innerHTML=total;
-                
-                $clone.find('[id=retencion]')[0].innerHTML="";
-                $clone.find('[id=codigo]')[0].innerHTML="";
-                $clone.find('[id=base]')[0].innerHTML="";
-                $clone.find('[id=porcentaje]')[0].innerHTML="";
-                $clone.find('[id=valor]')[0].innerHTML="";
+                clone.find('[id=parrafo1]')[0].innerHTML=nombre+"<br>"+"<br>"+nit+"<br>"+"<br>"+"<br>"+direccion+"<br>"+"<br>"+telefono; ;
+                clone.find('[id=parrafo2]')[0].innerHTML="<br>"+"<br>"+fecha_emision+"<br>"+"<br>"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+tipo_comprobante+"<br>"+"<br>"+"<br>"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+Num_comprobante+"<br>"+"<br>"+"<br>"+ejericio_fisical;
+                clone.find('[id=parrafo1]')[1].innerHTML=nombre+"<br>"+"<br>"+nit+"<br>"+"<br>"+"<br>"+direccion+"<br>"+"<br>"+telefono; ;
+                clone.find('[id=parrafo2]')[1].innerHTML="<br>"+"<br>"+fecha_emision+"<br>"+"<br>"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+tipo_comprobante+"<br>"+"<br>"+"<br>"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+Num_comprobante+"<br>"+"<br>"+"<br>"+ejericio_fisical;
+               
+               
+               switch (e.dscertret.certret[0].certretdet.length) {
+    case 0:
+        clone.find('[id=total]')[0].innerHTML="<br>"+"<br>"+"<br>"+"<br>"+"<br>"+"<br>"+total;
+        clone.find('[id=total]')[1].innerHTML="<br>"+"<br>"+"<br>"+"<br>"+"<br>"+"<br>"+total;
+        break;
+    case 1:
+         clone.find('[id=total]')[0].innerHTML="<br>"+"<br>"+"<br>"+"<br>"+"<br>"+"<br>"+total;
+         clone.find('[id=total]')[1].innerHTML="<br>"+"<br>"+"<br>"+"<br>"+"<br>"+"<br>"+total;
+        break;
+    case 2:
+      clone.find('[id=total]')[0].innerHTML="<br>"+"<br>"+"<br>"+"<br>"+"<br>"+total;
+      clone.find('[id=total]')[1].innerHTML="<br>"+"<br>"+"<br>"+"<br>"+"<br>"+total;
+        break;
+    case 3:
+        clone.find('[id=total]')[0].innerHTML="<br>"+"<br>"+"<br>"+"<br>"+total;
+        clone.find('[id=total]')[1].innerHTML="<br>"+"<br>"+"<br>"+"<br>"+total;
+        break;
+    case 4:
+        clone.find('[id=total]')[0].innerHTML="<br>"+"<br>"+"<br>"+total;
+        clone.find('[id=total]')[1].innerHTML="<br>"+"<br>"+"<br>"+total;
+        break;
+    case 5:
+        clone.find('[id=total]')[0].innerHTML="<br>"+"<br>"+total;
+        clone.find('[id=total]')[1].innerHTML="<br>"+"<br>"+total;
+        break;
+    case 6:
+        clone.find('[id=total]')[0].innerHTML="<br>"+total;
+        clone.find('[id=total]')[1].innerHTML="<br>"+total;
+        break;
+        
+   
+}
+                clone.find('[id=retencion]')[0].innerHTML="";
+                clone.find('[id=codigo]')[0].innerHTML="";
+                clone.find('[id=base]')[0].innerHTML="";
+                clone.find('[id=porcentaje]')[0].innerHTML="";
+                clone.find('[id=valor]')[0].innerHTML="";
 
-                $clone.find('[id=retencion]')[1].innerHTML="";
-                $clone.find('[id=codigo]')[1].innerHTML="";
-                $clone.find('[id=base]')[1].innerHTML="";
-                $clone.find('[id=porcentaje]')[1].innerHTML="";
-                $clone.find('[id=valor]')[1].innerHTML="";
+                clone.find('[id=retencion]')[1].innerHTML="";
+                clone.find('[id=codigo]')[1].innerHTML="";
+                clone.find('[id=base]')[1].innerHTML="";
+                clone.find('[id=porcentaje]')[1].innerHTML="";
+                clone.find('[id=valor]')[1].innerHTML="";
                 for (j = 0; j< e.dscertret.certret[i].certretdet.length; j++){
     
                 var Tip_Retencion = e.dscertret.certret[i+1].certretdet[j].v_nom;
@@ -146,25 +179,29 @@
                 var V_Retenido = e.dscertret.certret[i+1].certretdet[j].v_valor;
 
                 
-                $clone.find('[id=retencion]')[0].innerHTML+=Tip_Retencion+"<br>";
-                $clone.find('[id=codigo]')[0].innerHTML+=Codigo+"<br>";
-                $clone.find('[id=base]')[0].innerHTML+=Base+"<br>";
-                $clone.find('[id=porcentaje]')[0].innerHTML+=Porc_retencion+"<br>";
-                $clone.find('[id=valor]')[0].innerHTML+=V_Retenido+"<br>";
+                clone.find('[id=retencion]')[0].innerHTML+=Tip_Retencion+"<br>";
+                clone.find('[id=codigo]')[0].innerHTML+=Codigo+"<br>";
+                clone.find('[id=base]')[0].innerHTML+=Base+"<br>";
+                clone.find('[id=porcentaje]')[0].innerHTML+=Porc_retencion+"<br>";
+                clone.find('[id=valor]')[0].innerHTML+=V_Retenido+"<br>";
 
-                $clone.find('[id=retencion]')[1].innerHTML+=Tip_Retencion+"<br>";
-                $clone.find('[id=codigo]')[1].innerHTML+=Codigo+"<br>";
-                $clone.find('[id=base]')[1].innerHTML+=Base+"<br>";
-                $clone.find('[id=porcentaje]')[1].innerHTML+=Porc_retencion+"<br>";
-                $clone.find('[id=valor]')[1].innerHTML+=V_Retenido+"<br>";
+                clone.find('[id=retencion]')[1].innerHTML+=Tip_Retencion+"<br>";
+                clone.find('[id=codigo]')[1].innerHTML+=Codigo+"<br>";
+                clone.find('[id=base]')[1].innerHTML+=Base+"<br>";
+                clone.find('[id=porcentaje]')[1].innerHTML+=Porc_retencion+"<br>";
+                clone.find('[id=valor]')[1].innerHTML+=V_Retenido+"<br>";
+               
                 
             }
 
-                
-                $clone.find('[id]');
+                 clone.find('[id]');
+                    clone.find('[id=tdsuperior1]').remove();
+                    clone.find('[id=tdsuperior3]').empty();
+                    clone.find('[id=tdsuperior5]').empty();
                 var x=i+1;
-                $("#Pag"+x).append($clone);
+                $("#Pag"+x).append(clone);
                 
+               
             }
 }
 else{

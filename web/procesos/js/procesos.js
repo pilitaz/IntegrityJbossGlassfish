@@ -178,7 +178,7 @@ $(document).ready(function () {
      */     
     var grid1 = $("#grid1").kendoGrid({
         dataSource: datasourcex,
-         selectable:"multiple, row",
+        selectable:"multiple, row",
         sortable: true,
         filterable: {
             mode: "row",
