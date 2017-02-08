@@ -52,9 +52,9 @@
     
     var Tip_Retencion = e.dscertret.certret[0].certretdet[i].v_nom;
     var Codigo = e.dscertret.certret[0].certretdet[i].timp;
-    var Base = e.dscertret.certret[0].certretdet[i].v_valor;
+    var Base = e.dscertret.certret[0].certretdet[i].v_valor1;
     var Porc_retencion = e.dscertret.certret[0].certretdet[i].v_cpt;
-    var V_Retenido = e.dscertret.certret[0].certretdet[i].v_cpt;
+    var V_Retenido = e.dscertret.certret[0].certretdet[i].v_valor;
     
     document.getElementById("retencion").innerHTML+=Tip_Retencion+"<br>";
     document.getElementById("codigo").innerHTML+=Codigo+"<br>"
@@ -141,9 +141,9 @@
     
                 var Tip_Retencion = e.dscertret.certret[i+1].certretdet[j].v_nom;
                 var Codigo = e.dscertret.certret[i+1].certretdet[j].timp;
-                var Base = e.dscertret.certret[i+1].certretdet[j].v_valor;
+                var Base = e.dscertret.certret[i+1].certretdet[j].v_valor1;
                 var Porc_retencion = e.dscertret.certret[i+1].certretdet[j].v_cpt;
-                var V_Retenido = e.dscertret.certret[i+1].certretdet[j].v_cpt;
+                var V_Retenido = e.dscertret.certret[i+1].certretdet[j].v_valor;
 
                 
                 $clone.find('[id=retencion]')[0].innerHTML+=Tip_Retencion+"<br>";
