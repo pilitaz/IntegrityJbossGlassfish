@@ -142,10 +142,12 @@ table{
 }
 .k-grid tr:not(.k-state-selected):hover {
       color: #ED4B5E;
+       
   }
 
   .k-grid tr.k-alt:not(.k-state-selected):hover {
       background: #f1f1f1;
+       
   }
 
 .red {
@@ -186,5 +188,10 @@ footer {
             position: fixed;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
-
+.k-multiselect-wrap {
+    font-style: normal;
+    opacity: 0.6;
+    color: grey;
+    font-size: 14px;
+}
 html{}a.solink{position:fixed;top:50;width:100%;text-align:center;background:#f3f5f6;color:#cfd6d9;border:1px solid #cfd6d9;line-height:30px;text-decoration:none;transition:all .3s;z-index:999}a.solink::first-letter{text-transform:capitalize}a.solink:hover{color:#428bca}
