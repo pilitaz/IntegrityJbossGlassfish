@@ -261,12 +261,11 @@ function servicio(){
     servicio();
 }
     $(document).ready(function() {
-        document.body.style.zoom = 1.0
-var scale = 'scale(1)';
+       document.body.style.zoom="100%";
+       var scale = 'scale(1)';
 document.body.style.webkitTransform =  scale;    // Chrome, Opera, Safari
  document.body.style.msTransform =   scale;       // IE 9
- document.body.style.transform = scale;
-       
+ document.body.style.transform = scale;  
         
         $("#fecha").kendoDatePicker({
              format: "yyyy/MM/dd"
