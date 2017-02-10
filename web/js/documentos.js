@@ -125,13 +125,16 @@ function getFile(e) {
                 alert("Error" + JSON.stringify(e));
             }
         }).done(function () {
-//            window.location = sessionStorage.getItem("documentobase64");
-            var dataURI = "data:text/plain;base64," + sessionStorage.getItem("documentobase64");
-            kendo.saveAs({
-                dataURI: sessionStorage.getItem("documentobase64"),
-                fileName: sessionStorage.getItem("documento")
-            });
-
+            var dataURI = sessionStorage.getItem("documentobase64");
+            if(identBrowser()==="Chrome"){
+                kendo.saveAs({
+                    dataURI: dataURI,
+                    fileName: sessionStorage.getItem("documento")
+                });
+            }else{
+                alertDialogs("Para descargar el archivo es necesario utilizar el navegador Chome.");
+                window.open("./docOnline.html", "_blank");
+            }
         });
     } catch (e) {
         kendo.alert(e.message);
@@ -160,12 +163,18 @@ function getFileAsPDF(e) {
                 alert("Error" + JSON.stringify(e));
             }
         }).done(function () {
-            var dataURI = "data:text/plain;base64," + sessionStorage.getItem("documentobase64");
+            var dataURI = sessionStorage.getItem("documentobase64");
             archivo = archivo.replace(/\.[a-z]+/g, ".pdf");
-            kendo.saveAs({
-                dataURI: sessionStorage.getItem("documentobase64"),
-                fileName: archivo
-            });
+            
+            if(identBrowser()==="Chrome"){
+                kendo.saveAs({
+                    dataURI: dataURI,
+                    fileName: archivo
+                });
+            }else{
+                alertDialogs("Para descargar el archivo es necesario utilizar el navegador Chome.");
+                window.open("./docOnline.html", "_blank");
+            }
         });
     } catch (e) {
         kendo.alert(e.message);
@@ -195,16 +204,14 @@ function showFile(e) {
         }).done(function () {
             var tipoArchivo = sessionStorage.getItem("documento").split(".")[sessionStorage.getItem("documento").split(".").length - 1];
             if (tipoArchivo === "pdf") {
-                var dataURI = sessionStorage.getItem("documentobase64");
+                var dataURI = "data:application/pdf;base64," + sessionStorage.getItem("documentobase64");
             } else if (tipoArchivo === "gif" || tipoArchivo === "jpeg" || tipoArchivo === "png" || tipoArchivo === "pjpeg" || tipoArchivo === "tiff") {
-                var dataURI = sessionStorage.getItem("documentobase64");
+                var dataURI = "data:image/" + tipoArchivo + ";base64," + sessionStorage.getItem("documentobase64");
             } else {
-                var dataURI = sessionStorage.getItem("documentobase64");
+                var dataURI = "data:text/plain;base64," + sessionStorage.getItem("documentobase64");
             }
-            var a = document.createElement("a");
-            a.target = "_blank";
-            a.href = "./docOnline.html";
-            a.click();
+            window.open("./docOnline.html", "_blank");
+            
         });
     } catch (e) {
         kendo.alert(e.message);
