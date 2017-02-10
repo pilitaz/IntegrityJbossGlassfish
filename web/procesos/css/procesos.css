@@ -149,10 +149,21 @@ table{
       background: #f1f1f1;
        
   }
-
-.red {
-    color: red;
+  .k-grid .k-state-selected  {
+  background-color: #48494B !important;
+  color:#48494B;
+  opacity: 0.6;
 }
+ 
+.k-grid .k-alt.k-state-selected {
+  background-color: #48494B !important;
+  color: #48494B;
+  opacity: 0.6;
+}
+
+/*.red {
+    color: red;
+}*/
 #customPopUp1{
     height:70%;
     position: absolute;

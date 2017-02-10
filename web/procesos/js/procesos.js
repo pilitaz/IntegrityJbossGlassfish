@@ -360,6 +360,7 @@ function reasignar(){
 //    $("#customPopUp").fadeIn("slow");
 //
 //}    
+
         $("#formvacations").append("<div id='windowform'></div>");
         var myWindow1 = $("#windowform"),undo = $("#undo");
                 
