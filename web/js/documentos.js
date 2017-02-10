@@ -117,12 +117,16 @@ function getFile(e) {
                 alert("Error" + JSON.stringify(e));
             }
         }).done(function () {
-            var dataURI = "data:text/plain;base64," + sessionStorage.getItem("documentobase64");
-            kendo.saveAs({
-                dataURI: dataURI,
-                fileName: sessionStorage.getItem("documento")
-            });
-
+            var dataURI = sessionStorage.getItem("documentobase64");
+            if(identBrowser()==="Chrome"){
+                kendo.saveAs({
+                    dataURI: dataURI,
+                    fileName: sessionStorage.getItem("documento")
+                });
+            }else{
+                alertDialogs("Para descargar el archivo es necesario utilizar el navegador Chome.");
+                window.open("./docOnline.html", "_blank");
+            }
         });
     } catch (e) {
         kendo.alert(e.message);
@@ -151,12 +155,18 @@ function getFileAsPDF(e) {
                 alert("Error" + JSON.stringify(e));
             }
         }).done(function () {
-            var dataURI = "data:text/plain;base64," + sessionStorage.getItem("documentobase64");
+            var dataURI = sessionStorage.getItem("documentobase64");
             archivo = archivo.replace(/\.[a-z]+/g, ".pdf");
-            kendo.saveAs({
-                dataURI: dataURI,
-                fileName: archivo
-            });
+            
+            if(identBrowser()==="Chrome"){
+                kendo.saveAs({
+                    dataURI: dataURI,
+                    fileName: archivo
+                });
+            }else{
+                alertDialogs("Para descargar el archivo es necesario utilizar el navegador Chome.");
+                window.open("./docOnline.html", "_blank");
+            }
         });
     } catch (e) {
         kendo.alert(e.message);
@@ -192,10 +202,8 @@ function showFile(e) {
             } else {
                 var dataURI = "data:text/plain;base64," + sessionStorage.getItem("documentobase64");
             }
-            var a = document.createElement("a");
-            a.target = "_blank";
-            a.href = dataURI;
-            a.click();
+            window.open("./docOnline.html", "_blank");
+            
         });
     } catch (e) {
         kendo.alert(e.message);
