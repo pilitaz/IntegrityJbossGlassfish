@@ -237,9 +237,9 @@ $(document).ready(function () {
                     trr__cod:    {editable: true, nullable: false}, 
                 }
             },
-             error: function (e) {
+            
+        }, error: function (e) {
             alertDialogs(e.errorThrown);
-        }
         }
     });
   

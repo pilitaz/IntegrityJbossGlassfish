@@ -5,15 +5,77 @@ iniciar();
 jefe();
 pagoAnticipado();
 });
-function guardar(){
+function guardar(){debugger
+    try {
+   var consultar = new guardarVacaciones();
+    var datajson = consultar.getjson();
+    var urlService = consultar.getUrlSir();
+    var fecha_inicio = $("#inicioVacaciones")[0].value;
+    var dias_pedir = $("#diasPedir")[0].value;
+    var dias_pago = $("#totaldiasvalor")[0].value;
+    
+    var anticipado = $("#anticipado").data("kendoComboBox");   
+    var select = anticipado.selectedIndex;
+    var anticipado = anticipado.dataSource._data[select].valor;
+    
+    var jefe = $("#jefe").data("kendoDropDownList");   
+    var select = jefe.selectedIndex;
+    var jefe = jefe.dataSource._data[select].usrcod;
+    
+    datajson.dsSolicitudVacaciones.eeParametros[0].usertoassign=jefe;
+    datajson.dsSolicitudVacaciones.eeParametros[0].picproc_name= sessionStorage.getItem("tarea_usuario");
+    
+    datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].Pago_anticipado=anticipado;
+    datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].dias_tiempo=parseInt(dias_pedir);
+    datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].fecha_ini_vacaciones=fecha_inicio;
+    datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].dias_dinero=parseInt(dias_pago);
+    datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].jefe_inmediato=jefe;
+    datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].observaciones_empleado=document.getElementById("Observaciones").value ;
+    datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].dias_ant_solicitud= parseInt(document.getElementById("vacaciones").innerHTML);
+    datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].dias_anticipados=parseInt(document.getElementById("anticipacion").innerHTML);
+    datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].dias_disponibles=parseInt(document.getElementById("pendientes").innerHTML);
+    datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].fecha_solictud=document.getElementById("fecha").innerHTML;
+    datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].fecha_ult_vac= document.getElementById("corte").innerHTML;
+    datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].estado_aprocbacion="FALSE";
+        $.ajax({
+            
+            type: "POST",        
+            async: false,
+            data: JSON.stringify(datajson),
+            url: urlService,
+            dataType: "json",        
+            contentType: "application/json;",
+            success: function (resp) { debugger
+                if((resp.dsSolicitudVacaciones.eeEstados[0].Estado)=="OK")
+                {
+                  
+                  parent.cerrar();
+                }
+                else   
+                {  
+                     
+                } 
+            } ,
+            error: function (e) {
+             parent.alertDialogs("Error al consumir el servicio de CrearConciones" + e.status + " - " + e.statusText);
+        }
+            
+        });  
+   
+    
+    
+}
+catch(err) {
+   parent.alertDialogs("Debe ingresar todos los valores requeridos");
+}
     
     
 }
 function pagoAnticipado(){
     
      var estados = [
-        {text: "Si", valor: "1"},
-        {text: "No", valor: "0"},
+        {text: "Si", valor: "TRUE"},
+        {text: "No", valor: "FALSE"},
 
     ];
 
@@ -76,7 +138,7 @@ function jefe(){
     
 }
 function iniciar(){
-    $("#inicioVacaciones").kendoDatePicker();
+    $("#inicioVacaciones").kendoDatePicker({format:  "yyyy/MM/dd "});
     $("#diasPedir").kendoNumericTextBox({format: "0"});
     $("#totaldiasvalor").kendoNumericTextBox({format: "0"});
     

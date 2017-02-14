@@ -520,3 +520,63 @@ function sirJefes() {
     };
     
 };
+//---------------------------------------------------------------------------
+function guardarVacaciones() {
+    var urlSir = ipServicios + baseUsrBpm +"SIInicioSolicitudVacaciones";
+    var json = {  
+   "dsSolicitudVacaciones":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+     ],
+       "eeParametros":[  
+         {  
+            "picproc_name":"",
+            "usertoassign":"",
+         }
+     ],
+   "eeSolicitudVacaciones":[  
+         {  
+   "Id_empleado":sessionStorage.getItem("usuario"),
+   "email_empleado":"",
+   "fecha_ult_vac":"",
+   "Pago_anticipado":"",
+   "dias_ant_solicitud":0,
+   "estado_aprocbacion":"",
+   "dias_tiempo":0,
+   "fecha_ini_vacaciones":"",
+   "dias_dinero":0,
+   "jefe_inmediato":"",
+   "dias_disponibles":0,
+   "dias_anticipados":0,
+   "fecha_solictud":"",
+   "tiempo_rta_solicitud":0,
+   "observaciones_empleado":""
+         }
+     ]
+   } 
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};

@@ -3,12 +3,16 @@ $(document).ready(function () {
 reasignar();
 });
    
-   function reasignar() {
+   function reasignar() {debugger
+        var lista = sessionStorage.getItem("listado_tareas"); 
+        var lista = JSON.parse(lista);
         
+        document.getElementById("subtitulo2").innerHTML  = "Reasignacion de  "+lista.length +" tareas : "+lista[0].text; 
         var consultar = new sirconsulta();
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();
         var mapCud1 = "UserBPM";
+        
         $("#reasiganar")
                 .kendoComboBox({
                

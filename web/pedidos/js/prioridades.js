@@ -197,9 +197,9 @@ $(document).ready(function () {
                         pri__des:    {editable: true, nullable: false},          
                     }
                 },
-                 error: function (e) {
+                 
+            },error: function (e) {
                 alertDialogs(e.errorThrown);
-            }
             }
         });
 

@@ -1,5 +1,5 @@
  function getPDF(selector) {debugger
-      $("#pag").removeClass("jorge");
+      $("#pag").removeClass("fondo");
         kendo.drawing.drawDOM($(selector),{ forcePageBreak: ".page-break" }).then(function(group){
           kendo.drawing.pdf.saveAs(group, "Quantum.pdf");
         });
@@ -107,7 +107,7 @@
     for (i = 0; i < e.dscertret.certret.length-1; i++){
         j=i+1;
    $("#principal").append("<div class='responsive-message page-break'></div><p></p>"); 
-   $("#principal").append("<div id ="+"Pag" +j+ "  class='pdf-page size-a4 jorge' ></div> '");
+   $("#principal").append("<div id ="+"Pag" +j+ "  class='pdf-page size-a4 fondo' ></div> '");
             
            }
    

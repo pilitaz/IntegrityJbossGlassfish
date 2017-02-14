@@ -2,7 +2,7 @@
 <html>
 <head>
    
-    <style>html { font-size: 10px; font-family: Arial }</style>
+    <style>html { font-size: 10px; font-family: "Courier New" }</style>
     
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
@@ -60,7 +60,7 @@
     </div>
 
     <div id="principal"  class="page-container hidden-on-narrow">
-        <div id="pag" class="pdf-page size-a4 jorge" >
+        <div id="pag" class="pdf-page size-a4 fondo" >
 
             <div id="pdfContainer" class="pdf-body">
                 <table >
@@ -164,6 +164,7 @@
         // from a different origin, e.g. cdn.kendostatic.com
         kendo.pdf.defineFont({
                "DejaVu Sans"                : "http://cdn.kendostatic.com/2017.1.118/styles/fonts/DejaVu/DejaVuSans.ttf",
+            
                // "DejaVu Sans|Bold"        : "DejaVuSans-Bold.ttf",
                // "DejaVu Sans|Bold|Italic" : "DejaVuSans-Oblique.ttf",
                // "DejaVu Sans|Italic"      : "DejaVuSans-Oblique.ttf"
@@ -174,8 +175,8 @@
     <script src="../../scripts/pakoPdf.js"></script>
 
     <style>
-        .jorge{
-            background-image: url(w3s.JPEG);
+        .fondo{
+            /*background-image: url(w3s.png);*/
         }
         .pdf-page {
             margin: 0 auto;

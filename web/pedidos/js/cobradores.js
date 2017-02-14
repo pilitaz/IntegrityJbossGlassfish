@@ -209,10 +209,10 @@ $(document).ready(function () {
                     cbr__est:    {editable: true, nullable: false}
                     
                 },
-             error: function (e) {
-            alertDialogs(e.errorThrown);
-        }
+             
             }
+        },error: function (e) {
+            alertDialogs(e.errorThrown);
         }
     });
 

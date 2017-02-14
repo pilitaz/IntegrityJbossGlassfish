@@ -170,10 +170,10 @@ $(document).ready(function () {
                     ctr__est:    {editable: true, nullable: false}                   
                                         
                 },
-             error: function (e) {
-            alertDialogs(e.errorThrown);
-        }
+             
             }
+        },error: function (e) {
+            alertDialogs(e.errorThrown);
         }
     });
     var window = $("#window1").kendoWindow({

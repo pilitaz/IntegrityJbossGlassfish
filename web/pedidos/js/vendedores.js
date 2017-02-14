@@ -256,9 +256,9 @@ $(document).ready(function () {
 
                 }
             },
-             error: function (e) {
+            
+        }, error: function (e) {
             alertDialogs(e.errorThrown);
-        }
         }
     });
     var grid1 = $("#grid").kendoGrid({

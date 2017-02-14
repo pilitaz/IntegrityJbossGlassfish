@@ -103,11 +103,11 @@ function gridDetalleVendedor(){
                     ter__raz:    {editable: true, nullable: false}
 
 
-                },
-             error: function (e) {
-            alertDialogs(e.errorThrown);
-        }
+                }
+             
             }
+        },error: function (e) {
+            alertDialogs(e.errorThrown);
         }
     });
     var grid1 = $("#gridDetalleVendedor").kendoGrid({

@@ -214,11 +214,11 @@ $(document).ready(function () {
                         bar__est:    {editable: true, nullable: false},
                         ciu__nom:    {editable: true, nullable: false},
                     },
-                    error: function (e) {
+                    
+                }
+            },error: function (e) {
                         alertDialogs(e.errorThrown);
                     }
-                }
-            }
         });
         
         /**

@@ -160,7 +160,9 @@
                             ter__nit: {editable: false, nullable: false}
                         }
                     }
-                }
+                },error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
             }
 
         });

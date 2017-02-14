@@ -240,10 +240,10 @@ $(document).ready(function () {
                     sre__est:    {editable: true, nullable: false}, 
                     rgeo__nom:    {editable: true, nullable: false}
                 }
-            },
-             error: function (e) {
+            }
+             
+        },error: function (e) {
             alertDialogs(e.errorThrown);
-        }
         }
     });
     var grid1 = $("#grid").kendoGrid({
