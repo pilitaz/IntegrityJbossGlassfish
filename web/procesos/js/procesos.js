@@ -231,7 +231,9 @@ $(document).ready(function () {
 
 function iniciarTarea(e){debugger
      var x = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).id;
-     sessionStorage.setItem("tarea_usuario",x);          
+     var y = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).task__name;
+    sessionStorage.setItem("tarea_usuario",x); 
+    sessionStorage.setItem("proceso_usuario",y);  
     $("#formvacations").append("<div id='windowform'></div>");
         var myWindow1 = $("#windowform"),undo = $("#undo");
                 
@@ -400,7 +402,7 @@ if (contador === datanew.length )
             undo.fadeIn();
             $("#windowform").empty();
         }
-//        mostrarCustomPopUp();
+//    mostrarCustomPopUp();
 //    onloadPopUpCond ();
         var UrL= sessionStorage.getItem("url");  
         myWindow1.kendoWindow({

@@ -580,3 +580,46 @@ function guardarVacaciones() {
     };
     
 };
+//---------------------------------------------------------------------------
+function infoAyuda() {
+    var urlSir = ipServicios + baseUsrBpm +"SIRgetWorkstepInstruction";
+    var json = {  
+   "dsgetWorkstepInstruction":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "getWorkstepInstruction":[  
+         {  
+         
+          "picprocname":"",
+            "pictaskname":"",
+            "picusuario":sessionStorage.getItem("usuario"),
+         }
+      ]      
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
