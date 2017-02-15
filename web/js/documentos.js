@@ -132,7 +132,7 @@ function getFile(e) {
                     fileName: sessionStorage.getItem("documento")
                 });
             }else{
-                alertDialogs("Para descargar el archivo es necesario utilizar el navegador Chome.");
+                alertDialogs("Para descargar el archivo es necesario utilizar el navegador Chrome.");
                 window.open("./docOnline.html", "_blank");
             }
         });

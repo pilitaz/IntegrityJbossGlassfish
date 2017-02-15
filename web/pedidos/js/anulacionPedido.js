@@ -189,10 +189,10 @@ $(document).ready(function () {
                         gpd__est:    {editable: false, nullable: false},
                     }
                 },
-                
-            },error: function (e) {
+                error: function (e) {
                     alertDialogs(e.errorThrown);
                 }
+            }
         });
         
         /**

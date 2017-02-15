@@ -146,9 +146,10 @@ $(document).ready(function () {
                     if (operation === "read") {
                         return JSON.stringify(datajson);
                     }
-                    if (operation === "update") {
+                    if (operation === "update") {                        
                        actjson.dsSICUDgpd_pri.eegpd_pri[0].pri__cod=options.pri__cod;
-                       actjson.dsSICUDgpd_pri.eegpd_pri[0].pri__des=options.pri__des;     
+                       actjson.dsSICUDgpd_pri.eegpd_pri[0].pri__des=options.pri__des;
+                       actjson.dsSICUDgpd_pri.eegpd_pri[0].ctr__est=options.ctr__est;                       
                         return JSON.stringify(actjson);
 
 
@@ -158,9 +159,9 @@ $(document).ready(function () {
                        actjson.dsSICUDgpd_pri.eegpd_pri[0].pri__des=options.pri__des; 
                         actjson.dsSICUDgpd_pri.eegpd_pri[0].piictr__est=99; 
                         return JSON.stringify(actjson);          
-                        $('#grid').data('kendoGrid').refresh();
-                        $('#grid').data('kendoGrid').dataSource.read();
-                        $('#grid').data('kendoGrid').refresh();                                     
+//                        $('#grid').data('kendoGrid').refresh();
+//                        $('#grid').data('kendoGrid').dataSource.read();
+//                        $('#grid').data('kendoGrid').refresh();                                     
                     }
                     if (operation === "destroy") {
 
@@ -187,18 +188,22 @@ $(document).ready(function () {
                             return e[key1][mapCud];
                         }else
                         {
-                        alertDialogs("Error"+e[key1].eeEstados[0].Estado);    
+                            alertDialogs("Error"+e[key1].eeEstados[0].Estado);    
                         }
-                    }},
+                    }else{
+                        alertDialogs("Error "+e._errors["0"]._errorMsg)
+                    }
+                },
                 model: {
                     id: "pri__cod",
                     fields: {
                         pri__cod:    {editable: false, nullable: false},
                         pri__des:    {editable: true, nullable: false},          
                     }
-                },
-                 
-            },error: function (e) {
+                }
+            },
+            error: function (e) {
+                     debugger
                 alertDialogs(e.errorThrown);
             }
         });

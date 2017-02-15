@@ -237,7 +237,7 @@ function popUpPedidoCU() {
 
 function closePopUpCabecera(){       
     $("#windowPedidoCabecera").data("kendoWindow").close();
-    window.location.replace(( sessionStorage.getItem("url")+"pedidos/html/pedido"+".html"));  
+    window.location.replace( sessionStorage.getItem("url")+"pedidos/html/pedido"+".html");  
 }
 
 function popUpAprobacionPedido() {

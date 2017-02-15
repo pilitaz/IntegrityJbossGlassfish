@@ -165,8 +165,7 @@ function grilla(obj) {
         editable: "popup",
         rowTemplate: kendo.template($("#rowTemplate").html()),
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
-        edit: function (e) {
-            
+        edit: function (e) {            
             e.container.kendoWindow("title", "Editar");
 //                e.container.find("label[for='cam__des']").hide();
 //                e.container.find("input[name=cam__des]").hide();

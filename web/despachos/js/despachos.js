@@ -41,11 +41,11 @@ function addRow() {
     var UrL = sessionStorage.getItem("url");
     myWindow1.kendoWindow({
         draggable: true,
-        height: "40%",
+        height: 300,
         modal: true,
         resizable: true,
-        title: "Crear",
-        width: "35%",
+        title: "Nuevo",
+        width: 600,
         content: UrL + "despachos/html/popupFiltros.html",
         actions: [
             "Close"

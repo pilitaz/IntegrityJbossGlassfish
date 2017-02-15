@@ -249,13 +249,13 @@ $(document).ready(function () {
     var grid1 = $("#grid").kendoGrid({
         dataSource: dataSource,
         columns: [
-            {field: "sre__cod", title: "Cod Supervisor ",  hidden:false},
+            {field: "sre__cod", title: "Código",  hidden:false},
             
-            {field: "rgeo__nom", title: "Region",  hidden:false,editor:regionCod,
+            {field: "rgeo__nom", title: "Región",  hidden:false,editor:regionCod,
                 template: function (e) {
                     return e.rgeo__nom;
                 }},    
-            {field: "ter__nit", title: "Cedula",  hidden:false, editor: filtroestado,
+            {field: "ter__nit", title: "Cédula",  hidden:false, editor: filtroestado,
                 template: function (e) {
                     return e.ter__nit;
                 }},    
