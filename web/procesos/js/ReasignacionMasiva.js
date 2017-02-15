@@ -1,7 +1,7 @@
 
-$(document).ready(function () {
+function onloadPopUpCond() {
 reasignar();
-});
+};
    
    function reasignar() {debugger
         var lista = sessionStorage.getItem("listado_tareas"); 
