@@ -378,7 +378,13 @@ function inputsPopUp(e){
         }
     });
 }
-function mostrarCustomPopUp() {
+
+function closePopUp() {     
+    $("#windowListPre").data("kendoWindow").close();
+    location.reload();
+}
+
+function mostrarCustomPopUp() {    
     $("#customPopUp").fadeIn();
     onloadPopUpCabecera();
 
