@@ -9,7 +9,10 @@ $(window).resize(function () {
                         
 });
                     
- 
+ function newCliente(){
+    sessionStorage.removeItem("Detalle_Cliente"); 
+    crearCliente();
+ }
 /**
  * FUNCION crear usuario nuevo
  * grid1 variable almacena data de grid
@@ -17,36 +20,29 @@ $(window).resize(function () {
  *   
  *  
  *  
- */ function newrol(e){
- 
-    //var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
-        $("#textarea").append("<div id='windowform'></div>");
-        var myWindow1 = $("#windowform"),undo = $("#undo");
-                
-        function onClose() {
-            undo.fadeIn();
-            $("#windowform").empty();
-        
-        }
-        var UrL= sessionStorage.getItem("url");  
-        myWindow1.kendoWindow({
-            draggable: true,
-            height: "70%",
-            modal: true,
-            resizable: false,
-            title: "Crear",
-            width: "50%",
-            content: UrL+"clientes/html/popupCliente.html",
-            actions: [
-                "Close"
-            ],                               
-           close: function () {
-            
-            $("#textarea").empty();
-            this.destroy();}
-        }).data("kendoWindow").center().open();    
+ */ function crearCliente(e){        
+    $("body").append("<div id='windowClienteCabecera'></div>");
+    var myWindow = $("#windowClienteCabecera");
+    var undo = $("#undo");
     
-   
+    function onCloseWindowCabCliente() {
+        document.getElementById("windowClienteCabecera").remove();
+        undo.fadeIn();
+    }
+    
+    myWindow.kendoWindow({
+        width: "80%",
+        height: 500,
+        title: "Editar",
+        content: sessionStorage.getItem("url") + "clientes/html/popupCabeceracliente.html",
+        visible: false,
+        modal: true,
+        actions: [
+            "Close"
+        ],
+        close: onCloseWindowCabCliente
+    }).data("kendoWindow").center().open();
+
 }
                             
 
@@ -696,7 +692,7 @@ function changeEst(e){
         actions[1].action = function () {
             bandAlert = 0;
         };
-        createDialog("Atención", "Esta seguro de cambiar estado de Registro ---" + seleccion.vdd__cod + " ---?", "400px", "200px", true, true, actions);
+        createDialog("Atención", "Esta seguro de cambiar estado de Registro ---" + seleccion.ter__raz + " ---?", "400px", "200px", true, true, actions);
 
     } catch (e) {
         createDialog(e);
@@ -711,14 +707,11 @@ function changeEst(e){
       function cerrar(){
     //onClosex();
     $("#windowform").data("kendoWindow").close();
-  
-    
 }  
                 
-      function cerrar1(){
-    //onClosex();
-    
-    $("#windowform").data("kendoWindow").close();
-  window.location = ("clienteDetalle.html"); 
-    
+function cerrarClienteCabecera(){
+    $("#windowClienteCabecera").data("kendoWindow").close();
+    debugger
+    console.log(sessionStorage.getItem("url")+"clientes/html/clienteDetalle"+".html");
+    window.location.replace( sessionStorage.getItem("url")+"clientes/html/clienteDetalle.html");
 }  
