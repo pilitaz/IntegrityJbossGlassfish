@@ -644,6 +644,88 @@
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -58px -1108px;
 }
+
+/* ——  */
+
+.po_share{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -1158px;
+	cursor:pointer
+}
+.po_share:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -1158px;
+	cursor:pointer
+}
+.po_share:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -1158px;
+}
+
+/* ——  */
+
+.po_asignar{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -1208px;
+	cursor:pointer
+}
+.po_asignar:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -1208px;
+	cursor:pointer
+}
+.po_asignar:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -1208px;
+}
+
+/* ——  */
+
+.po_upfolder_sup{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -1258px;
+	cursor:pointer
+}
+.po_upfolder_sup:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -1258px;
+	cursor:pointer
+}
+.po_upfolder_sup:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -1258px;
+}
+
+/* ——  */
+
+.po_upfecha{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -1308px;
+	cursor:pointer
+}
+.po_upfecha:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -1308px;
+	cursor:pointer
+}
+.po_upfecha:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -1308px;
+}
+
+
 /**********************************************/
 /**********************************************/
 /****************   REPORTES   ****************/
