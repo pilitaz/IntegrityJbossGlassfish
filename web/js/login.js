@@ -15,7 +15,10 @@ function onLoad() {
 
     $("#btnLogin").kendoButton({
     });
-
+    $( "#logoIntegrity" ).click(function() {
+        window.location = window.location.href+'?eraseCache=true';
+        location.reload(true);
+      });
     presionaEnter();
 }
 
@@ -154,7 +157,5 @@ function errorHtml() {
     }
 }
 
-$( "#logoIntegrity" ).click(function() {
-  window.location = window.location.href+'?eraseCache=true';
-});
+
 
