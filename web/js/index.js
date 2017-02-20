@@ -45,7 +45,7 @@ $(document).ready(function () {
     }
     $("#k-icon.k-i-arrow-s").className = "k-icon   k-i-hbars";
     $( "#logoEmpresa" ).click(function() {
-        window.location = window.location.href+'?eraseCache=true';
+//        window.location = window.location.href+'?eraseCache=true';
         location.reload(true);
       });
 });

@@ -16,7 +16,7 @@ function onLoad() {
     $("#btnLogin").kendoButton({
     });
     $( "#logoIntegrity" ).click(function() {
-        window.location = window.location.href+'?eraseCache=true';
+//        window.location = window.location.href+'?eraseCache=true';
         location.reload(true);
       });
     presionaEnter();
