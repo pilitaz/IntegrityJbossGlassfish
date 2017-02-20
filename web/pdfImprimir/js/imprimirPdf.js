@@ -42,8 +42,8 @@
     var tipo_comprobante =e.dscertret.certret[0].tclc_cod;
     var Num_comprobante =e.dscertret.certret[0].tserie;
     var ejericio_fisical =e.dscertret.certret[0].v_fecha;
-    document.getElementById("parrafo1").innerHTML="<strong>Sr.(es): </strong>"+nombre+"<br>"+"<br>"+"CI/RUC: "+nit+"<br>"+"<br>"+"Direccion: "+direccion+"<br>"+"<br>"+"Teléfonos: "+telefono; 
-    document.getElementById("parrafo2").innerHTML="Fecha de Emision:"+fecha_emision+"<br>"+"<br>"+"Tipo de Comprobante de venta: "+tipo_comprobante+"<br>"+"<br>"+"N° de Comprobande de venta:"+Num_comprobante+"<br>"+"<br>"+"Ejercicio Fis: "+ejericio_fisical;
+    document.getElementById("parrafo1").innerHTML="<strong>Sr.(es): </strong>"+nombre+"<br>"+"<br>"+"<strong>CI/RUC:</strong> "+nit+"<br>"+"<br>"+"<strong>Direccion: </strong>"+direccion+"<br>"+"<br>"+"<strong>Teléfonos: </strong>"+telefono; 
+    document.getElementById("parrafo2").innerHTML="<strong>Fecha de Emision:</strong>"+fecha_emision+"<br>"+"<br>"+"<strong>Tipo de Comprobante de venta: </strong>"+tipo_comprobante+"<br>"+"<br>"+"<strong>N° de Comprobande de venta: </strong>"+Num_comprobante+"<br>"+"<br>"+"<strong>Ejercicio Fis: </strong>"+ejericio_fisical;
     document.getElementById("retencion").innerHTML="";
     document.getElementById("codigo").innerHTML="";
     document.getElementById("base").innerHTML="";
@@ -120,11 +120,10 @@
                 var Num_comprobante =e.dscertret.certret[i+1].tserie;
                 var ejericio_fisical =e.dscertret.certret[i+1].v_fecha;
                 var total = e.dscertret.certret[i+1].certretdet[e.dscertret.certret[i+1].certretdet.length-1].t_suma1;
-                clone.find('[id=parrafo1]')[0].innerHTML="<strong>Sr.(es): </strong>"+nombre+"<br>"+"<br>"+"CI/RUC: "+nit+"<br>"+"<br>"+"Direccion: "+direccion+"<br>"+"<br>"+"Teléfonos: "+telefono; ;
-                clone.find('[id=parrafo2]')[0].innerHTML="Fecha de Emision:"+fecha_emision+"<br>"+"<br>"+"Tipo de Comprobante de venta: "+tipo_comprobante+"<br>"+"<br>"+"N° de Comprobande de venta:"+Num_comprobante+"<br>"+"<br>"+"Ejercicio Fis: "+ejericio_fisical;
-                clone.find('[id=parrafo1]')[1].innerHTML="<strong>Sr.(es): </strong>"+nombre+"<br>"+"<br>"+"CI/RUC: "+nit+"<br>"+"<br>"+"Direccion: "+direccion+"<br>"+"<br>"+"Teléfonos: "+telefono; ;
-                clone.find('[id=parrafo2]')[1].innerHTML="Fecha de Emision:"+fecha_emision+"<br>"+"<br>"+"Tipo de Comprobante de venta: "+tipo_comprobante+"<br>"+"<br>"+"N° de Comprobande de venta:"+Num_comprobante+"<br>"+"<br>"+"Ejercicio Fis: "+ejericio_fisical;
-
+                clone.find('[id=parrafo1]')[0].innerHTML="<strong>Sr.(es): </strong>"+nombre+"<br>"+"<br>"+"<strong>CI/RUC: </strong>"+nit+"<br>"+"<br>"+"<strong>Direccion:</strong> "+direccion+"<br>"+"<br>"+"<strong>Teléfonos: </strong>"+telefono; ;
+                clone.find('[id=parrafo2]')[0].innerHTML="<strong>Fecha de Emision:</strong>"+fecha_emision+"<br>"+"<br>"+"<strong>Tipo de Comprobante de venta: </strong>"+tipo_comprobante+"<br>"+"<br>"+"<strong>N° de Comprobande de venta:</strong>"+Num_comprobante+"<br>"+"<br>"+"<strong>Ejercicio Fis: </strong>"+ejericio_fisical;
+                clone.find('[id=parrafo1]')[1].innerHTML="<strong>Sr.(es): </strong>"+nombre+"<br>"+"<br>"+"<strong>CI/RUC: </strong>"+nit+"<br>"+"<br>"+"<strong>Direccion:</strong> "+direccion+"<br>"+"<br>"+"<strong>Teléfonos: </strong>"+telefono; ;
+                clone.find('[id=parrafo2]')[1].innerHTML="<strong>Fecha de Emision:</strong>"+fecha_emision+"<br>"+"<br>"+"<strong>Tipo de Comprobante de venta: </strong>"+tipo_comprobante+"<br>"+"<br>"+"<strong>N° de Comprobande de venta:</strong>"+Num_comprobante+"<br>"+"<br>"+"<strong>Ejercicio Fis: </strong>"+ejericio_fisical;
                clone.find('[id=total]')[0].innerHTML=total;
         clone.find('[id=total]')[1].innerHTML=total;
         
@@ -195,10 +194,10 @@
                 
             }
 
-                 clone.find('[id]');
-                    clone.find('[id=tdsuperior1]').remove();
-                    clone.find('[id=tdsuperior3]').empty();
-                    clone.find('[id=tdsuperior5]').empty();
+                     clone.find('[id]');
+//                    clone.find('[id=tdsuperior1]').remove();
+//                    clone.find('[id=tdsuperior3]').empty();
+//                    clone.find('[id=tdsuperior5]').empty();
                 var x=i+1;
                 $("#Pag"+x).append(clone);
                 
@@ -220,16 +219,26 @@ function servicio(){
     if(parametros)
     {
     $.ajax({
-            
+             
             type: "POST",        
             async: false,
             data: parametros,
             url: urlservicio,
             dataType: "json",        
             contentType: "application/json;",
-            success: function (resp) {
+            success: function (resp) {debugger
                 if((resp.dscertret.eeEstados[0].Estado)=="OK")
                 {
+                 var i=0;
+                    for (i = 0; i< resp.dscertret.certret.length; i++){
+                        
+                         var nombre = resp.dscertret.certret[i].ter_raz;
+                         var rest=nombre.replace("\u008d\u0081", "ñ").replace("æ","Ñ");                        
+                         resp.dscertret.certret[i].ter_raz=rest;
+                    }
+                    
+                 
+                  
                   evaluar(resp);
                  
                 }
@@ -269,7 +278,7 @@ document.body.style.webkitTransform =  scale;    // Chrome, Opera, Safari
  document.body.style.transform = scale;  
         
         $("#fecha").kendoDatePicker({
-             format: "dd/MM/yyyy"
+             format: "yyyy/MM/dd"
         });
         $("#paper").kendoDropDownList({
           change: function() {
