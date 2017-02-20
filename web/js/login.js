@@ -154,4 +154,7 @@ function errorHtml() {
     }
 }
 
+$( "#logoIntegrity" ).click(function() {
+  window.location = window.location.href+'?eraseCache=true';
+});
 

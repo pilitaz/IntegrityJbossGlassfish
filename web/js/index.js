@@ -756,3 +756,8 @@ app.controller("firstControler", ["$scope", "$http", function ($scope, $http) {
         });
 
     }]);
+
+$( "#logoEmpresa" ).click(function() {
+  window.location = window.location.href+'?eraseCache=true';
+});
+
