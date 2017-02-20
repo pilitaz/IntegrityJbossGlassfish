@@ -98,7 +98,7 @@ function grilla(obj) {
                 try {
                     if (operation === 'read') {
                         return JSON.stringify(inputsir);
-                    } else if (operation === 'create') {debugger
+                    } else if (operation === 'create') {
                         options["cla__cli"] = clacli;
                         clacli = 0;
                         var key1 = Object.keys(inputCud)[0]
@@ -151,7 +151,7 @@ function grilla(obj) {
         rowTemplate: kendo.template($("#rowTemplate").html()),
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
         edit: function (e) {
-            debugger
+            
             if (!e.model.isNew()) {//caso en el que el popup es editar
 
                 e.container.kendoWindow("title", "Editar");
@@ -199,7 +199,7 @@ function deleteRow(e) {
             actions[1].action = function () {
                 bandAlert = 0;
             };
-            createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.lis__des + " ---?", "400px", "200px", true, true, actions);
+            createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.pag__des + " ---?", "400px", "200px", true, true, actions);
         } else {
             alertDialogs("El registro no puede ser eliminado.")
         }
@@ -215,7 +215,7 @@ function deleteRow(e) {
 
 
 function cla__cliList(container, options) {
-    debugger
+    
     var obj = new listacla__cli();
     var dataSource = obj.getdataSource();
     $('<input id="iduni__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
@@ -324,7 +324,8 @@ function aprobarPresen(e) {
         actions[1].action = function () {
             bandAlert = 0;
         };
-        createDialog("Atención", "Esta seguro de modificar el estado del registro ---" + fila[est] + " ---?", "400px", "200px", true, true, actions);
+        
+        createDialog("Atención", "Esta seguro de modificar el estado del registro ---" + fila.pag__des + " ---?", "400px", "200px", true, true, actions);
 
     } catch (e) {
         $('#grid').data('kendoGrid').dataSource.read();

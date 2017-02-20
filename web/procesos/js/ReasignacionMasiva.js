@@ -4,11 +4,15 @@ reasignar();
 });
    
    function reasignar() {debugger
+        var lista = sessionStorage.getItem("listado_tareas"); 
+        var lista = JSON.parse(lista);
         
+        document.getElementById("subtitulo2").innerHTML  = "Reasignacion de  "+lista.length +" tareas : "+lista[0].text; 
         var consultar = new sirconsulta();
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();
         var mapCud1 = "UserBPM";
+        
         $("#reasiganar")
                 .kendoComboBox({
                
@@ -29,7 +33,7 @@ reasignar();
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];

@@ -371,6 +371,7 @@ function inicio() {
 
 function abreFuncion(servicio) {
     tamanoFunciones();
+    limpiarfiltros();
     document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
     $("#tdPerfil").fadeOut("slow");
     $('#divDerecho').width($(window).width());
@@ -761,4 +762,7 @@ app.controller("firstControler", ["$scope", "$http", function ($scope, $http) {
     }]);
 
 
-
+function limpiarfiltros(){    
+    sessionStorage.removeItem("jsonFiltroPedidos");
+    sessionStorage.removeItem("regPedidos");    
+}

@@ -18,7 +18,7 @@
                      *   
                      *  
                      *  
-                     */ function newrol(){debugger
+                     */ function newrol(){
                         var grid1 = $("#grid").data("kendoGrid");
             		    var dataSource = $("#grid").data("kendoGrid").dataSource;
                             
@@ -27,7 +27,7 @@
                                 grid1.options.editable = "popup";
                             
                     }
-                    function editar_rol(){debugger
+                    function editar_rol(){
                 	
                     
                        var grid1 = $("#grid").data("kendoGrid");
@@ -121,14 +121,14 @@
                                     if (operation === "read") {
                                         return JSON.stringify(datajson);
                                     }
-                                    if (operation === "update") {debugger
+                                    if (operation === "update") {
                                     actjson.dssic_actor.eesic_actor[0].actor__cod = options.actor__cod;
                                     actjson.dssic_actor.eesic_actor[0].actor__des = options.actor__des;
                                     return JSON.stringify(actjson);
                                         
                                         
                                     }
-                                    if (operation === "create") {debugger
+                                    if (operation === "create") {
                                         options;
                                     actjson.dssic_actor.eesic_actor[0].actor__cod = options.actor__cod;
                                     actjson.dssic_actor.eesic_actor[0].actor__des = options.actor__des;
@@ -138,7 +138,7 @@
                                     $('#grid').data('kendoGrid').dataSource.read();
                                     $('#grid').data('kendoGrid').refresh();                                     
                                     }
-                                    if (operation === "destroy") {debugger
+                                    if (operation === "destroy") {
                                         
                                     actjson.dssic_actor.eesic_actor[0].actor__cod = options.actor__cod;
                                     actjson.dssic_actor.eesic_actor[0].actor__des = options.actor__des;
@@ -157,7 +157,7 @@
                             batch: false,
                             severFiltering: true,                            
                             schema: {
-                                data: function (e) {debugger
+                                data: function (e) {
                                     var key1 = Object.keys(e)[0];
                                     if(e[key1].eeEstados){
                                     if (e[key1].eeEstados[0].Estado === "OK") {
@@ -213,7 +213,7 @@
                                 {field: "actor__des", title: "Descripción",  hidden:false},	
                                  	
                                 {command: [{name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
-                                           {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: function(e){ debugger //add a click event listener on the delete button
+                                           {name: "deletae", text: "destoy", template: "<a class='k-grid-deletae'><span class='k-sprite po_cerrar'></span></a>", click: function(e){  //add a click event listener on the delete button
                         e.preventDefault(); //prevent page scroll reset
                         var tr = $(e.target).closest("tr"); //get the row for deletion
                         var data = this.dataItem(tr); //get the row data so it can be referred later

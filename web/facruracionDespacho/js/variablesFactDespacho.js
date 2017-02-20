@@ -33,7 +33,7 @@ function SIRdpc_cab() {
                     "piddpc_fec": "?",
                     "piidpc_num" : 0,
                     "picclc_cod":"*",
-                    "piidpc_est":"-1",
+                    "piidpc_est":"99",
                 }
             ]  
         }

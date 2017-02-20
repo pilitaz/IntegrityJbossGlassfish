@@ -95,14 +95,15 @@ table{
 {
     float:right;
 }
+#grid {
+  height:100%;
+}
 #outerWrapper{
   background-color: #FFFFFF;
   position:relative;
   min-height:470px;
 }
-#grid {
-  height:470px;
-}
+
 
 
 .k-grid tr:hover {

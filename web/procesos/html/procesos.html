@@ -43,14 +43,14 @@ and open the template in the editor.
                     <a  class='k-grid-tareas'><span title='Administrar' id = "spantarea#: proc__name#" class='k-sprite pro_groupoff'></span></a>
                     <a  class='k-grid-editar'><span title='Grafica'id = "spanedit#: proc__name#" class='k-sprite pro_graphoff'></span></a>
                     <a  class='k-grid-info'><span title='Informacion' id = "spaninfo#: proc__name#" class='k-sprite pro_infooff'></span></a>
-                    <a  class='k-grid-play'><span title='Inciar Proceso' onclick="iniciarTarea()" id = "spanplay#: proc__name#" class='k-sprite pro_playoff'></span></a>
+                    <a  class='k-grid-play'><span title='Inciar Proceso'  id = "spanplay#: proc__name#" class='k-sprite pro_playoff'></span></a>
                     </td>
             
                     </tr>
         </script>
         <script id="altRowTemplateCmp" type="text/x-kendo-tmpl">
                     <tr class="k-alt" data-uid="#: uid #">
-                    
+            
                     <td>
                     <a  class='k-grid-bullet'><span class='k-sprite pro_bullet'></span></a>
                     </td>
@@ -62,11 +62,11 @@ and open the template in the editor.
                     <a  class='k-grid-tareas'><span title='Administrar' id = "spantarea#: proc__name#" class='k-sprite pro_groupoff'></span></a>
                     <a  class='k-grid-editar'><span title='Grafica' id = "spanedit#: proc__name#" class='k-sprite pro_graphoff'></span></a>
                     <a  class='k-grid-info'><span title='Informacion' id = "spaninfo#: proc__name#" class='k-sprite  pro_infooff'></span></a>
-                    <a  class='k-grid-play'><span title='Iniciar Proceso' onclick="iniciarTarea()" id = "spanplay#: proc__name#" class='k-sprite pro_playoff'></span></a>
-                    
+                    <a  class='k-grid-play'><span title='Iniciar Proceso'  id = "spanplay#: proc__name#" class='k-sprite pro_playoff'></span></a>
+            
                     </td>
                     </tr>
-    
+            
         </script>
         
         <script id="rowTemplateCmp1" type="text/x-kendo-tmpl">
@@ -122,99 +122,7 @@ and open the template in the editor.
             </tr>
             
         </script>
-        <div id="customPopUp" hidden="hidden" style = "" class="">
-        <div id="window">
-            
-            <div>
-                <table style="height: 50px; vertical-align: top">
-                    <td style="width: 50px;height: 50px"><a class="k-grid"  aling="center"><span class="k-sprite  pro_play"></span></a></td>
-                        
-                    <td style="width: 90%; height: 50px; vertical-align: middle"><h4 id = "subtitulo2" class="subTitulo">Solicitud de vacaciones </h4>
-                    <td style="width: 10%; height: 50px; vertical-align: middle"><span class="k-sprite  pro_infout" onclick="ayuda()" id="btnayuda" estado="off"></span></td>
-                </table>
-                <div class="sidenavSup1"></div>
-                    
-            </div>
-            
-            
-            <div class= "container-fluid text-left" style="width: 100%;">
-                <table>
-                    <tr>                     
-                    <div>
-                        <table>
-                            <td style="width: 50%;">
-                                
-                                <h1 id = "subtitulo2" class="subTituloform">Fecha de la solicitud: </h1>
-                                <p id="fecha"></p>
-                                <h2 id = "subtitulo2" class="subTituloform">Total días habiles pendientes:</h2>                         
-                                <p id="pendientes"></p>
-                                <h2 id = "subtitulo2" class="subTituloform">Fecha de corte: </h2>                         
-                                <p id="corte"></p>
-                            </td>
-                            <td style="width: 50px;">
-                               
-                            </td>      
-                                <td style="width: 50%;">
-                                <h2 id = "subtitulo2" class="subTituloform">Días de anticipación: </h2>                         
-                                <p id="anticipacion"></p>
-                                <h2 id = "subtitulo2" class="subTituloform">Número de dias de vacaciones: </h2>                         
-                                <p id="vacaciones"></p>
-                                  
-                              
-                                </td>
-                                
-                        </table>
-                       
-                        
-                        
-                    </tr>
-                    <tr>
-                    <div id="ayuda"></div>
-                    </tr>  
-                    
-                    <tr>  
-                        
-                    <div>
-                        <table>
-                             <div class="sidenavInf"></div>
-                            <td style="width: 50%;">
-                                
-                                <h1 id = "subtitulo2" class="subTituloform">Fecha inicio de las vacaciones: </h1>
-                                <input id="inicioVacaciones" vertical-align="center"/>    
-                                <h2 id = "subtitulo2" class="subTituloform">Total días a pedir:</h2>                         
-                                 <input id="diasPedir" vertical-align="center"/>   
-                                <h2 id = "subtitulo2" class="subTituloform">Total dias en valor: </h2>                         
-                                  <input id="totaldiasvalor" vertical-align="center"/>  
-                            </td>
-                            <td style="width: 50px;">
-                                
-                            </td>      
-                            <td style="width: 50%;">
-                                <h2 id = "subtitulo2" class="subTituloform">Jefe inmediato: </h2>                         
-                                  <input id="jefe" vertical-align="center"/>  
-                                <h2 id = "subtitulo2" class="subTituloform">Pago anticipado: </h2>                         
-                                 <input id="anticipado" vertical-align="center"/>   
-                                <h2 id = "subtitulo2" class="subTituloform">Observaciones: </h2>                         
-                                  <input id="Observacoines" vertical-align="center"/>   
-                                     
-                                     
-                            </td>
-                                
-                        </table>   
-                        
-                    </div>                       
-                    </tr>
-                    
-                    
-                </table>
-                 
-                     </div>
-                    <br>
-                    <br>
-                    <button id="buttonEnviar" class="k-primary" style="width: 99%;height: 40px; vertical-align: middle;">Guardar </button><br>
-   
-            </div>
-             </div>
+        
         <div class="mainContainer">
             <div>
                 <div>
@@ -238,10 +146,10 @@ and open the template in the editor.
                         <div>
                             
                             <table style="width: 100%; height: 40px; ">
-                                                                       
-                                    <td><div id ="demo"></div> </td>
-                                    <td> <div style="text-align: right;"> <span style="align:right" id = "cargar" class='k-sprite pro_asignaroff' estado="cero" onclick="reasignar()"></span></div></td> 
-                                    <td><span style="width: 200px; height: 40px; " >&nbsp; </span></td>
+                                
+                                <td><div id ="demo"></div> </td>
+                                <td> <div style="text-align: right;"> <span style="align:right" id = "cargar" class='k-sprite pro_asignaroff' estado="cero" onclick="reasignar()"></span></div></td> 
+                                <td><span style="width: 200px; height: 40px; " >&nbsp; </span></td>
                             </table>
                             
                             
@@ -258,6 +166,58 @@ and open the template in the editor.
                     
                 </div>
             </div>
+        </div>
+        <!--popup-->
+        <div id="customPopUp" hidden="hidden" style = "overflow-y: hidden;" class="">
+            <div class="k-window-titlebar k-header" style="margin-top: -4px;">
+                &nbsp;
+                
+                <div class="k-window-actions">
+                    <a role="button" href="#" class="k-window-action k-link" aria-label="Close">
+                        <span class="k-icon k-i-close" onclick='cerrarCustomPopUp()' role="button"></span>
+                    </a>
+                </div>
+            </div>
+            <br>
+            <div>
+                                   
+            </div>
+            
+            <span id="centeredNotification" style="display:none;"></span>
+            <div >
+                <!-- codigo html -->
+                <div id="window">
+                    <div>
+                        <table style="height: 50px; vertical-align: top">
+                            <td style="width: 50px;height: 50px"><a class="k-grid"  aling="center"><span class="k-sprite  pro_asignaroff"></span></a></td>
+                            <td style="width: 90%; height: 50px; vertical-align: middle"><h4 id = "subtitulo2" class="subTitulo">Reasignacion de tareas</h4>
+                            <td style="width: 10%; height: 50px; vertical-align: middle"><span></span></td>
+                        </table>
+                        <div class="sidenavSup1"></div>
+                    </div>
+                    <div class= "container-fluid text-left"  style="text-align:center ">
+                        <div>
+                            <table style="width: 100%; align-content: center">
+                                <td style=" align-content: center">
+                                    <h1 id = "subtitulo2" class="subTituloform">Reasignar Tarea A: </h1>
+                                    <input id="reasiganar" content-align="center"/>    
+                                </td>
+                            </table>   
+                        </div>                       
+                        </tr>
+                        </table>
+                    </div>
+                    <br>
+                    <br>
+                    <!--<button id="buttonEnviar" class="k-primary" style="width: 99%;height: 40px; vertical-align:bottom ;">Guardar </button><br>-->
+                </div>
+                <footer><button id="btnCrearRepo"onclick = "" class="k-primary" style="width: 100%;height: 70px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" >Enviar</button></footer>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            
         </div>
     </body>
 </html>

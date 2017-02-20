@@ -1,4 +1,4 @@
-   $(document).ready(function () {debugger
+   $(document).ready(function () {
        
     $("#btAgregar").kendoButton({
         click: guardar
@@ -7,7 +7,7 @@
         click: cancelar
     });
        
-       function guardar(){debugger
+       function guardar(){
            var  actualizar = new CudVendedores();
            var  actjson = actualizar.getjson();
            var  urlactualizar = actualizar.getUrlSir();    
@@ -33,7 +33,7 @@
                     url: urlactualizar,
                     dataType: "json",        
                     contentType: "application/json;",
-                    success: function (resp) {debugger
+                    success: function (resp) {
                         if((resp.dsSICUDgpd_vdd.eeEstados[0].Estado)=="OK")
                         {    
                            sessionStorage.setItem("Detalle_Vendedor",JSON.stringify(resp.dsSICUDgpd_vdd.eegpd_vdd[0]));
@@ -75,7 +75,7 @@
             minLength: 4,
             placeholder: "Nombre..",
              filter: "contains",
-            select: function(e) {debugger                
+            select: function(e) {                
             $("#nit").val(e.dataItem.ter__nit);    
             },
             template:'<div class="divElementDropDownList">#: data.ter__raz #</div>',  
@@ -94,7 +94,7 @@
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -114,7 +114,7 @@
 
         });
       }
-    function filtroestado(container, options) {debugger
+    function filtroestado(container, options) {
     var consultar = new SirSicVen();
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();
@@ -126,7 +126,7 @@
             minLength: 6,
             placeholder: "Nit..",
             filter: "contains",
-            select: function(e) {debugger                
+            select: function(e) {                
             $("#nombre").val(e.dataItem.ter__nit);    
             },
             template:'<div class="divElementDropDownList">#: data.ter__nit #</div>',  
@@ -145,7 +145,7 @@
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -160,13 +160,15 @@
                             ter__nit: {editable: false, nullable: false}
                         }
                     }
-                }
+                },error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
             }
 
         });
 
     }                       
-function claseCliente(container, options) {debugger
+function claseCliente(container, options) {
         
         var consultar = new sirClaseCliente();
         var datajson = consultar.getjson();
@@ -192,7 +194,7 @@ function claseCliente(container, options) {debugger
                     }
                 },
                 schema: {
-                    data: function (e) {debugger
+                    data: function (e) {
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];

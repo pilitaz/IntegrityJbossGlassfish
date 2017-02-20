@@ -121,7 +121,9 @@ function grilla(obj) {
                         return JSON.stringify(inputCud);
 
                     } else {
-                        options.ter__nit = $("#idter__nit").val();
+                        if($("#idter__nit").val()){
+                            options.ter__nit = $("#idter__nit").val();
+                        }                        
                         var key1 = Object.keys(inputCud)[0]
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
@@ -163,7 +165,14 @@ function grilla(obj) {
         sortable: true,
         selectable: false,
         columns: columns,
-        editable: "popup",
+        editable:  {
+            mode: "popup",
+            window: {
+                title: "Editar",
+                animation: false,
+                width: 600
+            }
+        } ,
         rowTemplate: kendo.template($("#rowTemplate").html()),
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
         edit: function (e) {
@@ -175,9 +184,20 @@ function grilla(obj) {
                 e.container.find("input[name=cam__des]").hide();
                 
             if (!e.model.isNew()) {//caso en el que el popup es editar
-
                 e.container.kendoWindow("title", "Editar");
+                var kendoAutoCompleteNIT = $("#idter__nit").data("kendoAutoComplete");
+                kendoAutoCompleteNIT.enable(false);
                 
+                var kendoAutoCompleteNIT = $("#idter__raz").data("kendoAutoComplete");
+                kendoAutoCompleteNIT.enable(false);
+                
+                var dropDownListCamion= $("#iduni__cod").data("kendoDropDownList"); 
+                dropDownListCamion.enable(false);
+                
+                var dropDownListRuta= $("#idRut__cod").data("kendoDropDownList"); 
+                dropDownListRuta.enable(false);
+                
+                var dropDownList= $("#ipDivisa").data("kendoDropDownList"); 
                 //e.container.find("input[name=ter__raz]")[0].readOnly="true"
                 if (e.model[est] != 99) {
                     kendo.ui.progress($('.k-edit-form-container'), true);
@@ -221,7 +241,7 @@ function deleteRow(e) {
             actions[1].action = function () {
                 bandAlert = 0;
             };
-            createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.lis__des + " ---?", "400px", "200px", true, true, actions);
+            createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.ter__raz + " ---?", "400px", "200px", true, true, actions);
         } else {
             alertDialogs("El registro no puede ser eliminado.")
         }
@@ -237,7 +257,7 @@ function deleteRow(e) {
 
 
 function cam__codList(container, options) {
-    debugger
+    
     var obj = new listacam__cod();
     var dataSource = obj.getdataSource();
     $('<input id="iduni__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
@@ -318,10 +338,10 @@ function listacam__cod() {
 ;
 
 function rut__codList(container, options) {
-    debugger
+    
     var obj = new listarut__cod();
     var dataSource = obj.getdataSource();
-    $('<input id="iduni__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
+    $('<input id="idRut__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
         dataTextField: "rut__des",
         dataValueField: "rut__cod",
         dataSource: dataSource,
@@ -396,7 +416,7 @@ function listarut__cod() {
 ;
 
 function ter__nitList(container, options) {
-    debugger
+    
     var obj = new listater__nit();
     var dataSource = obj.getdataSource();
     $('<input id="idter__nit" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoAutoComplete({
@@ -479,7 +499,7 @@ function listater__nit() {
 }
 ;
 function ter__razList(container, options) {
-    debugger
+    
     var obj = new listater__raz();
     var dataSource = obj.getdataSource();
     $('<input id="idter__raz" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoAutoComplete({
@@ -562,7 +582,7 @@ function listater__raz() {
 ;
 
 function tra__tipList(container, options) {
-    debugger
+    
     var obj = new listatra__tip();
     var dataSource = obj.getdataSource();
     $('<input id="idutra__tip" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({

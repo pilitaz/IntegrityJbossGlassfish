@@ -3,6 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+$(window).resize(function () {
+    
+    var viewportHeight = $(window).height();
+    $('#outerWrapper').height(viewportHeight - 30);
+    $('.k-grid-content').height(viewportHeight - 100);
+});
+
 $(document).ready(function() {   
     gridAsignacionPedidos();
 });
@@ -101,12 +109,11 @@ function gridAsignacionPedidos(){
             }
         },
         group: { field: "ped__num"}
-    });
-    //$(window).trigger("resize");    
+    });       
     $("#gridAsignacionPedidos").kendoGrid({
-        dataSource: dataSourceAsignarPedidos,
-        selectable: true,  
+        dataSource: dataSourceAsignarPedidos,        
         batch: false,
+        selectable: false,
         columns: [            
             {field: "ped__num", title: "Número de Pedido", hidden: true },
             {field: "cla__des", title: "Clase articulo"},
@@ -137,6 +144,7 @@ function gridAsignacionPedidos(){
             }           
         } ,
     });
+    $(window).trigger("resize"); 
 }
 
 

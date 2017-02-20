@@ -255,10 +255,12 @@ $(document).ready(function () {
         $("#idDescuentoMax").val(parseInt((obj.top__dct)*100));
     }
     $("#idDescuentoMax").kendoNumericTextBox({
-        format: "# \\%"
+        format: "# \\%",
+        min: 0
     });
     $("#idPrecio").kendoNumericTextBox({
-        format: "c0"
+        format: "c0",
+        min: 0
     });
 });
 function onChangeClase(e) {

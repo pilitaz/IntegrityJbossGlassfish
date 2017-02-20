@@ -65,6 +65,8 @@ $(document).ready(function () {
                     piidreg:       {editable: false, nullable: false}
                 }
             }
+        }, error: function (e) {
+            alertDialogs(e.errorThrown);
         }
     });
     var name = sessionStorage.getItem("usuario");
@@ -99,7 +101,7 @@ $(document).ready(function () {
                     {name: "tareas", text: "", click: grilla, template: "<a title='comenzar' class='k-grid-tareas'><span  title='comenzar' class='k-sprite pro_groupoff'></span></a>"},
                     {name: "editar", text: " ",  click: grafica, template: "<a class='k-grid-editar'><span class='k-sprite pro_graphoff '></span></a>"},
                     {name: "info", text: " ",  template: "<a class='k-grid-info'><span class='k-sprite pro_infooff'></span></a>"},
-                    {name: "play", text: " ",  template: "<a class='k-grid-play'><span class='k-sprite pro_playoff '></span></a>"},
+                    {name: "play", text: " ", click: iniciarTarea, template: "<a class='k-grid-play'><span class='k-sprite pro_playoff '></span></a>"},
                            
                 ],
                 width: "220px"}],                            
@@ -163,6 +165,8 @@ $(document).ready(function () {
                     task__type:       {editable: false, nullable: false}
                 }
             }
+        } ,error: function (e) {
+            alertDialogs(e.errorThrown);
         }
     });
     /**
@@ -178,6 +182,7 @@ $(document).ready(function () {
      */     
     var grid1 = $("#grid1").kendoGrid({
         dataSource: datasourcex,
+        selectable:"multiple, row",
         sortable: true,
         filterable: {
             mode: "row",
@@ -217,15 +222,19 @@ $(document).ready(function () {
         } 
     });
 
-                      
+                  
                     
                         
                         
 });
 //funcion que incia la tarea de acuerdo a los parametros diseñados
 
-function iniciarTarea(e){
-             $("#formvacations").append("<div id='windowform'></div>");
+function iniciarTarea(e){debugger
+     var x = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).id;
+     var y = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).task__name;
+    sessionStorage.setItem("tarea_usuario",x); 
+    sessionStorage.setItem("proceso_usuario",y);  
+    $("#formvacations").append("<div id='windowform'></div>");
         var myWindow1 = $("#windowform"),undo = $("#undo");
                 
         function onClose() {
@@ -354,19 +363,47 @@ function disable(){
     
 }
 function reasignar(){debugger
-//    function mostrarCustomPopUp() {
-//    $("body").append("<div id='disable'></div>");
-//    $("#customPopUp").fadeIn("slow");
-//
-//}    
-        $("#formvacations").append("<div id='windowform'></div>");
+            try{                             
+        var grid = $('#grid1').data('kendoGrid');
+        var datos = grid.select($("#rowSelection_active_cell").closest("tr"));
+        var i=0;        
+         var datanew=[];  
+for (i = 0; i < datos.length; i++){
+                   var objeto={};
+                    objeto.text=datos[i].childNodes[3].innerText;
+                    objeto.proceso=datos[i].childNodes[1].innerText;
+                    objeto.descripcion=datos[i].childNodes[5].innerText;
+                    objeto.value=i;
+                    datanew.push(objeto);
+                    }
+                    var texto = datanew[0].text;
+                    var contador = 0;
+for (i = 0; i < datanew.length; i++){
+    if (datanew[i].text===texto)
+    {
+        contador++;
+    }
+    else
+    {
+     alertDialogs("Recuerde que solo podra reasignar tareas del mismo tipo");   
+    }
+            
+}
+if (contador === datanew.length )
+{
+    
+ sessionStorage.setItem("listado_tareas",JSON.stringify(datanew)); 
+    
+            
+            $("#formvacations").append("<div id='windowform'></div>");
         var myWindow1 = $("#windowform"),undo = $("#undo");
                 
         function onClose() {
             undo.fadeIn();
             $("#windowform").empty();
         }
-        
+//    mostrarCustomPopUp();
+//    onloadPopUpCond ();
         var UrL= sessionStorage.getItem("url");  
         myWindow1.kendoWindow({
             draggable: true,
@@ -382,6 +419,19 @@ function reasignar(){debugger
             close: onClose
         }).data("kendoWindow").center().open();    
     
+}
+else{}
+
+}
+
+
+catch(err) {
+  alertDialogs("Debe Selecionar al menos un registro para reasignar");
+}
+
+
+ 
+        
 }
 function changImgFunc1(results) {
    var results =  $('#grid1').data('kendoGrid')._data;
@@ -476,7 +526,13 @@ function changImgFunc1(results) {
     
  }  
 }
-
+function cerrar(){
+     $("#windowform").data("kendoWindow").close();   
+    alertDialogs("Se ha iniciado la tarea correctamente");
+    $('#grid1').data('kendoGrid').refresh();                                             
+            $('#grid1').data('kendoGrid').dataSource.read();
+            $('#grid1').data('kendoGrid').refresh(); 
+}
 function changImgFunc(results) {
 
     for (var i = 0; i < results.length; i++) {
@@ -501,6 +557,21 @@ function changImgFunc(results) {
             document.getElementById("spanedit"+results[i].proc__name).setAttribute('onclick','disable();');
         }
     }
-} 
+}
+function mostrarCustomPopUp() {
+    if(bandAlert===0){
+        bandAlert++;
+        $("body").append("<div id='disable'></div>");
+        $("#customPopUp").fadeIn("slow");
+    }
+    
+}
+function cerrarCustomPopUp() {
+    bandAlert = 0;
+    $("#disable").fadeOut("slow");
+    $("#customPopUp").fadeOut("slow");
+    $("#disable").remove();
+
+}
                         
                         

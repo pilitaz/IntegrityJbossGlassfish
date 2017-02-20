@@ -15,6 +15,14 @@ dsfiles.dsfiles.eeDatos[0].remote_ip = sessionStorage.getItem("ipPublica");
 var grid = "";
 
 function documentos() {
+    $('#buscarDoc').keyup(function (e) {
+        var value = this.value;
+        if (value) {
+            grid.data("kendoGrid").dataSource.filter({field: "nomfile", operator: "contains", value: value});
+        } else {
+            grid.data("kendoGrid").dataSource.filter({});
+        }
+    });
     var dataSource = new kendo.data.DataSource({
         transport: {
             read: {
@@ -88,7 +96,7 @@ function onChange(arg) {
         actions[2].action = getFileAsPDF;
     }
     createDialog("Documentos", "El archivo seleccinado es " + selected + " que desea hacer ", "400px", "auto", true, true, actions);
-    
+
 }
 /**
  * Descarga el archivo en su formato original
@@ -124,7 +132,7 @@ function getFile(e) {
                     fileName: sessionStorage.getItem("documento")
                 });
             }else{
-                alertDialogs("Para descargar el archivo es necesario utilizar el navegador Chome.");
+                alertDialogs("Para descargar el archivo es necesario utilizar el navegador Chrome.");
                 window.open("./docOnline.html", "_blank");
             }
         });
@@ -213,14 +221,6 @@ function showFile(e) {
  * funcion para filtrar los elementos de la grilla al oprimir una tecla dentro del input buscarDoc
  * @param {type} param
  */
-$("#buscarDoc").keyup(function () {
 
-    var value = this.value;
-    if (value) {
-        grid.data("kendoGrid").dataSource.filter({field: "nomfile", operator: "contains", value: value});
-    } else {
-        grid.data("kendoGrid").dataSource.filter({});
-    }
-});
 
 

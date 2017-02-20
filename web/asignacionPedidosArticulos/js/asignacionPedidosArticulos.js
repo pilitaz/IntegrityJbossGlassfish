@@ -74,11 +74,9 @@ function gridAsignacionPedidos(){
                 }
             },            
         });
-    $(window).trigger("resize");    
-    
     $("#gridAsignacionPedidos").kendoGrid({
         dataSource: dataSourceAsignarPedidos,
-        selectable: true,  
+        selectable: false,  
         detailInit: detailInit,
         dataBound: function() {
             this.expandRow(this.tbody.find("tr.k-master-row").first());
@@ -103,7 +101,7 @@ function gridAsignacionPedidos(){
             }
         }
     });
-    
+    $(window).trigger("resize");  
     
     function asignarTodoPedidos(e){
         

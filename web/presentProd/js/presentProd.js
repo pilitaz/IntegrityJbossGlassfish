@@ -202,7 +202,7 @@ function deleteRow(e) {
             actions[1].action = function () {
                 bandAlert = 0;
             };
-            createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.lis__des + " ---?", "400px", "200px", true, true, actions);
+            createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.pre__des + " ---?", "400px", "200px", true, true, actions);
         } else {
             alertDialogs("El registro no puede ser eliminado.")
         }

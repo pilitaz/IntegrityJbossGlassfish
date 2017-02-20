@@ -72,7 +72,7 @@ function gridDetalleListaPrecios() {
         editable:"popup",
 //        edit: function (e) {
 //            inputsPopUp(e);
-//            debugger
+//            
 //            
 //            if (e.sender._data[0].ID) {//caso en el que el popup es editar
 //                    e.container.kendoWindow("title", "Editar");
@@ -378,7 +378,13 @@ function inputsPopUp(e){
         }
     });
 }
-function mostrarCustomPopUp() {
+
+function closePopUp() {     
+    $("#windowListPre").data("kendoWindow").close();
+    location.reload();
+}
+
+function mostrarCustomPopUp() {    
     $("#customPopUp").fadeIn();
     onloadPopUpCabecera();
 

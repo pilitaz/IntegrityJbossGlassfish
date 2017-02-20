@@ -16,7 +16,7 @@ function cargarArbol() {
             }
             var to = false;
             $('#inpSearch').keyup(function (e) {
-                debugger
+                
               if(to) { clearTimeout(to); }
               to = setTimeout(function () {
                 var v = $('#inpSearch').val();
