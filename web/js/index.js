@@ -44,7 +44,10 @@ $(document).ready(function () {
         window.location.assign(sessionStorage.getItem("url"));
     }
     $("#k-icon.k-i-arrow-s").className = "k-icon   k-i-hbars";
-
+    $( "#logoEmpresa" ).click(function() {
+//        window.location = window.location.href+'?eraseCache=true';
+        location.reload(true);
+      });
 });
 
 function habilitarOpciones(){

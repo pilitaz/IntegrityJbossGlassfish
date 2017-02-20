@@ -505,7 +505,7 @@ function changeEst(e){
         actions[0] = new Object();
         actions[0].text = "OK";
         actions[0].action = function () {
-            if(seleccion.cbr__est==0){  
+            if(seleccion.cbr__est===0){  
                 actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__cod=seleccion.cbr__cod;  
                 actjson.dsSICUDgpd_cbr.eegpd_cbr[0].ter__nit=seleccion.ter__nit;                     
                 actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__est=1; 
@@ -534,9 +534,7 @@ function changeEst(e){
                     } 
         
                 });
-            }
-
-            if(seleccion.cbr__est==99){  
+            }else if(seleccion.cbr__est===99){  
                 actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__cod=seleccion.cbr__cod;  
                 actjson.dsSICUDgpd_cbr.eegpd_cbr[0].ter__nit=seleccion.ter__nit;                     
                 actjson.dsSICUDgpd_cbr.eegpd_cbr[0].cbr__est=0;  

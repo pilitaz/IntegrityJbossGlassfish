@@ -404,7 +404,7 @@ function aprobar(e) {
         actions[1].action = function () {
             bandAlert = 0;
         };
-        createDialog("Atención", "Esta seguro de modificar el estado del registro ---" + fila.pre__est + " ---?", "400px", "200px", true, true, actions);
+        createDialog("Atención", "Esta seguro de modificar el estado del registro ---" + fila.uni__des + " ---?", "400px", "200px", true, true, actions);
 
     } catch (e) {
         $('#grid').data('kendoGrid').dataSource.read();
@@ -516,6 +516,7 @@ function logical(obj, nodo) {
     return obj;
 }
 function logicalrev(obj, nodo) {
+    debugger
     if (obj[nodo].value === true) {
         delete  obj[nodo];
         obj[nodo] = true;
