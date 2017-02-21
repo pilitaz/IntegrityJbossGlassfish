@@ -85,6 +85,10 @@ function login() {
                 sessionStorage.setItem("opcionesCompañia",JSON.stringify(jsonResp.dslogin.eeciaoptions));
 
                 window.location.assign("html/index.html");
+//                if(jsonResp.dslogin.eesiccia[0].version !== getCookie("version")){
+//                    document.cookie = "version=" + jsonResp.dslogin.eesiccia[0].version;
+//                    location.reload(true);
+//                }
             } else {
                 var actions = new Array();
                 actions[0] = new Object();
@@ -93,7 +97,7 @@ function login() {
                 actions[0].action = "IntentarNuevamente";
 
 //                createDialog("Problemas con el inicio sesión", permitirIngreso, "400px", "auto", true, false, actions);
-alertDialogs("Problemas con el inicio sesión", permitirIngreso);
+                alertDialogs("Problemas con el inicio sesión\n"+ permitirIngreso);
                 var buttonObject = $("#btnLogin").kendoButton().data("kendoButton");
                 buttonObject.enable(true);
             }
@@ -157,5 +161,20 @@ function errorHtml() {
     }
 }
 
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
 
 

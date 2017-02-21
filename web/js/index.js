@@ -111,7 +111,8 @@ function cambiarImagen(imgId, estiloTd) {
             $('#divDerecho').width($(window).width());
             document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
             var urlFrameNew = "http://" + ip + ":" + puerto + "/" + servicio;
-            document.getElementById("idFrame").src = urlFrameNew;
+//            document.getElementById("idFrame").src = urlFrameNew;
+            document.getElementById("idFrame").src = sessionStorage.getItem("url") + servicio + "/indexRepo/html/indexRepo.html";
             document.getElementById("tdPerfil").style = "display:none"
         } else if (servicio === "procesos") {
             $('#divDerecho').width($(window).width());
