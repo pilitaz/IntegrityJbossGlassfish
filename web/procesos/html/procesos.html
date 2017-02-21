@@ -26,7 +26,7 @@ and open the template in the editor.
         <link href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.mobile.all.min.css" rel="stylesheet" type="text/css" />        
         <script src="../../scripts/bootstrap.js" type="text/javascript"></script>
         <link href="../css/procesos.css" rel="stylesheet" type="text/css"/>
-        
+        <script src="../js/ReasignacionMasiva.js" type="text/javascript"></script>
     </head>
     <body>
         <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
@@ -133,7 +133,7 @@ and open the template in the editor.
                         
                         <div id="window" hidden="true"></div>
                         <table style="height: 50px; vertical-align: top">
-                            <td style="width: 100%; height: 50px; vertical-align: middle"><h4 id = "subtitulo2" class="subTitulo">Mis procesos</h4>
+                            <td style="width: 100%; height: 50px; vertical-align: middle"><h4 id = "subtitulo" class="subTitulo">Mis procesos</h4>
                             </td>
                             
                         </table>
@@ -144,11 +144,11 @@ and open the template in the editor.
                         
                         <div id="grid"></div>   
                         <div>
-                            
+                              
                             <table style="width: 100%; height: 40px; ">
                                 
                                 <td><div id ="demo"></div> </td>
-                                <td> <div style="text-align: right;"> <span style="align:right" id = "cargar" class='k-sprite pro_asignaroff' estado="cero" onclick="reasignar()"></span></div></td> 
+                                <td> <div style="text-align: right;"> <span style="align:right" id = "cargar" title='reasignar' class='k-sprite pro_asignaroff' estado="cero" onclick="reasignar1()"></span></div></td> 
                                 <td><span style="width: 200px; height: 40px; " >&nbsp; </span></td>
                             </table>
                             
@@ -190,7 +190,7 @@ and open the template in the editor.
                     <div>
                         <table style="height: 50px; vertical-align: top">
                             <td style="width: 50px;height: 50px"><a class="k-grid"  aling="center"><span class="k-sprite  pro_asignaroff"></span></a></td>
-                            <td style="width: 90%; height: 50px; vertical-align: middle"><h4 id = "subtitulo2" class="subTitulo">Reasignacion de tareas</h4>
+                            <td style="width: 90%; height: 50px; vertical-align: middle"><h4 id = "subtituloReasigna" class="subTitulo"></h4>
                             <td style="width: 10%; height: 50px; vertical-align: middle"><span></span></td>
                         </table>
                         <div class="sidenavSup1"></div>

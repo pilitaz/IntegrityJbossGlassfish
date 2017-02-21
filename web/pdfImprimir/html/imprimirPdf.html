@@ -69,18 +69,18 @@
                     </td>
                     </tr>
                     <tr>
-                     <td  id ="tdsuperior2" style="height:105px;">
+                     <td  id ="tdsuperior2" style="height:150px;">
                     </td>
                     </tr>
                 </table >
                 
                 
-               <table style="width: 100%;  padding-left: 110px;  align-content:left; " vertical-align="top" >
-               <td style="width: 150px;">
+               <table align="center" style="width: 100%;   align-content:left; " vertical-align="top" >
+               <td style="width: 100px;  padding-left: 100px;">
                <p id="parrafo1" >
                </p>
                 </td>
-                <td style="width: 180px;">
+                <td style="width: 20px;">
                     
                 </td>
                 <td style="width: 150px;"> 
@@ -92,40 +92,59 @@
                     </td>    
                 </table >
                   
-                 <table style="width: 80%;  padding-left: 80px; height:120px; align-content:left; ">
+                 <table  style="width: 80%;  padding-left: 80px; "  align="center">
+                     <tr  style=" align-content:center; ">
                      
-                     <tr style="height:10px; align-content:left;">
-                     <td style="width: 25px; height:10px; align-content:right;">
+                    <td height="10px" class=" bordePDF1" style="width: 25px;  text-align:center;">
+                         <p >RETENCION</p>
+                     </td>
+                          
+                     <td class="tablaPdf" style="width: 25px;  text-align:center; ">
+                         <p >CODIGO</p>
+                     </td>
+                     <td  class="tablaPdf" style="width: 25px; text-align:center;">
+                         <p >BASE IMPONIBLE</p>
+                     </td>
+                     <td  class="tablaPdf" style="width: 25px; text-align:center;">
+                         <p >% RETENCION</p>
+                     </td>
+                     <td class=" bordePDF2" style="width: 25px; height:10px;text-align:center;">
+                          <p >VALOR RETENIDO</p>
+                      </td>
+                      </tr>  
+                     <tr style=" align-content:left; ">
+                     <td height="50px" class="tablaPdf" style="width: 25px;  text-align:center;">
                          <p id="retencion"></p>
                      </td>
                           
-                     <td style="width: 25px; height:10px; text-align:right; ">
+                     <td class="tablaPdf" style="width: 25px;  text-align:center; ">
                          <p id="codigo"></p>
                      </td>
-                     <td style="width: 25px; height:10px;text-align:right;">
+                     <td  class="tablaPdf" style="width: 25px; text-align:center;">
                          <p id="base"></p>
                      </td>
-                     <td style="width: 25px; height:10px;text-align:right;">
+                     <td  class="tablaPdf" style="width: 25px; text-align:center;">
                          <p id="porcentaje"></p>
                      </td>
-                     <td style="width: 25px; height:10px;text-align:right;">
+                     <td class="tablaPdf" style="width: 25px; height:10px;text-align:right;">
                           <p id="valor"></p>
                       </td>
                       </tr>                     
-                      <tr>
-                       <td style="width: 25px; height:10px;">
+                      <tr >
+                       <td height="15px" class="bordePDF3" style="width: 25px; height:10px;text-align:center">
+                           TOTAL RETENCION
                      </td>
-                     <td style="width: 25px; height:10px;">
+                     <td   class="tablaPdf1"style="width: 25px; height:10px;">
                      
                      </td>
-                     <td style="width: 25px; height:10px;">
+                     <td   class="tablaPdf1" style="width: 25px; height:10px;">
                         
                      </td>
-                     <td style="width: 25px; height:10px;">
+                     <td  class="tablaPdf1" style="width: 25px; height:10px;">
                         
                       </td>
                       
-                       <td style="width: 50px; height:10px; text-align:right;">
+                       <td height="15px" class="bordePDF4" style="width: 50px; height:10px; text-align:right;">
                            
                            <div id="espacios"> </div>
                            <p id="total"></p>
@@ -138,7 +157,7 @@
                     </td>
                     </tr>
                     <tr>
-                     <td  id ="tdsuperior4" style="height:135px;">
+                     <td  id ="tdsuperior4" style="height:140px;">
                     </td>
                     <tr>
                     <td  id ="tdsuperior5" style="height:10px;">
@@ -175,13 +194,49 @@
     <script src="../../scripts/pakoPdf.js"></script>
 
     <style>
+        
+        
+        
+        table {
+    border-collapse: collapse;
+    border-spacing: 0;
+        }
+        .bordePDF1{
+            border-radius: 12px 0 0 0;
+            border: 0.5px solid black;
+           
+        }
+        .bordePDF2{
+            border-radius: 0 12px  0 0;
+            border: 0.5px solid black;
+           
+        }
+        .bordePDF4{
+            border-radius: 0 0 12px 0;
+            border: 0.5px solid black;
+           
+        }
+        .bordePDF3{
+            border-radius:  0 0 0 12px ;
+            border: 0.5px solid black;
+           
+        }
+        .tablaPdf{
+    border: 0.5px solid black;
+
+        
+        }
+        .tablaPdf1{
+        border-bottom: 0.5px solid black;
+
+        }
         .fondo{
             /*background-image: url(w3s.png);*/
         }
         .pdf-page {
             margin: 0 auto;
             box-sizing: border-box;
-            box-shadow: 0 5px 10px 0 rgba(0,0,0,.3);
+            box-shadow: 0 1px 10px 0 rgba(0,0,0,.3);
             background-color: #fff;
             color: #333;
             position: relative;
@@ -232,6 +287,7 @@
         .signature {
             padding-top: .5in;
         }
+      
     </style>
 
 </div>

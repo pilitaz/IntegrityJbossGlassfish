@@ -98,7 +98,7 @@ $(document).ready(function () {
             {command:
                         [
                     {name: "proceso", text: "", click: grafica, template: "<a title='procesos' class='k-grid-proceso'><span  title='comenzar' class='k-sprite pro_prooff'></span></a>"},
-                    {name: "tareas", text: "", click: grilla, template: "<a title='comenzar' class='k-grid-tareas'><span  title='comenzar' class='k-sprite pro_groupoff'></span></a>"},
+                    {name: "tarea", text: "", click: grilla, template: "<a title='comenzar' class='k-grid-tareas'><span  title='comenzar' class='k-sprite pro_groupoff'></span></a>"},
                     {name: "editar", text: " ",  click: grafica, template: "<a class='k-grid-editar'><span class='k-sprite pro_graphoff '></span></a>"},
                     {name: "info", text: " ",  template: "<a class='k-grid-info'><span class='k-sprite pro_infooff'></span></a>"},
                     {name: "play", text: " ", click: iniciarTarea, template: "<a class='k-grid-play'><span class='k-sprite pro_playoff '></span></a>"},
@@ -205,7 +205,7 @@ $(document).ready(function () {
             {field: "task__type", title: "Tipo",  hidden:false},             
             {command:
                         [
-                    {name: "inciar", click: iniciarTarea, template: "<a class='k-grid-iniciar' href='' style='min-width:16px;'><span class='k-sprite pro_playoff'></span></a>"}
+                    {name: "inciar",text: " ",  click: iniciarTarea2, template: "<a class='k-grid-iniciar'  style='min-width:16px;'><span class='k-sprite pro_playoff'></span></a>"}
                 ],
                 width: "50px"}], 
         rowTemplate: kendo.template($("#rowTemplateCmp1").html()),
@@ -227,11 +227,41 @@ $(document).ready(function () {
                         
                         
 });
+function iniciarTarea2(e){debugger  
+//     var x = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).id;
+//     var y = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).task__name;
+     var nombreFormulario = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"));
+
+    $("#formvacations").append("<div id='windowform'></div>");
+        var myWindow1 = $("#windowform"),undo = $("#undo");
+                
+        function onClose() {
+            undo.fadeIn();
+            $("#windowform").empty();
+        }
+        
+        var UrL= sessionStorage.getItem("url");  
+        myWindow1.kendoWindow({
+            draggable: true,
+            height: "80%",
+            modal: true,
+            resizable: false,
+            title: "Solicitud De Vacaciones",
+            width: "50%",
+            content: UrL+"procesos/formularioProcesos/html/Solicitar_Vacaciones.html",
+            actions: [
+                "Close"
+            ],                               
+            close: onClose
+        }).data("kendoWindow").center().open();    
+    
+}
 //funcion que incia la tarea de acuerdo a los parametros diseñados
 
 function iniciarTarea(e){debugger
      var x = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).id;
      var y = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).task__name;
+     var nombreFormulario = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).screen__name;
     sessionStorage.setItem("tarea_usuario",x); 
     sessionStorage.setItem("proceso_usuario",y);  
     $("#formvacations").append("<div id='windowform'></div>");
@@ -250,7 +280,7 @@ function iniciarTarea(e){debugger
             resizable: false,
             title: "Solicitud De Vacaciones",
             width: "50%",
-            content: UrL+"procesos/html/formVacations.html",
+            content: UrL+"procesos/formularioProcesos/html/"+nombreFormulario+".html",
             actions: [
                 "Close"
             ],                               
@@ -362,7 +392,7 @@ function grilla(e){
 function disable(){
     
 }
-function reasignar(){debugger
+function reasignar1(){debugger
             try{                             
         var grid = $('#grid1').data('kendoGrid');
         var datos = grid.select($("#rowSelection_active_cell").closest("tr"));
@@ -401,24 +431,24 @@ if (contador === datanew.length )
         function onClose() {
             undo.fadeIn();
             $("#windowform").empty();
-        }
-//    mostrarCustomPopUp();
-//    onloadPopUpCond ();
-        var UrL= sessionStorage.getItem("url");  
-        myWindow1.kendoWindow({
-            draggable: true,
-            height: "40%",
-            modal: true,
-            resizable: false,
-            title: "Reasignar Tareas",
-            width: "50%",
-            content: UrL+"procesos/html/ReasignacionMasiva.html",
-            actions: [
-                "Close"
-            ],                               
-            close: onClose
-        }).data("kendoWindow").center().open();    
-    
+        } 
+        mostrarCustomPopUp();
+    onloadPopUpCond ();
+//        var UrL= sessionStorage.getItem("url");  
+//        myWindow1.kendoWindow({
+//            draggable: true,
+//            height: "40%",
+//            modal: true,
+//            resizable: false,
+//            title: "Reasignar Tareas",
+//            width: "50%",
+//            content: UrL+"procesos/html/ReasignacionMasiva.html",
+//            actions: [
+//                "Close"
+//            ],                               
+//            close: onClose
+//        }).data("kendoWindow").center().open();    
+//    
 }
 else{}
 

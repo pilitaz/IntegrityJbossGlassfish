@@ -1,13 +1,13 @@
 
-$(document).ready(function () {
+function onloadPopUpCond() {
 reasignar();
-});
+};
    
    function reasignar() {debugger
         var lista = sessionStorage.getItem("listado_tareas"); 
         var lista = JSON.parse(lista);
         
-        document.getElementById("subtitulo2").innerHTML  = "Reasignacion de  "+lista.length +" tareas : "+lista[0].text; 
+        document.getElementById("subtituloReasigna").innerHTML  = "Reasignacion de  "+lista.length +" tareas : "+lista[0].text; 
         var consultar = new sirconsulta();
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();
