@@ -198,37 +198,37 @@ function closePopUpCabecera(){
     $("#windowTercero").data("kendoWindow").close();   
 }
 
-function popUpAprobacionPedido() {
-    
-    sessionStorage.removeItem("regPedidos");
-    
-    var widthPopUp = $("body").width();
-    widthPopUp = widthPopUp * (30 / 100);
-    var heightPopUp = $("body").height();
-    heightPopUp = heightPopUp * (30 / 100);
-
-    $("body").append("<div id='windowPedidoAproba'></div>");
-    var myWindow = $("#windowPedidoAproba");
-    var undo = $("#undo");
-
-    function onClosePopUpAprobacionPedido() {
-        document.getElementById("windowPedidoAproba").remove();
-        undo.fadeIn();
-    }
-
-    myWindow.kendoWindow({
-        width: widthPopUp,
-        height: heightPopUp,
-        title: "Cartera",
-        content: sessionStorage.getItem("url") + "/pedidos/html/popUpAprobacionPedido.html",
-        visible: false,
-        modal: true,
-        actions: [
-            "Close"
-        ],
-        close: onClosePopUpAprobacionPedido
-    }).data("kendoWindow").center().open();
-}
+//function popUpAprobacionPedido() {
+//    
+//    sessionStorage.removeItem("regPedidos");
+//    
+//    var widthPopUp = $("body").width();
+//    widthPopUp = widthPopUp * (30 / 100);
+//    var heightPopUp = $("body").height();
+//    heightPopUp = heightPopUp * (30 / 100);
+//
+//    $("body").append("<div id='windowPedidoAproba'></div>");
+//    var myWindow = $("#windowPedidoAproba");
+//    var undo = $("#undo");
+//
+//    function onClosePopUpAprobacionPedido() {
+//        document.getElementById("windowPedidoAproba").remove();
+//        undo.fadeIn();
+//    }
+//
+//    myWindow.kendoWindow({
+//        width: widthPopUp,
+//        height: heightPopUp,
+//        title: "Cartera",
+//        content: sessionStorage.getItem("url") + "/pedidos/html/popUpAprobacionPedido.html",
+//        visible: false,
+//        modal: true,
+//        actions: [
+//            "Close"
+//        ],
+//        close: onClosePopUpAprobacionPedido
+//    }).data("kendoWindow").center().open();
+//}
 
 function closePopUpAprobacionPedido(){       
     $("#windowPedidoAproba").data("kendoWindow").close();

@@ -767,3 +767,32 @@ function limpiarfiltros(){
     sessionStorage.removeItem("jsonFiltroPedidos");
     sessionStorage.removeItem("regPedidos");    
 }
+
+function popUpSubirArchivo(){    
+    $("body").append("<div id='windowSubirArchivo'></div>");
+    var myWindow = $("#windowSubirArchivo");
+    var undo = $("#undo");
+
+    function onCloseWindowCabPedido() {
+        document.getElementById("windowSubirArchivo").remove();
+        undo.fadeIn();
+    }
+
+    myWindow.kendoWindow({
+        width: 300,
+        height: 200,
+        title: "Adjuntar archivo",
+        content: sessionStorage.getItem("url") + "/documentos/html/popupSubirArchivo.html",
+        visible: false,
+        modal: true,
+        actions: [
+            "Close"
+        ],
+        close: onCloseWindowCabPedido
+    }).data("kendoWindow").center().open();
+}
+
+function closePopUpSubirArchivo(msj){
+    alertDialogs(msj);    
+    $("#windowSubirArchivo").data("kendoWindow").close();       
+}
