@@ -8,16 +8,17 @@ reasignar();
         var lista = JSON.parse(lista);
         
         document.getElementById("subtituloReasigna").innerHTML  = "Reasignacion de  "+lista.length +" tareas : "+lista[0].text; 
-        var consultar = new sirconsulta();
+        var consultar = new SirUsuariosReasigna();
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();
-        var mapCud1 = "UserBPM";
-        
+        var mapCud1 = "eesearchuserstoreassign";
+        datajson.dssearchuserstoreassign.SIRsearchuserstoreassign[0].picprocname=lista[0].proceso;
+        datajson.dssearchuserstoreassign.SIRsearchuserstoreassign[0].pictaskname=lista[0].text;
         $("#reasiganar")
                 .kendoComboBox({
                
-            dataTextField: "usr__name",
-            dataValueField: "usr__cod",
+            dataTextField: "username",
+            dataValueField: "username",
             dataSource: {
                 transport: {
                     read: {
@@ -33,7 +34,7 @@ reasignar();
                     }
                 },
                 schema: {
-                    data: function (e) {
+                    data: function (e) {debugger
                         var key1 = Object.keys(e)[0];
                         if (e[key1].eeEstados[0].Estado === "OK") {
                             return e[key1][mapCud1];
@@ -42,10 +43,10 @@ reasignar();
                         }
                     },
                     model: {
-                        id: "usr__cod",
+                        id: "username",
                         fields: {
-                            usr__name: {editable: true, nullable: false},
-                            usr__cod: {editable: true, nullable: false}
+                            username: {editable: true, nullable: false},
+                            
                             
                         }
                     }

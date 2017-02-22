@@ -623,3 +623,84 @@ function infoAyuda() {
     };
     
 };
+//---------------------------------------------------------------------------
+function sirInstancias() {
+    var urlSir = ipServicios + baseUsrBpm +"getUserCreatedProcessInstanceListByUserName";
+    var json = {  
+   "dsProcessInstanceListByUserName":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],  
+     "SIRProcessInstanceList":[  
+         {  
+            "picprocname":""
+         }
+      ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+//---------------------------------------------------------------------------
+function SirUsuariosReasigna() {
+    var urlSir = ipServicios + baseUsrBpm +"SIsearchuserstoreassign";
+    var json = {  
+   "dssearchuserstoreassign":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+            "SIRsearchuserstoreassign":[  
+         {  
+            "picprocname":"",
+            "pictaskname":""
+         }
+      ]   
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};

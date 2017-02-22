@@ -86,9 +86,6 @@ $(document).ready(function () {
     var grid1 = $("#grid").kendoGrid({
         dataSource: datasource,
                             
-                            
-      
-                            
         //navigatable: true,
         columns: [
             //                            { template: "<a class='k-grid-play'><span class='k-sprite pro_bullet1'></span></a>", width: "50px"} ,    
@@ -97,10 +94,10 @@ $(document).ready(function () {
             { field: "proc__name", title: "Procesos",  hidden:false},
             {command:
                         [
-                    {name: "proceso", text: "", click: grafica, template: "<a title='procesos' class='k-grid-proceso'><span  title='comenzar' class='k-sprite pro_prooff'></span></a>"},
-                    {name: "tarea", text: "", click: grilla, template: "<a title='comenzar' class='k-grid-tareas'><span  title='comenzar' class='k-sprite pro_groupoff'></span></a>"},
+                    {name: "proceso", text: " ", click: grafica, template: "<a class='k-grid-proceso'><span  title='comenzar' class='k-sprite pro_prooff'></span></a>"},
+                    {name: "admin", text: " ", click: grilla_Administar, template: "<a class='k-grid-admin'><span  title='comenzar' class='k-sprite pro_groupoff'></span></a>"},
                     {name: "editar", text: " ",  click: grafica, template: "<a class='k-grid-editar'><span class='k-sprite pro_graphoff '></span></a>"},
-                    {name: "info", text: " ",  template: "<a class='k-grid-info'><span class='k-sprite pro_infooff'></span></a>"},
+                    {name: "info", text: " ", click: instancias, template: "<a class='k-grid-info'><span class='k-sprite pro_infooff'></span></a>"},
                     {name: "play", text: " ", click: iniciarTarea, template: "<a class='k-grid-play'><span class='k-sprite pro_playoff '></span></a>"},
                            
                 ],
@@ -227,6 +224,67 @@ $(document).ready(function () {
                         
                         
 });
+function grilla_Administar(e){debugger
+    e.preventDefault();
+    var id = this.dataItem($(e.currentTarget).closest("tr")).proc__name;
+    var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;  
+    if (adm=== true ){
+        sessionStorage.setItem("Proc_usuar",id);                                           
+        $("#grillapopUp").append("<div id='windowg'></div>");                       
+        var myWindow2 = $("#windowg"),undo = $("#undo");                
+        function onClose1() {
+            undo.fadeIn();
+            $("#grillapopUp").empty();
+        }       
+        var UrL= sessionStorage.getItem("url");
+        myWindow2.kendoWindow({
+            draggable: true,
+            height: "90%",
+            modal: true,
+            resizable: false,
+            title: "Tareas",
+            width: "90%",
+            content: UrL+"procesos/html/popUpGrilla.html",
+            deactivate: function() {
+                this.destroy();                                           
+            },
+            actions: [
+                "Close"
+            ],                               
+            close: onClose1
+        }).data("kendoWindow").center().open();   
+    }
+    else
+    {}
+                      
+}       
+function instancias(e){debugger  
+     var instacia_proceso = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).proc__name;
+     sessionStorage.setItem("instacia_proceso",instacia_proceso);  
+    $("#formvacations").append("<div id='windowform'></div>");
+        var myWindow1 = $("#windowform"),undo = $("#undo");
+                
+        function onClose() {
+            undo.fadeIn();
+            $("#windowform").empty();
+        }
+        
+        var UrL= sessionStorage.getItem("url");  
+        myWindow1.kendoWindow({
+            draggable: true,
+            height: "80%",
+            modal: true,
+            resizable: false,
+            title: "Instancias",
+            width: "70%",
+            content: UrL+"procesos/formularioProcesos/html/instancias.html",
+            actions: [
+                "Close"
+            ],                               
+            close: onClose
+        }).data("kendoWindow").center().open();    
+    
+    }
 function iniciarTarea2(e){debugger  
 //     var x = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).id;
 //     var y = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).task__name;
@@ -355,40 +413,7 @@ function grafica(e){
 //    
 //Funcion para crear la grilla de tareas por poceseo 
 //Se crea un html llamado popupgrilla                    
-function grilla(e){
-    e.preventDefault();
-    var id = this.dataItem($(e.currentTarget).closest("tr")).proc__name;
-    var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;  
-    if (adm=== true ){
-        sessionStorage.setItem("Proc_usuar",id);                                           
-        $("#grillapopUp").append("<div id='windowg'></div>");                       
-        var myWindow2 = $("#windowg"),undo = $("#undo");                
-        function onClose1() {
-            undo.fadeIn();
-            $("#grillapopUp").empty();
-        }       
-        var UrL= sessionStorage.getItem("url");
-        myWindow2.kendoWindow({
-            draggable: true,
-            height: "90%",
-            modal: true,
-            resizable: false,
-            title: "Tareas",
-            width: "90%",
-            content: UrL+"procesos/html/popUpGrilla.html",
-            deactivate: function() {
-                this.destroy();                                           
-            },
-            actions: [
-                "Close"
-            ],                               
-            close: onClose1
-        }).data("kendoWindow").center().open();   
-    }
-    else
-    {}
-                      
-}       
+
 function disable(){
     
 }
