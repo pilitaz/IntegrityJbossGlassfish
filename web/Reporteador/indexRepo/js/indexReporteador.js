@@ -200,7 +200,8 @@ function ClickPlay(e) {
     var nomRepo = this.dataItem($(e.currentTarget).closest("tr")).rpt_nom;
     sessionStorage.setItem("idRepo", idRepo);
     sessionStorage.setItem("nomRepo", nomRepo);
-    window.location.assign("html/reporteView.html");
+    window.location.assign(sessionStorage.getItem("url") + "Reporteador/viewRepo/html/viewRepo.html");
+    
 }
 /**
  * Eventcliclick de la imagen play
