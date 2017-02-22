@@ -98,7 +98,7 @@ $(document).ready(function () {
                     {name: "admin", text: " ", click: grilla_Administar, template: "<a class='k-grid-admin'><span  title='comenzar' class='k-sprite pro_groupoff'></span></a>"},
                     {name: "editar", text: " ",  click: grafica, template: "<a class='k-grid-editar'><span class='k-sprite pro_graphoff '></span></a>"},
                     {name: "info", text: " ", click: instancias, template: "<a class='k-grid-info'><span class='k-sprite pro_infooff'></span></a>"},
-                    {name: "play", text: " ", click: iniciarTarea, template: "<a class='k-grid-play'><span class='k-sprite pro_playoff '></span></a>"},
+                    {name: "play", text: " ", click: iniciarProceso, template: "<a class='k-grid-play'><span class='k-sprite pro_playoff '></span></a>"},
                            
                 ],
                 width: "220px"}],                            
@@ -145,7 +145,7 @@ $(document).ready(function () {
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     return e[key1][mapCud1];
                 } else {
-                  alertDialogs("El usuario no tiene tareas asiganadas");
+                    alertDialogs("El usuario no tiene tareas asiganadas");
                 }
             },
             model: {
@@ -202,7 +202,7 @@ $(document).ready(function () {
             {field: "task__type", title: "Tipo",  hidden:false},             
             {command:
                         [
-                    {name: "inciar",text: " ",  click: iniciarTarea2, template: "<a class='k-grid-iniciar'  style='min-width:16px;'><span class='k-sprite pro_playoff'></span></a>"}
+                    {name: "iniciar",text: " ",  click: iniciarTarea2, template: "<a class='k-grid-iniciar'  style='min-width:16px;'><span class='k-sprite pro_playoff'></span></a>"}
                 ],
                 width: "50px"}], 
         rowTemplate: kendo.template($("#rowTemplateCmp1").html()),
@@ -259,129 +259,94 @@ function grilla_Administar(e){debugger
                       
 }       
 function instancias(e){debugger  
-     var instacia_proceso = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).proc__name;
-     sessionStorage.setItem("instacia_proceso",instacia_proceso);  
+    var instacia_proceso = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).proc__name;
+    sessionStorage.setItem("instacia_proceso",instacia_proceso);  
     $("#formvacations").append("<div id='windowform'></div>");
-        var myWindow1 = $("#windowform"),undo = $("#undo");
+    var myWindow1 = $("#windowform"),undo = $("#undo");
                 
-        function onClose() {
-            undo.fadeIn();
-            $("#windowform").empty();
-        }
-        
-        var UrL= sessionStorage.getItem("url");  
-        myWindow1.kendoWindow({
-            draggable: true,
-            height: "80%",
-            modal: true,
-            resizable: false,
-            title: "Instancias",
-            width: "70%",
-            content: UrL+"procesos/formularioProcesos/html/instancias.html",
-            actions: [
-                "Close"
-            ],                               
-            close: onClose
-        }).data("kendoWindow").center().open();    
-    
+    function onClose() {
+        undo.fadeIn();
+        $("#windowform").empty();
     }
-function iniciarTarea2(e){debugger  
-//     var x = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).id;
-//     var y = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).task__name;
-     var nombreFormulario = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"));
-
-    $("#formvacations").append("<div id='windowform'></div>");
-        var myWindow1 = $("#windowform"),undo = $("#undo");
-                
-        function onClose() {
-            undo.fadeIn();
-            $("#windowform").empty();
-        }
         
-        var UrL= sessionStorage.getItem("url");  
-        myWindow1.kendoWindow({
-            draggable: true,
-            height: "80%",
-            modal: true,
-            resizable: false,
-            title: "Solicitud De Vacaciones",
-            width: "50%",
-            content: UrL+"procesos/formularioProcesos/html/Solicitar_Vacaciones.html",
-            actions: [
-                "Close"
-            ],                               
-            close: onClose
-        }).data("kendoWindow").center().open();    
+    var UrL= sessionStorage.getItem("url");  
+    myWindow1.kendoWindow({
+        draggable: true,
+        height: "80%",
+        modal: true,
+        resizable: false,
+        title: "Instancias",
+        width: "70%",
+        content: UrL+"procesos/formularioProcesos/html/instancias.html",
+        actions: [
+            "Close"
+        ],                               
+        close: onClose
+    }).data("kendoWindow").center().open();    
     
 }
-//funcion que incia la tarea de acuerdo a los parametros diseñados
+function iniciarTarea2(e){debugger  
+    //     var x = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).id;
+    //     var y = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).task__name;
+    var nombreTarea = $("#grid1").data("kendoGrid").dataItem($(e.target).closest("tr")).task__name;
 
-function iniciarTarea(e){debugger
-     var x = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).id;
-     var y = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).task__name;
-     var nombreFormulario = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).screen__name;
+    $("#formvacations").append("<div id='windowform'></div>");
+    var myWindow1 = $("#windowform"),undo = $("#undo");
+                
+    function onClose() {
+        undo.fadeIn();
+        $("#windowform").empty();
+    }
+        
+    var UrL= sessionStorage.getItem("url");  
+    myWindow1.kendoWindow({
+        draggable: true,
+        height: "80%",
+        modal: true,
+        resizable: false,
+        title: "Solicitud De Vacaciones",
+        width: "50%",
+        content: UrL+"procesos/formularioProcesos/html/"+nombreTarea+".html",
+        actions: [
+            "Close"
+        ],                               
+        close: onClose
+    }).data("kendoWindow").center().open();    
+    
+}
+//funcion que incia el proceso de acuerdo a los parametros diseñados
+
+function iniciarProceso(e){debugger
+    var x = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).id;
+    var y = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).task__name;
+    var nombreFormulario = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).screen__name;
     sessionStorage.setItem("tarea_usuario",x); 
     sessionStorage.setItem("proceso_usuario",y);  
     $("#formvacations").append("<div id='windowform'></div>");
-        var myWindow1 = $("#windowform"),undo = $("#undo");
+    var myWindow1 = $("#windowform"),undo = $("#undo");
                 
-        function onClose() {
-            undo.fadeIn();
-            $("#windowform").empty();
-        }
+    function onClose() {
+        undo.fadeIn();
+        $("#windowform").empty();
+    }
         
-        var UrL= sessionStorage.getItem("url");  
-        myWindow1.kendoWindow({
-            draggable: true,
-            height: "80%",
-            modal: true,
-            resizable: false,
-            title: "Solicitud De Vacaciones",
-            width: "50%",
-            content: UrL+"procesos/formularioProcesos/html/"+nombreFormulario+".html",
-            actions: [
-                "Close"
-            ],                               
-            close: onClose
-        }).data("kendoWindow").center().open();    
+    var UrL= sessionStorage.getItem("url");  
+    myWindow1.kendoWindow({
+        draggable: true,
+        height: "80%",
+        modal: true,
+        resizable: false,
+        title: "Solicitud De Vacaciones",
+        width: "50%",
+        content: UrL+"procesos/formularioProcesos/html/"+nombreFormulario+".html",
+        actions: [
+            "Close"
+        ],                               
+        close: onClose
+    }).data("kendoWindow").center().open();    
     
 }
-//funcion para inciar proceso, envia peticion al servicio 
-//y luego refresca la grilla
-function iniciarProceso(e){
-    
-    var adm = this.dataItem($(e.currentTarget).closest("tr")).id;
-    var consultar = new sistartaplication();
-    var datajson = consultar.getjson();
-    var urlService = consultar.getUrlSir();
-                        
-    datajson.dsAplication.SIRapp[0].picproc__name= adm;
-                   
-    $.ajax({
-        
-        type: "POST",        
-        async: false,
-        data: JSON.stringify(datajson),
-        url: urlService,
-        dataType: "json",        
-        contentType: "application/json;",
-        success: function (resp) {
-            if((resp.dsAplication.eeEstados["0"].Estado)=="OK")
-            {
-            
-             alertDialogs("Se ha inciado el proceso "+adm);
-            $('#grid1').data('kendoGrid').refresh();                                             
-            $('#grid1').data('kendoGrid').dataSource.read();
-            $('#grid1').data('kendoGrid').refresh(); 
-            }
-            else
-            {
-             alertDialogs("Error"+resp.dsAplication.eeEstados["0"].Estado);   
-            }
-        } 
-        
-        });
-}
+
 //funcion para crear grafica 
 function grafica(e){
     var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
@@ -418,96 +383,96 @@ function disable(){
     
 }
 function reasignar1(){debugger
-            try{                             
+    try{                             
         var grid = $('#grid1').data('kendoGrid');
         var datos = grid.select($("#rowSelection_active_cell").closest("tr"));
         var i=0;        
-         var datanew=[];  
-for (i = 0; i < datos.length; i++){
-                   var objeto={};
-                    objeto.text=datos[i].childNodes[3].innerText;
-                    objeto.proceso=datos[i].childNodes[1].innerText;
-                    objeto.descripcion=datos[i].childNodes[5].innerText;
-                    objeto.value=i;
-                    datanew.push(objeto);
-                    }
-                    var texto = datanew[0].text;
-                    var contador = 0;
-for (i = 0; i < datanew.length; i++){
-    if (datanew[i].text===texto)
-    {
-        contador++;
-    }
-    else
-    {
-     alertDialogs("Recuerde que solo podra reasignar tareas del mismo tipo");   
-    }
+        var datanew=[];  
+        for (i = 0; i < datos.length; i++){
+            var objeto={};
+            objeto.text=datos[i].childNodes[3].innerText;
+            objeto.proceso=datos[i].childNodes[1].innerText;
+            objeto.descripcion=datos[i].childNodes[5].innerText;
+            objeto.value=i;
+            datanew.push(objeto);
+        }
+        var texto = datanew[0].text;
+        var contador = 0;
+        for (i = 0; i < datanew.length; i++){
+            if (datanew[i].text===texto)
+            {
+                contador++;
+            }
+            else
+            {
+                alertDialogs("Recuerde que solo podra reasignar tareas del mismo tipo");   
+            }
             
-}
-if (contador === datanew.length )
-{
+        }
+        if (contador === datanew.length )
+        {
     
- sessionStorage.setItem("listado_tareas",JSON.stringify(datanew)); 
+            sessionStorage.setItem("listado_tareas",JSON.stringify(datanew)); 
     
             
             $("#formvacations").append("<div id='windowform'></div>");
-        var myWindow1 = $("#windowform"),undo = $("#undo");
+            var myWindow1 = $("#windowform"),undo = $("#undo");
                 
-        function onClose() {
-            undo.fadeIn();
-            $("#windowform").empty();
-        } 
-        mostrarCustomPopUp();
-    onloadPopUpCond ();
-//        var UrL= sessionStorage.getItem("url");  
-//        myWindow1.kendoWindow({
-//            draggable: true,
-//            height: "40%",
-//            modal: true,
-//            resizable: false,
-//            title: "Reasignar Tareas",
-//            width: "50%",
-//            content: UrL+"procesos/html/ReasignacionMasiva.html",
-//            actions: [
-//                "Close"
-//            ],                               
-//            close: onClose
-//        }).data("kendoWindow").center().open();    
-//    
-}
-else{}
+            function onClose() {
+                undo.fadeIn();
+                $("#windowform").empty();
+            } 
+            mostrarCustomPopUp();
+            onloadPopUpCond ();
+            //        var UrL= sessionStorage.getItem("url");  
+            //        myWindow1.kendoWindow({
+            //            draggable: true,
+            //            height: "40%",
+            //            modal: true,
+            //            resizable: false,
+            //            title: "Reasignar Tareas",
+            //            width: "50%",
+            //            content: UrL+"procesos/html/ReasignacionMasiva.html",
+            //            actions: [
+            //                "Close"
+            //            ],                               
+            //            close: onClose
+            //        }).data("kendoWindow").center().open();    
+            //    
+        }
+        else{}
 
-}
+    }
 
 
-catch(err) {
-  alertDialogs("Debe Selecionar al menos un registro para reasignar");
-}
+    catch(err) {
+        alertDialogs("Debe Selecionar al menos un registro para reasignar");
+    }
 
 
  
         
 }
 function changImgFunc1(results) {
-   var results =  $('#grid1').data('kendoGrid')._data;
+    var results =  $('#grid1').data('kendoGrid')._data;
     var consultar = new serviTime();
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();
     
-     $.ajax({
-            type: "POST",
-            async: false, 
-            data: JSON.stringify(datajson),
-            url: urlService,
-            dataType : "json",  
-            contentType: "application/json;",
-            success: function (resp) {             
-                sessionStorage.setItem("Fecha_Hora",resp.dstime.eetime["0"].systime);
+    $.ajax({
+        type: "POST",
+        async: false, 
+        data: JSON.stringify(datajson),
+        url: urlService,
+        dataType : "json",  
+        contentType: "application/json;",
+        success: function (resp) {             
+            sessionStorage.setItem("Fecha_Hora",resp.dstime.eetime["0"].systime);
                                
-            },
-            error: function (e) {              
-            }
-        });
+        },
+        error: function (e) {              
+        }
+    });
     var s =   sessionStorage.getItem("Fecha_Hora");
     var x = s.replace("T", " ");
     var fechaSistema =  new Date(x);
@@ -517,19 +482,19 @@ function changImgFunc1(results) {
     var horaSistema = fechaSistema.getHours();
     var minSistema = fechaSistema.getMinutes();
     for (var i = 0; i < results.length; i++) {
-    var fecha1 = new Date(results[i].task__tst);
-    var mesSistema1 = fecha1.getMonth()+1;
-    var diaSistema1 = fecha1.getDate();
-    var AñoSistema1 = fecha1.getUTCFullYear();
-    var horaSitema1 = fecha1.getHours();
-    var minSistema1 = fecha1.getMinutes();
+        var fecha1 = new Date(results[i].task__tst);
+        var mesSistema1 = fecha1.getMonth()+1;
+        var diaSistema1 = fecha1.getDate();
+        var AñoSistema1 = fecha1.getUTCFullYear();
+        var horaSitema1 = fecha1.getHours();
+        var minSistema1 = fecha1.getMinutes();
     
-    var fecha2 = new Date(results[i].task__ddt);
-    var mesSistema2 = fecha2.getMonth()+1;
-    var diaSistema2 = fecha2.getDate();
-    var AñoSistema2 = fecha2.getUTCFullYear();
-    var horaSitema2 = fecha2.getHours();
-    var minSistema2 = fecha2.getMinutes();
+        var fecha2 = new Date(results[i].task__ddt);
+        var mesSistema2 = fecha2.getMonth()+1;
+        var diaSistema2 = fecha2.getDate();
+        var AñoSistema2 = fecha2.getUTCFullYear();
+        var horaSitema2 = fecha2.getHours();
+        var minSistema2 = fecha2.getMinutes();
     
         document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__tst).innerHTML  = diaSistema1+"/"+mesSistema1+"/"+AñoSistema1 + " "+horaSitema1+":"+minSistema1; 
         document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__ddt).innerHTML  = diaSistema2+"/"+mesSistema2+"/"+AñoSistema2 + " "+horaSitema2+":"+minSistema1; 
@@ -537,14 +502,14 @@ function changImgFunc1(results) {
     
     for (var i = 0; i < results.length; i++) {
      
-    var fecha2 = new Date(results[i].task__ddt);
-    var mesServicio = fecha2.getMonth()+1;
-    var diaServicio = fecha2.getDate();
-    var AñoServicio = fecha2.getUTCFullYear();
-    var horaServicio = fecha2.getHours();
-    var minServicio = fecha2.getMinutes();
+        var fecha2 = new Date(results[i].task__ddt);
+        var mesServicio = fecha2.getMonth()+1;
+        var diaServicio = fecha2.getDate();
+        var AñoServicio = fecha2.getUTCFullYear();
+        var horaServicio = fecha2.getHours();
+        var minServicio = fecha2.getMinutes();
     
-    var fechaSistema = AñoSistema+diaSistema+mesSistema;
+        var fechaSistema = AñoSistema+diaSistema+mesSistema;
         if ((mesServicio<mesSistema || diaServicio<diaSistema || AñoServicio<AñoSistema)){
             
             document.getElementById(results[i].inst__name+results[i].task__name+results[i].inst__name).style.color = 'red';  
@@ -554,46 +519,46 @@ function changImgFunc1(results) {
             document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__ddt).style.color = 'red'; 
             document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__dpr).style.color = 'red'; 
             document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__type).style.color = 'red';       
-    }
-    else{
-        if(diaServicio===diaSistema ){
-            if (horaSistema > horaServicio  ){
-            document.getElementById(results[i].inst__name+results[i].task__name+results[i].inst__name).style.color = 'red';  
-            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__name).style.color = 'red'; 
-            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__des).style.color = 'red'; 
-            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__tst).style.color = 'red'; 
-            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__ddt).style.color = 'red'; 
-            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__dpr).style.color = 'red'; 
-            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__type).style.color = 'red'; 
-                    }else{
-            if (horaServicio == horaSistema &&   minSistema >= minServicio ){
-            document.getElementById(results[i].inst__name+results[i].task__name+results[i].inst__name).style.color = 'red';  
-            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__name).style.color = 'red'; 
-            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__des).style.color = 'red'; 
-            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__tst).style.color = 'red'; 
-            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__ddt).style.color = 'red'; 
-            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__dpr).style.color = 'red'; 
-            document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__type).style.color = 'red'; 
+        }
+        else{
+            if(diaServicio===diaSistema ){
+                if (horaSistema > horaServicio  ){
+                    document.getElementById(results[i].inst__name+results[i].task__name+results[i].inst__name).style.color = 'red';  
+                    document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__name).style.color = 'red'; 
+                    document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__des).style.color = 'red'; 
+                    document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__tst).style.color = 'red'; 
+                    document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__ddt).style.color = 'red'; 
+                    document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__dpr).style.color = 'red'; 
+                    document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__type).style.color = 'red'; 
+                }else{
+                    if (horaServicio == horaSistema &&   minSistema >= minServicio ){
+                        document.getElementById(results[i].inst__name+results[i].task__name+results[i].inst__name).style.color = 'red';  
+                        document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__name).style.color = 'red'; 
+                        document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__des).style.color = 'red'; 
+                        document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__tst).style.color = 'red'; 
+                        document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__ddt).style.color = 'red'; 
+                        document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__dpr).style.color = 'red'; 
+                        document.getElementById(results[i].inst__name+results[i].task__name+results[i].task__type).style.color = 'red'; 
                     }
-                    }                       
-                    }
-    }
+                }                       
+            }
+        }
     
- }  
+    }  
 }
-function cerrar(){
-     $("#windowform").data("kendoWindow").close();   
-    alertDialogs("Se ha iniciado la tarea correctamente");
+function cerrar(){debugger
+    $("#windowform").data("kendoWindow").close();   
+    alertDialogs("Se ha iniciado el proceso correctamente");
     $('#grid1').data('kendoGrid').refresh();                                             
-            $('#grid1').data('kendoGrid').dataSource.read();
-            $('#grid1').data('kendoGrid').refresh(); 
+    $('#grid1').data('kendoGrid').dataSource.read();
+    $('#grid1').data('kendoGrid').refresh(); 
 }
 function changImgFunc(results) {
 
     for (var i = 0; i < results.length; i++) {
         if(results[i].can__start===true){                            
-     document.getElementById("spanplay"+results[i].proc__name).setAttribute("class", "k-sprite pro_playon");
-     document.getElementById("spanplay"+results[i].proc__name).setAttribute("estado", "on");
+            document.getElementById("spanplay"+results[i].proc__name).setAttribute("class", "k-sprite pro_playon");
+            document.getElementById("spanplay"+results[i].proc__name).setAttribute("estado", "on");
         }else
         {}}
   

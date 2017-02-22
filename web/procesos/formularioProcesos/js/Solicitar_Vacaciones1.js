@@ -49,7 +49,7 @@ function guardar(){debugger
                 if((resp.dsSolicitudVacaciones.eeEstados[0].Estado)=="OK")
                 {
                   
-                  parent.cerrar();
+                   parent.cerrar();
                 }
                 else   
                 {  
@@ -57,7 +57,7 @@ function guardar(){debugger
                 } 
             } ,
             error: function (e) {
-             parent.alertDialogs("Error al consumir el servicio de CrearConciones" + e.status + " - " + e.statusText);
+              parent.alertDialogs("Error al consumir el servicio Iniciar Proceso" + e.status + " - " + e.statusText);
         }
             
         });  
@@ -66,7 +66,7 @@ function guardar(){debugger
     
 }
 catch(err) {
-   parent.alertDialogs("Debe ingresar todos los valores requeridos");
+   parent.alertDialogs("Debe ingresar todos los valores requeridos"+err);
 }
     
     

@@ -453,7 +453,7 @@ function serviTime() {
 //---------------------------------------------------------------------------
 function IniciaVacaciones() {
     var urlSir = ipServicios + baseUsrBpm +"SIRSolicitaVacaciones";
-    var json = {  
+    var json =  {  
    "dsparam_proc_vac":{  
       "eeDatos":[  
          {  
@@ -461,6 +461,11 @@ function IniciaVacaciones() {
             "picfiid":sessionStorage.getItem("picfiid"),
             "local_ip":sessionStorage.getItem("ipPrivada"),
             "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+    "SIRparam":[  
+         {  
+            "piccedula":sessionStorage.getItem("clienteNIT")
          }
       ]
    }
@@ -682,6 +687,52 @@ function SirUsuariosReasigna() {
             "pictaskname":""
          }
       ]   
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+//---------------------------------------------------------------------------
+function cudReasignaTarea() {
+    var urlSir = ipServicios + baseUsrBpm +"reassignvarioustasks";
+    var json = {  
+   "dsreassignvarioustasks":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "reassignto":[  
+         {  
+            "picuserreassign":""
+         }
+      ],
+          "eetask":[  
+         {  
+            "taskname":"",
+            "procname":""
+         }
+      ]
    }
 };
     

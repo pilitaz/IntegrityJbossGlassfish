@@ -28,7 +28,7 @@
         <link href="../../../css/cssSpriteIntegrity.css" rel="stylesheet" type="text/css"/>
         <link href="../css/fomularios.css" rel="stylesheet" type="text/css"/>
         <script src="../../../scripts/LibreriaIntegrity.js" type="text/javascript"></script>
-        <script src="../js/Solicitar_Vacaciones1.js" type="text/javascript"></script>
+        
     </head>
     <body> 
         <div id="window">
@@ -51,13 +51,18 @@
                     <div>
                         <table>
                             <td style="width: 50%;">
-                                
+                                <h2 id = "subtitulo2" class="subTituloform">Usuario: </h2>                         
+                                <p id="usuario"></p>
                                 <h1 id = "subtitulo2" class="subTituloform">Fecha de la solicitud: </h1>
                                 <p id="fecha"></p>
                                 <h2 id = "subtitulo2" class="subTituloform">Total días habiles pendientes:</h2>                         
                                 <p id="pendientes"></p>
-                                <h2 id = "subtitulo2" class="subTituloform">Fecha de corte: </h2>                         
+                                <h2 id = "subtitulo2" class="subTituloform">Fecha de inicio de vacaciones: </h2>                         
                                 <p id="corte"></p>
+                                <h2 id = "subtitulo2" class="subTituloform">Total dias a pedir: </h2>                         
+                                <p id="dias"></p>
+                                <h2 id = "subtitulo2" class="subTituloform">Total dias en valor: </h2>                         
+                                <p id="dias"></p>
                             </td>
                             <td style="width: 50px;">
                                
@@ -67,8 +72,14 @@
                                 <p id="anticipacion"></p>
                                 <h2 id = "subtitulo2" class="subTituloform">Número de dias de vacaciones: </h2>                         
                                 <p id="vacaciones"></p>
-                                  
-                              
+                                <h2 id = "subtitulo2" class="subTituloform">Fecha de corte: </h2>                         
+                                <p id="fechaCorte"></p>  
+                                <h2 id = "subtitulo2" class="subTituloform">Jefe Inmediato: </h2>                         
+                                <p id="jefe"></p>  
+                                <h2 id = "subtitulo2" class="subTituloform">Pago Anticipado: </h2>                         
+                                <p id="pagoAnticipado"></p> 
+                                <h2 id = "subtitulo2" class="subTituloform">Observaciones: </h2>                         
+                                <p id="observaciones"></p>
                                 </td>
                                 
                         </table>
@@ -85,30 +96,12 @@
                     <div>
                         <table>
                              <div class="sidenavInf"></div>
-                            <td style="width: 50%;">
-                                
-                                <h1 id = "subtitulo2" class="subTituloform">Fecha inicio de las vacaciones: </h1>
-                                <input id="inicioVacaciones" vertical-align="center"/>    
-                                <h2 id = "subtitulo2" class="subTituloform">Total días a pedir:</h2>                         
-                                 <input id="diasPedir" vertical-align="center"/>   
-                                <h2 id = "subtitulo2" class="subTituloform">Total dias en valor: </h2>                         
-                                  <input id="totaldiasvalor" vertical-align="center"/>  
-                            </td>
-                            <td style="width: 50px;">
-                                
-                            </td> 
-                           
-                            <td style="width: 50%;">
-                                 <br><br>
-                                <h2 id = "subtitulo2" class="subTituloform">Jefe inmediato: </h2>                         
-                                  <input id="jefe" vertical-align="center"/>  
-                                <h2 id = "subtitulo2" class="subTituloform">Pago anticipado: </h2>                         
-                                 <input id="anticipado" vertical-align="center"/>   
+                            
                                 <h2 id = "subtitulo2" class="subTituloform">Observaciones: </h2>                                                       
-                                <textarea id="Observaciones" class="" style="width:190px;height:70px;" vertical-align="center">
+                                <textarea id="Observaciones" class="" style="width:85%;height:70px;" vertical-align="center">
                                 </textarea> 
                                      
-                            </td>
+                            </td
                                 
                         </table>   
                         
@@ -121,7 +114,9 @@
                      </div>
                     <br>
                     <br>
-                    <button id="buttonEnviar" onclick="guardar()" class="k-primary" style="width: 99%;height: 40px; vertical-align: middle;">Guardar </button><br>
+                    <button id="buttonEnviar" onclick="" class="k-primary" style="width: 48%;height: 40px; vertical-align: middle;">Aceptar </button>
+                    <button id="buttonEnviar" onclick="" class="k-primary" style="width: 48%;height: 40px; vertical-align: middle;">Rechazar </button>
+                    <br>
    
             </div>
                  
