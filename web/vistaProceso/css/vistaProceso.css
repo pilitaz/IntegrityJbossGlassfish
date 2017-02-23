@@ -18,7 +18,7 @@ html.k-material .demo-section.k-content {
 }
 
 #agglomerations {
-    position: relative;
+    position: absolute;
     width: 1312px;
     height: 762px;
     margin: 0 auto;
@@ -76,5 +76,5 @@ html.k-material .demo-section.k-content {
 }
 #vistaProceso{
     overflow-y: auto;
-    overflow-x: auto;
+     overflow-x: auto;
 }

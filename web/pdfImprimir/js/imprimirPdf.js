@@ -1,4 +1,4 @@
- function getPDF(selector) {debugger
+ function getPDF(selector) {
       $("#pag").removeClass("fondo");
         kendo.drawing.drawDOM($(selector),{ forcePageBreak: ".page-break" }).then(function(group){
           kendo.drawing.pdf.saveAs(group, "Quantum.pdf");
@@ -32,7 +32,7 @@
     document.getElementById("Container2").append(cln);
     
     }
-    function llenar(e){debugger
+    function llenar(e){
     var i,j=0;
     var nombre =e.dscertret.certret[0].ter_raz;
     var nit =e.dscertret.certret[0].tnit;
@@ -95,7 +95,7 @@
 
    
 }
-   function evaluar(e){debugger
+   function evaluar(e){
    var pos=0;
    if (e.dscertret.certret.length>1){
    
@@ -226,14 +226,14 @@ function servicio(){
             url: urlservicio,
             dataType: "json",        
             contentType: "application/json;",
-            success: function (resp) {debugger
+            success: function (resp) {
                 if((resp.dscertret.eeEstados[0].Estado)=="OK")
                 {
                  var i=0;
                     for (i = 0; i< resp.dscertret.certret.length; i++){
                         
                          var nombre = resp.dscertret.certret[i].ter_raz;
-                         var rest=nombre.replace("\u008d\u0081", "ñ").replace("æ","Ñ");                        
+                         var rest=nombre.replace("\u008d\u0081", "ñ").replace("æ","Ñ").replace("Ã‘","Ñ");                        
                          resp.dscertret.certret[i].ter_raz=rest;
                     }
                     
