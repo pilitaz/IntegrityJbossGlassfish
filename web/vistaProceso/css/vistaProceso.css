@@ -1,0 +1,76 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 22/02/2017, 04:34:33 PM
+    Author     : jenny
+*/
+
+.demo-section.k-content,
+html.k-material .demo-section.k-content {
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+    
+}
+
+#agglomerations {
+    position: relative;
+    width: 1312px;
+    height: 762px;
+    margin: 0 auto;
+    background: url('../images/vacaciones.jpeg') no-repeat 0 0;
+}
+
+#agglomerations a {
+    position: absolute;
+    display: block;
+    border: 0;
+    transition:  box-shadow .3s;
+}
+
+#inicio { top: 107px; left: 95px; width: 36px; height: 36px; border-radius: 30px;}
+#consultarVacaciones { top: 87px; left: 187px; width: 100px; height: 80px; border-radius: 10px;}
+#solicitarVacaciones { top: 87px; left: 346px; width: 100px; height: 80px; border-radius: 10px;}
+#verificarSolicitud { top: 87px; left: 510px; width: 100px; height: 80px; border-radius: 10px;}
+#revisarSolicitud { top: 345px; left: 680px; width: 100px; height: 80px; border-radius: 10px;}
+#notificarRechazo { top: 287px; left: 933px; width: 100px; height: 80px; border-radius: 10px;}
+#solicitudRechazada { top: 310px; left: 1090px; width: 36px; height: 36px; border-radius: 30px;}
+#notificarAprobacion { top: 397px; left: 933px; width: 100px; height: 80px; border-radius: 10px;}
+#solicitudAprobada { top: 420px; left: 1090px; width: 36px; height: 36px; border-radius: 30px;}
+#reasignarSolicitud { top: 591px; left: 683px; width: 100px; height: 80px; border-radius: 10px;}
+#solicitudReasignada { top: 615px; left: 840px; width: 36px; height: 36px; border-radius: 30px;}
+#aprueba { top: 365px; left: 838px; width: 36px; height: 36px; border-radius: 30px;}
+
+
+
+#inicio:hover,
+#consultarVacaciones:hover,
+#solicitarVacaciones,
+#verificarSolicitud,
+#revisarSolicitud,
+#notificarRechazo,
+#solicitudRechazada,
+#notificarAprobacion,
+#solicitudAprobada,
+#reasignarSolicitud,
+#solicitudReasignada,
+#aprueba{ z-index: 10; }
+
+.k-animation-container{
+    background-color: #CF0021
+}
+
+.k-widget.k-tooltip{
+    background-color: #CF0021
+}
+
+.k-callout-s{
+    border-top-color: #CF0021;
+}
+.k-callout-n {
+    border-bottom-color: #CF0021;
+}
