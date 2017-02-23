@@ -755,3 +755,110 @@ function cudReasignaTarea() {
     };
     
 };
+//---------------------------------------------------------------------------
+function SirApruevaVacaciones() {
+    var urlSir = ipServicios + baseUsrBpm +"ConsultaDataslotsVacaciones";
+    var json = {  
+   "dsSolicitudVacaciones":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+    "SIRSolicitudVacaciones":[  
+         {  
+            "picprocid":"",
+            "pictaskname":""
+         }
+      ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+//---------------------------------------------------------------------------
+function CudApruevaVacaciones() {
+    var urlSir = ipServicios + baseUsrBpm +"ActualizaCompletaVacaciones";
+    var json = {  
+   "dsSolicitudVacaciones":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+    "SIRSolicitudVacaciones":[  
+         {  
+            "picprocid":"",
+            "pictaskname":""
+         }
+      ],
+	"eeSolicitudVacaciones": [
+		{
+		"Id_empleado": "jsandrea_800001541",
+		"email_empleado": "email@mail.com",
+		"fecha_ult_vac": "2014-09-22",
+		"fecha_Ingreso": null,
+		"Pago_anticipado": true,
+		"observaciones_jefe": "",
+		"dias_ant_solicitud": 0,
+		"estado_aprocbacion": true,
+		"dias_tiempo": 4,
+		"fecha_ini_vacaciones": "2017-02-02",
+		"dias_dinero": 4,
+		"jefe_inmediato": "aduarte_800001541",
+		"dias_disponibles": 30,
+		"dias_anticipados": 20,
+		"fecha_solictud": "2017-01-10",
+		"tiempo_rta_solicitud": 0,
+		"Jefe_Reasignado": "",
+		"observaciones_empleado": "asdasdasd",
+		"tarea_reasignada": false,
+		"tiempo_espera_segundos": 0,
+		"tiempo_reasignar_segundos": 0
+	}
+	]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};

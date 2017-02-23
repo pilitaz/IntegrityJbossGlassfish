@@ -28,7 +28,7 @@
         <link href="../../../css/cssSpriteIntegrity.css" rel="stylesheet" type="text/css"/>
         <link href="../css/fomularios.css" rel="stylesheet" type="text/css"/>
         <script src="../../../scripts/LibreriaIntegrity.js" type="text/javascript"></script>
-        
+        <script src="../js/Revisar_Solicitud.js" type="text/javascript"></script>
     </head>
     <body> 
         <div id="window">
@@ -53,6 +53,8 @@
                             <td style="width: 50%;">
                                 <h2 id = "subtitulo2" class="subTituloform">Usuario: </h2>                         
                                 <p id="usuario"></p>
+                                <h2 id = "subtitulo2" class="subTituloform">Email: </h2>                         
+                                <p id="email"></p>                               
                                 <h1 id = "subtitulo2" class="subTituloform">Fecha de la solicitud: </h1>
                                 <p id="fecha"></p>
                                 <h2 id = "subtitulo2" class="subTituloform">Total días habiles pendientes:</h2>                         
@@ -60,9 +62,9 @@
                                 <h2 id = "subtitulo2" class="subTituloform">Fecha de inicio de vacaciones: </h2>                         
                                 <p id="corte"></p>
                                 <h2 id = "subtitulo2" class="subTituloform">Total dias a pedir: </h2>                         
-                                <p id="dias"></p>
+                                <p id="diasPedir"></p>
                                 <h2 id = "subtitulo2" class="subTituloform">Total dias en valor: </h2>                         
-                                <p id="dias"></p>
+                                <p id="diasValor"></p>
                             </td>
                             <td style="width: 50px;">
                                
@@ -97,8 +99,8 @@
                         <table>
                              <div class="sidenavInf"></div>
                             
-                                <h2 id = "subtitulo2" class="subTituloform">Observaciones: </h2>                                                       
-                                <textarea id="Observaciones" class="" style="width:85%;height:70px;" vertical-align="center">
+                                <h2 id = "subtitulo2" class="subTituloform">Observaciones : </h2>                                                       
+                                <textarea id="ObservacionesJefe" class="" style="width:85%;height:70px;" vertical-align="center">
                                 </textarea> 
                                      
                             </td
@@ -114,8 +116,8 @@
                      </div>
                     <br>
                     <br>
-                    <button id="buttonEnviar" onclick="" class="k-primary" style="width: 48%;height: 40px; vertical-align: middle;">Aceptar </button>
-                    <button id="buttonEnviar" onclick="" class="k-primary" style="width: 48%;height: 40px; vertical-align: middle;">Rechazar </button>
+                    <button id="buttonEnviar" onclick="aprovarVacaciones()" class="k-primary" style="width: 48%;height: 40px; vertical-align: middle;">Aceptar </button>
+                    <button id="buttonEnviar" onclick="rechazarVacaciones()" class="k-primary" style="width: 48%;height: 40px; vertical-align: middle;">Rechazar </button>
                     <br>
    
             </div>

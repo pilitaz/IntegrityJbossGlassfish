@@ -288,8 +288,9 @@ function instancias(e){debugger
 function iniciarTarea2(e){debugger  
     //     var x = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).id;
     //     var y = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).task__name;
+    var nombreTarea = $("#grid1").data("kendoGrid").dataItem($(e.target).closest("tr"));
+    sessionStorage.setItem("Aprueba_Proceso",JSON.stringify(nombreTarea));  
     var nombreTarea = $("#grid1").data("kendoGrid").dataItem($(e.target).closest("tr")).task__name;
-
     $("#formvacations").append("<div id='windowform'></div>");
     var myWindow1 = $("#windowform"),undo = $("#undo");
                 
