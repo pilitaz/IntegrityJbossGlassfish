@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Tercero</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../../css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="../../scripts/bootstrap.js" type="text/javascript"></script>
+        <script src="../../scripts/jquery-2.2.0.min.js" type="text/javascript"></script> 
+        <script src="../../scripts/jquery.min.js" type="text/javascript"></script>
+        <script src="../../scripts/jquery-ui.js" type="text/javascript"></script>
+        <link href="../../css/kendo.common.min.css" rel="stylesheet" type="text/css"/>        
+        <script src="../../scripts/kendo.all.min.js" type="text/javascript"></script>
+        <script src="../../scripts/LibreriaIntegrity.js" type="text/javascript"></script>
+        <script src="../../js/servicios.js" type="text/javascript"></script>
+        <script src="../js/vistaProceso.js" type="text/javascript"></script>        
+        <link href="../../css/kendo.metro.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../css/kendo.metro.mobile.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../css/integrity.css" rel="stylesheet" type="text/css"/>
+        <link href="../../css/cssSpriteIntegrity.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/vistaProceso.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>        
+            <div class="demo-section k-content wide">
+                <div id="agglomerations">
+                    <a href="#" title='Se crea una instancia del proceso "Solicitud de Vacaciones" cuando un empleado desea realizar el trámite de su derecho a vacaciones ante la empresa.' id="inicio"></a>
+                    <a href="#" title='Se genera una tarea que permite al empleado consultar los días de vacaciones que tiene pendiente por disfrutar.<br>La consulta da a conocer sobre el empleado como mínimo la fecha de ingreso, la fecha del último corte, el total de días pendientes por disfrutar. Así, se crea el objeto de datos "Vacaciones".<br>El empleado completa la tarea indicando si continúa o no con su solicitud de vacaciones.' id="consultarVacaciones"></a>
+                    <a href="#" title='Se genera una tarea que permite al empleado formalizar su solicitud de vacaciones.<br>El empleado indica la fecha de inicio de vacaciones, el total de días hábiles a tomar y/o el total de días en valor, el nombre de su jefe inmediato. Así, se crea el objeto de datos "Solicitud".<br>El empleado completa la tarea confirmando los datos de su solicitud de vacaciones.' id="solicitarVacaciones"></a>
+                    <a href="#" title='Se realiza una verificación automática de los requisitos de la solicitud de acuerdo a lo estipulado por la empresa dentro de los lineamientos del Ministerio del Trabajo consignados en el Código Sustantivo del Trabajo (C.S.T.)' id="verificarSolicitud"></a>
+                    <a href="#" title='Se genera una tarea para que el Jefe inmediato del empleado evalúe y apruebe o rechace la solicitud.<br>Los datos de la solicitud están consignados en el objeto de datos "Solicitud".<br>El Jefe completa la tarea confirmando si "Aprueba" o "Rechaza" la Solicitud, en consecuencia el objeto de datos "Solicitud" es sujeto de la actualización de su estado ("Aprobada"/Rechazada"). En caso que la solicitud sea rechazada el Jefe debe dejar consignado el por qué a manera de comentarios/observaciones como parte de la información del objeto de datos "Solicitud".<br>' id="revisarSolicitud"></a>
+                    <a href="#" title='Se genera una tarea que de manera automática entrega al Empleado las observaciones/comentarios sobre el rechazo de su <b>Solicitud<b>.' id="notificarRechazo"></a>
+                    <a href="#" title='La instancia del proceso "Solicitud de Vacaciones" termina y como resultado del proceso se obtiene un objeto de datos "Solicitud" en estado "Rechazada".' id="solicitudRechazada"></a>
+                    <a href="#" title='Se genera una tarea que de manera automática comunica al Empleado que su Solicitud fue aprobada. Comentarios u Observaciones sobre esta decisión son opcionales. <br>Se completa la tarea tras generar la notificación. ' id="notificarAprobacion"></a>
+                    <a href="#" title='La instancia del proceso "Solicitud de Vacaciones" termina y como resultado del proceso se obtiene un objeto de datos "Solicitud" en estado "Aprobada".' id="solicitudAprobada"></a>
+                    <a href="#" title='Se genera una tarea para que la Gerente Administrativa y Financiera de la empresa evalúe porqué no se ha procesado la solicitud de vacaciones del empleado y tome una acción final y definitiva sobre el particular. En caso de algún evento no superable con el Jefe inmediato la Gerente Administrativa y Financiera será responsable de reasignar la Solicitud hacia otro recurso (Jefe) dentro de la empresa y velar por una pronta respuesta. Una vez reasignada la tarea "Revisar Solicitud" se completa la tarea.' id="reasignarSolicitud"></a>
+                    <a href="#" title='La instancia asociada al flujo de secuencia iniciado desde el evento intermedio "Tarea Atrasada" pasando por la tarea "Intervenir Solicitud" termina. Sin embargo, La instancia del proceso "Solicitud de Vacaciones" continúa a la espera de completar la tarea "Revisar Solicitud".' id="solicitudReasignada"></a>
+                    <a href="#" title='Se valida cuál fue la decisión del Jefe acerca de la Solicitud, ¿fue aprobada o rechazada?.' id="aprueba"></a>
+                </div>
+            </div>
+    </body>
+    
+</html>
