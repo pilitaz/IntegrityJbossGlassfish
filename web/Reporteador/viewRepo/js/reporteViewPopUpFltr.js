@@ -138,7 +138,7 @@ function clicBtnSaveFiltros() {
         });
         sendAjax(objAdd, "PUT");
     } catch (e) {
-        alertDialog("Function: clickCrearRepo Error: " + e.message);
+        alertDialogs("Function: clickCrearRepo Error: " + e.message);
     }
 }
 /**

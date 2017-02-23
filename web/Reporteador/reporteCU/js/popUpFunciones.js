@@ -49,7 +49,7 @@ var objFunc = [{
         cmp_fin_nom: "",
         cmp_fun_ope: "+",
         rpt_fun_pos: "",
-        id: 0,
+        id: 0
     }];
 
 function showFunExt() {
@@ -139,7 +139,7 @@ angular.module("KendoDemos", ["kendo.directives"])
                                 });
                                 return globalCmp;
                             } else {
-                                alertDialog(e[key1].eeEstados[0].Estado);
+                                alertDialogs(e[key1].eeEstados[0].Estado);
                             }
                         },
                         model: {

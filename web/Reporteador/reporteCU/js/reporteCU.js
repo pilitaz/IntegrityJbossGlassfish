@@ -116,7 +116,7 @@ function modClasesBootstrap(btnid) {
 
 $(document).ready(function () {
     document.getElementById("titulo").innerHTML = sessionStorage.getItem("nomRepo");
-    
+    debugger
 //    $('#' + "Reporte").hide();
     $('#' + "Campos").hide();
     $('#' + "Filtros").hide();

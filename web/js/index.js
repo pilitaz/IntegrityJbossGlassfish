@@ -44,19 +44,19 @@ $(document).ready(function () {
         window.location.assign(sessionStorage.getItem("url"));
     }
     $("#k-icon.k-i-arrow-s").className = "k-icon   k-i-hbars";
-    $( "#logoEmpresa" ).click(function() {
+    $("#logoEmpresa").click(function () {
 //        window.location = window.location.href+'?eraseCache=true';
         location.reload(true);
-      });
+    });
 });
 
-function habilitarOpciones(){
-    var opciones = JSON.parse(sessionStorage.getItem("opcionesCompañia"));    
-    for(var i=0; i<opciones.length; i++){
-        if(!opciones[i].opt_activa){
-            document.getElementById("tr"+opciones[i].cia_det_opcion).remove();        
+function habilitarOpciones() {
+    var opciones = JSON.parse(sessionStorage.getItem("opcionesCompañia"));
+    for (var i = 0; i < opciones.length; i++) {
+        if (!opciones[i].opt_activa) {
+            document.getElementById("tr" + opciones[i].cia_det_opcion).remove();
         }
-    }    
+    }
 }
 /**
  * funciona para ejecutar la funcion correlinux cada t milisegundos
@@ -113,17 +113,17 @@ function cambiarImagen(imgId, estiloTd) {
             var urlFrameNew = "http://" + ip + ":" + puerto + "/" + servicio;
 //            document.getElementById("idFrame").src = urlFrameNew;
             document.getElementById("idFrame").src = sessionStorage.getItem("url") + servicio + "/indexRepo/html/indexRepo.html";
-            document.getElementById("tdPerfil").style = "display:none"
+            document.getElementById("tdPerfil").style = "display:none";
         } else if (servicio === "procesos") {
             $('#divDerecho').width($(window).width());
             document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
             document.getElementById("idFrame").src = sessionStorage.getItem("url") + servicio + "/html/" + servicio + ".html";
-            document.getElementById("tdPerfil").style = "display:none"
+            document.getElementById("tdPerfil").style = "display:none";
         } else if (servicio !== "") {
             $('#divDerecho').width($(window).width());
             document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
             document.getElementById("idFrame").src = urlIFrame + servicio + "/Start.jsp";
-            document.getElementById("tdPerfil").style = "display:none"
+            document.getElementById("tdPerfil").style = "display:none";
         }
 
         cambiarFondoTD(estiloTd);
@@ -390,6 +390,16 @@ function abreFuncion(servicio) {
         sessionStorage.setItem("sesion", sessionStorage.getItem("picfiid"));
         servLinuxSOption(servicio);
         //document.getElementById("idFrame").src = urlIFrame + "IntegrityViejo/Start.jsp";        
+    } else if (servicio === "ReporteConsulta") {
+//        $('#divDerecho').width($(window).width());
+//        document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
+//            var urlFrameNew = "http://" + ip + ":" + puerto + "/" + servicio;
+//            document.getElementById("idFrame").src = urlFrameNew;
+        var arbol = $('#jstree2').jstree(true);
+        sessionStorage.setItem("idRepo", arbol._model.data[arbol.get_selected()].original.Parametro);
+        sessionStorage.setItem("nomRepo", arbol._model.data[arbol.get_selected()].original.text);
+        document.getElementById("idFrame").src = sessionStorage.getItem("url") + "Reporteador/viewRepo/html/viewRepo.html";
+        document.getElementById("tdPerfil").style = "display:none";
     } else if (regex.test(servicio)) {
         sessionStorage.setItem("servicio", servicio);
         document.getElementById("idFrame").src = sessionStorage.getItem("url") + servicio;
@@ -697,7 +707,7 @@ function mostrarCumple() {
     document.getElementById("idFrame").src = "birthdays.html";
 }
 function mostrarNotiCumple() {
-    
+
     $("#regalo").fadeIn("slow");
     var centered = $("#centeredNotification").kendoNotification({
         position: {
@@ -731,30 +741,30 @@ app.controller("firstControler", ["$scope", "$http", function ($scope, $http) {
         $scope.urlSir = $scope.objSir.getUrlSir();
         $scope.mapSir = $scope.objSir.getMapData();
         $scope.inputsir = $scope.objSir.getjson();
-        
+
         $scope.items = [];
         $scope.permitirIngreso = "";
         $scope.jsonResp = [];
-        $scope.key1= [];
-        
+        $scope.key1 = [];
+
         $http.post(ipServicios + baseServicio + "Getbirthdays", $scope.inputsir
                 ).success(function (resp, status, headers, config) {
-                    
-                    $scope.key1 = Object.keys(resp)[0];
-                    $scope.permitirIngreso = JSON.stringify(resp[$scope.key1].eeEstados[0].Estado);
-                    $scope.jsonResp = resp[$scope.key1];
-                    if($scope.permitirIngreso == '"OK"'){
-                        if($scope.jsonResp.ownbirthday[0].mybirthday){
-                            mostrarCumple();
-                        }else if($scope.jsonResp[$scope.mapSir]){
-                            mostrarNotiCumple();
-                            $scope.items = $scope.jsonResp[$scope.mapSir];
-                            document.getElementById("idFrame").src = "fondo.html";    
-                        }
-                    }else{
-                        document.getElementById("idFrame").src = "fondo.html";
-                        alertDialogs("Error al consumir el servicio Getbirthdays .\n" + $scope.permitirIngreso);
-                    }
+
+            $scope.key1 = Object.keys(resp)[0];
+            $scope.permitirIngreso = JSON.stringify(resp[$scope.key1].eeEstados[0].Estado);
+            $scope.jsonResp = resp[$scope.key1];
+            if ($scope.permitirIngreso == '"OK"') {
+                if ($scope.jsonResp.ownbirthday[0].mybirthday) {
+                    mostrarCumple();
+                } else if ($scope.jsonResp[$scope.mapSir]) {
+                    mostrarNotiCumple();
+                    $scope.items = $scope.jsonResp[$scope.mapSir];
+                    document.getElementById("idFrame").src = "fondo.html";
+                }
+            } else {
+                document.getElementById("idFrame").src = "fondo.html";
+                alertDialogs("Error al consumir el servicio Getbirthdays .\n" + $scope.permitirIngreso);
+            }
         }).error(function (error, status, headers, config) {
             document.getElementById("idFrame").src = "fondo.html";
             console.log(error);
@@ -763,12 +773,12 @@ app.controller("firstControler", ["$scope", "$http", function ($scope, $http) {
     }]);
 
 
-function limpiarfiltros(){    
+function limpiarfiltros() {
     sessionStorage.removeItem("jsonFiltroPedidos");
-    sessionStorage.removeItem("regPedidos");    
+    sessionStorage.removeItem("regPedidos");
 }
 
-function popUpSubirArchivo(){    
+function popUpSubirArchivo() {
     $("body").append("<div id='windowSubirArchivo'></div>");
     var myWindow = $("#windowSubirArchivo");
     var undo = $("#undo");
@@ -792,7 +802,7 @@ function popUpSubirArchivo(){
     }).data("kendoWindow").center().open();
 }
 
-function closePopUpSubirArchivo(msj){
-    alertDialogs(msj);    
-    $("#windowSubirArchivo").data("kendoWindow").close();       
+function closePopUpSubirArchivo(msj) {
+    alertDialogs(msj);
+    $("#windowSubirArchivo").data("kendoWindow").close();
 }

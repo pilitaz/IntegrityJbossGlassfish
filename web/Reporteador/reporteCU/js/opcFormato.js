@@ -60,7 +60,7 @@ function gridFormato(urlGrid, dataserv) {
                         return JSON.stringify(objRepo);
                     }
                 } catch (e) {
-                    alertDialog("Error al consumir el servicio gridFormato Error" + e.message);
+                    alertDialogs("Error al consumir el servicio gridFormato Error" + e.message);
                 }
             }
         },
@@ -72,7 +72,7 @@ function gridFormato(urlGrid, dataserv) {
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     return e[key1][mapData];
                 } else {
-                    alertDialog("Error" + e[key1].eeEstados[0].Estado);
+                    alertDialogs("Error" + e[key1].eeEstados[0].Estado);
                 }
             },
             model: {

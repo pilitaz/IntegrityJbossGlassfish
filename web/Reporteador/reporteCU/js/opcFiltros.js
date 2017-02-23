@@ -79,7 +79,7 @@ function gridFiltros(urlGrid, dataserv) {
                         return JSON.stringify(objRepo);
                     }
                 } catch (e) {
-                    alertDialog("Function: gridFiltros Error" + e.message);
+                    alertDialogs("Function: gridFiltros Error" + e.message);
 
                 }
             }
@@ -96,7 +96,7 @@ function gridFiltros(urlGrid, dataserv) {
                         });
                     return filtrosGrid;
                 } else {
-                    alertDialog("Error al consumir el serviocio gridFiltros" + e[key1].eeEstados[0].Estado);
+                    alertDialogs("Error al consumir el serviocio gridFiltros" + e[key1].eeEstados[0].Estado);
                 }
             },
             model: {
@@ -182,7 +182,7 @@ function PopUpFiltro(e) {
 //        }).data("kendoWindow").center().open();
 
     } else {
-        alertDialog("Function: PopUp Error" + "el campo no es filtrable");
+        alertDialogs("Function: PopUp Error" + "el campo no es filtrable");
     }
 }
 }
@@ -292,7 +292,7 @@ function reloadGridFltr() {
  * @returns {undefined}
  */
 function errorPopUp(message){
-    alertDialog(message);
+    alertDialogs(message);
     reloadGridFltr();
     
 }

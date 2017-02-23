@@ -59,7 +59,7 @@ function grid() {
                         return JSON.stringify(objRepoD);
                     }
                 } catch (e) {
-                    alertDialog("Error en el servicio" + e.message);
+                    alertDialogs("Error en el servicio" + e.message);
                 }
             }
         },
@@ -70,8 +70,10 @@ function grid() {
                 var key1 = Object.keys(e)[0];
                 if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
                     return e[key1][mapDataRepo];
+                } else if ((e[key1].eeEstados[0].Estado === "Sin Informacion en la tabla")) {
+                    alertDialogs("Usted no tiene Reportes Disponibles");
                 } else {
-                    alertDialog("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                    alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
                 }
             },
             model: {
@@ -201,7 +203,7 @@ function ClickPlay(e) {
     sessionStorage.setItem("idRepo", idRepo);
     sessionStorage.setItem("nomRepo", nomRepo);
     window.location.assign(sessionStorage.getItem("url") + "Reporteador/viewRepo/html/viewRepo.html");
-    
+
 }
 /**
  * Eventcliclick de la imagen play
@@ -238,19 +240,65 @@ function ClickCreate() {
     mostrarCustomPopUp();
 }
 function multiSelectCompar() {
-    $("#customers").removeClass();
-    $("#customers").kendoMultiSelect({
-        dataTextField: "ContactName",
-                        dataValueField: "CustomerID",
-                        dataSource: {
-                            transport: {
-                                read: {
-                                    dataType: "jsonp",
-                                    url: "https://demos.telerik.com/kendo-ui/service/Customers",
-                                }
+    var obj = new SirUsuariosxRol();
+    var inputsir = obj.getjson();
+    var urlSir = obj.getUrlSir();
+    var mapSir = "ee_user2";
+    
+    $("#usuario").removeClass();
+    $("#usuario").kendoMultiSelect({
+        dataTextField: "euser__Name",
+        dataValueField: "euserid",
+        dataSource: {
+            transport: {
+                read: {
+                    url: urlSir,
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json'
+                },
+                batch: false,
+                parameterMap: function (options, operation) {
+                    try {
+                        if (operation === 'read') {
+                            return JSON.stringify(inputsir);
+                        } 
+                    } catch (e) {
+                        alertDialogs(e.message);
+                    }
+                }
+            },
+            schema: {
+                type: "json",
+                data: function (e) {
+                    var key1 = Object.keys(e)[0];
+                    if (e[key1].eeEstados[0].Estado === "OK") {
+                        if (e[key1][mapSir]) {
+                            for (var i = 0; i < e[key1][mapSir].length; i++) {
+                                e[key1][mapSir][i].id = i;
                             }
-                        },
-                        height: 400
+                        } else {
+                            grilla();
+                        }
+
+                        return e[key1][mapSir];
+                    } else {
+                        alertDialogs(e[key1].eeEstados[0].Estado);
+                    }
+                },
+                model: {
+                    id: "euserid",
+                    fields: {
+                        euserid: {validation: {required: true}, type: 'string'},
+                        euser__Name: {validation: {required: true}, type: 'string'}
+                    }
+                }
+            },
+            error: function (e) {
+                alertDialogs(e.errorThrown);
+            }
+        },
+        height: 400
     });
 }
 

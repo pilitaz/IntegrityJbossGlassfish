@@ -96,7 +96,7 @@ function clicBtnSaveFiltrosV2() {
         });
         sendAjaxFltr(objAdd, "POST");//funccion esta en la primera version de filtros
     } catch (e) {
-        alertDialog("Function: clickCrearRepo Error: " + e.message);
+        alertDialogs("Function: clickCrearRepo Error: " + e.message);
     }
 }
 

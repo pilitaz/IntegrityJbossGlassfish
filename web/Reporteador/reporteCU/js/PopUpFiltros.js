@@ -198,7 +198,7 @@ function crearComboCmp(id) {
                     });
                     return globalCmp;
                 } else {
-                    alertDialog(e[key1].eeEstados[0].Estado);
+                    alertDialogs(e[key1].eeEstados[0].Estado);
                 }
             },
             model: {
@@ -299,7 +299,7 @@ function clicBtnSaveFiltros() {
         });
         sendAjaxFltr(objAdd, "POST");
     } catch (e) {
-        alertDialog("Function: clickCrearRepo Error: " + e.message);
+        alertDialogs("Function: clickCrearRepo Error: " + e.message);
     }
 }
 /**
