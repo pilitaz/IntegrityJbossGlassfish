@@ -233,8 +233,12 @@ function servicio(){
                     for (i = 0; i< resp.dscertret.certret.length; i++){
                         
                          var nombre = resp.dscertret.certret[i].ter_raz;
-                         var rest=nombre.replace("\u008d\u0081", "ñ").replace("æ","Ñ").replace("Ã‘","Ñ");                        
+                         var direccion = resp.dscertret.certret[i].ter_dir;
+                         var direccion1=direccion.replace("\u008d\u0081", "ñ").replace("æ","Ñ").replace("Ã‘","Ñ").replace("Ã‘","Ñ") ;
+                         var rest=nombre.replace("\u008d\u0081", "ñ").replace("æ","Ñ").replace("Ã‘","Ñ").replace("Ã‘","Ñ") ;                        
                          resp.dscertret.certret[i].ter_raz=rest;
+                         resp.dscertret.certret[i].ter_dir=direccion1;
+                         
                     }
                     
                  
