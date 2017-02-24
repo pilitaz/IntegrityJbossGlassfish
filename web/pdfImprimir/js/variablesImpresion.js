@@ -1,7 +1,7 @@
 
 //-------------------------------------------------------------------------
 function sirImpresion() {
-    var urlSir =  "http://190.144.16.114:8810/rest/Contab/SIRImprcertretECU";
+    var urlSir = ipServicios + baseContabilidad + "SIRImprcertretECU";
     var json ={  
    "dscertret":{  
       "eeDatos":[  

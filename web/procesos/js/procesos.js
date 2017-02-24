@@ -574,6 +574,13 @@ function changImgFunc1(results) {
     
     }  
 }
+function terminarVacaciones(){debugger
+    $("#windowform").data("kendoWindow").close();   
+    alertDialogs("Se ha terminado el proceso");
+    $('#grid1').data('kendoGrid').refresh();                                             
+    $('#grid1').data('kendoGrid').dataSource.read();
+    $('#grid1').data('kendoGrid').refresh(); 
+}
 function cerrar(){debugger
     $("#windowform").data("kendoWindow").close();   
     alertDialogs("Se ha iniciado el proceso correctamente");
