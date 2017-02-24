@@ -29,17 +29,17 @@ function onloadPopUpFunciones() {
     $('#imgOpc').removeClass('re_compon').addClass('re_funcion');
     $("#popUpFunciones").show();
     var scope = angular.element(document.getElementById("customPopUp")).scope();
-        scope.$apply(function () {
-            scope.reloadDatas([{
-                    cmp_fin_nom: "",
-                    cmp_fun_ope: "+",
-                    rpt_fun_pos: "",
-                    id: 0
-                }]);
-        });
-        scope.$apply(function () {
-            scope.reloadDataSource();
-        });
+    scope.$apply(function () {
+        scope.reloadDatas([{
+                cmp_fin_nom: "",
+                cmp_fun_ope: "+",
+                rpt_fun_pos: "",
+                id: 0
+            }]);
+    });
+    scope.$apply(function () {
+        scope.reloadDataSource();
+    });
     showFunExt();
 
 }
@@ -137,6 +137,15 @@ angular.module("KendoDemos", ["kendo.directives"])
                                 globalCmp = globalCmp.filter(function (obj) {
                                     return obj.rpt_cmp_vis !== sessionStorage.getItem("nomFun");
                                 });
+                                globalCmp = globalCmp.filter(function (obj) {
+                                    return obj.cmp_td !== "character";
+                                });
+                                globalCmp = globalCmp.filter(function (obj) {
+                                    return obj.cmp_td !== "logical";
+                                });
+//                                globalCmp = globalCmp.filter(function (obj) {
+//                                    return obj.cmp_td !== sessionStorage.getItem("nomFun");
+//                                });
                                 return globalCmp;
                             } else {
                                 alertDialogs(e[key1].eeEstados[0].Estado);
@@ -204,9 +213,46 @@ function saveElemCUFun() {
         cmpVal2 = $("#cmpVal2").val();
         if (sessionStorage.getItem("idFun") === "10001") {
             blokWin();
-            var inputCmpFun = getinputRestCmpCud();
-            inputCmpFun.dsSICUDRep_rpt.eerep_rpt_cmp[0].rpt_cmp_vis = $("#nomFun").val();
-            inputCmpFun.dsSICUDRep_rpt.eerep_rpt_cmp[0].rpt_cmp_fun = true;
+            var inputCmpFun = {
+                "dsSICUDRep_rpt": {
+                    "eeDatos": [
+                        {
+                            "picusrcod": user,
+                            "picfiid": fiid
+                        }
+                    ],
+                    "eerep_rpt_cmp": [
+                        {
+                            "anx_cmp_id": "",
+                            "anx_cmp_lkp": false,
+                            "anx_cmp_vsb": true,
+                            "anx_nom": "",
+                            "cmp_bloq": false,
+                            "cmp_brk": false,
+                            "cmp_dsc": "",
+                            "cmp_id": "",
+                            "cmp_inquery": "",
+                            "cmp_nom": "",
+                            "cmp_ssm": false,
+                            "cmp_sum": false,
+                            "cmp_td": "",
+                            "rep_anx_cmp_idc": false,
+                            "rpt_cmp_con": false,
+                            "rpt_cmp_fil": true,
+                            "rpt_cmp_gru": true,
+                            "rpt_cmp_fun": true,
+                            "rpt_cmp_pos": 1,
+                            "rpt_cmp_pro": false,
+                            "rpt_cmp_sum": false,
+                            "rpt_cmp_vis": $("#nomFun").val(),
+                            "rpt_id": idRepo,
+                            "transf": ""
+                        }
+                    ]
+                }
+            };
+//            inputCmpFun.dsSICUDRep_rpt.eerep_rpt_cmp[0].rpt_cmp_vis = $("#nomFun").val();
+//            inputCmpFun.dsSICUDRep_rpt.eerep_rpt_cmp[0].rpt_cmp_fun = true;
             sendAjaxAddCmpFun(inputCmpFun.dsSICUDRep_rpt.eerep_rpt_cmp, "POST");
             inputFun1 = JSON.parse(JSON.stringify(inputFun));
             idnew = 1;

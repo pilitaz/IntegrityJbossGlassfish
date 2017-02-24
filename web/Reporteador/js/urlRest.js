@@ -483,8 +483,8 @@ function SirUsuariosxRol() {
    "dsee_user2":{  
       "eeDatos":[  
          {  
-             "picusrcod":"alex",
-//            "picusrcod":sessionStorage.getItem("usuario"),
+//             "picusrcod":"alex",
+            "picusrcod":sessionStorage.getItem("usuario").split("_")[0],
             "picfiid":sessionStorage.getItem("picfiid"),
             "local_ip":sessionStorage.getItem("ipPrivada"),
             "remote_ip":sessionStorage.getItem("ipPublica")

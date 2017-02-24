@@ -189,7 +189,7 @@ function ClickCompartir(e) {
 
 
     mostrarCustomPopUp1();
-    multiSelectCompar();
+    loadPopUpComparteRepo(e);
 }
 /**
  * 
@@ -239,68 +239,7 @@ function ClickCreate() {
 //    window.location.assign("html/reporteCU.html");
     mostrarCustomPopUp();
 }
-function multiSelectCompar() {
-    var obj = new SirUsuariosxRol();
-    var inputsir = obj.getjson();
-    var urlSir = obj.getUrlSir();
-    var mapSir = "ee_user2";
-    
-    $("#usuario").removeClass();
-    $("#usuario").kendoMultiSelect({
-        dataTextField: "euser__Name",
-        dataValueField: "euserid",
-        dataSource: {
-            transport: {
-                read: {
-                    url: urlSir,
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: 'json'
-                },
-                batch: false,
-                parameterMap: function (options, operation) {
-                    try {
-                        if (operation === 'read') {
-                            return JSON.stringify(inputsir);
-                        } 
-                    } catch (e) {
-                        alertDialogs(e.message);
-                    }
-                }
-            },
-            schema: {
-                type: "json",
-                data: function (e) {
-                    var key1 = Object.keys(e)[0];
-                    if (e[key1].eeEstados[0].Estado === "OK") {
-                        if (e[key1][mapSir]) {
-                            for (var i = 0; i < e[key1][mapSir].length; i++) {
-                                e[key1][mapSir][i].id = i;
-                            }
-                        } else {
-                            grilla();
-                        }
 
-                        return e[key1][mapSir];
-                    } else {
-                        alertDialogs(e[key1].eeEstados[0].Estado);
-                    }
-                },
-                model: {
-                    id: "euserid",
-                    fields: {
-                        euserid: {validation: {required: true}, type: 'string'},
-                        euser__Name: {validation: {required: true}, type: 'string'}
-                    }
-                }
-            },
-            error: function (e) {
-                alertDialogs(e.errorThrown);
-            }
-        },
-        height: 400
-    });
-}
 
 function mostrarCustomPopUp() {
     $("body").append("<div id='disable'></div>");

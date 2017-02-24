@@ -61,10 +61,7 @@ function onloadPopUpFltr(){
     if (sessionStorage.getItem("filtros") !== "undefined") {
         filtros = JSON.parse((sessionStorage.getItem("filtros")));
         objFltrAdd = JSON.parse(JSON.stringify(filtros));
-    } else {
-
     }
-    createStyleSheet();
 
     for (var i = 0; i < filtros.length; i++) {
         if (idCmpidFltr == filtros[i].rpt_cmp_pos) {

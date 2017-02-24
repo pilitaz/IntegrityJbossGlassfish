@@ -201,11 +201,11 @@ function llenFltrGrilla(results) {
         if (i % 2 === 0) {
             div = "divRowFiltro" + id;
             spanL = "spanLupa" + id;
-            spanBl = "spanCond" + id;
+//            spanBl = "spanCond" + id;
         } else {
             div = "altDivRowFiltro" + id;
             spanL = "altSpanLupa" + id;
-            spanBl = "spanCond" + id;
+//            spanBl = "spanCond" + id;
         }
         if (results[i].rpt_cmp_fil) {
             if (filtros) {
@@ -230,9 +230,9 @@ function llenFltrGrilla(results) {
                 }
             }
         }
-        if (results[i].rpt_cmp_con){
-            document.getElementById(spanBl).setAttribute("class", "k-sprite re_conon");
-        }
+//        if (results[i].rpt_cmp_con){
+//            document.getElementById(spanBl).setAttribute("class", "k-sprite re_conon");
+//        }
 
     }
 }
