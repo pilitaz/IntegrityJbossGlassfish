@@ -185,7 +185,7 @@ function ciudad(){
                             return JSON.stringify(json);
                         }	
                     } catch (e) {
-                        alertDialogs("Error en el servicio"+ e.message);
+                        alertDialogs( e.message);
                     }
                 },
             },
@@ -197,7 +197,7 @@ function ciudad(){
                     if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
                         return e[key1][mapData];
                     } else {
-                        alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                        alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -243,7 +243,7 @@ function claseTercero(){
                             return JSON.stringify(json);
                         }	
                     } catch (e) {
-                        alertDialogs("Error en el servicio"+ e.message);
+                        alertDialogs( e.message);
                     }
                 },
             },
@@ -255,7 +255,7 @@ function claseTercero(){
                     if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
                         return e[key1][mapData];
                     } else {
-                        alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                        alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -301,7 +301,7 @@ function regimen(){
                             return JSON.stringify(json);
                         }	
                     } catch (e) {
-                        alertDialogs("Error en el servicio"+ e.message);
+                        alertDialogs( e.message);
                     }
                 },
             },
@@ -313,7 +313,7 @@ function regimen(){
                     if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
                         return e[key1][mapData];
                     } else {
-                        alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                        alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -359,7 +359,7 @@ function actividadEconomica(){
                             return JSON.stringify(json);
                         }	
                     } catch (e) {
-                        alertDialogs("Error en el servicio"+ e.message);
+                        alertDialogs( e.message);
                     }
                 },
             },
@@ -371,7 +371,7 @@ function actividadEconomica(){
                     if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
                         return e[key1][mapData];
                     } else {
-                        alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                        alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -417,7 +417,7 @@ function regimenFiscal(){
                             return JSON.stringify(json);
                         }	
                     } catch (e) {
-                        alertDialogs("Error en el servicio"+ e.message);
+                        alertDialogs( e.message);
                     }
                 },
             },
@@ -429,7 +429,7 @@ function regimenFiscal(){
                     if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
                         return e[key1][mapData];
                     } else {
-                        alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                        alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -475,7 +475,7 @@ function paraisoFiscal(){
                             return JSON.stringify(json);
                         }	
                     } catch (e) {
-                        alertDialogs("Error en el servicio"+ e.message);
+                        alertDialogs( e.message);
                     }
                 },
             },
@@ -487,7 +487,7 @@ function paraisoFiscal(){
                     if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
                         return e[key1][mapData];
                     } else {
-                        alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                        alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -533,7 +533,7 @@ function pagoResidentes(){
                             return JSON.stringify(json);
                         }	
                     } catch (e) {
-                        alertDialogs("Error en el servicio"+ e.message);
+                        alertDialogs( e.message);
                     }
                 },
             },
@@ -545,7 +545,7 @@ function pagoResidentes(){
                     if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
                         return e[key1][mapData];
                     } else {
-                        alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                        alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -590,7 +590,7 @@ function tipoDocumentoIdentificacion(){
                             return JSON.stringify(json);
                         }	
                     } catch (e) {
-                        alertDialogs("Error en el servicio"+ e.message);
+                        alertDialogs( e.message);
                     }
                 },
             },
@@ -602,7 +602,7 @@ function tipoDocumentoIdentificacion(){
                     if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
                         return e[key1][mapData];
                     } else {
-                        alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                        alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -648,7 +648,7 @@ function pais(){
                             return JSON.stringify(json);
                         }	
                     } catch (e) {
-                        alertDialogs("Error en el servicio"+ e.message);
+                        alertDialogs(e.message);
                     }
                 },
             },
@@ -660,7 +660,7 @@ function pais(){
                     if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
                         return e[key1][mapData];
                     } else {
-                        alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                        alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -735,11 +735,16 @@ function guardarTercero(){
             if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
                 return e[key1][mapData];
             } else {
-                alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                alertDialogs(e[key1].eeEstados[0].Estado);
             }
         } 
-    }).done(function(e){                                          
-        parent.closePopUpCabecera();
+    }).done(function(e){
+        var key1 = Object.keys(e)[0];
+        if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {            
+            parent.closePopUpCabecera(e.dsSICUDsic_ter.eesic_ter["0"].ter__nit, "");
+        } else {
+            alertDialogs(e[key1].eeEstados[0].Estado);
+        }
     });
         
 }

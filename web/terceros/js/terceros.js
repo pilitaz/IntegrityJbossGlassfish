@@ -33,8 +33,7 @@ function grid(ternit, terraz) {
             },
             parameterMap: function (options, operation) {
                 try {
-                    if (operation === 'read') {
-                        
+                    if (operation === 'read') {                        
                         var key1 = Object.keys(json)[0];
                         var key2 = Object.keys(json[key1])[1];
                         json[key1][key2][0].picter_nit = ternit;
@@ -50,21 +49,20 @@ function grid(ternit, terraz) {
             type: "json",
             data: function (e) {                
                 var key1 = Object.keys(e)[0];
-                if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
-                    
+                if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {                    
                     return e[key1][mapData];
                 } else {
-                    alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                    alertDialogs("Error en el servicio " + e[key1].eeEstados[0].Estado);
                 }                
             },
             model: {
                 id: "ter__nit",
                 fields: {
-                    ter__nit: {type: 'number'},
+                    ter__nit: {type: 'string'},
                     ter__raz: {type: 'string'},
                     ter__dir: {type: 'string'},
                     ter__tel: {type: 'string'},                    
-                    ter__mail: {type: 'string'},                    
+                    mail_ter: {type: 'string'}                    
                 }
             }
         }
@@ -78,7 +76,7 @@ function grid(ternit, terraz) {
             {field: "ter__raz", title: "Razón social"},
             {field: "ter__dir", title: "Dirección"},
             {field: "ter__tel", title: "Teléfono"},
-            {field: "ter__mail", title: "Email"},
+            {field: "mail_ter", title: "Email principal"},
             {command:
                         [   
                             {name: "aprobar", text: " ", click: changeEst, template: "<a class='k-grid-aprobar' '><span class='k-sprite po_cerrar'></span></a>"},                            
@@ -127,7 +125,7 @@ function grid(ternit, terraz) {
         }else{
             alertDialogs("No es posible eliminar el tercero")
         }
-        delete tercero["ter__mail"];
+        //delete tercero["ter__nit"];
     }
 }
 
@@ -194,54 +192,13 @@ function popUpTerceroCU(titulo) {
     }).data("kendoWindow").center().open();
 }
 
-function closePopUpCabecera(){       
-    $("#windowTercero").data("kendoWindow").close();   
-}
-
-//function popUpAprobacionPedido() {
-//    
-//    sessionStorage.removeItem("regPedidos");
-//    
-//    var widthPopUp = $("body").width();
-//    widthPopUp = widthPopUp * (30 / 100);
-//    var heightPopUp = $("body").height();
-//    heightPopUp = heightPopUp * (30 / 100);
-//
-//    $("body").append("<div id='windowPedidoAproba'></div>");
-//    var myWindow = $("#windowPedidoAproba");
-//    var undo = $("#undo");
-//
-//    function onClosePopUpAprobacionPedido() {
-//        document.getElementById("windowPedidoAproba").remove();
-//        undo.fadeIn();
-//    }
-//
-//    myWindow.kendoWindow({
-//        width: widthPopUp,
-//        height: heightPopUp,
-//        title: "Cartera",
-//        content: sessionStorage.getItem("url") + "/pedidos/html/popUpAprobacionPedido.html",
-//        visible: false,
-//        modal: true,
-//        actions: [
-//            "Close"
-//        ],
-//        close: onClosePopUpAprobacionPedido
-//    }).data("kendoWindow").center().open();
-//}
-
-function closePopUpAprobacionPedido(){       
-    $("#windowPedidoAproba").data("kendoWindow").close();
-    location.reload();
-}
-
-function closePopUpAnularPedido(){       
-    $("#windowAnularPedido").data("kendoWindow").close();
-    location.reload();
+function closePopUpCabecera(ternit, terraz){    
+    $("#windowTercero").data("kendoWindow").close();
+    grid(ternit, terraz);
 }
 
 function changeEst(e){
-    var tercero = $("#gridTerceros").data("kendoGrid")._data[($(e.currentTarget).closest("tr")["0"].sectionRowIndex)]
+    var tercero = $("#gridTerceros").data("kendoGrid")._data[($(e.currentTarget).closest("tr")["0"].sectionRowIndex)]    
     delete tercero["ter__mail"];
     
     var  actualizar = new SICUDTercero();
