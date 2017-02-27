@@ -19,7 +19,7 @@ function clicBtnSaveCompartRepo() {
         for (var i = 0; i < multiSelect.value().length; i++) {
             var usuarios = multiSelect.value();
             usuarios = usuarios[i];
-            item.usr_cod = usuarios;
+            item.usr_cod = usuarios+"_"+sessionStorage.getItem("companyNIT");
             var obj = getinputRestRepoCud();
             obj.dsSICUDRep_rpt = {
                 "eerep_rpt": [

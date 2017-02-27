@@ -92,6 +92,7 @@ function mostrarGrid() {
         scrollable: true,
         sortable: true,
         filterable: true,
+        groupable: true,
         pageable: {
             input: true,
             numeric: false

@@ -59,7 +59,7 @@ function grid() {
                         return JSON.stringify(objRepoD);
                     }
                 } catch (e) {
-                    alertDialogs("Error en el servicio" + e.message);
+                    alertDialogs("Error en el servicio " + e.message);
                 }
             }
         },
@@ -70,10 +70,10 @@ function grid() {
                 var key1 = Object.keys(e)[0];
                 if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
                     return e[key1][mapDataRepo];
-                } else if ((e[key1].eeEstados[0].Estado === "Sin Informacion en la tabla")) {
+                } else if ((e[key1].eeEstados[0].Estado === "Sin Informacion en la tabla ''                                              ")) {
                     alertDialogs("Usted no tiene Reportes Disponibles");
                 } else {
-                    alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                    alertDialogs("Error en el servicio " + e[key1].eeEstados[0].Estado);
                 }
             },
             model: {
@@ -88,7 +88,7 @@ function grid() {
     $(window).trigger("resize");
     $("#grid").kendoGrid({
         dataSource: dataSource,
-        selectable: false,
+        selectable: "multiple",
         filterable: {
             mode: "row"
         },

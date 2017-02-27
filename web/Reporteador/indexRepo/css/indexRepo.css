@@ -81,7 +81,7 @@ li.k-button {
 }
 
 .k-grid tr.k-alt:not(.k-state-selected):hover {
-    background: #f1f1f1;
+    background: #F5F5F5;
 }
 .sidenavSup {
     border-style: solid;
@@ -177,3 +177,24 @@ li.k-button {
     -moz-opacity:0.7;
     opacity: 0.7;   
 }
+.k-grid table tr.k-state-selected
+{
+background: #ededed;
+color: #EF9F27;
+border-style: solid;
+
+    border-color: red;
+ }
+
+/*.k-grid table tr.k-state-selected
+{
+
+color: #EF9F27;
+
+ }
+ .k-grid table tr.k-state-selected:hover
+{
+background: #EF9F27;
+
+ }*/
+

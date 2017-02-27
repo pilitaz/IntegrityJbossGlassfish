@@ -9,6 +9,7 @@ var objFunAdd = "";
 var funciones = "";
 var idIniFun = -1;
 var cmp_ini = "";
+var selected = 0;
 var inputFun = [{
         "cmp_fin_nom": "",
         "cmp_fun_ope": "",
@@ -97,6 +98,8 @@ angular.module("KendoDemos", ["kendo.directives"])
             $scope.newRecord = [];
             $scope.clickItem = function (a) {
                 $scope.itemSele = parseInt(a.id);
+                selected = a.id;
+                alert(JSON.stringify(a));
             };
             $scope.addItem = function () {
                 $scope.records.push({cmp_fin_nom: "", cmp_fun_ope: "+", rpt_fun_pos: "", id: $scope.records.length});
@@ -279,8 +282,8 @@ function saveElemCUFun() {
         if ((idnew === 1)) {
             sendAjaxFun(inputFun1, "POST");
         } else {
+            inputFun1[0].rpt_fun_pos = selected + 1;
             sendAjaxFun(inputFun1, "PUT");
-            0
         }
 
     }
