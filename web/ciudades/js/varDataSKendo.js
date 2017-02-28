@@ -57,10 +57,10 @@ function sir() {
 
 ///////////////////////////////////////////////////////////////////////////////////////
 function cud() {
-    var url = ipServicios + baseComercial + "SICUDsic_ciu";
+    var url = ipServicios + baseContabilidad + "SICUDsic_ciu";
     var mapCud = "eesic_ciu";
     var dataInputCud = {
-        "dsSICUDgpr_pre": {
+        "dssic_ciu": {
             "eeDatos": [
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),

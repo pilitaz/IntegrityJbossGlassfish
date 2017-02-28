@@ -56,7 +56,7 @@ function grilla(obj) {
     /*hiden: true --- ocultar en grilla*/
     var columns = [
 //		btnDer,
-        {field: "ciu__cod", title: "Ciudad", width: "100%"},
+        {field: "ciu__cod", title: "Ciudad", editor:ciu__codList, width: "100%"},
         {field: "ciu__nom", title: "Nombre Ciudad", width: "100%"},
         {field: "ciu__area", title: "Codigo Area", width: "100%"},
         btnIzq
@@ -94,7 +94,6 @@ function grilla(obj) {
                         return JSON.stringify(inputsir);
                     } else if (operation === 'create') {
                         var key1 = Object.keys(inputCud)[0]
-                        options[est] = 99;
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
 
@@ -147,10 +146,8 @@ function grilla(obj) {
             if (!e.model.isNew()) {//caso en el que el popup es editar
 
                 e.container.kendoWindow("title", "Editar");
-                var buscarlabel = $("label").find("for");
-                Buscarlabel = buscarlabel.prevObject[0];
-                Buscarlabel.style.display = "none";
-                e.container.find("input[name=ciu__cod]")[0].style.display = "none";
+                var idBanco = $("#idciu__cod").data("kendoNumericTextBox");
+                idBanco.enable(false);
                 //e.container.find("input[name=ter__raz]")[0].readOnly="true"
 //                if (e.model[est] != 99) {
 //                    kendo.ui.progress($('.k-edit-form-container'), true);
@@ -205,7 +202,12 @@ function deleteRow(e) {
         $('#grid').data('kendoGrid').refresh();
     }
 }
-
+////////////////////////////////////////////////////////////////////////////////
+function  ciu__codList(container, options) {
+    $('<input id="idciu__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoNumericTextBox({
+       format: "{0:n0}"
+    });
+}
 
 ///-----------------------------------------------------------------------------
 
