@@ -150,6 +150,24 @@
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -8px -208px;
 }
+.po_detalleOff{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -858px -208px;
+	cursor:pointer
+}
+.po_detalleOff:hover{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -208px;
+	cursor:pointer
+}
+.po_detalleAct {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -208px;
+	cursor:pointer
+}
 
 /* ——  */
 
