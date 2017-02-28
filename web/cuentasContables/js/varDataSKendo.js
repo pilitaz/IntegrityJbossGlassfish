@@ -19,7 +19,10 @@ function sir() {
                     "local_ip": sessionStorage.getItem("ipPrivada"),
                     "remote_ip": sessionStorage.getItem("ipPublica")
                 }
-            ]
+            ],
+            "SIRcon_cta": [{
+             "picctacod":"*"
+            }]
         }
     };
     this.setUrlSir = function (newname) {

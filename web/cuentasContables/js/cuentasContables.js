@@ -325,7 +325,7 @@ function onChangeFltr() {
 }
 
 function cuentaPUC(container, options) {      
-    $('<input class="k-textbox" id = "cuentaPUC" required name="' + options.field + '"/>')
+    $('<input class="k-textbox" id = "cuentaPUC" required onBlur="verificarCuenta()"  name="' + options.field + '"/>')
             .appendTo(container);
 }
 
@@ -578,20 +578,50 @@ function conceptoTri(container, options) {
     });
 }
 
-function nivel(cuentaPUC){
-    
+function nivel(cuentaPUC){    
     var nivel;
     if(cuentaPUC.length===1){
         nivel = 1;
     }else if(cuentaPUC.length===2){
         nivel = 2;
     }else{
-        cuentaPUC = cuentaPUC.substr(2);
-        if(cuentaPUC.length%2==1){
-            alertDialogs("Cuenta contable invalida")
-        }else{
-            nivel = (cuentaPUC.length/2) + 2
-        }        
+        cuentaPUC = cuentaPUC.substr(2);                
         return nivel;
     }
+}
+
+function verificarCuenta(){
+    var msj = "";
+    var cuentaPUC = $("#cuentaPUC").val();
+    
+    if(cuentaPUC.length%2===1&&cuentaPUC.length!==1){
+        alertDialogs("Cuenta contable invalida");
+    }else{
+        var obj = new sir();
+        var objJson = obj.getdataInputSir();
+        var url = obj.getUrlSir();
+        var mapData = obj.getmapSir();
+        
+        var key1 = Object.keys(objJson)[0];
+        var key2 = Object.keys(objJson[key1])[1];
+        objJson[key1][key2][0].picctacod = cuentaPUC;
+        
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(objJson),
+            url: url,
+            dataType: "json",        
+            contentType: "application/json;",
+            success: function (e) {                
+                    
+            } 
+        }).done(function(e){                                          
+            var key1 = Object.keys(objJson)[0];               
+            if((e[key1].eeEstados["0"].Estado)==="OK" && e[key1][mapData].length===1)
+            {    
+                alertDialogs("La cuenta contable ya existe");
+            }
+        });
+    }    
+    
 }
