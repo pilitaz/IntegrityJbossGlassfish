@@ -741,7 +741,7 @@ function guardarTercero(){
     }).done(function(e){
         var key1 = Object.keys(e)[0];
         if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {            
-            parent.closePopUpCabecera(e.dsSICUDsic_ter.eesic_ter["0"].ter__nit, "");
+            parent.closePopUpCabecera("", "");
         } else {
             alertDialogs(e[key1].eeEstados[0].Estado);
         }

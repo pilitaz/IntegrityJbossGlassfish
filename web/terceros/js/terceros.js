@@ -16,7 +16,7 @@ $(document).ready(function () {
  * funcion para pintar la grilla
  * @returns {undefined}
  */
-function grid(ternit, terraz) { 
+function grid(ternit, terraz) {
     
     var obj = new sirConsultaCliente();
     var json = obj.getjson();
@@ -34,10 +34,16 @@ function grid(ternit, terraz) {
             parameterMap: function (options, operation) {
                 try {
                     if (operation === 'read') {                        
-                        var key1 = Object.keys(json)[0];
-                        var key2 = Object.keys(json[key1])[1];
-                        json[key1][key2][0].picter_nit = ternit;
-                        json[key1][key2][0].picter_raz = terraz;
+                        if(sessionStorage.getItem("jsonFiltroTercero") && ternit==="" && terraz===""){
+                            json = JSON.parse(sessionStorage.getItem("jsonFiltroTercero"))
+                        }else{
+                            var key1 = Object.keys(json)[0];
+                            var key2 = Object.keys(json[key1])[1];
+                            json[key1][key2][0].picter_nit = ternit;
+                            json[key1][key2][0].picter_raz = terraz;
+                            sessionStorage.setItem("jsonFiltroTercero",JSON.stringify(json));
+                        }
+                        
                         return JSON.stringify(json);
                     } 
                 } catch (e) {
@@ -168,31 +174,39 @@ function clickEditar(e) {
 
 }
 
-function popUpTerceroCU(titulo) {  
-    $("body").append("<div id='windowTercero'></div>");
-    var myWindow = $("#windowTercero");
-    var undo = $("#undo");
-
-    function onCloseWindowCabPedido() {
-        document.getElementById("windowTercero").remove();
-        undo.fadeIn();
+function popUpTerceroCU(titulo) { 
+    
+    if (bandAlert === 0){
+        bandAlert = bandAlert + 1;
+        
+        $("body").append("<div id='windowTercero'></div>");
+        var myWindow = $("#windowTercero");
+        var undo = $("#undo");
+        
+        function onCloseWindowCabPedido() {
+            document.getElementById("windowTercero").remove();
+            undo.fadeIn();
+        }
+        
+        myWindow.kendoWindow({
+            width: "90%",
+            height: 500,
+            title: titulo,
+            content: sessionStorage.getItem("url") + "/terceros/html/popupTercero.html",
+            visible: false,
+            modal: true,
+            actions: [
+                "Close"
+            ],
+            close: onCloseWindowCabPedido
+        }).data("kendoWindow").center().open();
     }
-
-    myWindow.kendoWindow({
-        width: "90%",
-        height: 500,
-        title: titulo,
-        content: sessionStorage.getItem("url") + "/terceros/html/popupTercero.html",
-        visible: false,
-        modal: true,
-        actions: [
-            "Close"
-        ],
-        close: onCloseWindowCabPedido
-    }).data("kendoWindow").center().open();
+    
+    
 }
 
-function closePopUpCabecera(ternit, terraz){    
+function closePopUpCabecera(ternit, terraz){
+    bandAlert = 0
     $("#windowTercero").data("kendoWindow").close();
     grid(ternit, terraz);
 }
