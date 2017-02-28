@@ -39,7 +39,8 @@ and open the template in the editor.
         </div>
         <script id="rowTemplate" type="text/x-kendo-tmpl">
             <tr data-uid="#: uid #">
-            
+            <td>
+            <a  class='k-grid-sucursal' title="Adicionar Sucursal"><span id = "sucursal#: id#" class = "k-sprite #try{if(havesuc){#po_detalleAct#}else {#po_detalleOff#} }catch(e){#po_detalleOff#}#" ></span></a>
             <td>
             <span class="title">#: bco__cod #</span>
             </td>
@@ -50,7 +51,7 @@ and open the template in the editor.
             <span class="title">#: ter__nit #</span>
             </td>
             <td>
-            <a  class='k-grid-sucursal' title="Adicionar Sucursal"><span id = "sucursal#: id#" class = "k-sprite #try{if(havesuc){#po_detalleAct#}else {#po_detalleOff#} }catch(e){#po_detalleOff#}#" ></span></a>
+            
             <a  class='k-grid-edit' title="Editar"><span id = "edit#: id#" class='k-sprite po_editon'></span></a>
             <a  class='k-grid-Delete' title="Borrar"><span id = "Delete#: id#" class='k-sprite po_cerrar'></span></a>
             </td>                
@@ -58,7 +59,9 @@ and open the template in the editor.
         </script>
         <script id="altRowTemplate" type="text/x-kendo-tmpl">
             <tr class="k-alt" data-uid="#: uid #">
-            
+            <td>
+            <a  class='k-grid-sucursal' title="Adicionar Sucursal"><span id = "sucursal#: id#" class = "k-sprite #try{if(havesuc){#po_detalleAct#}else {#po_detalleOff#} }catch(e){#po_detalleOff#}#" ></span></a>
+            </td>
             <td>
             <span class="title">#: bco__cod #</span>
             </td>
@@ -69,7 +72,6 @@ and open the template in the editor.
             <span class="title">#: ter__nit #</span>
             </td>
             <td>
-            <a  class='k-grid-sucursal' title="Adicionar Sucursal"><span id = "sucursal#: id#" class = "k-sprite #try{if(havesuc){#po_detalleAct#}else {#po_detalleOff#} }catch(e){#po_detalleOff#}#" ></span></a>
             <a  class='k-grid-edit' title="Editar"><span id = "edit#: id#" class='k-sprite po_editon'></span></a>
             <a  class='k-grid-Delete' title="Borrar"><span id = "Delete#: id#" class='k-sprite po_cerrar'></span></a>
             </td>
