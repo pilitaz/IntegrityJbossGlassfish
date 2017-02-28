@@ -52,14 +52,14 @@ function grilla(obj) {
     var btnC = true;
     var btnUD = [
         {name: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
-        {name: "Delete", click: deleteRow, template: "<a class='k-grid-Delete'><span class='k-sprite po_cerrar'></span></a>"},
+//        {name: "Delete", click: deleteRow, template: "<a class='k-grid-Delete'><span class='k-sprite po_cerrar'></span></a>"},
     ];
     var btnDetalle = [
         {id: "play", text: " ", template: "<a class=''><span class='k-sprite re_bullet2'></span></a>"},
     ];
     
     var btnDer = {};
-    var btnIzq = {command: btnUD, title: "&nbsp;", width: "100px"};
+    var btnIzq = {command: btnUD, title: "&nbsp;", width: "50px"};
 
     /*variables para poner los campos visibles tanto en popUp como en grilla, en caso de no colocarlos no apareceran en ni en popup ni engrilla */
     /*hidden: true --- ocultar en grilla*/
@@ -86,12 +86,12 @@ function grilla(obj) {
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
             },
-            destroy: {
-                url: urlCud,
-                type: "DELETE",
-                dataType: "json",
-                contentType: "application/json"
-            },
+//            destroy: {
+//                url: urlCud,
+//                type: "DELETE",
+//                dataType: "json",
+//                contentType: "application/json"
+//            },
             update: {
                 url: urlCud,
                 type: "PUT",
