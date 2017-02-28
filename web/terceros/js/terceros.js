@@ -201,8 +201,6 @@ function popUpTerceroCU(titulo) {
             close: onCloseWindowCabPedido
         }).data("kendoWindow").center().open();
     }
-    
-    
 }
 
 function closePopUpCabecera(ternit, terraz){
