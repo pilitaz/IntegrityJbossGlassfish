@@ -39,7 +39,9 @@ function grilla(obj) {
         cta__est: {type: 'string'},
         anf__cod: {type: 'number'},
         cta__tip: {type: 'number'},   
-        anx__cod: {type: 'number'}
+        anx__cod: {type: 'number'},
+        anxtribnom: {type: 'string'},
+        anxfinnom: {type: 'string'}
     }
 
     /*variable id es el id correspondiente a la tabla a cansultar*/
@@ -66,15 +68,15 @@ function grilla(obj) {
     var columns = [
         {field: "cta__cod", title: "P.U.C", width: "100%", editor: cuentaPUC},
         {field: "cta__nom", title: "Nombre", width: "100%", editor: nombre},
-        {field: "cta__mov", title: "Movimiento", width: "100%", editor: movimiento},
-        {field: "cta__est", title: "Estado", width: "100%", hidden: true, editor: estado},
-        {field: "anx__cod", title: "Anexo tributario", width: "100%", hidden: true, editor: anexoTributario},
+        {field: "cta__mov", title: "Movimiento", width: "100%", editor: movimiento, filterable: false},        
+        {field: "anx__cod", title: "Anexo tributario", width: "100%", editor: anexoTributario, filterable: false},
         {field: "cpt__cod", title: "Concepto tributario", width: "100%", hidden: true, editor: conceptoTri},
-        {field: "cta__cen", title: "Centro de costo", width: "100%", editor: centroCosto},
-        {field: "cta__snit", title: "Maneja NIT", width: "100%", editor: manejaNIT},
-        {field: "cta__pres", title: "Presupuesto", width: "100%", editor: presupuesto},        
-        {field: "anf__cod", title: "Anexo financiero", width: "100%", hidden: true, editor: anexofinanciero},
+        {field: "cta__cen", title: "Centro de costo", width: "100%", hidden: true, editor: centroCosto},
+        {field: "cta__snit", title: "Maneja NIT", width: "100%", hidden: true, editor: manejaNIT},
+        {field: "cta__pres", title: "Presupuesto", width: "100%", hidden: true, editor: presupuesto},        
+        {field: "anf__cod", title: "Anexo financiero", width: "100%", editor: anexofinanciero, filterable: false},
         {field: "cta__tip", title: "Tipo cuenta", width: "100%", hidden: true, editor: tipoCuenta},
+        {field: "cta__est", title: "Estado", width: "70px", filterable: false},
         btnIzq
     ];
 
@@ -128,6 +130,10 @@ function grilla(obj) {
                 }
             }
         },
+        sortable: {
+            mode: "single",
+            allowUnsort: false
+        },
         schema: {
             type: "json",
             data: function (e) {
@@ -158,17 +164,24 @@ function grilla(obj) {
         dataSource: dataSource,
         sortable: true,
         selectable: false,
+        filterable: {
+           mode: "row"
+        },
         columns: columns,
         editable: "popup",
         rowTemplate: kendo.template($("#rowTemplate").html()),
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
         edit: function (e) {
+            
+             e.container.find("label[for='cta__est']").hide();
+             e.container.find("input[name=cta__est]").hide();
 
             if (!e.model.isNew()) {//caso en el que el popup es editar                                
                 e.container.kendoWindow("title", "Editar");      
                 
-                $("#cuentaPUC")[0].disabled=true;                
-                $("#nombre")[0].disabled=true;
+                $("#cuentaPUC").prop("disabled", true).addClass("k-state-disabled");
+                $("#nombre").prop("disabled", true).addClass("k-state-disabled");
+                
                 
                 if(e.model.cta__mov === "false"){                    
                     var dropDownListCentroCosto= $("#centroCosto").data("kendoDropDownList"); 
@@ -365,22 +378,6 @@ function movimiento(container, options) {
     });
 }
 
-function estado(container, options) {    
-    var data = [
-        {text: "Activo", value: 0},
-        {text: "Inactivo", value: 1},
-    ];
-    
-    $('<input  id = "estado" required name="' + options.field + '"/>')
-            .appendTo(container)
-            .kendoDropDownList({
-        dataTextField: "text",
-        dataValueField: "value",
-        dataSource: data        
-    });
-}
-
-
 function manejaNIT(container, options) {    
     var data = [
         {text: "Si", value: "true"},
@@ -413,6 +410,7 @@ function presupuesto(container, options) {
 
 function tipoCuenta(container, options) {    
     var data = [
+        {text: "NO APLICA", value: 0},
         {text: "IVA", value: 1},
         {text: "Retención", value: 2},
         {text: "ReteICA", value: 3},
@@ -491,6 +489,36 @@ function anexoTributario(container, options) {
                 dataTextField: "anx__nom",
         dataValueField: "anx__cod",
         autoClose: true,
+        dataBound: function (e){
+            
+            if($("#anexoTributario").val()==="0"){
+                var dropDownListConceptoTributario= $("#conceptoTributario").data("kendoDropDownList"); 
+                dropDownListConceptoTributario.value("0");
+                dropDownListConceptoTributario.enable(false);
+                
+                var dropDownListTipoCuenta= $("#tipoCuenta").data("kendoDropDownList"); 
+                dropDownListTipoCuenta.value("0");
+                dropDownListTipoCuenta.enable(false);
+            }
+        },
+        change: function (e){
+            
+            if($("#anexoTributario").val()==="0"){
+                var dropDownListConceptoTributario= $("#conceptoTributario").data("kendoDropDownList"); 
+                dropDownListConceptoTributario.value("0");
+                dropDownListConceptoTributario.enable(false);
+                
+                var dropDownListTipoCuenta= $("#tipoCuenta").data("kendoDropDownList"); 
+                dropDownListTipoCuenta.val("0");
+                dropDownListTipoCuenta.enable(false);
+            }else{
+                var dropDownListConceptoTributario= $("#conceptoTributario").data("kendoDropDownList");                 
+                dropDownListConceptoTributario.enable(true);
+                
+                var dropDownListTipoCuenta= $("#tipoCuenta").data("kendoDropDownList"); 
+                dropDownListTipoCuenta.enable(true);
+            }
+        },
         template:'<div class="divElementDropDownList">#: data.anx__nom #</div>',  
         dataSource: {
             transport: {
