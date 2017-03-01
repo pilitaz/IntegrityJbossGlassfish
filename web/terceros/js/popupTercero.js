@@ -9,6 +9,8 @@ $(document).ready(function () {
     $("#buttonGuardar").kendoButton({
         //click: buscarPedidos
     });
+    
+    $("#ipNumeroDoc").prop("disabled", true).addClass("k-state-disabled");    
         
     var data = [
         {text: "Si", value: "true"},
@@ -578,7 +580,11 @@ function tipoDocumentoIdentificacion(){
         optionLabel: "Seleccione el tipo de documento",
         dataTextField: "cln__des",
         dataValueField: "ter__cln",
-        template:'<div class="divElementDropDownList">#: data.cln__des #</div>',        
+        template:'<div class="divElementDropDownList">#: data.cln__des #</div>', 
+        change: function(e){
+            $("#ipNumeroDoc").val(""); 
+            $("#ipNumeroDoc").prop("disabled", false).removeClass("k-state-disabled");
+        },
         dataSource: {
             transport: {
                 read: {
@@ -750,4 +756,19 @@ function guardarTercero(){
         }
     });
         
+}
+
+function cuentaDigitos(){
+    var ter__cln = $("#tipoDocumento").val();
+    var ter__nit = $("#ipNumeroDoc").val();    
+    ter__nit = ter__nit.replace(/^\s+|\s+$/g, "");
+    
+    if(ter__cln==="C" && ter__nit.length!==10){
+        alertDialogs("La cédula debe tener exactamente 10 dígitos")
+    }else if (ter__cln==="R" && !ter__nit.length!==13){
+        alertDialogs("El número de RUC debe tener exactamente 13 dígitos")
+    }else{
+        alertDialogs("Número de documento valido")
+    }
+    
 }
