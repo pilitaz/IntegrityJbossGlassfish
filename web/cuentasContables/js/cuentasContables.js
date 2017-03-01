@@ -68,13 +68,13 @@ function grilla(obj) {
     var columns = [
         {field: "cta__cod", title: "P.U.C", width: "100%", editor: cuentaPUC},
         {field: "cta__nom", title: "Nombre", width: "100%", editor: nombre},
-        {field: "cta__mov", title: "Movimiento", width: "100%", editor: movimiento},        
-        {field: "anx__cod", title: "Anexo tributario", width: "100%", editor: anexoTributario},
+        {field: "cta__mov", title: "Movimiento", width: "100%", editor: movimiento, filterable: false},        
+        {field: "anx__cod", title: "Anexo tributario", width: "100%", editor: anexoTributario, filterable: false},
         {field: "cpt__cod", title: "Concepto tributario", width: "100%", hidden: true, editor: conceptoTri},
         {field: "cta__cen", title: "Centro de costo", width: "100%", hidden: true, editor: centroCosto},
         {field: "cta__snit", title: "Maneja NIT", width: "100%", hidden: true, editor: manejaNIT},
         {field: "cta__pres", title: "Presupuesto", width: "100%", hidden: true, editor: presupuesto},        
-        {field: "anf__cod", title: "Anexo financiero", width: "100%", editor: anexofinanciero},
+        {field: "anf__cod", title: "Anexo financiero", width: "100%", editor: anexofinanciero, filterable: false},
         {field: "cta__tip", title: "Tipo cuenta", width: "100%", hidden: true, editor: tipoCuenta},
         {field: "cta__est", title: "Estado", width: "70px", filterable: false},
         btnIzq
