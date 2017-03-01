@@ -476,3 +476,39 @@ function setmapDataRestRepoGridFomat(e) {
 
 }
 ///////////////////////////////
+
+function SirUsuariosxRol() {
+    var urlSir =  ipServicios + baseServicio + "SirUsuariosxRol";
+    var json ={  
+   "dsee_user2":{  
+      "eeDatos":[  
+         {  
+//             "picusrcod":"alex",
+            "picusrcod":sessionStorage.getItem("usuario").split("_")[0],
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ]     
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};

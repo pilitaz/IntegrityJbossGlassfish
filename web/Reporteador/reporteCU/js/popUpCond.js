@@ -2,6 +2,7 @@
 
 var globalCmp = {};//guarda todos los campos disponibles en el reporte 
 var globalCon = {};//guarda todos las condiciones disponibles en el reporte 
+var globalCmpSelect = {};//guarda el campo que selecciono para la condicion 
 var objConDel = [];
 var objConAdd = [];
 var objConEdit = [];
@@ -25,12 +26,14 @@ function onloadPopUpCond() {
     objConDel = [];
     objConAdd = [];
     objConEdit = [];
-   //var filtrosCampos = [];
+    //var filtrosCampos = [];
     conciones = "";
     idIniCon = -1;
     cmp_ini = "";
+    $("cmpValoCond1").val();
+    $("conOpeCond1").val();
+    $("cmpValCond1").val();
     sessionStorage.setItem("opcFl", "Con");
-    var obj = JSON.parse(sessionStorage.getItem("obj"));
     document.getElementById('tituloPopUp').innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + sessionStorage.getItem("cmpNom");
     $('#imgOpc').removeClass('re_compon').addClass('re_conon');
     $("#popUpCond").show();
@@ -84,11 +87,11 @@ function llenarComboCmp() {
                         globalCmp = e[key1][mapData];
                         globalCon = e[key1][mapDataCon];
                         globalCmp = globalCmp.filter(function (obj) {
-                            return obj.rpt_cmp_vis !== sessionStorage.getItem("nomCon");
+                            return obj.rpt_cmp_vis !== sessionStorage.getItem("cmpNom");
                         });
                         return globalCmp;
                     } else {
-                        alertDialog(e[key1].eeEstados[0].Estado);
+                        alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -98,9 +101,9 @@ function llenarComboCmp() {
                     }
                 }
             },
-        error: function (e) {
-                alertDialog(e.errorThrown);
-        }
+            error: function (e) {
+                alertDialogs(e.errorThrown);
+            }
         },
     }).data("kendoComboBox");
 
@@ -111,9 +114,10 @@ function llenarComboCmp() {
  * @returns {undefined}
  */
 function showConExt(e) {
+    $("#operaciones").empty();
     var obj = JSON.parse(sessionStorage.getItem("obj"));
     var idCon = obj.rpt_cmp_pos;
-    var comboCmpIni = $("#" + "cmpVal0").data("kendoComboBox");
+    var comboCmpIni = $("#" + "cmpValoCond1").data("kendoComboBox");
     var j = 0; // variable de bandera para buscar la primer ope de concion seleccionada
     if (globalCon) {
         for (var i = 0; i < globalCon.length; i++) {
@@ -128,18 +132,40 @@ function showConExt(e) {
                     var cmpVal0 = $("#" + "cmpValCond1").data("kendoComboBox");
                     conOpe0.value(globalCon[i].cmp_con_ope);
                     cmpVal0.value(globalCon[i].cmp_fin_nom);
-                }else{
+                } else {
                     creaConcion(globalCon[i].rpt_con_pos, i);
                 }
                 j++;
             }
+            /**
+             * condicion en caso de que sea una condicion nueva y en base de datos ya tenga varias conbdiciones
+             */
+            if (j === 0) {
+                $("#operaciones").empty();
+                creaCmpDefecto();
+                crearComboOpe("conOpeCond1");
+                crearComboCmp("cmpValCond1");
+                objConAdd.push("1");
+                var cmpValo0 = $("#" + "cmpValoCond1").data("kendoComboBox");
+                var conOpe0 = $("#" + "conOpeCond1").data("kendoComboBox");
+                var cmpVal0 = $("#" + "cmpValCond1").data("kendoComboBox");
+                cmpValo0.value("");
+                conOpe0.value(">");
+                cmpVal0.value("");
+            }
         }
-    }else{
+    } else {
         $("#operaciones").empty();
         creaCmpDefecto();
         crearComboOpe("conOpeCond1");
         crearComboCmp("cmpValCond1");
         objConAdd.push("1");
+        var cmpValo0 = $("#" + "cmpValoCond1").data("kendoComboBox");
+        var conOpe0 = $("#" + "conOpeCond1").data("kendoComboBox");
+        var cmpVal0 = $("#" + "cmpValCond1").data("kendoComboBox");
+        cmpValo0.value("");
+        conOpe0.value(">");
+        cmpVal0.value("");
     }
     creaCmpDefecto();
 }
@@ -210,7 +236,7 @@ function creaConcion(i, imas) {
  * @param {type} id
  * @returns {undefined}
  */
-function crearComboOpe(id) { 
+function crearComboOpe(id) {
     $("#" + id).kendoComboBox({
         dataTextField: "text",
         dataValueField: "value",
@@ -233,31 +259,31 @@ function crearComboOpe(id) {
  * @param {type} e
  * @returns {undefined}
  */
-function selectComboValIni(e) {
-    if (idIniCon !== -1) {
-        var dataItem1 = this.dataItem(e.item.index());
-
-        var id = globalCon[idIniCon].rpt_con_pos;
-        var inputCon1 = JSON.parse(JSON.stringify(inputCon));
-        var selected = $("#cmpValCond").data("kendoComboBox").dataSource._data[$("#cmpValCond").data("kendoComboBox").selectedIndex];
-        cmp_ini = dataItem1.anx_nom;
-        inputCon1[0].cmp_ini = dataItem1.anx_nom;
-        inputCon1[0].cmp_ini_nom = dataItem1.cmp_dsc;
-
-        var selected = $("#conOpeCond" + id).data("kendoComboBox").dataSource._data[$("#conOpeCond" + id).data("kendoComboBox").selectedIndex];
-        inputCon1[0].cmp_fin_nom = globalCon[idIniCon].cmp_fin_nom;
-        inputCon1[0].cmp_con_ope = globalCon[idIniCon].cmp_con_ope;
-        inputCon1[0].rpt_con_pos = globalCon[idIniCon].rpt_con_pos;
-        sendAjax(inputCon1, "PUT");
-    }
-}
+//function selectComboValIni(e) {
+//    if (idIniCon !== -1) {
+//        var dataItem1 = this.dataItem(e.item.index());
+//
+//        var id = globalCon[idIniCon].rpt_con_pos;
+//        var inputCon1 = JSON.parse(JSON.stringify(inputCon));
+//        var selected = $("#cmpValCond").data("kendoComboBox").dataSource._data[$("#cmpValCond").data("kendoComboBox").selectedIndex];
+//        cmp_ini = dataItem1.anx_nom;
+//        inputCon1[0].cmp_ini = dataItem1.anx_nom;
+//        inputCon1[0].cmp_ini_nom = dataItem1.cmp_dsc;
+//
+//        var selected = $("#conOpeCond" + id).data("kendoComboBox").dataSource._data[$("#conOpeCond" + id).data("kendoComboBox").selectedIndex];
+//        inputCon1[0].cmp_fin_nom = globalCon[idIniCon].cmp_fin_nom;
+//        inputCon1[0].cmp_con_ope = globalCon[idIniCon].cmp_con_ope;
+//        inputCon1[0].rpt_con_pos = globalCon[idIniCon].rpt_con_pos;
+//        sendAjax(inputCon1, "PUT");
+//    }
+//}
 function select(e) {
     var dataItem1 = this.dataItem(e.item.index());
     var numberPattern = /\d+/g;
     var id = e.sender.element[0].id;
     var id = id.match(numberPattern)[0];
     var inputCon1 = JSON.parse(JSON.stringify(inputCon));
-    if ((e.sender.element[0].id.indexOf("new") === -1)&&(objConAdd.indexOf(id)===-1 )&&(objConEdit.indexOf(id)===-1)){
+    if ((e.sender.element[0].id.indexOf("new") === -1) && (objConAdd.indexOf(id) === -1) && (objConEdit.indexOf(id) === -1)) {
         objConEdit.push("id");
     }
 //    if (e.sender.element[0].id === "conOpe1000000") {
@@ -279,10 +305,12 @@ function select(e) {
 
 function addConc() {
     var length = $("#operaciones").find('.col-sm-11 ').length + 1;
-    
+
     var numberPattern = /\d+/g;
-    var id = objConAdd[objConAdd.length-1];
-    length = parseInt(id.match(numberPattern)[0])+1;
+    var id = objConAdd[objConAdd.length - 1];
+    if (objConAdd.length !== 0) {
+        length = parseInt(id.match(numberPattern)[0]) + 1;
+    }
     objConAdd.push("new" + length);
     var e = "new" + length;
     $("#divCon1000000").remove();
@@ -312,7 +340,7 @@ function crearComboCmp(id) {
 //        close: saveElemCU,
         filter: "contains",
         select: select
-        
+
     });
 }
 
@@ -325,90 +353,98 @@ function saveElemCUCond() {
 //    var cmpVal = "";
 //    var iniconcmp = $("#Campos").find('.col-sm-12 .row')["0"].id.match(numberPattern)[0];
     if (($("#cmpValoCond1").val() !== "") && ($("#cmpValdef2").val() !== "")) {
-        var cmpVal =  $("#cmpValoCond1").data("kendoComboBox").dataSource._data[$("#cmpValoCond1").data("kendoComboBox").selectedIndex];
-        var inputCon1 = {};
-        if(objConDel.length>0){
+        var cmpVal = $("#cmpValoCond1").data("kendoComboBox").dataSource._data[$("#cmpValoCond1").data("kendoComboBox").selectedIndex];
+        var inputCon1 = [];
+        if (objConDel.length > 0) {
             for (var i = 0; i < objConDel.length; i++) {
-                var id = objConAdd[i];
-                var pos = "";
-                if(id.split("new")[0]==="1"){
-                    pos = id;
-                }else{
-                    pos = id.split("new")[1];
-                }
+//                if((i === 0)&&(i < objConDel.length)&&(1 === 1)){}
+//                var id = objConDel[i];
+                var pos = objConDel[i];
+//                if (id.split("new")[0] === "1") {
+//                    pos = id;
+//                } else {
+//                    pos = id.split("new")[1];
+//                }
                 var id = objConDel[i];
-                inputCon1[i] = {
-                        "cmp_con_ono": "",
-                        "cmp_con_ope": $("#conOpeCond" + id).data("kendoComboBox").value(),
-                        "cmp_fin_nom": $("#cmpValCond" + id).val(),
-                        "cmp_ini": cmpVal.anx_nom,
-                        "cmp_ini_nom": cmpVal.cmp_dsc,
-                        "rpt_cmp_pos": sessionStorage.getItem("idDato"),
-                        "rpt_con_pos": pos,
-                        "rpt_id": sessionStorage.getItem("idRepo")
-                    };
-    //            sendAjax(inputCon1, "POST");
+                inputCon1.push({
+                    "cmp_con_ono": "",
+                    "cmp_con_ope": "",
+                    "cmp_fin_nom": "",
+                    "cmp_ini": cmpVal.anx_nom,
+                    "cmp_ini_nom": cmpVal.cmp_dsc,
+                    "rpt_cmp_pos": sessionStorage.getItem("idDato"),
+                    "rpt_con_pos": pos,
+                    "rpt_id": sessionStorage.getItem("idRepo")
+                });
+//                            sendAjax(inputCon1, "POST");
             }
+            sendAjaxCond(inputCon1, "DELETE");
         }
-        
-        
-        if(objConAdd.length>0){
-            inputCon1 = {};
+
+
+        if (objConAdd.length > 0) {
+            inputCon1 = [];
             for (var i = 0; i < objConAdd.length; i++) {
                 var cmp_ini = "";
                 var id = objConAdd[i];
                 var pos = "";
-                if(id.split("new")[0]==="1"){
+                if (id.split("new")[0] === "1") {
                     pos = id;
-                }else{
+                } else {
                     pos = id.split("new")[1];
                 }
-                if(pos === "1"){
+                if ((pos === "1") && (i === 0)) {
                     cmp_ini = cmpVal.anx_nom;
+                    var obj = JSON.parse(sessionStorage.getItem("obj"));
+                    obj["rpt_cmp_con"] = true;
+                    sendAjax2([obj], "PUT");//paso el nodo codiciones del campo seleccionado a true
+                    i++;
                 }
-                inputCon1[i] = {
-                        "cmp_con_ono": "",
-                        "cmp_con_ope": $("#conOpeCond" + id).data("kendoComboBox").value(),
-                        "cmp_fin_nom": $("#cmpValCond" + id).val(),
-                        "cmp_ini": cmp_ini,
-                        "cmp_ini_nom": cmpVal.cmp_dsc,
-                        "rpt_cmp_pos": sessionStorage.getItem("idDato"),
-                        "rpt_con_pos": pos,
-                        "rpt_id": sessionStorage.getItem("idRepo")
-                    };
-                
+                inputCon1.push({
+                    "cmp_con_ono": "",
+                    "cmp_con_ope": $("#conOpeCond" + id).data("kendoComboBox").value(),
+                    "cmp_fin_nom": $("#cmpValCond" + id).val(),
+                    "cmp_ini": cmp_ini,
+                    "cmp_ini_nom": cmpVal.cmp_dsc,
+                    "rpt_cmp_pos": sessionStorage.getItem("idDato"),
+                    "rpt_con_pos": pos,
+                    "rpt_id": sessionStorage.getItem("idRepo")
+                });
+
             }
+            ;
             sendAjaxCond(inputCon1, "POST");
         }
-        if(objConEdit.length>0){
-            inputCon1 = {};
+        if (objConEdit.length > 0) {
+            inputCon1 = [];
             for (var i = 0; i < objConEdit.length; i++) {
                 var id = objConAdd[i];
                 var cmp_ini = "";
                 var pos = "";
-                if(id.split("new")[0]==="1"){
+                if (id.split("new")[0] === "1") {
                     pos = id;
-                }else{
+                } else {
                     pos = id.split("new")[1];
                 }
-                if(pos === 1){
+                if ((pos === 1) && (i === 0)) {
                     cmp_ini = cmpVal.anx_nom;
+                    i++;
                 }
                 var id = objConEdit[i];
-                inputCon1[i] = {
-                        "cmp_con_ono": "",
-                        "cmp_con_ope": $("#conOpeCond" + id).data("kendoComboBox").value(),
-                        "cmp_fin_nom": $("#cmpValCond" + id).val(),
-                        "cmp_ini": cmp_ini,
-                        "cmp_ini_nom": cmpVal.cmp_dsc,
-                        "rpt_cmp_pos": sessionStorage.getItem("idDato"),
-                        "rpt_con_pos": pos,
-                        "rpt_id": sessionStorage.getItem("idRepo")
-                    };
-    //            sendAjax(inputCon1, "PUT");
+                inputCon1.push({
+                    "cmp_con_ono": "",
+                    "cmp_con_ope": $("#conOpeCond" + id).data("kendoComboBox").value(),
+                    "cmp_fin_nom": $("#cmpValCond" + id).val(),
+                    "cmp_ini": cmp_ini,
+                    "cmp_ini_nom": cmpVal.cmp_dsc,
+                    "rpt_cmp_pos": sessionStorage.getItem("idDato"),
+                    "rpt_con_pos": pos,
+                    "rpt_id": sessionStorage.getItem("idRepo")
+                });
+                //            sendAjax(inputCon1, "PUT");
             }
         }
-        
+
     }
 
 //    var inputCon1 = JSON.parse(JSON.stringify(inputCon));
@@ -565,8 +601,8 @@ function sendAjaxCond(data, verHtml, oldId) {
             jsonResp = resp;
         },
         error: function (e) {
-            bandAlert=0;
-            alertDialog("Error al consumir el servicio de CrearConciones" + e.status + " - " + e.statusText);
+            bandAlert = 0;
+            alertDialogs("Error al consumir el servicio de CrearConciones" + e.status + " - " + e.statusText);
         }
     }).done(function () {
         if (permitirIngreso == '"OK"') {
@@ -575,16 +611,16 @@ function sendAjaxCond(data, verHtml, oldId) {
                 var id = jsonResp[key1].eerep_rpt_con[0].rpt_con_pos;
                 globalCon.push(jsonResp[key1].eerep_rpt_con[0]);
                 replaceIdEle(oldId, id);
+                cerrarCustomPopUp();
 //                closeLoading("#operaciones");
             }
 
         } else {
+            bandAlert = 0;
 //            closeLoading("#operaciones");
-           errorPopUp("Problemas con el creación de conciones .\n" + permitirIngreso);
+            alertDialogs("Problemas con el creación de conciones .\n" + permitirIngreso);
         }
-        $("#btnSaveFiltros").kendoButton({
-            enable: true
-        });
+
     });
 
 }

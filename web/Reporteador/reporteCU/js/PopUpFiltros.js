@@ -61,10 +61,7 @@ function onloadPopUpFltr(){
     if (sessionStorage.getItem("filtros") !== "undefined") {
         filtros = JSON.parse((sessionStorage.getItem("filtros")));
         objFltrAdd = JSON.parse(JSON.stringify(filtros));
-    } else {
-
     }
-    createStyleSheet();
 
     for (var i = 0; i < filtros.length; i++) {
         if (idCmpidFltr == filtros[i].rpt_cmp_pos) {
@@ -198,7 +195,7 @@ function crearComboCmp(id) {
                     });
                     return globalCmp;
                 } else {
-                    alertDialog(e[key1].eeEstados[0].Estado);
+                    alertDialogs(e[key1].eeEstados[0].Estado);
                 }
             },
             model: {
@@ -299,7 +296,7 @@ function clicBtnSaveFiltros() {
         });
         sendAjaxFltr(objAdd, "POST");
     } catch (e) {
-        alertDialog("Function: clickCrearRepo Error: " + e.message);
+        alertDialogs("Function: clickCrearRepo Error: " + e.message);
     }
 }
 /**

@@ -92,6 +92,7 @@ function mostrarGrid() {
         scrollable: true,
         sortable: true,
         filterable: true,
+        groupable: true,
         pageable: {
             input: true,
             numeric: false
@@ -120,7 +121,7 @@ function sendServicio() {
             jsonResp = resp;
         },
         error: function (e) {
-            alertDialog("Error al consumir el servicio de CrearConciones" + e.status + " - " + e.statusText);
+            alertDialogs("Error al consumir el servicio de CrearConciones" + e.status + " - " + e.statusText);
         }
     }).done(function () {
         if (permitirIngreso == '"OK"') {
@@ -131,7 +132,7 @@ function sendServicio() {
             }
 
         } else {
-            alertDialog("Problemas con el creación de condciones .\n" + permitirIngreso);
+            alertDialogs("Problemas con el creación de condciones .\n" + permitirIngreso);
         }
         $("#btnSaveFiltros").kendoButton({
             enable: true
@@ -180,7 +181,7 @@ function exportarExcel() {
                     });
                 });
     } catch (e) {
-        alertDialog("Funcion: exportarExcel,  Error:" + e.message);
+        alertDialogs("Funcion: exportarExcel,  Error:" + e.message);
     }
 }
 
@@ -244,7 +245,7 @@ function cerrarWindow() {
 function errorPopUp(message) {
     $("#windowVfltr").data("kendoWindow").close();
 //    onClose()
-    alertDialog(message);
+    alertDialogs(message);
     mostrarGrid();
 
 }

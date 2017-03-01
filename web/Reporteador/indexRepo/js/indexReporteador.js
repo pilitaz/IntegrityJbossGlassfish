@@ -59,7 +59,7 @@ function grid() {
                         return JSON.stringify(objRepoD);
                     }
                 } catch (e) {
-                    alertDialog("Error en el servicio" + e.message);
+                    alertDialogs("Error en el servicio " + e.message);
                 }
             }
         },
@@ -70,8 +70,10 @@ function grid() {
                 var key1 = Object.keys(e)[0];
                 if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
                     return e[key1][mapDataRepo];
+                } else if ((e[key1].eeEstados[0].Estado === "Sin Informacion en la tabla ''                                              ")) {
+                    alertDialogs("Usted no tiene Reportes Disponibles");
                 } else {
-                    alertDialog("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                    alertDialogs("Error en el servicio " + e[key1].eeEstados[0].Estado);
                 }
             },
             model: {
@@ -86,7 +88,7 @@ function grid() {
     $(window).trigger("resize");
     $("#grid").kendoGrid({
         dataSource: dataSource,
-        selectable: false,
+        selectable: "multiple",
         filterable: {
             mode: "row"
         },
@@ -187,7 +189,7 @@ function ClickCompartir(e) {
 
 
     mostrarCustomPopUp1();
-    multiSelectCompar();
+    loadPopUpComparteRepo(e);
 }
 /**
  * 
@@ -201,7 +203,7 @@ function ClickPlay(e) {
     sessionStorage.setItem("idRepo", idRepo);
     sessionStorage.setItem("nomRepo", nomRepo);
     window.location.assign(sessionStorage.getItem("url") + "Reporteador/viewRepo/html/viewRepo.html");
-    
+
 }
 /**
  * Eventcliclick de la imagen play
@@ -237,22 +239,7 @@ function ClickCreate() {
 //    window.location.assign("html/reporteCU.html");
     mostrarCustomPopUp();
 }
-function multiSelectCompar() {
-    $("#customers").removeClass();
-    $("#customers").kendoMultiSelect({
-        dataTextField: "ContactName",
-                        dataValueField: "CustomerID",
-                        dataSource: {
-                            transport: {
-                                read: {
-                                    dataType: "jsonp",
-                                    url: "https://demos.telerik.com/kendo-ui/service/Customers",
-                                }
-                            }
-                        },
-                        height: 400
-    });
-}
+
 
 function mostrarCustomPopUp() {
     $("body").append("<div id='disable'></div>");

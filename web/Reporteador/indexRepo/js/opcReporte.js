@@ -135,7 +135,7 @@ function clickCrearRepo() {
                     jsonResp = resp;
                 },
                 error: function (e) {
-                    alertDialog("Error al consumir el servicio de CrearReporte.\n" + e.status + " - " + e.statusText);
+                    alertDialogs("Error al consumir el servicio de CrearReporte.\n" + e.status + " - " + e.statusText);
 
                 }
             }).done(function () {
@@ -143,8 +143,8 @@ function clickCrearRepo() {
                     
                     var key1 = Object.keys(jsonResp)[0]
                     var idRepo = jsonResp[key1][mapResponse][0].rpt_id;
-                    var capCod = jsonResp[key1][mapResponse][0].cap__cod;
-                    var porCod = jsonResp[key1][mapResponse][0].por__cod;
+                    var capCod = jsonResp[key1]["eerep_rpt"][0].cap_cod;
+                    var porCod = jsonResp[key1]["eerep_rpt"][0].por_cod;
                     sessionStorage.setItem("idRepo", idRepo);
                     sessionStorage.setItem("capCod", capCod);
                     sessionStorage.setItem("porCod", porCod);
@@ -168,25 +168,26 @@ function clickCrearRepo() {
                     sessionStorage.setItem("idRepo", idRepo);
                     sessionStorage.setItem("capCod", $("#capi").data("kendoComboBox").value());
                     sessionStorage.setItem("nomRepo", $("#nomRepo").val());
+                    sessionStorage.setItem("ope", "create");
 
 //                    cambiarImagen('imgCampos');
 //                    $("#btnCrearRepo").hide();
 //                    $("#capi").data("kendoComboBox").enable(false);
 //                    document.getElementById("nomRepo").disabled = true;
 //                    clickbtn('Campos');
-                    window.location.assign("html/reporteCU.html");
+                    window.location.assign(sessionStorage.getItem("url") + "Reporteador/reporteCU/html/reporteCU.html");
                 } else {
-                    alertDialog("Problemas con el inicio sesión .\n" + permitirIngreso);
+                    alertDialogs("Problemas con el inicio sesión .\n" + permitirIngreso);
 
                 }
             });
         } else {
-            alertDialog("Por favor ingrese el nombre del reporte y capitulo.");
+            alertDialogs("Por favor ingrese el nombre del reporte y capitulo.");
         }
 
 
     } catch (e) {
-        alertDialog("Function: clickCrearRepo Error: " + e.message);
+        alertDialogs("Function: clickCrearRepo Error: " + e.message);
 
     }
 

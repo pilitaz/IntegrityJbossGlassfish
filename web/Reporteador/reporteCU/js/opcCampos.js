@@ -42,6 +42,7 @@ function loadCampos() {
     llenarComboKendoCampos(urlAnex, "porta", "nombreprestador");
     gridCampos("urlGrid", "dsttnomjor.ttnomjor");
     $("#btnAddCmp").kendoButton();
+    cerrarCustomPopUp();
 }
 /**
  * llena los campos anexo y campo 
@@ -52,6 +53,9 @@ function loadCampos() {
  */
 function llenarComboKendoCampos(urlServ, idCmp, field) {
     var objAnx = getinputRestAnx();
+    objAnx.dsSIRcar_anx.eeSIRcar_anx["0"].piicapcod = sessionStorage.getItem("capCod");
+//    objAnx.dsSIRcar_anx.eeSIRcar_anx["0"].piicarcod = sessionStorage.getItem(""); 
+    objAnx.dsSIRcar_anx.eeSIRcar_anx["0"].piiporcod = sessionStorage.getItem("porCod");
     var urlServAnx = geturlRestAnx();
     var mapDataAnx = getmapDataRestAnx();
     var objCmp = getinputRestCmp();
@@ -84,7 +88,7 @@ function llenarComboKendoCampos(urlServ, idCmp, field) {
                     if (e[key1].eeEstados[0].Estado.indexOf("OK") === 0) {
                         return e[key1].eecar_anx_nom;
                     } else {
-                        alertDialog(e[key1].eeEstados[0].Estado);
+                        alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -124,7 +128,7 @@ function llenarComboKendoCampos(urlServ, idCmp, field) {
                     if (e[key1].eeEstados[0].Estado.indexOf("OK")) {
                         return e[key1][mapDataCmp];
                     } else {
-                        alertDialog(e[key1].eeEstados[0].Estado);
+                        alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -198,7 +202,7 @@ function comboCampos(objCmp) {
                     if (e[key1].eeEstados[0].Estado.indexOf("OK") === 0) {
                         return e[key1][mapDataCmp];
                     } else {
-                        alertDialog(e[key1].eeEstados[0].Estado);
+                        alertDialogs(e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -267,8 +271,8 @@ function gridCampos(urlGrid, dataserv) {
                         return kendo.stringify(objRepoUD);
                     }
                 } catch (e) {
-                    alertDialog();
-                    alertDialog(e.message)
+                    alertDialogs();
+                    alertDialogs(e.message)
                 }
             }
         },
@@ -281,7 +285,7 @@ function gridCampos(urlGrid, dataserv) {
                     return e[key1][mapData];
 
                 } else {
-                    alertDialog(e[key1].eeEstados[0].Estado);
+                    alertDialogs(e[key1].eeEstados[0].Estado);
                 }
             },
             model: {
@@ -351,7 +355,7 @@ function gridCampos(urlGrid, dataserv) {
             
             saveOrden(data);
         }catch (e){
-            alertDialog("Ocurrió un error en al mover el campo!");
+            alertDialogs("Ocurrió un error en al mover el campo!");
         $('#girdCampos').data('kendoGrid').dataSource.read();
         $('#girdCampos').data('kendoGrid').refresh();
     }
@@ -378,7 +382,7 @@ function ondataBound(grid) {
 }
 
 function click(e) {
-    alertDialog("edito");
+    alertDialogs("edito");
 }
 /**
  * Funcion para eliminar el campo
@@ -454,14 +458,14 @@ function saveOrden() {
             jsonResp = resp;
         },
         error: function (e) {
-            alertDialog("Error al consumir el servicio" + e.status + " - " + e.statusText);
+            alertDialogs("Error al consumir el servicio" + e.status + " - " + e.statusText);
         }
     }).done(function () {
         if (permitirIngreso == '"OK"') {
             $('#girdCampos').data('kendoGrid').dataSource.read();
             $('#girdCampos').data('kendoGrid').refresh();
         } else {
-            alertDialog("Error al consumir el servicio" + permitirIngreso);
+            alertDialogs("Error al consumir el servicio" + permitirIngreso);
         }
     });
 }
@@ -557,7 +561,7 @@ function clickCrearCampo() {
                 jsonResp = resp;
             },
             error: function (e) {
-                alertDialog("Error al consumir el servicio de CrearCampos" + e.status + " - " + e.statusText);
+                alertDialogs("Error al consumir el servicio de CrearCampos" + e.status + " - " + e.statusText);
             }
         }).done(function () {
             if (permitirIngreso == '"OK"') {
@@ -565,11 +569,11 @@ function clickCrearCampo() {
                 $('#girdCampos').data('kendoGrid').refresh();
                 desableButton("All");
             } else {
-                alertDialog("Error al consumir el servicio " + permitirIngreso);
+                alertDialogs("Error al consumir el servicio " + permitirIngreso);
             }
         });
     } catch (e) {
-        alertDialog("Function: clickCrearRepo Error" + e.message);
+        alertDialogs("Function: clickCrearRepo Error" + e.message);
     }
 }
 /**
@@ -647,7 +651,7 @@ function popUpFunciones(id, nomFun) {
 //        }).data("kendoWindow").center().open();
 
     } else {
-        alertDialog("Function: PopUp Error" + "el campo no es filtrable");
+        alertDialogs("Function: PopUp Error" + "el campo no es filtrable");
     }
 }
 /**
