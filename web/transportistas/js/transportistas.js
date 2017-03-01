@@ -176,7 +176,7 @@ function grilla(obj) {
         rowTemplate: kendo.template($("#rowTemplate").html()),
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
         edit: function (e) {
-            debugger
+            
             e.container.kendoWindow("title", "Editar");
                 e.container.find("label[for='rut__des']").hide();
                 e.container.find("input[name=rut__des]").hide();

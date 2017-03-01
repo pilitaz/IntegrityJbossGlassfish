@@ -17,11 +17,16 @@ $(document).ready(function () {
     });
 });
 function buscarPedidos() {
+    var ternit = $("#ipRUC").val();
+    ternit = ternit.replace(/^\s+|\s+$/g, "");
     
-    if($("#ipRUC").val()!==""){        
+    var terraz = $("#ipRazonSocial").val();
+    terraz = terraz.replace(/^\s+|\s+$/g, "");
+    
+    if(ternit!==""){        
         parent.grid($("#ipRUC").val(),"");
         parent.closePopUpFiltros();
-    }else if($("#ipRazonSocial").val()!==""){
+    }else if(terraz!==""){
         parent.grid("", $("#ipRazonSocial").val());
         parent.closePopUpFiltros();
     }else{

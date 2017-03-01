@@ -77,6 +77,9 @@ function grid(ternit, terraz) {
     $("#gridTerceros").kendoGrid({
         dataSource: dataSourceTerceros,        
         selectable: false,
+        filterable: {
+           mode: "row"
+        },
         columns: [
             {field: "ter__nit", title: "RUC"},
             {field: "ter__raz", title: "Razón social"},
@@ -86,53 +89,13 @@ function grid(ternit, terraz) {
             {command:
                         [   
                             {name: "aprobar", text: " ", click: changeEst, template: "<a class='k-grid-aprobar' '><span class='k-sprite po_cerrar'></span></a>"},                            
-                            {name: "editar",  click: clickEditar, template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},
-                            {name: "destroyed", click: clickEliminar, template: "<a class='k-grid-destroyed' href='' style='min-width:16px;'><span class='k-sprite po_cerrar'></span></a>"}
+                            {name: "editar",  click: clickEditar, template: "<a class='k-grid-editar'><span class='k-sprite po_editoff'></span></a>"},                            
                         ],
-                width: "150px"}],
+                width: "100px"}],
         editable: "popup",
         rowTemplate: kendo.template($("#rowTemplate").html()),
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
     });
-    
-       
-    function clickEliminar(e) {        
-        var tercero = $("#gridTerceros").data("kendoGrid")._data[($(e.currentTarget).closest("tr")["0"].sectionRowIndex)]
-        if(tercero.ter__est===99){
-            var  actualizar = new SICUDTercero();
-            var  actjson = actualizar.getjson();
-            var  urlactualizar = actualizar.getUrlSir();
-            var  mapData = actualizar.getMapData();
-            
-            var key1 = Object.keys(actjson)[0];
-            var key2 = Object.keys(actjson[key1])[1];
-            actjson[key1][key2][0] = tercero;
-            
-            $.ajax({
-        
-                    type: "DELETE",        
-                    async: false,
-                    data: JSON.stringify(actjson),
-                    url: urlactualizar,
-                    dataType: "json",        
-                    contentType: "application/json;",
-                    success: function (resp) {     
-                                                                    
-                    }         
-                }).done(function(resp){                    
-                       if((resp.dsSICUDsic_ter.eeEstados["0"].Estado)==="OK"){
-                            location.reload();
-                        }else{
-                            bandAlert = 0;
-                            alertDialogs("Error "+(resp.dsSICUDsic_ter.eeEstados["0"].Estado));
-                        }            
-                });
-            
-        }else{
-            alertDialogs("No es posible eliminar el tercero")
-        }
-        //delete tercero["ter__nit"];
-    }
 }
 
 function btnFltrTercero() {
@@ -161,6 +124,7 @@ function btnFltrTercero() {
 }
 
 function closePopUpFiltros() {
+    bandAlert = 0
     $("#windowFiltros").data("kendoWindow").close();
 }
 function crearTercero() {
@@ -184,6 +148,7 @@ function popUpTerceroCU(titulo) {
         var undo = $("#undo");
         
         function onCloseWindowCabPedido() {
+            bandAlert = 0
             document.getElementById("windowTercero").remove();
             undo.fadeIn();
         }

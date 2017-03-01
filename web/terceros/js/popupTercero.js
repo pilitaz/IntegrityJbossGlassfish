@@ -43,7 +43,8 @@ $(document).ready(function () {
     
     $("#ipAutoretenedor").kendoDropDownList({
         dataTextField: "text",
-        dataValueField: "value",        
+        dataValueField: "value", 
+        value: "false",
         dataSource: data
         
     });
@@ -79,12 +80,14 @@ $(document).ready(function () {
 function setTercero(){    
     var tercero = JSON.parse(sessionStorage.getItem("regTercero"));
     
-    $("#buttonGuardar")["0"].childNodes["0"].data="Actualizar";
+    $("#buttonGuardar")["0"].childNodes["0"].data="Actualizar";    
     
     var kendoDropDownListtipoDocumento = $("#tipoDocumento").data("kendoDropDownList");    
     kendoDropDownListtipoDocumento.value(tercero.ter__cln);
+    kendoDropDownListtipoDocumento.enable(false);
     
     $("#ipNumeroDoc").val(tercero.ter__nit);
+    $("#ipNumeroDoc").prop("disabled", true).addClass("k-state-disabled");
     
     $("#ipTercero").val(tercero.ter__raz);
     
