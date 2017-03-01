@@ -77,7 +77,7 @@ function grilla(obj) {
         {field: "bco__nom", title: "Nombre del Banco",editor: bco__codList,width: "100%"},
         {field: "sbco__cod", title: "Código de la Sucursal",editor: sbco__codList,width: "100%"},
         {field: "sbco__nom", title: "Nombre de la Sucursal",width: "100%"},
-        {field: "ciu__cod", title: "Ciudad",editor: ciu__codList,width: "100%",template: "#='f'#"},
+        {field: "ciu__nom", title: "Ciudad",editor: ciu__codList,width: "100%"},
         {field: "bco__dir", title: "Direccion",width: "100%"},
         {field: "sbco__pri", title: "Sucursal Principal",editor: sbco__priList,width: "100%"},
         
@@ -119,7 +119,7 @@ function grilla(obj) {
                         
                         var key1 = Object.keys(inputCud)[0];
                         options["bco__cod"] = codBank;
-                        options["ciu__cod"];
+                        options["ciu__cod"] = $("#idciu__cod").data("kendoDropDownList").listView._dataItems[0].ciu__cod;
                         options[est] = 99;
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
@@ -127,7 +127,7 @@ function grilla(obj) {
                     }else if (operation === 'update') {
                         var key1 = Object.keys(inputCud)[0];
                         options["bco__cod"] = codBank;
-                        options["ciu__cod"];
+                        options["ciu__cod"] = $("#idciu__cod").data("kendoDropDownList").listView._dataItems[0].ciu__cod;
                         options[est] = 99;
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
@@ -163,6 +163,12 @@ function grilla(obj) {
         },
         error: function (e) {
             alertDialogs(e.errorThrown);
+        },
+        requestEnd: function (e) {
+            if((e.type==="create")||(e.type==="update")){
+                $("#grid").data("kendoGrid").destroy();
+                grilla();
+            }
         }
     });
     if (!btnC) {
@@ -278,7 +284,7 @@ function ciu__codList(container, options) {
     var dataSource = obj.getdataSource();
     $('<input id="idciu__cod" data-bind="value:' + options.field + '" />"').appendTo(container).kendoDropDownList({
         dataTextField: "ciu__nom",
-        dataValueField: "ciu__cod",
+        dataValueField: "ciu__nom",
         dataSource: dataSource,
         index: 0
     });
@@ -363,11 +369,11 @@ function listassbco__pri() {
 
     var dataSource = [{
             text: "si",
-            value: "true"
+            value: true
         },
         {
             text: "no",
-            value: "false"
+            value: false
         }
     ];
     this.setdataSource = function (newname) {

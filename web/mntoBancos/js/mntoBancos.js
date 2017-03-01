@@ -27,13 +27,14 @@ function grilla(obj) {
     /*variable para adicionar los campos requeridos y el tipo de dato*/
     /*editable: false --- ocultar en grilla*/
     var fieldShema = {
-        bco__cod: {type: 'number'},
+        bco__cod: {type: 'string'},
         bco__nom: {type: 'string'},
         ter__nit: {type: 'string'},
+        ter__raz: {type: 'string'},
         bco__org: {type: 'logical'},
         bco__sig: {type: 'string'},
-        bco__chr: {type: 'string'},
-    }
+        bco__chr: {type: 'string'}
+    };
 
     /*variable id es el id correspondiente a la tabla a cansultar*/
     var model = {
@@ -44,26 +45,25 @@ function grilla(obj) {
     /*variables para adicionar los botones de la grilla*/
     var btnC = true;
     var btnUD = [
-        
         {name: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
         {name: "Delete", click: deleteRow, template: "<a class='k-grid-Delete'><span class='k-sprite po_cerrar'></span></a>"}
     ];
     var btnDetalle = [
         {name: "sucursal", text: " ", click: selecSucur, template: "<a class='k-grid-sucursal' '><span class='k-sprite po_cerrar'></span></a>"}
     ];
-    var btnDer = {command: btnDetalle, title: "&nbsp;", width: "50px" };
+    var btnDer = {command: btnDetalle, title: "&nbsp;", width: "50px"};
 //    var btnDer = {};
     var btnIzq = {command: btnUD, title: "&nbsp;", width: "100px"};
 
     /*variables para poner los campos visibles tanto en popUp como en grilla, en caso de no colocarlos no apareceran en ni en popup ni engrilla */
     /*hiden: true --- ocultar en grilla*/
     var columns = [
-		btnDer,
-        {field: "bco__cod", title: "Codigo del Banco", editor:bco__codList,width: "100%"},
+        btnDer,
+        {field: "bco__cod", title: "Código del Banco", editor: bco__codList, width: "100%"},
         {field: "bco__nom", title: "Nombre Banco", width: "100%"},
 //        {field: "ter__nit", title: "Nit", width: "100%"},
-        {field: "ter__nit", title: "Nit", editor:ter__nitList, width: "100%"},
-        {field: "ter__raz", title: "Razon social",editor:ter__razList, width: "100%",hidden: true},
+        {field: "ter__nit", title: "Nit", editor: ter__nitList, width: "100%",hidden:true},
+        {field: "ter__raz", title: "Razón social", editor: ter__razList, width: "100%"},
         btnIzq
     ];
 
@@ -73,7 +73,7 @@ function grilla(obj) {
                 url: urlSir,
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
-                dataType: 'json',
+                dataType: 'json'
             },
             destroy: {
                 url: urlCud,
@@ -94,30 +94,46 @@ function grilla(obj) {
                 contentType: "application/json"
             },
             parameterMap: function (options, operation) {
+                var alerta = "";
                 try {
                     if (operation === 'read') {
                         return JSON.stringify(inputsir);
                     } else if (operation === 'create') {
-                        var key1 = Object.keys(inputCud)[0]
-                        options["ter__nit"] = options.ter__raz.ter__nit;
-                        delete options["ter__raz"];
+                        if (($("#idter__raz").val()=== "") || ($("#idter__nit").val()=== "")) {
+                            alerta = "Por favor seleccione una razón social antes de guardar cambios.";
+                            throw alerta;
+                        }
+                        var key1 = Object.keys(inputCud)[0];
+                        options["ter__nit"] = $("#idter__nit").val();
+                        options["ter__raz"] = $("#idter__raz").val();
+                        options[est] = 99;
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
 
-                    }else if (operation === 'update') {
-                        var key1 = Object.keys(inputCud)[0]
-                        options["ter__nit"] = options.ter__raz.ter__nit;
-                        delete options["ter__raz"];
+                    } else if (operation === 'update') {
+                        if (($("#idter__raz").val()=== "") || ($("#idter__nit").val()=== "")) {
+                            alerta = "Por favor seleccione una razón social antes de guardar cambios.";
+                            throw alerta;
+                        }
+                        var key1 = Object.keys(inputCud)[0];
+                        options["ter__nit"] = $("#idter__nit").val();
+                        options["ter__raz"] = $("#idter__raz").val();
+                        options[est] = 99;
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
 
                     } else {
-                        var key1 = Object.keys(inputCud)[0]
+                        var key1 = Object.keys(inputCud)[0];
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
                     }
                 } catch (e) {
-                    alertDialogs(e.message)
+                    if (alerta !== "") {
+                        alertDialogs(e);
+                    } else {
+                        alertDialogs(e.message);
+                    }
+
                 }
             }
         },
@@ -140,6 +156,12 @@ function grilla(obj) {
         },
         error: function (e) {
             alertDialogs(e.errorThrown);
+        },
+        requestEnd: function (e) {
+            if((e.type==="create")||(e.type==="update")){
+                $("#grid").data("kendoGrid").destroy();
+                grilla();
+            }
         }
     });
     if (!btnC) {
@@ -153,6 +175,7 @@ function grilla(obj) {
         selectable: false,
         columns: columns,
         editable: "popup",
+        filterable: true,
         rowTemplate: kendo.template($("#rowTemplate").html()),
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
         edit: function (e) {
@@ -160,8 +183,10 @@ function grilla(obj) {
             if (!e.model.isNew()) {//caso en el que el popup es editar
 
                 e.container.kendoWindow("title", "Editar");
-                var idBanco = $("#idbco__cod").data("kendoNumericTextBox");
+                var idBanco = $("#idbco__cod").data("kendoMaskedTextBox");
                 idBanco.enable(false);
+                var idNit = $("#idter__nit").data("kendoMaskedTextBox");
+                idNit.enable(false);
 //                e.container.find("span[name=bco__cod]")[0].style.display = "none";
                 //e.container.find("input[name=ter__raz]")[0].readOnly="true"
 //                if (e.model[est] != 99) {
@@ -171,6 +196,8 @@ function grilla(obj) {
 //                }
             } else {
                 e.container.kendoWindow("title", "Crear");
+                var idNit = $("#idter__nit").data("kendoMaskedTextBox");
+                idNit.enable(false);
                 ////caso en el que el popup es crear
 //                Buscarlabel = buscarlabel.prevObject[3];
 //                Buscarlabel.style.display = "none";
@@ -194,66 +221,67 @@ function deleteRow(e) {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
         var dataItem = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"));
-
-            var actions = new Array();
-            actions[0] = new Object();
-            actions[0].text = "OK";
-            actions[0].action = function () {
-                var dataSource = $("#grid").data("kendoGrid").dataSource;
-                dataSource.remove(dataItem);
-                dataSource.sync();
-                bandAlert = 0;
-            };
-            actions[1] = new Object();
-            actions[1].text = "Cancelar";
-            actions[1].action = function () {
-                bandAlert = 0;
-            };
-            createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.bco__nom + " ---?", "400px", "200px", true, true, actions);
-        
+//        if (dataItem[est] == 99) {
+        var actions = new Array();
+        actions[0] = new Object();
+        actions[0].text = "OK";
+        actions[0].action = function () {
+            var dataSource = $("#grid").data("kendoGrid").dataSource;
+            dataSource.remove(dataItem);
+            dataSource.sync();
+            bandAlert = 0;
+        };
+        actions[1] = new Object();
+        actions[1].text = "Cancelar";
+        actions[1].action = function () {
+            bandAlert = 0;
+        };
+        createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.bco__nom + " ---?", "400px", "200px", true, true, actions);
+//        } else {
+//            alertDialogs("El registro no puede ser eliminado.")
+//        }
     } catch (e) {
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();
     }
 }
 
-function selecSucur(e){
+function selecSucur(e) {
     try {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
         var dataItem = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"));
-        sessionStorage.setItem("objBanco",JSON.stringify(dataItem));
+        sessionStorage.setItem("objBanco", JSON.stringify(dataItem));
         window.location.assign(sessionStorage.getItem("url") + "sucurBancos/html/sucurBancos.html");
-     } catch (e) {
+    } catch (e) {
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();
-    }    
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 function  bco__codList(container, options) {
-    $('<input id="idbco__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoNumericTextBox({
-       format: "{0:n0}"
+    $('<input id="idbco__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoMaskedTextBox({
     });
 }
 
 function ter__nitList(container, options) {
-    
+
     var obj = new listater__nit();
     var dataSource = obj.getdataSource();
-    $('<input id="idter__nit" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoAutoComplete({
-        dataTextField: "ter__nit",
-        dataValueField: "ter__nit",
-        dataSource: dataSource,
-        template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
-        minLength: 7,
-        change: onSelectNit
+    $('<input id="idter__nit" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoMaskedTextBox({
+//        dataTextField: "ter__nit",
+//        dataValueField: "ter__nit",
+//        dataSource: dataSource,
+//        template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
+//        minLength: 7,
+//        change: onSelectNit
     });
 }
 
-function onSelectNit(e){
-     $("#idter__raz").val(e.sender.listView._dataItems[0].ter__raz);
+function onSelectNit(e) {
+    $("#idter__raz").val(e.sender.listView._dataItems[0].ter__raz);
 }
 function listater__nit() {
     var objSirUn = new SIRsic_ter();
@@ -322,20 +350,26 @@ function listater__nit() {
 }
 ;
 function ter__razList(container, options) {
-    
+
     var obj = new listater__raz();
     var dataSource = obj.getdataSource();
     $('<input id="idter__raz" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoAutoComplete({
         dataTextField: "ter__raz",
         dataValueField: "ter__raz",
-        template:'<div class="divElementDropDownList">#: data.ter__raz #</div>',
+        template: '<div class="divElementDropDownList">#: data.ter__raz #</div>',
         dataSource: dataSource,
-         minLength: 4,
+        minLength: 4,
         change: onSelectRaz
     });
 }
-function onSelectRaz(e){
-    $("#idter__nit").val(e.sender.listView._dataItems[0].ter__nit);
+function onSelectRaz(e) {
+    try {
+        $("#idter__nit").val(e.sender.listView._dataItems[0].ter__nit);
+    } catch (e) {
+        $("#idter__raz").val("");
+        $("#idter__nit").val("");
+        alertDialogs("La razón social seleccionada no tiene un nit asociado.");
+    }
 }
 function listater__raz() {
     var objSirUn = new SIRsic_ter();

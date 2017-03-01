@@ -127,6 +127,12 @@ function grilla(obj) {
         },
         error: function (e) {
             alertDialogs(e.errorThrown);
+        },
+        requestEnd: function (e) {
+            if((e.type==="create")||(e.type==="update")){
+                $("#grid").data("kendoGrid").destroy();
+                grilla();
+            }
         }
     });
     if (!btnC) {

@@ -156,7 +156,7 @@ footer {
 }
 th.k-header, .k-window-titlebar 
 {
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 li.k-button {
     min-height: 30px;
