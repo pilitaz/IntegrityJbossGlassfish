@@ -27,14 +27,14 @@ function grilla(obj) {
     /*variable para adicionar los campos requeridos y el tipo de dato*/
     /*editable: false --- ocultar en grilla*/
     var fieldShema = {
-        cto__cod: { type: 'string'},
-            cniv__cod: { type: 'number'},
-            cto__nom: { type: 'string'},
-            ter__nit: { type: 'string'},
-            cto__est: { type: 'logical'},
-            est__cto: { type: 'number'},
-            doc__exp: { type: 'number'},
-            cto__hom: { type: 'string'},
+        cto__cod: {type: 'string'},
+        cniv__cod: {type: 'number'},
+        cto__nom: {type: 'string'},
+        ter__nit: {type: 'string'},
+        cto__est: {type: 'logical'},
+        est__cto: {type: 'number'},
+        doc__exp: {type: 'number'},
+        cto__hom: {type: 'string'},
     }
 
     /*variable id es el id correspondiente a la tabla a cansultar*/
@@ -61,11 +61,11 @@ function grilla(obj) {
     /*hiden: true --- ocultar en grilla*/
     var columns = [
 //		btnDer,{field: "cniv__cod", title: "Nivel",width: "100%", editor:cniv__codList},
-        {field: "cto__cod", title: "Centro de Actividad", editor:cto__codList,width: "100%"},
-            {field: "cniv__cod", title: "Nivel",width: "100%", editor:cniv__codList},
-            {field: "cto__nom", title: "Nombre",width: "100%"},
-            {field: "ter__nit", title: "Responsable",width: "100%",editor:ter__nitList},
-            {field: "ter__raz", title: "Razon social",editor:ter__razList, width: "100%",hidden: true},
+        {field: "cto__cod", title: "Centro de Actividad", editor: cto__codList, width: "100%"},
+        {field: "cniv__cod", title: "Nivel", width: "100%", editor: cniv__codList},
+        {field: "cto__nom", title: "Nombre", width: "100%"},
+        {field: "ter__nit", title: "Cédula", width: "100%", editor: ter__nitList},
+        {field: "ter__raz", title: "Responsable", editor: ter__razList, width: "100%", hidden: true},
         btnIzq
     ];
 
@@ -96,24 +96,37 @@ function grilla(obj) {
                 contentType: "application/json"
             },
             parameterMap: function (options, operation) {
+                var alerta = "";
                 try {
                     var maskedtextbox = $("#idcto__cod").data("kendoMaskedTextBox");
                     if (operation === 'read') {
                         return JSON.stringify(inputsir);
                     } else if (operation === 'create') {
-                        if(maskedtextbox._old.indexOf("_")!==-1){
-                            throw "Debe llenar con digitos todo el centro de actividad";
+                        if (($("#idter__raz").val()=== "") || ($("#idter__nit").val()=== "")) {
+                            alerta = "Por favor seleccione un responsable antes de guardar cambios.";
+                            throw alerta;
+                        }
+                        if (maskedtextbox._old.indexOf("_") !== -1) {
+                            alerta = "Debe llenar con digitos todo el centro de actividad";
+                            throw alerta;
                         }
                         var key1 = Object.keys(inputCud)[0];
-                         options["doc__exp"] = 0;
-                         options["est__cto"] = 0;
+                        options["doc__exp"] = 0;
+                        options["est__cto"] = 0;
+                        var key1 = Object.keys(inputCud)[0]
+                        options["ter__nit"] = options.ter__raz.ter__nit;
                         delete options["ter__raz"];
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
-                        
-                    }else if (operation === 'update') {
-                        if(maskedtextbox._old.indexOf("_")!==-1){
-                            throw "debe llenar con digitos todo el centro de actividad";
+
+                    } else if (operation === 'update') {
+                        if (maskedtextbox._old.indexOf("_") !== -1) {
+                            alerta = "Debe llenar con digitos todo el centro de actividad";
+                            throw alerta;
+                        }
+                        if (($("#idter__raz").val()=== "") || ($("#idter__nit").val()=== "")) {
+                            alerta = "Por favor seleccione un Responsable antes de guardar cambios.";
+                            throw alerta;
                         }
                         var key1 = Object.keys(inputCud)[0]
                         options["ter__nit"] = options.ter__raz.ter__nit;
@@ -127,8 +140,11 @@ function grilla(obj) {
                         return JSON.stringify(inputCud);
                     }
                 } catch (e) {
-                    debugger
-                    alertDialogs(e)
+                    if (alerta !== "") {
+                        alertDialogs(e);
+                    } else {
+                        alertDialogs(e.message);
+                    }
                 }
             }
         },
@@ -136,18 +152,17 @@ function grilla(obj) {
             type: "json",
             data: function (e) {
                 try {
-                var key1 = Object.keys(e)[0];
-                if (e[key1].eeEstados[0].Estado === "OK") {
-                    if (e[key1][mapSir]) {
-                        for (var i = 0; i < e[key1][mapSir].length; i++) {
-                            e[key1][mapSir][i].id = i
+                    var key1 = Object.keys(e)[0];
+                    if (e[key1].eeEstados[0].Estado === "OK") {
+                        if (e[key1][mapSir]) {
+                            for (var i = 0; i < e[key1][mapSir].length; i++) {
+                                e[key1][mapSir][i].id = i
+                            }
                         }
+                        return e[key1][mapSir];
+                    } else {
+                        alertDialogs(e[key1].eeEstados[0].Estado);
                     }
-                    return e[key1][mapSir];
-                } else {
-                    throw "Error";
-                    alertDialogs(e[key1].eeEstados[0].Estado);
-                }
                 } catch (e) {
                     alertDialogs(e.message)
                 }
@@ -179,6 +194,8 @@ function grilla(obj) {
                 var idBanco = $("#idcto__cod").data("kendoNumericTextBox");
 //                var idNivel = $("#idcniv__cod").data("kendoNumericTextBox");
                 idBanco.enable(false);
+                var idNit = $("#idter__nit").data("kendoMaskedTextBox");
+                idNit.enable(false);
                 //e.container.find("input[name=ter__raz]")[0].readOnly="true"
 //                if (e.model[est] != 99) {
 //                    kendo.ui.progress($('.k-edit-form-container'), true);
@@ -187,6 +204,8 @@ function grilla(obj) {
 //                }
             } else {
                 e.container.kendoWindow("title", "Crear");
+                var idNit = $("#idter__nit").data("kendoMaskedTextBox");
+                idNit.enable(false);
 //                var idNivel = $("#idcniv__cod").data("kendoNumericTextBox");
                 ////caso en el que el popup es crear
 //                Buscarlabel = buscarlabel.prevObject[3];
@@ -212,23 +231,23 @@ function deleteRow(e) {
         e.preventDefault();
         var dataItem = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"));
 
-        
-            var actions = new Array();
-            actions[0] = new Object();
-            actions[0].text = "OK";
-            actions[0].action = function () {
-                var dataSource = $("#grid").data("kendoGrid").dataSource;
-                dataSource.remove(dataItem);
-                dataSource.sync();
-                bandAlert = 0;
-            };
-            actions[1] = new Object();
-            actions[1].text = "Cancelar";
-            actions[1].action = function () {
-                bandAlert = 0;
-            };
-            createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.cto__nom+ " ---?", "400px", "200px", true, true, actions);
-        
+
+        var actions = new Array();
+        actions[0] = new Object();
+        actions[0].text = "OK";
+        actions[0].action = function () {
+            var dataSource = $("#grid").data("kendoGrid").dataSource;
+            dataSource.remove(dataItem);
+            dataSource.sync();
+            bandAlert = 0;
+        };
+        actions[1] = new Object();
+        actions[1].text = "Cancelar";
+        actions[1].action = function () {
+            bandAlert = 0;
+        };
+        createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.cto__nom + " ---?", "400px", "200px", true, true, actions);
+
     } catch (e) {
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();
@@ -238,9 +257,8 @@ function deleteRow(e) {
 ////////////////////////////////////////////////////////////////////////////////
 function  cto__codList(container, options) {
     $('<input id="idcto__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoMaskedTextBox({
-       mask: "000-00-0000"
     });
-    
+
 }
 //function  cniv__codList(container, options) {
 //    $('<input id="idcniv__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoNumericTextBox({
@@ -255,24 +273,25 @@ function cniv__codList(container, options) {
         dataTextField: "cniv__cod",
         dataValueField: "cniv__cod",
         dataSource: dataSource,
-        change:onSelectNivel,
+        change: onSelectNivel,
+        dataBound: onSelectNivel,
         template: '<div class="divElementDropDownList">Nivel: #: cniv__cod # <br>Num. Digitos: #:cniv__tam#</div>',
         index: 0
     });
 }
-function onSelectNivel(){
+function onSelectNivel() {
     var dropdownlist = $("#idcniv__cod").data("kendoDropDownList");
-    
+
     var tam = dropdownlist.dataSource._data[dropdownlist.selectedIndex].cniv__tam;
     var tamMask = "";
-    for(var i = 0;i < tam;i++){
-        tamMask = tamMask +"0";
+    for (var i = 0; i < tam; i++) {
+        tamMask = tamMask + "0";
     }
     $("#idcto__cod").removeClass();
     var maskedtextbox = $("#idcto__cod").data("kendoMaskedTextBox");
     maskedtextbox.destroy();
-     $("#idcto__cod").kendoMaskedTextBox({
-       mask: tamMask
+    $("#idcto__cod").kendoMaskedTextBox({
+        mask: tamMask
     });
 }
 function listasciu__cod() {
@@ -343,21 +362,21 @@ function listasciu__cod() {
 
 
 function ter__nitList(container, options) {
-    
+
     var obj = new listater__nit();
     var dataSource = obj.getdataSource();
-    $('<input id="idter__nit" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoAutoComplete({
-        dataTextField: "ter__nit",
-        dataValueField: "ter__nit",
-        dataSource: dataSource,
-        template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
-        minLength: 7,
-        change: onSelectNit
+    $('<input id="idter__nit" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoMaskedTextBox({
+//        dataTextField: "ter__nit",
+//        dataValueField: "ter__nit",
+//        dataSource: dataSource,
+//        template: '<div class="divElementDropDownList">#: data.ter__nit #' + ' - ' + ' #:data.ter__raz #</div>',
+//        minLength: 7,
+//        change: onSelectNit
     });
 }
 
-function onSelectNit(e){
-     $("#idter__raz").val(e.sender.listView._dataItems[0].ter__raz);
+function onSelectNit(e) {
+    $("#idter__raz").val(e.sender.listView._dataItems[0].ter__raz);
 }
 function listater__nit() {
     var objSirUn = new SIRsic_ter();
@@ -426,20 +445,26 @@ function listater__nit() {
 }
 ;
 function ter__razList(container, options) {
-    
+
     var obj = new listater__raz();
     var dataSource = obj.getdataSource();
     $('<input id="idter__raz" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoAutoComplete({
         dataTextField: "ter__raz",
         dataValueField: "ter__raz",
-        template:'<div class="divElementDropDownList">#: data.ter__raz #</div>',
+        template: '<div class="divElementDropDownList">#: data.ter__raz #</div>',
         dataSource: dataSource,
-         minLength: 4,
+        minLength: 4,
         change: onSelectRaz
     });
 }
-function onSelectRaz(e){
-    $("#idter__nit").val(e.sender.listView._dataItems[0].ter__nit);
+function onSelectRaz(e) {
+    try {
+        $("#idter__nit").val(e.sender.listView._dataItems[0].ter__nit);
+    } catch (e) {
+        $("#idter__raz").val("");
+        $("#idter__nit").val("");
+        alertDialogs("El responsable seleccionado no tiene una cédula asociada.");
+    }
 }
 function listater__raz() {
     var objSirUn = new SIRsic_ter();
