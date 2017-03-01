@@ -399,7 +399,7 @@ function presupuesto(container, options) {
         {text: "No", value: "false"},
     ];
     
-    $('<input  id = "presupuesto" required name="' + options.field + '"/>')
+    $('<input  id = "presupuesto" name="' + options.field + '"/>')
             .appendTo(container)
             .kendoDropDownList({        
         dataTextField: "text",
@@ -417,7 +417,7 @@ function tipoCuenta(container, options) {
         {text: "ReteIVA", value: 4}
     ];
     
-    $('<input  id = "tipoCuenta" required name="' + options.field + '"/>')
+    $('<input  id = "tipoCuenta" name="' + options.field + '"/>')
             .appendTo(container)
             .kendoDropDownList({        
         dataTextField: "text",
@@ -433,7 +433,7 @@ function anexofinanciero(container, options) {
     var urlService = consultar.getUrlSir();
     var mapCud1 = consultar.getmapSir();
     
-    $('<input  id = "anexofinanciero" required name="' + options.field + '"/>')
+    $('<input  id = "anexofinanciero" name="' + options.field + '"/>')
             .appendTo(container)
             .kendoDropDownList({
         dataTextField: "anf__des",
@@ -483,7 +483,7 @@ function anexoTributario(container, options) {
     var urlService = consultar.getUrlSir();
     var mapCud1 = consultar.getmapSir();
     
-    $('<input  id = "anexoTributario" required name="' + options.field + '"/>')
+    $('<input  id = "anexoTributario" name="' + options.field + '"/>')
             .appendTo(container)
             .kendoDropDownList({
                 dataTextField: "anx__nom",
@@ -563,7 +563,7 @@ function conceptoTri(container, options) {
     var urlService = consultar.getUrlSir();
     var mapCud1 = consultar.getmapSir();
     
-    $('<input  id = "conceptoTributario" required name="' + options.field + '"/>')
+    $('<input  id = "conceptoTributario" name="' + options.field + '"/>')
             .appendTo(container)
             .kendoDropDownList({
         dataTextField: "cpt__nom",
