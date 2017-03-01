@@ -150,7 +150,7 @@ function SIRsic_ter() {
 function SirEstructuraCto() {
 var url = ipServicios + baseContabilidad + "SirEstructuraCto";
     ;
-    var mapSir = "eesic_ciu";
+    var mapSir = "eesic_cniv";
     var dataInputSir = {
         "dssic_cniv": {
             "eeDatos": [

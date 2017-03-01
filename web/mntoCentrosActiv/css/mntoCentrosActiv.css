@@ -80,3 +80,8 @@ table{
   height:100%;
 }
 
+.divElementDropDownList{
+    border-bottom: 1px solid;
+    border-bottom-color: #DFDFDF;
+}
+

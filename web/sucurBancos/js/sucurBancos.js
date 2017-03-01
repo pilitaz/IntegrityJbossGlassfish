@@ -38,9 +38,11 @@ function grilla(obj) {
     /*variable para adicionar los campos requeridos y el tipo de dato*/
     /*editable: false --- ocultar en grilla*/
     var fieldShema = {
+        bco__nom: { type: 'string'},
         bco__cod: { type: 'string'},
             bco__dir: { type: 'string'},
             ciu__cod: { type: 'string'},
+            ciu__nom: { type: 'string'},
             sbco__cod: { type: 'number'},
             sbco__dir: { type: 'string'},
             sbco__nom: { type: 'string'},
@@ -70,7 +72,8 @@ function grilla(obj) {
     /*variables para poner los campos visibles tanto en popUp como en grilla, en caso de no colocarlos no apareceran en ni en popup ni engrilla */
     /*hiden: true --- ocultar en grilla*/
     var columns = [
-        {field: "bco__cod", title: "Codigo Banco",editor: bco__codList,width: "100%"},
+//        {field: "bco__cod", title: "Codigo Banco",editor: bco__codList,width: "100%"},
+        {field: "bco__nom", title: "Codigo Banco",editor: bco__codList,width: "100%"},
             {field: "bco__dir", title: "Direccion",width: "100%"},
             {field: "ciu__cod", title: "Ciudad",editor: ciu__codList,width: "100%"},
             {field: "sbco__cod", title: "Sucursal del Banco",editor: sbco__codList,width: "100%"},

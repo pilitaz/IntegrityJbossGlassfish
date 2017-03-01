@@ -60,7 +60,7 @@ function grilla(obj) {
     /*variables para poner los campos visibles tanto en popUp como en grilla, en caso de no colocarlos no apareceran en ni en popup ni engrilla */
     /*hiden: true --- ocultar en grilla*/
     var columns = [
-//		btnDer,
+//		btnDer,{field: "cniv__cod", title: "Nivel",width: "100%", editor:cniv__codList},
         {field: "cto__cod", title: "Centro de Actividad", editor:cto__codList,width: "100%"},
             {field: "cniv__cod", title: "Nivel",width: "100%", editor:cniv__codList},
             {field: "cto__nom", title: "Nombre",width: "100%"},
@@ -97,9 +97,13 @@ function grilla(obj) {
             },
             parameterMap: function (options, operation) {
                 try {
+                    var maskedtextbox = $("#idcto__cod").data("kendoMaskedTextBox");
                     if (operation === 'read') {
                         return JSON.stringify(inputsir);
                     } else if (operation === 'create') {
+                        if(maskedtextbox._old.indexOf("_")!==-1){
+                            throw "Debe llenar con digitos todo el centro de actividad";
+                        }
                         var key1 = Object.keys(inputCud)[0];
                          options["doc__exp"] = 0;
                          options["est__cto"] = 0;
@@ -108,6 +112,9 @@ function grilla(obj) {
                         return JSON.stringify(inputCud);
                         
                     }else if (operation === 'update') {
+                        if(maskedtextbox._old.indexOf("_")!==-1){
+                            throw "debe llenar con digitos todo el centro de actividad";
+                        }
                         var key1 = Object.keys(inputCud)[0]
                         options["ter__nit"] = options.ter__raz.ter__nit;
                         delete options["ter__raz"];
@@ -120,13 +127,15 @@ function grilla(obj) {
                         return JSON.stringify(inputCud);
                     }
                 } catch (e) {
-                    alertDialogs(e.message)
+                    debugger
+                    alertDialogs(e)
                 }
             }
         },
         schema: {
             type: "json",
             data: function (e) {
+                try {
                 var key1 = Object.keys(e)[0];
                 if (e[key1].eeEstados[0].Estado === "OK") {
                     if (e[key1][mapSir]) {
@@ -136,7 +145,11 @@ function grilla(obj) {
                     }
                     return e[key1][mapSir];
                 } else {
+                    throw "Error";
                     alertDialogs(e[key1].eeEstados[0].Estado);
+                }
+                } catch (e) {
+                    alertDialogs(e.message)
                 }
             },
             model: model
@@ -164,7 +177,7 @@ function grilla(obj) {
 
                 e.container.kendoWindow("title", "Editar");
                 var idBanco = $("#idcto__cod").data("kendoNumericTextBox");
-                var idNivel = $("#idcniv__cod").data("kendoNumericTextBox");
+//                var idNivel = $("#idcniv__cod").data("kendoNumericTextBox");
                 idBanco.enable(false);
                 //e.container.find("input[name=ter__raz]")[0].readOnly="true"
 //                if (e.model[est] != 99) {
@@ -174,7 +187,7 @@ function grilla(obj) {
 //                }
             } else {
                 e.container.kendoWindow("title", "Crear");
-                var idNivel = $("#idcniv__cod").data("kendoNumericTextBox");
+//                var idNivel = $("#idcniv__cod").data("kendoNumericTextBox");
                 ////caso en el que el popup es crear
 //                Buscarlabel = buscarlabel.prevObject[3];
 //                Buscarlabel.style.display = "none";
@@ -224,24 +237,42 @@ function deleteRow(e) {
 
 ////////////////////////////////////////////////////////////////////////////////
 function  cto__codList(container, options) {
-    $('<input id="idcto__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoNumericTextBox({
-       format: "{0:n0}"
+    $('<input id="idcto__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoMaskedTextBox({
+       mask: "000-00-0000"
     });
+    
 }
-function  cniv__codList(container, options) {
-    $('<input id="idcniv__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoNumericTextBox({
-       format: "{0:n0}"
-    });
-}
+//function  cniv__codList(container, options) {
+//    $('<input id="idcniv__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoNumericTextBox({
+//       format: "{0:n0}"
+//    });
+//}
 
-function ciu__codList(container, options) {
+function cniv__codList(container, options) {
     var obj = new listasciu__cod();
     var dataSource = obj.getdataSource();
-    $('<input id="idciu__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
-        dataTextField: "cniv__tam",
+    $('<input id="idcniv__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
+        dataTextField: "cniv__cod",
         dataValueField: "cniv__cod",
         dataSource: dataSource,
+        change:onSelectNivel,
+        template: '<div class="divElementDropDownList">Nivel: #: cniv__cod # <br>Num. Digitos: #:cniv__tam#</div>',
         index: 0
+    });
+}
+function onSelectNivel(){
+    var dropdownlist = $("#idcniv__cod").data("kendoDropDownList");
+    
+    var tam = dropdownlist.dataSource._data[dropdownlist.selectedIndex].cniv__tam;
+    var tamMask = "";
+    for(var i = 0;i < tam;i++){
+        tamMask = tamMask +"0";
+    }
+    $("#idcto__cod").removeClass();
+    var maskedtextbox = $("#idcto__cod").data("kendoMaskedTextBox");
+    maskedtextbox.destroy();
+     $("#idcto__cod").kendoMaskedTextBox({
+       mask: tamMask
     });
 }
 function listasciu__cod() {
@@ -287,7 +318,7 @@ function listasciu__cod() {
                 }
             },
             model: {
-                id: "ciu__cod",
+                id: "cniv__cod",
                 fields: {
                     cniv__cod: {type: 'string'},
                     cniv__tam: {type: 'string'}

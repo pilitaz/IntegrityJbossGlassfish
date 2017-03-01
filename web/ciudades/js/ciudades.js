@@ -204,8 +204,7 @@ function deleteRow(e) {
 }
 ////////////////////////////////////////////////////////////////////////////////
 function  ciu__codList(container, options) {
-    $('<input id="idciu__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoNumericTextBox({
-       format: "{0:n0}"
+    $('<input id="idciu__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoMaskedTextBox({
     });
 }
 
