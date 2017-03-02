@@ -77,13 +77,14 @@ function grid(ternit, terraz) {
     $("#gridTerceros").kendoGrid({
         dataSource: dataSourceTerceros,        
         selectable: false,
+        sortable: true,
         filterable: true,
         columns: [
             {field: "ter__nit", title: "RUC"},
             {field: "ter__raz", title: "Razón social"},
-            {field: "ter__dir", title: "Dirección", filterable: false},
-            {field: "ter__tel", title: "Teléfono", filterable: false},
-            {field: "mail_ter", title: "Email principal", filterable: false},
+            {field: "ter__dir", title: "Dirección"},
+            {field: "ter__tel", title: "Teléfono"},
+            {field: "mail_ter", title: "Email principal"},
             {command:
                         [   
                             {name: "aprobar", text: " ", click: changeEst, template: "<a class='k-grid-aprobar' '><span class='k-sprite po_cerrar'></span></a>"},                            
