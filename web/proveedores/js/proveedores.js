@@ -189,7 +189,7 @@ function cargarProveedor(e){
     document.getElementById('direccion').value=e.dsSIRcon_prv.eecon_prv[0].prv__dir;
     
     document.getElementById('autorizacion').value=e.dsSIRcon_prv.eecon_prv[0].doc__pref;
-    document.getElementById('departamento').value=e.dsSIRcon_prv.eecon_prv[0].dpto__cod1;
+    //document.getElementById('departamento').value=e.dsSIRcon_prv.eecon_prv[0].dpto__cod1;
     document.getElementById('indicativo').value=e.dsSIRcon_prv.eecon_prv[0].prv__ind__ciu;
     document.getElementById('postal').value=e.dsSIRcon_prv.eecon_prv[0].prv__pos;
     document.getElementById('informarBeneficiario').value=e.dsSIRcon_prv.eecon_prv[0].prv__ben;
@@ -272,18 +272,17 @@ function cargarProveedor(e){
         }
         
     });
-    
-    var consultar = new sirCiudades();
+  
+    var consultar = new sirPaises();
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();
     var mapCud1 = "eesic_ciu";
-       $("#ciudad")
+       var paises = $("#pais")
             .kendoDropDownList({
                 dataTextField: "ciu__nom",
         dataValueField: "ciu__cod",
-        dataBound: function() {          
-        var dropdownlist = $("#ciudad").data("kendoDropDownList");
-         dropdownlist.value(dataProveedor.dsSIRcon_prv.eecon_prv[0].ciu__cod);
+        select: function(e) { debugger         
+            departamentos(e.dataItem.ciu__cod);
             },
         dataSource: {
             transport: {
@@ -305,7 +304,7 @@ function cargarProveedor(e){
                     if (e[key1].eeEstados[0].Estado === "OK") {
                         return e[key1][mapCud1];
                     } else {
-                        alertDialogs("Error Con Servicio Cuidades"+e[key1].eeEstados[0].Estado);
+                        alertDialogs("Error Con Servicio Paises"+e[key1].eeEstados[0].Estado);
                     }
                 },
                 model: {
@@ -319,6 +318,8 @@ function cargarProveedor(e){
         }
         
     });
+   
+ 
     $("#ciudadBanco")
             .kendoDropDownList({
                 dataTextField: "ciu__nom",
@@ -372,7 +373,7 @@ function cargarProveedor(e){
         dataTextField: "bco__nom",
         dataValueField: "bco__cod",
         dataBound: function() {          
-        var dropdownlist = $("#ciudadBanco").data("kendoDropDownList");
+        var dropdownlist = $("#Banco").data("kendoDropDownList");
          dropdownlist.value(dataProveedor.dsSIRcon_prv.eecon_prv[0].bco__cod1);
             },
            
@@ -414,6 +415,114 @@ function cargarProveedor(e){
        
 //     $("#ciudad").data("kendoDropDownList").value=e.dsSIRcon_prv.eecon_prv[0].ciu__cod;
 //    $("#ciudadBanco").data("kendoDropDownList").value=e.dsSIRcon_prv.eecon_prv[0].ciu__cod1;
+}
+function departamentos(e){
+    
+    var consultar = new sirPaises();
+    var datajson = consultar.getjson();
+    var urlService = consultar.getUrlSir();
+    datajson.dsSIRsic_ciuxfiltro.eeSIRsic_ciu_xfiltro[0].picciu_cod=e;
+    datajson.dsSIRsic_ciuxfiltro.eeSIRsic_ciu_xfiltro[0].piiciu_pos=4;
+    
+    var mapCud1 = "eesic_ciu";
+       var paises = $("#departamento")
+            .kendoDropDownList({
+                dataTextField: "ciu__nom",
+        dataValueField: "ciu__cod",
+        select: function(e) { debugger         
+ciudades(e.dataItem.ciu__cod);
+            },
+        dataSource: {
+            transport: {
+                read: {
+                    url: urlService,
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8"
+                },
+                parameterMap: function (options, operation) {
+                    if (operation === "read") {
+                        return JSON.stringify(datajson);
+                    }
+                }
+            },
+            schema: {
+                data: function (e) {
+                    var key1 = Object.keys(e)[0];
+                    if (e[key1].eeEstados[0].Estado === "OK") {
+                        return e[key1][mapCud1];
+                    } else {
+                        alertDialogs("Error Con Servicio Paises"+e[key1].eeEstados[0].Estado);
+                    }
+                },
+                model: {
+                    id: "ciu__cod",
+                    fields: {
+                        ciu__nom: {editable: false, nullable: false},
+                        ciu__cod: {editable: false, nullable: false}
+                    }
+                }
+            }
+        }
+        
+    });
+    
+    
+    
+}
+function ciudades(e){
+    
+    var consultar = new sirPaises();
+    var datajson = consultar.getjson();
+    var urlService = consultar.getUrlSir();
+    datajson.dsSIRsic_ciuxfiltro.eeSIRsic_ciu_xfiltro[0].picciu_cod=e;
+    datajson.dsSIRsic_ciuxfiltro.eeSIRsic_ciu_xfiltro[0].piiciu_pos=7;
+    
+    var mapCud1 = "eesic_ciu";
+       var paises = $("#ciudad")
+            .kendoDropDownList({
+                dataTextField: "ciu__nom",
+        dataValueField: "ciu__cod",
+        select: function(e) { debugger         
+ciudades(e.dataItem.ciu__cod);
+            },
+        dataSource: {
+            transport: {
+                read: {
+                    url: urlService,
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8"
+                },
+                parameterMap: function (options, operation) {
+                    if (operation === "read") {
+                        return JSON.stringify(datajson);
+                    }
+                }
+            },
+            schema: {
+                data: function (e) {
+                    var key1 = Object.keys(e)[0];
+                    if (e[key1].eeEstados[0].Estado === "OK") {
+                        return e[key1][mapCud1];
+                    } else {
+                        alertDialogs("Error Con Servicio Paises"+e[key1].eeEstados[0].Estado);
+                    }
+                },
+                model: {
+                    id: "ciu__cod",
+                    fields: {
+                        ciu__nom: {editable: false, nullable: false},
+                        ciu__cod: {editable: false, nullable: false}
+                    }
+                }
+            }
+        }
+        
+    });
+    
+    
+    
 }
 function cargarDatos(e){debugger
    try {

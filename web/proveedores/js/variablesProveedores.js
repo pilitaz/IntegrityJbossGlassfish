@@ -345,3 +345,40 @@ function cudProveedores() {
     };
     
 };
+////////////////////////////////////////////////////////////////////////
+function sirPaises() {
+    var urlSir = ipServicios + baseParameters +"SIRsic_ciu_xfiltro";
+    var json = {
+ "dsSIRsic_ciuxfiltro": {
+  "eeDatos": [{
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+  }],
+   "eeSIRsic_ciu_xfiltro": [{
+   "picciu_cod": "*",
+   "piiciu_pos": 2
+  }]
+ }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
