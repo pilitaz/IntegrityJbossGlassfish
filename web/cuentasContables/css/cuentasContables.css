@@ -91,7 +91,7 @@ table{
     border-style: none;
     padding: 0;
 }*/
-.k-edit-buttons.k-state-default{
+/*.k-edit-buttons.k-state-default{
     padding: 0;
     overflow: hidden;
     height: 40px
@@ -112,4 +112,4 @@ a.k-button.k-button-icontext.k-primary.k-grid-update{
 
 .k-icon.k-i-update{
     display: none
-}
+}*/

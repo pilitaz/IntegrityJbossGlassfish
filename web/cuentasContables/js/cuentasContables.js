@@ -198,6 +198,7 @@ function grilla(obj) {
                     dropDownListAnexoTributario.enable(false);
                 }                
             } else {
+                e.container.find("a.k-button.k-button-icontext.k-primary.k-grid-update")["0"].innerText = "Guardar"
                 e.container.kendoWindow("title", "Crear");
             }
         },
