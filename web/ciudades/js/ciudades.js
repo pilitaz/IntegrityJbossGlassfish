@@ -154,6 +154,8 @@ function grilla(obj) {
             if (!e.model.isNew()) {//caso en el que el popup es editar
 
                 e.container.kendoWindow("title", "Editar");
+                var idCiu = $("#idciu__cod").data("kendoMaskedTextBox");
+                idCiu.enable(false);
 //                var idBanco = $("#idciu__cod").data("kendoNumericTextBox");
 //                idBanco.enable(false);
                 //e.container.find("input[name=ter__raz]")[0].readOnly="true"
