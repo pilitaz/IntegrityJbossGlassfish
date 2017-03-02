@@ -17,14 +17,14 @@ $(document).ready(function () {
         sessionStorage.removeItem("objBanco");
     }else{
         bco__cod = 0;
-        grilla();
+//        grilla();
     }
     
 
 });
 
 function grilla(obj) {
-
+    
    
     /* variables para consumir el servicio SiCud*/
     var objCud = new cud();
@@ -67,7 +67,7 @@ function grilla(obj) {
     ];
 //    var btnDer = {command: btnDetalle, title: "&nbsp;", width: "50px" };
 //    var btnDer = {};
-    var btnIzq = {command: btnUD, title: "&nbsp;", width: "150px"};
+    var btnIzq = {command: btnUD, title: "&nbsp;", width: "100px"};
 
     /*variables para poner los campos visibles tanto en popUp como en grilla, en caso de no colocarlos no apareceran en ni en popup ni engrilla */
     /*hiden: true --- ocultar en grilla*/

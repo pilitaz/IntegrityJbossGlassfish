@@ -171,12 +171,6 @@ function grilla(obj) {
         },
         error: function (e) {
             alertDialogs(e.errorThrown);
-        },
-        requestEnd: function (e) {
-            if((e.type==="create")||(e.type==="update")){
-                $("#grid").data("kendoGrid").destroy();
-                grilla();
-            }
         }
     });
     if (!btnC) {
@@ -483,7 +477,7 @@ function listater__raz() {
                 url: urlSirUn,
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
-                dataType: 'json',
+                dataType: 'json'
             },
             parameterMap: function (options, operation) {
                 try {
@@ -493,7 +487,7 @@ function listater__raz() {
                         return JSON.stringify(inputsirUn);
                     }
                 } catch (e) {
-                    alertDialogs(e.message)
+                    alertDialogs(e.message);
                 }
             }
         },
@@ -579,7 +573,7 @@ function sendAjax(verHtml, obj) {
 }
 function fltrEst() {
     var data = [
-        {text: "Todos", value: "-1", },
+        {text: "Todos", value: "-1" },
         {text: "Creado", value: "99", clase: "po_checkCreate"},
         {text: "Activo", value: "0", clase: "po_checkAct"},
         {text: "Bloqueado", value: "1", clase: "po_checkBloq"}
@@ -615,7 +609,7 @@ function onChangeFltr() {
                 }
             ]
         }
-    }
+    },
     grilla(inputsir);
 }
 
