@@ -7,10 +7,6 @@ and open the template in the editor.
     Created on : 21-sep-2016, 13:52:08
     Author     : Quantum
 */
-.k-edit-form-container{
-    width: 99%;
-}
-
 .divElementDropDownList{
     border-bottom: 1px solid;
     border-bottom-color: #DFDFDF;
@@ -82,9 +78,6 @@ table{
     font-weight: bold;
 }
 
-
-
-
 #outerWrapper{
   background-color: #FFFFFF;
   position:relative;
@@ -94,3 +87,29 @@ table{
   height:100%;
 }
 
+/*div.k-edit-form-container.k-edit-buttons{
+    border-style: none;
+    padding: 0;
+}*/
+.k-edit-buttons.k-state-default{
+    padding: 0;
+    overflow: hidden;
+    height: 40px
+        
+}
+.k-button.k-button-icontext.k-grid-cancel{
+    display: none
+}
+
+a.k-button.k-button-icontext.k-primary.k-grid-update{    
+    width: 100%;
+    margin: 0; 
+    height: 100%
+}
+.k-edit-form-container.k-button{
+    margin: 0;
+}
+
+.k-icon.k-i-update{
+    display: none
+}

@@ -53,7 +53,7 @@ function grilla(obj) {
     /*variables para adicionar los botones de la grilla*/
     var btnC = true;
     var btnUD = [
-        {name: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
+        {name: "edit", text: {update: "Actualizar"}, template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
 //        {name: "Delete", click: deleteRow, template: "<a class='k-grid-Delete'><span class='k-sprite po_cerrar'></span></a>"},
     ];
     var btnDetalle = [
@@ -88,12 +88,6 @@ function grilla(obj) {
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
             },
-//            destroy: {
-//                url: urlCud,
-//                type: "DELETE",
-//                dataType: "json",
-//                contentType: "application/json"
-//            },
             update: {
                 url: urlCud,
                 type: "PUT",
@@ -201,11 +195,8 @@ function grilla(obj) {
                     dropDownListAnexoTributario.enable(false);
                     
                     var dropDownListAnexoTributario= $("#conceptoTributario").data("kendoDropDownList"); 
-                    dropDownListAnexoTributario.enable(false);                    
-                    
-                }
-
-                
+                    dropDownListAnexoTributario.enable(false);
+                }                
             } else {
                 e.container.kendoWindow("title", "Crear");
             }

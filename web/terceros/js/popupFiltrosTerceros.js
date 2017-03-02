@@ -12,8 +12,7 @@
  */
 
 $(document).ready(function () {        
-    $("#btBuscar").kendoButton({
-        click: buscarPedidos
+    $("#btBuscar").kendoButton({        
     });
 });
 function buscarPedidos() {

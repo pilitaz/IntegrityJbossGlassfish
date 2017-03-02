@@ -103,6 +103,7 @@ function btnFltrTercero() {
     var undo = $("#undo");
 
     function onCloseFiltros() {
+        bandAlert = 0
         document.getElementById("windowFiltros").remove();
         undo.fadeIn();
     }
