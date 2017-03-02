@@ -77,9 +77,7 @@ function grid(ternit, terraz) {
     $("#gridTerceros").kendoGrid({
         dataSource: dataSourceTerceros,        
         selectable: false,
-        filterable: {
-           mode: "row"
-        },
+        filterable: true,
         columns: [
             {field: "ter__nit", title: "RUC"},
             {field: "ter__raz", title: "Razón social"},

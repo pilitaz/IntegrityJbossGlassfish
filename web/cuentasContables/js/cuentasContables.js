@@ -164,9 +164,7 @@ function grilla(obj) {
         dataSource: dataSource,
         sortable: true,
         selectable: false,
-        filterable: {
-           mode: "row"
-        },
+        filterable: true,
         columns: columns,
         editable: "popup",
         rowTemplate: kendo.template($("#rowTemplate").html()),
