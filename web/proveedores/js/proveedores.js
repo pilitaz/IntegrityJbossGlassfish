@@ -1,6 +1,11 @@
 var bandAlert=0;
 var dataProveedor;
 $(document).ready(function () {   
+     
+     $("#fechaAutorizacion").kendoDateTimePicker({
+    format: "dd/MM/yyyy"
+});
+      $("#agencia").kendoNumericTextBox();
     var nit1 = sessionStorage.getItem("Nit_Tercero");
     if(nit1==="Nuevo"){
           cargarDatos1();
@@ -10,7 +15,11 @@ $(document).ready(function () {
 
 
 } );
+ function volverProveedores(){debugger
 
+                        window.location = ("proveedoresCabecera.html");
+   }
+               
 function mostrarCustomPopUp() {
     if(bandAlert===0){
         bandAlert++;
@@ -19,13 +28,142 @@ function mostrarCustomPopUp() {
     }
     
 }
-function mostrarCustomPopUp1() {
-    if(bandAlert===0){
+function mostrarCustomPopUp1() {debugger
+    mostrarPopUp2();
+    cargarBancos();
+
+   
+}
+
+function mostrarPopUp2() {
+     if(bandAlert===0){
         bandAlert++;
         $("body").append("<div id='disable'></div>");
         $("#customPopUp1").fadeIn("slow");
     }
     
+}
+function cargarBancos() {
+var consultar = new sirBancos();
+    var datajson = consultar.getjson();
+    var urlService = consultar.getUrlSir();
+    var mapCud3 = "eesic_bco";
+     $("#bancoTercero")
+            .kendoDropDownList({
+                
+        dataTextField: "bco__nom",
+        dataValueField: "bco__cod",
+        
+        dataSource: {
+            transport: {
+                read: {
+                    url: urlService,
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8"
+                },
+                parameterMap: function (options, operation) {
+                    if (operation === "read") {
+                        return JSON.stringify(datajson);
+                    }
+                }
+            },
+            schema: {
+                data: function (e) {
+                    var key1 = Object.keys(e)[0];
+                    if (e[key1].eeEstados[0].Estado === "OK") {
+                        return e[key1][mapCud3];
+                    } else {
+                        alertDialogs("Error Con Servicio Bancos"+e[key1].eeEstados[0].Estado);
+                    }
+                },
+                model: {
+                    id: "bco__cod",
+                    fields: {
+                        bco__nom: {editable: true, nullable: false},
+                        bco__cod: {editable: true, nullable: false},
+                        
+                    }
+                }
+            }
+        }
+        
+    });
+    
+}
+function crearProveedor() {debugger
+    
+  var consultar = new cudProveedores();
+    var datajson = consultar.getjson();
+    var urlService = consultar.getUrlSir();
+    
+    var nit1 = sessionStorage.getItem("Nit_Tercero");
+    if(nit1==="Nuevo"){
+        var Type="POST";
+        datajson.dsSICUDcon_prv.eecon_prv[0].ter__nit=$("#NiT").val();  
+        datajson.dsSICUDcon_prv.eecon_prv[0].eecon_prtra[0].ter__nit=$("#NiT").val(); 
+    }else{
+        var Type="PUT";
+        datajson.dsSICUDcon_prv.eecon_prv[0].ter__nit=document.getElementById('nit').innerHTML; 
+        datajson.dsSICUDcon_prv.eecon_prv[0].eecon_prtra[0].ter__nit=document.getElementById('nit').innerHTML; 
+    }
+     
+     datajson.dsSICUDcon_prv.eecon_prv[0].ter__rep=document.getElementById('responsable').value;
+     datajson.dsSICUDcon_prv.eecon_prv[0].bco__cod1=parseInt($("#Banco").data("kendoDropDownList")._old);
+    datajson.dsSICUDcon_prv.eecon_prv[0].bco__cta=document.getElementById('cuenta').value;
+    datajson.dsSICUDcon_prv.eecon_prv[0].doc__pref=document.getElementById('fechaAutorizacion').value;
+    datajson.dsSICUDcon_prv.eecon_prv[0].doc__rfec=null;
+    datajson.dsSICUDcon_prv.eecon_prv[0].dpto__cod=document.getElementById('departamentoBanco').value;
+    datajson.dsSICUDcon_prv.eecon_prv[0].dpto__cod1=document.getElementById('departamento').value;
+    datajson.dsSICUDcon_prv.eecon_prv[0].ciu__cod=$("#ciudad").data("kendoDropDownList")._old;
+    datajson.dsSICUDcon_prv.eecon_prv[0].ciu__cod1=$("#ciudadBanco").data("kendoDropDownList")._old;
+    datajson.dsSICUDcon_prv.eecon_prv[0].fin__dir=document.getElementById('direccionBanco').value;
+    datajson.dsSICUDcon_prv.eecon_prv[0].pag__cod=parseInt($("#formaPago").data("kendoDropDownList")._old);
+    datajson.dsSICUDcon_prv.eecon_prv[0].prv__age=parseInt(document.getElementById('agencia').value);
+    datajson.dsSICUDcon_prv.eecon_prv[0].prv__ben=document.getElementById('informarBeneficiario').value;
+    datajson.dsSICUDcon_prv.eecon_prv[0].prv__cgo=document.getElementById('cargoResponsable').value;
+    if ($("#tipoCuenta").data("kendoDropDownList")._old==="true"){var tipo=true;}else{tipo=false;}
+    datajson.dsSICUDcon_prv.eecon_prv[0].prv__cta=tipo;
+    datajson.dsSICUDcon_prv.eecon_prv[0].prv__dir=document.getElementById('direccion').value;
+    datajson.dsSICUDcon_prv.eecon_prv[0].prv__dpfax="";
+    datajson.dsSICUDcon_prv.eecon_prv[0].prv__ind__ciu=document.getElementById('indicativo').value;
+    datajson.dsSICUDcon_prv.eecon_prv[0].prv__max=document.getElementById('maximoPago').value;
+//    datajson.dsSICUDcon_prv.eecon_prv[0].prv__nofax
+    datajson.dsSICUDcon_prv.eecon_prv[0].prv__nrfax=document.getElementById('fax').value;
+    datajson.dsSICUDcon_prv.eecon_prv[0].prv__pos=document.getElementById('postal').value;
+    datajson.dsSICUDcon_prv.eecon_prv[0].prv__tel =parseInt(document.getElementById('telefono').value);
+    datajson.dsSICUDcon_prv.eecon_prv[0].ter__mail=document.getElementById('correo').value;
+    //datajson.dsSICUDcon_prv.eecon_prv[0].bco__nom=
+    //datajson.dsSICUDcon_prv.eecon_prv[0].pag__nom=
+    //datajson.dsSICUDcon_prv.eecon_prv[0].dpto__nom=
+    //datajson.dsSICUDcon_prv.eecon_prv[0].dpto__nom1=
+//    datajson.dsSICUDcon_prv.eecon_prv[0].ciu__nom=
+//    datajson.dsSICUDcon_prv.eecon_prv[0].ciu__nom1=
+    datajson.dsSICUDcon_prv.eecon_prv[0].eecon_prtra[0].bco__cod=parseInt($("#Banco").data("kendoDropDownList")._old);
+   
+$.ajax({
+        
+                    type: Type,        
+                    async: false,
+                    data: JSON.stringify(datajson),
+                    url: urlService,
+                    dataType: "json",        
+                    contentType: "application/json;",
+                    success: function (resp) {
+                        if((resp.dsSICUDcon_prv.eeEstados[0].Estado)=="OK")
+                        {     
+                             alert("OK papu");
+                        }
+                        else
+                        {
+                            alertDialogs("Error"+resp.dsSICUDcon_prv.eeEstados[0].Estado); 
+                                                     
+                        }
+                    } 
+        
+                }); 
+    
+            
 }
 function cerrarCustomPopUp1() {
     bandAlert = 0;
@@ -49,7 +187,7 @@ function cargarProveedor(e){
     document.getElementById('correo').value=e.dsSIRcon_prv.eecon_prv[0].ter__mail;
     document.getElementById('fax').value=e.dsSIRcon_prv.eecon_prv[0].prv__nrfax;
     document.getElementById('direccion').value=e.dsSIRcon_prv.eecon_prv[0].prv__dir;
-   
+    
     document.getElementById('autorizacion').value=e.dsSIRcon_prv.eecon_prv[0].doc__pref;
     document.getElementById('departamento').value=e.dsSIRcon_prv.eecon_prv[0].dpto__cod1;
     document.getElementById('indicativo').value=e.dsSIRcon_prv.eecon_prv[0].prv__ind__ciu;
@@ -58,16 +196,17 @@ function cargarProveedor(e){
     document.getElementById('fechaAutorizacion').value=e.dsSIRcon_prv.eecon_prv[0].doc__pref;
     document.getElementById('estado').value=e.dsSIRcon_prv.eecon_prv[0].prv__est;
     //Detalle 
-    document.getElementById('Banco').value=e.dsSIRcon_prv.eecon_prv[0].bco__cod1;
+    
     document.getElementById('cuenta').value=e.dsSIRcon_prv.eecon_prv[0].bco__cta;
     document.getElementById('maximoPago').value=e.dsSIRcon_prv.eecon_prv[0].prv__max;
     document.getElementById('direccionBanco').value=e.dsSIRcon_prv.eecon_prv[0].fin__dir;
     document.getElementById('departamentoBanco').value=e.dsSIRcon_prv.eecon_prv[0].dpto__cod;
     document.getElementById('responsable').value=e.dsSIRcon_prv.eecon_prv[0].ter__rep;
     document.getElementById('cargoResponsable').value=e.dsSIRcon_prv.eecon_prv[0].prv__cgo;
-    document.getElementById('agencia').value=e.dsSIRcon_prv.eecon_prv[0].prv__age;
+    $("#agencia").data("kendoNumericTextBox").value(e.dsSIRcon_prv.eecon_prv[0].prv__age);
+    
     document.getElementById('tipoCuenta').value=e.dsSIRcon_prv.eecon_prv[0].prv__cta;
-    document.getElementById('terceroBancario').value="";
+    document.getElementById('terceroBancario').value=e.dsSIRcon_prv.eecon_prv[0].prv__cta;
     
     var estados = [
         {text: "Corriente", valor: true},
@@ -180,7 +319,7 @@ function cargarProveedor(e){
         }
         
     });
-       $("#ciudadBanco")
+    $("#ciudadBanco")
             .kendoDropDownList({
                 dataTextField: "ciu__nom",
         dataValueField: "ciu__cod",
@@ -222,6 +361,57 @@ function cargarProveedor(e){
         }
         
     });
+    var consultar = new sirBancos();
+    var datajson = consultar.getjson();
+    var urlService = consultar.getUrlSir();
+    var mapCud3 = "eesic_bco";
+    
+    $("#Banco")
+            .kendoDropDownList({
+                
+        dataTextField: "bco__nom",
+        dataValueField: "bco__cod",
+        dataBound: function() {          
+        var dropdownlist = $("#ciudadBanco").data("kendoDropDownList");
+         dropdownlist.value(dataProveedor.dsSIRcon_prv.eecon_prv[0].bco__cod1);
+            },
+           
+        dataSource: {
+            transport: {
+                read: {
+                    url: urlService,
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8"
+                },
+                parameterMap: function (options, operation) {
+                    if (operation === "read") {
+                        return JSON.stringify(datajson);
+                    }
+                }
+            },
+            schema: {
+                data: function (e) {
+                    var key1 = Object.keys(e)[0];
+                    if (e[key1].eeEstados[0].Estado === "OK") {
+                        return e[key1][mapCud3];
+                    } else {
+                        alertDialogs("Error Con Servicio Bancos"+e[key1].eeEstados[0].Estado);
+                    }
+                },
+                model: {
+                    id: "bco__cod",
+                    fields: {
+                        bco__nom: {editable: true, nullable: false},
+                        bco__cod: {editable: true, nullable: false},
+                        
+                    }
+                }
+            }
+        }
+        
+    });
+       
 //     $("#ciudad").data("kendoDropDownList").value=e.dsSIRcon_prv.eecon_prv[0].ciu__cod;
 //    $("#ciudadBanco").data("kendoDropDownList").value=e.dsSIRcon_prv.eecon_prv[0].ciu__cod1;
 }
@@ -324,6 +514,54 @@ function onloadPopUpCond(){
 }
 function cargarDatos1(e){debugger
    try {
+    var consultar = new sirBancos();
+    var datajson = consultar.getjson();
+    var urlService = consultar.getUrlSir();
+    var mapCud3 = "eesic_bco";
+    
+    $("#Banco")
+            .kendoDropDownList({
+                
+        dataTextField: "bco__nom",
+        dataValueField: "bco__cod",
+        placeholder: "Banco...",
+           
+   
+        dataSource: {
+            transport: {
+                read: {
+                    url: urlService,
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8"
+                },
+                parameterMap: function (options, operation) {
+                    if (operation === "read") {
+                        return JSON.stringify(datajson);
+                    }
+                }
+            },
+            schema: {
+                data: function (e) {
+                    var key1 = Object.keys(e)[0];
+                    if (e[key1].eeEstados[0].Estado === "OK") {
+                        return e[key1][mapCud3];
+                    } else {
+                        alertDialogs("Error Con Servicio Bancos"+e[key1].eeEstados[0].Estado);
+                    }
+                },
+                model: {
+                    id: "bco__cod",
+                    fields: {
+                        bco__nom: {editable: true, nullable: false},
+                        bco__cod: {editable: true, nullable: false},
+                        
+                    }
+                }
+            }
+        }
+        
+    });
        var obj = new sirConsultaTercero();
         var objJson = obj.getjson();
         var url = obj.getUrlSir();
@@ -357,7 +595,7 @@ function cargarDatos1(e){debugger
                             if (operation === 'read') {debugger
                                 var key1 = Object.keys(objJson)[0];
                                 var key2 = Object.keys(objJson[key1])[1];
-                                objJson[key1][key2][0].picter_nit = $("#NiT").val();;
+                                objJson[key1][key2][0].picter_nit = $("#NiT").val();
                                 objJson[key1][key2][0].picter_raz = "";
                                 return JSON.stringify(objJson);
                             } 

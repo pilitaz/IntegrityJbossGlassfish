@@ -119,7 +119,7 @@ $(document).ready(function () {
         var  consultar = new sirProveedor();
         var  datajson = consultar.getjson();
         var  urlService = consultar.getUrlSir();
-//        datajson.dsSIRgpd_pri.SIRgpd_pri[0].piictr__est=e;           
+       datajson.dsSIRcon_prv.eeSIRcon_prv[0].piiprv_est=e;           
         var  actualizar = new sirProveedor();
         var  actjson = actualizar.getjson();
         var  urlactualizar = actualizar.getUrlSir();
@@ -317,18 +317,18 @@ $(document).ready(function () {
  
 function changImgFunc(results) {
 
-        for (var i = 0; i < results.length; i++) {
-            if (document.getElementById("spanproceso"+results[i].pri__cod+results[i].pri__des)){
-                if(results[i].ctr__est==0){                            
-                    document.getElementById("spanproceso"+results[i].pri__cod+results[i].pri__des).setAttribute("class", "k-sprite po_checkAct");   
+        for (var i = 0; i < results.length; i++) {debugger
+            if (document.getElementById("spanproceso"+results[i].ter__nit+results[i].ter__raz)){
+                if(results[i].prv__est==0){                            
+                    document.getElementById("spanproceso"+results[i].ter__nit+results[i].ter__raz).setAttribute("class", "k-sprite po_checkAct");   
                     //document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("onclick", "disable();");
                 }
-                if(results[i].ctr__est==99){     
-                    document.getElementById("spanproceso"+results[i].pri__cod+results[i].pri__des).setAttribute("class", "k-sprite po_checkCreate");
+                if(results[i].prv__est==99){     
+                    document.getElementById("spanproceso"+results[i].ter__nit+results[i].ter__raz).setAttribute("class", "k-sprite po_checkCreate");
                     //document.getElementById("spanproceso"+results[i].rgeo__cod+results[i].ter__nit+results[i].sre__cod).setAttribute("onclick", "active();");
                 }
-                if(results[i].ctr__est==1){     
-                    document.getElementById("spanproceso"+results[i].pri__cod+results[i].pri__des).setAttribute("class", "k-sprite po_checkBloq");
+                if(results[i].prv__est==1){     
+                    document.getElementById("spanproceso"+results[i].ter__nit+results[i].ter__raz).setAttribute("class", "k-sprite po_checkBloq");
 
                 }
             }
