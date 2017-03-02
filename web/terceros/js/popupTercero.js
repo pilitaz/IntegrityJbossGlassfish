@@ -9,6 +9,8 @@ $(document).ready(function () {
     $("#buttonGuardar").kendoButton({
         //click: buscarPedidos
     });
+    
+    $("#ipNumeroDoc").prop("disabled", true).addClass("k-state-disabled");    
         
     var data = [
         {text: "Si", value: "true"},
@@ -43,7 +45,8 @@ $(document).ready(function () {
     
     $("#ipAutoretenedor").kendoDropDownList({
         dataTextField: "text",
-        dataValueField: "value",        
+        dataValueField: "value", 
+        value: "false",
         dataSource: data
         
     });
@@ -79,12 +82,14 @@ $(document).ready(function () {
 function setTercero(){    
     var tercero = JSON.parse(sessionStorage.getItem("regTercero"));
     
-    $("#buttonGuardar")["0"].childNodes["0"].data="Actualizar";
+    $("#buttonGuardar")["0"].childNodes["0"].data="Actualizar";    
     
     var kendoDropDownListtipoDocumento = $("#tipoDocumento").data("kendoDropDownList");    
     kendoDropDownListtipoDocumento.value(tercero.ter__cln);
+    kendoDropDownListtipoDocumento.enable(false);
     
     $("#ipNumeroDoc").val(tercero.ter__nit);
+    $("#ipNumeroDoc").prop("disabled", true).addClass("k-state-disabled");
     
     $("#ipTercero").val(tercero.ter__raz);
     
@@ -575,7 +580,11 @@ function tipoDocumentoIdentificacion(){
         optionLabel: "Seleccione el tipo de documento",
         dataTextField: "cln__des",
         dataValueField: "ter__cln",
-        template:'<div class="divElementDropDownList">#: data.cln__des #</div>',        
+        template:'<div class="divElementDropDownList">#: data.cln__des #</div>', 
+        change: function(e){
+            $("#ipNumeroDoc").val(""); 
+            $("#ipNumeroDoc").prop("disabled", false).removeClass("k-state-disabled");
+        },
         dataSource: {
             transport: {
                 read: {
@@ -747,4 +756,19 @@ function guardarTercero(){
         }
     });
         
+}
+
+function cuentaDigitos(){
+    var ter__cln = $("#tipoDocumento").val();
+    var ter__nit = $("#ipNumeroDoc").val();    
+    ter__nit = ter__nit.replace(/^\s+|\s+$/g, "");
+    
+    if(ter__cln==="C" && ter__nit.length!==10){
+        alertDialogs("La cédula debe tener exactamente 10 dígitos")
+    }else if (ter__cln==="R" && !ter__nit.length!==13){
+        alertDialogs("El número de RUC debe tener exactamente 13 dígitos")
+    }else{
+        alertDialogs("Número de documento valido")
+    }
+    
 }

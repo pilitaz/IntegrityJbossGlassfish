@@ -93,7 +93,8 @@ function grilla(obj) {
                     if (operation === 'read') {
                         return JSON.stringify(inputsir);
                     } else if (operation === 'create') {
-                        var key1 = Object.keys(inputCud)[0]
+                        var key1 = Object.keys(inputCud)[0];
+//                        options[est] = 99;
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
 
@@ -126,6 +127,12 @@ function grilla(obj) {
         },
         error: function (e) {
             alertDialogs(e.errorThrown);
+        },
+        requestEnd: function (e) {
+            if((e.type==="create")||(e.type==="update")){
+                $("#grid").data("kendoGrid").destroy();
+                grilla();
+            }
         }
     });
     if (!btnC) {
@@ -138,6 +145,7 @@ function grilla(obj) {
         sortable: true,
         selectable: false,
         columns: columns,
+        filterable: true,
         editable: "popup",
         rowTemplate: kendo.template($("#rowTemplate").html()),
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
@@ -146,8 +154,8 @@ function grilla(obj) {
             if (!e.model.isNew()) {//caso en el que el popup es editar
 
                 e.container.kendoWindow("title", "Editar");
-                var idBanco = $("#idciu__cod").data("kendoNumericTextBox");
-                idBanco.enable(false);
+//                var idBanco = $("#idciu__cod").data("kendoNumericTextBox");
+//                idBanco.enable(false);
                 //e.container.find("input[name=ter__raz]")[0].readOnly="true"
 //                if (e.model[est] != 99) {
 //                    kendo.ui.progress($('.k-edit-form-container'), true);
@@ -180,7 +188,7 @@ function deleteRow(e) {
         e.preventDefault();
         var dataItem = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"));
 
-        
+//        if (dataItem[est] == 99) {
             var actions = new Array();
             actions[0] = new Object();
             actions[0].text = "OK";
@@ -196,7 +204,9 @@ function deleteRow(e) {
                 bandAlert = 0;
             };
             createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.ciu__nom + " ---?", "400px", "200px", true, true, actions);
-        
+//          } else {
+//            alertDialogs("El registro no puede ser eliminado.");
+//        }  
     } catch (e) {
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();

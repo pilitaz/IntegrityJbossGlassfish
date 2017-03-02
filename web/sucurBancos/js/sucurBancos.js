@@ -24,7 +24,7 @@ $(document).ready(function () {
 });
 
 function grilla(obj) {
-
+    
    
     /* variables para consumir el servicio SiCud*/
     var objCud = new cud();
@@ -73,13 +73,14 @@ function grilla(obj) {
     /*hiden: true --- ocultar en grilla*/
     var columns = [
 //        {field: "bco__cod", title: "Codigo Banco",editor: bco__codList,width: "100%"},
-        {field: "bco__nom", title: "Codigo Banco",editor: bco__codList,width: "100%"},
-            {field: "bco__dir", title: "Direccion",width: "100%"},
-            {field: "ciu__cod", title: "Ciudad",editor: ciu__codList,width: "100%"},
-            {field: "sbco__cod", title: "Sucursal del Banco",editor: sbco__codList,width: "100%"},
-            {field: "sbco__dir", title: "Direccion3",width: "100%"},
-            {field: "sbco__nom", title: "Nombre de la Sucursal",width: "100%"},
-            {field: "sbco__pri", title: "Sucursal Principal",editor: sbco__priList,width: "100%"},
+        
+        {field: "bco__nom", title: "Nombre del Banco",editor: bco__codList,width: "100%"},
+        {field: "sbco__cod", title: "Código de la Sucursal",editor: sbco__codList,width: "100%"},
+        {field: "sbco__nom", title: "Nombre de la Sucursal",width: "100%"},
+        {field: "ciu__nom", title: "Ciudad",editor: ciu__codList,width: "100%"},
+        {field: "bco__dir", title: "Direccion",width: "100%"},
+        {field: "sbco__pri", title: "Sucursal Principal",editor: sbco__priList,width: "100%"},
+        
         btnIzq
     ];
 
@@ -118,17 +119,21 @@ function grilla(obj) {
                         
                         var key1 = Object.keys(inputCud)[0];
                         options["bco__cod"] = codBank;
+                        options["ciu__cod"] = $("#idciu__cod").data("kendoDropDownList").listView._dataItems[0].ciu__cod;
+                        options[est] = 99;
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
 
                     }else if (operation === 'update') {
                         var key1 = Object.keys(inputCud)[0];
                         options["bco__cod"] = codBank;
+                        options["ciu__cod"] = $("#idciu__cod").data("kendoDropDownList").listView._dataItems[0].ciu__cod;
+                        options[est] = 99;
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
 
                     } else {
-                        var key1 = Object.keys(inputCud)[0]
+                        var key1 = Object.keys(inputCud)[0];
                         inputCud[key1][mapCud] = [options];
                         return JSON.stringify(inputCud);
                     }
@@ -137,6 +142,7 @@ function grilla(obj) {
                 }
             }
         },
+        batch: false,
         schema: {
             type: "json",
             data: function (e) {
@@ -157,6 +163,12 @@ function grilla(obj) {
         },
         error: function (e) {
             alertDialogs(e.errorThrown);
+        },
+        requestEnd: function (e) {
+            if((e.type==="create")||(e.type==="update")){
+                $("#grid").data("kendoGrid").destroy();
+                grilla();
+            }
         }
     });
     if (!btnC) {
@@ -168,6 +180,7 @@ function grilla(obj) {
         dataSource: dataSource,
         sortable: true,
         selectable: false,
+        filterable: true,
         columns: columns,
         editable: "popup",
         rowTemplate: kendo.template($("#rowTemplate").html()),
@@ -178,7 +191,7 @@ function grilla(obj) {
 
                 e.container.kendoWindow("title", "Editar");
 //                debugger
-                var idBanco = $("#idbco__cod").data("kendoNumericTextBox");
+                var idBanco = $("#idbco__cod").data("kendoMaskedTextBox");
                 debugger
                 idBanco.value(codBank);
                 idBanco.enable(false);
@@ -191,7 +204,7 @@ function grilla(obj) {
 //                }
             } else {
                 e.container.kendoWindow("title", "Crear");
-                var idBanco = $("#idbco__cod").data("kendoNumericTextBox");
+                var idBanco = $("#idbco__cod").data("kendoMaskedTextBox");
                 idBanco.value(codBank);
                 idBanco.enable(false);
                 ////caso en el que el popup es crear
@@ -217,7 +230,7 @@ function deleteRow(e) {
         var fila = $(e.currentTarget).closest("tr")[0].rowIndex;
         e.preventDefault();
         var dataItem = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"));
-
+//            if (dataItem[est] == 99) {
             var actions = new Array();
             actions[0] = new Object();
             actions[0].text = "OK";
@@ -233,7 +246,9 @@ function deleteRow(e) {
                 bandAlert = 0;
             };
             createDialog("Atención", "Esta seguro de eliminar el Registro ---" + dataItem.sbco__nom + " ---?", "400px", "200px", true, true, actions);
-        
+//        } else {
+//            alertDialogs("El registro no puede ser eliminado.");
+//        }
     } catch (e) {
         $('#grid').data('kendoGrid').dataSource.read();
         $('#grid').data('kendoGrid').refresh();
@@ -255,22 +270,21 @@ function selecSucur(e){
 ////////////////////////////////////////////////////////////////////////////////
 
 function  bco__codList(container, options) {
-    $('<input id="idbco__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoNumericTextBox({
+    $('<input id="idbco__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoMaskedTextBox({
        format: "{0:n0}"
     });
 }
 function  sbco__codList(container, options) {
-    $('<input id="idsbco__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoNumericTextBox({
-       format: "{0:n0}"
+    $('<input id="idsbco__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoMaskedTextBox({
     });
 }
 
 function ciu__codList(container, options) {
     var obj = new listasciu__cod();
     var dataSource = obj.getdataSource();
-    $('<input id="idciu__cod" data-bind="value: ' + options.field + '" />"').appendTo(container).kendoDropDownList({
+    $('<input id="idciu__cod" data-bind="value:' + options.field + '" />"').appendTo(container).kendoDropDownList({
         dataTextField: "ciu__nom",
-        dataValueField: "ciu__cod",
+        dataValueField: "ciu__nom",
         dataSource: dataSource,
         index: 0
     });
@@ -355,11 +369,11 @@ function listassbco__pri() {
 
     var dataSource = [{
             text: "si",
-            value: "true"
+            value: true
         },
         {
             text: "no",
-            value: "false"
+            value: false
         }
     ];
     this.setdataSource = function (newname) {
