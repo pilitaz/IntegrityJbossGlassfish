@@ -38,11 +38,13 @@ and open the template in the editor.
         <div>
             <div>
 
-                <table style="height: 50px; vertical-align: top">
+                <table style="width: 100%">
                     <td style="width: 50px;height: 50px"><a class="k-grid"  aling="center"><span class="k-sprite po_bullet1"></span></a></td>
-                    <td style="width: 20%;height: 50px;" ><h4 id = "subtitulo" class="subTitulo">Proveedores</h4> </td>
-                    <td style="width: 80%; height: 50px; vertical-align: middle" class="navbar" > 
-
+                    <td style="width: 90%;height: 50px;" ><h4 id = "subtitulo" class="subTitulo">Proveedores</h4> </td>
+                    
+                    <td style="width: 50px; text-align: right; ">
+                                <a id ="btnGuardar3" class="k-grid" onclick ="volverProveedores()" aling="center"><span class="k-sprite po_back"></span></a>
+                            </td>
 
                         <div class="container-fluid">                                                
                             <button type="button" class="navbar-toggle" class="btn btn-default btn-circle btn-lg" data-toggle="collapse" data-target="#myNavbar">
@@ -125,12 +127,34 @@ and open the template in the editor.
                             </tr>
                             <tr>
                                 <td style="width: 30%">
+                                    <label class="letraParrafo">Pais:</label>
+                                </td>
+                                <td style="width: 70%">
+                                    <input id="pais"  style="width: 100%" required/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%">
+                                    <label class="letraParrafo">Departamento:</label>
+                                </td>
+                                <td style="width: 70%">
+                                    <input id="departamento"  style="width: 100%" required/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%">
                                     <label class="letraParrafo">Ciudad:</label>
                                 </td>
                                 <td style="width: 70%">
                                     <input id="ciudad"  style="width: 100%" required/>
                                 </td>
                             </tr>
+                            
+
+                        </table>                        
+                    </div>
+                    <div class="col-md-6">                        
+                        <table style="width: 100%">
                             <tr>
                                 <td style="width: 30%">
                                     <label class="letraParrafo">Forma De Pago:</label>
@@ -145,19 +169,6 @@ and open the template in the editor.
                                 </td>
                                 <td style="width: 70%">
                                     <input id="autorizacion" class ="k-textbox" style="width: 100%" required/>
-                                </td>
-                            </tr>
-
-                        </table>                        
-                    </div>
-                    <div class="col-md-6">                        
-                        <table style="width: 100%">
-                            <tr>
-                                <td style="width: 30%">
-                                    <label class="letraParrafo">Departamento:</label>
-                                </td>
-                                <td style="width: 70%">
-                                    <input id="departamento" class ="k-textbox" style="width: 100%" required/>
                                 </td>
                             </tr>
                             <tr>
@@ -189,7 +200,7 @@ and open the template in the editor.
                                     <label class="letraParrafo">Fecha Autorizacion:</label>
                                 </td>
                                 <td>
-                                    <input id="fechaAutorizacion" class ="k-textbox" style="width: 100%"/>
+                                    <input id="fechaAutorizacion"  style="width: 100%"/>
                                 </td>
                             </tr>
                             <tr>
@@ -216,7 +227,7 @@ and open the template in the editor.
                                     <label class="letraParrafo">Banco:</label>
                                 </td>
                                 <td style="width: 70%">
-                                    <input id="Banco" class ="k-textbox" style="width: 100%" required/>                 
+                                    <input id="Banco"  style="width: 100%" required/>                 
                                 </td>
                             </tr>
                             <tr>
@@ -281,7 +292,7 @@ and open the template in the editor.
                                     <label class="letraParrafo">Agencia:</label>
                                 </td>
                                 <td style="width: 70%">
-                                    <input id="agencia" class ="k-textbox" style="width: 100%" required/>
+                                    <input id="agencia"  style="width: 100%" required/>
                                 </td>
                             </tr>
                             <tr>
@@ -359,7 +370,7 @@ and open the template in the editor.
             </div></div>
         
          <div id="customPopUp1" hidden="hidden" style = "overflow-y: hidden;" class="">
-            <div class="k-window-titlebar k-header" style="margin-top: -4px;">
+            <div class="k-window-titlebar k-header" style="margin-top: 1px;height: 2em">
                 &nbsp;
 
                 <div class="k-window-actions">
@@ -388,7 +399,7 @@ and open the template in the editor.
                             <table style="width: 100%; align-content: center">
                                 <td style=" align-content: center">
                                     <h1 id = "subtitulo2" class="subTituloPopUp">Seleccionar  Banco: </h1>
-                                    <input id="terceroNit" content-align="center"/>    
+                                    <input id="bancoTercero" content-align="center"/>    
                                 </td>
                             </table>   
                         </div>                       
@@ -396,7 +407,7 @@ and open the template in the editor.
 
                     </div>
                 </div>
-                 <footer><button id="btnCrearRepo" onclick = "reasignarTarea()" class="k-primary" style="width: 100%;height: 70px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" >Enviar</button></footer>
+                 <footer><button id="btnCrearRepo" onclick = "crearProveedor()" class="k-primary" style="width: 100%;height: 70px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" >Enviar</button></footer>
             </div></div>
         
     </body>
