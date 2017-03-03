@@ -53,7 +53,7 @@ function grilla(obj) {
     /*variables para adicionar los botones de la grilla*/
     var btnC = true;
     var btnUD = [
-        {name: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
+        {name: "edit", text: {update: "Actualizar"}, template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
 //        {name: "Delete", click: deleteRow, template: "<a class='k-grid-Delete'><span class='k-sprite po_cerrar'></span></a>"},
     ];
     var btnDetalle = [
@@ -68,15 +68,15 @@ function grilla(obj) {
     var columns = [
         {field: "cta__cod", title: "P.U.C", width: "100%", editor: cuentaPUC},
         {field: "cta__nom", title: "Nombre", width: "100%", editor: nombre},
-        {field: "cta__mov", title: "Movimiento", width: "100%", editor: movimiento, filterable: false},        
-        {field: "anx__cod", title: "Anexo tributario", width: "100%", editor: anexoTributario, filterable: false},
+        {field: "cta__mov", title: "Movimiento", width: "100%", editor: movimiento},        
+        {field: "anx__cod", title: "Anexo tributario", width: "100%", editor: anexoTributario},
         {field: "cpt__cod", title: "Concepto tributario", width: "100%", hidden: true, editor: conceptoTri},
         {field: "cta__cen", title: "Centro de costo", width: "100%", hidden: true, editor: centroCosto},
         {field: "cta__snit", title: "Maneja NIT", width: "100%", hidden: true, editor: manejaNIT},
         {field: "cta__pres", title: "Presupuesto", width: "100%", hidden: true, editor: presupuesto},        
-        {field: "anf__cod", title: "Anexo financiero", width: "100%", editor: anexofinanciero, filterable: false},
+        {field: "anf__cod", title: "Anexo financiero", width: "100%", editor: anexofinanciero},
         {field: "cta__tip", title: "Tipo cuenta", width: "100%", hidden: true, editor: tipoCuenta},
-        {field: "cta__est", title: "Estado", width: "70px", filterable: false},
+        {field: "cta__est", title: "Estado", width: "70px"},
         btnIzq
     ];
 
@@ -88,12 +88,6 @@ function grilla(obj) {
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
             },
-//            destroy: {
-//                url: urlCud,
-//                type: "DELETE",
-//                dataType: "json",
-//                contentType: "application/json"
-//            },
             update: {
                 url: urlCud,
                 type: "PUT",
@@ -164,9 +158,7 @@ function grilla(obj) {
         dataSource: dataSource,
         sortable: true,
         selectable: false,
-        filterable: {
-           mode: "row"
-        },
+        filterable: true,
         columns: columns,
         editable: "popup",
         rowTemplate: kendo.template($("#rowTemplate").html()),
@@ -203,12 +195,10 @@ function grilla(obj) {
                     dropDownListAnexoTributario.enable(false);
                     
                     var dropDownListAnexoTributario= $("#conceptoTributario").data("kendoDropDownList"); 
-                    dropDownListAnexoTributario.enable(false);                    
-                    
-                }
-
-                
+                    dropDownListAnexoTributario.enable(false);
+                }                
             } else {
+                e.container.find("a.k-button.k-button-icontext.k-primary.k-grid-update")["0"].innerText = "Guardar"
                 e.container.kendoWindow("title", "Crear");
             }
         },
@@ -399,7 +389,7 @@ function presupuesto(container, options) {
         {text: "No", value: "false"},
     ];
     
-    $('<input  id = "presupuesto" required name="' + options.field + '"/>')
+    $('<input  id = "presupuesto" name="' + options.field + '"/>')
             .appendTo(container)
             .kendoDropDownList({        
         dataTextField: "text",
@@ -417,7 +407,7 @@ function tipoCuenta(container, options) {
         {text: "ReteIVA", value: 4}
     ];
     
-    $('<input  id = "tipoCuenta" required name="' + options.field + '"/>')
+    $('<input  id = "tipoCuenta" name="' + options.field + '"/>')
             .appendTo(container)
             .kendoDropDownList({        
         dataTextField: "text",
@@ -433,7 +423,7 @@ function anexofinanciero(container, options) {
     var urlService = consultar.getUrlSir();
     var mapCud1 = consultar.getmapSir();
     
-    $('<input  id = "anexofinanciero" required name="' + options.field + '"/>')
+    $('<input  id = "anexofinanciero" name="' + options.field + '"/>')
             .appendTo(container)
             .kendoDropDownList({
         dataTextField: "anf__des",
@@ -483,7 +473,7 @@ function anexoTributario(container, options) {
     var urlService = consultar.getUrlSir();
     var mapCud1 = consultar.getmapSir();
     
-    $('<input  id = "anexoTributario" required name="' + options.field + '"/>')
+    $('<input  id = "anexoTributario" name="' + options.field + '"/>')
             .appendTo(container)
             .kendoDropDownList({
                 dataTextField: "anx__nom",
@@ -563,7 +553,7 @@ function conceptoTri(container, options) {
     var urlService = consultar.getUrlSir();
     var mapCud1 = consultar.getmapSir();
     
-    $('<input  id = "conceptoTributario" required name="' + options.field + '"/>')
+    $('<input  id = "conceptoTributario" name="' + options.field + '"/>')
             .appendTo(container)
             .kendoDropDownList({
         dataTextField: "cpt__nom",

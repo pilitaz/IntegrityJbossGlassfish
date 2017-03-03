@@ -75,3 +75,26 @@ button{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     min-width: 150px
 }
+
+.k-edit-buttons.k-state-default{
+    padding: 0;
+    overflow: hidden;
+    height: 40px
+        
+}
+.k-button.k-button-icontext.k-grid-cancel{
+    display: none
+}
+
+a.k-button.k-button-icontext.k-primary.k-grid-update{    
+    width: 100%;
+    margin: 0; 
+    height: 100%
+}
+.k-edit-form-container.k-button{
+    margin: 0;
+}
+
+.k-icon.k-i-update{
+    display: none
+}
