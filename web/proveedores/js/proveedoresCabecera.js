@@ -37,7 +37,13 @@ function editar_rol(){
     //                         sessionStorage.setItem("Rolname",row.car__nom);
     window.location = ("tareas.html");
 }
-                    
+ function cerrarPopup(){
+        $("#windowg").data("kendoWindow").close();   
+     alertDialogs ("Se ha actualizado la informacion");
+    $('#grid').data('kendoGrid').refresh();                                             
+    $('#grid').data('kendoGrid').dataSource.read();
+    $('#grid').data('kendoGrid').refresh(); 
+ }                   
  function detalle(e){debugger
        e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
                         var id = this.dataItem($(e.currentTarget).closest("tr")).ter__nit;
@@ -78,7 +84,31 @@ function editar_rol(){
              function detalle1(e){debugger
     
                         sessionStorage.setItem("Nit_Tercero","Nuevo");
-                        window.location = ("proveedores.html");
+//                        window.location = ("proveedores.html");
+                  //window.location = ("proveedores.html");
+       $("#grillapopUp").append("<div id='windowg'></div>");                       
+        var myWindow2 = $("#windowg"),undo = $("#undo");                
+        function onClose1() {
+            undo.fadeIn();
+            $("#grillapopUp").empty();
+        }       
+        var UrL= sessionStorage.getItem("url");
+        myWindow2.kendoWindow({
+            draggable: true,
+            height: "90%",
+            modal: true,
+            resizable: false,
+            title: "Proveedores",
+            width: "90%",
+            content: UrL+"proveedores/html/proveedores.html",
+            deactivate: function() {
+                this.destroy();                                           
+            },
+            actions: [
+                "Close"
+            ],                               
+            close: onClose1
+        }).data("kendoWindow").center().open();   
    }
                
                     
@@ -265,6 +295,8 @@ $(document).ready(function () {
     //    gridheigth = gridheigth*0.12 + gridheigth;
         var grid1 = $("#grid").kendoGrid({
             dataSource: dataSource, 
+            sortable: true,
+            filterable: true,
             columns: [
                 {field: "ter__nit", title: "Nit",  hidden:false,  width: "150px"},  
                 {field: "ter__raz", title: "Razon Social",  hidden:false},
