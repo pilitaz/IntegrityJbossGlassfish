@@ -64,7 +64,7 @@ and open the template in the editor.
                 </table>
                 <div class="sidenavSup"></div>
             </div>
-<div id="contenido" hidden="hidden" >
+<div id="contenido" hidden="hidden" style="display: block;height: 430px;width: 100%;overflow-y: auto;overflow-x : hidden">
             <div class="container-fluid">
                 <div class="row">
                     <h4 id = "subtitulo" style="padding-left: 20px;" class="subTitulo">Datos Personales Del Proveedor:<div id="nit"></div></h4> 
@@ -259,29 +259,30 @@ and open the template in the editor.
                                 </td>
                             </tr>
                             <tr>
+                                <td>
+                                    <label class="letraParrafo">Pais:</label>
+                                </td>
+                                <td>
+                                    <input id="paisBanco"  style="width: 100%" />
+                                </td>
+                            </tr>
+                            <tr>
                                 <td style="width: 30%">
                                     <label class="letraParrafo">Departamento:</label>
                                 </td>
                                 <td style="width: 70%">
-                                    <input id="departamentoBanco"  class ="k-textbox" style="width: 100%" required/>
+                                    <input id="departamentoBanco"  style="width: 100%" required/>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width: 30%">
-                                    <label class="letraParrafo">Responsable:</label>
+                                <td>
+                                    <label class="letraParrafo">Ciudad:</label>
                                 </td>
-                                <td style="width: 70%">
-                                    <input id="responsable" class ="k-textbox" style="width: 100%" required/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 30%">
-                                    <label class="letraParrafo">Cargo Responsable:</label>
-                                </td>
-                                <td style="width: 70%">
-                                    <input id="cargoResponsable" class ="k-textbox" style="width: 100%" required/>
+                                <td>
+                                    <input id="ciudadBanco"  style="width: 100%" />
                                 </td>
                             </tr>
+                            
 
                         </table>                        
                     </div>
@@ -312,22 +313,33 @@ and open the template in the editor.
                                 </td>
                             </tr>
                             <tr>
-                                <td>
-                                    <label class="letraParrafo">Ciudad:</label>
+                                <td style="width: 30%">
+                                    <label class="letraParrafo">Responsable:</label>
                                 </td>
-                                <td>
-                                    <input id="ciudadBanco"  style="width: 100%" />
+                                <td style="width: 70%">
+                                    <input id="responsable" class ="k-textbox" style="width: 100%" required/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%">
+                                    <label class="letraParrafo">Cargo Responsable:</label>
+                                </td>
+                                <td style="width: 70%">
+                                    <input id="cargoResponsable" class ="k-textbox" style="width: 100%" required/>
                                 </td>
                             </tr>
 
                         </table><br>
                     </div><br>
-                    <button  type="button" id ="btnDespachar" onclick='mostrarCustomPopUp1()' class="k-primary" style="width:25%;height: 40px; align-content: right; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">Continuar </button>
                 </div>
 
             </div>    
-        </div>          
+    
+        </div>   
+            
+   
 </div>
+         <footer><button id="btnCrearRepo" onclick = "reasignarTarea()" class="k-primary" style="width: 100%;height: 40px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" >Enviar</button></footer>
         <div id="customPopUp" hidden="hidden" style = "overflow-y: hidden;" class="">
             <div class="k-window-titlebar k-header" style="margin-top: 1px;height: 2em">
                 &nbsp;

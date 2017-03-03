@@ -1,4 +1,4 @@
-                   
+            
 /*  FUNCION RESIZE WINDOW 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -43,8 +43,38 @@ function editar_rol(){
                         var id = this.dataItem($(e.currentTarget).closest("tr")).ter__nit;
 //                      
                         sessionStorage.setItem("Nit_Tercero",(id));
-                        window.location = ("proveedores.html");
-   }
+                        //window.location = ("proveedores.html");
+       $("#grillapopUp").append("<div id='windowg'></div>");                       
+        var myWindow2 = $("#windowg"),undo = $("#undo");                
+        function onClose1() {
+            undo.fadeIn();
+            $("#grillapopUp").empty();
+        }       
+        var UrL= sessionStorage.getItem("url");
+        myWindow2.kendoWindow({
+            draggable: true,
+            height: "90%",
+            modal: true,
+            resizable: false,
+            title: "Proveedores",
+            width: "90%",
+            content: UrL+"proveedores/html/proveedores.html",
+            deactivate: function() {
+                this.destroy();                                           
+            },
+            actions: [
+                "Close"
+            ],                               
+            close: onClose1
+        }).data("kendoWindow").center().open();   
+    }
+   
+                        
+                        
+                        
+                        
+                        
+   
              function detalle1(e){debugger
     
                         sessionStorage.setItem("Nit_Tercero","Nuevo");
