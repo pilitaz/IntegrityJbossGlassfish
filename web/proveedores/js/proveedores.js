@@ -1,8 +1,8 @@
 var bandAlert=0;
 var dataProveedor;
-$(document).ready(function () {   
-     
-     $("#fechaAutorizacion").kendoDateTimePicker({
+$(document).ready(function () {   debugger
+     $('#contenido').css("height",$('#windowg').context.children["0"].clientHeight-100 + "px");
+     $("#fechaAutorizacion").kendoDatePicker({
     format: "dd/MM/yyyy"
 });
       $("#agencia").kendoNumericTextBox();
@@ -104,12 +104,12 @@ function crearProveedor() {
         datajson.dsSICUDcon_prv.eecon_prv[0].eecon_prtra[0].ter__nit=$("#NiT").val(); 
     }else{
         var Type="PUT";
-        datajson.dsSICUDcon_prv.eecon_prv[0].ter__nit=document.getElementById('nit').innerHTML; 
-        datajson.dsSICUDcon_prv.eecon_prv[0].eecon_prtra[0].ter__nit=document.getElementById('nit').innerHTML; 
+        datajson.dsSICUDcon_prv.eecon_prv[0].ter__nit=document.getElementById('raz').innerHTML; 
+        datajson.dsSICUDcon_prv.eecon_prv[0].eecon_prtra[0].ter__nit=document.getElementById('raz').innerHTML; 
     }
      
-     datajson.dsSICUDcon_prv.eecon_prv[0].ter__rep=document.getElementById('responsable').value;
-     datajson.dsSICUDcon_prv.eecon_prv[0].bco__cod1=parseInt($("#Banco").data("kendoDropDownList")._old);
+    datajson.dsSICUDcon_prv.eecon_prv[0].ter__rep=document.getElementById('responsable').value;
+    datajson.dsSICUDcon_prv.eecon_prv[0].bco__cod1=parseInt($("#Banco").data("kendoDropDownList")._old);
     datajson.dsSICUDcon_prv.eecon_prv[0].bco__cta=document.getElementById('cuenta').value;
     datajson.dsSICUDcon_prv.eecon_prv[0].doc__pref=document.getElementById('fechaAutorizacion').value;
     datajson.dsSICUDcon_prv.eecon_prv[0].doc__rfec=null;
@@ -185,7 +185,8 @@ function cerrarCustomPopUp() {
 function cargarProveedor(e){
     
     document.getElementById('contenido').hidden=false;
-    document.getElementById('nit').innerHTML=e.dsSIRcon_prv.eecon_prv[0].ter__raz;
+    document.getElementById('raz').innerHTML=e.dsSIRcon_prv.eecon_prv[0].ter__nit;
+    document.getElementById('nit').innerHTML=e.dsSIRcon_prv.eecon_prv[0].ter__raz+"-";
     document.getElementById('telefono').value=e.dsSIRcon_prv.eecon_prv[0].prv__tel;
     document.getElementById('correo').value=e.dsSIRcon_prv.eecon_prv[0].ter__mail;
     document.getElementById('fax').value=e.dsSIRcon_prv.eecon_prv[0].prv__nrfax;
