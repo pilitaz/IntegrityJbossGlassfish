@@ -64,10 +64,10 @@ and open the template in the editor.
                 </table>
                 <div class="sidenavSup"></div>
             </div>
-<div id="contenido" hidden="hidden" style="display: block;height: 70%;width: 100%;overflow-y: auto;overflow-x : hidden">
+<div id="contenido" hidden="hidden" style="display: block;height: 70px;width: 100%;overflow-y: auto;overflow-x : hidden">
             <div class="container-fluid">
                 <div class="row">
-                    <h4 id = "subtitulo" style="padding-left: 20px;" class="subTitulo">Datos Personales Del Proveedor:<div id="nit"></div></h4> 
+                    <div> <h4 id = "subtitulo" style="padding-left: 20px;" class="subTitulo">Datos Personales Del Proveedor: <label id="nit"></label><label id="raz"></label></h4> </div>
                     <div class="col-md-6">      
 
                         <table style="width: 100%">
@@ -125,7 +125,36 @@ and open the template in the editor.
                                     <input id="direccion"  class ="k-textbox" style="width: 100%" required/>
                                 </td>
                             </tr>
+                             <tr>
+                                <td style="width: 30%">
+                                    <label class="letraParrafo">Indicativo/Fax:</label>
+                                </td>
+                                <td style="width: 70%">
+                                    <input id="indicativo" class ="k-textbox" style="width: 100%"/>                        
+                                </td>
+                            </tr>
+                           <tr>
+                                <td style="width: 30%">
+                                    <label class="letraParrafo">Forma De Pago:</label>
+                                </td>
+                                <td style="width: 70%">
+                                    <input id="formaPago"  style="width: 100%" required/>
+                                </td>
+                            </tr>
                             <tr>
+                                <td>
+                                    <label class="letraParrafo">Fecha Autorizacion:</label>
+                                </td>
+                                <td>
+                                    <input id="fechaAutorizacion"  style="width: 100%"/>
+                                </td>
+                            </tr>
+
+                        </table>                        
+                    </div>
+                    <div class="col-md-6">                        
+                        <table style="width: 100%">
+                             <tr>
                                 <td style="width: 30%">
                                     <label class="letraParrafo">Pais:</label>
                                 </td>
@@ -150,19 +179,6 @@ and open the template in the editor.
                                 </td>
                             </tr>
                             
-
-                        </table>                        
-                    </div>
-                    <div class="col-md-6">                        
-                        <table style="width: 100%">
-                            <tr>
-                                <td style="width: 30%">
-                                    <label class="letraParrafo">Forma De Pago:</label>
-                                </td>
-                                <td style="width: 70%">
-                                    <input id="formaPago"  style="width: 100%" required/>
-                                </td>
-                            </tr>
                             <tr>
                                 <td style="width: 30%">
                                     <label class="letraParrafo">N° Autorizacion:</label>
@@ -171,14 +187,7 @@ and open the template in the editor.
                                     <input id="autorizacion" class ="k-textbox" style="width: 100%" required/>
                                 </td>
                             </tr>
-                            <tr>
-                                <td style="width: 30%">
-                                    <label class="letraParrafo">Indicativo/Fax:</label>
-                                </td>
-                                <td style="width: 70%">
-                                    <input id="indicativo" class ="k-textbox" style="width: 100%"/>                        
-                                </td>
-                            </tr>
+                           
                             <tr>
                                 <td>
                                     <label class="letraParrafo">Codigo Postal:</label>
@@ -195,14 +204,7 @@ and open the template in the editor.
                                     <input id="informarBeneficiario" class ="k-textbox" value=""  style="width: 100%" />
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <label class="letraParrafo">Fecha Autorizacion:</label>
-                                </td>
-                                <td>
-                                    <input id="fechaAutorizacion"  style="width: 100%"/>
-                                </td>
-                            </tr>
+                            
                             
                         </table>
                     </div>
