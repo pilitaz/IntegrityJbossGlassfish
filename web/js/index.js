@@ -596,8 +596,8 @@ function tamanoShell(e) {
     var div_ancho = $("#divDerecho").width();
     var div_alto = $("#divDerecho").height();
 
-    $("#divIFrame").width(div_ancho - 500);
-    $("#divIFrame").height(div_alto);
+//    $("#divIFrame").width(div_ancho - 500);
+//    $("#divIFrame").height(div_alto);
     $("#divFrameInc").height(div_alto - 51);
     $("#idFrame").height(div_alto);
     $("#idFrame").width(div_ancho - 35 - 20);
@@ -614,9 +614,9 @@ function tamanoPagIni(width) {
 
     $("#includeTerm").height(div_alto - 51);
     $("#includeTerm").width(div_ancho - 51);
-    $("#divIFrame").width(div_ancho - 500);
+//    $("#divIFrame").width(div_ancho - 500);
     $("#divFrameInc").height(div_alto - 51);
-    $("#divIFrame").height(div_alto);
+//    $("#divIFrame").height(div_alto);
     $("#idFrame").width(div_ancho - 35 - 253 - 20);
     $("#includeArbol").height(div_alto - 10);
 }
@@ -635,8 +635,8 @@ function tamanoFunciones(e) {
 //    $( "#includeTerm" ).width( div_ancho - 35-20);
 //    
     $("#includeTerm").width(div_ancho - 51);
-    $("#divIFrame").width(div_ancho - 500);
-    $("#divIFrame").height(div_alto);
+//    $("#divIFrame").width(div_ancho - 500);
+//    $("#divIFrame").height(div_alto);
     $("#divFrameInc").height(div_alto - 51);
 
     $("#idFrame").height(div_alto);
