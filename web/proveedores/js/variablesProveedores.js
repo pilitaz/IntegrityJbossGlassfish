@@ -295,7 +295,7 @@ function cudProveedores() {
         "prv__cta": true,
         "prv__dir": "",
         "prv__dpfax": "",
-        "prv__est": 0,
+        "prv__est": 99,
         "prv__ind__ciu": 0,
         "prv__max": 9999999999,
         "prv__nofax": "",
@@ -359,6 +359,42 @@ function sirPaises() {
    "eeSIRsic_ciu_xfiltro": [{
    "picciu_cod": "*",
    "piiciu_pos": 2
+  }]
+ }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+////////////////////////////////////////////////////////////////////////
+function sirBancoDetalle() {
+    var urlSir = ipServicios + baseContabilidad +"SIRsic_tra";
+    var json = {
+ "dsSIRsic_tra": {
+  "eeDatos": [{
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+  }],
+   "eeSIRsic_tra": [{
+   "piibco__cod": 0
   }]
  }
 };
