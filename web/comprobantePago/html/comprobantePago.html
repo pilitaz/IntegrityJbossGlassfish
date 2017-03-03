@@ -57,7 +57,7 @@ and open the template in the editor.
                             </td>
                         </tr>
                         <tr>
-                            <td style="width: 25%">
+                            <td style="width: 25%" colspan="2" style="text-align: center">
                                 <div class="box-col">                            
                                     <button class="export-pdf k-button" onclick="getPDF('.pdf-page')">Guardar PDF</button>
                                 </div>
@@ -66,19 +66,18 @@ and open the template in the editor.
                     </table>
                 </td>
                 <td style="width: 80%">
-                    <div class="page-container hidden-on-narrow">
-                        <div class="pdf-page size-a4">
+                    <div class="page-container hidden-on-narrow" style="overflow-y: auto">
+                        <div class="pdf-page size-letter">
                             <div class="pdf-header">
                                 <span class="company-logo">
-                                    <img src="../content/web/framework/company-logo.png" /> Blauer See Delikatessen
+                                    <img src="../images/EmpresaLogo.png" width="300" height="115"/>                                    
                                 </span>
-                                <span class="invoice-number">Invoice #23543</span>
+                                <span class="invoice-number">Comprobante de pago</span>
                             </div>
                             <div class="pdf-footer">
-                                <p>Blauer See Delikatessen<br />
-                                    Lützowplatz 456<br />
-                                    Berlin, Germany,  10785
-                                </p>
+                                <span class="company-logo">
+                                    <img src="../images/ComprobantePie.png" width="820" height="103"/>                                    
+                                </span>                                
                             </div>
                             <div class="for">
                                 <h3>Invoice For</h3>
@@ -86,8 +85,7 @@ and open the template in the editor.
                                     Naucalpan de Juárez<br />
                                     México D.F., Mexico, 53500
                                 </p>
-                            </div>
-                            
+                            </div>                            
                             <div class="from">
                                 <h3>From</h3>
                                 <p style="padding-bottom: 20px; border-bottom: 1px solid #e5e5e5;">Hanna Moos <br />

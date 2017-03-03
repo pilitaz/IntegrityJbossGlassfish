@@ -765,10 +765,8 @@ function cuentaDigitos(){
     
     if(ter__cln==="C" && ter__nit.length!==10){
         alertDialogs("La cédula debe tener exactamente 10 dígitos")
-    }else if (ter__cln==="R" && !ter__nit.length!==13){
+    }else if (ter__cln==="R" && ter__nit.length!==13){
         alertDialogs("El número de RUC debe tener exactamente 13 dígitos")
-    }else{
-        alertDialogs("Número de documento valido")
     }
     
 }
