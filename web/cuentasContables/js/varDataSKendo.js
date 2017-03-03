@@ -239,5 +239,49 @@ function cud() {
 }
 ;
 
-
+function validaDigitos() {
+    var url = ipServicios + baseContabilidad + "validadigitoscuentas";
+    ;
+    var mapSir = "eecon_cta";
+    var dataInputSir = {
+        "dscon_cta": {
+            "eeDatos": [
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip": sessionStorage.getItem("ipPrivada"),
+                    "remote_ip": sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "SIRcon_cta": [{
+             "picctacod":"*"
+            }]
+        }
+    };
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            url = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return url;
+    };
+    this.setmapSir = function (newname) {
+        if (newname) {
+            mapSir = newname;
+        }
+    };
+    this.getmapSir = function () {
+        return mapSir;
+    };
+    this.setdataInputSir = function (newname) {
+        if (newname) {
+            dataInputSir = newname;
+        }
+    };
+    this.getdataInputSir = function () {
+        return dataInputSir;
+    };
+}
+;
 

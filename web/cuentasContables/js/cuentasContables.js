@@ -430,6 +430,13 @@ function anexofinanciero(container, options) {
         dataValueField: "anf__cod",
         autoClose: true,        
         template:'<div class="divElementDropDownList">#: data.anf__des #</div>',  
+        change: function (e){
+            if($("#anexofinanciero").val()!=="0"){
+                var dropDownListAnexoTributario= $("#anexoTributario").data("kendoDropDownList");
+                dropDownListAnexoTributario.value("0");  
+            }
+          
+        },
         dataSource: {
             transport: {
                 read: {
@@ -502,6 +509,9 @@ function anexoTributario(container, options) {
                 dropDownListTipoCuenta.val("0");
                 dropDownListTipoCuenta.enable(false);
             }else{
+                var dropDownListAnexofinanciero= $("#anexofinanciero").data("kendoDropDownList");
+                dropDownListAnexofinanciero.value("0");                
+                
                 var dropDownListConceptoTributario= $("#conceptoTributario").data("kendoDropDownList");                 
                 dropDownListConceptoTributario.enable(true);
                 
@@ -633,13 +643,51 @@ function verificarCuenta(){
             success: function (e) {                
                     
             } 
-        }).done(function(e){                                          
+        }).done(function(e){   
+            debugger
             var key1 = Object.keys(objJson)[0];               
             if((e[key1].eeEstados["0"].Estado)==="OK" && e[key1][mapData].length===1)
             {    
                 alertDialogs("La cuenta contable ya existe");
+            }else{
+                validarNivelSuperior();
             }
         });
     }    
+    
+}
+
+function validarNivelSuperior(){
+    debugger
+    var msj = "";
+    var cuentaPUC = $("#cuentaPUC").val();
+    
+    var obj = new validaDigitos();
+    var objJson = obj.getdataInputSir();
+    var url = obj.getUrlSir();
+    var mapData = obj.getmapSir();
+    
+    var key1 = Object.keys(objJson)[0];
+    var key2 = Object.keys(objJson[key1])[1];
+    objJson[key1][key2][0].picctacod = cuentaPUC;
+    
+    $.ajax({
+        type: "POST",
+        data: JSON.stringify(objJson),
+        url: url,
+        dataType: "json",        
+        contentType: "application/json;",
+        success: function (e) {                
+            
+        } 
+    }).done(function(e){
+        debugger
+        var key1 = Object.keys(objJson)[0];               
+        if((e[key1].eeEstados["0"].Estado)!=="OK")
+        {    
+            alertDialogs(e[key1].eeEstados["0"].Estado);
+        }
+    });
+    
     
 }
