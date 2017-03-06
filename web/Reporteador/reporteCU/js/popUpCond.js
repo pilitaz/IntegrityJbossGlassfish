@@ -38,7 +38,7 @@ function onloadPopUpCond() {
     $('#imgOpc').removeClass('re_compon').addClass('re_conon');
     $("#popUpCond").show();
     llenarComboCmp();//lleno el primer combo pero tambien miro si tiene condiciones y creo los respectyivos campos
-//    crearComboCmp("cmpValCond1");
+
 }
 /**
  * funcion invocada por el boton ok
@@ -140,23 +140,22 @@ function showConExt(e) {
             /**
              * condicion en caso de que sea una condicion nueva y en base de datos ya tenga varias conbdiciones
              */
-            if (j === 0) {
-                $("#operaciones").empty();
-                creaCmpDefecto();
-                crearComboOpe("conOpeCond1");
-                crearComboCmp("cmpValCond1");
-                objConAdd.push("1");
-                var cmpValo0 = $("#" + "cmpValoCond1").data("kendoComboBox");
-                var conOpe0 = $("#" + "conOpeCond1").data("kendoComboBox");
-                var cmpVal0 = $("#" + "cmpValCond1").data("kendoComboBox");
-                cmpValo0.value("");
-                conOpe0.value(">");
-                cmpVal0.value("");
-            }
+
+        }
+        if (j === 0) {
+            $("#operaciones").empty();
+            crearComboOpe("conOpeCond1");
+            crearComboCmp("cmpValCond1");
+            objConAdd.push("1");
+            var cmpValo0 = $("#" + "cmpValoCond1").data("kendoComboBox");
+            var conOpe0 = $("#" + "conOpeCond1").data("kendoComboBox");
+            var cmpVal0 = $("#" + "cmpValCond1").data("kendoComboBox");
+            cmpValo0.value("");
+            conOpe0.value(">");
+            cmpVal0.value("");
         }
     } else {
         $("#operaciones").empty();
-        creaCmpDefecto();
         crearComboOpe("conOpeCond1");
         crearComboCmp("cmpValCond1");
         objConAdd.push("1");
@@ -254,29 +253,7 @@ function crearComboOpe(id) {
 
     });
 }
-/**
- * en caso de seleccionar una opcion en la lista de operaciones se cambia el item de 
- * @param {type} e
- * @returns {undefined}
- */
-//function selectComboValIni(e) {
-//    if (idIniCon !== -1) {
-//        var dataItem1 = this.dataItem(e.item.index());
-//
-//        var id = globalCon[idIniCon].rpt_con_pos;
-//        var inputCon1 = JSON.parse(JSON.stringify(inputCon));
-//        var selected = $("#cmpValCond").data("kendoComboBox").dataSource._data[$("#cmpValCond").data("kendoComboBox").selectedIndex];
-//        cmp_ini = dataItem1.anx_nom;
-//        inputCon1[0].cmp_ini = dataItem1.anx_nom;
-//        inputCon1[0].cmp_ini_nom = dataItem1.cmp_dsc;
-//
-//        var selected = $("#conOpeCond" + id).data("kendoComboBox").dataSource._data[$("#conOpeCond" + id).data("kendoComboBox").selectedIndex];
-//        inputCon1[0].cmp_fin_nom = globalCon[idIniCon].cmp_fin_nom;
-//        inputCon1[0].cmp_con_ope = globalCon[idIniCon].cmp_con_ope;
-//        inputCon1[0].rpt_con_pos = globalCon[idIniCon].rpt_con_pos;
-//        sendAjax(inputCon1, "PUT");
-//    }
-//}
+
 function select(e) {
     var dataItem1 = this.dataItem(e.item.index());
     var numberPattern = /\d+/g;
@@ -284,28 +261,14 @@ function select(e) {
     var id = id.match(numberPattern)[0];
     var inputCon1 = JSON.parse(JSON.stringify(inputCon));
     if ((e.sender.element[0].id.indexOf("new") === -1) && (objConAdd.indexOf(id) === -1) && (objConEdit.indexOf(id) === -1)) {
-        objConEdit.push("id");
+        objConEdit.push(id);
     }
-//    if (e.sender.element[0].id === "conOpe1000000") {
-//        addConc(dataItem1.text);
-//    } else if (e.sender.element[0].id.indexOf("new") === -1) {
-//        if ((globalCon[idIniCon].rpt_con_pos == id)) {
-////            var selected = $("#cmpVal").data("kendoComboBox").dataSource._data[$("#cmpVal").data("kendoComboBox").selectedIndex];
-//            inputCon1[0].cmp_ini = cmp_ini;
-//            inputCon1[0].cmp_ini_nom = $("#cmpVal").val();
-//        }
-//        var selected = $("#conOpe" + id).data("kendoComboBox").dataSource._data[$("#conOpe" + id).data("kendoComboBox").selectedIndex];
-//        inputCon1[0].cmp_fin_nom = $("#cmpVal" + id).val();
-//        inputCon1[0].cmp_con_ope = dataItem1.value;
-//        inputCon1[0].rpt_con_pos = id;
-//        sendAjax(inputCon1, "PUT");
-//    }
+
 
 }
 
 function addConc() {
     var length = $("#operaciones").find('.col-sm-11 ').length + 1;
-
     var numberPattern = /\d+/g;
     var id = objConAdd[objConAdd.length - 1];
     if (objConAdd.length !== 0) {
@@ -346,12 +309,6 @@ function crearComboCmp(id) {
 
 function saveElemCUCond() {
 
-//    var numberPattern = /\d+/g;
-//    var id = e.sender.element[0].id;
-//    var id = id.match(numberPattern)[0];
-//    var idnew = "";
-//    var cmpVal = "";
-//    var iniconcmp = $("#Campos").find('.col-sm-12 .row')["0"].id.match(numberPattern)[0];
     if (($("#cmpValoCond1").val() !== "") && ($("#cmpValdef2").val() !== "")) {
         var cmpVal = $("#cmpValoCond1").data("kendoComboBox").dataSource._data[$("#cmpValoCond1").data("kendoComboBox").selectedIndex];
         var inputCon1 = [];
@@ -398,18 +355,20 @@ function saveElemCUCond() {
                     var obj = JSON.parse(sessionStorage.getItem("obj"));
                     obj["rpt_cmp_con"] = true;
                     sendAjax2([obj], "PUT");//paso el nodo codiciones del campo seleccionado a true
-                    i++;
                 }
-                inputCon1.push({
-                    "cmp_con_ono": "",
-                    "cmp_con_ope": $("#conOpeCond" + id).data("kendoComboBox").value(),
-                    "cmp_fin_nom": $("#cmpValCond" + id).val(),
-                    "cmp_ini": cmp_ini,
-                    "cmp_ini_nom": cmpVal.cmp_dsc,
-                    "rpt_cmp_pos": sessionStorage.getItem("idDato"),
-                    "rpt_con_pos": pos,
-                    "rpt_id": sessionStorage.getItem("idRepo")
-                });
+                if ($("#cmpValCond" + id).val()) {
+                    inputCon1.push({
+                        "cmp_con_ono": "",
+                        "cmp_con_ope": $("#conOpeCond" + id).data("kendoComboBox").value(),
+                        "cmp_fin_nom": $("#cmpValCond" + id).val(),
+                        "cmp_ini": cmp_ini,
+                        "cmp_ini_nom": cmpVal.cmp_dsc,
+                        "rpt_cmp_pos": sessionStorage.getItem("idDato"),
+                        "rpt_con_pos": pos,
+                        "rpt_id": sessionStorage.getItem("idRepo")
+                    });
+                }
+
 
             }
             ;
@@ -418,10 +377,10 @@ function saveElemCUCond() {
         if (objConEdit.length > 0) {
             inputCon1 = [];
             for (var i = 0; i < objConEdit.length; i++) {
-                var id = objConAdd[i];
+                var id = objConEdit[i];
                 var cmp_ini = "";
                 var pos = "";
-                if (id.split("new")[0] === "1") {
+                if ((id.split("new")[0] === "1")||(isNumber(id))) {
                     pos = id;
                 } else {
                     pos = id.split("new")[1];
@@ -431,7 +390,8 @@ function saveElemCUCond() {
                     i++;
                 }
                 var id = objConEdit[i];
-                inputCon1.push({
+                if ($("#cmpValCond" + id).val()) {
+                    inputCon1.push({
                     "cmp_con_ono": "",
                     "cmp_con_ope": $("#conOpeCond" + id).data("kendoComboBox").value(),
                     "cmp_fin_nom": $("#cmpValCond" + id).val(),
@@ -441,78 +401,14 @@ function saveElemCUCond() {
                     "rpt_con_pos": pos,
                     "rpt_id": sessionStorage.getItem("idRepo")
                 });
-                //            sendAjax(inputCon1, "PUT");
+                            sendAjaxCond(inputCon1, "PUT");
+                }
+                
             }
         }
 
     }
 
-//    var inputCon1 = JSON.parse(JSON.stringify(inputCon));
-//    if (($("#cmpVal").val() !== "")&&($("#cmpValdef2").val() !== "")) {
-//        cmpVal = $("#cmpVal" + id).context.activeElement.value;
-////            blokWin();
-//        var obj = JSON.parse(sessionStorage.getItem("obj"));
-//        var inputCmpCon = getinputRestCmpCud();
-////            inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].rpt_cmp_vis = $("#nomCon").val();
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].anx_cmp_id = obj.anx_cmp_id;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].anx_cmp_lkp = obj.anx_cmp_lkp;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].anx_cmp_vsb = obj.anx_cmp_vsb;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].anx_nom = obj.anx_nom;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].cmp_bloq = obj.cmp_bloq;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].cmp_brk = obj.cmp_brk;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].cmp_dsc = obj.cmp_dsc;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].cmp_id = obj.cmp_id;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].cmp_inquery = obj.cmp_inquery;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].cmp_nom = obj.cmp_nom;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].cmp_ssm = obj.cmp_ssm;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].cmp_sum = obj.cmp_sum;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].cmp_td = obj.cmp_td;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].rep_anx_cmp_idc = obj.rep_anx_cmp_idc;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].rpt_cmp_fil = obj.rpt_cmp_fil;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].rpt_cmp_fun = obj.rpt_cmp_fun;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].rpt_cmp_gru = obj.rpt_cmp_gru;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].rpt_cmp_pos = obj.rpt_cmp_pos;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].rpt_cmp_col = obj.rpt_cmp_col;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].rpt_cmp_pro = obj.rpt_cmp_pro;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].rpt_cmp_sum = obj.rpt_cmp_sum;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].rpt_cmp_vis = obj.rpt_cmp_vis;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].rpt_id = obj.rpt_id;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].transf = obj.transf;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].piindicador = obj.piindicador;
-//        inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp[0].rpt_cmp_con = true;
-////            sendAjaxAddCmpCon(inputCmpCon.dsSICUDRep_rpt.eerep_rpt_cmp, "PUT");
-////            inputCon1 = JSON.parse(JSON.stringify(inputCon));
-////            desBlokWin();
-//
-//        if (e.sender.element[0].id.indexOf("new") !== -1) {
-//            if ((id === "1") || (idnew === 1) || (iniconcmp == id)) {
-//                var selected = $("#cmpVal").data("kendoComboBox").dataSource._data[$("#cmpVal").data("kendoComboBox").selectedIndex];
-//                cmp_ini = selected.anx_nom;
-//                inputCon1[0].cmp_ini = selected.anx_nom;
-//                inputCon1[0].cmp_ini_nom = selected.rpt_cmp_vis;
-//            }
-//            cmpVal = $("#cmpValnew" + id).context.activeElement.value;
-//            inputCon1[0].cmp_fin_nom = cmpVal;
-//            inputCon1[0].cmp_con_ope = $("#conOpenew" + id).data("kendoComboBox").value();
-//            inputCon1[0].rpt_con_pos = id;
-////            sendAjax(inputCon1, "POST", "new" + id);
-//            if (objConAdd !== "") {
-//                globalCon.push(objConAdd);
-//            }
-//        } else {
-//            if ((id === iniconcmp)) {
-//                var selected = $("#cmpVal").data("kendoComboBox").dataSource._data[$("#cmpVal").data("kendoComboBox").selectedIndex];
-//                inputCon1[0].cmp_ini = cmp_ini;
-//                inputCon1[0].cmp_ini_nom = $("#cmpVal").val();
-//            }
-//            cmpVal = $("#cmpValnew" + id).context.activeElement.value;
-//            inputCon1[0].cmp_fin_nom = cmpVal;
-//            inputCon1[0].cmp_con_ope = $("#conOpe" + id).data("kendoComboBox").value();
-//            inputCon1[0].rpt_con_pos = id;
-////            sendAjax(inputCon1, "PUT");
-//        }
-////        
-//    }
 }
 
 function delCon(e) {
@@ -528,30 +424,6 @@ function delCon(e) {
         }
         document.getElementById("divCon" + e).remove();
     }
-
-
-//    var inputCon1 = JSON.parse(JSON.stringify(inputCon));
-////    var selected = $("#cmpVal").data("kendoComboBox").dataSource._data[$("#cmpVal").data("kendoComboBox").selectedIndex];
-//    inputCon1[0].cmp_ini = cmp_ini;
-//    inputCon1[0].cmp_ini_nom = $("#cmpVal").val();
-//    inputCon1[0].cmp_fin_nom = $("#cmpVal" + id).val();
-//    inputCon1[0].cmp_con_ope = $("#conOpe" + id).data("kendoComboBox").value();
-//    inputCon1[0].rpt_con_pos = idNum;
-//    if (((idNum == 1) || (globalCon[idIniCon].rpt_con_pos == idNum)) && (globalCon[idIniCon + 1])) {
-//        var idIni = $("#Campos").find('.col-sm-12 .row')["0"].id;
-//        idIniCon = idIniCon + 1;
-//        var idIni = idIni.match(numberPattern)[0];
-//        var inputCon2 = JSON.parse(JSON.stringify(inputCon));
-////        var selected = $("#cmpVal").data("kendoComboBox").dataSource._data[$("#cmpVal").data("kendoComboBox").selectedIndex];
-//        inputCon2[0].cmp_ini = cmp_ini;
-//        inputCon2[0].cmp_ini_nom = $("#cmpVal").val();
-//        inputCon2[0].cmp_fin_nom = globalCon[idIniCon].cmp_fin_nom;
-//        inputCon2[0].cmp_con_ope = globalCon[idIniCon].cmp_con_ope;
-//        inputCon2[0].rpt_con_pos = globalCon[idIniCon].rpt_con_pos;
-//        sendAjax(inputCon2, "PUT");
-//    }
-//
-//    sendAjax(inputCon1, "DELETE");
 
 }
 
@@ -602,18 +474,11 @@ function sendAjaxCond(data, verHtml, oldId) {
         },
         error: function (e) {
             bandAlert = 0;
-            alertDialogs("Error al consumir el servicio de CrearConciones" + e.status + " - " + e.statusText);
+            alertDialogs("Error al consumir el servicio de Crear Condiciones" + e.status + " - " + e.statusText);
         }
     }).done(function () {
         if (permitirIngreso == '"OK"') {
-            if (verHtml === "POST") {
-                var key1 = Object.keys(jsonResp)[0];
-                var id = jsonResp[key1].eerep_rpt_con[0].rpt_con_pos;
-                globalCon.push(jsonResp[key1].eerep_rpt_con[0]);
-                replaceIdEle(oldId, id);
                 cerrarCustomPopUp();
-//                closeLoading("#operaciones");
-            }
 
         } else {
             bandAlert = 0;
