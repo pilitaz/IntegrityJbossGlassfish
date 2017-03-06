@@ -679,12 +679,13 @@ function cerrarWindow(){
 }
 /**
  * funcion que pinta unna ventana popUp para deplegar el archico popUpCondiciones html 
+ * @param {type} e
  * @returns {undefined}
  */
 function PopUpCondicion2(e) {
     e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
-    var obj = this.dataItem($(e.currentTarget).closest("tr"));
-    
+//    var obj = this.dataItem($(e.currentTarget).closest("tr"));
+    var obj = $("#girdCampos").data("kendoGrid").dataItem($(e.target).closest("tr"));
     sessionStorage.setItem("cmpNom", obj.cmp_dsc);
     sessionStorage.setItem("obj", JSON.stringify(obj));
     sessionStorage.setItem("idDato",obj.rpt_cmp_pos);
