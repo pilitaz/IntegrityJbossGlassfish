@@ -275,6 +275,15 @@ function identBrowser() {
 }
 
 /**
+ * funcion para verificar si el dato es nbumerico
+ * @param {type} n string
+ * @returns {RegExp} un valor boolean 
+ */
+function isNumber(n) {
+    return /^-?[\d.]+(?:e-?\d+)?$/.test(n);
+}
+
+/**
  * Crea un ventana tipo "dialog" de kendo para mostrar mensajes de al usuario
  * 
  * @param {string} titulo  texto que aparece en la parte superior de la ventana
