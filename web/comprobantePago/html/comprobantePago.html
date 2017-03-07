@@ -72,43 +72,172 @@ and open the template in the editor.
                                 <span class="company-logo">
                                     <img src="../images/EmpresaLogo.png" width="300" height="115"/>                                    
                                 </span>
-                                <span class="invoice-number">Comprobante de pago</span>
+                                <span class="documentName"><h3>Comprobante de pago</h3></span>
                             </div>
                             <div class="pdf-footer">
                                 <span class="company-logo">
                                     <img src="../images/ComprobantePie.png" width="820" height="103"/>                                    
                                 </span>                                
                             </div>
-                            <div class="for">
-                                <h3>Invoice For</h3>
-                                <p>Antonio Moreno<br />
-                                    Naucalpan de Juárez<br />
-                                    México D.F., Mexico, 53500
-                                </p>
-                            </div>                            
-                            <div class="from">
-                                <h3>From</h3>
-                                <p style="padding-bottom: 20px; border-bottom: 1px solid #e5e5e5;">Hanna Moos <br />
-                                    Lützowplatz 456<br />
-                                    Berlin, Germany,  10785
-                                </p>
-                                <p style="padding-top: 20px;">
-                                    Invoice ID: 23543<br />
-                                    Invoice Date: 12.03.2014<br />
-                                    Due Date: 27.03.2014
-                                </p>
-                            </div>
+                            <div class="encabezado">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td style="width: 15%">
+                                            Empleado
+                                        </td>
+                                        <td style="width: 35%">
+                                            <label id="lbEmpleado"></label>
+                                        </td>
+                                        <td style="width: 5%">
+                                            
+                                        </td>
+                                        <td style="width: 15%">
+                                            Actividad
+                                        </td>
+                                        <td style="width: 30%">
+                                            <label id="lbActividad"></label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%">
+                                            NIT / CC
+                                        </td>
+                                        <td style="width: 30%">
+                                            <label id="lbNumeroDocumento"></label>
+                                        </td>
+                                        <td style="width: 10%">
+                                            
+                                        </td>
+                                        <td style="width: 15%; vertical-align: middle;" rowspan="2">
+                                            Sucursal / Agencia
+                                        </td>
+                                        <td style="width: 30%; vertical-align: middle;" rowspan="2">
+                                            <label id="lbSucursal"></label>
+                                        </td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%">
+                                            Cargo
+                                        </td>
+                                        <td style="width: 35%">
+                                            <label id="lbCargo"></label>
+                                        </td>
+                                        <td style="width: 5%">
+                                            
+                                        </td>
+                                        <td style="width: 15%">
+                                            
+                                        </td>
+                                        <td style="width: 30%">
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%">
+                                            Sueldo básico
+                                        </td>
+                                        <td style="width: 35%">
+                                            <label id="lbSueldoBasico"></label>
+                                        </td>
+                                        <td style="width: 5%">
+                                            
+                                        </td>
+                                        <td style="width: 15%">
+                                            
+                                        </td>
+                                        <td style="width: 30%">
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%">
+                                            Fecha
+                                        </td>
+                                        <td style="width: 35%">
+                                            <label id="lbFecha"></label>
+                                        </td>
+                                        <td style="width: 5%">
+                                            
+                                        </td>
+                                        <td style="width: 15%">
+                                            
+                                        </td>
+                                        <td style="width: 30%">
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%">
+                                            Forma de pago
+                                        </td>
+                                        <td colspan="4">
+                                            <label id="lbFormaPago"></label>
+                                        </td>                                        
+                                    </tr>
+                                </table>
+                            </div>                                                        
                             <div class="pdf-body">
                                 <div id="grid"></div>
-                                <p class="signature">
-                                    Signature: ________________ <br /><br />
-                                    Date: 12.03.2014
-                                </p>
+                                <br><br>
+                                <div class="signature">
+                                    <p>
+                                    Neto devengado:  <label id="lbNetoDevengado"></label>                                    
+                                    </p><br>
+                                    <p>                                    
+                                    Recibido: ________________________________________                                     
+                                    </p>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>                    
                 </td>
             </tr>
         </table>
+        <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
+            <tr data-uid="#: uid #"> 
+            <td>
+            <span class="title" id ="#: desconcepto #">#: desconcepto # </span>
+            </td> 
+            <td style="text-align: right">
+            <span class="title" id ="#: base #">#: kendo.toString( base,"c0") # </span>
+            </td>                               
+            <td style="text-align: right">
+            <span class="title" id ="#: devtiempo #">#: devtiempo # </span>
+            </td>                   
+            <td style="text-align: right">
+            <span class="title" id ="#: devvalor #">#: kendo.toString( devvalor,"c0") # </span>
+            </td>
+            <td style="text-align: right">
+            <span class="title" id ="#: dedtiempo #">#: dedtiempo # </span>
+            </td>                   
+            <td style="text-align: right">
+            <span class="title" id ="#: dedvalor #">#: kendo.toString( dedvalor,"c0") # </span>
+            </td>
+            </tr>                       
+        </script>
+        <script id="altRowTemplateCmp" type="text/x-kendo-tmpl">
+            <tr class="k-alt" data-uid="#: uid #">             
+            <td>
+            <span class="title" id ="#: desconcepto #">#: desconcepto # </span>
+            </td> 
+            <td style="text-align: right">
+            <span class="title" id ="#: base #">#: kendo.toString( base,"c0") # </span>
+            </td>                               
+            <td style="text-align: right">
+            <span class="title" id ="#: devtiempo #">#: devtiempo # </span>
+            </td>                   
+            <td style="text-align: right">
+            <span class="title" id ="#: devvalor #">#: kendo.toString( devvalor,"c0") # </span>
+            </td>
+            <td style="text-align: right">
+            <span class="title" id ="#: dedtiempo #">#: dedtiempo # </span>
+            </td>                   
+            <td style="text-align: right">
+            <span class="title" id ="#: dedvalor #">#: kendo.toString( dedvalor,"c0") # </span>
+            </td>                       
+            </tr>
+        </script>
     </body>
 </html>

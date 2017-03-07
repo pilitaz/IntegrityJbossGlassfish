@@ -12,48 +12,7 @@ $(window).resize(function () {
 
 $(document).ready(function() {    
     anoLiquidacion();
-    $(window).trigger("resize");
-    var data = [
-        { productName: "QUESO CABRALES", unitPrice: 21, qty: 5 },
-        { productName: "ALICE MUTTON", unitPrice: 39, qty: 7 },
-        { productName: "GENEN SHOUYU", unitPrice: 15.50, qty: 3 },
-        { productName: "CHARTREUSE VERTE", unitPrice: 18, qty: 1 },
-        { productName: "MASCARPONE FABIOLI", unitPrice: 32, qty: 2 },
-        { productName: "VALKOINEN SUKLAA", unitPrice: 16.25, qty: 3 }
-    ];
-    var schema = {
-        model: {
-            productName: { type: "string" },
-            unitPrice: { type: "number", editable: false },
-            qty: { type: "number" }
-        },
-        parse: function (data) {
-            $.each(data, function(){
-                this.total = this.qty * this.unitPrice;
-            });
-            return data;
-        }
-    };
-    var aggregate = [
-        { field: "qty", aggregate: "sum" },
-        { field: "total", aggregate: "sum" }
-    ];
-    var columns = [
-        { field: "productName", title: "Product", footerTemplate: "Total"},
-        { field: "unitPrice", title: "Price", width: 120},
-        { field: "qty", title: "Pcs.", width: 120, aggregates: ["sum"], footerTemplate: "#=sum#" },
-        { field: "total", title: "Total", width: 120, aggregates: ["sum"], footerTemplate: "#=sum#" }
-    ];
-    var grid = $("#grid").kendoGrid({
-        editable: false,
-        sortable: true,
-        dataSource: {
-            data: data,
-            aggregate: aggregate,
-            schema: schema,
-        },
-        columns: columns
-    });
+    $(window).trigger("resize");   
     
     $("#paper").kendoDropDownList({
         change: function() {
@@ -189,8 +148,7 @@ function nomina(){
     });
 }
 
-function comprobante(){ 
-    var comprobante;
+function comprobante(){     
     
     var obj = new sirComprobante();    
     var json = obj.getjson();
@@ -199,7 +157,7 @@ function comprobante(){
     
     var key1 = Object.keys(json)[0];
     var key2 = Object.keys(json[key1])[1];
-    debugger
+    
     var kendoDropDownListNomina = $("#ipNomina").data("kendoDropDownList");    
     var dataItem = kendoDropDownListNomina.dataSource._data[kendoDropDownListNomina.selectedIndex-1];
         
@@ -221,8 +179,22 @@ function comprobante(){
                 alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
             }
         } 
-    }).done(function(e){                                          
-        alert(JSON.parse(comprobante));
+    }).done(function(e){ 
+        var key1 = Object.keys(e)[0];
+        if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                document.getElementById('lbEmpleado').innerHTML = e[key1].ttconsultacomprobante["0"].nomempleado;
+                document.getElementById('lbSucursal').innerHTML = e[key1].ttconsultacomprobante["0"].Sucagencia;
+                document.getElementById('lbNumeroDocumento').innerHTML = e[key1].ttconsultacomprobante["0"].idempleado;
+                document.getElementById('lbActividad').innerHTML = e[key1].ttconsultacomprobante["0"].ctoactividad;
+                document.getElementById('lbCargo').innerHTML = e[key1].ttconsultacomprobante["0"].cargo;
+                document.getElementById('lbSueldoBasico').innerHTML = e[key1].ttconsultacomprobante["0"].sueldo;
+                document.getElementById('lbFecha').innerHTML = e[key1].ttconsultacomprobante["0"].fechaperiodo;
+                document.getElementById('lbFormaPago').innerHTML = e[key1].ttconsultacomprobante["0"].formapago +" "+ e[key1].ttconsultacomprobante["0"].banco +" "+ e[key1].ttconsultacomprobante["0"].Nocuenta;                
+                document.getElementById('lbNetoDevengado').innerHTML = kendo.toString( e[key1].ttconsultacomprobante["0"].netodevengado,"c0");
+                grid(e[key1].ttconsultacomprobantedet);
+            } else {
+                alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+            }        
     });
 }
 
@@ -231,9 +203,59 @@ function getPDF(selector) {
         kendo.drawing.pdf.saveAs(group, "Invoice.pdf");
     });
 }
-//
-//$(document).ready(function() {
-//    
-//});
 
+function grid(data){
+     
+    var schema = {
+        model: {
+            codconcepto: { type: "string" },
+            desconcepto: { type: "string"},
+            base: { type: "number" },
+            devtiempo: { type: "string" },
+            devvalor: { type: "number" },            
+            dedtiempo: { type: "string" },
+            dedvalor: { type: "number" },
+            saldoacumulado: { type: "number" }
+        }
+    };
+    
+    var aggregate = [
+        { field: "devvalor", aggregate: "sum" },
+        { field: "dedvalor", aggregate: "sum" }
+    ];
+
+    
+    var columns = [        
+        { field: "desconcepto", title: "Descripción", width: "100%", footerTemplate: "Totales" },
+        { field: "base", title: "Base", width: 80, format:"{0:c0}"},
+        { 
+            title: "Devengado",
+            columns: [
+                { field: "devtiempo", title: "tiempo", width: "50px"},
+                { field: "devvalor", title: "Valor", width: "80px", aggregates: ["sum"], footerTemplate: "#=kendo.toString(sum, 'c0')#" }
+            ]
+        },
+        {
+            title: "Deducciones",
+            columns: [
+                { field: "dedtiempo", title: "tiempo", width: "50px" },
+                { field: "dedvalor", title: "Valor", width: "80px", aggregates: ["sum"], footerTemplate: "#=kendo.toString(sum, 'c0')#" }
+            ]
+        },
+//        { field: "saldoacumulado", title: "Saldo<br>acumulado", width: "50px" }
+    ];
+    var grid = $("#grid").kendoGrid({
+        editable: false,
+        sortable: false,
+        scrollable: false,
+        dataSource: {
+            data: data,            
+            schema: schema,
+            aggregate: aggregate,
+        },
+        columns: columns,
+        rowTemplate: kendo.template($("#rowTemplateCmp").html()),
+        altRowTemplate: kendo.template($("#altRowTemplateCmp").html())
+    });
+}
 

@@ -8,6 +8,10 @@ and open the template in the editor.
     Author     : jenny
 */
 
+tr{    
+    vertical-align: top;
+}
+
 .pdf-page {
     margin: 0 auto;
     box-sizing: border-box;
@@ -24,51 +28,53 @@ and open the template in the editor.
     right: 1cm;
     vertical-align: bottom;    
 }
-.invoice-number {
+.documentName {
     padding-top: 2cm;
     float: right;
 }
 .pdf-footer {
     position: absolute;
     bottom: 0cm;
-    height: .6in;
+    height: 1.5cm;
     left: 0cm;
-    right: .5in;
+    right: 1cm;
     padding-top: 10px;    
     text-align: left;
 }
+	/*216 x 279*/
+.size-letter { width: 216mm; height: 279mm; }
+
 .pdf-body {
     position: absolute;
-    top: 3.7in;
-    bottom: 1.2in;
-    left: .5in;
-    right: .5in;
+    top: 10cm;
+    bottom: 3cm;
+    left: 1cm;
+    right: 1cm;
 }
-
-.size-a4 { width: 8.3in; height: 11.7in; }
-.size-letter { width: 8.5in; height: 11in; }
-.size-executive { width: 7.25in; height: 10.5in; }
-
 .company-logo {
     font-size: 30px;
     font-weight: bold;
     color: #3aabf0;
 }
-.for {
+.encabezado {
     position: absolute;
-    top: 1.5in;
-    left: .5in;
-    width: 2.5in;
-}
-.from {
-    position: absolute;
-    top: 1.5in;
-    right: .5in;
-    width: 2.5in;
-}
-.from p, .for p {
-    color: #787878;
+    top: 5cm;
+    left: 1cm;
+    right: 1cm;    
 }
 .signature {
-    padding-top: .5in;
+    position: absolute;    
+    left: 1cm;
+    right: 1cm;
+    text-align: center
+}
+
+.k-grid-header th.k-header {
+    vertical-align: middle;
+    text-align: center
+}
+
+.pdf-page {
+    font-family: "DejaVu Sans", "Arial", sans-serif;
+    font-size: 12px
 }
