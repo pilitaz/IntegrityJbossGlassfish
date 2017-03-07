@@ -6,23 +6,13 @@
 
 $(window).resize(function () {
     var viewportHeight = $(window).height();
-    $('#outerWrapper').height(viewportHeight - 100);
-                        
+    $('#outerWrapper').height(viewportHeight - 100);                        
+    $('#divPDF').height(viewportHeight - 50);
 });
 
 $(document).ready(function() {    
     anoLiquidacion();
-    $(window).trigger("resize");   
-    
-    $("#paper").kendoDropDownList({
-        change: function() {
-            $(".pdf-page")
-                    .removeClass("size-a4")
-                    .removeClass("size-letter")
-                    .removeClass("size-executive")
-                    .addClass(this.value());
-        }
-    });
+    $(window).trigger("resize"); 
 });
 
 function anoLiquidacion(){
@@ -187,9 +177,9 @@ function comprobante(){
                 document.getElementById('lbNumeroDocumento').innerHTML = e[key1].ttconsultacomprobante["0"].idempleado;
                 document.getElementById('lbActividad').innerHTML = e[key1].ttconsultacomprobante["0"].ctoactividad;
                 document.getElementById('lbCargo').innerHTML = e[key1].ttconsultacomprobante["0"].cargo;
-                document.getElementById('lbSueldoBasico').innerHTML = e[key1].ttconsultacomprobante["0"].sueldo;
+                document.getElementById('lbSueldoBasico').innerHTML = kendo.toString(e[key1].ttconsultacomprobante["0"].sueldo,"c0");
                 document.getElementById('lbFecha').innerHTML = e[key1].ttconsultacomprobante["0"].fechaperiodo;
-                document.getElementById('lbFormaPago').innerHTML = e[key1].ttconsultacomprobante["0"].formapago +" "+ e[key1].ttconsultacomprobante["0"].banco +" "+ e[key1].ttconsultacomprobante["0"].Nocuenta;                
+                document.getElementById('lbFormaPago').innerHTML = e[key1].ttconsultacomprobante["0"].formapago +" "+ e[key1].ttconsultacomprobante["0"].banco;                
                 document.getElementById('lbNetoDevengado').innerHTML = kendo.toString( e[key1].ttconsultacomprobante["0"].netodevengado,"c0");
                 grid(e[key1].ttconsultacomprobantedet);
             } else {
@@ -232,14 +222,14 @@ function grid(data){
         { 
             title: "Devengado",
             columns: [
-                { field: "devtiempo", title: "tiempo", width: "50px"},
+                { field: "devtiempo", title: "Tiempo", width: "50px"},
                 { field: "devvalor", title: "Valor", width: "80px", aggregates: ["sum"], footerTemplate: "#=kendo.toString(sum, 'c0')#" }
             ]
         },
         {
             title: "Deducciones",
             columns: [
-                { field: "dedtiempo", title: "tiempo", width: "50px" },
+                { field: "dedtiempo", title: "Tiempo", width: "50px" },
                 { field: "dedvalor", title: "Valor", width: "80px", aggregates: ["sum"], footerTemplate: "#=kendo.toString(sum, 'c0')#" }
             ]
         },
@@ -249,6 +239,7 @@ function grid(data){
         editable: false,
         sortable: false,
         scrollable: false,
+        selectable: false,
         dataSource: {
             data: data,            
             schema: schema,

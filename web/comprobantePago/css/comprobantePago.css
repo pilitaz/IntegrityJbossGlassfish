@@ -35,14 +35,14 @@ tr{
 .pdf-footer {
     position: absolute;
     bottom: 0cm;
-    height: 1.5cm;
+    height: 3.5cm;
     left: 0cm;
-    right: 1cm;
-    padding-top: 10px;    
+    right: 0cm;    
     text-align: left;
+    vertical-align: bottom
 }
 	/*216 x 279*/
-.size-letter { width: 216mm; height: 279mm; }
+.size-letter { width: 216mm; height: 279mm;}
 
 .pdf-body {
     position: absolute;
@@ -76,5 +76,20 @@ tr{
 
 .pdf-page {
     font-family: "DejaVu Sans", "Arial", sans-serif;
-    font-size: 12px
+    font-size: 12px;
+}
+
+.k-grid tr:hover {
+    background: transparent;
+}
+.k-grid tr:not(.k-state-selected):hover {
+    color: #80BD28;
+}
+
+.k-grid tr.k-alt:not(.k-state-selected):hover {
+    background: #f1f1f1;
+}
+
+.k-grid-footer td{
+    background-color: #DFDFDF;
 }

@@ -15,7 +15,9 @@ and open the template in the editor.
         <link href="../../css/kendo.common.min.css" rel="stylesheet" type="text/css"/>        
         <script src="../../scripts/kendo.all.min.js" type="text/javascript"></script>
         <script src="../../scripts/LibreriaIntegrity.js" type="text/javascript"></script>
-        <script src="../../js/servicios.js" type="text/javascript"></script>
+        <script src="../../scripts/zipPdf.js" type="text/javascript"></script>
+        <script src="../../scripts/pakoPdf.js" type="text/javascript"></script>
+        <script src="../../js/servicios.js" type="text/javascript"></script>        
         <script src="../../comprobantePago/js/variablesComprobatePago.js" type="text/javascript"></script>
         <script src="../../comprobantePago/js/comprobantePago.js" type="text/javascript"></script>
         <link href="../../css/kendo.metro.min.css" rel="stylesheet" type="text/css"/>
@@ -66,7 +68,7 @@ and open the template in the editor.
                     </table>
                 </td>
                 <td style="width: 80%">
-                    <div class="page-container hidden-on-narrow" style="overflow-y: auto">
+                    <div id="divPDF" class="page-container hidden-on-narrow" style="width: 100%;overflow-y: auto;overflow-x : hidden">
                         <div class="pdf-page size-letter">
                             <div class="pdf-header">
                                 <span class="company-logo">
@@ -76,7 +78,7 @@ and open the template in the editor.
                             </div>
                             <div class="pdf-footer">
                                 <span class="company-logo">
-                                    <img src="../images/ComprobantePie.png" width="820" height="103"/>                                    
+                                    <img src="../images/ComprobantePie.png" width="818" height="103" style="position: absolute; left: 0px; bottom: 0px;"/>                                    
                                 </span>                                
                             </div>
                             <div class="encabezado">
