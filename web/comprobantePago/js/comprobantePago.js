@@ -198,9 +198,10 @@ function comprobante(){
     });
 }
 
-function getPDF(selector) {
+function getPDF(selector) {    
+    var dropdownlist = $("#ipNomina").data("kendoDropDownList");
     kendo.drawing.drawDOM($(selector)).then(function(group){
-        kendo.drawing.pdf.saveAs(group, "Invoice.pdf");
+        kendo.drawing.pdf.saveAs(group, "Comprobante de pago "+dropdownlist.dataSource._data[dropdownlist.selectedIndex-1].Descripcion+" "+$("#ipAnoLiq").val()+".pdf");
     });
 }
 
