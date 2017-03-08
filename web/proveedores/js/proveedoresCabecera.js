@@ -44,7 +44,7 @@ function editar_rol(){
     $('#grid').data('kendoGrid').dataSource.read();
     $('#grid').data('kendoGrid').refresh(); 
  }                   
- function detalle(e){debugger
+ function detalle(e){
        e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
                         var id = this.dataItem($(e.currentTarget).closest("tr")).ter__nit;
 //                      
@@ -81,7 +81,7 @@ function editar_rol(){
                         
                         
    
-             function detalle1(e){debugger
+             function detalle1(e){
     
                         sessionStorage.setItem("Nit_Tercero","Nuevo");
 //                        window.location = ("proveedores.html");
@@ -144,8 +144,40 @@ $(document).ready(function() {
  *  var urlactualizar: url de servicio para actualizar / crear 
  *  
  */ 
-$(document).ready(function () {  
-      var data = [
+ function cerrarPopup1(){
+        $("#windowg").data("kendoWindow").close();   
+
+
+ } 
+ function popup(){
+        $("#grillapopUp").append("<div id='windowg'></div>");                       
+        var myWindow2 = $("#windowg"),undo = $("#undo");                
+        function onClose1() {
+            undo.fadeIn();
+            $("#grillapopUp").empty();
+        }       
+        var UrL= sessionStorage.getItem("url");
+        myWindow2.kendoWindow({
+            draggable: true,
+            width: "600px",
+            height: "250px",
+            title: "Busqueda",
+            modal: true,
+            resizable: false,
+            content: UrL+"proveedores/html/popUpFiltroProveedores.html",
+            deactivate: function() {
+                this.destroy();                                           
+            },
+            actions: [
+                "Close"
+            ],                               
+            close: onClose1
+        }).data("kendoWindow").center().open();   
+        
+        
+    } 
+    function grilla(nit,razon){
+         var data = [
         {text: "Todos", value: "-1", clase: "po_checkCreate"},
         {text: "Creado", value: "99", clase: "po_checkCreate"},
         {text: "Activo", value: "0", clase: "po_checkAct"},
@@ -162,7 +194,7 @@ $(document).ready(function () {
         dataSource: data,
          change: function (e) {
          var send = parseInt ($("#fltrEst").data("kendoDropDownList").value() ); 
-         grilla(send);
+         grilla(send,nit,razon);
          }
          
 
@@ -175,10 +207,13 @@ $(document).ready(function () {
 
     }).data("kendoWindow");
     
-        function grilla(e){debugger
+        function grilla(e,nit,razon){debugger
         var  consultar = new sirProveedor();
         var  datajson = consultar.getjson();
         var  urlService = consultar.getUrlSir();
+        datajson.dsSIRcon_prv.eeSIRcon_prv[0].piiprv_est=e;    
+        datajson.dsSIRcon_prv.eeSIRcon_prv[0].piiprv_est=e;    
+        
        datajson.dsSIRcon_prv.eeSIRcon_prv[0].piiprv_est=e;           
         var  actualizar = new sirProveedor();
         var  actjson = actualizar.getjson();
@@ -252,7 +287,7 @@ $(document).ready(function () {
             batch: false,
             severFiltering: true,                            
             schema: {
-                data: function (e) {debugger
+                data: function (e) {
                     var key1 = Object.keys(e)[0];
                     if(e[key1].eeEstados){
                         if (e[key1].eeEstados[0].Estado === "OK") {
@@ -338,7 +373,7 @@ $(document).ready(function () {
         });
         $(window).trigger("resize"); 
     }
-    grilla(-1);
+    grilla(-1,nit,razon);
     $("#filtro").kendoAutoComplete({ 
         dataTextField: "pri__des",  
         dataValueField: "pri__des",
@@ -375,11 +410,15 @@ $(document).ready(function () {
             $('#grid').data('kendoGrid').refresh();
         }
     }
+    }
+$(document).ready(function () {  
+   popup();
+    //grilla();
 });
  
 function changImgFunc(results) {
 
-        for (var i = 0; i < results.length; i++) {debugger
+        for (var i = 0; i < results.length; i++) {
             if (document.getElementById("spanproceso"+results[i].ter__nit+results[i].ter__raz)){
                 if(results[i].prv__est==0){                            
                     document.getElementById("spanproceso"+results[i].ter__nit+results[i].ter__raz).setAttribute("class", "k-sprite po_checkAct");   
@@ -398,7 +437,7 @@ function changImgFunc(results) {
  }
                     
 
-function changeEst(e){debugger
+function changeEst(e){
     var datos= $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr"))
     var consultar = new cudProveedores();
     var datajson = consultar.getjson();

@@ -418,3 +418,41 @@ function sirBancoDetalle() {
     };
     
 };
+////////////////////////////////////////////////////////////////////////
+function sirSucursalBanco() {
+    var urlSir = ipServicios + baseContabilidad +"SIRsic_sbco";
+    var json = {
+	"dsSIRsic_sbco": {
+		"eeDatos": [{
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+		}],
+		"SIRsic_sbco": [{
+			"piibco__cod": 0,
+			"piisbco__cod": 0,
+			"picusuario": "*"
+		}]
+	}
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
