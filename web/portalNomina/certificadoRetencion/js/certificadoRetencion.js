@@ -9,5 +9,5 @@
     $(document).ready(function() {
        document.body.style.zoom="100%";
 
-    getPDF('.page-container')     
+    //getPDF('.page-container')     
     });
