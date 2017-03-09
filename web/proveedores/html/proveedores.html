@@ -73,7 +73,7 @@ and open the template in the editor.
                         <table style="width: 100%">
                             <tr id="nitNuevo" hidden="hidden" >
                                 <td style="width: 30%">
-                                    <label class="letraParrafo" >Nit:</label>
+                                    <label class="letraParrafo" >Ruc/cc:</label>
                                 </td>
                                 <td style="width: 70%">
                                     <input id="NiT" style="width: 100%"  required/>                 
@@ -141,19 +141,19 @@ and open the template in the editor.
                                     <input id="formaPago"  style="width: 100%" required/>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr id="fechaAutorizacionHidden" >
                                 <td>
                                     <label class="letraParrafo">Fecha Autorizacion:</label>
                                 </td>
                                 <td>
-                                    <input id="fechaAutorizacion"  style="width: 100%"/>
+                                    <input id="fechaAutorizacion1"  style="width: 100%"/>
                                 </td>
                             </tr>
 
                         </table>                        
                     </div>
-                    <div class="col-md-6">                        
-                        <table style="width: 100%">
+                    <div class="col-md-6" >                        
+                        <table style="width: 100%" id="columna2">
                              <tr>
                                 <td style="width: 30%">
                                     <label class="letraParrafo">Pais:</label>
@@ -196,7 +196,7 @@ and open the template in the editor.
                                     <input id="postal" class ="k-textbox" style="width: 100%"/>      
                                 </td>
                             </tr>
-                            <tr>
+                            <tr >
                                 <td>
                                     <label class="letraParrafo">Informar Beneficiario:</label>
                                 </td>
@@ -285,7 +285,7 @@ and open the template in the editor.
                         <table style="width: 100%">
                             <tr>
                                 <td style="width: 30%">
-                                    <label class="letraParrafo">Agencia:</label>
+                                    <label class="letraParrafo">Sucursal:</label>
                                 </td>
                                 <td style="width: 70%">
                                     <input id="agencia"  style="width: 100%" required/>
