@@ -400,11 +400,13 @@ function abreFuncion(servicio) {
         sessionStorage.setItem("nomRepo", arbol._model.data[arbol.get_selected()].original.text);
         document.getElementById("idFrame").src = sessionStorage.getItem("url") + "Reporteador/viewRepo/html/viewRepo.html";
         document.getElementById("tdPerfil").style = "display:none";
-    } else if (regex.test(servicio)) {
+//    } else if (regex.test(servicio)) {
+//        sessionStorage.setItem("servicio", servicio);
+//        document.getElementById("idFrame").src = sessionStorage.getItem("url") + servicio;
+    } else {
+//        document.getElementById("idFrame").src = urlIFrame + servicio + "/Start.jsp";
         sessionStorage.setItem("servicio", servicio);
         document.getElementById("idFrame").src = sessionStorage.getItem("url") + servicio;
-    } else {
-        document.getElementById("idFrame").src = urlIFrame + servicio + "/Start.jsp";
     }
 
 }
