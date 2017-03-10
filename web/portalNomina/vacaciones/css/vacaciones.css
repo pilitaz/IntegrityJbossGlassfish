@@ -42,11 +42,11 @@ tr{
     vertical-align: bottom
 }
 	/*216 x 279*/
-.size-letter { width: 216mm; height: 279mm;}
+.size-letter { width: 279mm; height: 216mm;}
 
 .pdf-body {
     position: absolute;
-    top: 10cm;
+    top: 8.5cm;
     bottom: 3cm;
     left: 1cm;
     right: 1cm;

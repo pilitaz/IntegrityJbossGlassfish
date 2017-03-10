@@ -2,15 +2,28 @@ var bandAlert=0;
 var dataProveedor;
 $(document).ready(function () {   debugger
      $('#contenido').css("height",$('#windowg').context.children["0"].clientHeight-100 + "px");
-     $("#fechaAutorizacion").kendoDatePicker({
-    format: "dd/MM/yyyy"
-});
-      $("#agencia").kendoNumericTextBox();
+
     var nit1 = sessionStorage.getItem("Nit_Tercero");
     if(nit1==="Nuevo"){
           cargarDatos1();
+   
+    var itm = document.getElementById("fechaAutorizacionHidden");
+    var cln = itm.cloneNode(true);
+    document.getElementById("columna2").append(cln);
+    //document.getElementById("fechaAutorizacionHidden").hidden="true"; 
+    $("body").find('[id=fechaAutorizacion1]')[1].id="fechaAutorizacion";
+    $("#columna2").append("<div id='copia1'></div>");
+    $("#fechaAutorizacion").kendoDatePicker({
+    format: "dd/MM/yyyy"
+    });
+    document.getElementById("fechaAutorizacion1").hidden="true"; 
     }else{
+    $("body").find('[id=fechaAutorizacion1]')[0].id="fechaAutorizacion";
+    $("#fechaAutorizacion").kendoDatePicker({
+    format: "dd/MM/yyyy"
+    });
         cargarDatos();
+        
     }
 
 
@@ -30,7 +43,7 @@ function mostrarCustomPopUp() {
 }
 function mostrarCustomPopUp1() {
     mostrarPopUp2();
-    cargarBancos();
+    
 
    
 }
@@ -43,54 +56,7 @@ function mostrarPopUp2() {
     }
     
 }
-function cargarBancos() {
-var consultar = new sirBancos();
-    var datajson = consultar.getjson();
-    var urlService = consultar.getUrlSir();
-    var mapCud3 = "eesic_bco";
-     $("#bancoTercero")
-            .kendoDropDownList({
-                
-        dataTextField: "bco__nom",
-        dataValueField: "bco__cod",
-        
-        dataSource: {
-            transport: {
-                read: {
-                    url: urlService,
-                    dataType: "json",
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8"
-                },
-                parameterMap: function (options, operation) {
-                    if (operation === "read") {
-                        return JSON.stringify(datajson);
-                    }
-                }
-            },
-            schema: {
-                data: function (e) {
-                    var key1 = Object.keys(e)[0];
-                    if (e[key1].eeEstados[0].Estado === "OK") {
-                        return e[key1][mapCud3];
-                    } else {
-                        alertDialogs("Error Con Servicio Bancos"+e[key1].eeEstados[0].Estado);
-                    }
-                },
-                model: {
-                    id: "bco__cod",
-                    fields: {
-                        bco__nom: {editable: true, nullable: false},
-                        bco__cod: {editable: true, nullable: false},
-                        
-                    }
-                }
-            }
-        }
-        
-    });
-    
-}
+
 function crearProveedor() {
     
   var consultar = new cudProveedores();
@@ -119,7 +85,7 @@ function crearProveedor() {
     datajson.dsSICUDcon_prv.eecon_prv[0].ciu__cod1=$("#ciudadBanco").data("kendoDropDownList")._old;
     datajson.dsSICUDcon_prv.eecon_prv[0].fin__dir=document.getElementById('direccionBanco').value;
     datajson.dsSICUDcon_prv.eecon_prv[0].pag__cod=parseInt($("#formaPago").data("kendoDropDownList")._old);
-    datajson.dsSICUDcon_prv.eecon_prv[0].prv__age=parseInt(document.getElementById('agencia').value);
+    datajson.dsSICUDcon_prv.eecon_prv[0].prv__age=parseInt($("#agencia").data("kendoDropDownList")._old);
     datajson.dsSICUDcon_prv.eecon_prv[0].prv__ben=document.getElementById('informarBeneficiario').value;
     datajson.dsSICUDcon_prv.eecon_prv[0].prv__cgo=document.getElementById('cargoResponsable').value;
     if ($("#tipoCuenta").data("kendoDropDownList")._old==="true"){var tipo=true;}else{tipo=false;}
@@ -207,7 +173,7 @@ function cargarProveedor(e){
     //document.getElementById('departamentoBanco').value=e.dsSIRcon_prv.eecon_prv[0].dpto__cod;
     document.getElementById('responsable').value=e.dsSIRcon_prv.eecon_prv[0].ter__rep;
     document.getElementById('cargoResponsable').value=e.dsSIRcon_prv.eecon_prv[0].prv__cgo;
-    $("#agencia").data("kendoNumericTextBox").value(e.dsSIRcon_prv.eecon_prv[0].prv__age);
+   // $("#agencia").data("kendoNumericTextBox").value(e.dsSIRcon_prv.eecon_prv[0].prv__age);
     
     document.getElementById('tipoCuenta').value=e.dsSIRcon_prv.eecon_prv[0].prv__cta;
     //document.getElementById('terceroBancario').value=e.dsSIRcon_prv.eecon_prv[0].prv__nit;
@@ -343,7 +309,68 @@ function cargarProveedor(e){
         
     });
     
-    var consultar = new sirBancos();
+   
+
+       paises(e);
+       paisesBanco(e);
+       bancotrans();
+       bancos();
+}
+function sucursales(e){debugger
+    var consultar = new sirSucursalBanco();
+    var datajson = consultar.getjson();
+    var urlService = consultar.getUrlSir();
+    var mapCud3 = "eesic_sbco";
+    //datajson.dsSIRsic_sbco.SIRsic_sbco[0].piibco__cod=e;
+    $("#agencia")
+            .kendoDropDownList({
+                
+        dataTextField: "bco__nom",
+        dataValueField: "bco__cod",
+        dataBound: function() {          
+        var dropdownlist = $("#agencia").data("kendoDropDownList");
+        dropdownlist.value(e);
+
+            },
+           
+        dataSource: {
+            transport: {
+                read: {
+                    url: urlService,
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8"
+                },
+                parameterMap: function (options, operation) {
+                    if (operation === "read") {
+                        return JSON.stringify(datajson);
+                    }
+                }
+            },
+            schema: {
+                data: function (e) {
+                    var key1 = Object.keys(e)[0];
+                    if (e[key1].eeEstados[0].Estado === "OK") {
+                        return e[key1][mapCud3];
+                    } else {
+                        alertDialogs("Error Con Servicio Sucursales"+e[key1].eeEstados[0].Estado);
+                    }
+                },
+                model: {
+                    id: "bco__cod",
+                    fields: {
+                        bco__nom: {editable: true, nullable: false},
+                        bco__cod: {editable: true, nullable: false},
+                        
+                    }
+                }
+            }
+        }
+        
+    });
+}
+function bancos(){
+     var consultar = new sirBancos();
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();
     var mapCud3 = "eesic_bco";
@@ -356,8 +383,11 @@ function cargarProveedor(e){
         dataBound: function() {          
         var dropdownlist = $("#Banco").data("kendoDropDownList");
          dropdownlist.value(dataProveedor.dsSIRcon_prv.eecon_prv[0].bco__cod1);
+         sucursales(dataProveedor.dsSIRcon_prv.eecon_prv[0].prv__age);
             },
-           
+        change: function(){debugger
+             sucursales(dataProveedor.dsSIRcon_prv.eecon_prv[0].prv__age);
+        },   
         dataSource: {
             transport: {
                 read: {
@@ -393,11 +423,63 @@ function cargarProveedor(e){
         }
         
     });
-
-       paises(e);
-       paisesBanco(e);
-       bancotrans();
+}
+function bancoNuevo(){
+     var consultar = new sirBancos();
+    var datajson = consultar.getjson();
+    var urlService = consultar.getUrlSir();
+    var mapCud3 = "eesic_bco";
+    
+    $("#Banco")
+            .kendoDropDownList({
+                
+        dataTextField: "bco__nom",
+        dataValueField: "bco__cod",
+        dataBound: function() {          
+        
        
+         sucursales("");
+            },
+        change: function(){debugger
+             var dropdownlist = $("#Banco").data("kendoDropDownList");
+               sucursales(parseInt(dropdownlist._old));
+           
+        },   
+        dataSource: {
+            transport: {
+                read: {
+                    url: urlService,
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8"
+                },
+                parameterMap: function (options, operation) {
+                    if (operation === "read") {
+                        return JSON.stringify(datajson);
+                    }
+                }
+            },
+            schema: {
+                data: function (e) {
+                    var key1 = Object.keys(e)[0];
+                    if (e[key1].eeEstados[0].Estado === "OK") {
+                        return e[key1][mapCud3];
+                    } else {
+                        alertDialogs("Error Con Servicio Bancos"+e[key1].eeEstados[0].Estado);
+                    }
+                },
+                model: {
+                    id: "bco__cod",
+                    fields: {
+                        bco__nom: {editable: true, nullable: false},
+                        bco__cod: {editable: true, nullable: false},
+                        
+                    }
+                }
+            }
+        }
+        
+    });
 }
 function bancotrans(){
       var consultar = new sirBancoDetalle();
@@ -528,7 +610,7 @@ function departamentos(e){
                 dataTextField: "ciu__nom",
         dataValueField: "ciu__cod",
         select: function(e) {          
-ciudades(e.dataItem.ciu__cod);
+        ciudades(e.dataItem.ciu__cod);
             },
         dataSource: {
             transport: {
@@ -639,6 +721,11 @@ function paisesBanco(e){
             .kendoDropDownList({
         dataTextField: "ciu__nom",
         dataValueField: "ciu__cod",
+        dataBound: function(e) {          
+            //departamentosBanco(e.dataItem.ciu__cod);
+//            var dropdownlist = $("#paisBanco").data("kendoDropDownList");
+//            dropdownlist.value("");
+            },
         select: function(e) {          
             departamentosBanco(e.dataItem.ciu__cod);
             var dropdownlist = $("#ciudadBanco").data("kendoDropDownList");
@@ -804,6 +891,55 @@ function ciudadesBanco(e){
     
     
     
+}
+function banco(){
+    var consultar = new sirBancos();
+    var datajson = consultar.getjson();
+    var urlService = consultar.getUrlSir();
+    var mapCud3 = "eesic_bco";
+    
+    $("#Banco").kendoDropDownList({
+                
+        dataTextField: "bco__nom",
+        dataValueField: "bco__cod",
+        placeholder: "Banco...",
+           
+   
+        dataSource: {
+            transport: {
+                read: {
+                    url: urlService,
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8"
+                },
+                parameterMap: function (options, operation) {
+                    if (operation === "read") {
+                        return JSON.stringify(datajson);
+                    }
+                }
+            },
+            schema: {
+                data: function (e) {
+                    var key1 = Object.keys(e)[0];
+                    if (e[key1].eeEstados[0].Estado === "OK") {
+                        return e[key1][mapCud3];
+                    } else {
+                        alertDialogs("Error Con Servicio Bancos"+e[key1].eeEstados[0].Estado);
+                    }
+                },
+                model: {
+                    id: "bco__cod",
+                    fields: {
+                        bco__nom: {editable: true, nullable: false},
+                        bco__cod: {editable: true, nullable: false},
+                        
+                    }
+                }
+            }
+        }
+        
+    });
 }
 function cargarDatos(e){
    try {
@@ -999,53 +1135,8 @@ function cargarDatos1(e){
         }
         
     });
-    var consultar = new sirBancos();
-    var datajson = consultar.getjson();
-    var urlService = consultar.getUrlSir();
-    var mapCud3 = "eesic_bco";
     
-    $("#Banco").kendoDropDownList({
-                
-        dataTextField: "bco__nom",
-        dataValueField: "bco__cod",
-        placeholder: "Banco...",
-           
-   
-        dataSource: {
-            transport: {
-                read: {
-                    url: urlService,
-                    dataType: "json",
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8"
-                },
-                parameterMap: function (options, operation) {
-                    if (operation === "read") {
-                        return JSON.stringify(datajson);
-                    }
-                }
-            },
-            schema: {
-                data: function (e) {
-                    var key1 = Object.keys(e)[0];
-                    if (e[key1].eeEstados[0].Estado === "OK") {
-                        return e[key1][mapCud3];
-                    } else {
-                        alertDialogs("Error Con Servicio Bancos"+e[key1].eeEstados[0].Estado);
-                    }
-                },
-                model: {
-                    id: "bco__cod",
-                    fields: {
-                        bco__nom: {editable: true, nullable: false},
-                        bco__cod: {editable: true, nullable: false},
-                        
-                    }
-                }
-            }
-        }
-        
-    });
+    bancoNuevo();
        var obj = new sirConsultaTercero();
         var objJson = obj.getjson();
         var url = obj.getUrlSir();
@@ -1056,8 +1147,17 @@ function cargarDatos1(e){
             placeholder: "Selecione un tercero...",
             minLength: 4,
             filter: "contains",
-            select: function(e) {                
-            $("#razonSocial").val(e.dataItem.ter__raz);    
+            select: function(e) { debugger               
+            $("#razonSocial").val(e.dataItem.ter__raz);  
+            document.getElementById('fax').value=e.dataItem.ter__fax;
+            document.getElementById('telefono').value=e.dataItem.ter__tel;
+            document.getElementById('correo').value=e.dataItem.ter__fax;
+            document.getElementById('direccion').value=e.dataItem.ter__dir;
+            
+            var dropdownlist = $("#pais").data("kendoDropDownList");
+            dropdownlist.value(e.dataItem.ciu__cod.slice(0, 2));
+            ciudades(e.dataItem.ciu__cod);
+            departamentos(e.dataItem.ciu__cod);
             },
             template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
             //select: setInfoCliente,
@@ -1123,8 +1223,16 @@ function cargarDatos1(e){
             placeholder: "Selecione un tercero...",
             minLength: 6,
             filter: "contains",
-            select: function(e) {                
-            $("#NiT").val(e.dataItem.ter__nit);    
+            select: function(e) {  debugger                
+            $("#NiT").val(e.dataItem.ter__nit);   
+            document.getElementById('fax').value=e.dataItem.ter__fax;
+            document.getElementById('telefono').value=e.dataItem.ter__tel;
+            document.getElementById('correo').value=e.dataItem.ter__fax;
+            document.getElementById('direccion').value=e.dataItem.ter__dir;
+            var dropdownlist = $("#pais").data("kendoDropDownList");
+            dropdownlist.value(e.dataItem.ciu__cod.slice(0, 2));
+            ciudades(e.dataItem.ciu__cod);
+            departamentos(e.dataItem.ciu__cod);
             },
             template:'<div class="divElementDropDownList">#: data.ter__nit #'+' - '+' #:data.ter__raz #</div>',
             //select: setInfoCliente,

@@ -7,7 +7,7 @@
 $(window).resize(function () {
     var viewportHeight = $(window).height();
     $('#outerWrapper').height(viewportHeight - 100);                        
-    $('#divPDF').height(viewportHeight - 50);
+    $('#divPDF').height(viewportHeight - 100);
 });
 
 $(document).ready(function() {    
