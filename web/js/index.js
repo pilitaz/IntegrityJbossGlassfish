@@ -32,6 +32,7 @@ $(document).ready(function () {
         cargaDocumentos();
         tamanoPagIni();
         correLinuxBackTimmer(9000);
+        setInterval(scrollFull, 10);
         document.getElementById("lbNombre").innerHTML = sessionStorage.getItem("usrnom");
         document.getElementById("lbEMail").innerHTML = sessionStorage.getItem("usrmail");
 //        document.getElementById("imgUsuario").src = "../images/equipo/" + sessionStorage.getItem("usuario") + ".png";
@@ -111,6 +112,7 @@ function cambiarImagen(imgId, estiloTd) {
             $('#divDerecho').width($(window).width());
             document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
             var urlFrameNew = "http://" + ip + ":" + puerto + "/" + servicio;
+            sessionStorage.setItem("menuToViewRepo","true");
 //            document.getElementById("idFrame").src = urlFrameNew;
             document.getElementById("idFrame").src = sessionStorage.getItem("url") + servicio + "/indexRepo/html/indexRepo.html";
             document.getElementById("tdPerfil").style = "display:none";
@@ -805,4 +807,9 @@ function popUpSubirArchivo() {
 function closePopUpSubirArchivo(msj) {
     alertDialogs(msj);
     $("#windowSubirArchivo").data("kendoWindow").close();
+}
+function scrollFull(){
+    if($( "body" ).scrollTop()!==0){
+        $( "body" ).scrollTop(0);
+    };
 }
