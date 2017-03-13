@@ -3,10 +3,10 @@
     padding: 0;
 }
 
-#fieldlist li {
+/*#fieldlist li {
     list-style: none;
     padding-bottom: 2em;
-}
+}*/
 
 #fieldlist label {
     display: block;
@@ -32,6 +32,11 @@ li.k-button {
     text-align: center;
     min-height: 26px;
 }
+button.k-button {
+    line-height: 35px;
+    text-align: center;
+    min-height: 26px;
+} 
 #grid {
     height:100%;
 }
@@ -61,11 +66,11 @@ li.k-button {
     visibility: hidden;
     overflow: hidden;
 }
-.GridNoHeader th.k-header
+/*.GridNoHeader th.k-header
 {
     padding: 0;
     border-width: 0;
-}
+}*/
 
 /*#grid tbody tr:hover {
     background: transparent;
@@ -84,20 +89,20 @@ li.k-button {
     background: #f1f1f1;
 }
 .sidenavSup {
+    height: 0px;
     border-style: solid;
     border-color: #EF9F27 #fff  #fff  #fff;
+    
 }
 body{
     margin-top: 0px; 
     margin-bottom: 0px; 
-    margin-left: 0px; 
-    margin-right: 0px;
+    margin-left: 0px;
     padding: 0;
+    padding-left: 0px;
     font-size: 14px; 
     font-family: "Verdana"; 
     color:"#E6E6FA";
-    overflow-y:hidden;
-    width:100%;
 }
 /*.k-grid-header{
     border-color: transparent
@@ -154,14 +159,11 @@ footer {
     position: fixed;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-th.k-header, .k-window-titlebar 
+/*th.k-header, .k-window-titlebar 
 {
   font-weight: bold;
-}
-li.k-button {
-    min-height: 30px;
-    height: 20px;
-}
+}*/
+
 .divNewFun{
     cursor: pointer;
     background-color: transparent;

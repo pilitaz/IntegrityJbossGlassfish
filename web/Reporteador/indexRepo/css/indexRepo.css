@@ -158,10 +158,7 @@ th.k-header, .k-window-titlebar
 {
   /*font-weight: bold;*/
 }
-li.k-button {
-    min-height: 30px;
-    height: 20px;
-}
+
 .divNewFun{
     cursor: pointer;
     background-color: transparent;

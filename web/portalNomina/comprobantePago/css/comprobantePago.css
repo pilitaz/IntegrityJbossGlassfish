@@ -15,7 +15,7 @@ tr{
 .pdf-page {
     margin: 0 auto;
     box-sizing: border-box;
-    box-shadow: 0 5px 10px 0 rgba(0,0,0,.3);
+    box-shadow: 0 10px 20px 6px rgba(0,0,0,.3);
     background-color: #fff;
     color: #333;
     position: relative;
@@ -92,4 +92,10 @@ tr{
 
 .k-grid-footer td{
     background-color: #DFDFDF;
+}
+
+#divPDF{
+    background-color: #f1f1f1;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }

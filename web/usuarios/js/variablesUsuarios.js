@@ -8,7 +8,7 @@
  *  var input = sir.getdataInputSir();
  */
  function sirconsulta() {
-    var urlSir = ipServicios + baseContabilidad +"SirUsuarios";
+    var urlSir = ipServicios + baseServicio +"SirUsuarios";
     var json = {  
      "dsee_user2":{  
       "eeDatos":[  

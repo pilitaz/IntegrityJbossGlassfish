@@ -468,8 +468,7 @@ function sirTipoDocumentoIdentificacion() {
 
 };
 
-function sirPais() {
-    
+function sirPais() {    
     var mapData = "eesic_pais_med";
     var urlSir = ipServicios + baseParameters + "SIRsic_pais_med";
     var json = {

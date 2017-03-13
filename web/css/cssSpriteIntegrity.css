@@ -743,6 +743,86 @@
 	background: url(../images/SpriteIntegrity.png) -58px -1308px;
 }
 
+/* ——  */
+
+.po_help{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -1358px;
+	cursor:pointer
+}
+.po_help:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -1358px;
+	cursor:pointer
+}
+.po_help:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -1358px;
+}
+
+/* ——  */
+
+.po_trash{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -1408px;
+	cursor:pointer
+}
+.po_trash:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -1408px;
+	cursor:pointer
+}
+.po_trash:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -1408px;
+}
+
+/* ——  */
+
+.po_downflecha{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -1458px;
+	cursor:pointer
+}
+.po_downflecha:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -1458px;
+	cursor:pointer
+}
+.po_downflecha:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -1458px;
+}
+
+
+/* ——  */
+
+.po_downflecha_sup{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -1458px;
+	cursor:pointer
+}
+.po_downflecha_sup:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -1458px;
+	cursor:pointer
+}
+.po_downflecha_sup:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -8px -1458px;
+}
 
 /**********************************************/
 /**********************************************/
@@ -1225,6 +1305,48 @@
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -208px -958px;
 }
+
+.re_check_sup{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -208px -958px;
+	cursor:pointer
+}
+.re_check_sup:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -258px -958px;
+	cursor:pointer
+}
+
+/* ——  */
+.re_checkAct{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -208px -958px;	
+        cursor:pointer
+}
+
+/* ——  */
+
+
+
+
+/* ——  */
+.re_checkCreate{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -258px -958px;
+	cursor:pointer
+}
+.re_checkCreate:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -208px -958px;
+	cursor:pointer
+}
+
+
 
 /* ——  */
 

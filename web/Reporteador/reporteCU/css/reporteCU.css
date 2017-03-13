@@ -163,3 +163,7 @@ footer {
     position:relative;
     min-height:470px;
 }
+.flexEnd{
+    display:flex;    
+    align-items:flex-end;
+}

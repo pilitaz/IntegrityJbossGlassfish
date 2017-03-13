@@ -307,7 +307,7 @@ function gridCampos(urlGrid, dataserv) {
             {field: "rpt_cmp_vis", title: "Descripcion", width: "auto"},
             {command:
                         [
-                            {name: "visible", text: ";&nbsp;", click: visiClick2, template: "<a class='k-grid-visible'><span class='k-sprite re_visibleon'></span></a>"},
+                            {name: "visible", text: ";&nbsp;", click: visiClick2, template: "<a class='k-grid-visible'><span class='k-sprite re_checkAct'></span></a>"},
                             {name: "condicion", text: ";&nbsp;", click: PopUpCondicion2, template: "<a class='k-grid-condicion'><span class='k-sprite re_filtrooff'></span></a>"},
                             {name: "destroyed", click: clickEliminar, template: "<a class='k-grid-destroyed'><span class='k-sprite re_cerrar'></span></a>"}
                         ],
@@ -609,7 +609,7 @@ function changImgFunc(results) {
             document.getElementById(spanBl).setAttribute("class", "k-sprite re_conon");
         }
         if (!results[i].anx_cmp_vsb) {
-            $('#' + spanVisi).removeClass('re_visibleon').addClass('re_visibleoff');
+            $('#' + spanVisi).removeClass('re_checkAct').addClass('re_checkCreate');
         }
     }
 }
@@ -679,12 +679,13 @@ function cerrarWindow(){
 }
 /**
  * funcion que pinta unna ventana popUp para deplegar el archico popUpCondiciones html 
+ * @param {type} e
  * @returns {undefined}
  */
 function PopUpCondicion2(e) {
     e.preventDefault();//Aca se pueden colocar las funcionalidades dependiendo del uso del click
-    var obj = this.dataItem($(e.currentTarget).closest("tr"));
-    
+//    var obj = this.dataItem($(e.currentTarget).closest("tr"));
+    var obj = $("#girdCampos").data("kendoGrid").dataItem($(e.target).closest("tr"));
     sessionStorage.setItem("cmpNom", obj.cmp_dsc);
     sessionStorage.setItem("obj", JSON.stringify(obj));
     sessionStorage.setItem("idDato",obj.rpt_cmp_pos);
