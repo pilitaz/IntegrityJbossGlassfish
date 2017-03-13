@@ -155,7 +155,9 @@ function grilla(obj) {
             model: model
         },
         error: function (e) {
-            alertDialogs(e.errorThrown);
+            var key1 = Object.keys(e.xhr.responseJSON)[0];
+            alertDialogs(e.xhr.responseJSON[key1].eeEstados["0"].Estado);
+//            alertDialogs(e.errorThrown);
         },
         requestEnd: function (e) {
             if((e.type==="create")||(e.type==="update")){

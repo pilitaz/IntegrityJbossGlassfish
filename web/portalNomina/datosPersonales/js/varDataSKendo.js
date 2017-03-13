@@ -7,28 +7,27 @@
 
 //////////////////////////////////////////////////////////////////////////////////////
 function sir() {
-    var url = "http://190.144.16.114:8810/rest/Portalnomina/SISolicitudcertificado";
+    var url = ipServicios + baseContabilidad + "SIRsic_ciu";
     ;
     var mapSir = "eesic_ciu";
-    var dataInputSir = 
-        {  
-   "dsSISolicitudcertificado":{  
-      "eeDatos":[  
-         {  
-            "picusrcod":"jsandrea_800001",
-            "picfiid":"405924036884581034980",
-            "local_ip":"172.21.24.109",
-            "remote_ip":"190.144.16.114"
-         }
-      ],
-      "eeSISolicitudcertificado":[  
-         {  
-            "picremitido":"Luis Alexander",
-            "picindicador":"Fisico"
-         }
-      ]
-   }
-};
+    var dataInputSir = {
+        "dsSIRsic_ciu": {
+            "eeDatos": [
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip": sessionStorage.getItem("ipPrivada"),
+                    "remote_ip": sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "eeSIRsic_ciu": [
+                {
+                    "picciu__cod": "*",
+                    "picciu__nom": "*"
+                }
+            ]
+        }
+    };
     this.setUrlSir = function (newname) {
         if (newname) {
             url = newname;

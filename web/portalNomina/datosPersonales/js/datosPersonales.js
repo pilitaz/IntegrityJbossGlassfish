@@ -8,7 +8,7 @@ var inputsir = objSir.getdataInputSir();
 //var est = "pre__est";
 $(document).ready(function () {
 //    fltrEst();
-    grilla();
+//    grilla();
 
 });
 
@@ -127,8 +127,7 @@ function grilla(obj) {
             model: model
         },
         error: function (e) {
-            var key1 = Object.keys(e.xhr.responseJSON)[0];
-            alertDialogs(e.xhr.responseJSON[key1].eeEstados["0"].Estado);
+            alertDialogs(e.errorThrown);
         },
         requestEnd: function (e) {
             if((e.type==="create")||(e.type==="update")){
@@ -225,8 +224,6 @@ function sendAjax(verHtml, obj) {
 
     });
 }
-
-
 function memoRow(e){
     try {
 		var fila = $("#grid").data("kendoGrid")._data[($(e.currentTarget).closest("tr")["0"].sectionRowIndex)];
@@ -237,8 +234,13 @@ function memoRow(e){
 //		sbm.util.setValue("textField8", item);
 //		formWidgetHandler.saveDataSlots();
 //		document.getElementById("button03").click();
+	} catch (e) {
+            alertDialogs(e);
+	}
+}
 
-                var archivo = sessionStorage.getItem("documento");
+try {
+        var archivo = sessionStorage.getItem("documento");
         dsfiles.dsfiles.SIRfile = new Array();
         dsfiles.dsfiles.SIRfile[0] = new Object();
         dsfiles.dsfiles.SIRfile[0].pilfilename = archivo;
@@ -269,8 +271,6 @@ function memoRow(e){
                 window.open("./docOnline.html", "_blank");
             }
         });
-	} catch (e) {
-            alertDialogs(e);
-	}
-}
-
+    } catch (e) {
+        kendo.alert(e.message);
+    }
