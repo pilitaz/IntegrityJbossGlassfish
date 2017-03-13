@@ -1226,6 +1226,48 @@
 	background: url(../images/SpriteIntegrity.png) -208px -958px;
 }
 
+.re_check_sup{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -208px -958px;
+	cursor:pointer
+}
+.re_check_sup:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -258px -958px;
+	cursor:pointer
+}
+
+/* ——  */
+.re_checkAct{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -208px -958px;	
+        cursor:pointer
+}
+
+/* ——  */
+
+
+
+
+/* ——  */
+.re_checkCreate{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -258px -958px;
+	cursor:pointer
+}
+.re_checkCreate:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -208px -958px;
+	cursor:pointer
+}
+
+
+
 /* ——  */
 
 .re_copy{

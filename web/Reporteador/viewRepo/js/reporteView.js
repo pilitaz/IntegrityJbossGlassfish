@@ -11,13 +11,16 @@ var columnasRepo = [];
  */
 $(window).resize(function () {
     var viewportHeight = $(window).height();
-    $('#outerWrapper').height(viewportHeight - 45);
-    $('.k-grid-content').height(viewportHeight - 100);
+    $('#outerWrapper').height(viewportHeight - 70);
+//    $('.k-grid-content').height(viewportHeight - 100);
 });
 
 $(document).ready(function () {
     document.getElementById("titulo").innerHTML = sessionStorage.getItem("nomRepo");
-
+    if(sessionStorage.getItem("menuToViewRepo")){
+        $("#btnBack").hide();
+        sessionStorage.removeItem("menuToViewRepo");
+    }
 //    mostrarGrid();
     PopUpCondicion();
 });
@@ -211,7 +214,8 @@ function PopUpCondicion() {
         mostrarGrid();
     }
     ;
-
+//    mostrarCustomPopUp();
+//    onloadPopUpFltr();
 
 
     myWindow.kendoWindow({
@@ -256,4 +260,38 @@ function errorPopUp(message) {
  */
 function clickFiltros(){
     PopUpCondicion();
+}
+
+/**
+ * Funcion para mostrar el popUp 
+ * @returns {undefined}
+ */
+function mostrarCustomPopUp() {
+    if(bandAlert===0){
+        bandAlert++;
+        var heightDiv = parseInt($("#divContenido").height())+310; 
+        $("body").append("<div id='disable' style='height:"+heightDiv+"px;'></div>");
+        $("#customPopUp").fadeIn("slow");
+    }
+    
+}
+/**
+ * funcion para cerrar el popup y eliminar varia variables de sesion 
+ * @returns {undefined}
+ */
+function cerrarCustomPopUp() {
+    bandAlert = 0;
+    bandAlertfl = 0;
+    $("#disable").fadeOut("slow");
+    $("#customPopUp").fadeOut("slow");
+    $("#disable").remove();
+    $("#popUpFltr").hide();
+    $("#popUpFltrV2").hide();
+    $("#btnCrearFltr").hide();
+    
+    sessionStorage.removeItem("obj");
+//    $('#gird').data('kendoGrid').dataSource.read();
+//    $('#gird').data('kendoGrid').refresh();
+    $("#grid").data("kendoGrid").destroy();
+    mostrarGrid();
 }

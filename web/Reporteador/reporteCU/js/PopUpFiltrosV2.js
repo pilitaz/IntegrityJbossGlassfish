@@ -10,6 +10,7 @@ function onloadPopUpFltrV2(){
     $('#imgOpc').removeClass().addClass('k-sprite');
     $('#imgOpc').addClass('re_filtroon');
     $("#popUpFltr").hide();
+//    $('#popUpFltrV2').css("height",$('#customPopUp').context.children["0"].clientHeight-230 + "px");
     $("#popUpFltrV2").show();
     $("#btnCrearFltrV2").show();
     sessionStorage.setItem("opcFl","Fil");
@@ -19,6 +20,7 @@ function onloadPopUpFltrV2(){
    $("#CamposFltrV2").empty();
     crearBr("CamposFltrV2");
     crearLabel("labelV2" , "Filtro", "CamposFltrV2");
+    crearBr("CamposFltrV2");
     crearBr("CamposFltrV2");
     crearInput("filtrosV2", "CamposFltrV2");
 //    document.getElementById('filtrosV2').style.length = 100 + 'px';

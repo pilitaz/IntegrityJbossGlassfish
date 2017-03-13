@@ -33,10 +33,12 @@ function onloadPopUpCond() {
     $("cmpValoCond1").val();
     $("conOpeCond1").val();
     $("cmpValCond1").val();
+//    $('#popUpCond').css("height",$('#customPopUp').context.children["0"].clientHeight-230 + "px");
     sessionStorage.setItem("opcFl", "Con");
     document.getElementById('tituloPopUp').innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + sessionStorage.getItem("cmpNom");
     $('#imgOpc').removeClass('re_compon').addClass('re_conon');
     $("#popUpCond").show();
+    $("#btnCrearCond").show();
     llenarComboCmp();//lleno el primer combo pero tambien miro si tiene condiciones y creo los respectyivos campos
 
 }

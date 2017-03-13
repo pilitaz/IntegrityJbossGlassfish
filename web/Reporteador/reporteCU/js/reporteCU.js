@@ -154,6 +154,7 @@ function cerrarCustomPopUp() {
     $("#popUpFltr").hide();
     $("#popUpFltrV2").hide();
     $("#btnCrearFltr").hide();
+    $("#btnCrearCond").hide();
     
     sessionStorage.removeItem("obj");
     $('#girdCampos').data('kendoGrid').dataSource.read();

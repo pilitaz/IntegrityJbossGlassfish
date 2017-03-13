@@ -307,7 +307,7 @@ function gridCampos(urlGrid, dataserv) {
             {field: "rpt_cmp_vis", title: "Descripcion", width: "auto"},
             {command:
                         [
-                            {name: "visible", text: ";&nbsp;", click: visiClick2, template: "<a class='k-grid-visible'><span class='k-sprite re_visibleon'></span></a>"},
+                            {name: "visible", text: ";&nbsp;", click: visiClick2, template: "<a class='k-grid-visible'><span class='k-sprite re_checkAct'></span></a>"},
                             {name: "condicion", text: ";&nbsp;", click: PopUpCondicion2, template: "<a class='k-grid-condicion'><span class='k-sprite re_filtrooff'></span></a>"},
                             {name: "destroyed", click: clickEliminar, template: "<a class='k-grid-destroyed'><span class='k-sprite re_cerrar'></span></a>"}
                         ],
@@ -609,7 +609,7 @@ function changImgFunc(results) {
             document.getElementById(spanBl).setAttribute("class", "k-sprite re_conon");
         }
         if (!results[i].anx_cmp_vsb) {
-            $('#' + spanVisi).removeClass('re_visibleon').addClass('re_visibleoff');
+            $('#' + spanVisi).removeClass('re_checkAct').addClass('re_checkCreate');
         }
     }
 }

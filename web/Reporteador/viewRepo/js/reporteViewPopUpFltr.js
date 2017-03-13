@@ -27,10 +27,12 @@ var inputFltr = [{
         "piindicador": 0
     }];
 
-$(document).ready(function () {
+function onloadPopUpFltr() {
     cmp("POST");
     document.getElementById("titulo").innerHTML = "Filtros";
-    createStyleSheet();
+    $("#popUpFltr").show();
+    $("#btnCrearFltr").show();
+//    createStyleSheet();
 
     for (var i = 0; i < filtros.length; i++) {
         filtrosCampos.push([filtros[i]]);
@@ -45,7 +47,7 @@ $(document).ready(function () {
         click: clicBtnSaveFiltros
     });
 
-});
+};
 
 function crearBr(div) {
     var mybr = document.createElement('br');

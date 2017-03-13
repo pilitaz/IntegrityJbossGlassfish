@@ -49,6 +49,7 @@ function onloadPopUpFltr(){
     document.getElementById('tituloPopUp').innerHTML = "Filtro al campo Valor &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + sessionStorage.getItem("cmpNom");
     $('#imgOpc').removeClass().addClass('k-sprite');
     $('#imgOpc').addClass('re_filtroon');
+//    $('#popUpFltr').css("height",$('#customPopUp').context.children["0"].clientHeight-90 + "px"); 
     $("#popUpFltr").show();
     $("#btnCrearFltr").show();
     sessionStorage.setItem("opcFl","Fil");
@@ -71,12 +72,12 @@ function onloadPopUpFltr(){
         }
 
     }
-    crearLabel("", "", "botones");
-    crearBr("botones");
-    crearButton("btnSaveFiltros", "Guardar", "botones", "k-primary");
-    $("#btnSaveFiltros").kendoButton({
-        click: clicBtnSaveFiltros
-    });
+//    crearLabel("", "", "botones");
+//    crearBr("botones");
+//    crearButton("btnSaveFiltros", "Guardar", "botones", "k-primary");
+//    $("#btnSaveFiltros").kendoButton({
+//        click: clicBtnSaveFiltros
+//    });
 
 }
 /**
@@ -114,13 +115,13 @@ function crearBr(div) {
  */
 function creaFiltro(i, imas, iadd) {
 
-    $("#CamposFltr").append("<div id=" + "divFiltr" + i + " class = 'col-sm-12' ></div>");
+    $("#CamposFltr").append("<div id=" + "divFiltr" + i + " class = 'col-sm-12 flexEnd' ></div>");
     crearBr("divFiltr" + i);
     $("#divFiltr" + i).append("<div id=" + "divFiltrCmpEsp" + i + " class = 'col-sm-1'></div>");
     $("#divFiltr" + i).append("<div id=" + "divFiltrCmpDe" + i + " class = 'col-sm-4' ></div>");
     $("#divFiltr" + i).append("<div id=" + "divFiltrCmpHasta" + i + " class = 'col-sm-4' ></div>");
 //    $("#divFiltr" + i).append("<div id=" + "divFiltrCmpEsp" + i + " class = 'col-sm-4'align='center'></div>");
-    $("#divFiltr" + i).append("<div id=" + "divFiltrImg" + i + " class = 'col-sm-3' ></div>");
+    $("#divFiltr" + i).append("<div id=" + "divFiltrImg" + i + " class = 'col-sm-3 ' ></div>");
 
     crearLabel("", "", "divFiltrImg" + i);
 //    crearBr("divFiltrImg" + i);
