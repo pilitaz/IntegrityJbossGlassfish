@@ -33,7 +33,10 @@ and open the template in the editor.
                     <td style="width: 50px"><a class="k-grid"  aling="center"><span class="k-sprite po_bullet1"></span></a></td>
                     <td>
                         <h1 id = "subtitulo" class="subTitulo">Comprobante de pago</h1>                                
-                    </td>                            
+                    </td>
+                    <td style="width: 40px; text-align: right; padding-right: 10px">
+                        <a id ="btnCrearPedido" class="k-grid" onclick="getPDF('.pdf-page')" aling="center"><span class="k-sprite po_downflecha_sup"></span></a>
+                    </td>
                 </tr>
             </table>
             <div class="sidenavSup"></div>                    
@@ -58,13 +61,13 @@ and open the template in the editor.
                                 <input id="ipNomina" class="k-textbox" style="width: 100%" />                        
                             </td>
                         </tr>
-                        <tr>
+<!--                        <tr>
                             <td style="width: 25% ; padding: 20px; text-align: right" colspan="2" style="text-align: center">
                                 <div class="box-col">                            
                                     <button class="export-pdf k-button" onclick="getPDF('.pdf-page')">Guardar PDF</button>
                                 </div>
                             </td>
-                        </tr>                        
+                        </tr>                        -->
                     </table>
                 </td>
                 <td style="width: 80%">
