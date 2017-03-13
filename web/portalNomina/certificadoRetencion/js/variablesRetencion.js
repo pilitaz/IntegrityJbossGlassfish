@@ -1,9 +1,9 @@
 
 //-------------------------------------------------------------------------
-function sirImpresion() {
-    var urlSir = ipServicios + baseContabilidad + "SIRImprcertretECU";
+function sirRetencion() {
+    var urlSir = ipServicios + basePortalNomina + "SICertificadoingret";
     var json ={  
-   "dscertret":{  
+   "dsCertificadoingret":{  
       "eeDatos":[  
          {  
             "picusrcod":sessionStorage.getItem("usuario"),
@@ -11,15 +11,13 @@ function sirImpresion() {
             "local_ip":sessionStorage.getItem("ipPrivada"),
             "remote_ip":sessionStorage.getItem("ipPublica")
          }
-     ],
-       "Sircertret":[  
+      ],
+  "SIRCertificadoingret":[  
          {  
-            "piiretdesde":"",
-            "piirethasta":"",
-            "pidfecimpr":""
+            "piiano":0
          }
-     ]
-   } 
+      ]
+   }
 };
     
     this.setUrlSir = function (newname) {

@@ -211,8 +211,10 @@ $(document).ready(function() {
         var  consultar = new sirProveedor();
         var  datajson = consultar.getjson();
         var  urlService = consultar.getUrlSir();
-        datajson.dsSIRcon_prv.eeSIRcon_prv[0].piiprv_est=e;    
-        datajson.dsSIRcon_prv.eeSIRcon_prv[0].piiprv_est=e;    
+        if (nit===""){nit="*"}
+        if (razon===""){razon="*"}
+        datajson.dsSIRcon_prv.eeSIRcon_prv[0].picter_nit=nit;    
+        datajson.dsSIRcon_prv.eeSIRcon_prv[0].picter_raz=razon;    
         
        datajson.dsSIRcon_prv.eeSIRcon_prv[0].piiprv_est=e;           
         var  actualizar = new sirProveedor();
