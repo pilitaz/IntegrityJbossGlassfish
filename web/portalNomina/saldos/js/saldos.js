@@ -39,7 +39,7 @@ function saldos(){
     }).done(function(e){ 
         var key1 = Object.keys(e)[0];
         if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {    
-            debugger
+            
                 document.getElementById("logoEmpresaPDF").src = "data:image/png;base64," + e[key1].eeImages["0"].logocia;
                 document.getElementById('lbSuscursal').innerHTML = e[key1].ttconsultasaldos["0"].Sucagencia;
                 document.getElementById('lbCentroActividad').innerHTML = e[key1].ttconsultasaldos["0"].ctoactividad;
@@ -60,7 +60,7 @@ function getPDF(selector) {
 }
 
 function grid(data){
-    debugger 
+     
     var schema = {
         model: {
             numdoc: { type: "number" },
