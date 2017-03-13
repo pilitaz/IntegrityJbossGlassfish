@@ -172,7 +172,7 @@ function comprobante(){
     }).done(function(e){ 
         var key1 = Object.keys(e)[0];
         if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
-            debugger
+            
                 document.getElementById("logoEmpresaPDF").src = "data:image/png;base64," + e[key1].eeImages["0"].logocia;
                 document.getElementById('lbEmpleado').innerHTML = e[key1].ttconsultacomprobante["0"].nomempleado;
                 document.getElementById('lbSucursal').innerHTML = e[key1].ttconsultacomprobante["0"].Sucagencia;

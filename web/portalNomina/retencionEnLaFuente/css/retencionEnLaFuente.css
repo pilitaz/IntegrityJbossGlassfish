@@ -8,17 +8,10 @@ and open the template in the editor.
     Author     : jenny
 */
 
-tr{  
+tr{    
+    vertical-align: top;
 }
-.pdf-sign {
-	position: absolute;
-	bottom: 1.7in;
-	left: .5in;
-	right: .5in;
-	margin-top: .5cm;
-	text-align:justify;
-	font-size:12pt;
-}
+
 .pdf-page {
     margin: 0 auto;
     box-sizing: border-box;
@@ -36,8 +29,8 @@ tr{
     vertical-align: bottom;    
 }
 .documentName {
-/*    padding-top: 2cm;
-    float: right;*/
+    padding-top: 1cm;
+    float: right;
 }
 .pdf-footer {
     position: absolute;
@@ -53,13 +46,10 @@ tr{
 
 .pdf-body {
     position: absolute;
-/*	top: 4.5in;*/
-	bottom: 2.2in;
-	left: .5in;
-	right: .5in;
-	margin-top: .5cm;
-	text-align:justify;
-	font-size:12pt;
+    top: 10cm;
+    bottom: 3cm;
+    left: 1cm;
+    right: 1cm;
 }
 .company-logo {
     font-size: 30px;
@@ -109,46 +99,3 @@ tr{
     padding-top: 20px;
     padding-bottom: 20px;
 }
-
-.Interesado {
-	position: absolute;
-	top: 1.5in;
-	bottom: 1.2in;
-	left: .5in;
-	right: .5in;
-	margin-top: .5cm;
-	text-align:center;
-	font-size:12pt;
-}
-.detallevalores {
-	border: 0px;
-	background: white;
-	width:30%;
-	text-align:left;
-	float:right;
-	padding-left:10px;
-	right:0in;
-	margin-top: .5in;
-	top:1.5in
-}
-.detalle {		
-	border: 0px;
-	background: white;
-	text-align:right;
-	float:right;
-	padding-bottom:35px;	
-	width:25%;
-	padding-left:10px;
-	margin-top: .5in;
-	top:1.5in
-}
-
-.Comprobante{
-	padding-top: .17in;
-	float: right;
-	text-align: right;
-	}
-        td{
-           height: 1px;
-           padding: 0;
-        }
