@@ -43,8 +43,7 @@ function cargarArbol() {
                     }
                     if (!$('#jstree2').jstree(true).is_parent(id[i])) {
                         var texto = id[i];
-                        var portaf = texto.split("P");
-                        sessionStorage.setItem("portafolio", portaf[0]);
+                        savePortCapFunSess();
                         parent.fijarPcf(sessionStorage.setItem("pcf", texto));
                     }
                 }
@@ -53,5 +52,33 @@ function cargarArbol() {
     } catch (err) {
         alert(err);
     }
+}
+function savePortCapFunSess() {
+    var Selement=$('#jstree2').jstree('get_selected');
+    for (var i = 0; i < Selement.length; i++) {
+        var portafolio = Selement[i].split('P');
+        var capitulo = portafolio[1].split('C');
+
+        if (Selement[i].indexOf('F') !== -1) {
+            var array = {};
+            var funcion = capitulo[capitulo.length - 1].split('F');
+            array.piifuncion = parseInt(funcion[0]);
+            array.piicapitulo = parseInt(capitulo[capitulo.length - 2]);
+            array.piiportafolio = parseInt(portafolio[0]);
+        } else if (Selement[i].indexOf('C') !== -1) {
+            var array = {};
+            array.piiportafolio = parseInt(portafolio[0]);
+            array.piicapitulo = parseInt(capitulo[capitulo.length - 2]);
+            array.piifuncion = 0;
+        } else if (Selement[i].indexOf('P') !== -1) {
+            var array = {};
+            array.piiportafolio = parseInt(portafolio[0]);
+            array.piicapitulo = 0;
+            array.piifuncion = 0;
+        }
+    }
+    sessionStorage.setItem("portafolio",array.piiportafolio);
+    sessionStorage.setItem("capitulo",array.piicapitulo);
+    sessionStorage.setItem("funcion",array.piifuncion);
 }
 

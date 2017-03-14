@@ -18,6 +18,7 @@ $(window).resize(function () {
 $(document).ready(function () {
     document.getElementById("titulo").innerHTML = sessionStorage.getItem("nomRepo");
     if(sessionStorage.getItem("menuToViewRepo")){
+        debugger
         $("#btnBack").hide();
         sessionStorage.removeItem("menuToViewRepo");
     }
