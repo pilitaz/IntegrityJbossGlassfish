@@ -1,4 +1,4 @@
- $(window).resize(function () {debugger
+ $(window).resize(function () {
     var viewportHeight = $(window).height();                       
     $('#divPDF').height(viewportHeight - 50);
 });
@@ -10,11 +10,135 @@
         });
 //        $("#principal").addClass("jorge");
       }
-      function mostrarDatos(e){debugger
-      
-      }
+    function mostrarDatos(e){debugger
+    var i=0;      
+    var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "5";
+                        }); 
+     var valorcasilla = numcasilla[0].valorcasilla;          
+     for (i = 1; i <= valorcasilla.length; i++){
+        document.getElementById('numCasilla5P'+i).innerHTML=valorcasilla[valorcasilla.length-i];
+     }
+      var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "6";
+                        });   
+      document.getElementById('numCasilla6').innerHTML=numcasilla[0].valorcasilla;  
+      var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "11";
+                        });   
+      document.getElementById('numCasilla11').innerHTML=numcasilla[0].valorcasilla;  
+      var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "24";
+                        });   
+      document.getElementById('numCasilla24').innerHTML=numcasilla[0].valorcasilla;  
+      var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "24";
+                        });   
+      document.getElementById('numCasilla24').innerHTML=numcasilla[0].valorcasilla;  
+        
+        var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "26";
+                        });   
+      document.getElementById('numCasilla26').innerHTML=numcasilla[0].valorcasilla;  
+        
+        var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "27";
+                        });   
+      document.getElementById('numCasilla27').innerHTML=numcasilla[0].valorcasilla;  
+        
+        var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "28";
+                        });   
+      document.getElementById('numCasilla28').innerHTML=numcasilla[0].valorcasilla;  
+         var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "29";
+                        });   
+      document.getElementById('numCasilla29').innerHTML=numcasilla[0].valorcasilla;  
+        
+        var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "30";
+                        });  
+        var x = numcasilla[0].valorcasilla.length;  
+       document.getElementById('numCasilla30P1').innerHTML=numcasilla[0].valorcasilla.slice(0, 4);
+       document.getElementById('numCasilla30P2').innerHTML=numcasilla[0].valorcasilla.slice(5, 7);
+       document.getElementById('numCasilla30P3').innerHTML=numcasilla[0].valorcasilla.slice(7, x);
+       var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "31";
+                        });  
+        var x = numcasilla[0].valorcasilla.length;  
+       document.getElementById('numCasilla31P1').innerHTML=numcasilla[0].valorcasilla.slice(0, 4);
+       document.getElementById('numCasilla31P2').innerHTML=numcasilla[0].valorcasilla.slice(5, 7);
+       document.getElementById('numCasilla31P3').innerHTML=numcasilla[0].valorcasilla.slice(7, x);
+       var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "32";
+                        });  
+        var x = numcasilla[0].valorcasilla.length;  
+       document.getElementById('numCasilla32P1').innerHTML=numcasilla[0].valorcasilla.slice(0, 4);
+       document.getElementById('numCasilla32P2').innerHTML=numcasilla[0].valorcasilla.slice(5, 7);
+       document.getElementById('numCasilla32P3').innerHTML=numcasilla[0].valorcasilla.slice(7, x);
+       var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "33";
+                        }); 
+       document.getElementById('numCasilla33').innerHTML=numcasilla[0].valorcasilla;
+       var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "34";
+                        }); 
+       document.getElementById('numCasilla34P1').innerHTML=numcasilla[0].valorcasilla.slice(0, 1);
+       document.getElementById('numCasilla34P2').innerHTML=numcasilla[0].valorcasilla.slice(2, 3);
+       var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "35";
+                        }); 
+       document.getElementById('numCasilla35P1').innerHTML=numcasilla[0].valorcasilla.slice(0, 1);
+       document.getElementById('numCasilla35P2').innerHTML=numcasilla[0].valorcasilla.slice(2, 3);
+       document.getElementById('numCasilla35P3').innerHTML=numcasilla[0].valorcasilla.slice(3, 5);
+       var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "36";
+                        }); 
+       document.getElementById('numCasilla36').innerHTML=numcasilla[0].valorcasilla;
+      var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "37";
+                        }); 
+       document.getElementById('numCasilla37').innerHTML=numcasilla[0].valorcasilla;
+       var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "38";
+                        }); 
+       document.getElementById('numCasilla38').innerHTML=numcasilla[0].valorcasilla;
+       var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "39";
+                        }); 
+       document.getElementById('numCasilla39').innerHTML=numcasilla[0].valorcasilla;
+       var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "40";
+                        }); 
+       document.getElementById('numCasilla40').innerHTML=numcasilla[0].valorcasilla;
+       var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "41";
+                        }); 
+       document.getElementById('numCasilla41').innerHTML=numcasilla[0].valorcasilla;
+       var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "42";
+                        }); 
+       document.getElementById('numCasilla42').innerHTML=numcasilla[0].valorcasilla;
+       var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "43";
+                        }); 
+       document.getElementById('numCasilla43').innerHTML=numcasilla[0].valorcasilla;
+       var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "44";
+                        }); 
+       document.getElementById('numCasilla44').innerHTML=numcasilla[0].valorcasilla;
+       var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "45";
+                        }); 
+       document.getElementById('numCasilla45').innerHTML=numcasilla[0].valorcasilla;
+       var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "46";
+                        }); 
+       document.getElementById('numCasilla46').innerHTML=numcasilla[0].valorcasilla;
+    }
    function consultar() {
-        var año=document.getElementById('añoGrabable').value;         
+       try {
+      var año=document.getElementById('añoGrabable').value;         
         var consultar = new sirRetencion();
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();
@@ -42,6 +166,11 @@
                     } 
         
                 }); 
+}
+catch(err) {
+     alertDialogs("Error"+err);
+}
+      
        
       }
       

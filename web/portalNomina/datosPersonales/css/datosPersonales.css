@@ -76,7 +76,10 @@ table{
 #outerWrapper{
   background-color: #FFFFFF;
   position:relative;
-  min-height:470px;
+  height:90%;
+  width: 100%;
+  overflow-y: auto;
+  
 }
 #grid {
   height:100%;
