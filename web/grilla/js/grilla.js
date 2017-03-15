@@ -64,19 +64,19 @@ $(document).ready(function() {
                 {
                     "titulo": "Editar",
                     "tipo": "editar",
-                    "funcion": editarElemento,
+                    "funcion": "editarElemento",
                     "class" : "po_editoff"
                 },
                 {
                     "titulo": "Eliminar",
                     "tipo": "eliminar",
-                    "funcion": borrarElemento,
+                    "funcion": "borrarElemento",
                     "class" : "po_cerrar"
                 },
                 {
-                    "titulo": "Cambiar estado",
+                    "titulo": "CambiarEstado",
                     "tipo": "cambiarEstado",
-                    "funcion": cambiarEstado,
+                    "funcion": "cambiarEstado",
                     "class" : "po_check"
                 }
             ]
@@ -123,7 +123,7 @@ function borrarElemento(e){
 }
 
 function cambiarEstado(e){
-    alertDialogs("cambiarEstado")
+    alertDialogs("cambiarEstado");
 }
 function grid(json, data){
     var schema = new Object();
@@ -139,19 +139,19 @@ function grid(json, data){
     for(var i = 0; i<json.grilla.botones.length; i++){        
         btnUD[i] = new Object();
         btnUD[i].name = json.grilla.botones[i].titulo;                
-        btnUD[i].click = json.grilla.botones[i].funcion;
+        btnUD[i].click = eval(json.grilla.botones[i].funcion);
 //        btnUD[i].template ="<a class='k-grid-editar'><span id = \"spanEdit# #\"  class='k-sprite "+json.grilla.botones[i].class+"' title=\""+json.grilla.botones[i].titulo+"\"></span></a>"
-        btnUD[i].template ="<a class='k-grid-"+json.grilla.botones[i].tipo+"'><span class='k-sprite "+json.grilla.botones[i].class+"'></span></a>"
+        btnUD[i].template ="<a class='k-grid-"+json.grilla.botones[i].titulo+"'><span class='k-sprite "+json.grilla.botones[i].class+"'></span></a>"
          
         tamañoColumnaBotones = tamañoColumnaBotones+50;
         
     }
     debugger
-     btnUD = [
-//        {name: "aprobar", text: " ", click: aprobarPresen, template: "<a class='k-grid-aprobar' '><span class='k-sprite po_cerrar'></span></a>"},
-        {name: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
-        {name: "Delete", click: editarElemento, template: "<a class='k-grid-Delete'><span class='k-sprite po_cerrar'></span></a>"},
-    ];
+//     btnUD = [
+////        {name: "aprobar", text: " ", click: aprobarPresen, template: "<a class='k-grid-aprobar' '><span class='k-sprite po_cerrar'></span></a>"},
+//        {name: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},
+//        {name: "Delete", click: editarElemento, template: "<a class='k-grid-Delete'><span class='k-sprite po_cerrar'></span></a>"},
+//    ];
     var btnIzq = {command: btnUD, title: "&nbsp;", width: tamañoColumnaBotones+"px"};
     
     for(var i = 0; i<json.grilla.columnas.length; i++){
