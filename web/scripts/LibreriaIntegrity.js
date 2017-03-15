@@ -22,7 +22,7 @@ function modTextboxPopupFl(idElemento, tipo, readonly) {
     } else {
         if (tipo == "decimal") {
             elemento.kendoNumericTextBox();
-        } else if (tipo == "number") {
+        } else if ((tipo == "number")||(tipo == "integer")) {
             elemento.kendoNumericTextBox({format: "#"});
         } else if (tipo == "money") {
             elemento.kendoNumericTextBox({format: "c0",decimals: 3});
