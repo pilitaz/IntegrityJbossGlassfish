@@ -5,30 +5,20 @@
  */
 
 
-/**
- * Funcion para obtener la url y el json de entrada para los años
- *  
- *  ejemplo
- *  var sir = new sirEjemplo();
- *  var url = sir.getUrlSir();
- *  var input = sir.getdataInputSir();
- */
-
-function sirRetencionFuente() {
-    
-    var mapData = "ttconsultacomprobante";
-    var urlSir = ipServicios + baseNomina +"SIConsultaretefte";
+function sirSaldos() {
+    debugger
+    var mapData = "ttconsultasaldos";
+    var urlSir = ipServicios + baseNomina +"SIConsultasaldos";
     var json = {  
-        "dsSIConsultaretefte":{  
+        "dsSIConsultasaldos":{  
             "eeDatos":[  
                 {  
-//                    "picusrcod":sessionStorage.getItem("usuario"),
-                    "picusrcod": "jsalazar_800001541",
+                    "picusrcod":sessionStorage.getItem("usuario"),
                     "picfiid":sessionStorage.getItem("picfiid"),
                     "local_ip":sessionStorage.getItem("ipPrivada"),
                     "remote_ip":sessionStorage.getItem("ipPublica")
                 }
-            ]            
+            ]
         }
     };
     

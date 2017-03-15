@@ -21,6 +21,7 @@
     <body onload="redire()">
         <script>
             function redire() {
+                debugger
                 sessionStorage.setItem("errorHtml",500);
                 var y = document.URL.split("/");
                 window.parent.location.href = y[0] + "//" + y[2] + "/" + y[3];

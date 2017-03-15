@@ -17,7 +17,7 @@ $(document).ready(function() {
 
 
 function retencionFuente(){     
-    debugger
+    
     var obj = new sirRetencionFuente();    
     var json = obj.getjson();
     var url = obj.getUrlSir();
@@ -37,8 +37,7 @@ function retencionFuente(){
                 alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
             }
         } 
-    }).done(function(e){ 
-        debugger
+    }).done(function(e){         
         var key1 = Object.keys(e)[0];
         if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {            
                 document.getElementById("logoEmpresaPDF").src = "data:image/png;base64," + e[key1].eeImages["0"].logocia;
@@ -50,7 +49,7 @@ function retencionFuente(){
                 document.getElementById('lbDedudcible').innerHTML = e[key1].ttconsultaretefte["0"].deducibleretencion;                
                 document.getElementById('lbTipoRetención').innerHTML = e[key1].ttconsultaretefte["0"].tiporetencion
                 document.getElementById('factorPrestacional').innerHTML = e[key1].ttconsultaretefte["0"].porcentaje + "%";
-                grid(e[key1].ttconsultareteftedet);
+//                grid(e[key1].ttconsultareteftedet);
             } else {
                 alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
             }        
