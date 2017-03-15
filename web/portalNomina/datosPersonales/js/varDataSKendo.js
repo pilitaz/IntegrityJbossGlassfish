@@ -5,94 +5,38 @@
  */
 
 
-//////////////////////////////////////////////////////////////////////////////////////
-function sir() {
-    var url = ipServicios + baseContabilidad + "SIRsic_ciu";
-    ;
-    var mapSir = "eesic_ciu";
-    var dataInputSir = {
-        "dsSIRsic_ciu": {
-            "eeDatos": [
-                {
-                    "picusrcod": sessionStorage.getItem("usuario"),
-                    "picfiid": sessionStorage.getItem("picfiid"),
-                    "local_ip": sessionStorage.getItem("ipPrivada"),
-                    "remote_ip": sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "eeSIRsic_ciu": [
-                {
-                    "picciu__cod": "*",
-                    "picciu__nom": "*"
-                }
-            ]
-        }
-    };
+
+function sirDatosPersonales() {
+   var urlSir = ipServicios + basePortalNomina + "Consultadatospersonales";
+    var json = {
+   "dsConsultadatospersonales":{  
+      "eeDatos":[  
+         {  
+            "picusrcod": sessionStorage.getItem("usuario"),
+            "picfiid": sessionStorage.getItem("picfiid"),
+            "local_ip": sessionStorage.getItem("ipPrivada"),
+            "remote_ip": sessionStorage.getItem("ipPublica")
+         }
+      ]
+   }
+};
+    
     this.setUrlSir = function (newname) {
         if (newname) {
-            url = newname;
+            urlSir = newname;
         }
     };
     this.getUrlSir = function () {
-        return url;
+        return urlSir;
     };
-    this.setmapSir = function (newname) {
+    
+    this.setjson = function (newname) {
         if (newname) {
-            mapSir = newname;
+            json = newname;
         }
     };
-    this.getmapSir = function () {
-        return mapSir;
+    this.getjson = function () {
+        return json;
     };
-    this.setdataInputSir = function (newname) {
-        if (newname) {
-            dataInputSir = newname;
-        }
-    };
-    this.getdataInputSir = function () {
-        return dataInputSir;
-    };
-}
-;
-
-///////////////////////////////////////////////////////////////////////////////////////
-function cud() {
-    var url = ipServicios + baseContabilidad + "SICUDsic_ciu";
-    var mapCud = "eesic_ciu";
-    var dataInputCud = {
-        "dssic_ciu": {
-            "eeDatos": [
-                {
-                    "picusrcod": sessionStorage.getItem("usuario"),
-                    "picfiid": sessionStorage.getItem("picfiid"),
-                    "local_ip": sessionStorage.getItem("ipPrivada"),
-                    "remote_ip": sessionStorage.getItem("ipPublica")
-                }
-            ]
-        }};
-    this.setUrlCud = function (newname) {
-        if (newname) {
-            url = newname;
-        }
-    };
-    this.getUrlCud = function () {
-        return url;
-    };
-    this.setmapCud = function (newname) {
-        if (newname) {
-            mapCud = newname;
-        }
-    };
-    this.getmapCud = function () {
-        return mapCud;
-    };
-    this.setdataInputCud = function (newname) {
-        if (newname) {
-            dataInputCud = newname;
-        }
-    };
-    this.getdataInputCud = function () {
-        return dataInputCud;
-    };
-}
-;
+    
+};
