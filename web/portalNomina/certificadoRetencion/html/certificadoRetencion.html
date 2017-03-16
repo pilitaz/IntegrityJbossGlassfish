@@ -21,15 +21,17 @@
         <link href="../../../css/kendo.metro.min.css" rel="stylesheet" type="text/css"/>
         <link href="/../../css/cssSpriteIntegrity.css" rel="stylesheet" type="text/css"/>
         <link href="../../../css/integrity.css" rel="stylesheet" type="text/css"/>
+        <link href="../../../css/cssSpriteIntegrity.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div>
             <table style="width: 100%">
                 <tr>
-                    <td style="width: 50px"><a class="k-grid"  aling="center"><span class="k-sprite po_bullet1"></span></a></td>
+                    <td style="width: 50px; vertical-align: middle "><a class="k-grid"  aling="center"><span class="k-sprite po_bullet1"></span></a></td>
                     <td>
-                        <h1 id = "subtitulo" class="subTitulo">Certificado De Retencion:</h1>                                
-                    </td>                            
+                        <h1 id = "subtitulo" aling="center" class="subTitulo">Certificado De Retencion:</h1>                                
+                    </td>               
+                     <td style="width: 55px;height: 50px; vertical-align: middle"><a  aling="center"><span class="k-sprite po_downflecha" onclick="volver()"></span></a></td>
                 </tr>
             </table>
             <div class="sidenavSup"></div>                    
@@ -228,6 +230,8 @@
                             <p id="numCasilla35P2"></p>
                             <p id="numCasilla35P3"></p>
                             <p id="numCasilla36"></p>
+                            <table id="ingresos">
+                                <td>
                             <p id="numCasilla37"></p>
                             <p id="numCasilla38"></p>
                             <p id="numCasilla39"></p>
@@ -238,6 +242,8 @@
                             <p id="numCasilla44"></p>
                             <p id="numCasilla45"></p>
                             <p id="numCasilla46"></p>
+                            </td>
+                            </table>
                             <p id="numCasillaPagador"></p>
                             <p id="numCasilla47"></p>
                             <p id="numCasilla48"></p>
@@ -314,6 +320,9 @@
         <script src="../../scripts/pakoPdf.js"></script>
         
         <style>
+            #ingresos{
+                 text-align: right;
+            }
             #numCasilla4{
             position: absolute;
             top: 80px;
@@ -421,7 +430,7 @@
             }
             #numCasilla24{           
             position: absolute;
-            top: 185px;
+            top: 180px;
             left: 45px;    
             }
             #numCasilla25P1{           
@@ -596,49 +605,51 @@
             }
             #numCasilla37{           
             position: absolute;
+            
             top: 262px;
-            left: 710px;    
+                right: 15px;   
             }#numCasilla38{           
             position: absolute;
+            
             top: 277px;
-            left: 710px;    
+                right: 15px;   
             }#numCasilla39{           
             position: absolute;
             top: 295px;
-            left: 710px;    
+               right: 15px;   
             }#numCasilla40{           
             position: absolute;
             top: 310px;
-            left: 710px;    
+                right: 15px;   
             }#numCasilla41{           
             position: absolute;
             top: 328px;
-            left: 710px;    
+                right: 15px;    
             }
             #numCasilla42{           
             position: absolute;
             top: 345px;
-            left: 710px;    
+             right: 15px;    
             }
             #numCasilla43{           
             position: absolute;
             top: 375px;
-            left: 710px;    
+               right: 15px;  
             }
             #numCasilla44{           
             position: absolute;
             top: 392px;
-            left: 710px;    
+                right: 15px;  
             }
             #numCasilla45{           
             position: absolute;
             top: 407px;
-            left: 710px;    
+             right: 15px;   
             }
             #numCasilla46{           
             position: absolute;
             top: 425px;
-            left: 710px;    
+           right: 15px;    
             } 
             #numCasillaPagador{           
             position: absolute;
@@ -960,11 +971,15 @@
                 background-image: url(certificado2016.png);
                 background-size: 820px 1050px;
             }*/
-            #principal{
+            
+            .dosmilquince{
                 background-image: url(certificado2015.png);
                 background-size: 820px 1050px;
             }
-            
+            .dosmildieciseis{
+                background-image: url(certificado2016.png);
+                background-size: 820px 1050px;
+            }
         </style>
         
     </div>

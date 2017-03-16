@@ -27,14 +27,21 @@
                             return obj.numcasilla === "11";
                         });   
       document.getElementById('numCasilla11').innerHTML=numcasilla[0].valorcasilla;  
+      
       var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
                             return obj.numcasilla === "24";
                         });   
       document.getElementById('numCasilla24').innerHTML=numcasilla[0].valorcasilla;  
-      var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
-                            return obj.numcasilla === "24";
-                        });   
-      document.getElementById('numCasilla24').innerHTML=numcasilla[0].valorcasilla;  
+
+        var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "25";
+                        }); 
+     var valorcasilla = numcasilla[0].valorcasilla;          
+     for (i = 1; i <= valorcasilla.length; i++){
+        document.getElementById('numCasilla25P'+i).innerHTML=valorcasilla[valorcasilla.length-i];
+     }                
+                        
+     
         
         var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
                             return obj.numcasilla === "26";
@@ -135,10 +142,26 @@
                             return obj.numcasilla === "46";
                         }); 
        document.getElementById('numCasilla46').innerHTML=numcasilla[0].valorcasilla;
+       
+        var numcasilla461= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "461";
+                        }); 
+        var numcasilla462= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
+                            return obj.numcasilla === "462";
+                        });        
+        document.getElementById('numCasillaPagador').innerHTML=numcasilla461[0].valorcasilla+" - "+numcasilla462[0].valorcasilla;
     }
    function consultar() {
        try {
-      var año=document.getElementById('añoGrabable').value;         
+      var año=document.getElementById('añoGrabable').value;    
+            if (año==="2015"){
+            $("#principal").removeClass( "dosmildieciseis" ).addClass( "dosmilquince" );     
+           //$("#principal").addClass("dosmilquince");
+            }
+            if (año==="2016"){
+            
+            $("#principal").removeClass( "dosmilquince" ).addClass( "dosmildieciseis" );     
+            }
         var consultar = new sirRetencion();
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();
@@ -163,12 +186,15 @@
                             alertDialogs("Error"+resp.dsCertificadoingret.eeEstados[0].Estado); 
                                                      
                         }
-                    } 
+                    },
+                    error: function (e) {  debugger       
+                        alertDialogs("Error"+e)
+        }
         
                 }); 
 }
-catch(err) {
-     alertDialogs("Error"+err);
+catch(err) {debugger
+     alertDialogs("Error"+err.statusText);
 }
       
        

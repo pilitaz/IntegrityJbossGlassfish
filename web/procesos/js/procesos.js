@@ -83,7 +83,7 @@ $(document).ready(function () {
      *  
      *  
      */     
-    var grid1 = $("#grid").kendoGrid({
+        $("#grid").kendoGrid({
         dataSource: datasource,
                             
         //navigatable: true,
@@ -575,18 +575,17 @@ function changImgFunc1(results) {
     }  
 }
 function terminarVacaciones(){debugger
+    
     $("#windowform").data("kendoWindow").close();   
     alertDialogs("Se ha terminado el proceso");
     $('#grid1').data('kendoGrid').refresh();                                             
     $('#grid1').data('kendoGrid').dataSource.read();
     $('#grid1').data('kendoGrid').refresh(); 
 }
-function cerrar(){debugger
+function solicitaVacaciones(){debugger
     $("#windowform").data("kendoWindow").close();   
     alertDialogs("Se ha iniciado el proceso correctamente");
-    $('#grid1').data('kendoGrid').refresh();                                             
-    $('#grid1').data('kendoGrid').dataSource.read();
-    $('#grid1').data('kendoGrid').refresh(); 
+ 
 }
 function changImgFunc(results) {
 

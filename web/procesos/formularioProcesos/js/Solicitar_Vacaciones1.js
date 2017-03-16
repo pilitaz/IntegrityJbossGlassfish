@@ -49,7 +49,7 @@ function guardar(){debugger
                 if((resp.dsSolicitudVacaciones.eeEstados[0].Estado)=="OK")
                 {
                   
-                   parent.cerrar();
+                   parent.solicitaVacaciones();
                 }
                 else   
                 {  
