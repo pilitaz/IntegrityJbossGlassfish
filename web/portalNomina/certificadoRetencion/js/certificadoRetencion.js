@@ -3,11 +3,12 @@
     $('#divPDF').height(viewportHeight - 50);
 });
 
- function getPDF(selector) {
+ function getPDF(selector) {debugger
      // $("#pag").removeClass("fondo");
-        kendo.drawing.drawDOM($(selector),{ forcePageBreak: ".page-break" }).then(function(group){
-          kendo.drawing.pdf.saveAs(group, "Certificado_Retencion.pdf");
+        kendo.drawing.drawDOM($(selector)).then(function(group){
+        kendo.drawing.pdf.saveAs(group, "Certificado_Retencion.pdf");
         });
+     
 //        $("#principal").addClass("jorge");
       }
     function mostrarDatos(e){debugger

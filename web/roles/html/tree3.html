@@ -3,7 +3,7 @@
         <link href="../../css/style2min.css" rel="stylesheet" type="text/css"/>
         <script src="../../scripts/jquery-2.2.0.min.js" type="text/javascript"></script>
         <script src="../../scripts/jstree.min.js" type="text/javascript"></script>
-        
+        <script src="../../scripts/LibreriaIntegrity.js" type="text/javascript"></script>
         
     </head>
     <body>
@@ -24,13 +24,23 @@
                     try {
                         var id_rol = sessionStorage.getItem("Idrol");
                         var jsonData =
-                                {
-                                    "dsmenuxrol": {
-                                        "eetemp": [{
-                                                "piirol": id_rol
-                                    }]
-                            }
-                        };
+                                {  
+                                "dsmenuxrol":{  
+                                   "eeDatos":[  
+                                      {  
+                                         "picusrcod":sessionStorage.getItem("usuario"),
+                                         "picfiid":sessionStorage.getItem("picfiid"),
+                                         "local_ip":sessionStorage.getItem("ipPrivada"),
+                                         "remote_ip":sessionStorage.getItem("ipPublica")
+                                      }
+                                   ],
+                                   "eetemp":[  
+                                      {  
+                                          "piirol": id_rol
+                                      }
+                                   ]
+                                }
+                             };
 
                         $.ajax({
                             type: "POST",
@@ -39,14 +49,19 @@
                             url: ipServicios + baseServicio + "SIRmenuxrol",
                             dataType: "json",
                             contentType: "application/json;",
-                            success: function (resp) {
-                                menuUsuario = JSON.stringify(resp.dsmenuxrol.ttmenuxusuario);
+                            success: function (resp) {debugger
+                                if( resp.dsmenuxrol.eeEstados[0].Estado==="OK"){
+                                     menuUsuario = JSON.stringify(resp.dsmenuxrol.ttmenuxusuario);
+                                }
+                               else{
+                                    parent.alertDialogs ("Error" + resp.dsmenuxrol.eeEstados[0].Estado);
+                               }
 
                             },
-                            error: function (e) {
-                                alert("Error" + JSON.stringify(e));
+                            error: function (e) {debugger
+                                parent.alertDialogs ("Error" + e.responseText);
                             }
-                        }).done(function (dataarbol) {
+                        }).done(function (dataarbol) {debugger
                             var dataarbol = JSON.stringify(dataarbol.dsmenuxrol.ttmenuxusuario);
 
                             if (dataarbol) {
