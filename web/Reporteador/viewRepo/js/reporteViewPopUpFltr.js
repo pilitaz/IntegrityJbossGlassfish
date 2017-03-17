@@ -6,7 +6,7 @@
 $(window).resize(function () {
     var viewportHeight = $(window).height();
     $('#campos').height(viewportHeight - 5000);
-    $('#girdCampos').height(viewportHeight - 9000);
+//    $('#girdCampos').height(viewportHeight - 9000);
 });
 var filtros = "";
 var tDato = JSON.parse((sessionStorage.getItem("tDato")));
@@ -27,7 +27,8 @@ var inputFltr = [{
         "piindicador": 0
     }];
 
-function onloadPopUpFltr() {
+$(document).ready(function () {
+    debugger
     cmp("POST");
     document.getElementById("titulo").innerHTML = "Filtros";
     $("#popUpFltr").show();
@@ -36,18 +37,20 @@ function onloadPopUpFltr() {
 
     for (var i = 0; i < filtros.length; i++) {
         filtrosCampos.push([filtros[i]]);
-        filtros[i].rpt_cmp_vis = cmpLabelfltr("POST",filtros[i].rpt_cmp_pos, filtros[i].rpt_id);
-        creaFiltro(filtros[i].rpt_cmp_pos.toString() + filtros[i].rpt_fil_pos.toString(), i, "", filtros[i].rpt_cmp_vis);
+        var objCmp = cmpLabelfltr("POST",filtros[i].rpt_cmp_pos, filtros[i].rpt_id);
+        filtros[i].rpt_cmp_vis = objCmp.nomCmp;
+        filtros[i].cmp_td = objCmp.cmp_td;
+        creaFiltro(filtros[i].rpt_cmp_pos.toString() + filtros[i].rpt_fil_pos.toString(), i, "", filtros[i].rpt_cmp_vis, filtros[i].cmp_td);
         objFltrAdd = JSON.parse(JSON.stringify(filtros));
     }
-    crearLabel("", "", "botones");
-    crearBr("botones");
-    crearButton("btnSaveFiltros", "Desplegar", "botones", "k-primary");
-    $("#btnSaveFiltros").kendoButton({
-        click: clicBtnSaveFiltros
-    });
+//    crearLabel("", "", "botones");
+//    crearBr("botones");
+//    crearButton("btnSaveFiltros", "Desplegar", "botones", "k-primary");
+//    $("#btnSaveFiltros").kendoButton({
+//        click: clicBtnSaveFiltros
+//    });
 
-};
+});
 
 function crearBr(div) {
     var mybr = document.createElement('br');
@@ -61,7 +64,7 @@ function crearBr(div) {
  * @param {type} iadd en caso de que se el filtro por defecto
  * @returns {undefined}
  */
-function creaFiltro(i, imas, iadd, nomCmp) {
+function creaFiltro(i, imas, iadd, nomCmp,tDatoFltr) {
 
     $("#Campos").append("<div id=" + "divFiltr" + i + " class = 'col-sm-12' ></div>");
     crearBr("divFiltr" + i);
@@ -70,7 +73,7 @@ function creaFiltro(i, imas, iadd, nomCmp) {
     $("#divFiltr" + i).append("<div id=" + "divFiltrCmpHasta" + i + " class = 'col-sm-4' ></div>");
 //    $("#divFiltr" + i).append("<div id=" + "divFiltrCmpEsp" + i + " class = 'col-sm-4'align='center'></div>");
     $("#divFiltr" + i).append("<div id=" + "divFiltrImg" + i + " class = 'col-sm-1' ></div>");
-    crearBr("divFiltrCmpEsp" + i);
+//    crearBr("divFiltrCmpEsp" + i);
 
     crearLabel("cmpLabel" + i, nomCmp, "divFiltrCmpEsp" + i);
     crearLabel("", "", "divFiltrImg" + i);
@@ -80,13 +83,13 @@ function creaFiltro(i, imas, iadd, nomCmp) {
     crearLabel("deLabel" + i, "Desde:", "divFiltrCmpDe" + i);
     crearInput("filtrosde" + i, "divFiltrCmpDe" + i);
     //crearComboCmp("filtrosde" + i);
-    modTextboxPopupFl("filtrosde" + i, tDato);
+    
 
     //crearLabel("", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", "divFiltrCmpHasta" + i);
     crearLabel("filtrosHastalabel" + i, "Hasta:", "divFiltrCmpHasta" + i);
     crearInput("filtrosHasta" + i, "divFiltrCmpHasta" + i);
     //crearComboCmp("filtrosHasta" + i);
-    modTextboxPopupFl("filtrosHasta" + i, tDato);
+    
     crearBr("divFiltr" + i);
     crearBr("divFiltr" + i);
     crearBr("divFiltr" + i);
@@ -100,6 +103,8 @@ function creaFiltro(i, imas, iadd, nomCmp) {
             document.getElementById("filtrosHasta" + i).value = filtros[imas].rpt_fil_Has;
         }
     }
+    modTextboxPopupFl("filtrosde" + i, tDatoFltr);
+    modTextboxPopupFl("filtrosHasta" + i, tDatoFltr);
 
 }
 
@@ -251,8 +256,8 @@ function cmp(verHtml) {
  * @returns {undefined}
  */
 function cmpLabelfltr(verHtml,rptPos, rptId) {
-    var nomCmp = ""; 
-            
+//    var nomCmp = ""; 
+    var cmp = {}        
     var objCmp = getinputRestRepoCmp();
     var urlServCmp = geturlRestRepoCmp();
     var mapData = getmapDataRestRepoCmp();
@@ -276,8 +281,11 @@ function cmpLabelfltr(verHtml,rptPos, rptId) {
             var key1 = Object.keys(resp)[0];
             permitirIngreso = JSON.stringify(resp[key1].eeEstados[0].Estado);
             if (resp[key1].eerep_rpt_cmp) {
-                nomCmp = resp[key1].eerep_rpt_cmp[0].rpt_cmp_vis;
-//                
+//                nomCmp = resp[key1].eerep_rpt_cmp[0].rpt_cmp_vis;
+                cmp = {
+                    nomCmp: resp[key1].eerep_rpt_cmp[0].rpt_cmp_vis,
+                    cmp_td: resp[key1].eerep_rpt_cmp[0].cmp_td
+                };
             } else {
                 permitirIngreso = "No coincide el campo"
             }
@@ -298,5 +306,5 @@ function cmpLabelfltr(verHtml,rptPos, rptId) {
             enable: true
         });
     });
-    return nomCmp;
+    return cmp;
 }

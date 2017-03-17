@@ -179,3 +179,8 @@ footer {
     -moz-opacity:0.7;
     opacity: 0.7;   
 }
+.k-grid .rightAling,
+.k-numerictextbox .k-input
+{
+    text-align: right;
+}

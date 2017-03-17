@@ -24,7 +24,9 @@ $(document).ready(function () {
         sessionStorage.removeItem("menuToViewRepo");
     }
 //    mostrarGrid();
-    PopUpCondicion();
+    cmp("POST");
+    
+    
 });
 /**
  * funcion para exttraer todos las llaves de un obj y si tiene algún espacio cambiarlo para que lo entienda Kendo
@@ -38,12 +40,13 @@ function obtkeysObj() {
         var numberPattern = /\s|\(|\)|'|\+|\-|\*|\/|\{|\}|\[|\]|\.|\,|\=|\¡|\!|\¿|\?|\$|\%/g;
         var changeObj = JSON.stringify(jsonReporte);
         for (var key in obj[0]) {//saca las llaves del json de entrada
-
+            
             if (key.match(numberPattern)) {
                 arrgloitemEsp.push(key);
                 keyEspNone = key.replace(numberPattern, "_");
                 key = {field: keyEspNone,
-                    title: key
+                    title: key,
+//                    template : "<div class='rightAling'>#= kendo.toString( "+ keyEspNone+",\"n3\")#</div>",
                 };
             }
             columnasRepo.push(key);
@@ -55,6 +58,7 @@ function obtkeysObj() {
                 delete jsonReporte.Reporte[j][arrgloitemEsp[i]];
             }
         }
+        
     } catch (e) {
 
     }
@@ -65,6 +69,32 @@ function obtkeysObj() {
  */
 function mostrarGrid() {
     columnasRepo = [];
+    ////////////////////////////////////////////////////////////////////////////
+//    var schema = new Object();
+//    schema.model = new Object();
+//    
+//    var columns = new Array();
+//    var align = "";
+//    debugger
+//
+//    var btnUD = new Array();
+//    var posicion;
+//    
+//    for(var i = 0; i<json.grilla.columnas.length; i++){
+//        posicion = parseInt(json.grilla.columnas[i].idinterno);
+//        schema.model[json.grilla.columnas[i].field] = new Object();
+//        schema.model[json.grilla.columnas[i].field].type = json.grilla.columnas[i].tipo;
+//        if(json.grilla.columnas[i].tipo==="number"){
+//            align = "rightAling";
+//        }else{
+//            align = "";
+//        }
+//        columns[posicion] = new Object();
+//        columns[posicion].field = json.grilla.columnas[i].field;        
+//        columns[posicion].title = json.grilla.columnas[i].titulo;
+//        columns[posicion].template = "<div class='"+align+"'>#= kendo.toString( "+ json.grilla.columnas[i].field+",\"n0\")#</div>";
+//    }
+    ////////////////////////////////////////////////////////////////////////////
     sendServicio();
     obtkeysObj();
     $(window).trigger("resize");
@@ -210,7 +240,7 @@ function PopUpCondicion() {
     $("#windowVfltr1").append("<div id='windowVfltr'></div>");
     var myWindow = $("#windowVfltr");
 //            undo = $("#undo");
-    function onClose() {
+    function onClose() {debugger
         document.getElementById("windowVfltr1").remove();
 //            undo.fadeIn();
         mostrarGrid();
@@ -222,12 +252,12 @@ function PopUpCondicion() {
 
     myWindow.kendoWindow({
         draggable: true,
-        height: "50%",
+        height: "426px",
         modal: true,
         resizable: false,
         title: "",
-        width: "50%",
-        content: "http://" + ip + ":" + puerto + "/Reporteador/html/reporteViewPopUpFltr.html",
+        width: "60%",
+        content: sessionStorage.getItem("url") + "Reporteador/viewRepo/html/reporteViewPopUpFltr.html",
         close: onClose
     }).data("kendoWindow").center().open();
 
@@ -238,6 +268,7 @@ function PopUpCondicion() {
  * @returns {undefined}
  */
 function cerrarWindow() {
+    
     $("#windowVfltr").data("kendoWindow").close();
 //    onClose()
     mostrarGrid();
@@ -297,3 +328,58 @@ function cerrarCustomPopUp() {
     $("#grid").data("kendoGrid").destroy();
     mostrarGrid();
 }
+/**
+ * optiene todos los filtros y campos de un reporte
+ * @param {type} data obj con los campos que requieren ser modificados
+ * @param {type} verHtml verbo html (POST.DELETE Y PUT)
+ * @returns {undefined}
+ */
+function cmp(verHtml) {
+    var objCmp = getinputRestRepoGridCmp();
+    var urlServCmp = geturlRestRepoGridCmp();
+    var mapData = getmapDataRestRepoGridCmp();
+
+    var jsonResp = "";
+    var permitirIngreso = "";
+    $.ajax({
+        async: false,
+        type: verHtml,
+        data: JSON.stringify(objCmp),
+        url: urlServCmp,
+        dataType: "json",
+        contentType: "application/json;",
+        success: function (resp) {
+            var key1 = Object.keys(resp)[0];
+            permitirIngreso = JSON.stringify(resp[key1].eeEstados[0].Estado);
+            if (resp[key1].eerep_rpt_fil) {
+//                
+            } else {
+                permitirIngreso = "Sin Filtros"
+            }
+            jsonResp = resp;
+        },
+        error: function (e) {
+            alertDialogs("Error al consumir el servicio de CrearFiltro" + e.status + " - " + e.statusText);
+        }
+    }).done(function () {
+        if (permitirIngreso == '"OK"') {
+            $("#btnFiltros").show();
+            PopUpCondicion();
+        } else if (permitirIngreso === "Sin Filtros") {
+            mostrarGrid();
+        } else {
+            alertDialogs("Problemas con el creación de campos .\n" + permitirIngreso);
+        }
+        $("#btnSaveFiltros").kendoButton({
+            enable: true
+        });
+    });
+}
+
+function getPDF(selector) {
+     // $("#pag").removeClass("fondo");
+        kendo.drawing.drawDOM($(selector),{ forcePageBreak: ".page-break" }).then(function(group){
+          kendo.drawing.pdf.saveAs(group, "Certificado_Retencion.pdf");
+        });
+//        $("#principal").addClass("jorge");
+      }
