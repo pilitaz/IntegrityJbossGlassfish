@@ -218,11 +218,14 @@ $(document).ready(function () {
         }   
         data.dsbpm_own_task.TTparam[0].picproc_name= proceso;
         data.dsbpm_own_task.eebpm_own_task=array;
+        
         if (data.dsbpm_own_task.eebpm_own_task.length===0){
             var nodo=[{pictasknamealtern: ""}];
             data.dsbpm_own_task.TTparamAltern=[];   
             data.dsbpm_own_task.TTparamAltern=nodo;
-             data.dsbpm_own_task.TTparamAltern[0].pictasknamealtern=tarea;
+            data.dsbpm_own_task.TTparamAltern[0].pictasknamealtern=tarea;
+            data.dsbpm_own_task.TTparamAltern[0].picprocnameatern=proceso;
+            
         }
         else
         {

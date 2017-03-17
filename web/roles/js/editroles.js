@@ -13,7 +13,7 @@ $(window).resize(function () {
    
 });
 
-$(document).ready(function() {
+$(document).ready(function() {debugger
 
 
 $('body').css('display', 'none');

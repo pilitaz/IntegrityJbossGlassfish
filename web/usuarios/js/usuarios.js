@@ -186,12 +186,12 @@ $(document).ready(function () {
     var grid1 = $("#grid").kendoGrid({
         dataSource: dataSource,
         sortable: true,
-        columns: [
-            {field: "euser__Name", title: "Nombre", hidden: true},
+        columns: [           
             {field: "euserid", title: "Usuario", hidden: false},
+            {field: "euser__Name", title: "Nombre", hidden: false},
             {field: "usr__mail", title: "Correo", hidden: true},
             {field: "usr__carp", title: "Cedula", hidden: true},
-            {field: "car__nom", title: "Elija un Rol", hidden: true, editor: filtroRol,
+            {field: "car__nom", title: "Rol", hidden: false, editor: filtroRol,
                 template: function (e) {
                     return e.car__nom;
                 }},
