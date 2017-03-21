@@ -24,14 +24,14 @@
                 debugger
                 sessionStorage.setItem("errorHtml",404);
                 var y = document.URL.split("/");
-                if(window.parent.location.ancestorOrigins.length!==0){
-                    for(var i=0;i<window.parent.parent.location.ancestorOrigins.length;i++){
-                         window.parent.location.href = y[0] + "//" + y[2] + "/" + y[3]
-                    }
-                    
-                }else{
+//                if(window.parent.location.ancestorOrigins.length!==0){
+//                    for(var i=0;i<window.parent.parent.location.ancestorOrigins.length;i++){
+//                         window.parent.location.href = y[0] + "//" + y[2] + "/" + y[3]
+//                    }
+//                    
+//                }else{
                    window.parent.location.href = y[0] + "//" + y[2] + "/" + y[3]; 
-                }
+//                }
                 
             }
         </script>

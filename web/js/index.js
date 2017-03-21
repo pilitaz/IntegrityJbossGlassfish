@@ -114,9 +114,16 @@ function cambiarImagen(imgId, estiloTd) {
             var urlFrameNew = "http://" + ip + ":" + puerto + "/" + servicio;
             sessionStorage.setItem("menuToViewRepo","true");
 //            document.getElementById("idFrame").src = urlFrameNew;
-            document.getElementById("idFrame").src = sessionStorage.getItem("url") + servicio + "/indexRepo/html/indexRepo.html";
+//            document.getElementById("idFrame").src = sessionStorage.getItem("url") + servicio + "/indexRepo/html/indexRepo.html";
             document.getElementById("tdPerfil").style = "display:none";
-        } else if (servicio === "procesos") {
+        } else if (servicio === "Reportes") {
+            $('#divDerecho').width($(window).width());
+            document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
+//            document.getElementById("idFrame").src = urlFrameNew;
+            sessionStorage.removeItem("menuToViewRepo");
+            document.getElementById("idFrame").src = sessionStorage.getItem("url") + "Reporteador" + "/indexRepo/html/indexRepo.html";
+            document.getElementById("tdPerfil").style = "display:none";
+        }else if (servicio === "procesos") {
             $('#divDerecho').width($(window).width());
             document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
             document.getElementById("idFrame").src = sessionStorage.getItem("url") + servicio + "/html/" + servicio + ".html";
