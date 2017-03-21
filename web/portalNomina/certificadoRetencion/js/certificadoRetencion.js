@@ -12,7 +12,8 @@
 //        $("#principal").addClass("jorge");
       }
     function mostrarDatos(e){debugger
-    var i=0;      
+    var i=0;    
+    document.getElementById('numCasilla4').innerHTML="1";
     var numcasilla= e.dsCertificadoingret.ttcertificadoingret.filter(function (obj) {
                             return obj.numcasilla === "5";
                         }); 
@@ -151,6 +152,10 @@
                             return obj.numcasilla === "462";
                         });        
         document.getElementById('numCasillaPagador').innerHTML=numcasilla461[0].valorcasilla+" - "+numcasilla462[0].valorcasilla;
+   //document.body.style.zoom="50%";
+   //-webkit-transform: scale(0.5);
+   $("#principal").removeClass( "dosmildieciseis" ).addClass( "dosmilquince" ); 
+   
     }
    function consultar() {
        try {

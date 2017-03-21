@@ -7,6 +7,7 @@ and open the template in the editor.
     Created on : 20/09/2016, 02:14:29 PM
     Author     : Desarrollo
 */
+
 body{
     margin-top: 0px; 
     margin-bottom: 0px; 
@@ -191,14 +192,7 @@ table{
     /*background: url("../images/fondo-arbol.png");*/
     overflow: auto;  
 }
-footer {
-            background-color: #333;
-            width: 100%;
-            bottom: 0;
-            left: 0px;
-            position: fixed;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        }
+
 .k-multiselect-wrap {
     font-style: normal;
     opacity: 0.6;
@@ -226,7 +220,7 @@ footer {
     left: 0px;
     position: absolute;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
+        }
 #customPopUp{
     height:500px;
     position: absolute;
