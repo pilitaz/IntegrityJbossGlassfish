@@ -5,18 +5,24 @@
  */
 
 
-function sirSaldos() {
-    debugger
-    var mapData = "ttconsultasaldos";
-    var urlSir = ipServicios + baseNomina +"SIConsultasaldos";
+function dsSIRinitial() {    
+    
+    var urlSir = ipServicios + baseServicio +"SIRinitial";
     var json = {  
-        "dsSIConsultasaldos":{  
+        "dsSIRinitial":{  
             "eeDatos":[  
                 {  
                     "picusrcod":sessionStorage.getItem("usuario"),
                     "picfiid":sessionStorage.getItem("picfiid"),
                     "local_ip":sessionStorage.getItem("ipPrivada"),
                     "remote_ip":sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "eesic_rol_fun":[  
+                {  
+                    "cap__cod":sessionStorage.getItem("capitulo"),
+                    "fun__cod":sessionStorage.getItem("funcion"),
+                    "por__cod":sessionStorage.getItem("portafolio")
                 }
             ]
         }
@@ -39,14 +45,45 @@ function sirSaldos() {
     this.getjson = function () {
         return json;
     };
-    
-    this.setMapData = function (newname) {
-        if (newname) {
-            mapData = newname;
+};
+
+function sirData () {
+    var url = ipServicios+baseServicio+"SirUsuarios";
+    var mapSir = "ee_user2";
+    var json = {
+        "dsee_user2": {
+            "eeDatos": [
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip": sessionStorage.getItem("ipPrivada"),
+                    "remote_ip": sessionStorage.getItem("ipPublica")
+                }
+            ]
         }
     };
-    this.getMapData = function () {
-        return mapData;
-    };
-    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            url = newname;
+		}
+	};
+    this.getUrlSir = function () {
+        return url;
+	};
+    this.setmapSir = function (newname) {
+        if (newname) {
+            mapSir = newname;
+		}
+	};
+    this.getmapSir = function () {
+        return mapSir;
+	};
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+		}
+	};
+    this.getjson = function () {
+        return json;
+	};
 };

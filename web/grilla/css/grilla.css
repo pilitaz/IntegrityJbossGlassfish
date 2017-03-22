@@ -13,3 +13,51 @@ and open the template in the editor.
 {
     text-align: right;
 }
+.customPopUp {
+    /*height:50%;*/
+    max-height: 50%;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width:700px;
+    z-index: 9;
+    background: #ffffff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    color: #000000;
+    /*background: url("../images/fondo-arbol.png");*/
+    overflow: auto;  
+}
+
+#disable {
+    height:100%;
+    width:100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 8;
+    background-color:rgba(0,0,0,0.5);
+    color: #000000;
+    /*background: url("../images/fondo-arbol.png");*/
+    overflow: auto;  
+}
+
+footer {
+    background-color: #333;
+    width: 100%;
+    bottom: 0;
+    left: 0px;
+    position: fixed;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.k-link:not(.k-state-disabled):hover>.k-i-close{
+        background-position: -32px -16px;
+}
+
+td{
+    padding-bottom: 2px;
+    padding-top: 2px;
+    padding-right: 10px;
+    padding-left: 10px
+}
