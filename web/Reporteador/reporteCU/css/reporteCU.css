@@ -167,3 +167,6 @@ footer {
     display:flex;    
     align-items:flex-end;
 }
+.k-link:not(.k-state-disabled):hover>.k-i-close{
+        background-position: -32px -16px;
+}
