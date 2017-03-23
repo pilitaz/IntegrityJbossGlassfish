@@ -24,6 +24,10 @@ $(window).resize(function () {
  *  var urlactualizar: url de servicio para actualizar / crear 
  *  
  */ 
+function tamaño(){debugger
+    var x = $("#windowform1").height();
+    return(x);
+}
 $(document).ready(function () {                             
                         
     var consultar = new sirusuariobpm();
@@ -234,7 +238,7 @@ function grilla_Administar(e){debugger
         var myWindow2 = $("#windowg"),undo = $("#undo");                
         function onClose1() {
             undo.fadeIn();
-            $("#grillapopUp").empty();
+            $("#grillapopUp").remove();
         }       
         var UrL= sessionStorage.getItem("url");
         myWindow2.kendoWindow({
@@ -266,7 +270,7 @@ function instancias(e){debugger
                 
     function onClose() {
         undo.fadeIn();
-        $("#windowform").empty();
+        $("#windowform").remove();
     }
         
     var UrL= sessionStorage.getItem("url");  
@@ -296,7 +300,7 @@ function iniciarTarea2(e){debugger
                 
     function onClose() {
         undo.fadeIn();
-        $("#windowform").empty();
+        $("#windowform").remove();
     }
         
     var UrL= sessionStorage.getItem("url");  
@@ -323,12 +327,13 @@ function iniciarProceso(e){debugger
     var nombreFormulario = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).screen__name;
     sessionStorage.setItem("tarea_usuario",x); 
     sessionStorage.setItem("proceso_usuario",y);  
-    $("#formvacations").append("<div id='windowform'></div>");
-    var myWindow1 = $("#windowform"),undo = $("#undo");
+    
+    $("#formvacations").append("<div id='windowform1'></div>");
+    var myWindow1 = $("#windowform1"),undo = $("#undo");
                 
-    function onClose() {
-        undo.fadeIn();
-        $("#windowform").empty();
+    function onClose() {debugger
+        //undo.fadeIn();
+        $("#windowform1").remove();
     }
         
     var UrL= sessionStorage.getItem("url");  
@@ -354,7 +359,7 @@ function vistaProceso(e){
                 
         function onClose() {
             undo.fadeIn();
-            $("#textarea").empty();
+            $("#textarea").remove();
         
         }
         var UrL= sessionStorage.getItem("url");  
@@ -383,7 +388,7 @@ function grafica(e){
                 
         function onClose() {
             undo.fadeIn();
-            $("#textarea").empty();
+            $("#textarea").remove();
         
         }
         var UrL= sessionStorage.getItem("url");  
@@ -448,7 +453,7 @@ function reasignar1(){debugger
                 
             function onClose() {
                 undo.fadeIn();
-                $("#windowform").empty();
+                $("#windowform").remove();
             } 
             mostrarCustomPopUp();
             onloadPopUpCond ();

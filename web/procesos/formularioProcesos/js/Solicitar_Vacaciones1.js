@@ -1,9 +1,15 @@
 
-$(document).ready(function () {
+$(document).ready(function () {debugger
     
 iniciar();
 jefe();
 pagoAnticipado();
+var x  = $("#btnCrearRepo").height();
+var w = $("#banner").height();
+var y  = $("#contenido").height();
+var z  = parent.tamaño();
+
+$("#contenido").height((z)-w-x);
 });
 function guardar(){debugger
     try {
@@ -31,7 +37,7 @@ function guardar(){debugger
     datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].dias_dinero=parseInt(dias_pago);
     datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].jefe_inmediato=jefe;
     datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].observaciones_empleado=document.getElementById("Observaciones").value ;
-    datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].dias_ant_solicitud= parseInt(document.getElementById("vacaciones").innerHTML);
+    //datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].dias_ant_solicitud= parseInt(document.getElementById("vacaciones").innerHTML);
     datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].dias_anticipados=parseInt(document.getElementById("anticipacion").innerHTML);
     datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].dias_disponibles=parseInt(document.getElementById("pendientes").innerHTML);
     datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].fecha_solictud=document.getElementById("fecha").innerHTML;
@@ -53,7 +59,7 @@ function guardar(){debugger
                 }
                 else   
                 {  
-                     
+                  parent.alertDialogs(resp.dsSolicitudVacaciones.eeEstados[0].Estado);
                 } 
             } ,
             error: function (e) {
@@ -83,6 +89,7 @@ function pagoAnticipado(){
         dataTextField: "text",
         dataValueField: "valor",
         placeholder: "...",
+        value:"TRUE",
         dataSource: estados,
         
     });
@@ -138,7 +145,25 @@ function jefe(){
     
 }
 function iniciar(){
-    $("#inicioVacaciones").kendoDatePicker({format:  "yyyy/MM/dd "});
+    var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+
+if(dd<10) {
+    dd='0'+dd
+} 
+
+if(mm<10) {
+    mm='0'+mm
+} 
+
+today = mm+dd+yyyy;
+    $("#inicioVacaciones").kendoDatePicker({
+        format:  "yyyy/MM/dd ",
+        disableDates: ["sa", "su"],
+        min: new Date(yyyy, mm, dd)
+    });
     $("#diasPedir").kendoNumericTextBox({format: "0"});
     $("#totaldiasvalor").kendoNumericTextBox({format: "0"});
     
@@ -160,11 +185,11 @@ function iniciar(){
                   document.getElementById("pendientes").innerHTML=resp.dsparam_proc_vac.eeparam_proc_vac[0].tot_dias_hab; 
                   document.getElementById("corte").innerHTML=resp.dsparam_proc_vac.eeparam_proc_vac[0].fec_cort; 
                   document.getElementById("anticipacion").innerHTML=resp.dsparam_proc_vac.eeparam_proc_vac[0].dias_antic; 
-                  document.getElementById("vacaciones").innerHTML=resp.dsparam_proc_vac.eeparam_proc_vac[0].num_dias_vac; 
+                  //document.getElementById("vacaciones").innerHTML=resp.dsparam_proc_vac.eeparam_proc_vac[0].num_dias_vac; 
                 }
                 else   
                 {  
-                    alert("Error"+resp.dsparam_proc_vac.eeEstados["0"].Estado);   
+                    parent.alertDialogs("Error"+resp.dsparam_proc_vac.eeEstados["0"].Estado);   
                 } 
             } 
             
