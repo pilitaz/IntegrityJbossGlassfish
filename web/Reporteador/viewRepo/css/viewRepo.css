@@ -179,6 +179,9 @@ footer {
     -moz-opacity:0.7;
     opacity: 0.7;   
 }
+.k-link:not(.k-state-disabled):hover>.k-i-close{
+        background-position: -32px -16px;
+}
 .k-grid .rightAling,
 .k-numerictextbox .k-input
 {
