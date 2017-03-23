@@ -5,6 +5,7 @@
  */
 var jsonReporte = {};
 var columnasRepo = [];
+var columnas = {};
 /**
  * funcion para renderizar el tamaño de la grilla, para que quede del tamaño de la pantalla
  * @param {type} param
@@ -44,11 +45,13 @@ function obtkeysObj() {
             if (key.match(numberPattern)) {
                 arrgloitemEsp.push(key);
                 keyEspNone = key.replace(numberPattern, "_");
+            }else{
+                keyEspNone = key;
+            }
                 key = {field: keyEspNone,
                     title: key,
-//                    template : "<div class='rightAling'>#= kendo.toString( "+ keyEspNone+",\"n3\")#</div>",
                 };
-            }
+            
             columnasRepo.push(key);
         }
         for (var i = 0; i < arrgloitemEsp.length; i++) {
@@ -69,34 +72,29 @@ function obtkeysObj() {
  */
 function mostrarGrid() {
     columnasRepo = [];
-    ////////////////////////////////////////////////////////////////////////////
-//    var schema = new Object();
-//    schema.model = new Object();
-//    
-//    var columns = new Array();
-//    var align = "";
-//    debugger
-//
-//    var btnUD = new Array();
-//    var posicion;
-//    
-//    for(var i = 0; i<json.grilla.columnas.length; i++){
-//        posicion = parseInt(json.grilla.columnas[i].idinterno);
-//        schema.model[json.grilla.columnas[i].field] = new Object();
-//        schema.model[json.grilla.columnas[i].field].type = json.grilla.columnas[i].tipo;
-//        if(json.grilla.columnas[i].tipo==="number"){
-//            align = "rightAling";
-//        }else{
-//            align = "";
-//        }
-//        columns[posicion] = new Object();
-//        columns[posicion].field = json.grilla.columnas[i].field;        
-//        columns[posicion].title = json.grilla.columnas[i].titulo;
-//        columns[posicion].template = "<div class='"+align+"'>#= kendo.toString( "+ json.grilla.columnas[i].field+",\"n0\")#</div>";
-//    }
-    ////////////////////////////////////////////////////////////////////////////
     sendServicio();
     obtkeysObj();
+    ////////////////////////////////////////////////////////////////////////////
+    var schema = new Object();
+    schema.model = new Object();
+    
+    var align = "";
+    
+    var posicion;
+    
+    for(var i = 0; i<columnas.length; i++){
+        posicion = parseInt(columnas[i].rpt_cmp_pos);
+        schema.model[columnas[i].cmp_dsc] = new Object();
+        schema.model[columnas[i].cmp_dsc].type = columnas[i].cmp_td;
+        if((columnas[i].cmp_td==="number")||(columnas[i].cmp_td==="decimal")){
+            align = "rightAling";
+        }else{
+            align = "";
+        }
+        columnasRepo[i].template = "<div class='"+align+"'>#= kendo.toString( "+ columnasRepo[i].field+",\"n0\")#</div>";
+    }
+    ////////////////////////////////////////////////////////////////////////////
+    
     $(window).trigger("resize");
     $("#grid").kendoGrid({
         toolbar: ["pdf", "excel"],
@@ -117,12 +115,7 @@ function mostrarGrid() {
         },
         dataSource: {
             data: jsonReporte.Reporte,
-            schema: {
-                model: {
-                    fields: {
-                    }
-                }
-            },
+            schema: schema,
         },
         scrollable: true,
         sortable: true,
@@ -362,6 +355,9 @@ function cmp(verHtml) {
             alertDialogs("Error al consumir el servicio de CrearFiltro" + e.status + " - " + e.statusText);
         }
     }).done(function () {
+        if(jsonResp){
+            columnas = jsonResp.dsSIRrep_rpt_det.eerep_rpt_cmp;
+        }
         if (permitirIngreso == '"OK"') {
             $("#btnFiltros").show();
             PopUpCondicion();

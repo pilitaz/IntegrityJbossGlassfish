@@ -252,7 +252,7 @@ function  crearLabel(id, titulo, div, fuente, color, tipo) {
 }
 function crearImg1(div) {
     var x = document.createElement("IMG");
-    x.setAttribute("src", "/Reporteador/images/espacio-95.png");
+    x.setAttribute("src", "../../../images/espacio-95.png");
     x.setAttribute("class", "re_bullet1");
     document.getElementById(div).appendChild(x);
 }

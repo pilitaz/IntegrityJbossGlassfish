@@ -37,7 +37,7 @@ $(document).ready(function () {
 
     for (var i = 0; i < filtros.length; i++) {
         filtrosCampos.push([filtros[i]]);
-        var objCmp = cmpLabelfltr("POST",filtros[i].rpt_cmp_pos, filtros[i].rpt_id);
+        var objCmp = cmpLabelfltr("POST", filtros[i].rpt_cmp_pos, filtros[i].rpt_id);
         filtros[i].rpt_cmp_vis = objCmp.nomCmp;
         filtros[i].cmp_td = objCmp.cmp_td;
         creaFiltro(filtros[i].rpt_cmp_pos.toString() + filtros[i].rpt_fil_pos.toString(), i, "", filtros[i].rpt_cmp_vis, filtros[i].cmp_td);
@@ -64,7 +64,7 @@ function crearBr(div) {
  * @param {type} iadd en caso de que se el filtro por defecto
  * @returns {undefined}
  */
-function creaFiltro(i, imas, iadd, nomCmp,tDatoFltr) {
+function creaFiltro(i, imas, iadd, nomCmp, tDatoFltr) {
 
     $("#Campos").append("<div id=" + "divFiltr" + i + " class = 'col-sm-12' ></div>");
     crearBr("divFiltr" + i);
@@ -83,19 +83,23 @@ function creaFiltro(i, imas, iadd, nomCmp,tDatoFltr) {
     crearLabel("deLabel" + i, "Desde:", "divFiltrCmpDe" + i);
     crearInput("filtrosde" + i, "divFiltrCmpDe" + i);
     //crearComboCmp("filtrosde" + i);
-    
+
 
     //crearLabel("", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", "divFiltrCmpHasta" + i);
     crearLabel("filtrosHastalabel" + i, "Hasta:", "divFiltrCmpHasta" + i);
     crearInput("filtrosHasta" + i, "divFiltrCmpHasta" + i);
     //crearComboCmp("filtrosHasta" + i);
-    
+
     crearBr("divFiltr" + i);
     crearBr("divFiltr" + i);
     crearBr("divFiltr" + i);
 
 
     if ((filtros[imas])) {
+        if(tDatoFltr=="date"){
+                filtros[imas].rpt_fil_des = filtros[imas].rpt_fil_des.split("'")[1];
+                filtros[imas].rpt_fil_Has = filtros[imas].rpt_fil_Has.split("'")[1];
+            }
         if (filtros[imas].rpt_fil_des !== "") {
             document.getElementById("filtrosde" + i).value = filtros[imas].rpt_fil_des;
         }
@@ -121,6 +125,12 @@ function clicBtnSaveFiltros() {
         $("#Campos").find('.col-sm-12').each(function (e, element) {
             var numberPattern = /\d+/g;
             var idfltr = element.id.match(numberPattern)[0];
+            var regex = /\d\d\d\d-\d\d-\d\d/g;
+            if((regex.test($("#filtrosHasta" + idfltr).val()))||(regex.test($("#filtrosde" + idfltr).val()))){
+                $("#filtrosde" + idfltr).val("\'"+$("#filtrosde" + idfltr).val()+"\'");
+                $("#filtrosHasta" + idfltr).val( "\'"+$("#filtrosHasta" + idfltr).val()+"\'");
+            }
+            
             var FiltrCmpDe = document.getElementById("filtrosde" + idfltr).value;
             var FiltrCmpHasta = document.getElementById("filtrosHasta" + idfltr).value;
 
@@ -255,18 +265,18 @@ function cmp(verHtml) {
  * @param {type} verHtml verbo html (POST.DELETE Y PUT)
  * @returns {undefined}
  */
-function cmpLabelfltr(verHtml,rptPos, rptId) {
+function cmpLabelfltr(verHtml, rptPos, rptId) {
 //    var nomCmp = ""; 
-    var cmp = {}        
+    var cmp = {}
     var objCmp = getinputRestRepoCmp();
     var urlServCmp = geturlRestRepoCmp();
     var mapData = getmapDataRestRepoCmp();
-    objCmp.dsSIRRep_rpt_cmp.eeSIRrep_rpt_cmp =[
-          {
+    objCmp.dsSIRRep_rpt_cmp.eeSIRrep_rpt_cmp = [
+        {
             "piirpt_id": rptId,
             "piirpt_pos": rptPos
-          }
-        ];
+        }
+    ];
 
     var jsonResp = "";
     var permitirIngreso = "";
@@ -292,7 +302,7 @@ function cmpLabelfltr(verHtml,rptPos, rptId) {
             jsonResp = resp;
         },
         error: function (e) {
-            parent.errorPopUp("Error al consumir el servicio de " +geturlRestRepoCmp()+"--"+ e.status + " - " + e.statusText);
+            parent.errorPopUp("Error al consumir el servicio de " + geturlRestRepoCmp() + "--" + e.status + " - " + e.statusText);
         }
     }).done(function () {
         if (permitirIngreso == '"OK"') {

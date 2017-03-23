@@ -70,7 +70,6 @@ function onloadPopUpFltr(){
             creaFiltro(filtros[i].rpt_fil_pos, i);
             objFltrAdd = JSON.parse(JSON.stringify(filtros));
         }
-
     }
 //    crearLabel("", "", "botones");
 //    crearBr("botones");
@@ -89,14 +88,14 @@ function onloadPopUpFltr(){
  */
 function crearImgFltr(div, id, onclick) {
     var x = document.createElement("IMG");
-    x.setAttribute("src", "/Reporteador/images/espacio-95.png");
+    x.setAttribute("src", "../../../images/espacio-95.png");
     x.setAttribute("class", "re_desbloff");
     x.setAttribute("id", id + "debloff");
     x.setAttribute("onclick", "bloqFiltro(" + parseInt(id) + ")");
     document.getElementById(div).appendChild(x);
 
     var x = document.createElement("IMG");
-    x.setAttribute("src", "/Reporteador/images/espacio-95.png");
+    x.setAttribute("src", "../../../images/espacio-95.png");
     x.setAttribute("class", "re_cerrar");
     x.setAttribute("id", id);
     x.setAttribute("onclick", "delFiltro(" + parseInt(id) + ")");
@@ -136,11 +135,15 @@ function creaFiltro(i, imas, iadd) {
     //crearComboCmp("filtrosHasta" + i);
     if (sessionStorage.getItem("filtros") !== "undefined") {
         if ((filtros[imas])) {
+            if(tDato=="date"){
+                filtros[imas].rpt_fil_des = filtros[imas].rpt_fil_des.split("'")[1];
+                filtros[imas].rpt_fil_Has = filtros[imas].rpt_fil_Has.split("'")[1];
+            }
             if (filtros[imas].rpt_fil_des !== "") {
                 document.getElementById("filtrosde" + i).value = filtros[imas].rpt_fil_des;
             }
             if (filtros[imas].rpt_fil_Has !== "") {
-                document.getElementById("filtrosHasta" + i).value = filtros[imas].rpt_fil_des;
+                document.getElementById("filtrosHasta" + i).value = filtros[imas].rpt_fil_Has;
             }
         }
     }
@@ -259,6 +262,7 @@ function clicBtnSaveFiltros() {
             var FiltrCmpDe = document.getElementById("filtrosde" + idfltr).value;
             var FiltrCmpHasta = document.getElementById("filtrosHasta" + idfltr).value;
             if ((sessionStorage.getItem("filtros") !== "undefined") && (filtrosCampos.length > 0)) {
+                
                 if ((idfltr > filtrosCampos.length) && (function (idfltr) {
                     for (var i = 0; i < filtrosCampos.length; i++) {
                         var bool = true;
@@ -270,7 +274,11 @@ function clicBtnSaveFiltros() {
                     return bool;
 
                 })) {
-                    
+                    var regex = /\d\d\d\d-\d\d-\d\d/g;
+                    if((regex.test($("#filtrosHasta" + idfltr).val()))||(regex.test($("#filtrosde" + idfltr).val()))){
+                        $("#filtrosde" + idfltr).val("\'"+$("#filtrosde" + idfltr).val()+"\'");
+                        $("#filtrosHasta" + idfltr).val( "\'"+$("#filtrosHasta" + idfltr).val()+"\'");
+                    }
                     var inputFltr1 = JSON.parse(JSON.stringify(inputFltr));
                     inputFltr1[0].rpt_fil_pos = 0;
                     inputFltr1[0].rpt_cmp_pos = idCmpidFltr;
