@@ -13,8 +13,7 @@ and open the template in the editor.
 {
     text-align: right;
 }
-.customPopUp {
-    /*height:50%;*/
+.customPopUp {    
     max-height: 50%;
     position: absolute;
     top: 20%;
@@ -25,7 +24,6 @@ and open the template in the editor.
     background: #ffffff;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     color: #000000;
-    /*background: url("../images/fondo-arbol.png");*/
     overflow: auto;  
 }
 
@@ -38,7 +36,6 @@ and open the template in the editor.
     z-index: 8;
     background-color:rgba(0,0,0,0.5);
     color: #000000;
-    /*background: url("../images/fondo-arbol.png");*/
     overflow: auto;  
 }
 
@@ -56,8 +53,24 @@ footer {
 }
 
 td{
-    padding-bottom: 2px;
-    padding-top: 2px;
-    padding-right: 10px;
-    padding-left: 10px
+    padding: 5px
+}
+
+table{
+    padding: 2px;
+}
+
+.k-grid tr:hover {
+    background: transparent;
+}
+.k-grid tr:not(.k-state-selected):hover {
+    color: #80BD28;
+}
+
+.k-grid tr.k-alt:not(.k-state-selected):hover {
+    background: #f1f1f1;
+}
+
+.k-window-titlebar .k-header {
+    display: none;
 }

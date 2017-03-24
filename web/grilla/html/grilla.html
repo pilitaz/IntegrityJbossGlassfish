@@ -15,10 +15,9 @@ and open the template in the editor.
         <link href="../../css/kendo.common.min.css" rel="stylesheet" type="text/css"/>        
         <script src="../../scripts/kendo.all.min.js" type="text/javascript"></script>
         <script src="../../scripts/LibreriaIntegrity.js" type="text/javascript"></script>
-        <script src="../../scripts/zipPdf.js" type="text/javascript"></script>
-        <script src="../../scripts/pakoPdf.js" type="text/javascript"></script>
         <script src="../../js/servicios.js" type="text/javascript"></script>        
         <script src="../js/variablesGrilla.js" type="text/javascript"></script>
+        <script src="../js/jsonDsInitial.js" type="text/javascript"></script>
         <script src="../js/grilla.js" type="text/javascript"></script>
         <link href="../../css/kendo.metro.min.css" rel="stylesheet" type="text/css"/>
         <link href="../../css/kendo.metro.mobile.min.css" rel="stylesheet" type="text/css"/>
@@ -28,20 +27,20 @@ and open the template in the editor.
     </head>
     <body>
         <div id="divGrillaPrincipal">
-            <div>
+            <div id = "titulogrid">
                 <table style="height: 50px; width: 100%">
                     <td style="width: 50px;height: 50px"><a class="k-grid"  aling="center"><span class="k-sprite po_bullet1"></span></a></td>
                     <td style="height: 50px"><h1 id = "subtitulo" class="subTitulo"><label id="lbfuncion"></label></h1></td>
                     <td style="width: 50px; text-align: right;">
-                        <a id ="btnBuscar" class="k-grid" onclick ="abrirCustomPopUp('customPopUpBusqueda')" aling="center"><span class="k-sprite po_look"></span></a>
+                        <a id ="btnBuscar" class="k-grid" onclick ="abrirCustomPopUp('popUpBusqueda')" aling="center"><span class="k-sprite po_look"></span></a>
                     </td>
                     <td style="width: 50px; text-align: right; padding-right: 10px">
-                        <a id ="btnCrear" class="k-grid" onclick ="abrirCustomPopUp('customPopUp')" aling="center"><span class="k-sprite po_mas"></span></a>
+                        <a id ="btnCrear" class="k-grid" onclick ="abrirCustomPopUp('popUpCabecera')" aling="center"><span class="k-sprite po_mas"></span></a>
                     </td>
                 </table>
                 <div class="sidenavSup"></div>
             </div>
-            <div id="grid"></div>  
+            <div id="grilla"></div>  
         </div>
         <div id="divCabeceraDetalle" hidden="hidden">
             <div>
@@ -49,7 +48,7 @@ and open the template in the editor.
                     <td style="width: 50px;height: 50px"><a class="k-grid"  aling="center"><span class="k-sprite po_bullet1"></span></a></td>
                     <td style="height: 50px"><h1 id = "subtitulo" class="subTitulo"><label id="lbCabecera"></label></h1></td>
                     <td style="width: 50px; text-align: right;">
-                        <a id ="btnEditar" class="k-grid" onclick ="abrirCustomPopUp('customPopUp')" aling="center"><span class="k-sprite po_edit_sup"></span></a>
+                        <a id ="btnEditar" class="k-grid" onclick ="abrirCustomPopUp('popUpCabecera')" aling="center"><span class="k-sprite po_edit_sup"></span></a>
                     </td>
                     <td style="width: 50px; text-align: right; padding-right: 10px">                        
                         <a id ="btnVolver" class="k-grid" onclick ="volver()" aling="center"><span class="k-sprite po_back"></span></a>
@@ -58,20 +57,32 @@ and open the template in the editor.
                 <div class="sidenavSup"></div>
             </div>
             <div id="divCabecera"></div>
+            <div>
+                <table style="width: 100%">
+                    <tr>
+                        <td>
+                            <h1 id = "subtitulo" class="subTitulo">Detalle</h1>
+                        </td>
+                        <td id ="tdAgregarItem" style="text-align: right; padding-right: 20">
+                            <a id ="btnAgregarItem" onclick ="abrirCustomPopUp('popUpDetalle')" class="k-grid" aling="center"><span class="k-sprite po_mas"></span></a>
+                        </td>
+                    </tr>
+                </table>                    
+            </div>
             <div id="gridDetalle"></div>  
         </div>
-        <div id="customPopUp" hidden="hidden" style = "overflow-y: hidden;" class="customPopUp">
+        <div id="popUpCabecera" hidden="hidden" style = "overflow-y: hidden;" class="customPopUp">
             <div class="k-window-titlebar k-header" style="margin-top: -4px;">
                 &nbsp;
                 <span class="k-window-title"><label id="lbAccion">Crear</label></span>
                 <div class="k-window-actions">
                     <a role="button" href="#" class="k-window-action k-link" aria-label="Close">
-                        <span class="k-icon k-i-close" onclick="cerrarCustomPopUp('customPopUp')" role="button"></span>
+                        <span class="k-icon k-i-close" onclick="cerrarCustomPopUp('popUpCabecera')" role="button"></span>
                     </a>
                 </div>
             </div>
             <br>
-            <div>
+            <div id="divTituloCustomPopUp">
                 <table style="width: 100%; padding-top: 10px;">
                     <tr>
                         <td style="width: 50px"><a class="k-grid" aling="center"><span class="k-sprite po_bullet1"></span></a></td>
@@ -83,31 +94,62 @@ and open the template in the editor.
                 <div class="sidenavSup"></div>                    
             </div>            
             <div>
-                <div id="popupCampos">
-                </div>                        
+                <div id="popupCampos" style="width: 100%;overflow-y: auto; overflow-x : hidden; margin-right: 0px;margin-left: 0px;">
+                </div>                
                 <footer><button id="buttonCab" class="k-primary" style="width: 100%;height: 40px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-left-width: 0px;border-right-width: 0px;" >Guardar</button>            
             </div>
             <br>
             <br>
             <br>
             <br>            
-        </div>
-        
-        <div id="customPopUpBusqueda" hidden="hidden" style = "overflow-y: hidden;" class="customPopUp">            
+        </div>        
+        <div id="popUpBusqueda" hidden="hidden" style = "overflow-y: hidden;" class="customPopUp">            
             <div class="k-window-titlebar k-header" style="margin-top: -4px;">
                 &nbsp;
                 <span class="k-window-title">Buscar</span>
                 <div class="k-window-actions">
                     <a role="button" href="#" class="k-window-action k-link" aria-label="Close">
-                        <span class="k-icon k-i-close" onclick="cerrarCustomPopUp('customPopUpBusqueda')" role="button"></span>
+                        <span class="k-icon k-i-close" onclick="cerrarCustomPopUp('popUpBusqueda')" role="button"></span>
                     </a>
                 </div>
             </div>
-            <br>            
+            <br>
+            <br>         
             <div>
-                <div id="popupCamposBusqueda">
+                <div id="popupCamposBusqueda" style="width: 100%;overflow-y: auto; overflow-x : hidden; margin-right: 0px;margin-left: 0px;">
                 </div>                        
                 <footer><button id="btBuscar" class="k-primary" style="width: 100%;height: 40px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-left-width: 0px;border-right-width: 0px;" >Buscar</button>            
+            </div>
+            <br>
+            <br>
+            <br>         
+        </div>
+        <div id="popUpDetalle" hidden="hidden" style = "overflow-y: hidden;" class="customPopUp">
+            <div class="k-window-titlebar k-header" style="margin-top: -4px;">
+                &nbsp;
+                <span class="k-window-title"><label id="lbAccion">Crear</label></span>
+                <div class="k-window-actions">
+                    <a role="button" href="#" class="k-window-action k-link" aria-label="Close">
+                        <span class="k-icon k-i-close" onclick="cerrarCustomPopUp('popUpDetalle')" role="button"></span>
+                    </a>
+                </div>
+            </div>
+            <br>
+            <div id="divTituloCustomPopUp">
+                <table style="width: 100%; padding-top: 10px;">
+                    <tr>
+                        <td style="width: 50px"><a class="k-grid" aling="center"><span class="k-sprite po_bullet1"></span></a></td>
+                        <td>
+                            <h1 id = "subtitulo" class="subTitulo"><label id="tituloPopUp"></label></h1>                                
+                        </td>                            
+                    </tr>
+                </table>
+                <div class="sidenavSup"></div>                    
+            </div>            
+            <div>
+                <div id="popupCampos" style="width: 100%;overflow-y: auto; overflow-x : hidden; margin-right: 0px;margin-left: 0px;">
+                </div>                
+                <footer><button id="buttonCab" class="k-primary" style="width: 100%;height: 40px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-left-width: 0px;border-right-width: 0px;" >Guardar</button>            
             </div>
             <br>
             <br>
