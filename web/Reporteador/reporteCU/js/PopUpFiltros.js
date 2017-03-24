@@ -26,7 +26,7 @@ var inputFltr = [{
         "piindicador": 0
     }];
 
-function onloadPopUpFltr(){
+function onloadPopUpFltr() {
     $("#CamposFltr").empty();
     filtros = "";
     tDato = JSON.parse((sessionStorage.getItem("tDato")));
@@ -52,7 +52,7 @@ function onloadPopUpFltr(){
 //    $('#popUpFltr').css("height",$('#customPopUp').context.children["0"].clientHeight-90 + "px"); 
     $("#popUpFltr").show();
     $("#btnCrearFltr").show();
-    sessionStorage.setItem("opcFl","Fil");
+    sessionStorage.setItem("opcFl", "Fil");
     document.getElementById("titulo").innerHTML = sessionStorage.getItem("cmpNom");
     document.getElementById('subtitulo').innerHTML = "<br>Filtros - " + sessionStorage.getItem("cmpNom");
     document.getElementById('labelTexto').innerHTML = "información que quieres consultar del campo “nombre del " +
@@ -135,7 +135,7 @@ function creaFiltro(i, imas, iadd) {
     //crearComboCmp("filtrosHasta" + i);
     if (sessionStorage.getItem("filtros") !== "undefined") {
         if ((filtros[imas])) {
-            if(tDato=="date"){
+            if (tDato == "date") {
                 filtros[imas].rpt_fil_des = filtros[imas].rpt_fil_des.split("'")[1];
                 filtros[imas].rpt_fil_Has = filtros[imas].rpt_fil_Has.split("'")[1];
             }
@@ -153,11 +153,11 @@ function creaFiltro(i, imas, iadd) {
     crearBr("divFiltr" + i);
     crearBr("divFiltr" + i);
 
-    
+
 }
 
 function llenarDataourceCmp() {
-    
+
 }
 /**
  * funcion que crea un combo box con todos los campos disponibles en el reporte
@@ -169,7 +169,7 @@ function crearComboCmp(id) {
     var url = geturlRestRepoGridCmp();
     var mapData = getmapDataRestRepoGridCmp();
     var mapDataFun = "eerep_rpt_fun";
-    
+
     var datasourceCmp = {
         transport: {
             read: {
@@ -224,7 +224,7 @@ function crearComboCmp(id) {
  * @returns {undefined}
  */
 function delFiltro(e) {
-    
+
     var lengthDel = objFltrDel.length;
     var inputFltr1 = JSON.parse(JSON.stringify(inputFltr));
     inputFltr1[0].rpt_fil_pos = e;
@@ -255,18 +255,19 @@ function clicBtnSaveFiltros() {
         $("#btnSaveFiltros").kendoButton({
             enable: false
         });
-        var objAdd = []
+        var objAdd = [];
+        var objEdit = [];
         $("#CamposFltr").find('.col-sm-12').each(function (e, element) {
             var numberPattern = /\d+/g;
             var idfltr = element.id.match(numberPattern)[0];
             var FiltrCmpDe = document.getElementById("filtrosde" + idfltr).value;
             var FiltrCmpHasta = document.getElementById("filtrosHasta" + idfltr).value;
             if ((sessionStorage.getItem("filtros") !== "undefined") && (filtrosCampos.length > 0)) {
-                
-                if ((idfltr > filtrosCampos.length) && (function (idfltr) {
-                    for (var i = 0; i < filtrosCampos.length; i++) {
+
+                if ((idfltr > filtrosCampos[0].length) && (function (idfltr) {
+                    for (var i = 0; i < filtrosCampos[0].length; i++) {
                         var bool = true;
-                        if (filtrosCampos[i]["rpt_fil_pos"] == idfltr) {
+                        if (filtrosCampos[0][i]["rpt_fil_pos"] == idfltr) {
                             bool = false;
                             break
                         }
@@ -275,9 +276,9 @@ function clicBtnSaveFiltros() {
 
                 })) {
                     var regex = /\d\d\d\d-\d\d-\d\d/g;
-                    if((regex.test($("#filtrosHasta" + idfltr).val()))||(regex.test($("#filtrosde" + idfltr).val()))){
-                        $("#filtrosde" + idfltr).val("\'"+$("#filtrosde" + idfltr).val()+"\'");
-                        $("#filtrosHasta" + idfltr).val( "\'"+$("#filtrosHasta" + idfltr).val()+"\'");
+                    if ((regex.test($("#filtrosHasta" + idfltr).val())) || (regex.test($("#filtrosde" + idfltr).val()))) {
+                        $("#filtrosde" + idfltr).val("\'" + $("#filtrosde" + idfltr).val() + "\'");
+                        $("#filtrosHasta" + idfltr).val("\'" + $("#filtrosHasta" + idfltr).val() + "\'");
                     }
                     var inputFltr1 = JSON.parse(JSON.stringify(inputFltr));
                     inputFltr1[0].rpt_fil_pos = 0;
@@ -290,7 +291,11 @@ function clicBtnSaveFiltros() {
                     }
                 }
             } else {
-                
+                var regex = /\d\d\d\d-\d\d-\d\d/g;
+                if ((regex.test($("#filtrosHasta" + idfltr).val())) || (regex.test($("#filtrosde" + idfltr).val()))) {
+                    $("#filtrosde" + idfltr).val("\'" + $("#filtrosde" + idfltr).val() + "\'");
+                    $("#filtrosHasta" + idfltr).val("\'" + $("#filtrosHasta" + idfltr).val() + "\'");
+                }
                 var inputFltr1 = JSON.parse(JSON.stringify(inputFltr));
                 inputFltr1[0].rpt_fil_pos = 0;
                 inputFltr1[0].rpt_cmp_pos = idCmpidFltr;
@@ -301,7 +306,28 @@ function clicBtnSaveFiltros() {
                     objAdd.push(inputFltr1[0]);
                 }
             }
+            if ((filtrosCampos["0"][e].rpt_fil_des !== FiltrCmpDe) || (filtrosCampos["0"][e].rpt_fil_Has !== FiltrCmpHasta)) {
+                if ((filtrosCampos["0"][e].rpt_fil_pos == idfltr) && (FiltrCmpDe !== "undefine") && (FiltrCmpHasta !== "undefine")) {
+                    var regex = /\d\d\d\d-\d\d-\d\d/g;
+                    if ((regex.test($("#filtrosHasta" + idfltr).val())) || (regex.test($("#filtrosde" + idfltr).val()))) {
+                        $("#filtrosde" + idfltr).val("\'" + $("#filtrosde" + idfltr).val() + "\'");
+                        $("#filtrosHasta" + idfltr).val("\'" + $("#filtrosHasta" + idfltr).val() + "\'");
+                    }
+                    var inputFltr1 = JSON.parse(JSON.stringify(inputFltr));
+                    inputFltr1[0].rpt_fil_pos = filtrosCampos["0"][e].rpt_fil_pos;
+                    inputFltr1[0].rpt_cmp_pos = idCmpidFltr;
+                    inputFltr1[0].rpt_cmp_vis = sessionStorage.getItem("cmpNom");
+                    inputFltr1[0].rpt_fil_des = $("#filtrosde" + idfltr).val();
+                    inputFltr1[0].rpt_fil_Has = $("#filtrosHasta" + idfltr).val();
+                    if (($("#filtrosde" + idfltr).val()) || ($("#filtrosHasta" + idfltr).val())) {
+                        objEdit.push(inputFltr1[0]);
+                    }
+                    sendAjaxFltr(objEdit, "PUT");
+                } else {
+                    alertDialogs("Por favor verifique los campos de filtros.");
+                }
 
+            } 
         });
         sendAjaxFltr(objAdd, "POST");
     } catch (e) {
@@ -316,7 +342,7 @@ function clicBtnSaveFiltros() {
  */
 function sendAjaxFltr(data, verHtml) {
     displayLoading("#Campos");
-            
+
     var obj = getinputRestCmpCud();
     var urlServ = geturlRestCmpCud();
     var mapData = "eerep_rpt_fil";
@@ -340,7 +366,7 @@ function sendAjaxFltr(data, verHtml) {
         dataType: "json",
         contentType: "application/json;",
         success: function (resp) {
-            
+
             var key1 = Object.keys(resp)[0];
             permitirIngreso = JSON.stringify(resp[key1].eeEstados[0].Estado);
             jsonResp = resp;
@@ -352,7 +378,7 @@ function sendAjaxFltr(data, verHtml) {
         if (permitirIngreso == '"OK"') {
             closeLoading("#Campos");
             reloadGridFltr();
-            
+
         } else {
             closeLoading("#Campos");
             errorPopUp("Problemas con el creación de campos .\n" + permitirIngreso);
