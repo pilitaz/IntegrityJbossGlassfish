@@ -176,6 +176,7 @@ function grid(json, data, divGrilla){
         scrollable: json.forms_scrollable,
         selectable: json.forms_selectable,
         filterable: json.forms_filterable,
+        resizable: true,
         dataSource: {
             data: data,            
             schema: schema,            
