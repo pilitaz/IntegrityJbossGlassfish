@@ -57,7 +57,7 @@ $(document).ready(function () {
         var dbRef = firebase.database().ref().child(sessionStorage.getItem("usuario"));
         //dbRef.on('value', snap => bigOne.innerText = snap.val());
 
-        dbRef.on('value', snap => notifyMe({mensaje: snap.val().texto, usuario: snap.val().titulo}));
+        dbRef.on('value', snap => notifyMe(snap.val()));
         ////////////////////////////////////////////////////////////////////////////
     } else {
         window.location.assign(sessionStorage.getItem("url"));
@@ -847,7 +847,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function notifyMe(mensaje) {
-    if ((mensaje.mensaje !== 'null') && ((mensaje.mensaje !== ''))) {
+    if ((mensaje.texto !== 'null') && ((mensaje.texto !== ''))) {
 
         var myAudio = document.getElementById("myAudioNoty");
 
@@ -862,14 +862,17 @@ function notifyMe(mensaje) {
         else {
 
                 myAudio.play();
-            var notification = new Notification(mensaje.usuario, {
+            var notification = new Notification(mensaje.titulo, {
                 icon: '../images/Login%20Inicio-07.png',
-                body: mensaje.mensaje,
+                body: mensaje.texto,
             });
             notification.onclick = function () {
                 //window.open("http://stackoverflow.com/a/13328397/1269037"); 
                 myAudio.pause();
                 myAudio.currentTime = 0;
+                if(mensaje.metodo){
+                    metodEventClickNoticacion(mensaje.metodo);///metodos ubicados en metodEventClickNoticacion.js 
+                }
             };
             notification.onclose=function (){
                 myAudio.pause();
