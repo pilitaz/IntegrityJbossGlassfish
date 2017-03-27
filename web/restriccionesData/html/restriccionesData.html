@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--<base href="http://demos.telerik.com/kendo-ui/tabstrip/angular">-->
+        <script src="../../scripts/jquery-2.2.0.min.js" type="text/javascript"></script>
+        
+        <script src="../../scripts/jquery-ui.js" type="text/javascript"></script>
+        <script src="../../scripts/jquery.min.js" type="text/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <!--<script src="../../scripts/kendoGridAnguMultiSelect.custom.min.js" type="text/javascript"></script>-->
+        <link href="../../css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <script src="../../scripts/bootstrap.js" type="text/javascript"></script>
+        
+        
+
+        <link href="../../css/kendo.common.min.css" rel="stylesheet" type="text/css"/>        
+        <script src="../../scripts/kendo.all.min.js" type="text/javascript"></script>
+        <script src="../../scripts/LibreriaIntegrity.js" type="text/javascript"></script>
+        <script src="../../js/servicios.js" type="text/javascript"></script>        
+        <script src="../js/varDataSKendo.js" type="text/javascript"></script>
+        <script src="../js/restriccionesData.js" type="text/javascript"></script>
+        <link href="../../css/kendo.metro.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../css/kendo.metro.mobile.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../css/integrity.css" rel="stylesheet" type="text/css"/>
+        <link href="../../css/cssSpriteIntegrity.css" rel="stylesheet" type="text/css"/>        
+        <link href="../css/restriccionesData.css" rel="stylesheet" type="text/css"/>
+        <!--<script src="https://kendo.cdn.telerik.com/2017.1.223/js/angular.min.js"></script>-->
+    </head>
+    <body>
+        <div id="divGrillaPrincipal">
+            <div id = "titulogrid">
+                <table style="height: 50px; width: 100%">
+                    <td style="width: 50px;height: 50px"><a class="k-grid"  ><span class="k-sprite po_bullet1"></span></a></td>
+                    <td style="height: 50px"><h1 id = "subtitulo" class="subTitulo"><label id="lbfuncion"></label></h1></td>
+                </table>
+                <div class="sidenavSup"></div>
+            </div>
+            <div id="example" ng-app="KendoDemos">
+                <div class="demo-section k-content">
+                    <div ng-controller="CtrlVentanas">
+                        <div id="arbolRolesUsr" class="col-sm-1" ></div>
+                        <div kendo-tab-strip k-content-urls="[ null, null]" class="col-sm-10">
+                        <ul>
+                            <li class="k-state-active">First tab</li>
+                            <li>Second tab </li>
+                        </ul>
+                        
+                        <div style="padding: 1em">
+                            This is the first tabsssss
+                        </div>
+
+                        <div style="padding: 1em">
+                            This is the second tabssss{{hello}}
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
