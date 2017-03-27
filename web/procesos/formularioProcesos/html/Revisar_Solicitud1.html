@@ -33,7 +33,7 @@
     <body> 
         <div id="window">
             
-            <div>
+            <div  id="banner">
                 <table style="height: 50px; vertical-align: top">
                     <td style="width: 50px;height: 50px"><a class="k-grid"  aling="center"><span class="k-sprite  pro_play"></span></a></td>
                         
@@ -45,7 +45,7 @@
             </div>
             
             
-            <div class= "container-fluid text-left" style="width: 100%;">
+            <div id ="contenido" class= "container-fluid text-left" style="width: auto; height:200px; overflow-y: auto;overflow-x : hidden">
                 <table>
                     <tr>                     
                     <div>
@@ -111,18 +111,22 @@
                     </tr>
                     
                     
-                </table>
+                </table>    
                  
                      </div>
                     <br>
                     <br>
-                    <button id="buttonEnviar" onclick="aprovarVacaciones()" class="k-primary" style="width: 48%;height: 40px; vertical-align: middle;">Aceptar </button>
-                    <button id="buttonEnviar" onclick="rechazarVacaciones()" class="k-primary" style="width: 48%;height: 40px; vertical-align: middle;">Rechazar </button>
-                    <br>
-   
+                    
+                     <br>
+
             </div>
-                 
-        
+            <footer>
+                <button id="buttonEnviar" onclick="aprovarVacaciones()" class="k-primary" style="width: 49%;height: 40px; vertical-align: middle;">Aceptar </button>
+                    <button id="buttonEnviar" onclick="rechazarVacaciones()" class="k-primary" style="width: 49%;height: 40px; vertical-align: middle;">Rechazar </button>
+                   
+            </footer>
+
+        </div>
    
     </body>
     

@@ -28,6 +28,10 @@ function tamaño(){debugger
     var x = $("#windowform1").height();
     return(x);
 }
+function tamañoRevisar(){debugger
+    var x = $("#windowform").height();
+    return(x);
+}
 $(document).ready(function () {                             
                         
     var consultar = new sirusuariobpm();

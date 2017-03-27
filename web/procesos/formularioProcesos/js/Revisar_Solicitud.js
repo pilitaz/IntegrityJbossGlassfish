@@ -1,6 +1,13 @@
-$(document).ready(function () {
+$(document).ready(function () {debugger
     
     llenar();
+var x  = $("#buttonEnviar").height();    
+var w = $("#banner").height();
+var y  = $("#contenido").height();
+var z  = parent.tamañoRevisar();
+
+$("#contenido").height((z)-w-x);
+
 });
 function aprovarVacaciones(){
     
