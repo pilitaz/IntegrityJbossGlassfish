@@ -588,7 +588,7 @@ function terminarVacaciones(){debugger
     $('#grid1').data('kendoGrid').refresh(); 
 }
 function solicitaVacaciones(){debugger
-    $("#windowform").data("kendoWindow").close();   
+    $("#windowform1").data("kendoWindow").close();   
     alertDialogs("Se ha iniciado el proceso correctamente");
  
 }
