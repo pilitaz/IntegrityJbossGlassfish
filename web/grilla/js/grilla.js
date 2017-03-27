@@ -6,8 +6,8 @@
 
 
 $(window).resize(function () {
-    var viewportHeight = $(window).height();
-    $('#outerWrapper').height(viewportHeight - 100);                            
+    var viewportHeight = $(window).height();    
+    $('#outerWrapper').height(viewportHeight - 100);     
 });
 
 $(document).ready(function() { 
@@ -53,14 +53,13 @@ $(document).ready(function() {
         success: function (e) {  
             
         } 
-    }).done(function(e){         
-        var key1 = Object.keys(e)[0];
-      
-        if ((e[key1].eeEstados[0].Estado === "OK")) {
+    }).done(function(e){                 
+        var key1 = Object.keys(e)[0];      
+        if ((e[key1].eeEstados[0].Estado === "OK")) {            
             sessionStorage.setItem("dsSIRinitial", JSON.stringify(e))
             for(var i=0; i< e[key1].eeforms.length; i++){
                 if(e[key1].eeforms[i].forms_nom === "grilla"){                    
-                    grid(e[key1].eeforms[i], data); 
+                    grid(e[key1].eeforms[i], data, e[key1].eeforms[i].forms_nom); 
                 }
             }
         } else {
@@ -74,36 +73,41 @@ function actualizarElemento(e){
 }
 
 function crearElemento(){
-    
+    alertDialogs("crearElemento");
 }
 
 function editarElemento(e){
      
     e.preventDefault();
-    
-    var grid = $("#grid").data("kendoGrid");
-    var item = grid.dataItem(grid.select());
+    var divGrilla = e.delegateTarget.id
+    var grilla = $("#"+divGrilla).data("kendoGrid");
+    var item = grilla.dataItem(grilla.select());
     var esCabeceraDetalle = true;
-    if(esCabeceraDetalle){
-        debugger
+    if(esCabeceraDetalle){        
         document.getElementById('divGrillaPrincipal').style.display = 'none';
-        document.getElementById('divCabeceraDetalle').style.display = 'block'; 
-        document.getElementById('lbCabecera').innerHTML = "Usuario";
-        crearTabla("customPopUp", "divCabecera", "label");
+        document.getElementById('divCabeceraDetalle').style.display = 'block';       
+        crearTabla("popUpCabecera", "divCabecera", "label");
         cargarDatos(item, "label");
+        var jsondsSIRinitial= JSON.parse(sessionStorage.getItem("dsSIRinitial"))
+        for(var i=0; i< jsondsSIRinitial.dsSIRinitial.eeforms.length; i++){
+            if(jsondsSIRinitial.dsSIRinitial.eeforms[i].forms_nom === "grilla"){                    
+                grid(jsondsSIRinitial.dsSIRinitial.eeforms[i], data, "gridDetalle"); 
+            }
+        }        
     }else{
         document.getElementById('lbAccion').innerHTML = "Editar";
         abrirCustomPopUp("customPopUp"); 
         
         $("#buttonCab")["0"].childNodes["0"].data= "Actualizar";
         cargarDatos(item, "input");
-    }
-    
+    }    
 }
 
 function volver(){
     document.getElementById('divGrillaPrincipal').style.display = 'block';
     document.getElementById('divCabeceraDetalle').style.display = 'none'; 
+    document.getElementById('divCabecera').innerHTML = ""; 
+    document.getElementById('gridDetalle').innerHTML = ""; 
 }
 
 function borrarElemento(e){
@@ -113,7 +117,7 @@ function borrarElemento(e){
 function cambiarEstado(e){
     alertDialogs("cambiarEstado");
 }
-function grid(json, data){
+function grid(json, data, divGrilla){
     
     var editable = false;
     if(json.forms_editable===true){
@@ -137,7 +141,7 @@ function grid(json, data){
         btnUD[posicion].name = json.eebuttons[i].nombre;                
         btnUD[posicion].click = eval(json.eebuttons[i].funcion);
         btnUD[posicion].template ="<a class='k-grid-"+json.eebuttons[i].nombre+"'><span class='k-sprite "+json.eebuttons[i].icono+"' title=\""+json.eebuttons[i].titulo+"\"></span></a>"         
-        tamañoColumnaBotones = tamañoColumnaBotones+50;        
+        tamañoColumnaBotones = tamañoColumnaBotones+44;        
     }
     
     var btnIzq = {command: btnUD, title: "&nbsp;", width: tamañoColumnaBotones+"px"};
@@ -162,8 +166,11 @@ function grid(json, data){
         columns[posicion].template = template;
     }
     columns[json.eecolumns.length] = btnIzq;
+    
+    var altoGrilla = $("body").height() - $("#"+divGrilla)["0"].parentNode.clientHeight;
         
-    var grid = $("#grid").kendoGrid({
+    var grid = $("#"+divGrilla).kendoGrid({
+        height : altoGrilla,
         editable: editable,
         sortable: json.forms_sorteable,
         scrollable: json.forms_scrollable,
@@ -178,14 +185,14 @@ function grid(json, data){
     $(window).trigger("resize");
 }
 
-function mostrarCustomPopUp(idcustomPopUp) {
+function mostrarCustomPopUp(idcustomPopUp) {    
     $("#"+idcustomPopUp).fadeIn("slow");
 }
 
 function cerrarCustomPopUp(idCustomPopUp) {
     $("#disable").fadeOut("slow");
     $("#"+idCustomPopUp).fadeOut("slow", function(){
-        var tabla = document.getElementById("tablaPopUp"); 
+        var tabla = document.getElementById("tablaPopUp"+idCustomPopUp); 
         tabla.parentNode.removeChild(tabla);
         if(document.getElementById('lbAccion')){
             document.getElementById('lbAccion').innerHTML = "Crear";
@@ -205,7 +212,7 @@ function abrirCustomPopUp(idCustomPopUp) {
         undo.fadeIn();
     }
     $("body").append("<div id='disable'></div>");
-    
+        
     mostrarCustomPopUp(idCustomPopUp);
     crearTabla(idCustomPopUp, idCustomPopUp, "input");   
 }
@@ -218,19 +225,7 @@ function abrirCustomPopUp(idCustomPopUp) {
  * @returns {undefined}
  */
 function crearTabla(idCustomPopUp, divBody, elementoHtml) { 
-    var body;
-    body = document.getElementById(divBody); 
-//    if(idCustomPopUp==="customPopUp"){
-//        body = document.getElementById("popupCampos");            
-//    }else if(idCustomPopUp==="customPopUpBusqueda"){
-//        body = document.getElementById("popupCamposBusqueda");            
-//    }else{
-//        body = document.getElementById(divBody);            
-//    }
-//    else if(){
-//        
-//    }
-    
+        
     var json = JSON.parse(sessionStorage.getItem("dsSIRinitial"));    
     var campos;
     var numcolumnas = 0; /*Cada columna es una pareja de label e input*/
@@ -255,23 +250,30 @@ function crearTabla(idCustomPopUp, divBody, elementoHtml) {
         }
     }
     
+    var body;
     
-    if(idCustomPopUp==="customPopUp"){
-       document.getElementById('tituloPopUp').innerHTML = campos.forms_nom;
+    if(idCustomPopUp==="popUpCabecera" && divBody ==="popUpCabecera"){
+        body = document.getElementById("popupCampos");
+        debugger
+        document.getElementById('tituloPopUp').innerHTML = campos.titulo;
         $("#buttonCab")["0"].childNodes["0"].data= campos.eebuttons[0].titulo;
         $("#buttonCab").kendoButton({
             click: eval(campos.eebuttons[0].funcion)
         }); 
-    }else if(idCustomPopUp==="customPopUpBusqueda"){
+    }else if(idCustomPopUp==="popUpBusqueda" && divBody ==="popUpBusqueda"){
+        body = document.getElementById("popupCamposBusqueda");
         $("#btBuscar").kendoButton({
             click: eval(campos.eebuttons[0].funcion)
         });
+    }else{
+        body = document.getElementById(divBody);            
+        document.getElementById('lbCabecera').innerHTML = campos.forms_title;
     }
     
     // Crea un elemento <table> y un elemento <tbody>
     var tabla   = document.createElement("table");
-    tabla.setAttribute("id", "tablaPopUp");
-    tabla.setAttribute("style", "width: 100%; padding-top: 20px;");
+    tabla.setAttribute("id", "tablaPopUp"+divBody);
+    tabla.setAttribute("style", "width: 100%;");
     var tblBody = document.createElement("tbody");
     var muncampo = 0;
     
@@ -319,14 +321,24 @@ function crearTabla(idCustomPopUp, divBody, elementoHtml) {
     // appends <table> into <body>
     body.appendChild(tabla);
     // modifica el atributo "border" de la tabla y lo fija a "2";    
+    
+    var childrens = $("#"+idCustomPopUp)["0"].children;
+    var tamañoDiv = 0;
+    for(var i=0; i<childrens.length; i++){
+        if(childrens[i].id==="divTituloCustomPopUp"){
+            tamañoDiv = -childrens[i].clientHeight;
+            break;
+        }
+    }    
+    tamañoDiv = tamañoDiv+ $("#"+idCustomPopUp)["0"].clientHeight - $("footer")["0"].clientHeight - 15;
+    document.getElementById("popupCampos").style.height = tamañoDiv+"px";
 }
 
 function buscarElementos(){
     alertDialogs("buscarElementos");
 }
 
-function cargarDatos(item, etiquetahtml){
-    debugger
+function cargarDatos(item, etiquetahtml){    
     var inputs = document.getElementsByName(etiquetahtml+"TD");       
     
     if(etiquetahtml==="input"){

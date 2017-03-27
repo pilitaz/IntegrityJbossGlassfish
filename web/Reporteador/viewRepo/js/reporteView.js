@@ -79,20 +79,24 @@ function mostrarGrid() {
     schema.model = new Object();
     
     var align = "";
-    
+    var formato = "";
     var posicion;
-    
-    for(var i = 0; i<columnas.length; i++){
+    if(columnasRepo.length !== 0){
+        for(var i = 0; i<columnas.length; i++){
         posicion = parseInt(columnas[i].rpt_cmp_pos);
         schema.model[columnas[i].cmp_dsc] = new Object();
         schema.model[columnas[i].cmp_dsc].type = columnas[i].cmp_td;
         if((columnas[i].cmp_td==="number")||(columnas[i].cmp_td==="decimal")){
             align = "rightAling";
+            formato= "n3";
         }else{
             align = "";
+            formato= "n0";
         }
-        columnasRepo[i].template = "<div class='"+align+"'>#= kendo.toString( "+ columnasRepo[i].field+",\"n0\")#</div>";
+        columnasRepo[i].template = "<div class='"+align+"'>#= kendo.toString( "+ columnasRepo[i].field+",'"+formato+"')#</div>";
     }
+    }
+    
     ////////////////////////////////////////////////////////////////////////////
     
     $(window).trigger("resize");

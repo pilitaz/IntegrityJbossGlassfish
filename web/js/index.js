@@ -41,6 +41,25 @@ $(document).ready(function () {
         document.getElementById("logoEmpresa").src = "data:image/png;base64," + sessionStorage.getItem("img");
         document.getElementById("idFrame").src = "fondo.html";
 //        document.getElementById("idFrame").src = "http://190.144.16.114:18800/PruebaHRD";
+        ////////////////////////////////////////////////////////////////////////////
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyAtX6CvwydAo1yAnIYy-dy0rF8zmdvihrY",
+        authDomain: "jaime-503d7.firebaseapp.com",
+        databaseURL: "https://jaime-503d7.firebaseio.com",
+        storageBucket: "jaime-503d7.appspot.com",
+        messagingSenderId: "291636831353"
+    };
+    firebase.initializeApp(config);
+
+    var bigOne = document.getElementById('bigOne');
+    //var dbRef = firebase.database().ref().child('/texto');
+    
+        var dbRef = firebase.database().ref().child(sessionStorage.getItem("usuario").split('_')[0]+'/texto');
+	//dbRef.on('value', snap => bigOne.innerText = snap.val());
+	
+    dbRef.on('value', snap => notifyMe({mensaje:snap.val(),usuario:"BPM Integrity"}) );
+    ////////////////////////////////////////////////////////////////////////////
     } else {
         window.location.assign(sessionStorage.getItem("url"));
     }
@@ -821,4 +840,31 @@ function scrollFull(){
     if($( "body" ).scrollTop()!==0){
         $( "body" ).scrollTop(0);
     };
+}
+document.addEventListener('DOMContentLoaded', function () {
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+});
+
+function notifyMe(mensaje) {
+  $("#mensaje").fadeIn("slow");  
+  if (!Notification) {
+    alert('Desktop notifications not available in your browser. Try Chromium.'); 
+    return;
+  }
+
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+  else {
+    var notification = new Notification(mensaje.usuario, {
+      icon: '../images/Login%20Inicio-07.png',
+      body: mensaje.mensaje 
+    });
+    notification.onclick = function () {
+      //window.open("http://stackoverflow.com/a/13328397/1269037"); 
+      
+    };
+    
+  }
+
 }
