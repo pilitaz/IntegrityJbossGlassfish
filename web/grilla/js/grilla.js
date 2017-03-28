@@ -15,7 +15,8 @@ $(document).ready(function() {
     /**
      * aqui debe ir el servicio que me trae los datos
      */
-    var objData = new sirData();    
+    
+    var objData = new sirConsultaPedidos();    
     var jsonSIRData = objData.getjson();
     var urlData = objData.getUrlSir();
     var mapData = objData.getmapSir()
@@ -57,10 +58,16 @@ $(document).ready(function() {
         var key1 = Object.keys(e)[0];      
         if ((e[key1].eeEstados[0].Estado === "OK")) {            
             sessionStorage.setItem("dsSIRinitial", JSON.stringify(e))
-            for(var i=0; i< e[key1].eeforms.length; i++){
-                if(e[key1].eeforms[i].forms_nom === "grilla"){                    
-                    grid(e[key1].eeforms[i], data, e[key1].eeforms[i].forms_nom); 
-                }
+            for(var i=0; i< e[key1].eesic_forms.length; i++){
+                if(e[key1].eesic_forms[i].forms_nom === "grilla"){  
+                    document.getElementById('lbfuncion').innerHTML =  e[key1].eesic_forms[i].titulo;
+                    grid(e[key1].eesic_forms[i], data, e[key1].eesic_forms[i].forms_nom); 
+                    if(e[key1].eesic_forms[i+1].forms_nom === "grillaDetalle"){  
+                        sessionStorage.setItem("esCabeceraDetalle", true);
+                    }else{
+                        sessionStorage.setItem("esCabeceraDetalle", false);
+                    }
+                }                
             }
         } else {
             alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
@@ -82,22 +89,22 @@ function editarElemento(e){
     var divGrilla = e.delegateTarget.id
     var grilla = $("#"+divGrilla).data("kendoGrid");
     var item = grilla.dataItem(grilla.select());
-    var esCabeceraDetalle = true;
-    if(esCabeceraDetalle){        
+    
+    var esCabeceraDetalle = sessionStorage.getItem("esCabeceraDetalle");
+    if(esCabeceraDetalle==="true"){        
         document.getElementById('divGrillaPrincipal').style.display = 'none';
         document.getElementById('divCabeceraDetalle').style.display = 'block';       
         crearTabla("popUpCabecera", "divCabecera", "label");
         cargarDatos(item, "label");
         var jsondsSIRinitial= JSON.parse(sessionStorage.getItem("dsSIRinitial"))
-        for(var i=0; i< jsondsSIRinitial.dsSIRinitial.eeforms.length; i++){
-            if(jsondsSIRinitial.dsSIRinitial.eeforms[i].forms_nom === "grilla"){                    
-                grid(jsondsSIRinitial.dsSIRinitial.eeforms[i], data, "gridDetalle"); 
+        for(var i=0; i< jsondsSIRinitial.dsSIRinitial.eesic_forms.length; i++){
+            if(jsondsSIRinitial.dsSIRinitial.eesic_forms[i].forms_nom === "grilla"){                    
+                grid(jsondsSIRinitial.dsSIRinitial.eesic_forms[i], data, "gridDetalle"); 
             }
         }        
     }else{
         document.getElementById('lbAccion').innerHTML = "Editar";
-        abrirCustomPopUp("customPopUp"); 
-        
+        abrirCustomPopUp("popUpCabecera", "popUpCabecera", "input");        
         $("#buttonCab")["0"].childNodes["0"].data= "Actualizar";
         cargarDatos(item, "input");
     }    
@@ -135,42 +142,44 @@ function grid(json, data, divGrilla){
     var tamañoColumnaBotones = 0;
     var posicion;
     
-    for(var i = 0; i<json.eebuttons.length; i++){
-        posicion = parseInt(json.eebuttons[i].idinterno);
+    for(var i = 0; i<json.eesic_forms_but.length; i++){
+        posicion = parseInt(json.eesic_forms_but[i].idinterno);
         btnUD[posicion] = new Object();
-        btnUD[posicion].name = json.eebuttons[i].nombre;                
-        btnUD[posicion].click = eval(json.eebuttons[i].funcion);
-        btnUD[posicion].template ="<a class='k-grid-"+json.eebuttons[i].nombre+"'><span class='k-sprite "+json.eebuttons[i].icono+"' title=\""+json.eebuttons[i].titulo+"\"></span></a>"         
+        btnUD[posicion].name = json.eesic_forms_but[i].nombre;                
+        btnUD[posicion].click = eval(json.eesic_forms_but[i].funcion);
+        btnUD[posicion].template ="<a class='k-grid-"+json.eesic_forms_but[i].nombre+"'><span class='k-sprite "+json.eesic_forms_but[i].icono+"' title=\""+json.eesic_forms_but[i].titulo+"\"></span></a>"         
         tamañoColumnaBotones = tamañoColumnaBotones+44;        
     }
     
     var btnIzq = {command: btnUD, title: "&nbsp;", width: tamañoColumnaBotones+"px"};
     
-    for(var i = 0; i<json.eecolumns.length; i++){
-        posicion = parseInt(json.eecolumns[i].idinterno);
-        schema.model[json.eecolumns[i].cmp_nom2] = new Object();
-        schema.model[json.eecolumns[i].cmp_nom2].type = json.eecolumns[i].tipo;
-        schema.model[json.eecolumns[i].cmp_nom2].editable = json.eecolumns[i].cmp_edi;
-        if(json.eecolumns[i].tipo==="number"){
+    for(var i = 0; i<json.eesic_forms_col.length; i++){
+        posicion = parseInt(json.eesic_forms_col[i].idinterno);
+        schema.model[json.eesic_forms_col[i].cmp_nom2] = new Object();
+        schema.model[json.eesic_forms_col[i].cmp_nom2].type = json.eesic_forms_col[i].tipo;
+        schema.model[json.eesic_forms_col[i].cmp_nom2].editable = json.eesic_forms_col[i].cmp_edi;
+        if(json.eesic_forms_col[i].tipo==="number"){
             align = "rightAling";
-            template = "<div class='"+align+"'>#= kendo.toString( "+ json.eecolumns[i].cmp_nom2+",\"n0\")#</div>";
+            template = "<div class='"+align+"'>#= kendo.toString( "+ json.eesic_forms_col[i].cmp_nom2+",\"n0\")#</div>";
             
         }else{
             align = "";
-            template = "<div class='"+align+"'>#=" + json.eecolumns[i].cmp_nom2+ "#</div>";
+            template = "<div class='"+align+"'>#=" + json.eesic_forms_col[i].cmp_nom2+ "#</div>";
         }
         columns[posicion] = new Object();
-        columns[posicion].field = json.eecolumns[i].cmp_nom2;        
-        columns[posicion].title = json.eecolumns[i].cmp_dsc;
-        //columns[posicion].hidden = json.eecolumns[i].cmp_vis;
+        columns[posicion].field = json.eesic_forms_col[i].cmp_nom2;        
+        columns[posicion].title = json.eesic_forms_col[i].cmp_dsc;
+        //columns[posicion].hidden = json.eesic_forms_col[i].cmp_vis;
         columns[posicion].template = template;
     }
-    columns[json.eecolumns.length] = btnIzq;
+    columns[json.eesic_forms_col.length] = btnIzq;
     
     var altoGrilla = $("body").height() - $("#"+divGrilla)["0"].parentNode.clientHeight;
+    var anchoGrilla = $("body").width(); 
         
     var grid = $("#"+divGrilla).kendoGrid({
         height : altoGrilla,
+        width : anchoGrilla,
         editable: editable,
         sortable: json.forms_sorteable,
         scrollable: json.forms_scrollable,
@@ -234,17 +243,17 @@ function crearTabla(idCustomPopUp, divBody, elementoHtml) {
     var tamColLabel = 0;
     var tamColInput = 0;
     
-    for(var i=0; i< json.dsSIRinitial.eeforms.length; i++){
-        if(json.dsSIRinitial.eeforms[i].forms_nom ===  idCustomPopUp){             
-            campos = json.dsSIRinitial.eeforms[i]; 
-            if(campos.eecolumns.length>10){
+    for(var i=0; i< json.dsSIRinitial.eesic_forms.length; i++){
+        if(json.dsSIRinitial.eesic_forms[i].forms_nom ===  idCustomPopUp){             
+            campos = json.dsSIRinitial.eesic_forms[i]; 
+            if(campos.eesic_forms_col.length>10){
                 numcolumnas=2;
-                numfilas = parseInt(campos.eecolumns.length/2) + campos.eecolumns.length%2
+                numfilas = parseInt(campos.eesic_forms_col.length/2) + campos.eesic_forms_col.length%2
                 tamColLabel = 15;
                 tamColInput = 35;
             }else{
                 numcolumnas=1;               
-                numfilas = campos.eecolumns.length; 
+                numfilas = campos.eesic_forms_col.length; 
                 tamColLabel = 30;
                 tamColInput = 70;
             }
@@ -255,20 +264,21 @@ function crearTabla(idCustomPopUp, divBody, elementoHtml) {
     
     if(idCustomPopUp==="popUpCabecera" && divBody ==="popUpCabecera"){
         body = document.getElementById("popupCampos");
-        debugger
+        
         document.getElementById('tituloPopUp').innerHTML = campos.titulo;
-        $("#buttonCab")["0"].childNodes["0"].data= campos.eebuttons[0].titulo;
+        $("#buttonCab")["0"].childNodes["0"].data= campos.eesic_forms_but[0].titulo;
         $("#buttonCab").kendoButton({
-            click: eval(campos.eebuttons[0].funcion)
+            click: eval(campos.eesic_forms_but[0].funcion)
         }); 
     }else if(idCustomPopUp==="popUpBusqueda" && divBody ==="popUpBusqueda"){
         body = document.getElementById("popupCamposBusqueda");
         $("#btBuscar").kendoButton({
-            click: eval(campos.eebuttons[0].funcion)
+            click: eval(campos.eesic_forms_but[0].funcion)
         });
     }else{
-        body = document.getElementById(divBody);            
-        document.getElementById('lbCabecera').innerHTML = campos.forms_title;
+        body = document.getElementById(divBody);
+        
+        document.getElementById('lbCabecera').innerHTML = campos.titulo;
     }
     
     // Crea un elemento <table> y un elemento <tbody>
@@ -291,8 +301,8 @@ function crearTabla(idCustomPopUp, divBody, elementoHtml) {
             celda.setAttribute("style", "text-align: right; with:"+tamColLabel+"%;");
             var label = document.createElement("label"); 
             label.setAttribute("class", "letraParrafo");
-            label.setAttribute("id", "lb"+campos.eecolumns[muncampo].cmp_nom2);
-            label.innerHTML = campos.eecolumns[muncampo].cmp_dsc;
+            label.setAttribute("id", "lb"+campos.eesic_forms_col[muncampo].cmp_nom2);
+            label.innerHTML = campos.eesic_forms_col[muncampo].cmp_dsc;
             celda.appendChild(label);
             hilera.appendChild(celda);
             
@@ -304,13 +314,13 @@ function crearTabla(idCustomPopUp, divBody, elementoHtml) {
             }else if(elementoHtml === "label"){
                 
             }            
-            input.setAttribute("id", campos.eecolumns[muncampo].cmp_nom2);
+            input.setAttribute("id", campos.eesic_forms_col[muncampo].cmp_nom2);
             input.setAttribute("style", "width: 90%");
             input.setAttribute("name", elementoHtml+"TD");
             celdaInput.appendChild(input);
             hilera.appendChild(celdaInput);
             muncampo = muncampo+1;
-            if(muncampo === campos.eecolumns.length){
+            if(muncampo === campos.eesic_forms_col.length){
                 j=numcolumnas;
             }
         }
