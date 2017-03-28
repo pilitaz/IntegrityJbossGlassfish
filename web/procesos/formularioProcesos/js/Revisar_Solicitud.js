@@ -1,6 +1,13 @@
-$(document).ready(function () {
+$(document).ready(function () {debugger
     
     llenar();
+var x  = $("#buttonEnviar").height();    
+var w = $("#banner").height();
+var y  = $("#contenido").height();
+var z  = parent.tamañoRevisar();
+
+$("#contenido").height((z)-w-x);
+
 });
 function aprovarVacaciones(){
     
@@ -60,8 +67,15 @@ function aprovarVacaciones(){
     });  
   
 }
-function rechazarVacaciones(){
-    var datos= sessionStorage.getItem("Aprueba_Proceso");
+function rechazarVacaciones(){debugger
+    var obs = document.getElementById("ObservacionesJefe").value;
+  var obs = obs.trim();
+    if(obs===""){
+         parent.alertDialogs("Debe especificar observaciones de rechazo");
+    }
+    else
+    {
+           var datos= sessionStorage.getItem("Aprueba_Proceso");
     var datos1 = JSON.parse(datos);
     
     var consultar = new CudApruevaVacaciones();
@@ -113,6 +127,9 @@ function rechazarVacaciones(){
         }
         
     });  
+    }
+    
+
 }
 
 function llenar(){debugger
@@ -137,7 +154,7 @@ function llenar(){debugger
         success: function (resp) { debugger
             if((resp.dsSolicitudVacaciones.eeEstados[0].Estado)=="OK")
             {
-                document.getElementById("usuario").innerHTML=resp.dsSolicitudVacaciones.eeSolicitudVacaciones[0].Id_empleado; 
+                document.getElementById("usuario").innerHTML=resp.dsSolicitudVacaciones.eeSolicitudVacaciones[0].nombreempleado; 
                 document.getElementById("email").innerHTML=resp.dsSolicitudVacaciones.eeSolicitudVacaciones[0].email_empleado; 
                 document.getElementById("fecha").innerHTML=resp.dsSolicitudVacaciones.eeSolicitudVacaciones[0].fecha_solictud; 
                 document.getElementById("pendientes").innerHTML=resp.dsSolicitudVacaciones.eeSolicitudVacaciones[0].dias_disponibles; 
@@ -147,7 +164,7 @@ function llenar(){debugger
                 document.getElementById("anticipacion").innerHTML=resp.dsSolicitudVacaciones.eeSolicitudVacaciones[0].dias_anticipados; 
                 document.getElementById("vacaciones").innerHTML=resp.dsSolicitudVacaciones.eeSolicitudVacaciones[0].dias_tiempo; 
                 document.getElementById("fechaCorte").innerHTML=resp.dsSolicitudVacaciones.eeSolicitudVacaciones[0].fecha_ult_vac; 
-                document.getElementById("jefe").innerHTML=resp.dsSolicitudVacaciones.eeSolicitudVacaciones[0].jefe_inmediato; 
+                document.getElementById("jefe").innerHTML=resp.dsSolicitudVacaciones.eeSolicitudVacaciones[0].nombrejefe; 
                 
                 if (resp.dsSolicitudVacaciones.eeSolicitudVacaciones[0].Pago_anticipado===true){
                     document.getElementById("pagoAnticipado").innerHTML="Si";

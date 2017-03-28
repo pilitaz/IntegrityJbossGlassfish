@@ -28,6 +28,10 @@ function tamaño(){debugger
     var x = $("#windowform1").height();
     return(x);
 }
+function tamañoRevisar(){debugger
+    var x = $("#windowform").height();
+    return(x);
+}
 $(document).ready(function () {                             
                         
     var consultar = new sirusuariobpm();
@@ -588,7 +592,7 @@ function terminarVacaciones(){debugger
     $('#grid1').data('kendoGrid').refresh(); 
 }
 function solicitaVacaciones(){debugger
-    $("#windowform").data("kendoWindow").close();   
+    $("#windowform1").data("kendoWindow").close();   
     alertDialogs("Se ha iniciado el proceso correctamente");
  
 }

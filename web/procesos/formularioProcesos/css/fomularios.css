@@ -144,23 +144,23 @@ table{
 }
 .k-grid tr:not(.k-state-selected):hover {
       color: #ED4B5E;
-       
+       opacity: 0.98;
   }
 
   .k-grid tr.k-alt:not(.k-state-selected):hover {
       background: #f1f1f1;
-       
+       opacity: 0.98;
   }
   .k-grid .k-state-selected  {
   background-color: #48494B !important;
   color:#48494B;
-  opacity: 0.6;
+  opacity: 0.98;
 }
  
 .k-grid .k-alt.k-state-selected {
   background-color: #48494B !important;
   color: #48494B;
-  opacity: 0.6;
+  opacity: 0.98;
 }
 
 /*.red {
