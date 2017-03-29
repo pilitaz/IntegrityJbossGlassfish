@@ -165,3 +165,38 @@ function siractores() {
     };
     
 };
+//-----------------------------
+function sirJefes() {
+   var urlSir = ipServicios + baseServicio +"SirJefes";
+    var json = {  
+   "dsJefes":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":"jsandrea_800001541",
+            "picfiid":"76225323834852643511",
+            "local_ip":"172.21.24.71",
+            "remote_ip":"190.144.16.114"
+         }
+     ]
+   } 
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};

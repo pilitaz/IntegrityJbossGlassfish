@@ -587,7 +587,7 @@ function guardarVacaciones() {
 };
 //---------------------------------------------------------------------------
 function infoAyuda() {
-    var urlSir = ipServicios + baseUsrBpm +"SIRgetWorkstepInstruction";
+    var urlSir = ipServicios + baseUsrBpm +"SIRgetWorkstepInstructionLong";
     var json = {  
    "dsgetWorkstepInstruction":{  
       "eeDatos":[  

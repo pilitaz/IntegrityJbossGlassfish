@@ -57,7 +57,7 @@ function aprovarVacaciones(){
             }
             else   
             {  
-                
+              parent.alertDialogs("Error "+resp.dsSolicitudVacaciones.eeEstados[0].Estado);
             } 
         } ,
         error: function (e) {
@@ -119,7 +119,7 @@ function rechazarVacaciones(){debugger
             }
             else   
             {  
-                
+                parent.alertDialogs("Error "+resp.dsSolicitudVacaciones.eeEstados[0].Estado);
             } 
         } ,
         error: function (e) {
