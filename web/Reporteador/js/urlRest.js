@@ -484,7 +484,7 @@ function SirUsuariosxRol() {
       "eeDatos":[  
          {  
 //             "picusrcod":"alex",
-            "picusrcod":sessionStorage.getItem("usuario").split("_")[0],
+            "picusrcod":sessionStorage.getItem("usuario"),
             "picfiid":sessionStorage.getItem("picfiid"),
             "local_ip":sessionStorage.getItem("ipPrivada"),
             "remote_ip":sessionStorage.getItem("ipPublica")

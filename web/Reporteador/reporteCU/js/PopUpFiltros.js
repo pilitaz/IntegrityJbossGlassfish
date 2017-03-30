@@ -121,7 +121,7 @@ function creaFiltro(i, imas, iadd) {
     $("#divFiltr" + i).append("<div id=" + "divFiltrCmpHasta" + i + " class = 'col-sm-4' ></div>");
 //    $("#divFiltr" + i).append("<div id=" + "divFiltrCmpEsp" + i + " class = 'col-sm-4'align='center'></div>");
     $("#divFiltr" + i).append("<div id=" + "divFiltrImg" + i + " class = 'col-sm-3 ' ></div>");
-
+    
     crearLabel("", "", "divFiltrImg" + i);
 //    crearBr("divFiltrImg" + i);
     crearImgFltr("divFiltrImg" + i, i);
@@ -231,7 +231,7 @@ function delFiltro(e) {
     inputFltr1[0].rpt_fil_des = $("#filtrosde" + e).val();
     inputFltr1[0].rpt_fil_Has = $("#filtrosHasta" + e).val();
     if (($("#filtrosde" + e).val()) || ($("#filtrosHasta" + e).val())) {
-        sendAjaxFltr(inputFltr1[0], "DELETE");
+        sendAjaxFltr([inputFltr1[0]], "DELETE");
     }
     document.getElementById("divFiltr" + e).remove();
 
@@ -262,7 +262,32 @@ function clicBtnSaveFiltros() {
             var idfltr = element.id.match(numberPattern)[0];
             var FiltrCmpDe = document.getElementById("filtrosde" + idfltr).value;
             var FiltrCmpHasta = document.getElementById("filtrosHasta" + idfltr).value;
-            if ((sessionStorage.getItem("filtros") !== "undefined") && (filtrosCampos.length > 0)) {
+            
+            if((filtrosCampos.length!==0)&&(filtrosCampos[e]!== undefined)){
+            if ((filtrosCampos[e]["0"].rpt_fil_des !== FiltrCmpDe) || (filtrosCampos[e]["0"].rpt_fil_Has !== FiltrCmpHasta)) {
+                if ((filtrosCampos[e]["0"].rpt_fil_pos == idfltr) && (FiltrCmpDe !== "undefine") && (FiltrCmpHasta !== "undefine")) {
+                    var regex = /\d\d\d\d-\d\d-\d\d/g;
+                    if ((regex.test($("#filtrosHasta" + idfltr).val())) || (regex.test($("#filtrosde" + idfltr).val()))) {
+                        $("#filtrosde" + idfltr).val("\'" + $("#filtrosde" + idfltr).val() + "\'");
+                        $("#filtrosHasta" + idfltr).val("\'" + $("#filtrosHasta" + idfltr).val() + "\'");
+                    }
+                    var inputFltr1 = JSON.parse(JSON.stringify(inputFltr));
+                    inputFltr1[0].rpt_fil_pos = filtrosCampos[e]["0"].rpt_fil_pos;
+                    inputFltr1[0].rpt_cmp_pos = idCmpidFltr;
+                    inputFltr1[0].rpt_cmp_vis = sessionStorage.getItem("cmpNom");
+                    inputFltr1[0].rpt_fil_des = $("#filtrosde" + idfltr).val();
+                    inputFltr1[0].rpt_fil_Has = $("#filtrosHasta" + idfltr).val();
+                    if (($("#filtrosde" + idfltr).val()) || ($("#filtrosHasta" + idfltr).val())) {
+                        objEdit.push(inputFltr1[0]);
+                    }
+                    sendAjaxFltr(objEdit, "PUT");
+                } else {
+                    alertDialogs("Por favor verifique los campos de filtros.");
+                }
+
+            }
+        }else{
+           if ((sessionStorage.getItem("filtros") !== "undefined") && (filtrosCampos.length > 0)) {
 
                 if ((idfltr > filtrosCampos[0].length) && (function (idfltr) {
                     for (var i = 0; i < filtrosCampos[0].length; i++) {
@@ -288,6 +313,7 @@ function clicBtnSaveFiltros() {
                     inputFltr1[0].rpt_fil_Has = $("#filtrosHasta" + idfltr).val();
                     if (($("#filtrosde" + idfltr).val()) || ($("#filtrosHasta" + idfltr).val())) {
                         objAdd.push(inputFltr1[0]);
+                        sendAjaxFltr([inputFltr1[0]], "POST");
                     }
                 }
             } else {
@@ -304,32 +330,12 @@ function clicBtnSaveFiltros() {
                 inputFltr1[0].rpt_fil_Has = $("#filtrosHasta" + idfltr).val();
                 if (($("#filtrosde" + idfltr).val()) || ($("#filtrosHasta" + idfltr).val())) {
                     objAdd.push(inputFltr1[0]);
+                    sendAjaxFltr([inputFltr1[0]], "POST");
                 }
-            }
-            if ((filtrosCampos["0"][e].rpt_fil_des !== FiltrCmpDe) || (filtrosCampos["0"][e].rpt_fil_Has !== FiltrCmpHasta)) {
-                if ((filtrosCampos["0"][e].rpt_fil_pos == idfltr) && (FiltrCmpDe !== "undefine") && (FiltrCmpHasta !== "undefine")) {
-                    var regex = /\d\d\d\d-\d\d-\d\d/g;
-                    if ((regex.test($("#filtrosHasta" + idfltr).val())) || (regex.test($("#filtrosde" + idfltr).val()))) {
-                        $("#filtrosde" + idfltr).val("\'" + $("#filtrosde" + idfltr).val() + "\'");
-                        $("#filtrosHasta" + idfltr).val("\'" + $("#filtrosHasta" + idfltr).val() + "\'");
-                    }
-                    var inputFltr1 = JSON.parse(JSON.stringify(inputFltr));
-                    inputFltr1[0].rpt_fil_pos = filtrosCampos["0"][e].rpt_fil_pos;
-                    inputFltr1[0].rpt_cmp_pos = idCmpidFltr;
-                    inputFltr1[0].rpt_cmp_vis = sessionStorage.getItem("cmpNom");
-                    inputFltr1[0].rpt_fil_des = $("#filtrosde" + idfltr).val();
-                    inputFltr1[0].rpt_fil_Has = $("#filtrosHasta" + idfltr).val();
-                    if (($("#filtrosde" + idfltr).val()) || ($("#filtrosHasta" + idfltr).val())) {
-                        objEdit.push(inputFltr1[0]);
-                    }
-                    sendAjaxFltr(objEdit, "PUT");
-                } else {
-                    alertDialogs("Por favor verifique los campos de filtros.");
-                }
-
             } 
+        }
         });
-        sendAjaxFltr(objAdd, "POST");
+        
     } catch (e) {
         alertDialogs("Function: clickCrearRepo Error: " + e.message);
     }

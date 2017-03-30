@@ -188,7 +188,7 @@ function sirDataDetalle() {
  *  var input = sir.getdataInputSir();
  */
 function sirData() {
-    var mapData = "eegpd_ped";
+    var mapData = "eesic_forms";
     var urlSir = ipServicios + baseServicio + "SIRinitial";
     var json = {
         "dsSIRinitial": {
@@ -199,9 +199,9 @@ function sirData() {
                     "remote_ip": "190.144.16.114"
                 }],
             "eesic_rol_fun": [{
-                    "cap__cod": 137,
-                    "fun__cod": 3,
-                    "por__cod": 10
+                    "cap__cod": 0,
+                    "fun__cod": 0,
+                    "por__cod": 0
                 }]
             
         }
