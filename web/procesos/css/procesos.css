@@ -139,26 +139,27 @@ table{
 
 .k-grid tr:hover {
   background: transparent;
+  
 }
 .k-grid tr:not(.k-state-selected):hover {
       color: #ED4B5E;
-       
+    
   }
 
   .k-grid tr.k-alt:not(.k-state-selected):hover {
       background: #f1f1f1;
-      
+       /*background: transparent;*/
   }
   .k-grid .k-state-selected  {
   background-color: #48494B !important;
-  color:#48494B;
-  opacity: 0.4;
+
+  opacity: 0.5;
 }
  
 .k-grid .k-alt.k-state-selected {
   background-color: #48494B !important;
-  color: #48494B;
-  opacity: 0.4;
+  
+  opacity: 0.5;
 }
 
 /*.red {

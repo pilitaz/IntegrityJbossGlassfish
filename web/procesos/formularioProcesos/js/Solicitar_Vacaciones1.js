@@ -164,8 +164,8 @@ today = mm+dd+yyyy;
         disableDates: ["sa", "su"],
         min: new Date(yyyy, mm, dd)
     });
-    $("#diasPedir").kendoNumericTextBox({format: "0"});
-    $("#totaldiasvalor").kendoNumericTextBox({format: "0"});
+    $("#diasPedir").kendoNumericTextBox({format: "0", min:0});
+    $("#totaldiasvalor").kendoNumericTextBox({format: "0",min:0 });
     
    var consultarUsr = new IniciaVacaciones();
    var data = consultarUsr.getjson();
@@ -201,8 +201,8 @@ function mostrarMensaje(e){
      var estado = document.getElementById("btnayuda").attributes[3].nodeValue;
     if (estado ==="on"){
         $("#mensaje").empty();
-         $("#ayuda").empty();  
-        document.getElementById("btnayuda").setAttribute("class", "k-sprite pro_infout");
+        $("#ayuda").empty();  
+        document.getElementById("btnayuda").setAttribute("class", "k-sprite pro_helpOff");
         document.getElementById("btnayuda").setAttribute("estado", "off");
     }
     else
@@ -212,7 +212,7 @@ function mostrarMensaje(e){
         document.getElementById("mensaje").innerHTML = "<strong>Ayuda: </strong><br>"+e;
         document.getElementById("mensaje").setAttribute("class", "sidenavIzq1");
         document.getElementById("mensaje").setAttribute("style", "padding: 0.5cm 0.5cm 0.5cm 1cm");
-        document.getElementById("btnayuda").setAttribute("class", "k-sprite pro_infoin");
+        document.getElementById("btnayuda").setAttribute("class", "k-sprite pro_help");
         document.getElementById("btnayuda").setAttribute("estado", "on");
     }
     

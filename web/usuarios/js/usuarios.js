@@ -459,34 +459,85 @@ $(document).ready(function () {
 
 
     function filtroJefe(container, options) {
-        var consultar = new sirconsulta();
+//        var consultar = new sirconsulta();
+//        var datajson = consultar.getjson();
+//        var urlService = consultar.getUrlSir();
+//
+//
+//        var data1 = grid1.data("kendoGrid").dataSource._pristineData;
+//
+//
+//        var arrayOriginal = [];
+//        var arraySinDuplicados = [];
+//        var i = 0;
+//        for (i  in data1) {
+//            if(data1[i] !== undefined){
+//                arrayOriginal[i] = data1[i].usr__codjef;
+//            }
+//            
+//        }
+//
+//        var arraySinDuplicados = arrayOriginal.filter(function (elem, pos) {
+//            return arrayOriginal.indexOf(elem) == pos;
+//        });
+//
+//        $('<input/>')
+//                .appendTo(container)
+//                .kendoDropDownList({
+//                    dataSource: arraySinDuplicados
+//
+//        });
+
+
+        var consultar = new sirJefes();
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();
-
-
-        var data1 = grid1.data("kendoGrid").dataSource._pristineData;
-
-
-        var arrayOriginal = [];
-        var arraySinDuplicados = [];
-        var i = 0;
-        for (i  in data1) {
-            if(data1[i] !== undefined){
-                arrayOriginal[i] = data1[i].usr__codjef;
-            }
-            
-        }
-
-        var arraySinDuplicados = arrayOriginal.filter(function (elem, pos) {
-            return arrayOriginal.indexOf(elem) == pos;
-        });
-
-        $('<input/>')
+        var mapCud1 = "eeusers";
+        $('<input  id = "jefe" required name="' + options.field + '"/>')
                 .appendTo(container)
                 .kendoDropDownList({
-                    dataSource: arraySinDuplicados
+                    dataTextField: "username",
+            dataValueField: "usrcod",
+            template:'<div class="divElementDropDownList">#: data.usrcodsin #'+' - '+' #:data.username #</div>',
+            dataSource: {
+                transport: {
+                    read: {
+                        url: urlService,
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation === "read") {
+                            return JSON.stringify(datajson);
+                        }
+                    }
+                },
+                schema: {
+                    data: function (e) {
+                        var key1 = Object.keys(e)[0];
+                        if (e[key1].eeEstados[0].Estado === "OK") {
+                            return e[key1][mapCud1];
+                        } else {
+                            
+                        }
+                    },
+                    model: {
+                        id: "usrcod",
+                        fields: {
+                            usrcod: {editable: false, nullable: false},
+                            username: {editable: false, nullable: false}
+                        }
+                    }
+                }
+            }
 
         });
+
+
+
+
+
     }
 
 
