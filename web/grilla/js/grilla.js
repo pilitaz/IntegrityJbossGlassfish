@@ -9,6 +9,8 @@ $(window).resize(function () {
     var viewportHeight = $(window).height();    
     $('#outerWrapper').height(viewportHeight - 100);     
 });
+var datosGrilla;
+var datosGrillaDetalle;
 
 $(document).ready(function() { 
     document.getElementById('lbfuncion').innerHTML = sessionStorage.getItem("ncf");
@@ -16,7 +18,7 @@ $(document).ready(function() {
      * aqui debe ir el servicio que me trae los datos
      */
     
-    var objData = new sirConsultaPedidos();    
+    var objData = new sirData();    
     var jsonSIRData = objData.getjson();
     var urlData = objData.getUrlSir();
     var mapData = objData.getmapSir()
@@ -34,7 +36,7 @@ $(document).ready(function() {
     }).done(function(e){         
         var key1 = Object.keys(e)[0];
         if ((e[key1].eeEstados[0].Estado === "OK")) {            
-            data = e[key1][mapData];
+            datosGrilla = e[key1][mapData];
         } else {
             alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
         } 
@@ -61,7 +63,7 @@ $(document).ready(function() {
             for(var i=0; i< e[key1].eesic_forms.length; i++){
                 if(e[key1].eesic_forms[i].forms_nom === "grilla"){  
                     document.getElementById('lbfuncion').innerHTML =  e[key1].eesic_forms[i].titulo;
-                    grid(e[key1].eesic_forms[i], data, e[key1].eesic_forms[i].forms_nom); 
+                    grid(e[key1].eesic_forms[i], datosGrilla, e[key1].eesic_forms[i].forms_nom); 
                     if(e[key1].eesic_forms[i+1].forms_nom === "grillaDetalle"){  
                         sessionStorage.setItem("esCabeceraDetalle", true);
                     }else{
@@ -98,8 +100,40 @@ function editarElemento(e){
         cargarDatos(item, "label");
         var jsondsSIRinitial= JSON.parse(sessionStorage.getItem("dsSIRinitial"))
         for(var i=0; i< jsondsSIRinitial.dsSIRinitial.eesic_forms.length; i++){
-            if(jsondsSIRinitial.dsSIRinitial.eesic_forms[i].forms_nom === "grilla"){                    
-                grid(jsondsSIRinitial.dsSIRinitial.eesic_forms[i], data, "gridDetalle"); 
+            if(jsondsSIRinitial.dsSIRinitial.eesic_forms[i].forms_nom === "grillaDetalle"){
+                
+                var objData = new sirDataDetalle();    
+                var jsonSIRDataDetalle = objData.getjson();
+                var urlDataDetalle = objData.getUrlSir();
+                var mapDataDetalle = objData.getmapSir()
+                
+                var key1 = Object.keys(jsonSIRDataDetalle)[0];
+                var key2 = Object.keys(jsonSIRDataDetalle[key1])[1];
+
+                jsonSIRDataDetalle[key1][key2][0].picsuc_cod = item.suc__cod;
+                jsonSIRDataDetalle[key1][key2][0].pidped_fec = item.ped__fec;
+                jsonSIRDataDetalle[key1][key2][0].piiped_num = item.ped__num;
+                jsonSIRDataDetalle[key1][key2][0].piiped_est = item.gpd__est;
+                
+                $.ajax({
+                    async: false, 
+                    type: "POST",
+                    data: JSON.stringify(jsonSIRDataDetalle),
+                    url: urlDataDetalle,
+                    dataType: "json",        
+                    contentType: "application/json;",
+                    success: function (e) {  
+                        
+                    } 
+                }).done(function(e){         
+                    var key1 = Object.keys(e)[0];
+                    if ((e[key1].eeEstados[0].Estado === "OK")) {            
+                        datosGrillaDetalle = e[key1][mapDataDetalle]["0"].eegpd_ped_det;
+                    } else {
+                        alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                    } 
+                });
+                grid(jsondsSIRinitial.dsSIRinitial.eesic_forms[i], datosGrillaDetalle , "gridDetalle"); 
             }
         }        
     }else{
@@ -121,10 +155,29 @@ function borrarElemento(e){
     alertDialogs("borrarElemento");
 }
 
+function borrarElementoDet(e){
+    alertDialogs("borrarElementoDet");
+}
+
+function editarElementoDet(e){
+    alertDialogs("editarElementoDet");
+    
+    e.preventDefault();
+    var divGrilla = e.delegateTarget.id
+    var grilla = $("#"+divGrilla).data("kendoGrid");
+    var item = grilla.dataItem(grilla.select());
+    
+    document.getElementById('lbAccion').innerHTML = "Editar";
+    abrirCustomPopUp("popUpDetalle", "popUpDetalle", "input");        
+    $("#buttonCab")["0"].childNodes["0"].data= "Actualizar";
+    //cargarDatos(item, "input");
+}
+
 function cambiarEstado(e){
     alertDialogs("cambiarEstado");
 }
-function grid(json, data, divGrilla){
+
+function grid(json, datosGrilla, divGrilla){
     
     var editable = false;
     if(json.forms_editable===true){
@@ -136,7 +189,7 @@ function grid(json, data, divGrilla){
     
     var columns = new Array();
     var align = "";
-    var template = ""
+    var template = "";
     
     var btnUD = new Array();
     var tamañoColumnaBotones = 0;
@@ -158,10 +211,9 @@ function grid(json, data, divGrilla){
         schema.model[json.eesic_forms_col[i].cmp_nom2] = new Object();
         schema.model[json.eesic_forms_col[i].cmp_nom2].type = json.eesic_forms_col[i].tipo;
         schema.model[json.eesic_forms_col[i].cmp_nom2].editable = json.eesic_forms_col[i].cmp_edi;
-        if(json.eesic_forms_col[i].tipo==="number"){
+        if(json.eesic_forms_col[i].cmp_tip==="number"){
             align = "rightAling";
-            template = "<div class='"+align+"'>#= kendo.toString( "+ json.eesic_forms_col[i].cmp_nom2+",\"n0\")#</div>";
-            
+            template = "<div class='"+align+"'>#= kendo.toString( "+ json.eesic_forms_col[i].cmp_nom2+",\"n0\")#</div>";            
         }else{
             align = "";
             template = "<div class='"+align+"'>#=" + json.eesic_forms_col[i].cmp_nom2+ "#</div>";
@@ -187,12 +239,11 @@ function grid(json, data, divGrilla){
         filterable: json.forms_filterable,
         resizable: true,
         dataSource: {
-            data: data,            
+            data: datosGrilla,            
             schema: schema,            
         },
         columns: columns,
     });
-    $(window).trigger("resize");
 }
 
 function mostrarCustomPopUp(idcustomPopUp) {    
@@ -276,8 +327,7 @@ function crearTabla(idCustomPopUp, divBody, elementoHtml) {
             click: eval(campos.eesic_forms_but[0].funcion)
         });
     }else{
-        body = document.getElementById(divBody);
-        
+        body = document.getElementById(divBody);        
         document.getElementById('lbCabecera').innerHTML = campos.titulo;
     }
     
@@ -298,7 +348,7 @@ function crearTabla(idCustomPopUp, divBody, elementoHtml) {
             // texto sea el contenido de <td>, ubica el elemento <td> al final
             // de la hilera de la tabla
             var celda = document.createElement("td");
-            celda.setAttribute("style", "text-align: right; with:"+tamColLabel+"%;");
+            celda.setAttribute("style", "text-align: right; width:"+tamColLabel+"%;");
             var label = document.createElement("label"); 
             label.setAttribute("class", "letraParrafo");
             label.setAttribute("id", "lb"+campos.eesic_forms_col[muncampo].cmp_nom2);
@@ -332,7 +382,7 @@ function crearTabla(idCustomPopUp, divBody, elementoHtml) {
     // appends <table> into <body>
     body.appendChild(tabla);
     // modifica el atributo "border" de la tabla y lo fija a "2";    
-    
+    debugger
     var childrens = $("#"+idCustomPopUp)["0"].children;
     var tamañoDiv = 0;
     for(var i=0; i<childrens.length; i++){
@@ -341,7 +391,8 @@ function crearTabla(idCustomPopUp, divBody, elementoHtml) {
             break;
         }
     }    
-    tamañoDiv = tamañoDiv+ $("#"+idCustomPopUp)["0"].clientHeight - $("footer")["0"].clientHeight - 15;
+//    tamañoDiv = tamañoDiv+ $("#"+idCustomPopUp)["0"].clientHeight - $("footer")["0"].clientHeight - 15;
+tamañoDiv = tamañoDiv+ $("#"+idCustomPopUp)["0"].clientHeight - 55;
     document.getElementById("popupCampos").style.height = tamañoDiv+"px";
 }
 
