@@ -1,5 +1,12 @@
 var fantasma = [];
 $(document).ready(function () { 
+var x  = $("#buttonAgregar").height();    
+var w = $("#banner").height();
+var y  = $("#grilla_usr").height();
+var z  = parent.tamañoUsuarios();
+
+$("#grilla_usr").height((z)-w-x);
+
     $("#buttonAgregar").kendoButton({
         click: guardar
     });

@@ -55,10 +55,15 @@ document.getElementById("task1").innerHTML = task ;
      */     
     var grid1 = $("#grilla").kendoGrid({
         dataSource: datasourcex,
+        sortable:true,
+        filterable:true,
         columns: [
             {field: "ProcessInstanceID", title: "Tarea",  hidden:false},      
             {field: "ProcessInstanceName", title: "Nombre de proceso",  hidden:false},
-         
+            {field: "workstepname", title: "Nombre Paso",  hidden:false},      
+            {field: "performer", title: "Performer",  hidden:false},
+            {field: "workstepstatus", title: "Status WorkStep",  hidden:false},      
+           
            ],                            
                     
         cancel: function(e) {                                                                                   
