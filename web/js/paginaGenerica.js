@@ -62,9 +62,14 @@ function grid(json, datosGrilla, divGrilla){
         columns[posicion].template = template;
     }
     columns[json.eesic_forms_col.length] = btnIzq;
+    if ($("#"+divGrilla)["0"].clientHeight===0){
+        var altoGrilla = $("body").height() - $("#"+divGrilla)["0"].parentNode.clientHeight;
+        var anchoGrilla = $("body").width(); 
+    }else{
+        var altoGrilla = $("#"+divGrilla)["0"].clientHeight;
+        var anchoGrilla = $("body").width(); 
+    }
     
-    var altoGrilla = $("body").height() - $("#"+divGrilla)["0"].parentNode.clientHeight;
-    var anchoGrilla = $("body").width(); 
         
     var grid = $("#"+divGrilla).kendoGrid({
         height : altoGrilla,
