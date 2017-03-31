@@ -1,4 +1,7 @@
-
+function tamañoUsuarios(){debugger
+    var x = $("#windous").height();
+    return(x);
+}
 $(document).ready(function () {
 var task = sessionStorage.getItem("Proc_usuar");    
 document.getElementById("task1").innerHTML = task ;

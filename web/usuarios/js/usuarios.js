@@ -212,6 +212,17 @@ $(document).ready(function () {
             {field: "epassword1", title: "Repita clave", width: "50px", hidden: true, editor: onkeypass},
             {command: [{name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"}], width: "60px"}],
         editable: "popup",
+        edit: function(e) {debugger
+            if (!e.model.isNew()) {//caso en el que el popup es editar
+//                var buscarlabel = $("label").find("for");
+//                Buscarlabel = buscarlabel.prevObject[0];
+//                Buscarlabel.style.display = "none";
+                e.container.find("input[name='euserid']")[0].disabled=true;
+            }
+            else{//caso en el que el popup es crear 
+              
+            }
+        } ,
         cancel: function (e) {
             e._defaultPrevented = true;
             $('#grid').data('kendoGrid').refresh();
@@ -493,7 +504,7 @@ $(document).ready(function () {
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();
         var mapCud1 = "eeusers";
-        $('<input  id = "jefe" required name="' + options.field + '"/>')
+        $('<input  id = "jefe"  name="' + options.field + '"/>')
                 .appendTo(container)
                 .kendoDropDownList({
                     dataTextField: "username",

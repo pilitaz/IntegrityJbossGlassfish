@@ -78,7 +78,7 @@ $(document).ready(function () {
         }
     });
     var name = sessionStorage.getItem("usuario");
-    document.getElementById("demo").innerHTML = "Tareas de " +  name;
+    document.getElementById("demo").innerHTML = "Mis Tareas" ;
     /**
      *  FUNCION CREAR GRILLA
      * Funcion cancel se ejecuta con el evento OnClick de EDIT grid
@@ -301,8 +301,15 @@ function iniciarTarea2(e){debugger
     var nombreTarea = $("#grid1").data("kendoGrid").dataItem($(e.target).closest("tr")).screen__name;
     $("#formvacations").append("<div id='windowform'></div>");
     var myWindow1 = $("#windowform"),undo = $("#undo");
-                
-    function onClose() {
+   if(nombreTarea==="ReasignacionMasiva")
+   {
+       reasignar1();
+       sessionStorage.setItem("Flujo_Tarea","true"); 
+       
+   }
+   else
+   {
+      function onClose() {
         undo.fadeIn();
         $("#windowform").remove();
     }
@@ -321,6 +328,9 @@ function iniciarTarea2(e){debugger
         ],                               
         close: onClose
     }).data("kendoWindow").center().open();    
+                  
+                
+   }
     
 }
 //funcion que incia el proceso de acuerdo a los parametros diseñados
@@ -450,7 +460,7 @@ function reasignar1(){debugger
         {
     
             sessionStorage.setItem("listado_tareas",JSON.stringify(datanew)); 
-    
+            sessionStorage.setItem("Flujo_Tarea","false"); 
             
             $("#formvacations").append("<div id='windowform'></div>");
             var myWindow1 = $("#windowform"),undo = $("#undo");
@@ -459,23 +469,23 @@ function reasignar1(){debugger
                 undo.fadeIn();
                 $("#windowform").remove();
             } 
-            mostrarCustomPopUp();
-            onloadPopUpCond ();
-            //        var UrL= sessionStorage.getItem("url");  
-            //        myWindow1.kendoWindow({
-            //            draggable: true,
-            //            height: "40%",
-            //            modal: true,
-            //            resizable: false,
-            //            title: "Reasignar Tareas",
-            //            width: "50%",
-            //            content: UrL+"procesos/html/ReasignacionMasiva.html",
-            //            actions: [
-            //                "Close"
-            //            ],                               
-            //            close: onClose
-            //        }).data("kendoWindow").center().open();    
-            //    
+//            mostrarCustomPopUp();
+//            onloadPopUpCond ();
+                    var UrL= sessionStorage.getItem("url");  
+                    myWindow1.kendoWindow({
+                        draggable: true,
+                        height: "60%",
+                        modal: true,
+                        resizable: false,
+                        title: "Reasignar Tareas",
+                        width: "50%",
+                        content: UrL+"procesos/html/ReasignacionMasiva.html",
+                        actions: [
+                            "Close"
+                        ],                               
+                        close: onClose
+                    }).data("kendoWindow").center().open();    
+                
         }
         else{}
 
