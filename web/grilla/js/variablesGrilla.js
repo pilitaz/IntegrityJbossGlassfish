@@ -5,8 +5,7 @@
  */
 
 
-function dsSIRinitial() {    
-    
+function dsSIRinitial() {        
     var urlSir = ipServicios + baseServicio +"SIRinitial";
     var json = {  
         "dsSIRinitial":{  
@@ -47,43 +46,128 @@ function dsSIRinitial() {
     };
 };
 
-function sirData () {
-    var url = ipServicios+baseServicio+"SirUsuarios";
-    var mapSir = "ee_user2";
+//////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Funcion para obtener la url y el json de entrada para los datos de la grilla principal
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function sirData() {
+    var mapData = "eegpd_ped";
+    var urlSir = ipServicios + baseComercial + "SIRgpd_ped";
     var json = {
-        "dsee_user2": {
-            "eeDatos": [
+            "dsSIRgpd_ped": {
+		"eeDatos":[
                 {
                     "picusrcod": sessionStorage.getItem("usuario"),
                     "picfiid": sessionStorage.getItem("picfiid"),
-                    "local_ip": sessionStorage.getItem("ipPrivada"),
-                    "remote_ip": sessionStorage.getItem("ipPublica")
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "eeSIRgpd_ped": [
+                {
+                    "picsuc_cod": "*",                    
+                    "pidped_fec": "",
+                    "piiped_num": 0,
+                    "piiped_est": -1,
+                    "pilhastapr": true
                 }
             ]
         }
     };
+
     this.setUrlSir = function (newname) {
         if (newname) {
-            url = newname;
-		}
-	};
+            urlSir = newname;
+        }
+    };
     this.getUrlSir = function () {
-        return url;
-	};
-    this.setmapSir = function (newname) {
-        if (newname) {
-            mapSir = newname;
-		}
-	};
-    this.getmapSir = function () {
-        return mapSir;
-	};
+        return urlSir;
+    };
+
     this.setjson = function (newname) {
         if (newname) {
             json = newname;
-		}
-	};
+        }
+    };
     this.getjson = function () {
         return json;
-	};
+    };
+
+    this.setmapSir = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getmapSir = function () {
+        return mapData;
+    };
+
+};
+
+//////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Funcion para obtener la url y el json de entrada para los datos de la grilla principal
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function sirDataDetalle() {
+    var mapData = "eegpd_ped";
+    var urlSir = ipServicios + baseComercial + "SIRgpd_ped";
+    var json = {
+            "dsSIRgpd_ped": {
+		"eeDatos":[
+                {
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "eeSIRgpd_ped": [
+                {
+                    "picsuc_cod": "*",                    
+                    "pidped_fec": "2017/01/02",
+                    "piiped_num": 0,
+                    "piiped_est": -1,
+                    "pilhastapr": true
+                }
+            ]
+        }
+    };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setmapSir = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getmapSir = function () {
+        return mapData;
+    };
+
 };

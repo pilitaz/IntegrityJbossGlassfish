@@ -49,7 +49,7 @@ footer {
 }
 
 .k-link:not(.k-state-disabled):hover>.k-i-close{
-        background-position: -32px -16px;
+    background-position: -32px -16px;
 }
 
 td{
@@ -73,4 +73,12 @@ table{
 
 .k-window-titlebar .k-header {
     display: none;
+}
+
+.k-grid table tr.k-state-selected
+{
+    background: #ededed;
+    color: #80BD28;
+    border-style: solid;
+
 }
