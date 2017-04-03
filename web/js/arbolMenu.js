@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-function cargarArbol() {
+function cargarArbol(arbol) {
     try {
         $(function () {
             try {
-                $('#jstree2').jstree(JSON.parse(sessionStorage.getItem("txtJson2")));
+                $('#jstree2').jstree(arbol);
                 if (sessionStorage.getItem("pcfAct")) {
                     $('#jstree2').jstree(true).select_node(sessionStorage.getItem("pcfAct"));
                 }

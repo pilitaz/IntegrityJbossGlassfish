@@ -66,7 +66,7 @@ function reasignarFlujo() {debugger
     var lista = sessionStorage.getItem("listado_tareas"); 
     var lista = JSON.parse(lista);
     
-    document.getElementById("subtituloReasigna").innerHTML  = "Reasignacion de  "+lista.length +" tareas : "+lista[0].text; 
+    document.getElementById("subtitulo2").innerHTML  = "Reasignacion de  "+lista.length +" tareas : "+lista[0].text; 
     var consultar = new SirUsuariosReasigna();
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();

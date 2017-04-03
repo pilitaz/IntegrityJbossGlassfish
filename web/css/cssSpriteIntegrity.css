@@ -2059,7 +2059,23 @@
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -458px  -1358px;
 }
-
+.pro_upfolder_sup{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -1258px;
+	cursor:pointer
+}
+.pro_upfolder_sup:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -408px -1258px;
+	cursor:pointer
+}
+.pro_upfolder_sup:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -458px -1258px;
+}
 /**********************************************/
 /**********************************************/
 /**************   INDICADORES   ***************/
