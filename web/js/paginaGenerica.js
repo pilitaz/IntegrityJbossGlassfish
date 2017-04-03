@@ -135,6 +135,7 @@ function crearTabla(idCustomPopUp, divBody, elementoHtml) {
     var numfilas=0;
     var tamColLabel = 0;
     var tamColInput = 0;
+    var fontWeight= "font-weight:bold;";
     
     for(var i=0; i< json.dsSIRinitial.eesic_forms.length; i++){
         if(json.dsSIRinitial.eesic_forms[i].forms_nom ===  idCustomPopUp){             
@@ -146,9 +147,14 @@ function crearTabla(idCustomPopUp, divBody, elementoHtml) {
                 tamColInput = 35;
             }else{
                 numcolumnas=1;               
-                numfilas = campos.eesic_forms_col.length; 
-                tamColLabel = 30;
-                tamColInput = 70;
+                numfilas = campos.eesic_forms_col.length;
+                if(elementoHtml === "label"){
+                    tamColLabel = 20;
+                    tamColInput = 80;
+                }else{
+                    tamColLabel = 30;
+                    tamColInput = 70;
+                }                
             }
         }
     }
@@ -184,6 +190,15 @@ function crearTabla(idCustomPopUp, divBody, elementoHtml) {
     tabla.setAttribute("style", "width: 100%;");
     var tblBody = document.createElement("tbody");
     var muncampo = 0;
+    var textAlingLabel;
+    
+    if(elementoHtml === "label"){
+        textAlingLabel = "left";  
+        fontWeight= "font-weight:bold;";
+    }else{
+        textAlingLabel = "right";
+        fontWeight ="";
+    }
     
     // Crea las celdas
     for (var i = 0; i < numfilas; i++) {
@@ -195,16 +210,17 @@ function crearTabla(idCustomPopUp, divBody, elementoHtml) {
             // texto sea el contenido de <td>, ubica el elemento <td> al final
             // de la hilera de la tabla
             var celda = document.createElement("td");
-            celda.setAttribute("style", "text-align: right; width:"+tamColLabel+"%;");
+            celda.setAttribute("style", "text-align: "+textAlingLabel+"; width:"+tamColLabel+"%;");
             var label = document.createElement("label"); 
             label.setAttribute("class", "letraParrafo");
-            label.setAttribute("id", "lb"+campos.eesic_forms_col[muncampo].cmp_nom2);
+            label.setAttribute("id", "lb"+campos.eesic_forms_col[muncampo].cmp_nom2); 
+            label.setAttribute("style", fontWeight);
             label.innerHTML = campos.eesic_forms_col[muncampo].cmp_dsc;
             celda.appendChild(label);
             hilera.appendChild(celda);
             
             var celdaInput = document.createElement("td");
-            celdaInput.setAttribute("style", "text-align: left; with:"+tamColInput+"%");            
+            celdaInput.setAttribute("style", "text-align: left; width:"+tamColInput+"%");            
             var input = document.createElement(elementoHtml);
             if(elementoHtml === "input"){
                 input.setAttribute("class", "k-textbox");   

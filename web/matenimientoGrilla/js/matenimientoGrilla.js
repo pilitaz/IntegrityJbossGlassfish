@@ -136,7 +136,7 @@ function editarElemento(e){
         for(var i=0; i< jsondsSIRinitial.dsSIRinitial.eesic_forms.length; i++){
             if(jsondsSIRinitial.dsSIRinitial.eesic_forms[i].forms_nom === "grillaDetalle"){
                 
-                var objData = new sirData();    
+                var objData = new sirDataDetalle();    
                 var jsonSIRDataDetalle = objData.getjson();
                 var urlDataDetalle = objData.getUrlSir();
                 var mapDataDetalle = objData.getmapSir();
@@ -146,8 +146,7 @@ function editarElemento(e){
 
                 jsonSIRDataDetalle[key1][key2][0].cap__cod = item.cap_cod;
                 jsonSIRDataDetalle[key1][key2][0].fun__cod = item.fun_cod;
-                jsonSIRDataDetalle[key1][key2][0].por__cod = item.por_cod;
-                
+                jsonSIRDataDetalle[key1][key2][0].por__cod = item.por_cod;                
                 
                 $.ajax({
                     async: false, 
@@ -163,7 +162,7 @@ function editarElemento(e){
                     
                     var key1 = Object.keys(e)[0];
                     if ((e[key1].eeEstados[0].Estado === "OK")) {            
-                        datosGrillaDetalle = e[key1][mapDataDetalle]["0"].eesic_forms_col;
+                        datosGrillaDetalle = e[key1][mapDataDetalle];
                     } else {
                         alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
                     } 

@@ -64,27 +64,24 @@ function dsSIRinitial() {
  *  var input = sir.getdataInputSir();
  */
 function sirDataDetalle() {
-    var mapData = "eegpd_ped";
-    var urlSir = ipServicios + baseComercial + "SIRgpd_ped";
+    debugger
+    var mapData = "eesic_forms_col";
+    var urlSir = ipServicios + baseServicio + "SIRsic_forms_col";
     var json = {
-            "dsSIRgpd_ped": {
-		"eeDatos":[
-                {
-                    "picusrcod": sessionStorage.getItem("usuario"),
-                    "picfiid": sessionStorage.getItem("picfiid"),
+        "dssic_forms_col": {
+            "eeDatos": [{
+                    "picusrcod":sessionStorage.getItem("usuario"),
+                    "picfiid":sessionStorage.getItem("picfiid"),
                     "local_ip":sessionStorage.getItem("ipPrivada"),
                     "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "eeSIRgpd_ped": [
-                {
-                    "picsuc_cod": "*",                    
-                    "pidped_fec": "2017/01/02",
-                    "piiped_num": 0,
-                    "piiped_est": -1,
-                    "pilhastapr": true
-                }
-            ]
+                }],
+            "eesic_rol_fun": [{
+                    "cap__cod": 0,
+                    "fun__cod": 0,
+                    "por__cod": 0,
+                    "rol__cod": 0
+                }]
+            
         }
     };
 
