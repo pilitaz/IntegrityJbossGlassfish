@@ -357,16 +357,18 @@ function menufunciones() {
             url: ipServicios + baseServicio + "arbol",
             dataType: "json",
             contentType: "application/json;",
-            success: function (jsonResp) {
-                menuUsuario = JSON.stringify(jsonResp.dslogin.ttmenuxusuario);
-                sessionStorage.setItem("menuJsonIni", menuUsuario);
-                permitirIngreso = JSON.stringify(jsonResp.dslogin.eeEstados[0].Estado);
+            success: function (resp) {
+//                menuUsuario = JSON.stringify(resp.dslogin.ttmenuxusuario);
+//                sessionStorage.setItem("menuJsonIni", menuUsuario);
+                permitirIngreso = JSON.stringify(resp.dslogin.eeEstados[0].Estado);
+                jsonResp = resp.dslogin.ttmenuxusuario;
+                
             },
             error: function (e) {
                 alertDialogs("Error" + JSON.stringify(e));
             }
         }).done(function () {
-            var dataarbol = sessionStorage.getItem("menuJsonIni");
+            var dataarbol = JSON.stringify(jsonResp);
             if (permitirIngreso === '"OK"') {
                 if (dataarbol) {
                     dataarbol = dataarbol.replace(/Codigo/g, "id");
@@ -377,8 +379,8 @@ function menufunciones() {
                     dataarbol = dataarbol.replace(/SIN IMAGEN/g, "");
                     dataarbol = dataarbol.replace(/Servicio/g, "columna5");
                     txtJson = "{ \"plugins\" : [\"search\"],\"core\" : { \"data\" : " + dataarbol + "},\"search\": {\"case_insensitive\": true,\"show_only_matches\" : true}}";
-                    sessionStorage.setItem("txtJson2", txtJson);
-                    cargarArbol();
+//                    sessionStorage.setItem("txtJson2", txtJson);
+                    cargarArbol(JSON.parse(txtJson));
 
                 }
             } else {
@@ -440,7 +442,7 @@ function abreFuncion(servicio) {
 
 function fijarPcf() {//apenas el usuario da click en alguna funcion del arbol tree2.html regresa a esta funcion con el nombre de la funcion y el id 
     try {
-        var dataarbol = sessionStorage.getItem("txtJson2");
+        var dataarbol = txtJson;
         var datas = JSON.parse(dataarbol);
         for (var i = 0; i < datas.core.data.length; i++) {//for para montar los datos en unas variables que van a ser utilizadas para identificar la fun seleccionada
             var funCod = datas.core.data[i].id;
@@ -851,7 +853,7 @@ function notifyMe(mensaje) {
 
         var myAudio = document.getElementById("myAudioNoty");
 
-        $("#mensaje").fadeIn("slow");
+        //$("#mensaje").fadeIn("slow");
         if (!Notification) {
             alert('Desktop notifications not available in your browser. Try Chromium.');
             return;
