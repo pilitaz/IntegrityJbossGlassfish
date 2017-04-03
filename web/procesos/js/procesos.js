@@ -394,6 +394,33 @@ function vistaProceso(e){
     }
     else{}
 }
+function vistaProceso1(e){
+        
+      $("#grillapopUp1").append("<div id='windowg'></div>");                       
+        var myWindow2 = $("#windowg"),undo = $("#undo");                
+        function onClose1() {
+            undo.fadeIn();
+            $("#windowg").remove();
+        }       
+        var UrL= sessionStorage.getItem("url");
+        myWindow2.kendoWindow({
+            
+            height: "20%",
+            modal: true,
+            resizable: true,
+            title: "Cargar Archivos",
+            width: "30%",
+            content: UrL+"procesos/formularioProcesos/html/popupSubirArchivo.html",
+            deactivate: function() {
+                this.remove();                                           
+            },
+            actions: [
+                "Close"
+            ],                               
+            close: onClose1
+        }).data("kendoWindow").center().open();   
+   
+}
 //funcion para crear grafica 
 function grafica(e){
     var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
