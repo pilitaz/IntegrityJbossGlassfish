@@ -29,13 +29,30 @@ $("#contenido").height((z)-w-x-1);
 
 
 });
-function popUpSubirArchivo(){
-
-  parent.vistaProceso1();
+function popUpSubirArchivo(){debugger
+    
+    //  parent.vistaProceso1();
+    
+    var estado = document.getElementById("fileInput").attributes[3].nodeValue;
+    if (estado ==="on"){
+        
+         $("#docs").empty();
+        $("#fileInput1").empty();  
+        document.getElementById("fileInput").setAttribute("class", "k-sprite pro_upfolder_sup_off");
+        document.getElementById("fileInput").setAttribute("estado", "off");
+    }
+    else
+    {     
+        $("#docs").append("<strong>Cargar Archivos :</strong><br><input type='file' id='fileInput1'>");  
+        $("#fileInput1").kendoUpload({        
+        });
+        
+        document.getElementById("fileInput").setAttribute("class", "k-sprite pro_upfolder_sup_on");
+        document.getElementById("fileInput").setAttribute("estado", "on");
     }
     
-                      
-
+    
+}
 function subirArchivo(base64, file){debugger
     
     base64 = base64.replace(/data:[a-z]+\/[a-z]+;base64,/g, "");

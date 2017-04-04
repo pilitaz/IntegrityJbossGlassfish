@@ -670,9 +670,9 @@ function sirInstancias() {
 };
 //---------------------------------------------------------------------------
 function SirUsuariosReasigna() {
-    var urlSir = ipServicios + baseUsrBpm +"SIsearchuserstoreassign";
+    var urlSir = ipServicios + baseUsrBpm +"SIRjefesBPM";
     var json = {  
-   "dssearchuserstoreassign":{  
+   "dsJefesBpm":{  
       "eeDatos":[  
          {  
             "picusrcod":sessionStorage.getItem("usuario"),
@@ -680,14 +680,13 @@ function SirUsuariosReasigna() {
             "local_ip":sessionStorage.getItem("ipPrivada"),
             "remote_ip":sessionStorage.getItem("ipPublica")
          }
-      ],
-            "SIRsearchuserstoreassign":[  
+     ],
+       "eeSIRjefes":[  
          {  
-            "picprocname":"",
-            "pictaskname":""
+            "picprocname":""
          }
-      ]   
-   }
+     ]
+   } 
 };
     
     this.setUrlSir = function (newname) {
@@ -840,6 +839,89 @@ function CudApruevaVacaciones() {
 		"tiempo_reasignar_segundos": 0
 	}
 	]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+//---------------------------------------------------------------------------
+function SirConsultaDocumentos() {
+    var urlSir = ipServicios + baseDocAlfresco +"SIRdoc_list";
+    var json = {  
+   "dsSIRdoc_list":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
+//---------------------------------------------------------------------------
+function CudTareaReasignarFlujo() {
+    var urlSir = ipServicios + baseUsrBpm +"SIcompleteandreassignVacaciones";
+    var json = {  
+   "dsSolicitudVacaciones":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "SIRSolicitudVacaciones":[  
+         {  
+            "picprocid":"",
+            "pictaskname":"",
+            "usertoreassign":""
+         }
+      ],
+      "eeSolicitudVacaciones":[  
+         { 
+            "Jefe_Reasignado":"",
+            "tarea_reasignada":true
+         }
+      ]
    }
 };
     

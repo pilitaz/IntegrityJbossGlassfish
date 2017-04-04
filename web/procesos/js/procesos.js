@@ -489,12 +489,12 @@ function reasignar1(){debugger
             sessionStorage.setItem("listado_tareas",JSON.stringify(datanew)); 
             sessionStorage.setItem("Flujo_Tarea","false"); 
             
-            $("#formvacations").append("<div id='windowform'></div>");
+            $("#reasignacion").append("<div id='windowform'></div>");
             var myWindow1 = $("#windowform"),undo = $("#undo");
                 
             function onClose() {
                 undo.fadeIn();
-                $("#windowform").remove();
+                $("#reasignacion").remove();
             } 
 //            mostrarCustomPopUp();
 //            onloadPopUpCond ();
@@ -627,6 +627,15 @@ function terminarVacaciones(){debugger
     $('#grid1').data('kendoGrid').refresh();                                             
     $('#grid1').data('kendoGrid').dataSource.read();
     $('#grid1').data('kendoGrid').refresh(); 
+}
+function cerrarReasignacion(){debugger
+    
+    $("#windowform").data("kendoWindow").close();   
+    alertDialogs("Reasignacion Completa");
+    $('#grid1').data('kendoGrid').refresh();                                             
+    $('#grid1').data('kendoGrid').dataSource.read();
+    $('#grid1').data('kendoGrid').refresh(); 
+    
 }
 function solicitaVacaciones(){debugger
     $("#windowform1").data("kendoWindow").close();   

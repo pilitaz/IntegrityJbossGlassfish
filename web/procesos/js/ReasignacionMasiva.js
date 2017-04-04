@@ -3,7 +3,7 @@ function CudTareaNormal(){
     var lista = JSON.parse(lista);   
     var usuario = $("#reasiganar").data("kendoComboBox");   
     var select = usuario.selectedIndex;
-    var usuario = usuario.dataSource._data[select].usr__cod;
+    var usuario = usuario.dataSource._data[select].usrcod;
     
     var consultar = new cudReasignaTarea();
     var datajson = consultar.getjson();
@@ -28,15 +28,10 @@ function CudTareaNormal(){
                 dataType: "json",        
                 contentType: "application/json;",
                 success: function (resp) { debugger
-                    if((resp.dsreassignvarioustasks.eeEstados[0].Estado)=="OK")
+                    if((resp.dsSolicitudVacaciones.eeEstados[0].Estado)=="OK")
                     {
                       
-                       cerrarCustomPopUp();
-                       
-                       alertDialogs("Las tareas han sido reasignadas ");
-                       $('#grid1').data('kendoGrid').refresh();                                             
-                       $('#grid1').data('kendoGrid').dataSource.read();
-                       $('#grid1').data('kendoGrid').refresh(); 
+                         parent.cerrarReasignacion();
                     }
                     else   
                     {  
@@ -49,9 +44,57 @@ function CudTareaNormal(){
                 
             }); 
 }
-function cudTareaFlujo(){}
+function cudTareaFlujo(){debugger
+    
+   var lista = sessionStorage.getItem("listado_tareas"); 
+    var lista = JSON.parse(lista);   
+    var usuario = $("#reasiganar").data("kendoComboBox");   
+    var select = usuario.selectedIndex;
+    var usuario = usuario.dataSource._data[select].usrcod;
+    
+    var consultar = new CudTareaReasignarFlujo();
+    var datajson = consultar.getjson();
+    var urlService = consultar.getUrlSir();
+    datajson.dsSolicitudVacaciones.SIRSolicitudVacaciones[0].picprocid=lista[0].proceso;
+    datajson.dsSolicitudVacaciones.SIRSolicitudVacaciones[0].pictaskname=lista[0].text;
+    datajson.dsSolicitudVacaciones.SIRSolicitudVacaciones[0].usertoreassign=usuario;
+    datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].Jefe_Reasignado=usuario;
+    
+    
+  
+        $.ajax({
+                
+                type: "POST",        
+                async: false,
+                data: JSON.stringify(datajson),
+                url: urlService,
+                dataType: "json",        
+                contentType: "application/json;",
+                success: function (resp) { debugger
+                    if((resp.dsSolicitudVacaciones.eeEstados[0].Estado)=="OK")
+                    {
+                      
+                       parent.cerrarReasignacion();
+                       
+                       
+                      
+                    
+                    }
+                    else   
+                    {  
+                         
+                    } 
+                } ,
+                error: function (e) {
+                  alertDialogs("Error" + e.status + " - " + e.statusText);
+            }
+                
+            });  
+    
 
-function reasignarTarea(){debugger
+}
+
+function reasignarTarea(e){debugger
 var tarea = sessionStorage.getItem("Flujo_Tarea"); 
    if (tarea==="true"){cudTareaFlujo(); }else{CudTareaNormal();}
 }
@@ -70,9 +113,11 @@ function reasignarFlujo() {debugger
     var consultar = new SirUsuariosReasigna();
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();
-    var mapCud1 = "eesearchuserstoreassign";
-    datajson.dssearchuserstoreassign.SIRsearchuserstoreassign[0].picprocname=lista[0].proceso;
-    datajson.dssearchuserstoreassign.SIRsearchuserstoreassign[0].pictaskname=lista[0].text;
+    var mapCud1 = "eeusers";
+    var proceso = lista[0].proceso;
+    var picProceso1 = proceso.indexOf("#")
+    var picProceso = proceso.slice(0, picProceso1);
+    datajson.dsJefesBpm.eeSIRjefes[0].picprocname=picProceso;
     $("#reasiganar")
             .kendoComboBox({
                 
@@ -115,6 +160,7 @@ function reasignarFlujo() {debugger
     });
 }
 function reasignarNormal() {debugger
+    
     var lista = sessionStorage.getItem("listado_tareas"); 
     var lista = JSON.parse(lista);
     
@@ -122,9 +168,11 @@ function reasignarNormal() {debugger
     var consultar = new SirUsuariosReasigna();
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();
-    var mapCud1 = "eesearchuserstoreassign";
-    datajson.dssearchuserstoreassign.SIRsearchuserstoreassign[0].picprocname=lista[0].proceso;
-    datajson.dssearchuserstoreassign.SIRsearchuserstoreassign[0].pictaskname=lista[0].text;
+    var mapCud1 = "eeusers";
+    var proceso = lista[0].proceso;
+    var picProceso1 = proceso.indexOf("#")
+    var picProceso = proceso.slice(0, picProceso1);
+    datajson.dsJefesBpm.eeSIRjefes[0].picprocname=picProceso;
     $("#reasiganar")
             .kendoComboBox({
                 
