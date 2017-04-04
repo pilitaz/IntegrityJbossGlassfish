@@ -6,7 +6,7 @@
 
 
 function dsSIRinitial() {      
-    debugger
+    
     var urlSir = ipServicios + baseServicio +"SIRinitial";
     var json = {  
         "dsSIRinitial":{  
@@ -64,27 +64,24 @@ function dsSIRinitial() {
  *  var input = sir.getdataInputSir();
  */
 function sirDataDetalle() {
-    var mapData = "eegpd_ped";
-    var urlSir = ipServicios + baseComercial + "SIRgpd_ped";
+    debugger
+    var mapData = "eesic_forms_col";
+    var urlSir = ipServicios + baseServicio + "SIRsic_forms_col";
     var json = {
-            "dsSIRgpd_ped": {
-		"eeDatos":[
-                {
-                    "picusrcod": sessionStorage.getItem("usuario"),
-                    "picfiid": sessionStorage.getItem("picfiid"),
+        "dssic_forms_col": {
+            "eeDatos": [{
+                    "picusrcod":sessionStorage.getItem("usuario"),
+                    "picfiid":sessionStorage.getItem("picfiid"),
                     "local_ip":sessionStorage.getItem("ipPrivada"),
                     "remote_ip":sessionStorage.getItem("ipPublica")
-                }
-            ],
-            "eeSIRgpd_ped": [
-                {
-                    "picsuc_cod": "*",                    
-                    "pidped_fec": "2017/01/02",
-                    "piiped_num": 0,
-                    "piiped_est": -1,
-                    "pilhastapr": true
-                }
-            ]
+                }],
+            "eesic_rol_fun": [{
+                    "cap__cod": 0,
+                    "fun__cod": 0,
+                    "por__cod": 0,
+                    "rol__cod": 0
+                }]
+            
         }
     };
 
@@ -144,6 +141,77 @@ function sirData() {
                     "rol__cod": 0
                 }]
             
+        }
+    };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setmapSir = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getmapSir = function () {
+        return mapData;
+    };
+
+};
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Funcion para obtener la url y el json de entrada para los datos de la grilla principal
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function SICUDForms() {
+    var mapData = "eesic_forms";
+    var urlSir = ipServicios + baseServicio + "SICUDsic_forms";
+    var json = {  
+        "dsSIRinitial":{  
+            "eeDatos":[  
+                {  
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "eesic_forms": [
+                {
+                    "cap_cod":"",
+                    "forms_editable":"",
+                    "forms_filterable":"",
+                    "forms_nom":"",
+                    "forms_num":"",
+                    "forms_scrollable":"",
+                    "forms_selectable":"",
+                    "forms_sorteable":"",
+                    "fun_cod":"",
+                    "por_cod":"",
+                    "titulo":"",
+                    "piindicador":""
+                }
+            ]
         }
     };
 
