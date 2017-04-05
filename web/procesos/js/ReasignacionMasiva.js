@@ -28,7 +28,7 @@ function CudTareaNormal(){
                 dataType: "json",        
                 contentType: "application/json;",
                 success: function (resp) { debugger
-                    if((resp.dsSolicitudVacaciones.eeEstados[0].Estado)=="OK")
+                    if((resp.dsreassignvarioustasks.eeEstados[0].Estado)=="OK")
                     {
                       
                          parent.cerrarReasignacion();

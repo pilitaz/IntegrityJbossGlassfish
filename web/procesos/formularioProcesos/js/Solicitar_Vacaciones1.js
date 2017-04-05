@@ -1,4 +1,4 @@
-
+var array1 =[];
 $(document).ready(function () {debugger
     
 iniciar();
@@ -10,13 +10,16 @@ var y  = $("#contenido").height();
 var z  = parent.tamaño();
 $("#contenido").height((z)-w-x-1);
 
-//$("#fileInput").kendoUpload({        
-//    });
+$("#fileInput").kendoUpload({        
+    });
+//$("#fileInput").closest(".k-upload-button").find("span")[1].innerHTML= "";
+//$(".k-upload").css("border",0);
+//$(".k-upload-button").css("border",0);
 //
 //    var base64;
 //    var fileInput = document.getElementById('fileInput');
 //    
-//    fileInput.addEventListener('change', function(e) {
+//    fileInput.addEventListener('change', function(e) {debugger
 //        var file = fileInput.files[0];
 //        var reader = new FileReader();
 //        
@@ -31,32 +34,68 @@ $("#contenido").height((z)-w-x-1);
 });
 function popUpSubirArchivo(){debugger
     
-    //  parent.vistaProceso1();
-    
-    var estado = document.getElementById("fileInput").attributes[3].nodeValue;
-    if (estado ==="on"){
-        
-         $("#docs").empty();
-        $("#fileInput1").empty();  
-        document.getElementById("fileInput").setAttribute("class", "k-sprite pro_upfolder_sup_off");
-        document.getElementById("fileInput").setAttribute("estado", "off");
-    }
-    else
-    {     
-        $("#docs").append("<strong>Cargar Archivos :</strong><br><input type='file' id='fileInput1'>");  
-        $("#fileInput1").kendoUpload({        
-        });
-        
-        document.getElementById("fileInput").setAttribute("class", "k-sprite pro_upfolder_sup_on");
-        document.getElementById("fileInput").setAttribute("estado", "on");
-    }
-    
+//    //  parent.vistaProceso1();
+//    
+//    var estado = document.getElementById("fileInput").attributes[3].nodeValue;
+//    if (estado ==="on"){
+//        
+//         $("#docs").empty();
+//        $("#fileInput1").empty();  
+//        document.getElementById("fileInput").setAttribute("class", "k-sprite pro_upfolder_sup_off");
+//        document.getElementById("fileInput").setAttribute("estado", "off");
+//    }
+//    else
+//    {     
+//        $("#docs").append("<strong> Archivos Adjuntos:</strong><br><input type='file' id='fileInput1'>");  
+//        $("#fileInput1").kendoUpload({
+////                        async: {
+////                            saveUrl: "save",
+////                            removeUrl: "remove",
+////                            autoUpload: true
+////                        },
+////                        cancel: onCancel,
+////                            complete: subirArchivo,
+////                        error: onError,
+////                        progress: onProgress,
+////                        remove: onRemove,
+//                        select: subirArchivo1,
+////                        success: subirArchivo,
+////                        upload: subirArchivo
+//                    });
+//    
+//	$("#fileInput1").closest(".k-upload-button").find("span")[0].innerHTML= "bla bla";
+//        
+//        document.getElementById("fileInput").setAttribute("class", "k-sprite pro_upfolder_sup_on");
+//        document.getElementById("fileInput").setAttribute("estado", "on");
+//    }
+//    
     
 }
 function subirArchivo(base64, file){debugger
+            base64 = base64.replace(/data:[a-z]+\/[a-z]+;base64,/g, "");
+        var array = {};
+        array.picldocbase64 = base64;
+        array.picdocname =  file.name;
+        array.picfolderpath = "/ECM";
+        array1.push(array);
+
+}
+function subirArchivo1(e){debugger
+       var base64;
+    var fileInput = document.getElementById('fileInput1');
     
-    base64 = base64.replace(/data:[a-z]+\/[a-z]+;base64,/g, "");
-    
+    fileInput.addEventListener('change', function(e) {debugger
+        var file = fileInput.files[0];
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {            
+            base64 = reader.result;
+            subirArchivo(base64,file);
+        }        
+        reader.readAsDataURL(file);	        
+    });
+
+//    
 //    var obj = new subirArchivos();    
 //    var json = obj.getjson();
 //    var url = obj.getUrlSir();
