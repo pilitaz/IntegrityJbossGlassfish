@@ -17,6 +17,81 @@ $(document).ready(function() {
         }        
         reader.readAsDataURL(file);	        
     });
+     var consultar = new sirusuariobpm();
+    var datajson = consultar.getjson();
+    var urlService = consultar.getUrlSir();
+    var mapCud = "eeeebpm_proc";
+    var datasource = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: urlService,
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; charset=utf-8"
+            },         
+            parameterMap: function (options, operation) {
+                if (operation === "read") {
+                    datajson.dsSIRbpm_proc.SIRbpm_proc[0].piccia__nit=sessionStorage.getItem("companyNIT");
+                    datajson.dsSIRbpm_proc.SIRbpm_proc[0].picusuario=sessionStorage.getItem("usuario");
+                    return JSON.stringify(datajson);
+                }
+            }
+        },
+        batch: false,
+        severFiltering: true,                            
+        schema: {
+            data: function (e) {
+                var key1 = Object.keys(e)[0];
+                if (e[key1].eeEstados[0].Estado === "OK") {
+                    return e[key1][mapCud];
+                } else {
+                    alertDialogs(e[key1].eeEstados[0].Estado);
+                }
+            },
+            model: {
+                id: "proc__name",
+                fields: {
+                    proc__name:    {editable: false, nullable: false},
+                    proc__des:     {editable: false, nullable: false},
+                    piidreg:       {editable: false, nullable: false}
+                }
+            }
+        }, error: function (e) {
+            alertDialogs(e.errorThrown);
+        }
+    });
+    $("#grid").kendoGrid({
+        dataSource: datasource,
+                            
+        //navigatable: true,
+        columns: [
+            //                            { template: "<a class='k-grid-play'><span class='k-sprite pro_bullet1'></span></a>", width: "50px"} ,    
+            {name: "play", text: " ",  template: "<a class='k-grid-bullet'><span class='k-sprite pro_bullet'></span></a>",width: "50px"},
+                           
+            { field: "proc__name", title: "Procesos",  hidden:false},
+            {command:
+                        [
+                    {name: "proceso"},
+      
+                ],
+                width: "220px"}],                            
+        editable: "popup",
+                            
+        rowTemplate: kendo.template($("#rowTemplateCmp").html()),
+        altRowTemplate: kendo.template($("#altRowTemplateCmp").html()),
+        dataBound: function () {
+            var results = datasource.data();
+            changImgFunc(results);
+        },
+        cancel: function(e) {                                                                                   
+            e._defaultPrevented= true;
+            $('#grid').data('kendoGrid').refresh();                                             
+            $('#grid').data('kendoGrid').dataSource.read();
+            $('#grid').data('kendoGrid').refresh();                                                                                        
+        } 
+    });
+    
+    
 });
 
 function subirArchivo(base64, file){
