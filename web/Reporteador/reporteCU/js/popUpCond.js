@@ -106,7 +106,7 @@ function llenarComboCmp() {
             error: function (e) {
                 alertDialogs(e.errorThrown);
             }
-        },
+        }
     }).data("kendoComboBox");
 
 }
@@ -197,7 +197,12 @@ function creaConcion(i, imas) {
 
 //    $("#divFiltr" + i).append("<div id=" + "divFiltrImg" + i + " class = 'col-sm-3' ></div>");
 
-
+    crearLabel("cmpValLabel" + i, "Campo o valor:", "divConEsp" + i);
+    crearBr("divConEsp" + i);
+    crearInput("cmpValoCond" + i, "divConEsp" + i);
+    document.getElementById("cmpValoCond" + i).style = "width: 100%";
+    crearComboCmp("cmpValoCond" + i);
+    
     crearLabel("opeLabel" + i, "Operación:", "divConOpe" + i);
     crearBr("divConOpe" + i);
     crearInput("conOpeCond" + i, "divConOpe" + i);
@@ -227,6 +232,10 @@ function creaConcion(i, imas) {
             if (globalCon[imas].cmp_fin_nom !== "") {
                 var comboCmp = $("#" + "cmpValCond" + i).data("kendoComboBox");
                 comboCmp.value(globalCon[imas].cmp_fin_nom);
+            }
+            if (globalCon[imas].cmp_ini !== "") {
+                var comboCmp = $("#" + "cmpValCondFirst" + i).data("kendoComboBox");
+                comboCmp.value(globalCon[imas].cmp_ini);
             }
         }
     }
@@ -265,8 +274,6 @@ function select(e) {
     if ((e.sender.element[0].id.indexOf("new") === -1) && (objConAdd.indexOf(id) === -1) && (objConEdit.indexOf(id) === -1)) {
         objConEdit.push(id);
     }
-
-
 }
 
 function addConc() {
@@ -363,8 +370,8 @@ function saveElemCUCond() {
                         "cmp_con_ono": "",
                         "cmp_con_ope": $("#conOpeCond" + id).data("kendoComboBox").value(),
                         "cmp_fin_nom": $("#cmpValCond" + id).val(),
-                        "cmp_ini": cmp_ini,
-                        "cmp_ini_nom": cmpVal.cmp_dsc,
+                        "cmp_ini": $("#cmpValoCond" + id).data("kendoComboBox").value(),
+                        "cmp_ini_nom": $("#cmpValoCond" + id).data("kendoComboBox").text(),
                         "rpt_cmp_pos": sessionStorage.getItem("idDato"),
                         "rpt_con_pos": pos,
                         "rpt_id": sessionStorage.getItem("idRepo")
@@ -397,8 +404,8 @@ function saveElemCUCond() {
                     "cmp_con_ono": "",
                     "cmp_con_ope": $("#conOpeCond" + id).data("kendoComboBox").value(),
                     "cmp_fin_nom": $("#cmpValCond" + id).val(),
-                    "cmp_ini": cmp_ini,
-                    "cmp_ini_nom": cmpVal.cmp_dsc,
+                    "cmp_ini": $("#cmpValoCond" + id).data("kendoComboBox").value(),
+                    "cmp_ini_nom": $("#cmpValoCond" + id).data("kendoComboBox").text(),
                     "rpt_cmp_pos": sessionStorage.getItem("idDato"),
                     "rpt_con_pos": pos,
                     "rpt_id": sessionStorage.getItem("idRepo")
