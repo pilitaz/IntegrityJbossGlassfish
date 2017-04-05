@@ -884,3 +884,11 @@ function notifyMe(mensaje) {
         }
     }
 }
+
+function mostrarConfig(){
+    apagarBotones();
+    cambiarFondoTD("tdVerde");
+    document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
+//    $("#tdPerfil").fadeIn("slow");
+    document.getElementById("idFrame").src = sessionStorage.getItem("url")+"restriccionesData/html/restriccionesData.html";
+}

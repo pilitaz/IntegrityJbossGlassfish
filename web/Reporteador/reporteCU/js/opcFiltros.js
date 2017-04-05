@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var filtros = "";
+var filtrosOpc = "";
 var bandAlertfl = 0;
 $(window).resize(function () {
     var viewportHeight = $(window).height();
@@ -89,7 +89,7 @@ function gridFiltros(urlGrid, dataserv) {
             data: function (e) {
                 var key1 = Object.keys(e)[0];
                 if (e[key1].eeEstados[0].Estado === "OK") {
-                    filtros = e[key1].eerep_rpt_fil;
+                    filtrosOpc = e[key1].eerep_rpt_fil;
                     var filtrosGrid = e[key1][mapData];
                     filtrosGrid = filtrosGrid.filter(function (obj) {
                             return obj.rpt_cmp_fil === true;
@@ -151,7 +151,9 @@ function PopUpFiltro(e) {
     sessionStorage.setItem("cmpNom", obj.rpt_cmp_vis);
     sessionStorage.setItem("idCmpidFltr", JSON.stringify(idCmpidFltr));
     if (obj.rpt_cmp_fil === true) {
-         sessionStorage.setItem("filtros", JSON.stringify(filtros));
+            sessionStorage.setItem("filtros", JSON.stringify(filtrosOpc));
+        
+         
         var ip = sessionStorage.getItem("ip");
         var puerto = sessionStorage.getItem("puerto");
         $("body").append("<div id='windowFil'></div>");
@@ -208,19 +210,19 @@ function llenFltrGrilla(results) {
 //            spanBl = "spanCond" + id;
         }
         if (results[i].rpt_cmp_fil) {
-            if (filtros) {
-                for (var j = 0; j < filtros.length; j++) {
-                    if (filtros[j].rpt_cmp_pos == results[i].rpt_cmp_pos) {
-                        if ((filtros[j].rpt_fil_des !== "") || (filtros[j].rpt_fil_Has !== "")) {
-                            if (filtros[j].rpt_fil_des !== "") {
+            if (filtrosOpc) {
+                for (var j = 0; j < filtrosOpc.length; j++) {
+                    if (filtrosOpc[j].rpt_cmp_pos == results[i].rpt_cmp_pos) {
+                        if ((filtrosOpc[j].rpt_fil_des !== "") || (filtrosOpc[j].rpt_fil_Has !== "")) {
+                            if (filtrosOpc[j].rpt_fil_des !== "") {
                                 crearImg1(div);
                                 crearLabel("label" + id, "Desde:&nbsp;", div);
-                                crearSpan(div, filtros[j].rpt_fil_des);
+                                crearSpan(div, filtrosOpc[j].rpt_fil_des);
                             }
-                            if (filtros[j].rpt_fil_Has !== "") {
+                            if (filtrosOpc[j].rpt_fil_Has !== "") {
                                 crearImg1(div);
                                 crearLabel("label" + id, "Hasta:&nbsp;", div);
-                                crearSpan(div, filtros[j].rpt_fil_Has);
+                                crearSpan(div, filtrosOpc[j].rpt_fil_Has);
                             }
                             crearBr(div);
                             //document.getElementById(spanBl).setAttribute("style", "display:");
