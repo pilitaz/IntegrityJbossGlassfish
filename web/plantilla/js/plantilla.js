@@ -10,7 +10,6 @@ $(window).resize(function () {
     $('#outerWrapper').height(viewportHeight - 100);     
 });
 
-
 $(document).ready(function() { 
     
     var objData = new sirData();    
@@ -72,20 +71,17 @@ $(document).ready(function() {
     });    
 });
 
-function actualizarElemento(e){
-    alertDialogs("actualizarElemento");
-}
 
-function crearElemento(){
-    alertDialogs("crearElemento");
-}
-
-function editarElemento(e){
-     
+/**
+ * Permite editar un elemento de la grilla, si es cabecera detalle visualiza el div correspondiente de lo contrario abre un popUp 
+ * @param {type} e
+ * @returns {undefined}
+ */
+function editarElemento(e){     
     e.preventDefault();
-    var divGrilla = e.delegateTarget.id
+    var divGrilla = e.delegateTarget.id;
     var grilla = $("#"+divGrilla).data("kendoGrid");
-    var item = grilla.dataItem(grilla.select());
+    item = grilla.dataItem(grilla.select());
     
     var esCabeceraDetalle = sessionStorage.getItem("esCabeceraDetalle");
     if(esCabeceraDetalle==="true"){        
@@ -101,16 +97,16 @@ function editarElemento(e){
                 var objData = new sirDataDetalle();    
                 var jsonSIRDataDetalle = objData.getjson();
                 var urlDataDetalle = objData.getUrlSir();
-                var mapDataDetalle = objData.getmapSir()
-                
-                var key1 = Object.keys(jsonSIRDataDetalle)[0];
-                var key2 = Object.keys(jsonSIRDataDetalle[key1])[1];
+                var mapDataDetalle = objData.getmapSir();
+                /**
+                 * si el servicio tiene un nodo donde se envie información adicional se debe ingresar en esta parte
+                 * var key1 = Object.keys(jsonSIRDataDetalle)[0];                
+                 * var key2 = Object.keys(jsonSIRDataDetalle[key1])[1];
+                 * jsonSIRDataDetalle[key1][key2][0].picsuc_cod = item.suc__cod;
+                 * jsonSIRDataDetalle[key1][key2][0].pidped_fec = item.ped__fec;
+                 * jsonSIRDataDetalle[key1][key2][0].piiped_num = item.ped__num;
+                 */
 
-                jsonSIRDataDetalle[key1][key2][0].picsuc_cod = item.suc__cod;
-                jsonSIRDataDetalle[key1][key2][0].pidped_fec = item.ped__fec;
-                jsonSIRDataDetalle[key1][key2][0].piiped_num = item.ped__num;
-                jsonSIRDataDetalle[key1][key2][0].piiped_est = item.gpd__est;
-                
                 $.ajax({
                     async: false, 
                     type: "POST",
@@ -140,31 +136,76 @@ function editarElemento(e){
     }    
 }
 
-function borrarElemento(e){
-    alertDialogs("borrarElemento");
-}
-
-function borrarElementoDet(e){
-    alertDialogs("borrarElementoDet");
-}
-
+/**
+ * identifica cual es el item que se quiere editar y llama al metodo que abre el popUp
+ * @param {type} e
+ * @returns {undefined}
+ */
 function editarElementoDet(e){
     e.preventDefault();
     var divGrilla = e.delegateTarget.id
     var grilla = $("#"+divGrilla).data("kendoGrid");
-    var item = grilla.dataItem(grilla.select());
+    itemDetalle = grilla.dataItem(grilla.select());
     
-    document.getElementById('lbAccionDet').innerHTML = "Edtar";
+    document.getElementById('lbAccionDet').innerHTML = "Crear";
     abrirCustomPopUp("popUpDetalle", "popUpDetalle", "input");        
-    $("#buttonCrearDet")["0"].childNodes["0"].data= "Actualizar";
-    //cargarDatos(item, "input");
+    $("#buttonCrearDet")["0"].childNodes["0"].data= "Crear";
+    cargarDatos(itemDetalle, "input");
 }
 
-function cambiarEstado(e){
-    alertDialogs("cambiarEstado");
-}
-
+/**
+ * Hace una busqueda del lado del servidor.
+ * @returns {undefined}
+ */
 function buscarElementos(){
     alertDialogs("buscarElementos");
 }
+/**
+ * Crea/actualiza un elemento de la grilla principal
+ * @returns {undefined}
+ */
+function crearElemento(){
+    alertDialogs("crearElemento");
+}
+/**
+ * Crea/actualiza un elemento de la grilla detalle
+ * @returns {undefined}
+ */
+function crearElementoDet(){
+    alertDialogs("crearElementoDet");
+}
+/**
+ * Borra un elemento de la grilla principal
+ * @param {type} e
+ * @returns {undefined}
+ */
+function borrarElemento(e){
+    alertDialogs("borrarElemento");
+}
+/**
+ * Borra un elemento de la grilla detalle
+ * @param {type} e
+ * @returns {undefined}
+ */
+function borrarElementoDet(e){
+    alertDialogs("borrarElementoDet");
+}
+/**
+ * Cambia el estado un elemento de la grilla principal
+ * @param {type} e
+ * @returns {undefined}
+ */
+function cambiarEstado(e){
+    alertDialogs("cambiarEstado");
+}
+/**
+ * Cambia el estado un elemento de la grilla detalle
+ * @param {type} e
+ * @returns {undefined}
+ */
+function cambiarEstadoDet(e){
+    alertDialogs("cambiarEstadoDet");
+}
+
+
 

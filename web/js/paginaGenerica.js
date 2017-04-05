@@ -6,6 +6,8 @@
 
 var datosGrilla;
 var datosGrillaDetalle;
+var item = null;
+var itemDetalle = null;
 
 /**
  * 
@@ -160,14 +162,14 @@ function crearTabla(idCustomPopUp, divBody, elementoHtml) {
     }
     
     var body;    
-    
+
     if(idCustomPopUp==="popUpCabecera" && divBody ==="popUpCabecera"){
         body = document.getElementById("popupCampos");        
         document.getElementById('tituloPopUp').innerHTML = campos.titulo;
         $("#buttonCab")["0"].childNodes["0"].data= campos.eesic_forms_but[0].titulo;
         $("#buttonCab").kendoButton({
             click: eval(campos.eesic_forms_but[0].funcion)
-        }); 
+        });         
     }else if(idCustomPopUp==="popUpBusqueda" && divBody ==="popUpBusqueda"){
         body = document.getElementById("popupCamposBusqueda");
         $("#btBuscar").kendoButton({
@@ -258,7 +260,11 @@ function crearTabla(idCustomPopUp, divBody, elementoHtml) {
 //    document.getElementById("popupCamposDetalle").style.height = tamañoDiv+"px";
     tamañoDiv = tamañoDiv+ $("#"+idCustomPopUp)["0"].clientHeight - 55;
     body.height = tamañoDiv+"px";
-
+    
+    if(item!==null ){
+        cargarDatos(item, "input");
+    }
+    
 }
 
 function cargarDatos(item, etiquetahtml){    
@@ -266,7 +272,8 @@ function cargarDatos(item, etiquetahtml){
     
     if(etiquetahtml==="input"){
         for(var i=0; i< inputs.length ; i++){
-            $("#"+inputs[i].id).val(item[inputs[i].id]);
+            $("body").find(etiquetahtml+"#"+inputs[i].id).val(item[inputs[i].id])
+//            $("#"+inputs[i].id).val(item[inputs[i].id]);
         }    
     }else if (etiquetahtml==="label"){
         for(var i=0; i< inputs.length ; i++){
@@ -281,5 +288,7 @@ function volver(){
     document.getElementById('divCabeceraDetalle').style.display = 'none'; 
     document.getElementById('divCabecera').innerHTML = ""; 
     document.getElementById('gridDetalle').innerHTML = ""; 
+    item = null;
+    itemDetalle = null;
 }
 
