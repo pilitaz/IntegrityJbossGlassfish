@@ -680,6 +680,14 @@ function mostrarDocumentos() {
     $('#grid').data('kendoGrid').refresh();
     $("#divDocumentos").fadeIn("slow");
 }
+function mostrarNotificaciones() {debugger
+
+    $("#divNotificaciones").fadeIn("slow");
+    notificaciones();
+}
+function ocultarNotificaciones() {
+    $("#divNotificaciones").fadeOut("slow");
+}
 function ocultarDocumentos() {
     $("#divDocumentos").fadeOut("slow");
 }

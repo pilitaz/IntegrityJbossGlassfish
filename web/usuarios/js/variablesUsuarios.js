@@ -172,10 +172,10 @@ function sirJefes() {
    "dsJefes":{  
       "eeDatos":[  
          {  
-            "picusrcod":"jsandrea_800001541",
-            "picfiid":"76225323834852643511",
-            "local_ip":"172.21.24.71",
-            "remote_ip":"190.144.16.114"
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
          }
      ]
    } 

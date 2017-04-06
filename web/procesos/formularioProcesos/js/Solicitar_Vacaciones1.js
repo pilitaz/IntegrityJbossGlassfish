@@ -10,12 +10,16 @@ var y  = $("#contenido").height();
 var z  = parent.tamaño();
 $("#contenido").height((z)-w-x-1);
 
-$("#fileInput").kendoUpload({        
+$("#fileInput1").kendoUpload({        
     });
-//$("#fileInput").closest(".k-upload-button").find("span")[1].innerHTML= "";
+$(".k-upload-button").css("border",0);
+//$(".k-upload").css("border",0);
+$("#fileInput1").closest(".k-upload-button").find("span")[0].innerText="";
+//$(".k-upload-button")[0].className="k-upload k-sprite  pro_upfolder_sup";
+
 //$(".k-upload").css("border",0);
 //$(".k-upload-button").css("border",0);
-//
+////
 //    var base64;
 //    var fileInput = document.getElementById('fileInput');
 //    
@@ -33,7 +37,8 @@ $("#fileInput").kendoUpload({
 
 });
 function popUpSubirArchivo(){debugger
-    
+
+    document.getElementById("fileInput1").click();
 //    //  parent.vistaProceso1();
 //    
 //    var estado = document.getElementById("fileInput").attributes[3].nodeValue;
@@ -68,7 +73,7 @@ function popUpSubirArchivo(){debugger
 //        document.getElementById("fileInput").setAttribute("class", "k-sprite pro_upfolder_sup_on");
 //        document.getElementById("fileInput").setAttribute("estado", "on");
 //    }
-//    
+    
     
 }
 function subirArchivo(base64, file){debugger

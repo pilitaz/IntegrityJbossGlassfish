@@ -160,5 +160,42 @@ function Getbirthdays() {
         return mapData;
     };
 
-}
-;
+};
+//------------------------------
+function sirNotificaciones() {
+    var urlSir = ipServicios + baseParameters +"SIRsic_alt";
+    var json = {
+ "dsSIRsic_alt": {
+  "eeDatos": [{
+             "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+  }],
+   "eeSIRsic_alt": [{
+   "picusr__cod": sessionStorage.getItem("usuario"),
+   "piialt__est": "-1",
+   "picalt__id": "*"
+  }]
+ }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};
