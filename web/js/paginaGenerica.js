@@ -102,6 +102,9 @@ function cerrarCustomPopUp(idCustomPopUp) {
         if(document.getElementById('lbAccion')){
             document.getElementById('lbAccion').innerHTML = "Crear";
         }
+        
+        $("#buttonCrearDet")["0"].childNodes["0"].data= "Guardar";
+        $("#buttonCab")["0"].childNodes["0"].data= "Guardar";
     });
     $("#disable" ).remove();
 }
@@ -262,6 +265,8 @@ function crearTabla(idCustomPopUp, divBody, elementoHtml) {
     body.height = tamañoDiv+"px";
     
     if(item!==null ){
+        document.getElementById('lbAccion').innerHTML = "Editar";        
+        $("#buttonCab")["0"].childNodes["0"].data= "Actualizar";        
         cargarDatos(item, "input");
     }
     
@@ -290,5 +295,6 @@ function volver(){
     document.getElementById('gridDetalle').innerHTML = ""; 
     item = null;
     itemDetalle = null;
+    $("#gridDetalle").empty();
 }
 
