@@ -111,7 +111,7 @@ function sirData() {
 
 //////////////////////////////////////////////////////////////////////////////////////
 /**
- * Funcion para obtener la url y el json de entrada para los datos de la grilla principal
+ * Funcion para obtener la url y el json de entrada para los datos de la grilla detalle
  *  
  *  ejemplo
  *  var sir = new sirEjemplo();

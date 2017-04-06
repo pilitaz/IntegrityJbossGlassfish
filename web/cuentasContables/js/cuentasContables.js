@@ -101,6 +101,7 @@ function grilla(obj) {
                 contentType: "application/json"
             },
             parameterMap: function (options, operation) {
+                
                 try {
                     if (operation === 'read') {                        
                         return JSON.stringify(inputsir);
@@ -606,16 +607,18 @@ function conceptoTri(container, options) {
     });
 }
 
-function nivel(cuentaPUC){    
+function nivel(cuentaPUC){ 
+    
     var nivel;
     if(cuentaPUC.length===1){
         nivel = 1;
     }else if(cuentaPUC.length===2){
         nivel = 2;
     }else{
-        cuentaPUC = cuentaPUC.substr(2);                
-        return nivel;
+        cuentaPUC = cuentaPUC.substr(2); 
+        nivel = (cuentaPUC.length/2)+2
     }
+    return nivel;
 }
 
 function verificarCuenta(){
@@ -644,7 +647,7 @@ function verificarCuenta(){
                     
             } 
         }).done(function(e){   
-            debugger
+            
             var key1 = Object.keys(objJson)[0];               
             if((e[key1].eeEstados["0"].Estado)==="OK" && e[key1][mapData].length===1)
             {    
@@ -658,7 +661,7 @@ function verificarCuenta(){
 }
 
 function validarNivelSuperior(){
-    debugger
+    
     var msj = "";
     var cuentaPUC = $("#cuentaPUC").val();
     
@@ -681,7 +684,7 @@ function validarNivelSuperior(){
             
         } 
     }).done(function(e){
-        debugger
+        
         var key1 = Object.keys(objJson)[0];               
         if((e[key1].eeEstados["0"].Estado)!=="OK")
         {    

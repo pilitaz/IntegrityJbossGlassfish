@@ -99,7 +99,7 @@ angular.module("KendoDemos", ["kendo.directives"])
             $scope.clickItem = function (a) {
                 $scope.itemSele = parseInt(a.id);
                 selected = a.id;
-                alert(JSON.stringify(a));
+//                alert(JSON.stringify(a));
             };
             $scope.addItem = function () {
                 $scope.records.push({cmp_fin_nom: "", cmp_fun_ope: "+", rpt_fun_pos: "", id: $scope.records.length});
