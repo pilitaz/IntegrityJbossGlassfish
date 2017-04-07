@@ -1,7 +1,7 @@
 
 //-------------------------------------------------------------------------
 function sirRetencion() {
-    var urlSir = ipServicios + basePortalNomina + "SICertificadoingret";
+    var urlSir = ipServicios + baseNomina + "SICertificadoingret";
     var json ={  
    "dsCertificadoingret":{  
       "eeDatos":[  
