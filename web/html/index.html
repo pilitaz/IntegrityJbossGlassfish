@@ -38,8 +38,8 @@ and open the template in the editor.
     
     <body tyle="overflow-x:hidden">
         <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
-                    <tr data-uid="#: uid #"> 
-            
+                    <tr id="rowNoti#: alt__id#" data-uid="#: uid #"> 
+                   
                     <td style="width:40px;" align="left">
                     <img style="width:40px;" id = "imgNoti#: alt__id#" class="imgNoti" align="center" src="../images/transaccionesOff.png" />
                     </td>
@@ -48,20 +48,21 @@ and open the template in the editor.
                     <br>   
                     <div align="right">#: alt__datehour #</div>
                     </td>
-
+                  
                     </tr>
         </script>
         <script id="altRowTemplateCmp" type="text/x-kendo-tmpl">
-                    <tr class="k-alt" data-uid="#: uid #">
-            
+                    <tr id="rowNoti#: alt__id#" data-uid="#: uid #">
+                    
                     <td style="width:40px;" align="left">
-                    <img style="width:40px;" id="imgNoti#: alt__id#" class="imgNoti" align="center" src="../images/transaccionesOff.png" />
+                    <img style="width:40px;" id = "imgNoti#: alt__id#" class="imgNoti" align="center" src="../images/transaccionesOff.png" />
                     </td>
                     <td>
                     <span class="title">#: alt__msj #</span>
-                    <br>
+                    <br>   
                     <div align="right">#: alt__datehour #</div>
                     </td>
+                  
                     </tr>
             
         </script>
