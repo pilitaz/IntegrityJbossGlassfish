@@ -69,7 +69,7 @@
                     <!--<img class="pointer" id="imgReporte" src="../images/btnReporteOff.png" onClick="cambiarImagen('imgReporte'); clickbtn('Reporte');" estado="off" onmouseover="this.src = '../images/btnReporteHov.png';" onmouseout="this.src = '../images/btnReporteOff.png';"/>-->
                     <img class="pointer" id="imgCampos" src="../../../images/btnCamposOff.png" onClick="cambiarImagen('imgCampos'); clickbtn('Campos');" estado="off" onmouseover="this.src = '../../../images/btnCamposHov.png';"onmouseout="this.src = '../../../images/btnCamposOff.png';"/>
                     <img class="pointer" id="imgFiltros" src="../../../images/btnFiltrosOff.png" onClick="cambiarImagen('imgFiltros'); clickbtn('Filtros');" estado="off" onmouseover="this.src = '../../../images/btnFiltrosHov.png';"onmouseout="this.src = '../../../images/btnFiltrosOff.png';"/>
-                    <img class="pointer" id="imgFormato" src="../../../images/btnFormatoOff.png" onClick="cambiarImagen('imgFormato'); clickbtn('Formato');" estado="off" onmouseover="this.src = '../../../images/btnFormatoHov.png';" onmouseout="this.src = '../../../images/btnFormatoOff.png';"/>
+                    <img class="pointer" id="imgFormato" src="../../../images/btnFormatoOff.png" onClick="cambiarImagen('imgFormato'); clickbtn('Formato');" estado="off" onmouseover="this.src = '../../../images/btnFormatoHov.png';" onmouseout="this.src = '../../../images/btnFormatoOff.png';"hidden="true"/>
                     <br>
                     <br>
                     <br>
@@ -103,7 +103,7 @@
                                         <br>
                                         <label class="letraParrafo">Campo:</label><br>
                                         <input id="campo"  style="width: 70%;"/>
-                                        <a id ="btnAdd" class="k-grid" onclick ="clickCrearCampo()" aling="right"><span class="k-sprite re_mas"></span></a>
+                                        <a id ="btnAdd" class="k-grid" onclick ="clickCrearCampo()" aling="right"><span class="k-sprite re_mas" title="Crear Campo"></span></a>
                                     </div>
                                 </div>
                                 <div class="col-sm-1 "></div>
@@ -118,7 +118,7 @@
                                             <td>
                                                 <br>
                                                 <label class="letraParrafo">&nbsp;</label><br>
-                                                &nbsp;&nbsp;&nbsp;&nbsp;<a id ="btnCrear" class="k-grid" onclick ="addFun()" aling="right"><span class="k-sprite re_funcion"></span></a>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;<a id ="btnCrear" class="k-grid" onclick ="addFun()" aling="right"><span class="k-sprite re_funcion" title="Crear Función"></span></a>
                                             </td>
                                         </tr>
 

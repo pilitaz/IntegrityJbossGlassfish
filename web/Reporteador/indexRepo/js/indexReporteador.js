@@ -49,6 +49,7 @@ function grid() {
             },
             parameterMap: function (options, operation) {
                 try {
+                    opeSevice = operation;
                     if (operation === 'read') {
                         objRepo["obj"] = [options];
                         return JSON.stringify(objRepo);
@@ -69,6 +70,9 @@ function grid() {
 
                 var key1 = Object.keys(e)[0];
                 if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {
+                    if (opeSevice !== "read") {
+                    grid();
+                }
                     return e[key1][mapDataRepo];
                 } else if ((e[key1].eeEstados[0].Estado === "Sin Informacion en la tabla ''                                              ")) {
                     alertDialogs("Usted no tiene Reportes Disponibles");
@@ -114,7 +118,7 @@ function grid() {
                         showOperators: false
                     }
                 }, width: "30%"},
-            {field: "cap_des", title: "Capitulo", filterable: {
+            {field: "cap_des", title: "Capítulo", filterable: { 
                     cell: {
                         inputWidth: "40%",
                         template: function (args) {
@@ -135,9 +139,9 @@ function grid() {
                             {name: "comp", text: " ", click: ClickCompartir, template: "<a class='k-grid-comp'><span class='k-sprite re_compoff' title ='Compartir Repoprte'></span></a>"},
                             {name: "play", text: " ", click: ClickPlay, template: "<a class='k-grid-play'><span class='k-sprite re_playoff' title ='Desplegar Reporte'></span></a>"},
                             {name: "editar", text: " ", click: ClickEditar, template: "<a class='k-grid-editar'><span class='k-sprite re_editoff' title ='Editar Reporte'></span></a>"},
-                            {name: "destroyed",text: " ", click: clickEliminar, template: "<a class='k-grid-destroyed'><span class='k-sprite re_trash' title ='Eliminar Reporte'></span></a>"}
+                            {name: "destroyed", click: clickEliminar, template: "<a class='k-grid-destroyed'><span class='k-sprite re_trash' title ='Eliminar Reporte'></span></a>"}
                         ],
-                width: "150px"}],
+                width: "155px"}],
         editable: "popup"
     });
 }

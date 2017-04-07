@@ -71,9 +71,9 @@ and open the template in the editor.
                     </table>
                 </td>
                 <td style="width: 80%">
-                    <div id="divPDF" class="page-container hidden-on-narrow" style="width: 100%;overflow-y: auto;overflow-x : hidden">
+                    <div id="divPDF" class="page-container hidden-on-narrow" style="display: none width: 100%;overflow-y: auto;overflow-x : hidden ">
                         <div class="pdf-page size-letter">
-                            <div class="pdf-header">
+                            <div class="pdf-header" id="headerPdf">
                                 <span class="company-logo">
                                     <img id="logoEmpresaPDF" src="" width="300" height="115"/>                                    
                                 </span>
@@ -84,7 +84,7 @@ and open the template in the editor.
                                     <img src="../../../images/ComprobantePie.png" width="817" height="103" style="position: absolute; left: 0px; bottom: 0px;"/>                                    
                                 </span>                                
                             </div>
-                            <div class="encabezado">
+                            <div class="encabezado" id="encabezado">
                                 <table style="width: 100%">
                                     <tr>
                                         <td style="width: 15%">
@@ -182,7 +182,7 @@ and open the template in the editor.
                                     </tr>
                                 </table>
                             </div>                                                        
-                            <div class="pdf-body">
+                            <div class="pdf-body" id="bodyPdf">
                                 <div id="grid"></div>
                                 <br><br>
                                 <div class="signature">

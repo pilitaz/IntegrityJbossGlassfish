@@ -89,11 +89,11 @@ function onloadPopUpFltr() {
 function crearImgFltr(div, id, onclick) {
     var x = document.createElement("IMG");
     x.setAttribute("src", "../../../images/espacio-95.png");
-    x.setAttribute("class", "re_desbloff");
+//    x.setAttribute("class", "re_desbloff");
     x.setAttribute("id", id + "debloff");
-    x.setAttribute("onclick", "bloqFiltro(" + parseInt(id) + ")");
+//    x.setAttribute("onclick", "bloqFiltro(" + parseInt(id) + ")");
     document.getElementById(div).appendChild(x);
-
+    
     var x = document.createElement("IMG");
     x.setAttribute("src", "../../../images/espacio-95.png");
     x.setAttribute("class", "re_cerrar");

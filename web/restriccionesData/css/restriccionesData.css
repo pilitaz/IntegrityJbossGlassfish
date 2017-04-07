@@ -32,7 +32,13 @@ and open the template in the editor.
     background: #f1f1f1;
 }
 
-.k-grid-header{
+/*.k-grid-header{
     border-color: transparent;
         display: none;
+}*/
+#gridCampos {
+    height:100%;
+}
+#restDatos {
+    height:100%;
 }
