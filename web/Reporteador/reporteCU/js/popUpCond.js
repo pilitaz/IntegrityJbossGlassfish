@@ -106,7 +106,7 @@ function llenarComboCmp() {
             error: function (e) {
                 alertDialogs(e.errorThrown);
             }
-        },
+        }
     }).data("kendoComboBox");
 
 }
@@ -173,7 +173,7 @@ function showConExt(e) {
 
 function crearImgCond(div, id, onclick) {
     var x = document.createElement("IMG");
-    x.setAttribute("src", "/Reporteador/images/espacio-95.png");
+    x.setAttribute("src", "../../../images/espacio-95.png");
     x.setAttribute("class", "re_cerrar");
     x.setAttribute("id", id);
     x.setAttribute("onclick", "delCon(" + ("\"" + id + "\"") + ")");
@@ -197,7 +197,12 @@ function creaConcion(i, imas) {
 
 //    $("#divFiltr" + i).append("<div id=" + "divFiltrImg" + i + " class = 'col-sm-3' ></div>");
 
-
+    crearLabel("cmpValLabel" + i, "Campo o valor:", "divConEsp" + i);
+    crearBr("divConEsp" + i);
+    crearInput("cmpValoCond" + i, "divConEsp" + i);
+    document.getElementById("cmpValoCond" + i).style = "width: 100%";
+    crearComboCmp("cmpValoCond" + i);
+    
     crearLabel("opeLabel" + i, "Operación:", "divConOpe" + i);
     crearBr("divConOpe" + i);
     crearInput("conOpeCond" + i, "divConOpe" + i);
@@ -228,6 +233,10 @@ function creaConcion(i, imas) {
                 var comboCmp = $("#" + "cmpValCond" + i).data("kendoComboBox");
                 comboCmp.value(globalCon[imas].cmp_fin_nom);
             }
+            if (globalCon[imas].cmp_ini !== "") {
+                var comboCmp = $("#" + "cmpValoCond" + i).data("kendoComboBox");
+                comboCmp.value(globalCon[imas].cmp_ini);
+            }
         }
     }
 
@@ -257,16 +266,14 @@ function crearComboOpe(id) {
 }
 
 function select(e) {
-    var dataItem1 = this.dataItem(e.item.index());
+    var id = "";
     var numberPattern = /\d+/g;
-    var id = e.sender.element[0].id;
-    var id = id.match(numberPattern)[0];
+    id = e.sender.element.context.id;
+    id = id.match(numberPattern)[0];
     var inputCon1 = JSON.parse(JSON.stringify(inputCon));
     if ((e.sender.element[0].id.indexOf("new") === -1) && (objConAdd.indexOf(id) === -1) && (objConEdit.indexOf(id) === -1)) {
         objConEdit.push(id);
     }
-
-
 }
 
 function addConc() {
@@ -288,6 +295,7 @@ function creaCmpDefecto() {
         creaConcion(1000000, 1000000);
         $("#cmpValCond1000000").data("kendoComboBox").enable(false);
         $("#conOpeCond1000000").data("kendoComboBox").enable(false);
+        $("#cmpValoCond1000000").data("kendoComboBox").enable(false);
         $('#1000000').unbind('click');
         document.getElementById("divCon1000000").classList.add("divNewFun");
 //        crearBr("1000000");
@@ -363,8 +371,8 @@ function saveElemCUCond() {
                         "cmp_con_ono": "",
                         "cmp_con_ope": $("#conOpeCond" + id).data("kendoComboBox").value(),
                         "cmp_fin_nom": $("#cmpValCond" + id).val(),
-                        "cmp_ini": cmp_ini,
-                        "cmp_ini_nom": cmpVal.cmp_dsc,
+                        "cmp_ini": $("#cmpValoCond" + id).data("kendoComboBox").value(),
+                        "cmp_ini_nom": $("#cmpValoCond" + id).data("kendoComboBox").text(),
                         "rpt_cmp_pos": sessionStorage.getItem("idDato"),
                         "rpt_con_pos": pos,
                         "rpt_id": sessionStorage.getItem("idRepo")
@@ -397,8 +405,8 @@ function saveElemCUCond() {
                     "cmp_con_ono": "",
                     "cmp_con_ope": $("#conOpeCond" + id).data("kendoComboBox").value(),
                     "cmp_fin_nom": $("#cmpValCond" + id).val(),
-                    "cmp_ini": cmp_ini,
-                    "cmp_ini_nom": cmpVal.cmp_dsc,
+                    "cmp_ini": $("#cmpValoCond" + id).data("kendoComboBox").value(),
+                    "cmp_ini_nom": $("#cmpValoCond" + id).data("kendoComboBox").text(),
                     "rpt_cmp_pos": sessionStorage.getItem("idDato"),
                     "rpt_con_pos": pos,
                     "rpt_id": sessionStorage.getItem("idRepo")

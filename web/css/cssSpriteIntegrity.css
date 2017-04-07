@@ -1367,6 +1367,25 @@
 	height: 34px;
 	background: url(../images/SpriteIntegrity.png) -208px -1008px;
 }
+/* ——  */
+
+.re_trash{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -258px -1408px;
+	cursor:pointer
+}
+.re_trash:hover {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -208px -1408px;
+	cursor:pointer
+}
+.re_trash:active {
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -258px -1408px;
+}
 
 /**********************************************/
 /**********************************************/

@@ -309,7 +309,7 @@ function gridCampos(urlGrid, dataserv) {
                         [
                             {name: "visible", text: ";&nbsp;", click: visiClick2, template: "<a class='k-grid-visible'><span class='k-sprite re_checkAct'></span></a>"},
                             {name: "condicion", text: ";&nbsp;", click: PopUpCondicion2, template: "<a class='k-grid-condicion'><span class='k-sprite re_filtrooff'></span></a>"},
-                            {name: "destroyed", click: clickEliminar, template: "<a class='k-grid-destroyed'><span class='k-sprite re_cerrar'></span></a>"}
+                            {name: "destroyed", click: clickEliminar, template: "<a class='k-grid-destroyed'><span class='k-sprite re_trash'></span></a>"}
                         ],
                 width: "140px"}],
         editable: "popup",

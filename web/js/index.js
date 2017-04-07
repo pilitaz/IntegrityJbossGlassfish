@@ -680,6 +680,14 @@ function mostrarDocumentos() {
     $('#grid').data('kendoGrid').refresh();
     $("#divDocumentos").fadeIn("slow");
 }
+function mostrarNotificaciones() {debugger
+
+    $("#divNotificaciones").fadeIn("slow");
+    notificaciones();
+}
+function ocultarNotificaciones() {
+    $("#divNotificaciones").fadeOut("slow");
+}
 function ocultarDocumentos() {
     $("#divDocumentos").fadeOut("slow");
 }
@@ -883,4 +891,12 @@ function notifyMe(mensaje) {
 
         }
     }
+}
+
+function mostrarConfig(){
+    apagarBotones();
+    cambiarFondoTD("tdVerde");
+    document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
+//    $("#tdPerfil").fadeIn("slow");
+    document.getElementById("idFrame").src = sessionStorage.getItem("url")+"restriccionesData/html/restriccionesData.html";
 }

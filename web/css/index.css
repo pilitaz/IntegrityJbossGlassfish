@@ -110,6 +110,16 @@ img{
     background-image: url("../images/fondo-arbol.png");
     overflow: auto
 }
+#divNotificaciones {
+    height:100%;
+    position: absolute;
+    right:  5px;
+    top: 0;
+    width:300px;
+    z-index: 9;    
+    background-image: url("../images/fondo-arbol.png");
+    overflow: auto
+}
 #divDocumentosd {
     height:50%;
     position: absolute;

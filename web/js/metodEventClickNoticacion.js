@@ -11,3 +11,6 @@ function goLinkProcesos(){
     document.getElementById("imgProcesos").click();
 }
 
+function goLinkNotificaciones(){
+    alertDialogs("goLinkNotificaciones");
+}
