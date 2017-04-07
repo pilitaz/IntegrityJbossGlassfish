@@ -22,21 +22,49 @@ and open the template in the editor.
         <link rel="stylesheet" href="../css/index.css" type="text/css"/>
         <link href="../css/objIntermitente.css" rel="stylesheet" type="text/css"/>
         <script src="../js/variablesIndex.js" type="text/javascript"></script>
-
+        
         <link href="../css/style2min.css" rel="stylesheet" type="text/css"/>
         <script src="../scripts/LibreriaIntegrity.js" type="text/javascript"></script>
         <script src="../js/index.js" type="text/javascript" ></script>
         <script src="../scripts/jstree.min.js" type="text/javascript"></script>
-
+        
         <script src="../js/documentos.js" type="text/javascript"></script>
+        <script src="../js/notificaciones.js" type="text/javascript"></script>
         <script src="../js/arbolMenu.js" type="text/javascript"></script>
         <script src="../js/metodEventClickNoticacion.js" type="text/javascript"></script>
         <script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
-        <link href="../images/favicon3.ico" rel="shortcut icon" type="image/x-icon" />
-    <!--<a href="../images/favicon.ico"></a>-->
+        
     </head>
+    
     <body tyle="overflow-x:hidden">
+        <script id="rowTemplateCmp" type="text/x-kendo-tmpl">
+                    <tr data-uid="#: uid #"> 
+            
+                    <td style="width:40px;" align="left">
+                    <img style="width:40px;" id = "imgNoti#: alt__id#" class="imgNoti" align="center" src="../images/transaccionesOff.png" />
+                    </td>
+                    <td>
+                    <span class="title">#: alt__msj #</span>
+                    <br>   
+                    <div align="right">#: alt__datehour #</div>
+                    </td>
 
+                    </tr>
+        </script>
+        <script id="altRowTemplateCmp" type="text/x-kendo-tmpl">
+                    <tr class="k-alt" data-uid="#: uid #">
+            
+                    <td style="width:40px;" align="left">
+                    <img style="width:40px;" id="imgNoti#: alt__id#" class="imgNoti" align="center" src="../images/transaccionesOff.png" />
+                    </td>
+                    <td>
+                    <span class="title">#: alt__msj #</span>
+                    <br>
+                    <div align="right">#: alt__datehour #</div>
+                    </td>
+                    </tr>
+            
+        </script>
         <div>
             <div>
                 <table width="100%">
@@ -50,6 +78,7 @@ and open the template in the editor.
                         <td width="230px" id="tdAyuda" name="tdSuperior" align="right">
                             <span id="regalo" hidden="hidden" class="parpadea text"><img src="../images/regalo.png" title="Cumpleaños" onClick="mostrarListaCumple()"/></span>
                             <span id="mensaje" hidden="hidden" class="parpadea text"><img src="../images/regalo.png" title="Mesaje" onClick="mostrarMensajes()"/></span>
+                            <img src="../images/Notificaciones.png" title="Notificaciones" onClick="mostrarNotificaciones()"/>
                             <img src="../images/documentos.png" title="Documentos" onClick="mostrarDocumentos()"/>
                             <img src="../images/configuracion.png" title="" onclick="mostrarConfig()"/>
                             <img src="../images/ayuda.png" title="Ayuda" onClick="ayuda()"/>
@@ -99,6 +128,7 @@ and open the template in the editor.
                                     <p>  #= message #</p>
                                     </div>
                                 </script>
+                                
                                 <style>
                                     .upload-success {
                                         width: 300px;
@@ -109,8 +139,9 @@ and open the template in the editor.
                                     .mmm  {
                                         float: left;
                                         margin: 30px 15px 15px 30px;
-
+                                        
                                     }
+                                    
                                 </style>
                                 <div id="perfil">
                                     <table width="100%" height="100%">
@@ -137,12 +168,12 @@ and open the template in the editor.
                                                 </div>
                                                 <br>
                                             </td>
-                                            <td class="tdIFrame" onmouseover="ocultarArbol(); ocultarDocumentos();" width="auto" align="left" >
+                                            <td class="tdIFrame" onmouseover="ocultarArbol(); ocultarDocumentos(); ocultarNotificaciones();" width="auto" align="left" >
                                                 <div id = "divIFrame">
                                                     <iframe id="idFrame" width="auto" height="100%" src="" frameborder="0" align="left"></iframe>
                                                 </div>
                                                 <div id="divFrameInc" width="100%" height="100%" align="left" style="z-index:-1">
-
+                                                    
                                                     <table width="100%">
                                                         <tr>
                                                             <td width="10px"></td>
@@ -158,7 +189,7 @@ and open the template in the editor.
                                                             </td>
                                                         </tr>
                                                     </table>
-
+                                                    
                                                 </div>
                                             </td>
                                         </tr>
@@ -178,20 +209,32 @@ and open the template in the editor.
                                             </td>
                                         </tr>
                                     </table>
-                                    <span class="k-textbox k-space-left "style="width: 300px;background-color:#3B3B3B; border-color: #3B3B3B">
+                                    <span class="k-textbox k-space-left " style="width: 300px;background-color:#3B3B3B; border-color: #3B3B3B">
                                         <input type="text" id="buscarDoc" name="buscarDoc"  placeholder="Buscar" title="Buscar Documento" style="width:100%;background-color:#2b2b2b; border-color: transparent" />
                                         <a class="k-icon k-i-search">&nbsp;</a>
                                     </span>
                                     <div id="grid"></div>
                                 </div>
-
+                                <div id="divNotificaciones" hidden="hidden">
+                                    <table style="width: 100%">
+                                        <tr>               
+                                            
+                                            <td style="padding: 0px 0px 0px 0px; vertical-align: middle">
+                                                <font color="#ffffff" size="4">Noticias</font>
+                                            </td>
+                                            
+                                        </tr>
+                                    </table>
+                                    
+                                    <div id="gridNotificaciones"></div>
+                                </div>
                                 <div id="divArbol" hidden="hidden">
                                     <table>
                                         <tr>               
                                             <td style="padding: 10px">
                                                 <font color="#ffffff" size="4">Portafolios</font>
                                             </td>
-
+                                            
                                         </tr>
                                         <tr>
                                             <td>
@@ -200,10 +243,10 @@ and open the template in the editor.
                                                     <a class="k-icon k-i-search">&nbsp;</a>
                                                 </span>
                                             </td>
-
+                                            
                                     </table>
                                     <div id="jstree2" style="font-family:Arial;font-size:9pt;color:white;"></div>
-
+                                    
                                 </div>
                                 <div id="divDocumentosd" hidden="hidden" style = "overflow-y: hidden;">
                                     <span style ="float:right; cursor: pointer;"  id = "close" onclick='cerrarListaCumple()'>x</span>
@@ -218,26 +261,29 @@ and open the template in the editor.
                                         <div ng-app='firstApp'>
                                             <div ng-controller='firstControler'>
                                                 <ul ng-repeat='com in items'>
-
+                                                    
                                                     <div class='customer-photo' style='background-image: url(data:image/png;base64,{{com.birthdaypersonpicture}})'></div>
                                                     <div class='customer-name'>{{com.birthdaypersonname}}<br><div>{{com.birthdaypersondate}}</div></div>
                                                     <hr class ="style-two"/>
-
+                                                    
                                                 </ul>
                                             </div>
                                         </div></div>
                                 </div>
-
-
+                                
+                                
+                                
+                                
+                                
                         </td>
                     </tr>
                 </table>            
             </div>
         </div>
-            <audio id="myAudioNoty">
-                <source src="../sounds/Chord0.mp3" type="audio/mpeg">
-                Your browser does not support the <code>audio</code> tag.
-            </audio>
+        <audio id="myAudioNoty">
+            <source src="../sounds/Chord0.mp3" type="audio/mpeg">
+            Your browser does not support the <code>audio</code> tag.
+        </audio>
         <style type="text/css">
             .panel-body {max-height:50%;overflow:scroll;overflow-x: hidden;}
             hr.style-two {
@@ -258,7 +304,7 @@ and open the template in the editor.
                 /*box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);*/
                 margin-left: 5px;
             }
-
+            
             .customer-name {
                 display: inline-block;
                 vertical-align: middle;
