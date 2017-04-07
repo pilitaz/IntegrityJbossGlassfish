@@ -1,46 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-//var app = angular.module("KendoDemos", ["kendo.directives"]);
-//
-//app.controller("CtrlVentanas", function ($scope, $http) {
-//    $scope.hello = "Hello from Controller!";
-//    $scope.objSir = new sir();
-//    $scope.urlSir = $scope.objSir.getUrlSir();
-//    $scope.mapSir = $scope.objSir.getmapSir();
-//    $scope.inputsir = $scope.objSir.getdataInputSir();
-//
-//    $scope.items = [];
-//    $scope.permitirIngreso = "";
-//    $scope.jsonResp = [];
-//    $scope.key1 = [];
-//    
-//    $http.post(ipServicios + baseServicio + "SIRsic_seg", $scope.inputsir
-//            ).success(function (resp, status, headers, config) {
-//
-//        $scope.key1 = Object.keys(resp)[0];
-//        $scope.permitirIngreso = JSON.stringify(resp[$scope.key1].eeEstados[0].Estado);
-//        $scope.jsonResp = resp[$scope.key1];
-//        if ($scope.permitirIngreso == '"OK"') {
-////            if ($scope.jsonResp.ownbirthday[0].mybirthday) {
-////                mostrarCumple();
-////            } else if ($scope.jsonResp[$scope.mapSir]) {
-////                mostrarNotiCumple();
-//                $scope.items = $scope.jsonResp[$scope.mapSir];
-////                document.getElementById("idFrame").src = "fondo.html";
-////            }
-//        } else {
-////            document.getElementById("idFrame").src = "fondo.html";
-////            alertDialogs("Error al consumir el servicio Getbirthdays .\n" + $scope.permitirIngreso);
-//        }
-//    }).error(function (error, status, headers, config) {
-//        document.getElementById("idFrame").src = "fondo.html";
-//        console.log(error);
-//    });
-//});
 
 
 var objSirC = new sirCampos();
@@ -296,7 +253,7 @@ function grillaDatos(obj) {
     var btnIzq = {command: btnUD, title: "&nbsp;", width: "100px"};
 
     var columns = [
-        {field: "cmp_desc", title: "&nbsp;", width: "100%"},
+        {field: "cmp_desc", title: "Campo", width: "100%"},
         {field: "seg_val", title: "&nbsp;", width: "100%"},
         btnIzq
     ];
@@ -442,8 +399,8 @@ function addRow() {
 }
 $(window).resize(function () {
     var viewportHeight = $(window).height();
-    $('#outerWrapper').height(viewportHeight - 380);
-    $('#outerWrapper2').height(viewportHeight - 380);
+    $('#outerWrapper').height(viewportHeight - 350);
+    $('#outerWrapper2').height(viewportHeight - 350);
 
 });
 

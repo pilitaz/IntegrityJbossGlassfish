@@ -173,7 +173,7 @@ function showConExt(e) {
 
 function crearImgCond(div, id, onclick) {
     var x = document.createElement("IMG");
-    x.setAttribute("src", "/Reporteador/images/espacio-95.png");
+    x.setAttribute("src", "../../../images/espacio-95.png");
     x.setAttribute("class", "re_cerrar");
     x.setAttribute("id", id);
     x.setAttribute("onclick", "delCon(" + ("\"" + id + "\"") + ")");
@@ -234,7 +234,7 @@ function creaConcion(i, imas) {
                 comboCmp.value(globalCon[imas].cmp_fin_nom);
             }
             if (globalCon[imas].cmp_ini !== "") {
-                var comboCmp = $("#" + "cmpValCondFirst" + i).data("kendoComboBox");
+                var comboCmp = $("#" + "cmpValoCond" + i).data("kendoComboBox");
                 comboCmp.value(globalCon[imas].cmp_ini);
             }
         }
@@ -266,10 +266,10 @@ function crearComboOpe(id) {
 }
 
 function select(e) {
-    var dataItem1 = this.dataItem(e.item.index());
+    var id = "";
     var numberPattern = /\d+/g;
-    var id = e.sender.element[0].id;
-    var id = id.match(numberPattern)[0];
+    id = e.sender.element.context.id;
+    id = id.match(numberPattern)[0];
     var inputCon1 = JSON.parse(JSON.stringify(inputCon));
     if ((e.sender.element[0].id.indexOf("new") === -1) && (objConAdd.indexOf(id) === -1) && (objConEdit.indexOf(id) === -1)) {
         objConEdit.push(id);
@@ -295,6 +295,7 @@ function creaCmpDefecto() {
         creaConcion(1000000, 1000000);
         $("#cmpValCond1000000").data("kendoComboBox").enable(false);
         $("#conOpeCond1000000").data("kendoComboBox").enable(false);
+        $("#cmpValoCond1000000").data("kendoComboBox").enable(false);
         $('#1000000').unbind('click');
         document.getElementById("divCon1000000").classList.add("divNewFun");
 //        crearBr("1000000");
