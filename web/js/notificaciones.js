@@ -69,7 +69,7 @@ function notificaciones(){  debugger
         dataBound: function () {
             var results = datasource.data();
             changImgFunc(results);
-            cambiarEstado(results);
+            //cambiarEstado(results);
         },
         
     });
