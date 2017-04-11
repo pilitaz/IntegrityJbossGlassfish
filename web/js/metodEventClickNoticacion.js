@@ -12,5 +12,9 @@ function goLinkProcesos(){
 }
 
 function goLinkNotificaciones(){
-    alertDialogs("goLinkNotificaciones");
+    document.getElementById("imgNotificaciones").click();
+}
+
+function blinkNotificaciones(){
+    $("#imgNotificaciones").addClass("parpadea text");
 }

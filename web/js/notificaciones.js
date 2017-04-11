@@ -1,5 +1,5 @@
-function notificaciones(){  debugger             
-    
+function notificaciones(){               
+    $("#notificaciones").removeClass();
     var consultar = new sirNotificaciones();
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();
@@ -58,7 +58,7 @@ function notificaciones(){  debugger
         //navigatable: true,
         columns: [
             //                            { template: "<a class='k-grid-play'><span class='k-sprite pro_bullet1'></span></a>", width: "50px"} ,    
-            {name: "imgNoti", text: " ",  template: "<a class='imgNoti'><img id='imgTransacciones' src='../images/transaccionesOff.png' /></a>",},
+            {name: "imgNoti", text: " ",  template: "<a class='imgNoti'><img id='imgTransacciones' src='../images/transaccionesOff.png' /></a>", width: "50px"},
             
             
             { field: "alt__msj", title: "",  hidden:false},

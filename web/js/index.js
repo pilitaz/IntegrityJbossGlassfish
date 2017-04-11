@@ -33,10 +33,13 @@ $(document).ready(function () {
         tamanoPagIni();
         correLinuxBackTimmer(9000);
         setInterval(scrollFull, 10);
+        if(sessionStorage.getItem("poccargo")!=="100"){
+            $("#imgCongiguracion").hide();
+        }
         document.getElementById("lbNombre").innerHTML = sessionStorage.getItem("usrnom");
         document.getElementById("lbEMail").innerHTML = sessionStorage.getItem("usrmail");
 //        document.getElementById("imgUsuario").src = "../images/equipo/" + sessionStorage.getItem("usuario") + ".png";
-
+        
         document.getElementById("imgUsuario").src = "data:image/png;base64," + consultaImgUsr();
         document.getElementById("logoEmpresa").src = "data:image/png;base64," + sessionStorage.getItem("img");
         document.getElementById("idFrame").src = "fondo.html";
@@ -675,14 +678,24 @@ function tamanoFunciones(e) {
     $("#idFrame").width(div_ancho - 35 - 20);
     $("#includeArbol").height(div_alto - 10);
 }
+function mostrarConfig(){
+    apagarBotones();
+    cambiarFondoTD("tdVerde");
+    document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
+    document.getElementById("idFrame").src = sessionStorage.getItem("url")+"restriccionesData/html/restriccionesData.html";
+}
 
 function mostrarDocumentos() {
     $('#grid').data('kendoGrid').dataSource.read();
     $('#grid').data('kendoGrid').refresh();
+    $("#divNotificaciones").fadeOut("slow");
+    $("#centeredNotification").data("kendoNotification").hide();
     $("#divDocumentos").fadeIn("slow");
 }
-function mostrarNotificaciones() {debugger
-
+function mostrarNotificaciones() {
+    $("#divDocumentos").fadeOut("slow");
+    $("#imgNotificaciones").removeClass();
+    $("#centeredNotification").data("kendoNotification").hide();
     $("#divNotificaciones").fadeIn("slow");
     notificaciones();
 }
@@ -871,7 +884,9 @@ function notifyMe(mensaje) {
         if (Notification.permission !== "granted")
             Notification.requestPermission();
         else {
-
+            if(mensaje.onLoad){
+                    metodEventClickNoticacion(mensaje.onLoad);///metodos ubicados en metodEventClickNoticacion.js 
+                }
                 myAudio.play();
             var notification = new Notification(mensaje.titulo, {
                 icon: '../images/Login%20Inicio-07.png',
@@ -881,23 +896,20 @@ function notifyMe(mensaje) {
                 //window.open("http://stackoverflow.com/a/13328397/1269037"); 
                 myAudio.pause();
                 myAudio.currentTime = 0;
-                if(mensaje.metodo){
-                    metodEventClickNoticacion(mensaje.metodo);///metodos ubicados en metodEventClickNoticacion.js 
+                if(mensaje.onClick){
+                    metodEventClickNoticacion(mensaje.onClick);///metodos ubicados en metodEventClickNoticacion.js 
                 }
             };
             notification.onclose=function (){
                 myAudio.pause();
                 myAudio.currentTime = 0;
+                if(mensaje.onClose){
+                    metodEventClickNoticacion(mensaje.onClose);///metodos ubicados en metodEventClickNoticacion.js 
+                }
             };
 
         }
     }
 }
 
-function mostrarConfig(){
-    apagarBotones();
-    cambiarFondoTD("tdVerde");
-    document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
-//    $("#tdPerfil").fadeIn("slow");
-    document.getElementById("idFrame").src = sessionStorage.getItem("url")+"restriccionesData/html/restriccionesData.html";
-}
+

@@ -79,9 +79,9 @@ and open the template in the editor.
                         <td width="230px" id="tdAyuda" name="tdSuperior" align="right">
                             <span id="regalo" hidden="hidden" class="parpadea text"><img src="../images/regalo.png" title="Cumpleaños" onClick="mostrarListaCumple()"/></span>
                             <span id="mensaje" hidden="hidden" class="parpadea text"><img src="../images/regalo.png" title="Mesaje" onClick="mostrarMensajes()"/></span>
-                            <img src="../images/Notificaciones.png" title="Notificaciones" onClick="mostrarNotificaciones()"/>
+                            <span ><img id="imgNotificaciones" src="../images/Notificaciones.png" title="Notificaciones" onClick="mostrarNotificaciones()"/></span>
                             <img src="../images/documentos.png" title="Documentos" onClick="mostrarDocumentos()"/>
-                            <img src="../images/configuracion.png" title="" onclick="mostrarConfig()"/>
+                            <span ><img id="imgCongiguracion" src="../images/configuracion.png" title="" onclick="mostrarConfig()"/></span>
                             <img src="../images/ayuda.png" title="Ayuda" onClick="ayuda()"/>
                             <img src="../images/salir.png" title="Salir" onClick="cerrarSesion()"/>
                         </td>
@@ -219,12 +219,15 @@ and open the template in the editor.
                                 <div id="divNotificaciones" hidden="hidden">
                                     <table style="width: 100%">
                                         <tr>               
-                                            
+                                            <td style="padding: 0px 0px 0px 10px; width: 35px">                    
+                                                <img src="../images/Notificaciones.png"/>                        
+                                            </td>
                                             <td style="padding: 0px 0px 0px 0px; vertical-align: middle">
                                                 <font color="#ffffff" size="4">Noticias</font>
                                             </td>
                                             
                                         </tr>
+                                        
                                     </table>
                                     
                                     <div id="gridNotificaciones"></div>
