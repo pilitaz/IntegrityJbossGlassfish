@@ -67,6 +67,11 @@ function aprovarVacaciones(){
     });  
   
 }
+function revisarDocumentos(){
+    
+  parent.revisarDocumentosP();
+    
+}
 function rechazarVacaciones(){debugger
     var obs = document.getElementById("ObservacionesJefe").value;
   var obs = obs.trim();

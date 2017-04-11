@@ -7,7 +7,7 @@
 
 
 function sirDatosPersonales() {
-   var urlSir = ipServicios + basePortalNomina + "Consultadatospersonales";
+   var urlSir = ipServicios + baseNomina + "Consultadatospersonales";
     var json = {
    "dsConsultadatospersonales":{  
       "eeDatos":[  

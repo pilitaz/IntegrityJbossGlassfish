@@ -265,7 +265,9 @@ function grilla_Administar(e){debugger
     else
     {}
                       
-}       
+}      
+
+
 function instancias(e){debugger  
     var instacia_proceso = $("#grid").data("kendoGrid").dataItem($(e.target).closest("tr")).proc__name;
     sessionStorage.setItem("instacia_proceso",instacia_proceso);  
@@ -684,3 +686,51 @@ function cerrarCustomPopUp() {
 }
                         
                         
+function revisarDocumentosP(){
+    $("#documentos").append("<div id='docs'></div>");
+    var myWindow1 = $("#docs"),undo = $("#undo");
+                
+    function onClose() {
+        undo.fadeIn();
+        $("#docs").remove();
+    }
+        
+    var UrL= sessionStorage.getItem("url");  
+    myWindow1.kendoWindow({
+        draggable: true,
+        height: "40%",
+        modal: true,
+        resizable: false,
+        title: "Documentos",
+        width: "30%",
+        content: UrL+"procesos/formularioProcesos/html/popupSubirArchivo.html",
+        actions: [
+            "Close"
+        ],                               
+        close: onClose
+    }).data("kendoWindow").center().open();    
+}
+function historicoDocs(){
+    $("#documentos").append("<div id='docs'></div>");
+    var myWindow1 = $("#docs"),undo = $("#undo");
+                
+    function onClose() {
+        undo.fadeIn();
+        $("#docs").remove();
+    }
+        
+    var UrL= sessionStorage.getItem("url");  
+    myWindow1.kendoWindow({
+        draggable: true,
+        height: "40%",
+        modal: true,
+        resizable: false,
+        title: "Documentos",
+        width: "30%",
+        content: UrL+"procesos/formularioProcesos/html/popupSubirArchivo.html",
+        actions: [
+            "Close"
+        ],                               
+        close: onClose
+    }).data("kendoWindow").center().open();    
+}

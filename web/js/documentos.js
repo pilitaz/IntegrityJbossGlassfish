@@ -15,6 +15,7 @@ dsfiles.dsfiles.eeDatos[0].remote_ip = sessionStorage.getItem("ipPublica");
 var grid = "";
 
 function documentos() {
+    $('#divDocumentos').removeAttr('style');
     $('#buscarDoc').keyup(function (e) {
         var value = this.value;
         if (value) {
