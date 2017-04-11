@@ -303,3 +303,6 @@ function ayuda(){
    
 
 }
+function historicoDocumentos(){
+    parent.historicoDocs();
+}
