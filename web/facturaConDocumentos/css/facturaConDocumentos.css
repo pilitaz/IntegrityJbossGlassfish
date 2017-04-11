@@ -7,72 +7,57 @@ and open the template in the editor.
     Created on : 17/08/2016, 02:33:11 PM
     Author     : jenny
 */
-body{
-    font-size: 14px; 
-    font-family: "Verdana"; 
-    color:"#E6E6FA";
-    padding-left: 10px;
+
+.k-grid .rightAling,
+.k-numerictextbox .k-input
+{
+    text-align: right;
+}
+.customPopUp {    
+    max-height: 50%;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width:700px;
+    z-index: 9;
+    background: #ffffff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    color: #000000;
+    overflow: auto;  
 }
 
-div{
-    padding: 2px;
+#disable {
+    height:100%;
+    width:100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 8;
+    background-color:rgba(0,0,0,0.5);
+    color: #000000;
+    overflow: auto;  
 }
 
-table{
-    padding: 2px;
+footer {
+    background-color: #333;
+    width: 100%;
+    bottom: 0;
+    left: 0px;
+    position: fixed;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.sidenavSup {
-    border-style: solid;
-    border-color: #80BD28 #fff  #fff  #fff;
-    height: 100%;
-}
-.letraParrafo{
-    font-style: normal; 
-    font-variant: normal;
-    font-weight: normal;
-    font-stretch: normal;
-    font-size: 14px;
-    line-height: normal;
-    font-family: Verdana;
-}
-.subTitulo{
-    font-style: normal; 
-    font-variant: normal;
-    font-weight: normal;
-    font-stretch: normal;
-    font-size: 17px;
-    line-height: normal;
-    font-family: Verdana;
-    font-weight: bold;
-}
-textarea {
-resize: vertical;
-}
-
-.tdBotton{
-    text-align: center;    
-}
-
-#divFactura{    
-    background-color: #F5F5F5;
+.k-link:not(.k-state-disabled):hover>.k-i-close{
+    background-position: -32px -16px;
 }
 
 td{
     padding: 5px
 }
 
-.k-edit-form-container{
-    width: 99%;
-}
-
-.divElementDropDownList{
-    border-bottom: 1px solid;
-    border-bottom-color: #DFDFDF;
-}
-
-.k-pager-info{
-    display: none;
+table{
+    padding: 2px;
 }
 
 .k-grid tr:hover {
@@ -84,4 +69,25 @@ td{
 
 .k-grid tr.k-alt:not(.k-state-selected):hover {
     background: #f1f1f1;
+}
+
+.k-window-titlebar .k-header {
+    display: none;
+}
+
+.k-grid table tr.k-state-selected
+{
+    background: #ededed;
+    color: #80BD28;
+    border-style: solid;
+
+}
+
+#gridDocumentoAd .k-grid-header
+{
+   display: none
+}
+#gridDocumentoAd .k-grid-content
+{
+   height: 97%;
 }
