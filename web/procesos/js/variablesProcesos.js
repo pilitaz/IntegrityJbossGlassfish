@@ -562,7 +562,16 @@ function guardarVacaciones() {
    "tiempo_rta_solicitud":0,
    "observaciones_empleado":""
          }
-     ]
+     ],
+    "ecreatedocument":[  
+         {  
+            "picdocname":"",
+            "picdescription":"",
+            "picfolderpath":"",
+            "picldocbase64":"",
+            "picmimetype":""
+         }
+      ]
    } 
 };
     

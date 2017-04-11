@@ -69,6 +69,7 @@ function notificaciones(){
         dataBound: function () {
             var results = datasource.data();
             changImgFunc(results);
+            //cambiarEstado(results);
         },
         
     });
@@ -76,7 +77,44 @@ function notificaciones(){
     $(".k-grid").css("font-weight","bold");
     $(".k-grid").css("font-size","14px");
     
+    function cambiarEstado(results){debugger
+        
+     for (var i = 0; i < results.length; i++) {
+         
+         if (results[i].alt__est===1)
+         {
+             results[i].alt__est=2;
+         }        
+         
+     }
+var datos =results;
     
+    var consultar = new cudNotificaciones();
+    var datajson = consultar.getjson();
+    var urlService = consultar.getUrlSir();
+    datajson.dsSICUDsic_alt.eesic_alt=datos;
+     $.ajax({
+                type: "PUT",
+                async: false, 
+                data: JSON.stringify(datajson),
+                url: urlService,
+                dataType : "json",  
+                contentType: "application/json;",
+                success: function (resp) {             
+                    if((resp.dsSICUDsic_alt.eeEstados["0"].Estado)=="OK")
+                    {
+                                              
+                    }
+                    else
+                    {
+                        alertDialogs("Error"+resp.dsSICUDsic_alt.eeEstados["0"].Estado);
+                    }
+                },
+                error: function (e) {   
+                      alertDialogs("Error"+e);
+                }
+            });
+    }
     function changImgFunc(results) {debugger
         
         for (var i = 0; i < results.length; i++) {

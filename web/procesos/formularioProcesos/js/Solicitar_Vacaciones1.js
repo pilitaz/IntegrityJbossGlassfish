@@ -1,5 +1,5 @@
 var array1 =[];
-$(document).ready(function () {debugger
+$(document).ready(function () {
     
 iniciar();
 jefe();
@@ -10,124 +10,61 @@ var y  = $("#contenido").height();
 var z  = parent.tamaño();
 $("#contenido").height((z)-w-x-1);
 
-$("#fileInput1").kendoUpload({        
+$("#fileInput1").kendoUpload({  
+    remove:remover,
     });
 $(".k-upload-button").css("border",0);
-//$(".k-upload").css("border",0);
 $("#fileInput1").closest(".k-upload-button").find("span")[0].innerText="";
-//$(".k-upload-button")[0].className="k-upload k-sprite  pro_upfolder_sup";
-
-//$(".k-upload").css("border",0);
-//$(".k-upload-button").css("border",0);
-////
-//    var base64;
-//    var fileInput = document.getElementById('fileInput');
-//    
-//    fileInput.addEventListener('change', function(e) {debugger
-//        var file = fileInput.files[0];
-//        var reader = new FileReader();
-//        
-//        reader.onload = function(e) {            
-//            base64 = reader.result;
-//            subirArchivo(base64,file);
-//        }        
-//        reader.readAsDataURL(file);	        
-//    });
 
 
 });
-function popUpSubirArchivo(){debugger
-
-    document.getElementById("fileInput1").click();
-//    //  parent.vistaProceso1();
-//    
-//    var estado = document.getElementById("fileInput").attributes[3].nodeValue;
-//    if (estado ==="on"){
-//        
-//         $("#docs").empty();
-//        $("#fileInput1").empty();  
-//        document.getElementById("fileInput").setAttribute("class", "k-sprite pro_upfolder_sup_off");
-//        document.getElementById("fileInput").setAttribute("estado", "off");
-//    }
-//    else
-//    {     
-//        $("#docs").append("<strong> Archivos Adjuntos:</strong><br><input type='file' id='fileInput1'>");  
-//        $("#fileInput1").kendoUpload({
-////                        async: {
-////                            saveUrl: "save",
-////                            removeUrl: "remove",
-////                            autoUpload: true
-////                        },
-////                        cancel: onCancel,
-////                            complete: subirArchivo,
-////                        error: onError,
-////                        progress: onProgress,
-////                        remove: onRemove,
-//                        select: subirArchivo1,
-////                        success: subirArchivo,
-////                        upload: subirArchivo
-//                    });
-//    
-//	$("#fileInput1").closest(".k-upload-button").find("span")[0].innerHTML= "bla bla";
-//        
-//        document.getElementById("fileInput").setAttribute("class", "k-sprite pro_upfolder_sup_on");
-//        document.getElementById("fileInput").setAttribute("estado", "on");
-//    }
+function remover(e){debugger
+ for(var i = 0; i < array1.length; i++ ){
+ 
+    if (array1[i].picdocname===e.files[0].name){
+        delete array1[i];
+    }
     
-    
-}
-function subirArchivo(base64, file){debugger
-            base64 = base64.replace(/data:[a-z]+\/[a-z]+;base64,/g, "");
-        var array = {};
-        array.picldocbase64 = base64;
-        array.picdocname =  file.name;
-        array.picfolderpath = "/ECM";
-        array1.push(array);
+    }
 
 }
-function subirArchivo1(e){debugger
-       var base64;
+function pdf(){
+    var base64;
     var fileInput = document.getElementById('fileInput1');
     
-    fileInput.addEventListener('change', function(e) {debugger
+    
         var file = fileInput.files[0];
         var reader = new FileReader();
         
         reader.onload = function(e) {            
             base64 = reader.result;
             subirArchivo(base64,file);
-        }        
+        };        
         reader.readAsDataURL(file);	        
-    });
-
-//    
-//    var obj = new subirArchivos();    
-//    var json = obj.getjson();
-//    var url = obj.getUrlSir();
-//    //var mapData = obj.getMapData(); 
-//    
-//    var key1 = Object.keys(json)[0];
-//    var key2 = Object.keys(json[key1])[1];                            
-//    json[key1][key2][0].pirfile = base64;
-//    json[key1][key2][0].picfilename = file.name;
-//    
-//    $.ajax({
-//        type: "POST",
-//        data: JSON.stringify(json),
-//        url: url,
-//        dataType: "json",        
-//        contentType: "application/json;",
-//        success: function (e) {             
-//            
-//        } 
-//    }).done(function(e){        
-//        if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {            
-//            parent.closePopUpSubirArchivo("Archivo subido correctamente");
-//        } else {
-//            alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
-//        }       
-//    });
+    
 }
+function popUpSubirArchivo(){debugger
+try{
+    document.getElementById("fileInput1").click();
+}catch(e){alert(e)}
+
+}
+function subirArchivo(base64, file){debugger
+    var fecha = sessionStorage.getItem("fechaSistema");
+    var año = fecha.slice(0, 4);
+    var mes  = fecha.slice(5, 7);
+   // base64 = base64.replace(/data:[a-z]+\/[a-z]+;base64,/g, "");  
+    file.name;
+    var array = {};
+    array.picdocname = file.name ;
+    array.picdescription = " ";
+    array.picfolderpath = "ECM/"+sessionStorage.getItem("companyNIT")+"/"+sessionStorage.getItem("tarea_usuario")+"/"+año+"/"+mes+"/";
+    array.picldocbase64 = base64;
+    array.picmimetype= file.type;
+    array1.push(array);
+       
+}
+
 function guardar(){debugger
     try {
    var consultar = new guardarVacaciones();
@@ -160,6 +97,7 @@ function guardar(){debugger
     datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].fecha_solictud=document.getElementById("fecha").innerHTML;
     datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].fecha_ult_vac= document.getElementById("corte").innerHTML;
     datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].estado_aprocbacion="FALSE";
+    datajson.dsSolicitudVacaciones.ecreatedocument=array1;
         $.ajax({
             
             type: "POST",        
