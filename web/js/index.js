@@ -146,12 +146,13 @@ function cambiarImagen(imgId, estiloTd) {
             document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
             document.getElementById("idFrame").src = sessionStorage.getItem("url") + servicio + "/html/" + servicio + ".html";
             document.getElementById("tdPerfil").style = "display:none";
-        } else if (servicio !== "") {
-            $('#divDerecho').width($(window).width());
-            document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
-            document.getElementById("idFrame").src = urlIFrame + servicio + "/Start.jsp";
-            document.getElementById("tdPerfil").style = "display:none";
-        }
+        } 
+//        else if (servicio !== "") {
+//            $('#divDerecho').width($(window).width());
+//            document.getElementById("divFrameInc").style = "position: absolute; left: 0; top: 0; z-index:-1";
+//            document.getElementById("idFrame").src = urlIFrame + servicio + "/Start.jsp";
+//            document.getElementById("tdPerfil").style = "display:none";
+//        }
 
         cambiarFondoTD(estiloTd);
     }
@@ -374,7 +375,7 @@ function menufunciones() {
                     dataarbol = dataarbol.replace(/Codigo/g, "id");
                     dataarbol = dataarbol.replace(/Depende/g, "parent");
                     dataarbol = dataarbol.replace(/Nombre/g, "text");
-                    dataarbol = dataarbol.replace(/Imagen/g, "icon");
+                    dataarbol = dataarbol.replace(/thumbail/g, "icon");
                     dataarbol = dataarbol.replace(/CON IMAGEN/g, "../css/images/leaf.gif");
                     dataarbol = dataarbol.replace(/SIN IMAGEN/g, "");
                     dataarbol = dataarbol.replace(/Servicio/g, "columna5");
