@@ -953,3 +953,46 @@ function CudTareaReasignarFlujo() {
     };
     
 };
+//---------------------------------------------------------------------------
+function sirDocumentosInstancia() {
+    var urlSir = ipServicios + baseUsrBpm +"ConsultaDataslotsVacaciones";
+    var json = {  
+   "dsSolicitudVacaciones":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "SIRSolicitudVacaciones":[  
+         {  
+            "picprocid":"",
+            "pictaskname":"",
+            "picyear":"",
+            "picmonth":""
+         }
+      ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};

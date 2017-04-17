@@ -54,7 +54,7 @@ function notificaciones(){
         dataSource: datasource,
         scrollable: false,  
         selectable: true,
-        change: onChange,
+        change: onChangeNotificaciones,
         //navigatable: true,
         columns: [
             //                            { template: "<a class='k-grid-play'><span class='k-sprite pro_bullet1'></span></a>", width: "50px"} ,    
@@ -156,7 +156,7 @@ var datos =results;
     }
 }             
 
-function onChange(arg) {debugger
+function onChangeNotificaciones(arg) {debugger
     
     var consultar = new cudNotificaciones();
     var datajson = consultar.getjson();
