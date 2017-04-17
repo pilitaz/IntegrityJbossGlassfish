@@ -1,4 +1,4 @@
-$(document).ready(function () {debugger
+$(document).ready(function () {
     
     llenar();
 var x  = $("#buttonEnviar").height();    
@@ -48,7 +48,7 @@ function aprovarVacaciones(){
         url: urlService,
         dataType: "json",        
         contentType: "application/json;",
-        success: function (resp) { debugger
+        success: function (resp) { 
             if((resp.dsSolicitudVacaciones.eeEstados[0].Estado)=="OK")
             {
            parent.terminarVacaciones(); 
@@ -72,7 +72,7 @@ function revisarDocumentos(){
   parent.revisarDocumentosP();
     
 }
-function rechazarVacaciones(){debugger
+function rechazarVacaciones(){
     var obs = document.getElementById("ObservacionesJefe").value;
   var obs = obs.trim();
     if(obs===""){
@@ -80,7 +80,7 @@ function rechazarVacaciones(){debugger
     }
     else
     {
-           var datos= sessionStorage.getItem("Aprueba_Proceso");
+    var datos= sessionStorage.getItem("Aprueba_Proceso");
     var datos1 = JSON.parse(datos);
     
     var consultar = new CudApruevaVacaciones();
@@ -117,7 +117,7 @@ function rechazarVacaciones(){debugger
         url: urlService,
         dataType: "json",        
         contentType: "application/json;",
-        success: function (resp) { debugger
+        success: function (resp) { 
             if((resp.dsSolicitudVacaciones.eeEstados[0].Estado)=="OK")
             {
                parent.terminarVacaciones(); 
@@ -137,7 +137,7 @@ function rechazarVacaciones(){debugger
 
 }
 
-function llenar(){debugger
+function llenar(){
     
     
     var datos= sessionStorage.getItem("Aprueba_Proceso");
@@ -176,14 +176,21 @@ function llenar(){debugger
                 }else{
                     document.getElementById("pagoAnticipado").innerHTML="No";
                 }
-                
+               
+                if (resp.dsSolicitudVacaciones.eeSolicitudVacaciones[0].maneja_doc===true){
+                    //document.getElementById("verArchivos").setAttribute("class", "k-sprite pro_upfolder_sup_on");
+                    document.getElementById("verArchivos").setAttribute("class", "k-sprite pro_upfolder_sup");
+                }else{
+                     document.getElementById("verArchivos").setAttribute("class", "k-sprite pro_upfolder_sup");
+                     //document.getElementById("verArchivos").setAttribute("class", "k-sprite pro_upfolder_sup_on");
+                }
                 document.getElementById("observaciones").innerHTML=resp.dsSolicitudVacaciones.eeSolicitudVacaciones[0].observaciones_empleado; 
                 
                 
             }
             else   
             {  
-                
+                parent.alertDialogs("Error " + resp.dsSolicitudVacaciones.eeEstados[0].Estado);
             } 
         } ,
         error: function (e) {
