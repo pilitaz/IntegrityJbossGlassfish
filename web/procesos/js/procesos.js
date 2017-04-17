@@ -701,7 +701,7 @@ function revisarDocumentosP(){
         height: "40%",
         modal: true,
         resizable: false,
-        title: "Documentos",
+        title: "Historico Documentos",
         width: "30%",
         content: UrL+"procesos/formularioProcesos/html/popupSubirArchivo.html",
         actions: [

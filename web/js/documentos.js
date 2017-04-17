@@ -75,8 +75,12 @@ function documentos() {
 }
 
 
-function onChange(arg) {
+function onChange(e) {debugger
     bandAlert = 0;
+     e.preventDefault();
+//    var divGrilla = e.delegateTarget.id;
+    var grilla = $("#grid").data("kendoGrid");
+    var item = grilla.dataItem(grilla.select());
     var selected = $.map(this.select(), function (item) {
         return $(item).text();
     });
@@ -104,7 +108,7 @@ function onChange(arg) {
  * @param {type} e
  * @returns {undefined}
  */
-function getFile(e) {
+function getFile(e) {debugger
     try {
         var archivo = sessionStorage.getItem("documento");
         dsfiles.dsfiles.SIRfile = new Array();
@@ -142,7 +146,7 @@ function getFile(e) {
     }
 }
 
-function getFileAsPDF(e) {
+function getFileAsPDF(e) {debugger
     try {
         var archivo = sessionStorage.getItem("documento");
         dsfiles.dsfiles.SIRfile = new Array();
@@ -182,7 +186,7 @@ function getFileAsPDF(e) {
     }
 }
 
-function showFile(e) {
+function showFile(e) {debugger
     try {
         var archivo = sessionStorage.getItem("documento");
         dsfiles.dsfiles.SIRfile = new Array();
