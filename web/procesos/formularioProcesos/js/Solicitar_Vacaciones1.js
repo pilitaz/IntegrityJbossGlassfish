@@ -215,9 +215,9 @@ if(mm<10) {
 
 today = mm+dd+yyyy;
     $("#inicioVacaciones").kendoDatePicker({
-        format:  "yyyy/MM/dd ",
+        format:  "MM/dd/yyyy",
         disableDates: ["sa", "su"],
-        min: new Date(yyyy, mm, dd)
+        min: new Date(mm, dd,yyyy)
     });
     $("#diasPedir").kendoNumericTextBox({format: "0", min:0});
     $("#totaldiasvalor").kendoNumericTextBox({format: "0",min:0 });
@@ -236,9 +236,9 @@ today = mm+dd+yyyy;
             success: function (resp) { 
                 if((resp.dsparam_proc_vac.eeEstados[0].Estado)=="OK")
                 {
-                  document.getElementById("fecha").innerHTML=resp.dsparam_proc_vac.eeparam_proc_vac[0].fec_sol; 
+                  document.getElementById("fecha").innerHTML=resp.dsparam_proc_vac.eeparam_proc_vac[0].fec_sol2; 
                   document.getElementById("pendientes").innerHTML=resp.dsparam_proc_vac.eeparam_proc_vac[0].tot_dias_hab; 
-                  document.getElementById("corte").innerHTML=resp.dsparam_proc_vac.eeparam_proc_vac[0].fec_cort; 
+                  document.getElementById("corte").innerHTML=resp.dsparam_proc_vac.eeparam_proc_vac[0].fec_cort2; 
                   document.getElementById("anticipacion").innerHTML=resp.dsparam_proc_vac.eeparam_proc_vac[0].dias_antic; 
                   //document.getElementById("vacaciones").innerHTML=resp.dsparam_proc_vac.eeparam_proc_vac[0].num_dias_vac; 
                 }

@@ -183,8 +183,8 @@ function llenar(){
                 }
                
                 if (resp.dsSolicitudVacaciones.eeSolicitudVacaciones[0].maneja_doc===true){
-                    //document.getElementById("verArchivos").setAttribute("class", "k-sprite pro_upfolder_sup_on");
-                    document.getElementById("verArchivos").setAttribute("class", "k-sprite pro_upfolder_sup");
+                    document.getElementById("verArchivos").setAttribute("class", "k-sprite pro_upfolder_sup_on");
+                    //document.getElementById("verArchivos").setAttribute("class", "k-sprite pro_upfolder_sup");
                 }else{
                      document.getElementById("verArchivos").setAttribute("class", "k-sprite pro_upfolder_sup");
                      //document.getElementById("verArchivos").setAttribute("class", "k-sprite pro_upfolder_sup_on");

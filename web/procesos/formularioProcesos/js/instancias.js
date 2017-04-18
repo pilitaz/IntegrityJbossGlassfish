@@ -61,8 +61,8 @@ document.getElementById("task1").innerHTML = task ;
             {field: "ProcessInstanceID", title: "Tarea",  hidden:false},      
             {field: "ProcessInstanceName", title: "Nombre de proceso",  hidden:false},
             {field: "workstepname", title: "Nombre Paso",  hidden:false},      
-            {field: "performer", title: "Performer",  hidden:false},
-            {field: "workstepstatus", title: "Status WorkStep",  hidden:false},      
+            {field: "performer", title: "Responsable",  hidden:false},
+            {field: "workstepstatus", title: "Estado",  hidden:false}     
            
            ],                            
                     
