@@ -28,21 +28,6 @@ function cerrarCustomPopUp(idCustomPopUp) {
     instacia = undefined;     
 }
 
-/**
- * Metodo para dar valor a las variables globales desde cada una de las "funciones" donde se coloque la opcion de subir archivos
- * @param {type} idCustomPopUp
- * @returns {undefined}
- */
-function abrirCustomPopUpDocumentosInstacia(idCustomPopUp) {
-    
-    year = "2017";
-    mes = "01";
-    instacia = "3306"
-    
-    abrirCustomPopUpDocumentos(idCustomPopUp);
- 
-}
-
 function abrirCustomPopUpDocumentos(idCustomPopUp) {
     
     $("body").append("<div id='windowCab'></div>");
@@ -217,6 +202,7 @@ function subirArchivo(base64, file){
         } 
     }).done(function(e){        
         if ((e[key1].eeEstados[0].Estado === "OK") || (e[key1].eeEstados[0].Estado === "")) {            
+            $("#imgArchivos")["0"].className = "k-icon po_upfolder_sup";
             $("#gridDocumentoAd").empty();
             cargaListaDocumentos();
             gridDocumentos();

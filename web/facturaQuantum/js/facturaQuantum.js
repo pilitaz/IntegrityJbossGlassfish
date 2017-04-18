@@ -69,7 +69,8 @@ $(document).ready(function() {
     kendoDropDownListVendedor.enable(false); 
         
     if(sessionStorage.getItem("regFactura")){        
-        cargarFactura();        
+        verificarArchivos();
+        cargarFactura();    
     }else{
         gridDetalle();
     }
@@ -1326,6 +1327,66 @@ function borrarBotonesGrilla(){
             id = buttons[i].id;
             document.getElementById(id).remove();
         }
+    }
+}
+
+/**
+ * Metodo para dar valor a las variables globales desde cada una de las "funciones" donde se coloque la opcion de subir archivos
+ * @param {type} idCustomPopUp
+ * @returns {undefined}
+ */
+function abrirCustomPopUpDocumentosInstacia(idCustomPopUp) {
+        
+    var factura = JSON.parse(sessionStorage.getItem("regFactura"));
+    var fecha = new Date(factura.fac__fec);
+    
+    year = fecha.getFullYear();
+    mes = fecha.getMonth()+1; // el mes debe corresponder asi enero = 1, febrero=2 hasta diciembre = 12 por eso se le suma 1
+    instacia = factura.fac__nro;
+    
+    abrirCustomPopUpDocumentos(idCustomPopUp);
+ 
+}
+
+function verificarArchivos(){
+    
+    
+    var factura = JSON.parse(sessionStorage.getItem("regFactura"));
+    var fecha = new Date(factura.fac__fec);
+    
+    year = fecha.getFullYear();
+    mes = fecha.getMonth()+1; // el mes debe corresponder asi enero = 1, febrero=2 hasta diciembre = 12 por eso se le suma 1
+    instacia = factura.fac__nro;
+    
+    try{
+        var objData = new sirConsultaDocumentosPorRuta();    
+        var jsonSIRData = objData.getjson();
+        var urlData = objData.getUrlSir();
+        var mapData = objData.getmapSir()
+        
+        var key1 = Object.keys(jsonSIRData)[0];
+        var key2 = Object.keys(jsonSIRData[key1])[1];  
+        
+        jsonSIRData[key1][key2][0].picfolderpath = "ECM\/"+sessionStorage.getItem("companyNIT")+"\/"+sessionStorage.getItem("portafolio")+"\/"+year+"\/"+mes+"\/"+instacia;               
+        
+        $.ajax({
+            async: false, 
+            type: "POST",
+            data: JSON.stringify(jsonSIRData),
+            url: urlData,
+            dataType: "json",        
+            contentType: "application/json;",
+            success: function (e) {  
+                
+            } 
+        }).done(function(e){         
+            var key1 = Object.keys(e)[0];
+            if ((e[key1].eeEstados[0].Estado === "OK")) {                         
+                $("#imgArchivos")["0"].className = "k-icon po_upfolder_sup";
+            } 
+        });    
+    }catch (e) {
+        alertDialogs(e.message);
     }
 }
 

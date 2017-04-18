@@ -12,8 +12,8 @@ and open the template in the editor.
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="../../scripts/bootstrap.js" type="text/javascript"></script>        
         <link href="../../css/bootstrap.css" rel="stylesheet" type="text/css"/>
-        <script src="../../scripts/jquery-2.2.0.min.js" type="text/javascript"></script> 
         
+        <script src="../../scripts/jquery-2.2.0.min.js" type="text/javascript"></script>         
         <script src="../../scripts/jquery.min.js" type="text/javascript"></script>
         <script src="../../scripts/jquery-ui.js" type="text/javascript"></script>
         <link href="../../css/kendo.common.min.css" rel="stylesheet" type="text/css"/>
@@ -24,15 +24,43 @@ and open the template in the editor.
         <script src="../../js/servicios.js" type="text/javascript"></script>
         <script src="../js/variablesFacturaQuantum.js" type="text/javascript"></script>
         <script src="../js/facturaQuantum.js" type="text/javascript"></script> 
-        
-        <link href="../../css/kendo.metro.min.css" rel="stylesheet" type="text/css"/>
+        <script src="../../js/variablesPopUpDocumentos.js" type="text/javascript"></script>
+        <script src="../../js/popUpDocumentos.js" type="text/javascript"></script>
         <link href="../../css/kendo.metro.mobile.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../css/kendo.metro.min.css" rel="stylesheet" type="text/css"/>
+        
         <link href="../css/facturaQuantum.css" rel="stylesheet" type="text/css"/>
         <link href="../../css/cssSpriteIntegrity.css" rel="stylesheet" type="text/css"/>
-        
-        
+        <link href="../../css/paginaGenerica.css" rel="stylesheet" type="text/css"/>
+        <link href="../../css/popUpDocumentos.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <div id="popUpDocumentos" hidden="hidden" style = "overflow-y: hidden;" class="customPopUp">
+            <div class="k-window-titlebar k-header" style="margin-top: 1px;height: 2em">
+                &nbsp;
+                <span class="k-window-title"><label id="lbAccion"></label></span>
+                <div class="k-window-actions">
+                    <a role="button" href="#" class="k-window-action k-link" aria-label="Close">
+                        <span class="k-icon k-i-close" onclick="cerrarCustomPopUp('popUpDocumentos')" role="button"></span>
+                    </a>
+                </div>
+            </div>
+            <br>
+            <div id="divTituloCustomPopUp">
+                <table style="width: 100%; padding-top: 10px;">
+                    <tr>
+                        <td style="width: 50px; padding-top: 15px;"><a class="k-grid" aling="center"><span class="k-sprite po_bullet1"></span></a></td>
+                        <td>
+                            <h1 id = "subtitulo" class="subTitulo">Documentos adjuntos</h1>                                
+                        </td>                            
+                        <td style="width: 10%; height: 50px; vertical-align: middle; padding-top: 20px;"><span class="k-sprite  po_upfolder_sup" onclick="popUpSubirArchivo()" id="fileInput"  estado="off"></span></td>
+                    </tr>
+                </table>
+                <div class="sidenavSup"></div>
+                <input type='file' id='ipFile' style="display:none;" onchange = "cargarArchivo()">
+            </div>                        
+            <div id="gridDocumentoAd" style="height: 390px; width: 98%;overflow-y: hidden; overflow-x : hidden; margin-right: 0px;margin-left: 5px;"></div>            
+        </div>
         <span id="centeredNotification" style="display:none;"></span>
         <div class="container-fluid">
             <div class="row content">
@@ -42,6 +70,9 @@ and open the template in the editor.
                             <td style="width: 50px"><a class="k-grid"  aling="center"><span class="k-sprite po_bullet1"></span></a></td>
                             <td>
                                 <h1 id = "subtitulo" class="subTitulo">Factura <label id="idNumerofactura"></label></h1>                                
+                            </td>
+                            <td style="width: 50px; text-align: right; padding-right: 20">
+                                <a id ="btnArchivos" class="k-grid" onclick ="abrirCustomPopUpDocumentosInstacia('popUpDocumentos')" aling="center"><span id ="imgArchivos"  class="k-icon po_upfolder_sup_disabled"></span></a>
                             </td>
                             <td style="width: 50px; text-align: right; padding-right: 20">
                                 <a id ="btnGuardar" class="k-grid" onclick ="guardarFactura()" aling="center"><span class="k-icon po_saveon"></span></a>
@@ -274,6 +305,6 @@ and open the template in the editor.
                         </td>                
                         </tr>
             </script>
-        </div>         
+        </div>        
     </body>
 </html>
