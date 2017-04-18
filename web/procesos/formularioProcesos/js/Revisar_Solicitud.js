@@ -143,11 +143,16 @@ function llenar(){
     var datos= sessionStorage.getItem("Aprueba_Proceso");
     var datos1 = JSON.parse(datos);
     
-    var consultar = new SirApruevaVacaciones();
+    var consultar = new sirDocumentosInstancia();
     var datajson = consultar.getjson();
     var urlService = consultar.getUrlSir();
     datajson.dsSolicitudVacaciones.SIRSolicitudVacaciones[0].picprocid=datos1.inst__name;
     datajson.dsSolicitudVacaciones.SIRSolicitudVacaciones[0].pictaskname=datos1.task__name;
+    var año= datos1.task__tst;
+    var year=año.slice(0, 4);                      
+    var month=año.slice(5, 7);
+    datajson.dsSolicitudVacaciones.SIRSolicitudVacaciones[0].picyear=year;
+    datajson.dsSolicitudVacaciones.SIRSolicitudVacaciones[0].picmonth=month;
     $.ajax({
         
         type: "POST",        
@@ -178,8 +183,8 @@ function llenar(){
                 }
                
                 if (resp.dsSolicitudVacaciones.eeSolicitudVacaciones[0].maneja_doc===true){
-                    //document.getElementById("verArchivos").setAttribute("class", "k-sprite pro_upfolder_sup_on");
-                    document.getElementById("verArchivos").setAttribute("class", "k-sprite pro_upfolder_sup");
+                    document.getElementById("verArchivos").setAttribute("class", "k-sprite pro_upfolder_sup_on");
+                    //document.getElementById("verArchivos").setAttribute("class", "k-sprite pro_upfolder_sup");
                 }else{
                      document.getElementById("verArchivos").setAttribute("class", "k-sprite pro_upfolder_sup");
                      //document.getElementById("verArchivos").setAttribute("class", "k-sprite pro_upfolder_sup_on");

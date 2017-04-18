@@ -996,3 +996,45 @@ function sirDocumentosInstancia() {
     };
     
 };
+//---------------------------------------------------------------------------
+function descargaDocumentosInstancia() {
+    var urlSir = ipServicios + baseServicio +"GetDocument";
+    var json = {  
+   "dsfiles":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "SIRfile":[  
+         {  
+            "pilfilename":"",
+            "piitipo":0,
+            "picfilepath":""
+         }
+      ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};

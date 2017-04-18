@@ -78,15 +78,55 @@ $(document).ready(function() {debugger
                             columns: [
                                 {field: "nomfile", title: "",  hidden:false},
                                 {command: [
-                                        {name: "edit", text: "edit", template: "<a class='k-grid-edit'><span class='k-sprite po_editoff'></span></a>"},            
-                      ], width: "90px"}],
+                                        {name: "descargar", text: "descargar", template: "<a class='k-grid-descargar'><span class='k-sprite pro_downflecha'></span></a>",  click:descargar},            
+                                ], width: "90px"}],
                                 
                             
                            
                         });
       $("#grillaDocs .k-grid-header").css('display', 'none');
     
+    function descargar(e){
+         debugger
+    e.preventDefault();
+    var divGrilla = e.delegateTarget.id;
+    var grilla = $("#grillaDocs").data("kendoGrid");
+    var item = grilla.dataItem(grilla.select());
     
+     try{
+        
+          var  consultar = new descargaDocumentosInstancia();
+          var  datajson = consultar.getjson();
+          var  urlService = consultar.getUrlSir();
+          datajson.dsfiles.SIRfile[0].pilfilename=item.nomfile;
+          datajson.dsfiles.SIRfile[0].piitipo=item.tipo;
+          datajson.dsfiles.SIRfile[0].picfilepath=item.ruta;
+        
+        $.ajax({
+            async: false, 
+            type: "POST",
+            data: JSON.stringify(datajson),
+            url: urlService,
+            dataType: "json",        
+            contentType: "application/json;",
+            success: function (e) {  
+                
+            } 
+        }).done(function(e){     debugger    
+            var key1 = Object.keys(e)[0];
+            if ((e[key1].dsfiles.dsfiles.eeEstados[0].Estado === "OK")) { debugger           
+                kendo.saveAs({
+                    dataURI: e.response.polfile,
+                    
+                });
+            } else {
+                parent.alertDialogs(e[key1].eeEstados[0].Estado);
+            } 
+        });     
+    } catch (e) {
+        alertDialogs("Function: consumeServAjaxSIR Error: " + e.message);
+    }
+    }
     
 });
 

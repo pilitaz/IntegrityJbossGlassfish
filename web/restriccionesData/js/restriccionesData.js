@@ -295,8 +295,12 @@ function grillaDatos(obj) {
                     verboHtmlD = operation;
                     if (operation === 'read') {
                         return JSON.stringify(inputsirD);
+                    }else if(operation === 'destroy'){
+                        debugger
+                        var key1 = Object.keys(inputCudD)[0];
+                        inputCudD[key1][mapCudD] = [options];
+                        return JSON.stringify(inputCudD);
                     } else {
-
                         var key1 = Object.keys(inputCudD)[0];
                         var cmp = options.restrDato;
                         options.cmp_nom = cmp;
@@ -658,7 +662,6 @@ function clickArbol(txt) {
         inputsirDa.dsSIRsic_seg.eeSIRsic_seg["0"].pilsegtip = true;
         inputsirDa.dsSIRsic_seg.eeSIRsic_seg["0"].picusrcod = txt;
 
-        debugger
         grillaCampos(inputsirCa);
         grillaDatos(inputsirDa);
         $('#btnAddCampos').show();

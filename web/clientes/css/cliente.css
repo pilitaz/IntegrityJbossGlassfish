@@ -34,3 +34,11 @@ table{
 .k-window-titlebar .k-header {
     display: none;
 }
+#outerWrapper{
+  background-color: #FFFFFF;
+  position:relative;
+  min-height:470px;
+}
+#grid {
+  height:100%;
+}

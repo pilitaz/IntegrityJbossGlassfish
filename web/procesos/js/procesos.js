@@ -242,7 +242,7 @@ function grilla_Administar(e){debugger
         var myWindow2 = $("#windowg"),undo = $("#undo");                
         function onClose1() {
             undo.fadeIn();
-            $("#grillapopUp").remove();
+            $("#windowg").remove();
         }       
         var UrL= sessionStorage.getItem("url");
         myWindow2.kendoWindow({
@@ -371,13 +371,14 @@ function iniciarProceso(e){debugger
 function vistaProceso(e){
     var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
     if (adm=== true ){               
-        var myWindow1 = $("#textarea"),undo = $("#undo");
-                
-        function onClose() {
-            undo.fadeIn();
-            $("#textarea").remove();
         
-        }
+       $("#textarea").append("<div id='windowform1'></div>");
+    var myWindow1 = $("#windowform1"),undo = $("#undo");
+                
+    function onClose() {debugger
+        //undo.fadeIn();
+        $("#windowform1").remove();
+    }
         var UrL= sessionStorage.getItem("url");  
         myWindow1.kendoWindow({
             draggable: true,
@@ -427,11 +428,12 @@ function vistaProceso1(e){
 function grafica(e){
     var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
     if (adm=== true ){               
-        var myWindow1 = $("#textarea"),undo = $("#undo");
+         $("#textarea").append("<div id='windowg2'></div>"); 
+        var myWindow1 = $("#windowg2"),undo = $("#undo");
                 
         function onClose() {
             undo.fadeIn();
-            $("#textarea").remove();
+            $("#windowg2").remove();
         
         }
         var UrL= sessionStorage.getItem("url");  
@@ -701,7 +703,7 @@ function revisarDocumentosP(){
         height: "40%",
         modal: true,
         resizable: false,
-        title: "Documentos",
+        title: "Historico Documentos",
         width: "30%",
         content: UrL+"procesos/formularioProcesos/html/popupSubirArchivo.html",
         actions: [
