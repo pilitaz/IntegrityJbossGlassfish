@@ -18,16 +18,16 @@ $(window).resize(function () {
 
 $(document).ready(function () {
     document.getElementById("titulo").innerHTML = sessionStorage.getItem("nomRepo");
-    debugger
+
     $("#btnBack").show();
-    if(sessionStorage.getItem("menuToViewRepo")){
+    if (sessionStorage.getItem("menuToViewRepo")) {
         $("#btnBack").hide();
         sessionStorage.removeItem("menuToViewRepo");
     }
 //    mostrarGrid();
     cmp("POST");
-    
-    
+
+
 });
 /**
  * funcion para exttraer todos las llaves de un obj y si tiene algún espacio cambiarlo para que lo entienda Kendo
@@ -41,17 +41,17 @@ function obtkeysObj() {
         var numberPattern = /\s|\(|\)|'|\+|\-|\*|\/|\{|\}|\[|\]|\.|\,|\=|\¡|\!|\¿|\?|\$|\%/g;
         var changeObj = JSON.stringify(jsonReporte);
         for (var key in obj[0]) {//saca las llaves del json de entrada
-            
+
             if (key.match(numberPattern)) {
                 arrgloitemEsp.push(key);
                 keyEspNone = key.replace(numberPattern, "_");
-            }else{
+            } else {
                 keyEspNone = key;
             }
-                key = {field: keyEspNone,
-                    title: key,
-                };
-            
+            key = {field: keyEspNone,
+                title: key,
+            };
+
             columnasRepo.push(key);
         }
         for (var i = 0; i < arrgloitemEsp.length; i++) {
@@ -61,7 +61,7 @@ function obtkeysObj() {
                 delete jsonReporte.Reporte[j][arrgloitemEsp[i]];
             }
         }
-        
+
     } catch (e) {
 
     }
@@ -77,28 +77,35 @@ function mostrarGrid() {
     ////////////////////////////////////////////////////////////////////////////
     var schema = new Object();
     schema.model = new Object();
-    
+
     var align = "";
     var formato = "";
     var posicion;
-    if(columnasRepo.length !== 0){
-        for(var i = 0; i<columnas.length; i++){
-        posicion = parseInt(columnas[i].rpt_cmp_pos);
-        schema.model[columnas[i].cmp_dsc] = new Object();
-        schema.model[columnas[i].cmp_dsc].type = columnas[i].cmp_td;
-        if((columnas[i].cmp_td==="number")||(columnas[i].cmp_td==="decimal")){
-            align = "rightAling";
-            formato= "n3";
-        }else{
-            align = "";
-            formato= "n0";
+    if (columnasRepo.length !== 0) {
+        for (var i = 0; i < columnasRepo.length; i++) {
+
+            var columna = jQuery.map(columnas, function (obj) {
+                if (obj.rpt_cmp_vis === columnasRepo[i].title)
+                    return obj; // or return obj.name, whatever.
+            });//en la variable columna queda todo el objeto con el cual columnas repo y columnas hacen match
+            columna = columna[0];
+            posicion = parseInt(columna.rpt_cmp_pos);
+            schema.model[columna.cmp_dsc] = new Object();
+            schema.model[columna.cmp_dsc].type = columna.cmp_td;
+            if ((columnas.cmp_td === "number") || (columna.cmp_td === "decimal")) {
+                align = "rightAling";
+                formato = "n3";
+            } else {
+                align = "";
+                formato = "n0";
+            }
+                columnasRepo[i].template = "<div class='" + align + "'>#= kendo.toString( " + columnasRepo[i].field + ",'" + formato + "')#</div>";
+            
         }
-        columnasRepo[i].template = "<div class='"+align+"'>#= kendo.toString( "+ columnasRepo[i].field+",'"+formato+"')#</div>";
     }
-    }
-    
+
     ////////////////////////////////////////////////////////////////////////////
-    
+
     $(window).trigger("resize");
     $("#grid").kendoGrid({
         toolbar: ["pdf", "excel"],
@@ -237,7 +244,7 @@ function PopUpCondicion() {
     $("#windowVfltr1").append("<div id='windowVfltr'></div>");
     var myWindow = $("#windowVfltr");
 //            undo = $("#undo");
-    function onClose() {debugger
+    function onClose() {
         document.getElementById("windowVfltr1").remove();
 //            undo.fadeIn();
         mostrarGrid();
@@ -265,7 +272,7 @@ function PopUpCondicion() {
  * @returns {undefined}
  */
 function cerrarWindow() {
-    
+
     $("#windowVfltr").data("kendoWindow").close();
 //    onClose()
     mostrarGrid();
@@ -288,7 +295,7 @@ function errorPopUp(message) {
  * Funcion para mostrar el popup de filtros ben el evento click del boton de filtros
  * @returns {undefined}
  */
-function clickFiltros(){
+function clickFiltros() {
     PopUpCondicion();
 }
 
@@ -297,13 +304,13 @@ function clickFiltros(){
  * @returns {undefined}
  */
 function mostrarCustomPopUp() {
-    if(bandAlert===0){
+    if (bandAlert === 0) {
         bandAlert++;
-        var heightDiv = parseInt($("#divContenido").height())+310; 
-        $("body").append("<div id='disable' style='height:"+heightDiv+"px;'></div>");
+        var heightDiv = parseInt($("#divContenido").height()) + 310;
+        $("body").append("<div id='disable' style='height:" + heightDiv + "px;'></div>");
         $("#customPopUp").fadeIn("slow");
     }
-    
+
 }
 /**
  * funcion para cerrar el popup y eliminar varia variables de sesion 
@@ -318,7 +325,7 @@ function cerrarCustomPopUp() {
     $("#popUpFltr").hide();
     $("#popUpFltrV2").hide();
     $("#btnCrearFltr").hide();
-    
+
     sessionStorage.removeItem("obj");
 //    $('#gird').data('kendoGrid').dataSource.read();
 //    $('#gird').data('kendoGrid').refresh();
@@ -359,7 +366,7 @@ function cmp(verHtml) {
             alertDialogs("Error al consumir el servicio de CrearFiltro" + e.status + " - " + e.statusText);
         }
     }).done(function () {
-        if(jsonResp){
+        if (jsonResp) {
             columnas = jsonResp.dsSIRrep_rpt_det.eerep_rpt_cmp;
         }
         if (permitirIngreso == '"OK"') {
@@ -377,9 +384,9 @@ function cmp(verHtml) {
 }
 
 function getPDF(selector) {
-     // $("#pag").removeClass("fondo");
-        kendo.drawing.drawDOM($(selector),{ forcePageBreak: ".page-break" }).then(function(group){
-          kendo.drawing.pdf.saveAs(group, "Certificado_Retencion.pdf");
-        });
+    // $("#pag").removeClass("fondo");
+    kendo.drawing.drawDOM($(selector), {forcePageBreak: ".page-break"}).then(function (group) {
+        kendo.drawing.pdf.saveAs(group, "Certificado_Retencion.pdf");
+    });
 //        $("#principal").addClass("jorge");
-      }
+}

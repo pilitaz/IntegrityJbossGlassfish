@@ -250,6 +250,7 @@ $(document).ready(function () {
         }}
         }
     });
+//    $(window).trigger("resize");
     var grid1 = $("#grid").kendoGrid({
         dataSource: dataSource,
 
@@ -715,3 +716,8 @@ function cerrarClienteCabecera(){
     console.log(sessionStorage.getItem("url")+"clientes/html/clienteDetalle"+".html");
     window.location.replace( sessionStorage.getItem("url")+"clientes/html/clienteDetalle.html");
 }  
+
+//$(window).resize(function () {
+//    var viewportHeight = $(window).height();
+//    $('#outerWrapper').height(viewportHeight - 61);
+//});

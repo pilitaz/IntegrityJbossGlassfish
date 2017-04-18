@@ -33,7 +33,7 @@ $(document).ready(function () {
         tamanoPagIni();
         correLinuxBackTimmer(9000);
         setInterval(scrollFull, 10);
-        if(sessionStorage.getItem("poccargo")!=="100"){
+        if(sessionStorage.getItem("poccargo")!=="9999"){
             $("#imgCongiguracion").hide();
         }
         document.getElementById("lbNombre").innerHTML = sessionStorage.getItem("usrnom");
@@ -884,10 +884,10 @@ function notifyMe(mensaje) {
         if (Notification.permission !== "granted")
             Notification.requestPermission();
         else {
-            if(mensaje.onLoad){
-                    metodEventClickNoticacion(mensaje.onLoad);///metodos ubicados en metodEventClickNoticacion.js 
-                }
-                myAudio.play();
+            if (mensaje.onLoad) {
+                metodEventClickNoticacion(mensaje.onLoad);///metodos ubicados en metodEventClickNoticacion.js 
+            }
+            myAudio.play();
             var notification = new Notification(mensaje.titulo, {
                 icon: '../images/Login%20Inicio-07.png',
                 body: mensaje.texto,
@@ -896,14 +896,15 @@ function notifyMe(mensaje) {
                 //window.open("http://stackoverflow.com/a/13328397/1269037"); 
                 myAudio.pause();
                 myAudio.currentTime = 0;
-                if(mensaje.onClick){
+                if (mensaje.onClick) {
                     metodEventClickNoticacion(mensaje.onClick);///metodos ubicados en metodEventClickNoticacion.js 
                 }
+                notification.close();
             };
-            notification.onclose=function (){
+            notification.onclose = function () {
                 myAudio.pause();
                 myAudio.currentTime = 0;
-                if(mensaje.onClose){
+                if (mensaje.onClose) {
                     metodEventClickNoticacion(mensaje.onClose);///metodos ubicados en metodEventClickNoticacion.js 
                 }
             };
