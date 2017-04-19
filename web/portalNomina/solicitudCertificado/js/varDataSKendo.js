@@ -57,7 +57,7 @@ function sir() {
 
 ///////////////////////////////////////////////////////////////////////////////////////
 function cud() {
-    var url = ipServicios + baseNomina + "SISolicitudcertificado";
+    var url = ipServicios + basePortalnomina + "SISolicitudcertificado";
     var mapCud = "eesic_ciu";
     var dataInputCud = {
         "dsSISolicitudcertificado": {

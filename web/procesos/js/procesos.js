@@ -368,11 +368,10 @@ function iniciarProceso(e){debugger
     }).data("kendoWindow").center().open();    
     
 }
-function vistaProceso(e){
+function vistaProceso(e){debugger
     var adm = this.dataItem($(e.currentTarget).closest("tr")).adm;
-    if (adm=== true ){               
-        
-       $("#textarea").append("<div id='windowform1'></div>");
+
+    $("#textarea").append("<div id='windowform1'></div>");
     var myWindow1 = $("#windowform1"),undo = $("#undo");
                 
     function onClose() {debugger
@@ -394,8 +393,8 @@ function vistaProceso(e){
             ],                               
             close: onClose
         }).data("kendoWindow").center().open();    
-    }
-    else{}
+    
+    
 }
 function vistaProceso1(e){
         
@@ -646,7 +645,7 @@ function solicitaVacaciones(){debugger
     alertDialogs("Se ha iniciado el proceso correctamente");
  
 }
-function changImgFunc(results) {
+function changImgFunc(results) {debugger
 
     for (var i = 0; i < results.length; i++) {
         if(results[i].can__start===true){                            
@@ -727,9 +726,9 @@ function historicoDocs(){
         height: "40%",
         modal: true,
         resizable: false,
-        title: "Documentos",
-        width: "30%",
-        content: UrL+"procesos/formularioProcesos/html/popupSubirArchivo.html",
+        title: "Historico Vacaciones",
+        width: "70%",
+        content: UrL+"procesos/formularioProcesos/html/popupHistoricoVacaciones.html",
         actions: [
             "Close"
         ],                               
