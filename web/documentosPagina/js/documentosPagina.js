@@ -77,6 +77,7 @@ function gridDocumentosPagina(){
         editable: false        
     }).data("kendoGrid");
     
+    
     function detallesArchivo(e){ 
         debugger
         e.preventDefault();
@@ -111,7 +112,8 @@ function gridDocumentosPagina(){
             }).done(function(e){         
                 var key1 = Object.keys(e)[0];
                 if ((e[key1].eeEstados[0].Estado === "OK")) {            
-                    
+                    abrirCustomPopUpPreview("popUpPreview")
+                    document.getElementById("ifPreview").src = "https://docs.google.com/gview?url="+e.dsSIRdoc_dump.edocdump["0"].polfile+"&embedded=true" 
                 } else {
                     alertDialogs(e[key1].eeEstados[0].Estado);
                 } 
@@ -120,6 +122,31 @@ function gridDocumentosPagina(){
             alertDialogs("Function: consumeServAjaxSIR Error: " + e.message);
         }
     }
+}
+
+function mostrarCustomPopUpPreview(idcustomPopUp) {    
+    $("#"+idcustomPopUp).fadeIn("slow");
+}
+
+function cerrarCustomPopUpPreview(idCustomPopUp) {
+    $("#disable").fadeOut("slow");
+    $("#"+idCustomPopUp).fadeOut("slow");
+    $("#disable" ).remove();   
+}
+
+function abrirCustomPopUpPreview(idCustomPopUp) {
+    
+    $("body").append("<div id='windowCab'></div>");
+    var myWindow = $("#windowCab");
+    var undo = $("#undo");
+    
+    function onCloseCabecera() {
+        document.getElementById("windowCab").remove();
+        undo.fadeIn();
+    }
+    $("body").append("<div id='disable'></div>");
+        
+    mostrarCustomPopUpPreview(idCustomPopUp); 
 }
 
 

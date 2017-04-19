@@ -110,6 +110,87 @@
       "width": "36px",
       "height": "36px",
       "border-radius": "30px"
-    }
+    },    
+    {
+      "id": "empleado",
+      "title": "Representa el rol \"Empleado\" en la empresa.",
+      "top": "100px",
+      "left": "40px",
+      "width": "24px",
+      "height": "63px",
+      "border-radius": "10px"
+    },
+    {
+      "id": "jefe",
+      "title": "Representa el rol \"Jefe\" en la empresa.",
+      "top": "350px",
+      "left": "40px",
+      "width": "24px",
+      "height": "63px",
+      "border-radius": "10px"
+    },
+    {
+      "id": "dueñoProceso",
+      "title": "Representa el rol \"Administrador del Proceso\" en la empresa.",
+      "top": "580px",
+      "left": "40px",
+      "width": "24px",
+      "height": "100px",
+      "border-radius": "10px"
+    },
+    {
+      "id": "procesoSolicitudVacaciones",
+      "title": "El proceso \"Solicitud de Vacaciones\" permite a todo empleado realizar el trámite de su derecho a vacaciones ante la empresa.",
+      "top": "300px",
+      "left": "8px",
+      "width": "28px",
+      "height": "150px",
+      "border-radius": "10px"
+    },
+    {
+      "id": "dataObjectSolicitudInicio",
+      "title": "Atributos objeto \"Solicitud\": Empresa, identificación del empleado, fecha de ingreso a la empresa, fecha del último corte de vacaciones, total de días pendientes por disfrutar.",
+      "top": "360px",
+      "left": "218px",
+      "width": "34px",
+      "height": "48px",
+      "border-radius": "10px"
+    },
+    {
+      "id": "dataObjectSolicitudAprobada",
+      "title": "Atributos objeto \"Solicitud [aprobado]\": Empresa, identificación del empleado, fecha de ingreso a la empresa, fecha del último corte de vacaciones, total de días pendientes por disfrutar, días de anticipación para la solicitud de vacaciones, fecha de inicio de vacaciones, total de días hábiles a tomar, total de días en valor, nombre de su jefe inmediato, fecha de solicitud de vacaciones, resultado regla número 1, resultado regla número 2, Estado: aprobado, observaciones (opcional).",
+      "top": "608px",
+      "left": "966px",
+      "width": "34px",
+      "height": "48px",
+      "border-radius": "10px"
+    },
+    {
+      "id": "dataObjectSolicitudRechazada",
+      "title": "Atributos objeto \"Solicitud [rechazado]\": Empresa, identificación del empleado, fecha de ingreso a la empresa, fecha del último corte de vacaciones, total de días pendientes por disfrutar, días de anticipación para la solicitud de vacaciones, fecha de inicio de vacaciones, total de días hábiles a tomar, total de días en valor, nombre de su jefe inmediato, fecha de solicitud de vacaciones, resultado regla número 1, resultado regla número 2, Estado: rechazado, observaciones.",
+      "top": "101px",
+      "left": "966px",
+      "width": "34px",
+      "height": "48px",
+      "border-radius": "10px"
+    },
+    {
+      "id": "dataObjectSolicitudPreVerificación",
+      "title": "Atributos objeto \"Solicitud [pre-verificación]\": Empresa, identificación del empleado, fecha de ingreso a la empresa, fecha del último corte de vacaciones, total de días pendientes por disfrutar, días de anticipación para la solicitud de vacaciones.",
+      "top": "360px",
+      "left": "380px",
+      "width": "34px",
+      "height": "48px",
+      "border-radius": "10px"
+    },
+    {
+      "id": "dataObjectSolicitudVerificado",
+      "title": "Atributos objeto \"Solicitud [verificación]\": Empresa, identificación del empleado, fecha de ingreso a la empresa, fecha del último corte de vacaciones, total de días pendientes por disfrutar, días de anticipación para la solicitud de vacaciones, fecha de inicio de vacaciones, total de días hábiles a tomar, total de días en valor, nombre de su jefe inmediato, fecha de solicitud de vacaciones, resultado regla número 1, resultado regla número 2.",
+      "top": "360px",
+      "left": "543px",
+      "width": "34px",
+      "height": "48px",
+      "border-radius": "10px"
+    }    
   ]
 }

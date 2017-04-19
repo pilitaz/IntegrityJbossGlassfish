@@ -22,7 +22,8 @@ and open the template in the editor.
         <link href="../../css/kendo.metro.min.css" rel="stylesheet" type="text/css"/>
         <link href="../../css/kendo.metro.mobile.min.css" rel="stylesheet" type="text/css"/>        
         <link href="../../css/cssSpriteIntegrity.css" rel="stylesheet" type="text/css"/>
-        <link href="../../css/integrity.css" rel="stylesheet" type="text/css"/>
+        <link href="../../css/integrity.css" rel="stylesheet" type="text/css"/>        
+        <link href="../css/documentosPagina.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div id="divSubtitulo">
@@ -34,6 +35,38 @@ and open the template in the editor.
         </div>        
         <div class="container-fluid">            
             <div id="gridDocumentosPaginas"></div>        
-        </div>            
+        </div>
+        <div id="popUpPreview" hidden="hidden" style = "overflow-y: hidden;" class="customPopUp">
+            <div class="k-window-titlebar k-header" style="margin-top: 1px;height: 2em">
+                &nbsp;
+                <span class="k-window-title"><label id="lbAccion"></label></span>
+                <div class="k-window-actions">
+                    <a role="button" href="#" class="k-window-action k-link" aria-label="Close">
+                        <span class="k-icon k-i-close" onclick="cerrarCustomPopUpPreview('popUpPreview')" role="button"></span>
+                    </a>
+                </div>
+            </div>
+            <br>
+            <div id="divTituloCustomPopUp">
+                <table style="width: 100%; padding-top: 10px;">
+                    <tr>
+                        <td style="width: 50px; padding-top: 15px;"><a class="k-grid" aling="center"><span class="k-sprite po_bullet1"></span></a></td>
+                        <td>
+                            <h1 id = "subtitulo" class="subTitulo"><label id="lbTitulo"></label></h1>
+                        </td>                                                    
+                    </tr>
+                </table>
+                <div class="sidenavSup"></div>                
+            </div>                        
+            <div id="gridDocumentoAd" style="height: 390px; width: 98%;overflow-y: hidden; overflow-x : hidden; margin-right: 0px;margin-left: 5px;">
+                <iframe id="ifPreview" class="doc" src=""></iframe>
+                <table style="position: absolute;top: 100px;left: 630px;">
+                    <tr>
+                        <td>Hola</td>
+                        <td>Hola</td>
+                    </tr>
+                </table>
+            </div>            
+        </div>
     </body>
 </html>
