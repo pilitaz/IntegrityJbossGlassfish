@@ -726,9 +726,9 @@ function historicoDocs(){
         height: "40%",
         modal: true,
         resizable: false,
-        title: "Documentos",
-        width: "30%",
-        content: UrL+"procesos/formularioProcesos/html/popupSubirArchivo.html",
+        title: "Historico Vacaciones",
+        width: "70%",
+        content: UrL+"procesos/formularioProcesos/html/popupHistoricoVacaciones.html",
         actions: [
             "Close"
         ],                               

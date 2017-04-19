@@ -7,7 +7,7 @@
 
 function sirSaldos() {
     var mapData = "ttconsultasaldos";
-    var urlSir = ipServicios + baseNomina +"SIConsultasaldos";
+    var urlSir = ipServicios + basePortalnomina +"SIConsultasaldos";
     var json = {  
         "dsSIConsultasaldos":{  
             "eeDatos":[  

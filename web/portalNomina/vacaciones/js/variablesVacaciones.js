@@ -8,7 +8,7 @@
 function sirVacaciones() {
     
     var mapData = "ttconsutavacaiones";
-    var urlSir = ipServicios + baseNomina +"SIConsultavacaciones";
+    var urlSir = ipServicios + basePortalnomina +"SIConsultavacaciones";
     var json = {  
         "dsSIConsultavacaciones":{  
             "eeDatos":[  

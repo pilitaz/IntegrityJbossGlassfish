@@ -84,7 +84,7 @@ function onChange(e) {debugger
     var selected = $.map(this.select(), function (item) {
         return $(item).text();
     });
-    sessionStorage.setItem("documento", selected);
+    sessionStorage.setItem("documento",item.tostring());
     var tipoArchivo = sessionStorage.getItem("documento").split(".")[sessionStorage.getItem("documento").split(".").length - 1];
 
     var actions = new Array();

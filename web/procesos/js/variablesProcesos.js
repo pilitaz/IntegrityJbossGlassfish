@@ -1038,3 +1038,44 @@ function descargaDocumentosInstancia() {
     };
     
 };
+//---------------------------------------------------------------------------
+function consultaHistoricoVacaciones() {
+    var urlSir = ipServicios + baseNomina +"SIRHistoricoVacaciones";
+    var json = {  
+   "dshistoricovacas":{  
+      "eeDatos":[  
+         {  
+            "picusrcod":sessionStorage.getItem("usuario"),
+            "picfiid":sessionStorage.getItem("picfiid"),
+            "local_ip":sessionStorage.getItem("ipPrivada"),
+            "remote_ip":sessionStorage.getItem("ipPublica")
+         }
+      ],
+      "eeParam":[  
+         {  
+            "piccedula":sessionStorage.getItem("clienteNIT"),
+            
+         }
+      ]
+   }
+};
+    
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+    
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+    
+};

@@ -15,7 +15,7 @@
  */
 function sirConsultaAnoLiq() {
     var mapData = "ttconsultaanoliq";    
-    var urlSir = ipServicios + baseNomina + "SIConsultaanoliq";
+    var urlSir = ipServicios + basePortalnomina + "SIConsultaanoliq";
     var json = {
                         "dsConsultaanoliq": {
                                 "eeDatos": [{
@@ -59,7 +59,7 @@ function sirConsultaAnoLiq() {
 function sirConsultaNomina() {
     
     var mapData = "ttconsultanomina";
-    var urlSir = ipServicios + baseNomina +"SIConsultanomina";
+    var urlSir = ipServicios + basePortalnomina +"SIConsultanomina";
     var json = {  
         "dsconsultanomina":{  
             "eeDatos":[  
@@ -110,7 +110,7 @@ function sirConsultaNomina() {
 function sirComprobante() {
     
     var mapData = "ttconsultacomprobante";
-    var urlSir = ipServicios + baseNomina +"SIRcomprobante";
+    var urlSir = ipServicios + basePortalnomina +"SIRcomprobante";
     var json = {  
         "dscomprobante":{  
             "eeDatos":[  
