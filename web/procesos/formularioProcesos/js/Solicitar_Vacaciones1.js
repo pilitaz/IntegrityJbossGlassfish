@@ -215,7 +215,7 @@ if(mm<10) {
 
 today = mm+dd+yyyy;
     $("#inicioVacaciones").kendoDatePicker({
-        format:  "yyyy/MM/dd",
+        format:  "MM/dd/yyyy",
         disableDates: ["sa", "su"],
         min: new Date(yyyy, mm, dd)
     });
