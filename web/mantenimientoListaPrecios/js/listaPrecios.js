@@ -32,11 +32,15 @@ $(document).ready(function () {
 
 function gridDetalleListaPrecios() {
 //    datasource1();
+    $(window).trigger("resize");
     var grid = $("#gridDetalleListaPrecios").kendoGrid({
         dataSource: dataGridDetalleListaPrecios,
         batch: false,
         filterable: true,
         pageable: false,
+//        dataBound: resizeGrid,
+//        height: function (e){var viewportHeight = $('#outerWrapper').height();
+//            return viewportHeight-60},
         columns: [
             {
                 field: "cla__des",
@@ -395,3 +399,20 @@ function cerrarCustomPopUp() {
     $( "#disable" ).remove();
 //    $("#regalo").fadeOut("slow");
 }
+//$(window).resize(function () {
+//    var viewportHeight = $(window).height();
+//    $('#outerWrapper').height(viewportHeight - 361);
+//});
+function resizeGrid() {debugger
+    var viewportHeight = $(window).height();
+    var gridElement = $("#gridDetalleListaPrecios");
+    var dataArea = gridElement.find(".k-grid-content");
+    var newHeight = gridElement.parent().innerHeight() - 2;
+    var diff = gridElement.innerHeight() - dataArea.innerHeight();
+    gridElement.height(viewportHeight-165);
+    dataArea.height(newHeight);
+}
+
+$(window).resize(function(){
+    resizeGrid();
+});    

@@ -1194,7 +1194,7 @@ function sirClientes() {
          {  
           "piicla__cli":0,
           "picter__nit":"*",
-          "picter__raz":"",
+          "picter__raz":"*",
           "piipago__cod":0,
           "piicli__est":-1
          }

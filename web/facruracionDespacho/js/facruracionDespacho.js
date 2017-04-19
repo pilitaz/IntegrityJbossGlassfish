@@ -6,12 +6,24 @@
 
 var asigGuardada;
 
-$(window).resize(function () {
+//$(window).resize(function () {
+//    var viewportHeight = $(window).height();
+//    $('#outerWrapper').height(viewportHeight - 30);
+//    $('.k-grid-content').height(viewportHeight - 100);
+//});
+function resizeGrid() {debugger
     var viewportHeight = $(window).height();
-    $('#outerWrapper').height(viewportHeight - 30);
-    $('.k-grid-content').height(viewportHeight - 100);
-});
+    var gridElement = $("#gridFacturacionDespachos");
+    var dataArea = gridElement.find(".k-grid-content");
+    var newHeight = gridElement.parent().innerHeight() - 2;
+    var diff = gridElement.innerHeight() - dataArea.innerHeight();
+    gridElement.height(viewportHeight-75);
+    dataArea.height(newHeight);
+}
 
+$(window).resize(function(){
+    resizeGrid();
+}); 
 $(document).ready(function() {   
     
     var obj = new dssic_clc();    
@@ -136,7 +148,7 @@ function grisFacDespachos(){
     
     $("#gridFacturacionDespachos").kendoGrid({
         dataSource: dataSourceAsignarPedidos,
-        selectable: true,                  
+        selectable: false,                  
         columns: [                        
             {field: "dpc__num", title: "Número despacho"},
             {field: "dpc__fec", title: "Fecha"},

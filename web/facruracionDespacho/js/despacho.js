@@ -100,3 +100,8 @@ function volverDespachos(){
     var servicio="facruracionDespacho"    
     window.location.replace(( sessionStorage.getItem("url")+servicio+"/html/"+servicio+".html"));  
 }
+
+$(window).resize(function () {
+    var viewportHeight = $(window).height();
+    $('#gridDetalleDespacho').height(viewportHeight - 61);
+});

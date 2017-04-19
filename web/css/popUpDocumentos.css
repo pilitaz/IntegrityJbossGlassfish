@@ -4,10 +4,9 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : 17/08/2016, 02:33:11 PM
+    Created on : 17/04/2017, 03:59:47 PM
     Author     : jenny
 */
-
 .k-grid .rightAling,
 .k-numerictextbox .k-input
 {
@@ -82,12 +81,11 @@ table{
     border-style: solid;
 
 }
-
 #gridDocumentoAd .k-grid-header
 {
    display: none
 }
 #gridDocumentoAd .k-grid-content
 {
-   height: 100%;
+   height: 96%;
 }

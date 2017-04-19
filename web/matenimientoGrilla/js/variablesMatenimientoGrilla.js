@@ -24,12 +24,6 @@ function dsSIRinitial() {
                     "fun__cod":3,
                     "por__cod":10
                 }
-
-//                {  
-//                    "cap__cod":sessionStorage.getItem("capitulo"),
-//                    "fun__cod":sessionStorage.getItem("funcion"),
-//                    "por__cod":sessionStorage.getItem("portafolio")
-//                }
             ]
         }
     };
@@ -64,7 +58,7 @@ function dsSIRinitial() {
  *  var input = sir.getdataInputSir();
  */
 function sirDataDetalle() {
-    debugger
+    
     var mapData = "eesic_forms_col";
     var urlSir = ipServicios + baseServicio + "SIRsic_forms_col";
     var json = {
@@ -210,6 +204,77 @@ function SICUDForms() {
                     "por_cod":"",
                     "titulo":"",
                     "piindicador":""
+                }
+            ]
+        }
+    };
+
+    this.setUrlSir = function (newname) {
+        if (newname) {
+            urlSir = newname;
+        }
+    };
+    this.getUrlSir = function () {
+        return urlSir;
+    };
+
+    this.setjson = function (newname) {
+        if (newname) {
+            json = newname;
+        }
+    };
+    this.getjson = function () {
+        return json;
+    };
+
+    this.setmapSir = function (newname) {
+        if (newname) {
+            mapData = newname;
+        }
+    };
+    this.getmapSir = function () {
+        return mapData;
+    };
+
+};
+
+//////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Funcion para obtener la url y el json de entrada para los datos de la grilla principal
+ *  
+ *  ejemplo
+ *  var sir = new sirEjemplo();
+ *  var url = sir.getUrlSir();
+ *  var input = sir.getdataInputSir();
+ */
+function SICUDFormsCol() {
+    var mapData = "eesic_forms";
+    var urlSir = ipServicios + baseServicio + "SICUDsic_forms_col";
+    var json = {  
+        "dsSIRinitial":{  
+            "eeDatos":[  
+                {  
+                    "picusrcod": sessionStorage.getItem("usuario"),
+                    "picfiid": sessionStorage.getItem("picfiid"),
+                    "local_ip":sessionStorage.getItem("ipPrivada"),
+                    "remote_ip":sessionStorage.getItem("ipPublica")
+                }
+            ],
+            "eesic_forms_col": [
+                {
+                    "forms_num":"",
+                    "cap_cod":"",
+                    "fun_cod":"",
+                    "por_cod":"",
+                    "cmp_dsc": "",
+                    "cmp_edi": "",
+                    "cmp_lec": "",
+                    "cmp_nom": "",
+                    "cmp_nom2": "",
+                    "cmp_req": "",
+                    "cmp_tip": "",
+                    "cmp_vis": "",
+                    "idinterno": 0, 
                 }
             ]
         }

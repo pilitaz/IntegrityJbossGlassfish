@@ -725,6 +725,15 @@
 
 /* ——  */
 
+.po_upfolder_sup_disabled{
+	width: 34px;
+	height: 34px;
+	background: url(../images/SpriteIntegrity.png) -58px -1258px;
+	cursor:pointer;        
+}
+
+/* ——  */
+
 .po_upfecha{
 	width: 34px;
 	height: 34px;

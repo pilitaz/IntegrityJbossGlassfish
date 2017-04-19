@@ -73,11 +73,13 @@ $(document).ready(function() {
     });    
 });
 
-function actualizarElemento(e){
-    alertDialogs("actualizarElemento");
-}
-
 function crearElemento(){
+    
+    var verbo = "POST"
+    
+    if($("#buttonCab")["0"].childNodes["0"].data=== "Actualizar"){
+        verbo = "PUT"
+    }  
     
     var objData = new SICUDForms();    
     var jsonSIRData = objData.getjson();
@@ -101,7 +103,7 @@ function crearElemento(){
     
     $.ajax({
         async: false, 
-        type: "POST",
+        type: verbo,
         data: JSON.stringify(jsonSIRData),
         url: urlData,
         dataType: "json",        
@@ -111,20 +113,33 @@ function crearElemento(){
         } 
     }).done(function(e){         
         var key1 = Object.keys(e)[0];
+        var key2 = Object.keys(jsonSIRData[key1])[1];
         if ((e[key1].eeEstados[0].Estado === "OK")) {                        
             cerrarCustomPopUp('popUpCabecera');
+            $("#buttonCab")["0"].childNodes["0"].data=== "Guardar"        
+            item = e[key1][key2]["0"];
+            if(verbo === "PUT"){
+               //item = e[key1][key2]["0"];
+               cargarDatos(item, "label");
+            }else{                
+                if(sessionStorage.getItem("esCabeceraDetalle")){
+                    editarElemento(); 
+                }
+            }
         } else {
             alertDialogs(e[key1].eeEstados[0].Estado);
         }
     });    
 }
 
-function editarElemento(e){
-     
-    e.preventDefault();
-    var divGrilla = e.delegateTarget.id
-    var grilla = $("#"+divGrilla).data("kendoGrid");
-    var item = grilla.dataItem(grilla.select());
+function editarElemento(e){     
+    
+    if(e){
+        e.preventDefault();
+        var divGrilla = e.delegateTarget.id
+        var grilla = $("#"+divGrilla).data("kendoGrid");
+        item = grilla.dataItem(grilla.select());        
+    }    
     
     var esCabeceraDetalle = sessionStorage.getItem("esCabeceraDetalle");
     if(esCabeceraDetalle==="true"){        
@@ -146,8 +161,9 @@ function editarElemento(e){
 
                 jsonSIRDataDetalle[key1][key2][0].cap__cod = item.cap_cod;
                 jsonSIRDataDetalle[key1][key2][0].fun__cod = item.fun_cod;
-                jsonSIRDataDetalle[key1][key2][0].por__cod = item.por_cod;                
-                
+                jsonSIRDataDetalle[key1][key2][0].por__cod = item.por_cod;
+                jsonSIRDataDetalle[key1][key2][0].forms__num = item.forms_num;
+        
                 $.ajax({
                     async: false, 
                     type: "POST",
@@ -178,8 +194,7 @@ function editarElemento(e){
     }    
 }
 
-function borrarElemento(e){
-    
+function borrarElemento(e){    
     e.preventDefault();
     var divGrilla = e.delegateTarget.id
     var grilla = $("#"+divGrilla).data("kendoGrid");
@@ -226,7 +241,53 @@ function borrarElemento(e){
 }
 
 function borrarElementoDet(e){
-    alertDialogs("borrarElementoDet");
+    
+    e.preventDefault();
+    var divGrilla = e.delegateTarget.id
+    var grilla = $("#"+divGrilla).data("kendoGrid");
+    var item = grilla.dataItem(grilla.select());
+    
+    var objData = new SICUDFormsCol();    
+    var jsonSIRData = objData.getjson();
+    var urlData = objData.getUrlSir();
+    var mapData = objData.getmapSir();
+       
+    var key1 = Object.keys(jsonSIRData)[0];
+    var key2 = Object.keys(jsonSIRData[key1])[1];
+
+    jsonSIRData[key1][key2][0].cap_cod = item.cap_cod;
+    jsonSIRData[key1][key2][0].fun_cod = item.fun_cod;
+    jsonSIRData[key1][key2][0].por_cod = item.por_cod;
+    jsonSIRData[key1][key2][0].forms_num = item.forms_num;
+    jsonSIRData[key1][key2][0].cmp_dsc = item.cmp_dsc;
+    jsonSIRData[key1][key2][0].cmp_edi = item.cmp_edi;
+    jsonSIRData[key1][key2][0].cmp_lec = item.cmp_lec;
+    jsonSIRData[key1][key2][0].cmp_nom = item.cmp_nom;
+    jsonSIRData[key1][key2][0].cmp_nom2 = item.cmp_nom2;
+    jsonSIRData[key1][key2][0].cmp_req = item.cmp_req;
+    jsonSIRData[key1][key2][0].cmp_tip = item.cmp_tip;
+    jsonSIRData[key1][key2][0].cmp_vis = item.cmp_vis;
+    jsonSIRData[key1][key2][0].idinterno = item.idinterno;     
+    
+    $.ajax({
+        async: false, 
+        type: "DELETE",
+        data: JSON.stringify(jsonSIRData),
+        url: urlData,
+        dataType: "json",        
+        contentType: "application/json;",
+        success: function (e) {  
+            
+        } 
+    }).done(function(e){    
+        
+        var key1 = Object.keys(e)[0];
+        if ((e[key1].eeEstados[0].Estado === "OK")) {                        
+            recargarGrillaDetalle(divGrilla)           
+        } else {
+            alertDialogs(e[key1].eeEstados[0].Estado);
+        }
+    });    
 }
 
 function editarElementoDet(e){    
@@ -246,7 +307,8 @@ function cambiarEstado(e){
 }
 
 function buscarElementos(){
-    $("#grilla")["0"].clientHeight=0 //.clientHeight
+    
+    $("#grilla")["0"].clientHeight=0;
     $("#grilla").empty();
     
     
@@ -287,4 +349,101 @@ function buscarElementos(){
             alertDialogs(e[key1].eeEstados[0].Estado);
         }
     });    
+}
+
+function crearElementoDet(e){ 
+    
+    var verbo = "POST"
+    
+    if($("#buttonCrearDet")["0"].childNodes["0"].data=== "Actualizar"){
+        verbo = "PUT"
+    }  
+    
+    var objData = new SICUDFormsCol();    
+    var jsonSIRData = objData.getjson();
+    var urlData = objData.getUrlSir();
+    var mapData = objData.getmapSir();
+       
+    var key1 = Object.keys(jsonSIRData)[0];
+    var key2 = Object.keys(jsonSIRData[key1])[1];
+    
+    jsonSIRData[key1][key2][0].cap_cod = $("#popUpDetalle").find("#cap_cod").val();
+    jsonSIRData[key1][key2][0].fun_cod = $("#popUpDetalle").find("#fun_cod").val();
+    jsonSIRData[key1][key2][0].por_cod = $("#popUpDetalle").find("#por_cod").val();
+    jsonSIRData[key1][key2][0].forms_num = $("#popUpDetalle").find("#forms_num").val();    
+    jsonSIRData[key1][key2][0].cmp_dsc = $("#popUpDetalle").find("#cmp_dsc").val();
+    jsonSIRData[key1][key2][0].cmp_edi = $("#popUpDetalle").find("#cmp_edi").val();
+    jsonSIRData[key1][key2][0].cmp_lec = $("#popUpDetalle").find("#cmp_lec").val();
+    jsonSIRData[key1][key2][0].cmp_nom = $("#popUpDetalle").find("#cmp_nom").val();
+    jsonSIRData[key1][key2][0].cmp_nom2 = $("#popUpDetalle").find("#cmp_nom2").val();
+    jsonSIRData[key1][key2][0].cmp_req = $("#popUpDetalle").find("#cmp_req").val();
+    jsonSIRData[key1][key2][0].cmp_tip = $("#popUpDetalle").find("#cmp_tip").val();
+    jsonSIRData[key1][key2][0].cmp_vis = $("#popUpDetalle").find("#cmp_vis").val();
+    jsonSIRData[key1][key2][0].idinterno = $("#popUpDetalle").find("#idinterno").val();    
+    
+    $.ajax({
+        async: false, 
+        type: verbo,
+        data: JSON.stringify(jsonSIRData),
+        url: urlData,
+        dataType: "json",        
+        contentType: "application/json;",
+        success: function (e) {  
+            
+        } 
+    }).done(function(e){         
+        var key1 = Object.keys(e)[0];
+        if ((e[key1].eeEstados[0].Estado === "OK")) {                        
+            cerrarCustomPopUp('popUpDetalle');
+            $("#buttonCrearDet")["0"].childNodes["0"].data=== "Guardar"
+            recargarGrillaDetalle("grillaDetalle")
+        } else {
+            alertDialogs(e[key1].eeEstados[0].Estado);
+        }
+    });
+}
+
+function recargarGrillaDetalle(divGrilla){
+    
+   $("#"+divGrilla).empty();
+   
+    var jsondsSIRinitial= JSON.parse(sessionStorage.getItem("dsSIRinitial"))
+        for(var i=0; i< jsondsSIRinitial.dsSIRinitial.eesic_forms.length; i++){
+            if(jsondsSIRinitial.dsSIRinitial.eesic_forms[i].forms_nom === "grillaDetalle"){
+                
+                var objData = new sirDataDetalle();    
+                var jsonSIRDataDetalle = objData.getjson();
+                var urlDataDetalle = objData.getUrlSir();
+                var mapDataDetalle = objData.getmapSir();
+                
+                var key1 = Object.keys(jsonSIRDataDetalle)[0];
+                var key2 = Object.keys(jsonSIRDataDetalle[key1])[1];
+
+                jsonSIRDataDetalle[key1][key2][0].cap__cod = item.cap_cod;
+                jsonSIRDataDetalle[key1][key2][0].fun__cod = item.fun_cod;
+                jsonSIRDataDetalle[key1][key2][0].por__cod = item.por_cod;
+                jsonSIRDataDetalle[key1][key2][0].forms__num = item.forms_num;
+        
+                $.ajax({
+                    async: false, 
+                    type: "POST",
+                    data: JSON.stringify(jsonSIRDataDetalle),
+                    url: urlDataDetalle,
+                    dataType: "json",        
+                    contentType: "application/json;",
+                    success: function (e) {  
+                        
+                    } 
+                }).done(function(e){     
+                    
+                    var key1 = Object.keys(e)[0];
+                    if ((e[key1].eeEstados[0].Estado === "OK")) {            
+                        datosGrillaDetalle = e[key1][mapDataDetalle];
+                    } else {
+                        alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                    } 
+                });
+                grid(jsondsSIRinitial.dsSIRinitial.eesic_forms[i], datosGrillaDetalle , "gridDetalle"); 
+            }
+        }
 }
