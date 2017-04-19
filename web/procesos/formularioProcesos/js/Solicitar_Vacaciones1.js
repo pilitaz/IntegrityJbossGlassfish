@@ -215,9 +215,9 @@ if(mm<10) {
 
 today = mm+dd+yyyy;
     $("#inicioVacaciones").kendoDatePicker({
-        format:  "MM/dd/yyyy",
+        format:  "yyyy/MM/dd",
         disableDates: ["sa", "su"],
-        min: new Date(mm, dd,yyyy)
+        min: new Date(yyyy, mm, dd)
     });
     $("#diasPedir").kendoNumericTextBox({format: "0", min:0});
     $("#totaldiasvalor").kendoNumericTextBox({format: "0",min:0 });
