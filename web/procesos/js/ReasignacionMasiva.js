@@ -74,7 +74,7 @@ function cudTareaFlujo(){debugger
                     if((resp.dsSolicitudVacaciones.eeEstados[0].Estado)=="OK")
                     {
                       
-                       parent.cerrarReasignacion();
+                        parent.cerrarReasignacion();
                        
                        
                       

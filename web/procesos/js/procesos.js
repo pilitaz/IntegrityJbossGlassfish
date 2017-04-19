@@ -29,7 +29,7 @@ function tamaño(){debugger
     return(x);
 }
 function tamañoRevisar(){debugger
-    var x = $("#windowform").height();
+    var x = $("#windowform1").height();
     return(x);
 }
 $(document).ready(function () {                             
@@ -301,8 +301,7 @@ function iniciarTarea2(e){debugger
     var nombreTarea = $("#grid1").data("kendoGrid").dataItem($(e.target).closest("tr"));
     sessionStorage.setItem("Aprueba_Proceso",JSON.stringify(nombreTarea));  
     var nombreTarea = $("#grid1").data("kendoGrid").dataItem($(e.target).closest("tr")).screen__name;
-    $("#formvacations").append("<div id='windowform'></div>");
-    var myWindow1 = $("#windowform"),undo = $("#undo");
+    
    if(nombreTarea==="ReasignacionMasiva")
    {
        reasignar1();
@@ -313,9 +312,10 @@ function iniciarTarea2(e){debugger
    {
       function onClose() {
         undo.fadeIn();
-        $("#windowform").remove();
+        $("#windowform1").remove();
     }
-        
+    $("#formvacations").append("<div id='windowform1'></div>");
+    var myWindow1 = $("#windowform1"),undo = $("#undo");    
     var UrL= sessionStorage.getItem("url");  
     myWindow1.kendoWindow({
         draggable: true,
@@ -492,12 +492,12 @@ function reasignar1(){debugger
             sessionStorage.setItem("listado_tareas",JSON.stringify(datanew)); 
             sessionStorage.setItem("Flujo_Tarea","false"); 
             
-            $("#reasignacion").append("<div id='windowform'></div>");
-            var myWindow1 = $("#windowform"),undo = $("#undo");
+            $("#formvacations").append("<div id='windowform1'></div>");
+            var myWindow1 = $("#windowform1"),undo = $("#undo");
                 
             function onClose() {
                 undo.fadeIn();
-                $("#reasignacion").remove();
+                $("#windowform1").remove();
             } 
 //            mostrarCustomPopUp();
 //            onloadPopUpCond ();
@@ -633,7 +633,7 @@ function terminarVacaciones(){debugger
 }
 function cerrarReasignacion(){debugger
     
-    $("#windowform").data("kendoWindow").close();   
+    $("#windowform1").data("kendoWindow").close();   
     alertDialogs("Reasignacion Completa");
     $('#grid1').data('kendoGrid').refresh();                                             
     $('#grid1').data('kendoGrid').dataSource.read();
@@ -663,10 +663,8 @@ function changImgFunc(results) {debugger
             x.setAttribute("id","x"+results[i].proc__name );             
             $("#spantarea"+results[i].proc__name).onclick = "";
             $("#spanedit"+results[i].proc__name).onclick = "";
-            document.getElementById("spantarea"+results[i].proc__name).setAttribute("class", "k-sprite transparente");
-            document.getElementById("spantarea"+results[i].proc__name).setAttribute('onclick','disable();'); // for FF
-            document.getElementById("spanedit"+results[i].proc__name).setAttribute("class", "k-sprite transparente");
-            document.getElementById("spanedit"+results[i].proc__name).setAttribute('onclick','disable();');
+            document.getElementById("spantarea"+results[i].proc__name).remove();           
+            document.getElementById("spanedit"+results[i].proc__name).remove();
         }
     }
 }
