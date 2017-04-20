@@ -100,7 +100,7 @@ function guardar(){debugger
     datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].fecha_ult_vac= document.getElementById("corte").innerHTML;
     datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].estado_aprocbacion="FALSE";
     var arrayNew=[];
-     for(var i in array1){
+     for(var i in array1){//array para enviar
         arrayNew.push(array1[i]);
     }
         datajson.dsSolicitudVacaciones.ecreatedocument=arrayNew;
