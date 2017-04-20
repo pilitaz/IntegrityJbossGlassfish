@@ -74,8 +74,30 @@ $(document).ready(function() {
     }else{
         gridDetalle();
     }
+    debugger
+    $("#droptarget").kendoDropTarget({
+        dragenter: droptargetOnDragEnter,
+        dragleave: droptargetOnDragLeave,
+        drop: droptargetOnDrop
+    });
     
 });
+
+function droptargetOnDragEnter(e) {    
+    //$("#droptarget").text("Now drop...");
+    $("#droptarget").addClass("painted");
+}
+
+function droptargetOnDragLeave(e) {debugger
+    $("#droptarget").text("Drop here.");
+    $("#droptarget").removeClass("painted");
+}
+
+function droptargetOnDrop(e) {debugger
+    $("#droptarget").text("You did great!");
+    $("#draggable").removeClass("hollow");
+}
+
 /** 
  * Se encarga de cargar la información de los combobox de la cabecera de la factura
  * @returns {undefined}
