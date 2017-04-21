@@ -176,8 +176,6 @@ function cargarArchivo(){
 
 function subirArchivo(base64, file){
     
-    base64 = base64.replace(/data:[a-z]+\/[a-z]+;base64,/g, "");
-    
     var obj = new subirDocumentoAlfre();    
     var json = obj.getjson();
     var url = obj.getUrlSir();
@@ -189,7 +187,7 @@ function subirArchivo(base64, file){
     json[key1][key2][0].picdescription = "";
     json[key1][key2][0].picfolderpath = "ECM\/"+sessionStorage.getItem("companyNIT")+"\/"+sessionStorage.getItem("portafolio")+"\/"+year+"\/"+mes+"\/"+instacia;   
     json[key1][key2][0].picldocbase64 = base64;
-    json[key1][key2][0].picmimetype = 1;
+    json[key1][key2][0].picmimetype = file.type;
     
     $.ajax({
         type: "POST",

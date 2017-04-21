@@ -75,7 +75,7 @@ function documentos() {
 }
 
 
-function onChange(e) {debugger
+function onChange(e) {
     bandAlert = 0;
      e.preventDefault();
 //    var divGrilla = e.delegateTarget.id;
@@ -84,7 +84,7 @@ function onChange(e) {debugger
     var selected = $.map(this.select(), function (item) {
         return $(item).text();
     });
-    sessionStorage.setItem("documento",item.tostring());
+    sessionStorage.setItem("documento", JSON.stringify(item));
     var tipoArchivo = sessionStorage.getItem("documento").split(".")[sessionStorage.getItem("documento").split(".").length - 1];
 
     var actions = new Array();
@@ -108,12 +108,16 @@ function onChange(e) {debugger
  * @param {type} e
  * @returns {undefined}
  */
-function getFile(e) {debugger
+function getFile(e) {
     try {
-        var archivo = sessionStorage.getItem("documento");
+        debugger
+        var archivo = JSON.parse(sessionStorage.getItem("documento"));
         dsfiles.dsfiles.SIRfile = new Array();
         dsfiles.dsfiles.SIRfile[0] = new Object();
-        dsfiles.dsfiles.SIRfile[0].pilfilename = archivo;
+        
+        dsfiles.dsfiles.SIRfile[0].pilfilename = archivo.nomfile;
+        dsfiles.dsfiles.SIRfile[0].piitipo = archivo.tipo;
+        dsfiles.dsfiles.SIRfile[0].picfilepath = archivo.ruta;
 
         $.ajax({
             type: "POST",
@@ -122,6 +126,7 @@ function getFile(e) {debugger
             dataType: "json",
             contentType: "application/json;",
             success: function (resp) {
+                debugger
                 documentobase64 = JSON.stringify(resp.response.polfile);
                 documentobase64 = documentobase64.replace(/"/g, "");
                 sessionStorage.setItem("documentobase64", documentobase64);
@@ -146,7 +151,8 @@ function getFile(e) {debugger
     }
 }
 
-function getFileAsPDF(e) {debugger
+function getFileAsPDF(e) {
+    debugger
     try {
         var archivo = sessionStorage.getItem("documento");
         dsfiles.dsfiles.SIRfile = new Array();
@@ -186,12 +192,15 @@ function getFileAsPDF(e) {debugger
     }
 }
 
-function showFile(e) {debugger
+function showFile(e) {
+    debugger
     try {
-        var archivo = sessionStorage.getItem("documento");
+        var archivo = JSON.parse(sessionStorage.getItem("documento"));
         dsfiles.dsfiles.SIRfile = new Array();
         dsfiles.dsfiles.SIRfile[0] = new Object();
-        dsfiles.dsfiles.SIRfile[0].pilfilename = archivo;
+        dsfiles.dsfiles.SIRfile[0].pilfilename = archivo.nomfile;
+        dsfiles.dsfiles.SIRfile[0].piitipo = archivo.tipo;
+        dsfiles.dsfiles.SIRfile[0].picfilepath = archivo.ruta;
         $.ajax({
             type: "POST",
             data: JSON.stringify(dsfiles),

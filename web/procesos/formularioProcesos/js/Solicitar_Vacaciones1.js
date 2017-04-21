@@ -1,4 +1,5 @@
 var array1 =[];
+var contador=0;
 $(document).ready(function () {
     
 iniciar();
@@ -19,7 +20,8 @@ $("#fileInput1").closest(".k-upload-button").find("span")[0].innerText="";
 
 });
 function remover(e){debugger
- for(var i = 0; i < array1.length; i++ ){
+    
+ for(var i in array1){
  
     if (array1[i].picdocname===e.files[0].name){
         delete array1[i];
@@ -97,7 +99,11 @@ function guardar(){debugger
     datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].fecha_solictud=document.getElementById("fecha").innerHTML;
     datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].fecha_ult_vac= document.getElementById("corte").innerHTML;
     datajson.dsSolicitudVacaciones.eeSolicitudVacaciones[0].estado_aprocbacion="FALSE";
-    datajson.dsSolicitudVacaciones.ecreatedocument=array1;
+    var arrayNew=[];
+     for(var i in array1){//array para enviar 1
+        arrayNew.push(array1[i]);
+    }
+        datajson.dsSolicitudVacaciones.ecreatedocument=arrayNew;
         $.ajax({
             
             type: "POST",        
