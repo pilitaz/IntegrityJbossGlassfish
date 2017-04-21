@@ -689,13 +689,13 @@ function mostrarDocumentos() {
     $('#grid').data('kendoGrid').dataSource.read();
     $('#grid').data('kendoGrid').refresh();
     $("#divNotificaciones").fadeOut("slow");
-    $("#centeredNotification").data("kendoNotification").hide();
+    $("#divCenteredNotification").hide();
     $("#divDocumentos").fadeIn("slow");
 }
 function mostrarNotificaciones() {
     $("#divDocumentos").fadeOut("slow");
     $("#imgNotificaciones").removeClass();
-    $("#centeredNotification").data("kendoNotification").hide();
+    $("#divCenteredNotification").hide();
     $("#divNotificaciones").fadeIn("slow");
     notificaciones();
 }
