@@ -625,7 +625,7 @@ function changImgFunc1(results) {
 }
 function terminarVacaciones(){debugger
     
-    $("#windowform").data("kendoWindow").close();   
+    $("#windowform1").data("kendoWindow").close();   
     alertDialogs("Se ha terminado el proceso");
     $('#grid1').data('kendoGrid').refresh();                                             
     $('#grid1').data('kendoGrid').dataSource.read();
