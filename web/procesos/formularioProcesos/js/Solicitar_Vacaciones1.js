@@ -157,12 +157,12 @@ function pagoAnticipado(){
 }
 function jefe(){
     
-
-        var consultar = new sirJefes();
+var proceso= sessionStorage.getItem("tarea_usuario");
+        var consultar = new SirUsuariosReasigna();
         var datajson = consultar.getjson();
         var urlService = consultar.getUrlSir();
         var mapCud1 = "eeusers";
-        
+        datajson.dsJefesBpm.eeSIRjefes[0].picprocname=proceso;
                $("#jefe")
                 .kendoDropDownList({
             dataTextField: "username",
