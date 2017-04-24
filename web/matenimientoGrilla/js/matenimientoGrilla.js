@@ -366,7 +366,7 @@ function crearElementoDet(e){
        
     var key1 = Object.keys(jsonSIRData)[0];
     var key2 = Object.keys(jsonSIRData[key1])[1];
-    
+    debugger
     jsonSIRData[key1][key2][0].cap_cod = $("#popUpDetalle").find("#cap_cod").val();
     jsonSIRData[key1][key2][0].fun_cod = $("#popUpDetalle").find("#fun_cod").val();
     jsonSIRData[key1][key2][0].por_cod = $("#popUpDetalle").find("#por_cod").val();

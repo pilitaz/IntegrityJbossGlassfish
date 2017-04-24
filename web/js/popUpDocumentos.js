@@ -94,7 +94,7 @@ function cargaListaDocumentos(){
             if ((e[key1].eeEstados[0].Estado === "OK")) {            
                 dataGridDetalle = e[key1][mapData];
             } else {
-                alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+                alertDialogs(e[key1].eeEstados[0].Estado);
             } 
         });    
 
@@ -154,23 +154,32 @@ function cargaListaDocumentos(){
 
 function popUpSubirArchivo(){
     try{
+        $("#popUpDocumentos").append("<div id='progresoCarga' hidden='hidden'></div>");
+        $("#progresoCarga").fadeIn("slow");
+        $("#progresoCarga").display="block";
+        displayLoading("#progresoCarga");
         document.getElementById("ipFile").click();
+        
     }catch(e){alert(e)}    
 }
 
 function cargarArchivo(){
     var base64;
-    var ipFile = document.getElementById('ipFile');
+    var ipFile = document.getElementById('ipFile');    
     
+    var file = ipFile.files[0];
+    var reader = new FileReader();
     
-        var file = ipFile.files[0];
-        var reader = new FileReader();
-        
-        reader.onload = function(e) {            
-            base64 = reader.result;
-            subirArchivo(base64,file);
-        };        
-        reader.readAsDataURL(file);	        
+    reader.onloadend  = function(e) {            
+        var div = document.getElementById("progresoCarga"); 
+        div.parentNode.removeChild(div);
+    };
+    
+    reader.onload = function(e) {            
+        base64 = reader.result;
+        subirArchivo(base64,file);
+    };        
+    reader.readAsDataURL(file);	        
     
 }
 
@@ -205,7 +214,7 @@ function subirArchivo(base64, file){
             cargaListaDocumentos();
             gridDocumentos();
         } else {
-            alertDialogs("Error en el servicio" + e[key1].eeEstados[0].Estado);
+            alertDialogs(e[key1].eeEstados[0].Estado);
         }       
     });
 }

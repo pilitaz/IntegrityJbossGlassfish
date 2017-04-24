@@ -115,8 +115,8 @@ function gridDocumentosPagina(){
                 if ((e[key1].eeEstados[0].Estado === "OK")) {            
                     abrirCustomPopUpPreview("popUpPreview")                     
                     document.getElementById("ifPreview").src = "https://docs.google.com/gview?url="+e.dsSIRdoc_dump.edocdump["0"].polfile+"&embedded=true" 
-                    document.getElementById('lbNombreArchivo').innerHTML = e.dsSIRdoc_dump.eeSIRdoc_det["0"].pocdoc_name;
-                    document.getElementById('lbTipoArchivo').innerHTML = e.dsSIRdoc_dump.eeSIRdoc_det["0"].pocMimeType;
+                    document.getElementById('lbNombreArchivo').innerHTML = e.dsSIRdoc_dump.eeSIRdoc_det["0"].pocdoc_name;                    
+                    document.getElementById('lbTipoArchivo').innerHTML = e.dsSIRdoc_dump.eeSIRdoc_det["0"].pocdoc_name.split(".")[e.dsSIRdoc_dump.eeSIRdoc_det["0"].pocdoc_name.split(".").length - 1];//e.dsSIRdoc_dump.eeSIRdoc_det["0"].pocMimeType;
                     document.getElementById('lbAutorArchivo').innerHTML = e.dsSIRdoc_dump.eeSIRdoc_det["0"].pocauthor;
                     document.getElementById('lbCreadorArchivo').innerHTML = e.dsSIRdoc_dump.eeSIRdoc_det["0"].poccreatedBy;
                     document.getElementById('lbFecCreadoArchivo').innerHTML = e.dsSIRdoc_dump.eeSIRdoc_det["0"].poccreationDate;
@@ -137,7 +137,7 @@ function mostrarCustomPopUpPreview(idcustomPopUp) {
 function cerrarCustomPopUpPreview(idCustomPopUp) {
     $("#disable").fadeOut("slow");
     $("#"+idCustomPopUp).fadeOut("slow");
-    $("#disable" ).remove();   
+    $("#disable").remove();   
 }
 
 function abrirCustomPopUpPreview(idCustomPopUp) {

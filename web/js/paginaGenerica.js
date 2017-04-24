@@ -48,9 +48,9 @@ function grid(json, datosGrilla, divGrilla){
     for(var i = 0; i<json.eesic_forms_col.length; i++){
         posicion = parseInt(json.eesic_forms_col[i].idinterno);
         schema.model[json.eesic_forms_col[i].cmp_nom2] = new Object();
-        schema.model[json.eesic_forms_col[i].cmp_nom2].type = json.eesic_forms_col[i].tipo;
+        schema.model[json.eesic_forms_col[i].cmp_nom2].type = json.eesic_forms_col[i].cmp_tip;
         schema.model[json.eesic_forms_col[i].cmp_nom2].editable = json.eesic_forms_col[i].cmp_edi;
-        if(json.eesic_forms_col[i].cmp_tip==="number"){
+        if(json.eesic_forms_col[i].cmp_tip==="integer"){
             align = "rightAling";
             template = "<div class='"+align+"'>#= kendo.toString( "+ json.eesic_forms_col[i].cmp_nom2+",\"n0\")#</div>";            
         }else{
@@ -60,7 +60,7 @@ function grid(json, datosGrilla, divGrilla){
         columns[posicion] = new Object();
         columns[posicion].field = json.eesic_forms_col[i].cmp_nom2;        
         columns[posicion].title = json.eesic_forms_col[i].cmp_dsc;
-        //columns[posicion].hidden = json.eesic_forms_col[i].cmp_vis;
+        columns[posicion].hidden = false;//json.eesic_forms_col[i].cmp_vis;
         columns[posicion].template = template;
     }
     columns[json.eesic_forms_col.length] = btnIzq;
