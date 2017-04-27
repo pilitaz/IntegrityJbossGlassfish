@@ -14,7 +14,7 @@
     },
     {
       "id": "consultarVacaciones",
-      "title": "Se genera una tarea que permite al empleado consultar los días de vacaciones que tiene pendiente por disfrutar.<br>La consulta da a conocer sobre el empleado como mínimo la fecha de ingreso, la fecha del último corte, el total de días pendientes por disfrutar. Así, se crea el objeto de datos \"Vacaciones\".\nEl empleado completa la tarea indicando si continúa o no con su solicitud de vacaciones.",
+      "title": "Esta tarea consiste en una consulta al ERP para obtener principalmente los días de vacaciones que el empleado tiene pendiente por disfrutar. Se logra un objeto de datos que contiene el NIT de la empresa,<br> la identificación del empleado, la fecha de ingreso a la empresa, la fecha del último corte de vacaciones, el total de días pendientes por disfrutar, los días de anticipación para la solicitud de vacaciones.",
       "top": "87px",
       "left": "187px",
       "width": "100px",
@@ -23,7 +23,7 @@
     },
     {
       "id": "solicitarVacaciones",
-      "title": "Se genera una tarea que permite al empleado formalizar su solicitud de vacaciones.<br>El empleado indica la fecha de inicio de vacaciones, el total de días hábiles a tomar y/o el total de días en valor, el nombre de su jefe inmediato. Así, se crea el objeto de datos \"Solicitud\".\nEl empleado completa la tarea confirmando los datos de su solicitud de vacaciones.",
+      "title": "Esta tarea permite que el empleado formalice su solicitud de vacaciones ante la empresa. <br> El empleado indica la fecha de inicio de vacaciones, el total de días hábiles a tomar y/o el total de días en valor, el nombre de su jefe inmediato. El empleado completa la tarea confirmando los datos de su solicitud de vacaciones.",
       "top": "87px",
       "left": "346px",
       "width": "100px",
@@ -32,7 +32,7 @@
     },
     {
       "id": "verificarSolicitud",
-      "title": "Se realiza una verificación automática de los requisitos de la solicitud de acuerdo a lo estipulado por la empresa dentro de los lineamientos del Ministerio del Trabajo consignados en el Código Sustantivo del Trabajo (C.S.T.)",
+      "title": "Esta tarea es una consulta al BRMS para procesar las políticas que determinó la empresa para procesar la solicitud de las vacaciones.  Regla No. 1 = La suma del \"total de días hábiles a tomar\" y el \"total de días en valor\" no debe ser mayor al \"total de días pendientes por disfrutar\" Regla No. 2 = La diferencia entre la \"fecha de inicio de vacaciones\" y la \"fecha de solicitud de vacaciones\" no debe ser inferior al número de \" días de anticipación para la solicitud de vacaciones\" estipulado por la empresa ",
       "top": "87px",
       "left": "510px",
       "width": "100px",
@@ -41,7 +41,7 @@
     },
     {
       "id": "revisarSolicitud",
-      "title": "Se genera una tarea para que el Jefe inmediato del empleado evalúe y apruebe o rechace la solicitud.<br>Los datos de la solicitud están consignados en el objeto de datos \"Solicitud\".<br>\nEl Jefe completa la tarea confirmando si \"Aprueba\" o \"Rechaza\" la Solicitud, en consecuencia el objeto de datos \"Solicitud\" es sujeto de la actualización de su estado (\"Aprobada\"/Rechazada\"). En caso que la solicitud sea rechazada el Jefe debe dejar consignado el por qué a manera de comentarios/observaciones como parte de la información del objeto de datos \"Solicitud\".",
+      "title": "Esta tarea permite que el Jefe inmediato del empleado evalúe su solicitud de vacaciones. <br> El Jefe completa la tarea confirmando si \"Aprueba\" o \"Rechaza\" la Solicitud. En caso que la solicitud se rechace: el Jefe debe indicar por qué rechazó la solicitud de vacaciones en una sección de \"Observaciones\" del formulario.",
       "top": "345px",
       "left": "680px",
       "width": "100px",
@@ -50,7 +50,7 @@
     },
     {
       "id": "notificarRechazo",
-      "title": "Se genera una tarea que de manera automática entrega al Empleado las observaciones/comentarios sobre el rechazo de su Solicitud.\nSe completa la tarea tras generar la notificación.",
+      "title": "Esta tarea permite el envío de un correo electrónico como notificación al Empleado con las 'observaciones' sobre el rechazo de su solicitud. Se completa la tarea tras el envío exitoso del correo electrónico.",
       "top": "287px",
       "left": "933px",
       "width": "100px",
@@ -59,7 +59,7 @@
     },
     {
       "id": "solicitudRechazada",
-      "title": "La instancia del proceso \"Solicitud de Vacaciones\" termina y como resultado del proceso se obtiene un objeto de datos \"Solicitud\" en estado \"Rechazada\".",
+      "title": "La instancia del proceso \"Solicitud de Vacaciones\" termina y como resultado del proceso se obtiene un objeto de datos \"Solicitud\" en estado \"Rechazado\".",
       "top": "310px",
       "left": "1090px",
       "width": "36px",
@@ -68,7 +68,7 @@
     },
     {
       "id": "notificarAprobacion",
-      "title": "Se genera una tarea que de manera automática comunica al Empleado que su Solicitud fue aprobada. Comentarios u Observaciones sobre esta decisión son opcionales.<br>Se completa la tarea tras generar la notificación.",
+      "title": "Esta tarea permite el envío de un correo electrónico como notificación al Empleado de la aprobación de su solicitud. Incluir \"observaciones\" es opcional.<br> Se completa la tarea tras el envío exitoso del correo electrónico.",
       "top": "397px",
       "left": "933px",
       "width": "100px",
@@ -77,7 +77,7 @@
     },
     {
       "id": "solicitudAprobada",
-      "title": "La instancia del proceso \"Solicitud de Vacaciones\" termina y como resultado del proceso se obtiene un objeto de datos \"Solicitud\" en estado \"Aprobada\".",
+      "title": "La instancia del proceso \"Solicitud de Vacaciones\" termina y como resultado del proceso se obtiene un objeto de datos \"Solicitud\" en estado \"Aprobado\"..",
       "top": "420px",
       "left": "1090px",
       "width": "36px",
@@ -86,7 +86,7 @@
     },
     {
       "id": "reasignarSolicitud",
-      "title": "Se genera una tarea para que la Gerente Administrativa y Financiera de la empresa evalúe porqué no se ha procesado la solicitud de vacaciones del empleado y tome una acción final y definitiva sobre el particular. En caso de algún evento no superable con el Jefe inmediato la Gerente Administrativa y Financiera será responsable de reasignar la Solicitud hacia otro recurso (Jefe) dentro de la empresa y velar por una pronta respuesta. Una vez reasignada la tarea \"Revisar Solicitud\" se completa la tarea.",
+      "title": "Esta tarea permite que el \"Dueño del Proceso\" evalúe por qué no se ha procesado la solicitud de vacaciones del empleado y reasigne la solicitud hacia otro recurso (Jefe) dentro de la empresa si es necesario.",
       "top": "591px",
       "left": "683px",
       "width": "100px",
@@ -95,7 +95,7 @@
     },
     {
       "id": "solicitudReasignada",
-      "title": "La instancia asociada al flujo de secuencia iniciado desde el evento intermedio \"Tarea Atrasada\" pasando por la tarea \"Intervenir Solicitud\" termina. Sin embargo, La instancia del proceso \"Solicitud de Vacaciones\" continúa a la espera de completar la tarea \"Revisar Solicitud\".",
+      "title": "La instancia asociada al flujo de secuencia finaliza. El control de flujo pasa a la tarea \"Revisar Solicitud\"..",
       "top": "615px",
       "left": "840px",
       "width": "36px",
@@ -104,7 +104,7 @@
     },
     {
       "id": "aprueba",
-      "title": "Se valida cuál fue la decisión del Jefe acerca de la Solicitud, ¿fue aprobada o rechazada?.",
+      "title": "El control de flujo continúa por el camino \"no\" si la solicitud fue rechazada; continúa por el camino \"si\" cuando la solicitud fue aprobada.",
       "top": "365px",
       "left": "838px",
       "width": "36px",
@@ -131,7 +131,7 @@
     },
     {
       "id": "dueñoProceso",
-      "title": "Representa el rol \"Administrador del Proceso\" en la empresa.",
+      "title": "Representa el rol \"Dueño  del Proceso\" en la empresa.",
       "top": "580px",
       "left": "40px",
       "width": "24px",
@@ -149,7 +149,7 @@
     },
     {
       "id": "dataObjectSolicitudInicio",
-      "title": "Atributos objeto \"Solicitud\": Empresa, identificación del empleado, fecha de ingreso a la empresa, fecha del último corte de vacaciones, total de días pendientes por disfrutar.",
+      "title": "Objeto de datos que contiene el NIT de la empresa, la identificación del empleado, la fecha de ingreso a la empresa, la fecha del último corte de vacaciones, el total de días pendientes por disfrutar, los días de anticipación para la solicitud de vacaciones.",
       "top": "360px",
       "left": "218px",
       "width": "34px",
@@ -158,7 +158,7 @@
     },
     {
       "id": "dataObjectSolicitudAprobada",
-      "title": "Atributos objeto \"Solicitud [aprobado]\": Empresa, identificación del empleado, fecha de ingreso a la empresa, fecha del último corte de vacaciones, total de días pendientes por disfrutar, días de anticipación para la solicitud de vacaciones, fecha de inicio de vacaciones, total de días hábiles a tomar, total de días en valor, nombre de su jefe inmediato, fecha de solicitud de vacaciones, resultado regla número 1, resultado regla número 2, Estado: aprobado, observaciones (opcional).",
+      "title": "Objeto de datos que contiene el NIT de la empresa, la identificación del empleado, la fecha de ingreso a la empresa, la fecha del último corte de vacaciones, el total de días pendientes por disfrutar, los días de anticipación para la solicitud de vacaciones, la fecha de inicio de vacaciones, el total de días hábiles a tomar, el total de días en valor, el nombre de su jefe inmediato, la fecha de solicitud de vacaciones, resultado de la regla número 1, resultado de la regla número 2, el estado de la solicitud como \"Aprobado\", y observaciones son de carácter opcional.",
       "top": "608px",
       "left": "966px",
       "width": "34px",
@@ -167,7 +167,7 @@
     },
     {
       "id": "dataObjectSolicitudRechazada",
-      "title": "Atributos objeto \"Solicitud [rechazado]\": Empresa, identificación del empleado, fecha de ingreso a la empresa, fecha del último corte de vacaciones, total de días pendientes por disfrutar, días de anticipación para la solicitud de vacaciones, fecha de inicio de vacaciones, total de días hábiles a tomar, total de días en valor, nombre de su jefe inmediato, fecha de solicitud de vacaciones, resultado regla número 1, resultado regla número 2, Estado: rechazado, observaciones.",
+      "title": "Objeto de datos que contiene el NIT de la empresa, la identificación del empleado, la fecha de ingreso a la empresa, la fecha del último corte de vacaciones, el total de días pendientes por disfrutar, los días de anticipación para la solicitud de vacaciones, la fecha de inicio de vacaciones, el total de días hábiles a tomar, el total de días en valor, el nombre de su jefe inmediato, la fecha de solicitud de vacaciones, resultado de la regla número 1, resultado de la regla número 2, el estado de la solicitud como \"Rechazado\", y algunas observaciones.",
       "top": "101px",
       "left": "966px",
       "width": "34px",
@@ -176,7 +176,7 @@
     },
     {
       "id": "dataObjectSolicitudPreVerificación",
-      "title": "Atributos objeto \"Solicitud [pre-verificación]\": Empresa, identificación del empleado, fecha de ingreso a la empresa, fecha del último corte de vacaciones, total de días pendientes por disfrutar, días de anticipación para la solicitud de vacaciones.",
+      "title": "Objeto de datos que contiene el NIT de la empresa, la identificación del empleado, la fecha de ingreso a la empresa, la fecha del último corte de vacaciones, el total de días pendientes por disfrutar, los días de anticipación para la solicitud de vacaciones, la fecha de inicio de vacaciones, el total de días hábiles a tomar, el total de días en valor, el nombre de su jefe inmediato, la fecha de solicitud de vacaciones.",
       "top": "360px",
       "left": "380px",
       "width": "34px",
@@ -185,7 +185,7 @@
     },
     {
       "id": "dataObjectSolicitudVerificado",
-      "title": "Atributos objeto \"Solicitud [verificación]\": Empresa, identificación del empleado, fecha de ingreso a la empresa, fecha del último corte de vacaciones, total de días pendientes por disfrutar, días de anticipación para la solicitud de vacaciones, fecha de inicio de vacaciones, total de días hábiles a tomar, total de días en valor, nombre de su jefe inmediato, fecha de solicitud de vacaciones, resultado regla número 1, resultado regla número 2.",
+      "title": "Objeto de datos que contiene el NIT de la empresa, la identificación del empleado, la fecha de ingreso a la empresa, la fecha del último corte de vacaciones, el total de días pendientes por disfrutar, los días de anticipación para la solicitud de vacaciones, la fecha de inicio de vacaciones, el total de días hábiles a tomar, el total de días en valor, el nombre de su jefe inmediato, la fecha de solicitud de vacaciones, resultado de la regla número 1, resultado de la regla número 2.",
       "top": "360px",
       "left": "543px",
       "width": "34px",
