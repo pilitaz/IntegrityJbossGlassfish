@@ -239,9 +239,11 @@ $(document).ready(function () {
      *  
      *  
      */
-    var gridheigth = $("body").height();
+    debugger
+    var gridheigth = $("#idFrame").height();
     gridheigth = gridheigth*0.12 + gridheigth;
     var grid1 = $("#grid").kendoGrid({
+        height:gridheigth,
         dataSource: dataSource,
         columns: [
             {field: "sar__cod", title: "Codigo Supervisor",  hidden:false},

@@ -173,13 +173,13 @@ function grilla() {
         altRowTemplate: kendo.template($("#altRowTemplate").html()),
         edit: function (e) {
             if (!e.model.isNew()) {
-                if (e.model[est] != 99) {
-                    debugger
+                if (e.model[est] != 99) {                    
                     kendo.ui.progress($('.k-edit-form-container'), true);
                     kendo.ui.progress($('.k-edit-buttons'), true);
                     e.container.find(".k-loading-image").css("background-image", "url('')");
+                    debugger
                     var rgeo= $("#idrgeo__cod").data("kendoDropDownList"); 
-                    rgeo.value(e.model[idrgeo__cod]);                   
+                    rgeo.value(e.model.idrgeo__cod);                   
                 }
                 e.container.kendoWindow("title", "Editar");
             } else {                
