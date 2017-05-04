@@ -1,4 +1,4 @@
-//alex
+
 var usuario;
 var password;
 
