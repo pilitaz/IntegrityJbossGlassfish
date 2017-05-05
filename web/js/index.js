@@ -1,4 +1,4 @@
-//version10
+//version12
 var puerto = sessionStorage.getItem("puerto");
 var ip = sessionStorage.getItem("ip");
 
